@@ -69,7 +69,7 @@ export  const roadmapData = [
     {
         title: "ACADEMICS",
         country: null ,
-        disable: true,
+        disable: false,
         description: "",
         view: false,
         tasks: [
