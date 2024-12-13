@@ -38,7 +38,7 @@ export  const roadmapData = [
         tasks: [
             {
                 heading: "Find your major",
-                estimated_time: '30/9/2024',
+                estimated_time: '30/6/2024',
                 type: 'Require',
                 checked: false,
                 task_description: "Choose a major suitable to you, based on your interests, results of your MBTI test, and also your career quiz. Finalizing your major early will help you in choosing ECs related to your chosen major that will carry more weight in your college application.",
@@ -52,14 +52,14 @@ export  const roadmapData = [
             },
             {
                 heading: "Join Major-related Competitions",
-                estimated_time: '30/9/2024',
+                estimated_time: 'As soon as possible',
                 type: 'optional',
                 checked: false,
                 task_description: "Achieving success in competitions can significantly enhance your application. The impact of these accomplishments on your application will be influenced by the following factors: • Scale of the competition • Reputation and level of competitiveness • Relevance to your chosen field of study",
             },
             {
                 heading: "Complete Internship",
-                estimated_time: 'As soon as possible',
+                estimated_time: '30/9/2024',
                 type: 'optional',
                 checked: false,
                 task_description: "If possible, seek an internship related to your intended major. It shows your passion, commitment, and readiness for future challenges. Getting a meaningful internship in high school might seem impossible. While your college friends have career fairs and established recruiting paths, you're left wondering if anyone will take a chance on you. But here's the truth: real opportunities exist, even if the path isn't obvious. Two Things Matter Most: - Who You Know - Your network - How Bold You Are - Sometimes you need to ignore the \"requirements\" and just go for it Start Building Your Network (You Already Have One): - Your teachers are your first champions - build genuine relationships with them - Connect with your friends' parents who work in interesting fields - Reach out to former students who've landed great internships - Join online communities where professionals hang out (Stack Overflow, GitHub, relevant forums) Be Bold: - Apply for college internships anyway - my friend landed at NASA this way - Reach out directly to companies you admire - Don't limit yourself to familiar industries - Keep following up - persistence often matters more than perfection Remember: Companies aren't just looking for experience (you're in high school - they know you don't have much). They're looking for curiosity, initiative, and eagerness to learn. Sometimes getting that dream internship is simply about being brave enough to ask and persistent enough to keep asking. Your first step? Pick one person in your network - a teacher, a friend's parent, anyone - and reach out this week. The worst they can say is no. Here are some of Arrowster's suggested job portals that may help you with your search: - Topcv.vn - Largest Vietnamese job portal - Ybox.vn - Youth and internship focused - Glints.com/vn - Multi-country professional network - Vietnamworks.com - Premium careers platform - Jobstreet.vn - Wide range job listings - 123job.vn - New generation job board - Vn.indeed.com - Global jobs localized - Vieclam24h.vn - Comprehensive job site - Mywork.com.vn - All-level positions portal - Careerbuilder.vn - US-backed recruitment site - Timviec365.vn - Free posting platform - Jobsgo.vn - Smart job matching - Careerlink.vn - Location-based job search - Topdev.vn - IT specialists platform - Itviec.com - Tech recruitment hub",
@@ -126,35 +126,35 @@ export  const roadmapData = [
             },
             {
                 heading: "Fill in activity list",
-                estimated_time: "1/9/2025",
+                estimated_time: "09/01/2025",
                 type: 'Require',
                 checked: false,
                 task_description: "",
             },
             {
                 heading: "Honor & Rewards",
-                estimated_time: "1/9/2025",
+                estimated_time: "09/01/2025",
                 type: 'Require',
                 checked: false,
                 task_description: "",
             },
             {
                 heading: "Upload Resume/CV",
-                estimated_time: "1/9/2025",
+                estimated_time: "09/01/2025",
                 type: 'Require',
                 checked: false,
                 task_description: "",
             },
             {
                 heading: "Request documents",
-                estimated_time: "1/9/2025",
+                estimated_time: "09/01/2025",
                 type: 'Require',
                 checked: false,
                 task_description: "",
             },
             {
                 heading: "Request Official School Transcript",
-                estimated_time: "1/9/2025",
+                estimated_time: "09/01/2025",
                 type: 'Require',
                 checked: false,
                 task_description: "You can request this from your schools. Transcript for Grade 9, 10, 11, and first semester is required. You will have to amend your Grade 12 first semester transcript when it's available, and provide schools with your full transcript when you matriculate. Unless high schools provide students with English transcripts, you need to provide a notarized translation for your college application. Ask for your transcript at least 2 weeks before the application deadline so that you can receive it in time.",
@@ -200,21 +200,21 @@ export  const roadmapData = [
         tasks: [
             {
                 heading: "Complete Personal Statement",
-                estimated_time: "13/12/2024",
+                estimated_time: "13/02/2025",
                 type: 'optional',
                 checked: false,
                 task_description: "",
             },
             {
                 heading: "Submit Application",
-                estimated_time: "14/12/2024",
+                estimated_time: "14/02/2025",
                 type: 'Require',
                 checked: false,
                 task_description: "",
             },
             {
                 heading: "Submit Outside Scholarship Application",
-                estimated_time: "14/12/2024",
+                estimated_time: "14/02/2025",
                 type: 'optional',
                 checked: false,
                 task_description: "",
@@ -244,7 +244,7 @@ export  const roadmapData = [
             },
             {
                 heading: "Submit Outside Scholarship Application",
-                estimated_time: "3/10/2024",
+                estimated_time: "2/10/2024",
                 type: 'optional',
                 checked: false,
                 task_description: "",
@@ -309,7 +309,7 @@ export  const roadmapData = [
             },
             {
                 heading: "Fill out CSS Profile/ Scholarship Applications",
-                estimated_time: "10/8/2024",
+                estimated_time: "08/10/2024",
                 type: 'Require',
                 checked: false,
                 task_description: "",
@@ -360,7 +360,7 @@ export  const roadmapData = [
             },
             {
                 heading: "Book Appointment with Embassy",
-                estimated_time: "6/1/2025",
+                estimated_time: "01/06/2025",
                 type: 'Require',
                 checked: false,
                 task_description: "The embassy is typically very busy in the summer. Book your appointment early.",
