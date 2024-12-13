@@ -40,8 +40,8 @@ const budget = [
     label: "0 - 500M VND",
   },
   {
-    value: "0 - 760M VND",
-    label: "0 - 760M VND",
+    value: "0 - 750M VND",
+    label: "0 - 750M VND",
   },
 ];
 const grade = [

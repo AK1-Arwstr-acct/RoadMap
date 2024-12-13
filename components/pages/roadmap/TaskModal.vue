@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col gap-3 overflow-y-auto">
-            <div class="h-fit text-[#F3F3F3]" v-html="modalData.task_description" />
+            <div class="h-fit text-[#F3F3F3] flex flex-col gap-3 custom_style" v-html="modalData.task_description" />
           </div>
         </aside>
       </div>
@@ -68,3 +68,34 @@ defineProps({
 });
 
 </script>
+<style>
+/* .custom_style{
+} */
+.custom_style > ul{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: disc;
+  list-style-position: inside;
+  padding-left: 0;
+}
+.custom_style > ul > li {
+  text-indent: -25px;
+  padding-left: 25px;
+}
+
+.custom_style li > ul {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: '-';
+  list-style-position: outside;
+  padding-left: 0;
+}
+.custom_style li > ul > li {
+  padding-left: 30px;
+  isolation: isolate;
+}
+
+</style>

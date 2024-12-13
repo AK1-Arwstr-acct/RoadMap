@@ -81,7 +81,6 @@
               <td class="p-3 text-xs text-[#AEAEAE] font-medium">{{ task.estimated_time }}</td>
               <td class="p-3 flex justify-end">
                 <p
-                  v-if="task.task_description"
                   @click="handelModal(task)"
                   class="text-xs w-fit rounded-lg p-2 border border-[#686868] bg-[#383838] cursor-pointer"
                   :class="[
@@ -92,7 +91,6 @@
                 >
                   View detail
                 </p>
-                <span v-else>&nbsp;</span>
               </td>
             </tr>
           </tbody>

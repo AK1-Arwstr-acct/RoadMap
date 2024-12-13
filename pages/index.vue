@@ -28,7 +28,7 @@
             alt="Background Image"
           />
         </div>
-        <div class="w-full h-4 bg-gradient-to-r from-[#8380FF] to-[#ADB2FF]" />
+        <!-- <div class="w-full h-4 bg-gradient-to-r from-[#8380FF] to-[#ADB2FF]" /> -->
         <div class="pl-6 pt-[27px]">
           <NuxtImg
             class="w-[164px] invert"
