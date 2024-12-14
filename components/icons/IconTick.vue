@@ -1,7 +1,7 @@
 <template>
   <svg
-    width="20"
-    height="20"
+    :width="width"
+    :height="height"
     viewBox="0 0 20 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -17,6 +17,14 @@
 </template>
 <script setup lang="ts">
 defineProps({
+  height: {
+    type: String,
+    default: "20",
+  },
+  width: {
+    type: String,
+    default: "20",
+  },
   stroke: {
     type: String,
     default: "#DCDCDC",

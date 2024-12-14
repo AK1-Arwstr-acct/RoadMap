@@ -10,17 +10,19 @@
       ]"
     >
       <div
-        class="absolute top-3 right-3 size-[17px] flex justify-center items-center"
+        class="absolute top-3 right-3"
       >
-        <input
-          :id="option"
-          type="checkbox"
-          v-model="isChecked"
-          @change="handleChange"
-          class="appearance-none size-[17px] border-2 border-[#D9D9D9] checked:border-[#8380FF] rounded-[4px] checked:bg-[#8380FF]"
-        />
-        <div class="absolute inset-0 flex justify-center items-center">
-          <IconTick v-if="isChecked" class="size-3 -mb-0.5" stroke="#ffffff" strokeWidth="3" />
+        <div class="size-5 flex justify-center items-center relative">
+          <input
+            :id="option"
+            type="checkbox"
+            v-model="isChecked"
+            @change="handleChange"
+            class="appearance-none absolute inset-0 size-full border-2 border-[#D9D9D9] checked:border-[#8380FF] rounded-[4px] checked:bg-[#8380FF]"
+          />
+          <div class="absolute inset-0 flex justify-center items-center">
+            <IconTick v-if="isChecked" height="12" width="12" stroke="#ffffff" strokeWidth="3" />
+          </div>
         </div>
       </div>
       {{ option }}
