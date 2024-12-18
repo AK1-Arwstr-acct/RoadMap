@@ -7,9 +7,9 @@
       >
         <div class="flex justify-between items-center">
           <h1 class="text-2xl 2xl:text-3xl font-semibold">Roadmap</h1>
-          <!-- <div @click="isSideBar = !isSideBar" class="cursor-pointer">
+          <div @click="isSideBar = !isSideBar" class="cursor-pointer">
             <IconSideBar />
-          </div> -->
+          </div>
         </div>
         <OverviewCard />
         <!-- <ProfileCard /> -->
