@@ -1,6 +1,6 @@
 <template>
-  <section class="bg-[#1A1A1A] h-screen w-screen flex text-white">
-    <SideBar />
+  <section class="bg-[#1A1A1A] size-full flex text-white">
+    <SideBar class="hidden lg:block" />
     <div class="p-6 size-full space-y-9 overflow-y-auto">
       <div v-for="(data, idx) in appStore.DashboardData">
         <Accordion :key="idx" :data="data" @showTaskModal="(data)=>handelTaskModal(data)" />
@@ -17,6 +17,10 @@
   </Transition>
 </template>
 <script setup lang="ts">
+definePageMeta({
+  layout: "main-layout",
+});
+
 import TaskModal from "~/components/pages/roadmap/TaskModal.vue";
 import useAppStore from "~/stores/AppStore";
 

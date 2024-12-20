@@ -1,5 +1,7 @@
 <template>
-  <div class="relative h-screen flex justify-center items-center py-16 px-28">
+  <div
+    class="relative h-screen flex justify-center items-center py-12 px-16 lg:py-16 lg:px-28"
+  >
     <div class="fixed inset-0 -z-20">
       <NuxtImg
         src="/images/shared/background-image.png"
@@ -12,7 +14,7 @@
     >
       <!-- Left Side -->
       <div
-        class="w-1/2 h-full bg-[#14125C] rounded-l-2xl overflow-hidden text-[#F3F3F3] relative isolate flex flex-col"
+        class="w-1/2 h-full bg-[#14125C] rounded-l-2xl overflow-hidden text-[#F3F3F3] relative isolate hidden lg:flex flex-col"
       >
         <div class="absolute inset-0 -z-10">
           <NuxtImg
@@ -38,8 +40,24 @@
         </div>
         <div class="mt-6 flex-1 flex items-center px-6">
           <div class="w-full -mt-10">
-            <div class="py-1 px-2 rounded-full w-fit font-semibold" :class="[steps === 'profile_information' ? 'text-[#5C2C08] bg-[#FFAF38]' : steps === 'country_selection' ? 'text-[#07422A] bg-[#36C453]' : '']">
-              Question {{ steps === 'profile_information' ? '1' : steps === 'country_selection' ? '2' : '' }}
+            <div
+              class="py-1 px-2 rounded-full w-fit font-semibold"
+              :class="[
+                steps === 'profile_information'
+                  ? 'text-[#5C2C08] bg-[#FFAF38]'
+                  : steps === 'country_selection'
+                  ? 'text-[#07422A] bg-[#36C453]'
+                  : '',
+              ]"
+            >
+              Question
+              {{
+                steps === "profile_information"
+                  ? "1"
+                  : steps === "country_selection"
+                  ? "2"
+                  : ""
+              }}
             </div>
             <h1
               class="text-7xl leading-[80px] font-semibold"
@@ -50,16 +68,26 @@
       </div>
       <!-- Right side  -->
       <div
-        class="w-1/2 h-full pt-[42px] bg-[#1A1A1A] rounded-r-2xl overflow-hidden text-[#F3F3F3]"
+        class="w-full lg:w-1/2 h-full lg:pt-[42px] bg-[#1A1A1A] rounded-r-2xl rounded-l-2xl lg:rounded-l-none overflow-hidden text-[#F3F3F3]"
       >
-        <ProfileInformation
-          v-if="steps === 'profile_information'"
-          @onSubmit="updateProfileInfo"
-        />
-        <CountrySelection
-          v-else-if="steps === 'country_selection'"
-          @onSubmit="updateCountrySelection"
-        />
+        <div class="flex flex-col size-full">
+          <NuxtImg
+            class="w-[164px] invert lg:hidden p-6"
+            src="/images/logo/logo.svg"
+            alt="Logo"
+          />
+          <div class="flex-1">
+            <ProfileInformation
+              v-if="steps === 'profile_information'"
+              @onSubmit="updateProfileInfo"
+            />
+            <CountrySelection
+              v-else-if="steps === 'country_selection'"
+              @onSubmit="updateCountrySelection"
+            />
+
+          </div>
+        </div>
         <!-- <ProcessSelection v-else @onSubmit="updateProcessSelection" /> -->
       </div>
     </div>
@@ -87,12 +115,11 @@ const displayQuestion = computed(() => {
 });
 
 const updateProfileInfo = (data: ProfileInformationAnswers) => {
-  steps.value = 'country_selection';
+  steps.value = "country_selection";
   formData.value.budget = data.selectedBudget;
   formData.value.grade = data.selectedGrade;
 };
 const updateCountrySelection = (selectedCountries: string[]) => {
-  steps.value += 1;
   formData.value.countries = selectedCountries;
   sessionStorage.setItem("formData", JSON.stringify(formData.value));
   navigateTo("/roadmap");

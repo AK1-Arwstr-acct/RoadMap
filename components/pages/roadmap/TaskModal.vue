@@ -6,7 +6,7 @@
         class="h-full w-[607px] bg-[#292929] shadow-[-4px_6px_12px_0px_rgba(0,0,0,0.40)]"
       >
         <aside class="size-full flex flex-col">
-          <div class="p-6 border-b border-[#686868] flex flex-col gap-3">
+          <div class="p-6 flex flex-col gap-3">
             <!-- icons -->
             <div class="flex gap-3 items-center">
               <div @click="emit('close')" class="cursor-pointer">
@@ -28,10 +28,14 @@
                   <div
                     class="absolute inset-0 flex justify-center items-center"
                   >
-                    <IconTick v-if="modalData.checked" class="size-5" stroke="#292929" />
+                    <IconTick
+                      v-if="modalData.checked"
+                      class="size-5"
+                      stroke="#292929"
+                    />
                   </div>
                 </div>
-                {{modalData.heading}}
+                {{ modalData.heading }}
               </label>
             </div>
             <!-- dates -->
@@ -48,9 +52,70 @@
                 </div>
               </div>
             </div>
+            <div v-if="modalData.cta" >
+              <NuxtLink
+                target="_blank"
+                :to="modalData.cta.link"
+                class="text-[#F3F3F3] p-2 text-xs font-medium cursor-pointer bg-[#8380FF] rounded-lg w-fit flex gap-2 items-center"
+              >
+                {{ modalData.cta.label }}
+                <IconArrowRight />
+              </NuxtLink>
+            </div>
+            <div>
+              <label class="font-medium text-[#E2E6FF]">Result</label>
+              <input
+                name="result"
+                type="text"
+                placeholder="Enter your type"
+                class="mt-1 bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#C5C5C5] py-2 w-full outline-none text-white"
+              />
+            </div>
+          </div>
+          <div
+            class="px-6 border-b border-[#383838] flex items-center font-medium"
+          >
+            <div
+              class="p-2 cursor-pointer transition-all ease-in-out duration-200"
+              @click="tabView = 'overView'"
+              :class="[
+                tabView === 'overView' ? 'text-[#8380FF]' : 'text-[#F3F3F3]',
+              ]"
+            >
+              Overview
+            </div>
+            <div
+              class="p-1 cursor-pointer transition-all ease-in-out duration-200"
+              @click="tabView = 'notes'"
+              :class="[
+                tabView === 'notes' ? 'text-[#8380FF]' : 'text-[#F3F3F3]',
+              ]"
+            >
+              Notes
+            </div>
           </div>
           <div class="p-6 flex-1 flex flex-col gap-3 overflow-y-auto">
-            <div class="h-fit text-[#F3F3F3] flex flex-col gap-3 custom_style" v-html="modalData.task_description" />
+            <Transition name="slide">
+              <div v-if="tabView === 'overView'" class="size-full">
+                <ClientOnly>
+                  <vue-markdown
+                    :source="modalData.task_description || ''"
+                    :options="options"
+                    class="h-fit text-[#F3F3F3] flex flex-col gap-3 pb-6"
+                  />
+                </ClientOnly>
+              </div>
+              <div v-else>
+                <div>
+                  <input
+                    name=""
+                    type="text"
+                    placeholder="Enter Notes"
+                    class="mt-1 bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#C5C5C5] py-2 w-full outline-none text-white"
+                  />
+                </div>
+              </div>
+            </Transition>
           </div>
         </aside>
       </div>
@@ -67,35 +132,31 @@ defineProps({
   },
 });
 
+const tabView = ref<"overView" | "notes">("overView");
+
+const options = {
+  html: true,
+};
 </script>
 <style>
-/* .custom_style{
-} */
-.custom_style > ul{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  list-style: disc;
-  list-style-position: inside;
-  padding-left: 0;
-}
-.custom_style > ul > li {
-  text-indent: -25px;
-  padding-left: 25px;
+/* transition style */
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 300ms;
+  transform: all 300ms;
 }
 
-.custom_style li > ul {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  list-style: '-';
-  list-style-position: outside;
-  padding-left: 0;
-}
-.custom_style li > ul > li {
-  padding-left: 30px;
-  isolation: isolate;
+.slide-enter-from {
+  opacity: 0;
 }
 
+.slide-leave-to {
+  display: none;
+}
+
+.slide-enter-to,
+.slide-leave-from {
+  opacity: 1;
+}
 </style>
