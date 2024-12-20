@@ -1,6 +1,6 @@
 <template>
   <section class="bg-[#1A1A1A] size-full flex text-white">
-    <UserSideBar />
+    <UserSideBar class="hidden lg:block" />
     <div class="p-6 size-full space-y-9 overflow-y-auto">
       <ScoreSection />
       <GoalsSection />
