@@ -62,7 +62,7 @@
                 <IconArrowRight />
               </NuxtLink>
             </div>
-            <div>
+            <!-- <div>
               <label class="font-medium text-[#E2E6FF]">Result</label>
               <input
                 name="result"
@@ -70,7 +70,7 @@
                 placeholder="Enter your type"
                 class="mt-1 bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#C5C5C5] py-2 w-full outline-none text-white"
               />
-            </div>
+            </div> -->
           </div>
           <div
             class="px-6 border-b border-[#383838] flex items-center font-medium"
