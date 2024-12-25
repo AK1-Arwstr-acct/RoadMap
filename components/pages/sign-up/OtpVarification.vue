@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8 mt-12">
+  <div class="flex flex-col gap-8 mt-10">
     <div>
       <div class="mb-8 md:mb-6">
         <p class="text-[#AEAEAE] mb-3">
@@ -11,7 +11,7 @@
           >
         </p>
         <h1
-          class="text-6xl lg:text-[72px] md:leading-[80px] font-semibold mb-3 text-white"
+          class="text-5xl md:text-6xl font-semibold mb-3 text-white"
         >
           <span class="text-[#7975FF]">OTP</span> <br />
           Verification

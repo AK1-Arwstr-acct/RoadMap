@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-6 w-full">
       <div>
         <h1
-          class="text-6xl md:text-[72px] md:leading-[80px] text-[#9C99FF] font-semibold mb-3"
+          class="text-5xl md:text-6xl text-[#9C99FF] font-semibold mb-3"
         >
           Sign up
         </h1>

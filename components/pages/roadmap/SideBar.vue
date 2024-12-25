@@ -32,13 +32,20 @@ const isSideBar = ref<boolean>(true);
 <style scoped>
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 400ms;
-  transform: all 400ms;
+  transition: all 300ms;
+  transform: all 300ms;
 }
 
 .slide-enter-from,
 .slide-leave-to {
+  opacity: 0;
   transform: translateX(-100%);
+}
+
+.slide-enter-to,
+.slide-leave-from {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .fade-enter-active,

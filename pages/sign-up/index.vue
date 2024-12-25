@@ -1,6 +1,7 @@
 <template>
   <div
-    class="relative h-screen flex justify-center items-center py-12 px-5 lg:py-16 lg:px-28"
+    class="relative h-screen flex justify-center py-8 px-5 lg:px-28 overflow-y-auto no-scrollbar"
+    :class="{'items-center': windowHeight}"
   >
     <div class="fixed inset-0 -z-20">
       <NuxtImg
@@ -10,36 +11,39 @@
       />
     </div>
     <div
-      class="bgGradient size-auto h-full max-h-[800px] w-[1200px] p-0.5 rounded-2xl flex"
+      class="bgGradient size-auto min-h-fit h-full max-h-[800px] w-[1200px] p-0.5 rounded-2xl flex"
     >
       <!-- Left Side -->
-      <div
-        class="w-full lg:w-1/2 bg-[#1A1A1A] rounded-l-2xl rounded-r-2xl lg:rounded-r-none overflow-hidden p-6 flex flex-col gap-6"
-      >
-        <div>
-          <NuxtImg
-            class="w-[164px] invert"
-            src="/images/logo/logo.svg"
-            alt="Logo"
-          />
-        </div>
-        <div class="flex-1 overflow-y-auto no-scrollbar">
-          <!-- steps -->
-          <PhoneNumber
-            v-if="steps === 'enter_phoneNumber'"
-            @setPhoneNumber="(value)=>setPhoneNumber(value)"
-            @setSelectedOption="(value)=>setSelectedOption(value)"
-          />
-          <OtpVarification
-            v-else-if="steps === 'otp_varification'"
-            :phoneNumber="phoneNumber"
-            :selectedOption="selectedOption"
-            @goBack="steps = 'enter_phoneNumber'"
-            @OtpConfirm="OtpConfirm"
-          />
-          <CreateAccount v-else />
-        </div>
-      </div>
+       <div class="w-full lg:w-1/2 h-full min-h-fit bg-[#1A1A1A] rounded-l-2xl rounded-r-2xl lg:rounded-r-none overflow-hidden" >
+         <div
+           class="w-full p-6 flex flex-col gap-6"
+           :class="[steps === 'enter_phoneNumber' ? 'h-full' : ' h-fit']"
+         >
+           <div>
+             <NuxtImg
+               class="w-[164px] invert"
+               src="/images/logo/logo.svg"
+               alt="Logo"
+             />
+           </div>
+           <div class="flex-1">
+             <!-- steps -->
+             <PhoneNumber
+               v-if="steps === 'enter_phoneNumber'"
+               @setPhoneNumber="(value)=>setPhoneNumber(value)"
+               @setSelectedOption="(value)=>setSelectedOption(value)"
+             />
+             <OtpVarification
+               v-else-if="steps === 'otp_varification'"
+               :phoneNumber="phoneNumber"
+               :selectedOption="selectedOption"
+               @goBack="steps = 'enter_phoneNumber'"
+               @OtpConfirm="OtpConfirm"
+             />
+             <CreateAccount :phoneNumber="phoneNumberWithCode" v-else />
+           </div>
+         </div>
+       </div>
       <!-- Right side  -->
       <div class="hidden lg:block lg:w-1/2 rounded-r-2xl overflow-hidden">
         <RightSideInformation />
@@ -55,6 +59,15 @@ const steps = ref<"enter_phoneNumber" | "otp_varification" | "create_account">(
 );
 const selectedOption = ref<Country>();
 const phoneNumber = ref<string>("");
+const height = ref<number>(0);
+
+const windowHeight = computed(() => {
+  return height.value > 830;
+});
+
+const phoneNumberWithCode = computed(() => {
+  return `${selectedOption.value?.phone_code}${phoneNumber.value}`;
+});
 
 const setSelectedOption = (selectedCountry: Country) => {
   selectedOption.value = selectedCountry;
@@ -66,6 +79,21 @@ const setPhoneNumber = (Number: string) => {
 const OtpConfirm = () => {
   steps.value = "create_account";
 };
+
+const windowSize = () => {
+  if (typeof window !== "undefined") {
+    height.value = window.innerHeight;
+  }
+};
+
+onMounted(() => {
+  windowSize();
+  window.addEventListener("resize", windowSize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", windowSize);
+});
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative h-screen flex justify-center items-center py-12 px-5 lg:py-16 lg:px-28"
+    class="relative h-screen flex justify-center items-center py-8 px-5 lg:px-28"
   >
     <div class="fixed inset-0 -z-20">
       <NuxtImg
