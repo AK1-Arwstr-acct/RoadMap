@@ -117,7 +117,7 @@
         </button>
         <p class="text-white text-center mt-3">
           Already have account?
-          <NuxtLink to="/log-in" class="text-[#8380FF] cursor-pointer">Log in</NuxtLink>
+          <NuxtLink to="/login" class="text-[#8380FF] cursor-pointer">Log in</NuxtLink>
         </p>
       </div>
     </div>
