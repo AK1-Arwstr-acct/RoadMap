@@ -9,7 +9,7 @@
             v-for="(item, idx) in options"
             :key="idx"
             :option="item"
-            :checked="selectedOptions.includes(item)"
+            :checked="isChecked(item)"
             @change="updateSelection(item)"
             class="w-[31%] h-36"
           />
@@ -47,6 +47,11 @@ const options = [
 ];
 const selectedOptions = ref<String[]>([]);
 
+ const isChecked = (option: string) => {
+  const countriesName = option.replace(/ /g, '_').toLowerCase();
+   return selectedOptions.value.includes(countriesName);
+};
+
 const updateSelection = (option: string) => {
   const countriesName = option.replace(/ /g, '_').toLowerCase();
   if (selectedOptions.value.includes(countriesName)) {
@@ -61,4 +66,11 @@ const updateSelection = (option: string) => {
 const submit = () => {
   emit("onSubmit", selectedOptions.value);
 };
+
+onMounted(() => {
+  const userData = JSON.parse(sessionStorage.getItem("formData")!);
+  if (userData) {
+    selectedOptions.value = userData.countries;
+  }
+});
 </script>

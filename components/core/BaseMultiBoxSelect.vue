@@ -48,4 +48,11 @@ const isChecked = ref<boolean>(props.checked);
 const handleChange = () => {
   emit("change");
 };
+
+watch(
+  () => props.checked,
+  (value) => {
+    isChecked.value = value;
+  }
+);
 </script>

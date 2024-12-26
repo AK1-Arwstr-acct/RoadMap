@@ -98,15 +98,18 @@
           </div>
         </div>
         <div>
-          <div>
+          <div class="remove-shadow">
             <label class="uppercase font-medium text-[#E2E6FF]">PASSWORD</label>
             <div class="relative">
               <input
                 name="userName"
-                type="password"
+                :type="isPassword ? 'password' : 'text'"
                 v-model="password"
                 class="bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#E1E1E1] py-2 w-full outline-none focus:border-[#8380FF] transition-all ease-in-out duration-150 appearance-none text-white"
               />
+              <div @click="isPassword = !isPassword" class="absolute right-0 top-1/2 transform -translate-y-1/2 cursor-pointer py-1 pl-1">
+              <IconCloseEye />
+            </div>
             </div>
           </div>
         </div>
@@ -142,6 +145,7 @@ const emits = defineEmits(["setPhoneNumber", "setSelectedOption"]);
 
 const { api } = useApi();
 
+const isPassword = ref<boolean>(true);
 const isDropdownOpen = ref<boolean>(false);
 const selectedOption = ref<Country | null>(null);
 const countryOptions = ref<Country[]>([]);

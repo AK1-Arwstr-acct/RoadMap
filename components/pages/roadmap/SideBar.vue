@@ -15,47 +15,35 @@
         <!-- <ProfileCard /> -->
       </div>
     </Transition>
-    <Transition name="fade">
-      <div
-        v-if="!isSideBar"
-        @click="isSideBar = !isSideBar"
-        class="bg-[#292929] size-fit p-3 rounded-lg mt-3 ml-3"
-      >
-        <IconSideBar />
-      </div>
-    </Transition>
+    <div
+      v-if="!isSideBar"
+      @click="isSideBar = !isSideBar"
+      class="bg-[#292929] size-fit p-3 rounded-lg mt-6 ml-3"
+    >
+      <IconSideBar />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 const isSideBar = ref<boolean>(true);
 </script>
-<style scoped>
+<style>
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 300ms;
-  transform: all 300ms;
+  transition: all 900ms ease-in-out;
 }
 
 .slide-enter-from,
 .slide-leave-to {
-  opacity: 0;
   transform: translateX(-100%);
+  /* width: 0px; */
+  /* opacity: 0; */
 }
 
 .slide-enter-to,
 .slide-leave-from {
-  opacity: 1;
   transform: translateX(0);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 300ms;
-  transform: all 300ms;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+  /* width: 100%; */
+  /* opacity: 1; */
 }
 </style>

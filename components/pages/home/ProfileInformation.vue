@@ -66,4 +66,12 @@ const continueBtnDisabled = computed(() => {
 const submit = () => {
     emit('onSubmit', answers.value)
 }
+
+onMounted(() => {
+  const userData = JSON.parse(sessionStorage.getItem("formData")!);
+  if (userData) {
+    answers.value.selectedBudget = userData.budget;
+    answers.value.selectedGrade = userData.grade;
+  }
+});
 </script>
