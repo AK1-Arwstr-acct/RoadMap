@@ -7,7 +7,7 @@
       </div>
     </div>
   </section>
-  <Transition name="slide">
+  <Transition name="slideModal">
     <component
       v-if="taskModal"
       :is="TaskModal"
@@ -43,20 +43,20 @@ onMounted(()=>{
 })
 </script>
 <style scoped>
-.slide-enter-active,
-.slide-leave-active {
+.slideModal-enter-active,
+.slideModal-leave-active {
   transition: all 300ms;
   transform: all 300ms;
 }
 
-.slide-enter-from,
-.slide-leave-to {
+.slideModal-enter-from,
+.slideModal-leave-to {
   opacity: 0;
   transform: translateX(100%);
 }
 
-.slide-enter-to,
-.slide-leave-from {
+.slideModal-enter-to,
+.slideModal-leave-from {
   opacity: 1;
   transform: translateX(0);
 }

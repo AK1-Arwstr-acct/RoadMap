@@ -29,11 +29,17 @@
             class="size-full object-cover object-left-bottom"
             alt="Background Image"
           />
+          <NuxtImg
+            v-else
+            src="/images/shared/gradient-bg-blue.png"
+            class="size-full object-cover object-left-bottom"
+            alt="Background Image"
+          />
         </div>
         <!-- <div class="w-full h-4 bg-gradient-to-r from-[#8380FF] to-[#ADB2FF]" /> -->
         <div class="pl-6 pt-[27px]">
           <NuxtImg
-            class="w-[164px] invert"
+            class="w-[164px]"
             src="/images/logo/logo.svg"
             alt="Logo"
           />
@@ -47,7 +53,7 @@
                   ? 'text-[#5C2C08] bg-[#FFAF38]'
                   : steps === 'country_selection'
                   ? 'text-[#07422A] bg-[#36C453]'
-                  : '',
+                  : 'text-[#0E265C] bg-[#63B3FF]',
               ]"
             >
               Question
@@ -56,7 +62,7 @@
                   ? "1"
                   : steps === "country_selection"
                   ? "2"
-                  : ""
+                  : "3"
               }}
             </div>
             <h1
@@ -72,7 +78,7 @@
       >
         <div class="flex flex-col size-full">
           <NuxtImg
-            class="w-[164px] invert lg:hidden p-6"
+            class="w-[164px] lg:hidden p-6"
             src="/images/logo/logo.svg"
             alt="Logo"
           />
@@ -85,10 +91,9 @@
               v-else-if="steps === 'country_selection'"
               @onSubmit="updateCountrySelection"
             />
-
+            <ProcessSelection v-else @onSubmit="updateProcessSelection" />
           </div>
         </div>
-        <!-- <ProcessSelection v-else @onSubmit="updateProcessSelection" /> -->
       </div>
     </div>
   </div>
@@ -97,13 +102,16 @@
 import type { ProfileInformationAnswers } from "~/components/pages/home/ProfileInformation.vue";
 import type { FormData } from "~/types/home";
 
-const steps = ref<"profile_information" | "country_selection">(
+const steps = ref<"profile_information" | "country_selection" | "your_process">(
   "profile_information"
 );
 const formData = ref<FormData>({
   budget: null,
   grade: null,
+  gpa: null,
+  ielts: null,
   countries: [],
+  process: "",
 });
 
 const displayQuestion = computed(() => {
@@ -111,24 +119,27 @@ const displayQuestion = computed(() => {
     ? "Profile<br/>Information"
     : steps.value === "country_selection"
     ? "Select<br/>countries"
-    : "";
+    : "Your process";
 });
 
 const updateProfileInfo = (data: ProfileInformationAnswers) => {
   steps.value = "country_selection";
   formData.value.budget = data.selectedBudget;
   formData.value.grade = data.selectedGrade;
+  formData.value.ielts = data.ielts;
+  formData.value.gpa = data.gpa;
 };
 const updateCountrySelection = (selectedCountries: string[]) => {
+  steps.value = "your_process";
   formData.value.countries = selectedCountries;
-  sessionStorage.setItem("formData", JSON.stringify(formData.value));
-  navigateTo("/roadmap");
+  // sessionStorage.setItem("formData", JSON.stringify(formData.value));
+  // navigateTo("/roadmap");
 };
-// const updateProcessSelection = (item: string) => {
-//   formData.value.process = item;
-//   sessionStorage.setItem("formData", JSON.stringify(formData.value));
-//   navigateTo("/roadmap");
-// };
+ const updateProcessSelection = (item: string) => {
+   formData.value.process = item;
+   sessionStorage.setItem("formData", JSON.stringify(formData.value));
+   navigateTo("/roadmap");
+ };
 </script>
 <style scoped>
 .bgGradient {

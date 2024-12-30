@@ -1,7 +1,7 @@
 <template>
   <div
     class="relative h-screen flex justify-center py-8 px-5 lg:px-28 overflow-y-auto no-scrollbar"
-    :class="{'items-center': windowHeight}"
+    :class="{ 'items-center': windowHeight }"
   >
     <div class="fixed inset-0 -z-20">
       <NuxtImg
@@ -17,29 +17,37 @@
       <div
         class="w-full min-h-fit h-full lg:w-1/2 bg-[#1A1A1A] rounded-l-2xl rounded-r-2xl lg:rounded-r-none"
       >
-        <div class="w-full p-6 flex flex-col" :class="[windowHeight ? 'h-full': steps === 'log_in' ? 'h-fit gap-16' : 'h-fit']">
+        <div
+          class="w-full p-6 flex flex-col"
+          :class="[
+            windowHeight
+              ? 'h-full'
+              : steps === 'log_in'
+              ? 'h-fit gap-16'
+              : 'h-fit gap-20',
+          ]"
+        >
           <div>
             <NuxtImg
-              class="w-[164px] invert"
+              class="w-[164px]"
               src="/images/logo/logo.svg"
               alt="Logo"
             />
           </div>
           <div class="flex-1">
             <!-- steps -->
-            <LogInByPhoneNumber
+            <LogInByEmail
               v-if="steps === 'log_in'"
-              @setPhoneNumber="(value) => setPhoneNumber(value)"
-              @setSelectedOption="(value) => setSelectedOption(value)"
+              @login="(value) => login(value)"
+              @reset="(value) => reset(value)"
             />
             <RecoverPassword
-              v-else-if="steps === 'otp_varification'"
-              :phoneNumber="phoneNumber"
-              :selectedOption="selectedOption"
+              v-else-if="steps === 'recover_password'"
+              :email="userData.email"
               @goBack="steps = 'log_in'"
-              @OtpConfirm="OtpConfirm"
+              @recoverPassword = "steps = 'reset_password'"
             />
-            <ResetPassword v-else @newPassword="steps = 'log_in'" />
+            <ResetPassword v-else @newPassword="steps = 'log_in'"  :email="userData.email" />
           </div>
         </div>
       </div>
@@ -51,26 +59,29 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Country } from "~/types/signUp";
+interface UserData {
+  email: string;
+  password: string;
+}
 
-const steps = ref<"log_in" | "otp_varification" | "reset_password">("log_in");
-const selectedOption = ref<Country>();
-const phoneNumber = ref<string>("");
+const userData = ref<UserData>({
+  email: "",
+  password: "",
+});
+const steps = ref<"log_in" | "recover_password" | "reset_password">("log_in");
 const height = ref<number>(0);
 
 const windowHeight = computed(() => {
   return height.value > 830;
 });
 
-const setSelectedOption = (selectedCountry: Country) => {
-  selectedOption.value = selectedCountry;
+const login = (data: UserData) => {
+  userData.value = data;
+  navigateTo("ai-introduction");
 };
-const setPhoneNumber = (Number: string) => {
-  phoneNumber.value = Number;
-  steps.value = "otp_varification";
-};
-const OtpConfirm = () => {
-  steps.value = "reset_password";
+const reset = (email: string) => {
+  userData.value.email = email;
+  steps.value = "recover_password";
 };
 
 const windowSize = () => {

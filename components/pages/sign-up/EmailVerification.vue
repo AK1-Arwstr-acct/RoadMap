@@ -1,19 +1,16 @@
 <template>
-  <div class="flex flex-col h-full justify-center gap-8">
+  <div class="flex flex-col justify-center h-full">
     <div class="flex flex-col gap-4">
       <p class="text-[#AEAEAE]">
-        Wrong email?
+        Wrong email ?
         <span
           class="text-[#9CA2FF] underline cursor-pointer"
           @click="emits('goBack')"
           >Go back</span
         >
       </p>
-      <h1
-        class="text-5xl lg:text-6xl font-semibold text-white"
-      >
-        <span class="text-[#7975FF]">Password</span> <br />
-        Recovery
+      <h1 class="text-5xl md:text-6xl font-semibold text-white">
+        Verify email
       </h1>
       <p class="text-[#AEAEAE]">
         We sent an verification link to <br class="lg:hidden" />
@@ -28,18 +25,16 @@
   </div>
 </template>
 <script setup lang="ts">
-const emits = defineEmits(["goBack", "recoverPassword"]);
 
-defineProps({
+const props = defineProps({
   email: {
     type: String,
   },
 });
 
+const emits = defineEmits<{
+  (e: "goBack"): void;
+}>();
 
-onMounted(() => {
-  setTimeout(() => {
-    emits("recoverPassword");
-  }, 3000);
-});
+const { api } = useApi();
 </script>

@@ -49,7 +49,7 @@
       </p>
     </div>
     </div>
-    <Transition name="fade">
+    <Transition name="fadeDropdown">
       <div v-if="isDropdown" :class="{ 'pointer-events-none': data?.disable }">
         <table class="w-full divide-y divide-[#383838]">
           <thead class="">
@@ -144,15 +144,14 @@ watch(
 );
 </script>
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 200ms;
-  transform: all 200ms;
+.fadeDropdown-enter-active,
+.fadeDropdown-leave-active {
+  transition: all 200ms ease-in-out;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+.fadeDropdown-enter-from,
+.fadeDropdown-leave-to {
   height: 0px;
+  opacity: 0;
 }
 </style>

@@ -11,7 +11,7 @@ export const roadmapData = [
                 estimated_time: '30/6/2024',
                 type: 'optional',
                 checked: false,
-                task_description: `<ul class="flex flex-col gap-1 list-inside list-disc pl-6"><li class="-indent-6 pl-0.5">One of the most important elements of a compelling college application is authentic self-reflection. The ability to understand and convey your true identity shapes every aspect of your application.</li><li class="-indent-6 pl-0.5">This test serves as a starting point for deeper self-exploration. Rather than accepting the results at face value, use them as a catalyst to examine who you are and what you aspire to achieve. These insights will not only strengthen your college applications but also guide your broader life journey.</li></ul>`,
+                task_description: `<ul class="flex flex-col gap-1 list-inside list-disc"><li class="-indent-6 pl-0.5">One of the most important elements of a compelling college application is authentic self-reflection. The ability to understand and convey your true identity shapes every aspect of your application.</li><li class="-indent-6 pl-0.5">This test serves as a starting point for deeper self-exploration. Rather than accepting the results at face value, use them as a catalyst to examine who you are and what you aspire to achieve. These insights will not only strengthen your college applications but also guide your broader life journey.</li></ul>`,
                 cta: {
                     label: "Take the test here",
                     link: "https://www.16personalities.com/"

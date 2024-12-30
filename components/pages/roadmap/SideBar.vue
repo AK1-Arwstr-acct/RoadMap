@@ -1,6 +1,6 @@
 <template>
   <div class="h-full">
-    <Transition name="slide">
+    <Transition name="slideBar">
       <div
         v-if="isSideBar"
         class="bg-[#292929] w-[376px] h-full p-6 flex flex-col gap-6"
@@ -28,22 +28,20 @@
 const isSideBar = ref<boolean>(true);
 </script>
 <style>
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 900ms ease-in-out;
+.slideBar-enter-active,
+.slideBar-leave-active {
+  transition: all 300ms ease-in-out;
 }
 
-.slide-enter-from,
-.slide-leave-to {
+.slideBar-enter-from,
+.slideBar-leave-to {
   transform: translateX(-100%);
-  /* width: 0px; */
-  /* opacity: 0; */
+  opacity: 0;
 }
 
-.slide-enter-to,
-.slide-leave-from {
+.slideBar-enter-to,
+.slideBar-leave-from {
   transform: translateX(0);
-  /* width: 100%; */
-  /* opacity: 1; */
+  opacity: 1;
 }
 </style>

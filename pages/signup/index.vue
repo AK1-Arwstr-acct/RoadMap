@@ -1,7 +1,7 @@
 <template>
   <div
     class="relative h-screen flex justify-center py-8 px-5 lg:px-28 overflow-y-auto no-scrollbar"
-    :class="{'items-center': windowHeight}"
+    :class="{ 'items-center': windowHeight }"
   >
     <div class="fixed inset-0 -z-20">
       <NuxtImg
@@ -14,36 +14,29 @@
       class="bgGradient size-auto min-h-fit h-full max-h-[800px] w-[1200px] p-0.5 rounded-2xl flex"
     >
       <!-- Left Side -->
-       <div class="w-full lg:w-1/2 h-full min-h-fit bg-[#1A1A1A] rounded-l-2xl rounded-r-2xl lg:rounded-r-none overflow-hidden" >
-         <div
-           class="w-full p-6 flex flex-col gap-6"
-           :class="[steps === 'enter_phoneNumber' ? 'h-full' : ' h-fit']"
-         >
-           <div>
-             <NuxtImg
-               class="w-[164px] invert"
-               src="/images/logo/logo.svg"
-               alt="Logo"
-             />
-           </div>
-           <div class="flex-1">
-             <!-- steps -->
-             <PhoneNumber
-               v-if="steps === 'enter_phoneNumber'"
-               @setPhoneNumber="(value)=>setPhoneNumber(value)"
-               @setSelectedOption="(value)=>setSelectedOption(value)"
-             />
-             <OtpVarification
-               v-else-if="steps === 'otp_varification'"
-               :phoneNumber="phoneNumber"
-               :selectedOption="selectedOption"
-               @goBack="steps = 'enter_phoneNumber'"
-               @OtpConfirm="OtpConfirm"
-             />
-             <CreateAccount :phoneNumber="phoneNumberWithCode" v-else />
-           </div>
-         </div>
-       </div>
+      <div
+        class="w-full lg:w-1/2 h-full min-h-fit bg-[#1A1A1A] rounded-l-2xl rounded-r-2xl lg:rounded-r-none overflow-hidden"
+      >
+        <div
+          class="w-full p-6 flex flex-col gap-6"
+          :class="[steps === 'email_varification' ? 'h-full' : ' h-fit']"
+        >
+          <div>
+            <NuxtImg
+              class="w-[164px]"
+              src="/images/logo/logo.svg"
+              alt="Logo"
+            />
+          </div>
+          <div class="flex-1">
+            <CreateAccount
+              v-if="steps === 'create_account'"
+              @updateStep="updateStep"
+            />
+            <EmailVerification v-else @goBack="goBack" :email="user.email" />
+          </div>
+        </div>
+      </div>
       <!-- Right side  -->
       <div class="hidden lg:block lg:w-1/2 rounded-r-2xl overflow-hidden">
         <RightSideInformation />
@@ -52,32 +45,21 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Country } from "~/types/signUp";
+const steps = ref<"create_account" | "email_varification">("create_account");
 
-const steps = ref<"enter_phoneNumber" | "otp_varification" | "create_account">(
-  "enter_phoneNumber"
-);
-const selectedOption = ref<Country>();
-const phoneNumber = ref<string>("");
 const height = ref<number>(0);
+const user = ref();
 
 const windowHeight = computed(() => {
   return height.value > 830;
 });
 
-const phoneNumberWithCode = computed(() => {
-  return `${selectedOption.value?.phone_code}${phoneNumber.value}`;
-});
-
-const setSelectedOption = (selectedCountry: Country) => {
-  selectedOption.value = selectedCountry;
-};
-const setPhoneNumber = (Number: string) => {
-  phoneNumber.value = Number;
-  steps.value = "otp_varification";
-};
-const OtpConfirm = () => {
+const goBack = () => {
   steps.value = "create_account";
+};
+const updateStep = (data) => {
+  user.value = data;
+  steps.value = "email_varification";
 };
 
 const windowSize = () => {

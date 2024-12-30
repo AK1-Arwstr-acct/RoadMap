@@ -4,7 +4,7 @@
   >
     <NuxtLink to="/">
       <NuxtImg
-        class="w-[164px] invert"
+        class="w-[164px]"
         src="/images/logo/logo.svg"
         alt="Logo"
       />

@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <p v-if="label" class="font-medium mb-1.5 text-[#E2E6FF]">{{ label }}</p>
+    <p v-if="label" class="font-medium text-[#E2E6FF]">{{ label }}</p>
     <div
       @click="isDropdownOpen = !isDropdownOpen"
       @touchstart.prevent="isDropdownOpen = !isDropdownOpen"

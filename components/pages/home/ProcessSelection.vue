@@ -42,4 +42,11 @@ const updateSelection = (option: string) => {
 const submit = () => {
   emit("onSubmit", selectedOption.value);
 };
+
+onMounted(() => {
+  const userData = JSON.parse(sessionStorage.getItem("formData")!);
+  if (userData) {
+    selectedOption.value = userData.process;
+  }
+});
 </script>
