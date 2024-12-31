@@ -1,32 +1,39 @@
 <template>
   <div class="size-full flex flex-col justify-center">
     <div
-      class="w-full p-6 h-20 flex-1 flex flex-col justify-center items-center"
+      class="w-full p-6 md:p-12 h-20 flex-1 flex flex-col gap-6 justify-center items-center"
     >
-      <div class="w-full flex gap-3 flex-wrap justify-center">
+      <div class="w-full flex flex-wrap justify-between">
         <BaseRadioBoxSelect
           v-for="(item, idx) in options"
           :key="idx"
           :option="item"
-          class="h-[160px] w-[31%]"
+          class="h-[160px] w-[32.4%]"
           :checked="selectedOption === item"
           @change="updateSelection(item)"
         />
       </div>
-    </div>
-    <div class="w-full p-6">
-      <button
-        @click="submit"
-        :disabled="selectedOption == null"
-        class="bg-[#8380FF] w-full rounded-lg font-semibold text-xl leading-6 py-3 disabled:opacity-50"
-      >
-        Continue
-      </button>
+      <div class="w-full flex gap-4 mt-12">
+        <button
+          @click="emit('backStep')"
+          class="text-[#8380FF] bg-transparent w-full rounded-lg font-semibold text-xl leading-6 py-3 flex justify-center items-center gap-2"
+        >
+          <IconArrowRight class="transform rotate-180" fill="#8380FF" />
+          Back
+        </button>
+        <button
+          @click="submit"
+          :disabled="selectedOption == null"
+          class="bg-[#8380FF] w-full rounded-lg font-semibold text-xl leading-6 py-3 disabled:opacity-50"
+        >
+          Continue
+        </button>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-const emit = defineEmits(["onSubmit"]);
+const emit = defineEmits(["onSubmit", "backStep"]);
 
 const options = [
   "Just getting started",

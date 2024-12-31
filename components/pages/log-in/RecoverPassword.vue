@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full justify-center gap-8">
+  <div class="flex flex-col h-full justify-center">
     <div class="flex flex-col gap-4">
       <p class="text-[#AEAEAE]">
         Wrong email?

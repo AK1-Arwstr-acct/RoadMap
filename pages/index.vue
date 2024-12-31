@@ -1,20 +1,9 @@
 <template>
-  <div
-    class="relative h-screen flex justify-center items-center py-8 px-5 lg:px-28"
-  >
-    <div class="fixed inset-0 -z-20">
-      <NuxtImg
-        src="/images/shared/background-image.png"
-        class="size-full object-cover"
-        alt="Background Image"
-      />
-    </div>
-    <div
-      class="bgGradient size-auto h-full max-h-[800px] w-[1200px] p-0.5 rounded-2xl flex"
-    >
+  <div class="h-screen w-screen overflow-x-hidden no-scrollbar">
+    <div class="size-full flex h-full min-h-fit">
       <!-- Left Side -->
       <div
-        class="w-1/2 h-full bg-[#14125C] rounded-l-2xl overflow-hidden text-[#F3F3F3] relative isolate hidden lg:flex flex-col"
+        class="w-1/2 min-h-full bg-[#14125C] text-[#F3F3F3] relative isolate hidden lg:flex flex-col"
       >
         <div class="absolute inset-0 -z-10">
           <NuxtImg
@@ -37,14 +26,10 @@
           />
         </div>
         <!-- <div class="w-full h-4 bg-gradient-to-r from-[#8380FF] to-[#ADB2FF]" /> -->
-        <div class="pl-6 pt-[27px]">
-          <NuxtImg
-            class="w-[164px]"
-            src="/images/logo/logo.svg"
-            alt="Logo"
-          />
+        <div class="pl-12 pt-8">
+          <NuxtImg class="w-[164px]" src="/images/logo/logo.svg" alt="Logo" />
         </div>
-        <div class="mt-6 flex-1 flex items-center px-6">
+        <div class="mt-6 flex-1 flex items-center px-12">
           <div class="w-full -mt-10">
             <div
               class="py-1 px-2 rounded-full w-fit font-semibold"
@@ -73,10 +58,8 @@
         </div>
       </div>
       <!-- Right side  -->
-      <div
-        class="w-full lg:w-1/2 h-full lg:pt-[42px] bg-[#1A1A1A] rounded-r-2xl rounded-l-2xl lg:rounded-l-none overflow-hidden text-[#F3F3F3]"
-      >
-        <div class="flex flex-col size-full">
+      <div class="w-full lg:w-1/2 h-full min-h-fit bg-[#1A1A1A] text-[#F3F3F3]">
+        <div class="flex flex-col w-full h-full min-h-fit">
           <NuxtImg
             class="w-[164px] lg:hidden p-6"
             src="/images/logo/logo.svg"
@@ -90,8 +73,9 @@
             <CountrySelection
               v-else-if="steps === 'country_selection'"
               @onSubmit="updateCountrySelection"
+              @backStep="backStep"
             />
-            <ProcessSelection v-else @onSubmit="updateProcessSelection" />
+            <ProcessSelection v-else @onSubmit="updateProcessSelection" @backStep="backStep" />
           </div>
         </div>
       </div>
@@ -108,7 +92,7 @@ const steps = ref<"profile_information" | "country_selection" | "your_process">(
 const formData = ref<FormData>({
   budget: null,
   grade: null,
-  gpa: null,
+  gpa: "",
   ielts: null,
   countries: [],
   process: "",
@@ -122,6 +106,14 @@ const displayQuestion = computed(() => {
     : "Your process";
 });
 
+const backStep = () => {
+  if (steps.value === "country_selection") {
+    steps.value = "profile_information";
+  } else if (steps.value === "your_process") {
+    steps.value = "country_selection";
+  }
+};
+
 const updateProfileInfo = (data: ProfileInformationAnswers) => {
   steps.value = "country_selection";
   formData.value.budget = data.selectedBudget;
@@ -132,14 +124,12 @@ const updateProfileInfo = (data: ProfileInformationAnswers) => {
 const updateCountrySelection = (selectedCountries: string[]) => {
   steps.value = "your_process";
   formData.value.countries = selectedCountries;
-  // sessionStorage.setItem("formData", JSON.stringify(formData.value));
-  // navigateTo("/roadmap");
 };
- const updateProcessSelection = (item: string) => {
-   formData.value.process = item;
-   sessionStorage.setItem("formData", JSON.stringify(formData.value));
-   navigateTo("/roadmap");
- };
+const updateProcessSelection = (item: string) => {
+  formData.value.process = item;
+  sessionStorage.setItem("formData", JSON.stringify(formData.value));
+  navigateTo("/roadmap");
+};
 </script>
 <style scoped>
 .bgGradient {

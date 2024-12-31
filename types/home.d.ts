@@ -7,7 +7,7 @@ interface OptionAttributes {
 interface FormData {
   budget: OptionAttributes | null;
   grade: OptionAttributes | null;
-  gpa: number | null;
+  gpa: String;
   ielts: String | null;
   countries: String[];
   process: String;

@@ -10,10 +10,10 @@
     class="bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[rgba(149,126,255)] via-[#6240FF] to-[#14125C] h-full overflow-hidden flex justify-center items-center"
   > -->
     <div
-      class="relative z-10 flex justify-center items-center gap-8 w-full p-6"
+      class="relative z-10 flex justify-center items-center gap-8 w-full p-12"
     >
       <div class="flex flex-col gap-6 w-full">
-        <div class="flex items-center gap-3 w-[90%]">
+        <div class="flex items-center gap-3 w-full pr-10">
           <div
             class="p-3 flex items-center gap-3 bg-[#211F7A] border border-white w-full rounded-2xl"
           >
@@ -34,7 +34,7 @@
             </div>
           </div>
         </div>
-        <div class="flex items-center gap-3 w-[90%] self-end">
+        <div class="flex items-center gap-3 self-end w-full pl-10">
           <div
             class="p-3 flex items-center gap-3 bg-[#211F7A] border border-white w-full rounded-2xl"
           >
@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="flex items-center gap-3 w-[90%]">
+        <div class="flex items-center gap-3 w-full pr-10">
           <div
             class="p-3 flex items-center gap-3 bg-[#211F7A] border border-white w-full rounded-2xl"
           >

@@ -1,25 +1,17 @@
 <template>
   <div
-    class="relative h-screen flex justify-center py-8 px-5 lg:px-28 overflow-y-auto no-scrollbar"
-    :class="{ 'items-center': windowHeight }"
+    class="h-screen w-screen overflow-x-hidden no-scrollbar"
   >
-    <div class="fixed inset-0 -z-20">
-      <NuxtImg
-        src="/images/shared/background-image.png"
-        class="size-full object-cover"
-        alt="Background Image"
-      />
-    </div>
     <div
-      class="bgGradient size-auto min-h-fit h-full max-h-[800px] w-[1200px] p-0.5 rounded-2xl flex"
+      class="size-full flex overflow-hidden min-h-fit"
     >
       <!-- Left Side -->
       <div
-        class="w-full lg:w-1/2 h-full min-h-fit bg-[#1A1A1A] rounded-l-2xl rounded-r-2xl lg:rounded-r-none overflow-hidden"
+        class="w-full lg:w-1/2 h-full min-h-fit bg-radial"
       >
         <div
-          class="w-full p-6 flex flex-col gap-6"
-          :class="[steps === 'email_varification' ? 'h-full' : ' h-fit']"
+          class="w-full p-6 md:p-12 flex flex-col h-full min-h-fit"
+          :class="[height > 700 ? 'gap-6' : 'gap-10']"
         >
           <div>
             <NuxtImg
@@ -79,16 +71,12 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.bgGradient {
+.bg-radial {
   background: radial-gradient(
-      68.44% 78.44% at 10% 141.23%,
-      #ffffff 17.18%,
-      rgba(57, 54, 178, 0) 100%
+      122.03% 137.69% at 74.31% 20.12%,
+      rgba(131, 128, 255, 0) 53.55%,
+      #8380ff 100%
     ),
-    radial-gradient(
-      97.99% 85.4% at 10% -15.14%,
-      rgba(255, 255, 255) 10.18%,
-      rgba(26, 26, 26, 0.3) 76.45%
-    );
+    var(--background-page-neutral, #111113);
 }
 </style>

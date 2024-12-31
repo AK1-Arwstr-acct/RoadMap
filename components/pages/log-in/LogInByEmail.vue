@@ -12,7 +12,7 @@
         </p>
       </div>
       <!-- input -->
-      <div class="flex flex-col gap-4 remove-shadow">
+      <div class="flex flex-col gap-6 remove-shadow">
         <div class="w-full">
           <label class="uppercase font-medium text-[#E2E6FF]">Your name</label>
           <input
@@ -55,7 +55,7 @@
         </button>
         <button
           type="submit"
-          class="cursor-pointer mt-4 disabled:opacity-70 w-full text-xl bg-white text-[#18191B] rounded-lg font-semibold py-3 flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
+          class="cursor-pointer mt-6 disabled:opacity-70 w-full text-xl bg-white text-[#18191B] rounded-lg font-semibold py-3 flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
         >
           <span>Sign up with Google Account</span>
           <img src="../../../public/images/googleIcon.png" alt="google" />
