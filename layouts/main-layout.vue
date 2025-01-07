@@ -1,7 +1,7 @@
 <template>
   <main>
     <Navebar />
-    <div class="h-[calc(100vh-76px)]">
+    <div class="h-[calc(100dvh-76px)] w-full">
       <slot />
     </div>
   </main>

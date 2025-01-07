@@ -1,6 +1,6 @@
 <template>
-  <div class="size-full flex flex-col justify-center">
-    <div class="w-full p-6 md:p-12 flex-1 flex flex-col justify-center gap-6">
+  <div class="size-full flex flex-col justify-center mt-16 lg:mt-0">
+    <div class="w-full p-6 lg:p-12 flex-1 flex flex-col lg:justify-center gap-6">
       <div class="w-full flex flex-col gap-6">
         <BaseSelectRadio
           label="ANNUAL TUITION BUDGET"
@@ -33,6 +33,7 @@
           <input
             name="ielts"
             type="text"
+            inputmode="decimal"
             v-model="answers.ielts"
             placeholder="N/A"
             class="mt-1 bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#E1E1E1] py-2 w-full outline-none focus:border-[#8380FF] transition-all ease-in-out duration-150 appearance-none text-white"
@@ -60,15 +61,21 @@ export interface ProfileInformationAnswers {
 }
 </script>
 <script setup lang="ts">
-import type { OptionAttributes } from "~/types/home";
+import type { OptionAttributes, FormData } from "~/types/home";
 
 const emit = defineEmits(["onSubmit"]);
 
+const props = defineProps({
+  formData: {
+    type: Object as PropType<FormData>,
+  },
+});
+
 const answers = ref<ProfileInformationAnswers>({
-  selectedBudget: null,
-  selectedGrade: null,
-  ielts: "",
-  gpa: "",
+  selectedBudget: props.formData?.budget || null,
+  selectedGrade: props.formData?.grade || null,
+  ielts: props.formData?.ielts || "",
+  gpa: props.formData?.gpa || "",
 });
 
 const budget = [
@@ -102,7 +109,9 @@ const grade = [
 
 const continueBtnDisabled = computed(() => {
   return !(
-    answers.value.selectedGrade != null && answers.value.selectedBudget != null
+    answers.value.selectedGrade != null &&
+    answers.value.selectedBudget != null &&
+    answers.value.gpa != ""
   );
 });
 
@@ -126,13 +135,13 @@ const submit = () => {
   emit("onSubmit", answers.value);
 };
 
-onMounted(() => {
-  const userData = JSON.parse(sessionStorage.getItem("formData")!);
-  if (userData) {
-    answers.value.selectedBudget = userData.budget;
-    answers.value.selectedGrade = userData.grade;
-    answers.value.ielts = userData.ielts;
-    answers.value.gpa = userData.gpa;
+watch(
+  () => props.formData,
+  () => {
+    answers.value.selectedBudget = props.formData?.budget || null,
+    answers.value.selectedGrade= props.formData?.grade || null,
+    answers.value.ielts= props.formData?.ielts || "",
+    answers.value.gpa= props.formData?.gpa || ""
   }
-});
+);
 </script>

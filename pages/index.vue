@@ -1,6 +1,6 @@
 <template>
-  <div class="h-screen w-screen overflow-x-hidden no-scrollbar">
-    <div class="size-full flex h-full min-h-fit">
+  <div class="h-[100dvh] w-full overflow-x-hidden no-scrollbar">
+    <div class="w-full flex h-[100dvh] lg:h-full min-h-fit">
       <!-- Left Side -->
       <div
         class="w-1/2 min-h-full bg-[#14125C] text-[#F3F3F3] relative isolate hidden lg:flex flex-col"
@@ -69,13 +69,22 @@
             <ProfileInformation
               v-if="steps === 'profile_information'"
               @onSubmit="updateProfileInfo"
+              :formData="formData"
             />
             <CountrySelection
               v-else-if="steps === 'country_selection'"
               @onSubmit="updateCountrySelection"
               @backStep="backStep"
+              @updateSelectedCounties = "updateSelectedCounties"
+              :selectedCounties="formData.countries"
             />
-            <ProcessSelection v-else @onSubmit="updateProcessSelection" @backStep="backStep" />
+            <ProcessSelection
+              v-else
+              @updateProcessSelection="updateProcessSelection"
+              @onSubmit="submitForm"
+              @backStep="backStep"
+              :selectedProcess="formData.process"
+            />
           </div>
         </div>
       </div>
@@ -125,11 +134,24 @@ const updateCountrySelection = (selectedCountries: string[]) => {
   steps.value = "your_process";
   formData.value.countries = selectedCountries;
 };
+const updateSelectedCounties = (selectedCountries: string[]) => {
+  formData.value.countries = selectedCountries;
+};
 const updateProcessSelection = (item: string) => {
   formData.value.process = item;
+};
+const submitForm = (item: string) => {
+  updateProcessSelection(item);
   sessionStorage.setItem("formData", JSON.stringify(formData.value));
   navigateTo("/roadmap");
 };
+
+onMounted(() => {
+  const userData = JSON.parse(sessionStorage.getItem("formData")!);
+  if (userData) {
+    formData.value = userData;
+  }
+});
 </script>
 <style scoped>
 .bgGradient {

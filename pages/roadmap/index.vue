@@ -1,27 +1,52 @@
 <template>
-  <section class="bg-[#1A1A1A] size-full flex text-white">
-    <div
-      class="hidden lg:block transition-all duration-500 ease-in-out overflow-hidden"
-      :class="isSideBar ? 'w-full max-w-[376px]' : 'w-0'"
-    >
-      <SideBar class="w-fit" :isSideBar="isSideBar" @toggleSideBar="toggleSideBar" />
+  <section
+    class="bg-[#111113] h-[100dvh] w-full overflow-hidden flex text-white"
+  >
+    <div class="hidden lg:block">
+      <SideBar @updateTab="updateTab" />
     </div>
-    <div
-      v-if="!isSideBar"
-      @click="isSideBar = !isSideBar"
-      class="bg-[#292929] size-fit p-3 rounded-lg mt-6 ml-3 cursor-pointer"
-    >
-      <IconSideBar />
-    </div>
-    <div class="flex">
-      <div class="p-6 size-full space-y-9 overflow-y-auto">
-        <div v-for="(data, idx) in appStore.DashboardData">
-          <Accordion
-            :key="idx"
-            :data="data"
-            @showTaskModal="(data) => handelTaskModal(data)"
-          />
-        </div>
+    <div class="flex-1 flex flex-col relative">
+      <div class="flex-1 overflow-y-auto">
+        <Transition name="fade">
+          <div
+            v-if="activeTab === 'home'"
+            class="flex-1 px-6 pb-6 pt-6 size-full space-y-8 overflow-y-auto"
+          >
+            <div v-if="infoPopup" class="bg-[#111113] sticky top-0 z-30">
+              <div
+                class="border border-[#63B3FF] bg-[#0E265C] rounded-lg flex gap-2 p-3"
+              >
+                <IconInfoCircle stroke="#63B3FF" />
+                <div class="flex-1">
+                  <h3 class="text-[#E2E6FF] font-semibold">
+                    Roadmap Generated!
+                  </h3>
+                  <p>
+                    The provided timeline is for estimation only - exact
+                    deadlines depend on schools so you should finish your school
+                    list early and contact your counselors for advice!
+                  </p>
+                </div>
+                <div @click="infoPopup = false" class="cursor-pointer">
+                  <IconCross />
+                </div>
+              </div>
+            </div>
+            <div v-for="(data, idx) in appStore.DashboardData">
+              <Accordion
+                :key="idx"
+                :data="data"
+                @showTaskModal="(data) => handelTaskModal(data)"
+              />
+            </div>
+          </div>
+          <div v-else-if="activeTab === 'user_profile'" class="size-full">
+            <ProfileTab />
+          </div>
+        </Transition>
+      </div>
+      <div v-if="activeTab !== 'user_profile'">
+        <AiBar />
       </div>
     </div>
   </section>
@@ -35,22 +60,17 @@
   </Transition>
 </template>
 <script setup lang="ts">
-definePageMeta({
-  layout: "main-layout",
-});
-
 import TaskModal from "~/components/pages/roadmap/TaskModal.vue";
 import useAppStore from "~/stores/AppStore";
 
 const appStore = useAppStore();
 
-const isSideBar = ref<boolean>(true);
+const activeTab = ref<
+  "home" | "school_finder" | "counselor_service" | "user_profile"
+>("home");
 const taskModal = ref<boolean>(false);
+const infoPopup = ref<boolean>(true);
 const modalData = ref({});
-
-const toggleSideBar = () => {
-  isSideBar.value = !isSideBar.value;
-};
 
 const handelTaskModal = (data) => {
   taskModal.value = !taskModal.value;
@@ -59,6 +79,9 @@ const handelTaskModal = (data) => {
 
 const closeModal = () => {
   taskModal.value = false;
+};
+const updateTab = (item) => {
+  activeTab.value = item;
 };
 
 onMounted(() => {
@@ -82,5 +105,20 @@ onMounted(() => {
 .slideModal-leave-from {
   opacity: 1;
   transform: translateX(0);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 300ms;
+  transform: all 300ms;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
 }
 </style>

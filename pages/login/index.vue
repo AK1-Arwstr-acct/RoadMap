@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-screen w-screen overflow-x-hidden no-scrollbar"
+    class="h-screen w-full overflow-x-hidden no-scrollbar"
   >
     <div
       class="size-full flex overflow-hidden min-h-fit"

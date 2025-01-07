@@ -1,9 +1,9 @@
 <template>
-  <div class="fixed inset-0 z-50 h-screen w-screen">
+  <div class="fixed inset-0 z-50 h-screen w-full">
     <div class="size-full flex justify-end">
       <div
         v-click-outside="() => emit('close')"
-        class="h-full w-[607px] bg-[#292929] shadow-[-4px_6px_12px_0px_rgba(0,0,0,0.40)]"
+        class="h-full w-[607px] bg-[#18191B] shadow-[-4px_6px_12px_0px_rgba(0,0,0,0.40)]"
       >
         <aside class="size-full flex flex-col">
           <div class="p-6 flex flex-col gap-3">
@@ -41,18 +41,25 @@
             <!-- dates -->
             <div class="text-xs font-medium flex items-center gap-6">
               <div class="w-fit">
-                <p class="text-[#AEAEAE]">Estimated deadline</p>
+                <p class="text-[#AEAEAE]">Ideal deadline</p>
                 <div class="flex items-center mt-1 gap-1">
                   <p
-                    class="text-[#5C2C08] w-fit py-1 px-2 bg-[#FFAF38] rounded"
+                    v-if="modalData.estimated_time"
+                    class="w-fit py-1 px-2 text-[#f7fdff] bg-[#272a2d] rounded"
                   >
                     {{ modalData.estimated_time }}
                   </p>
+                  <span
+                    v-else
+                    class="text-sm font-medium text-[#F7FDFF] bg-[#272A2D] p-1 rounded"
+                  >
+                    No due date
+                  </span>
                   <!-- <p class="text-[#FFAF38]">20 days left</p> -->
                 </div>
               </div>
             </div>
-            <div v-if="modalData.cta" >
+            <div v-if="modalData.cta">
               <NuxtLink
                 target="_blank"
                 :to="modalData.cta.link"
@@ -73,7 +80,7 @@
             </div> -->
           </div>
           <div
-            class="px-6 border-b border-[#383838] flex items-center font-medium"
+            class="px-6 border-b border-[#383838]/50 flex items-center font-medium"
           >
             <div
               class="p-2 cursor-pointer transition-all ease-in-out duration-200"
@@ -104,6 +111,22 @@
                     class="h-fit text-[#F3F3F3] flex flex-col gap-3 pb-6"
                   />
                 </ClientOnly>
+                <div class="mt-3 flex flex-col gap-1">
+                  <NuxtLink
+                    :to="resource.link"
+                    target="blank"
+                    v-for="(resource, idx) in modalData.resources"
+                    :key="idx"
+                    class="text-[#F3F3F3] bg-[#212225] py-2 pl-2 pr-2.5 rounded-lg flex items-center gap-2 w-fit"
+                  >
+                    <div v-if="resource.link">
+                      <IconGlobe width="18" height="18" />
+                    </div>
+                    <div>
+                      {{ resource.text }}
+                    </div>
+                  </NuxtLink>
+                </div>
               </div>
               <div v-else>
                 <div>

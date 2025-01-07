@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
-import { roadmapData } from "../utils/data"
+import { roadmapData, onboardingData } from "../utils/data"
 
 const useAppStore = defineStore("appStore", () => {
     const DashboardData = ref(roadmapData);
+    const onboardingViewData = ref(onboardingData);
 
     const chekCountry = () => {
         const data = sessionStorage.getItem('formData') || null
@@ -16,6 +17,7 @@ const useAppStore = defineStore("appStore", () => {
 
     return {
         DashboardData,
+        onboardingViewData,
         chekCountry
     }
 });

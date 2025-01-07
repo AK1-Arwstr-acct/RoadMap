@@ -19,18 +19,22 @@
             :option="item"
             :checked="isChecked(item)"
             @change="updateSelection(item)"
-            class="w-[31%] h-36"
+            class="w-[calc(50%-6px)] sm:w-[31%] h-36"
           />
         </div>
       </div>
-      <div class="w-full flex gap-4 mt-12">
-        <button
-          @click="emit('backStep')"
-          class="text-[#8380FF] bg-transparent w-full rounded-lg font-semibold text-xl leading-6 py-3 flex justify-center items-center gap-2"
+      <div class="w-full flex gap-4 lg:mt-12">
+        <div
+          class="text-[#8380FF] bg-transparent w-full flex justify-center rounded-lg font-semibold text-xl leading-6 py-3"
         >
-        <IconArrowRight class="transform rotate-180" fill="#8380FF" />
-          Back
-        </button>
+          <span
+            @click="goback"
+            class="flex justify-center items-center gap-2 cursor-pointer w-fit"
+          >
+            <IconArrowRight class="transform rotate-180" fill="#8380FF" />
+            Back
+          </span>
+        </div>
         <button
           @click="submit"
           :disabled="selectedOptions.length == 0"
@@ -43,7 +47,13 @@
   </div>
 </template>
 <script setup lang="ts">
-const emit = defineEmits(["onSubmit", "backStep"]);
+const emit = defineEmits(["onSubmit", "backStep", "updateSelectedCounties"]);
+
+const props = defineProps({
+  selectedCounties: {
+    type: Array as PropType<string[]>,
+  },
+});
 
 const options = [
   "United States",
@@ -52,7 +62,7 @@ const options = [
   "Europe",
   "Canada",
 ];
-const selectedOptions = ref<String[]>([]);
+const selectedOptions = ref<String[]>(props.selectedCounties || []);
 
 const isChecked = (option: string) => {
   const countriesName = option.replace(/ /g, "_").toLowerCase();
@@ -70,14 +80,19 @@ const updateSelection = (option: string) => {
   }
 };
 
+const goback = () => {
+  emit('backStep'),
+  emit('updateSelectedCounties', selectedOptions.value )
+}
+
 const submit = () => {
   emit("onSubmit", selectedOptions.value);
 };
 
-onMounted(() => {
-  const userData = JSON.parse(sessionStorage.getItem("formData")!);
-  if (userData) {
-    selectedOptions.value = userData.countries;
+watch(
+  () => props.selectedCounties,
+  () => {
+    selectedOptions.value = props.selectedCounties || [];
   }
-});
+);
 </script>

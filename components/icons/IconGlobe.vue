@@ -1,8 +1,8 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
+    :width="width"
+    :height="height"
     viewBox="0 0 16 16"
     fill="none"
   >
@@ -12,3 +12,15 @@
     />
   </svg>
 </template>
+<script setup lang="ts">
+defineProps({
+  width: {
+    type: String,
+    default: "16",
+  },
+  height: {
+    type: String,
+    default: "16",
+  },
+});
+</script>

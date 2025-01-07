@@ -1,96 +1,138 @@
 <template>
   <main
     ref="accordionWrapper"
-    class="bg-transparent rounded-xl overflow-hidden border border-[#383838] h-fit"
+    class="bg-transparent rounded-xl overflow-hidden border border-[#212225] h-fit w-full"
   >
     <div
       @click="isDropdown = !isDropdown"
-      class="bg-[#292929] p-3 cursor-pointer"
-      :class="{ 'border-b border-[#383838]': isDropdown }"
-    > 
-    <div class="flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <IconLock v-if="data?.disable" height="30" width="30" />
-        <h2
-          class="text-xl 2xl:text-2xl font-semibold"
-          :class="{ 'text-[#686868]': data?.disable }"
-        >
-          {{ data?.title }}
-        </h2>
-        <div class="flex items-center gap-2">
-          <div class="w-[260px] h-1.5 bg-[#383838]">
-            <div
-              v-if="!data?.disable"
-              class="bg-green-600 h-full transition-all ease-in-out duration-500"
-              :style="{ width: completedTask }"
-            />
-          </div>
-          <p
-            class="tracking-widest text-xl font-semibold"
+      class="bg-[#18191B] p-3 cursor-pointer"
+      :class="{ 'border-b border-[#212225]': isDropdown }"
+    >
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <IconLock v-if="data?.disable" height="30" width="30" />
+          <h2
+            class="text-sm md:text-xl 2xl:text-2xl font-semibold"
             :class="{ 'text-[#686868]': data?.disable }"
           >
-            {{ data?.tasks.filter((item) => item.checked).length }}/{{
-              data?.tasks.length
-            }}
-          </p>
+            {{ data?.title }}
+          </h2>
+          <div class="flex items-center gap-2">
+            <div
+              class="w-[100px] md:w-[260px] h-1.5 bg-[#383838] rounded-full overflow-hidden"
+            >
+              <div
+                v-if="!data?.disable"
+                class="bg-[#8380FF] h-full transition-all ease-in-out duration-500"
+                :style="{ width: completedTask }"
+              />
+            </div>
+            <p
+              class="tracking-widest text-xl font-semibold"
+              :class="{ 'text-[#686868]': data?.disable }"
+            >
+              {{ data?.tasks.filter((item) => item.checked).length }}/{{
+                data?.tasks.length
+              }}
+            </p>
+          </div>
+        </div>
+        <div>
+          <IconChevronDown
+            class="transform transition-all ease-in-out duration-200"
+            :class="{ 'rotate-180': isDropdown }"
+          />
         </div>
       </div>
-      <div>
-        <IconChevronDown
-          class="transform transition-all ease-in-out duration-200"
-          :class="{ 'rotate-180': isDropdown }"
-        />
-      </div>
-
-    </div>
-    <div v-if="data?.description" >
-      <p  class="text-[#AEAEAE] font-medium text-xs">
-        {{ data?.description }}
-      </p>
-    </div>
+      <!-- <div v-if="data?.description">
+        <p class="text-[#AEAEAE] font-medium text-xs">
+          {{ data?.description }}
+        </p>
+      </div> -->
     </div>
     <Transition name="fadeDropdown">
       <div v-if="isDropdown" :class="{ 'pointer-events-none': data?.disable }">
-        <table class="w-full divide-y divide-[#383838]">
-          <thead class="">
+        <table class="w-full divide-y divide-[#212225]">
+          <tbody class="divide-y divide-[#212225]">
             <tr
-              class="text-xs text-[#F3F3F3] font-medium divide-x divide-[#383838]"
+              v-for="task in data?.tasks"
+              @click="handelModal(task)"
+              class="cursor-pointer"
             >
-              <th class="w-[40%] text-lg 2xl:text-xl font-semibold text-start p-3">Task</th>
-              <th class="w-[40%] text-lg 2xl:text-xl text-start p-3">Estimated deadline</th>
-              <th class="w-[13%] text-start p-3" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-[#383838]">
-            <tr v-for="task in data?.tasks" class="divide-x divide-[#383838]">
-              <td class="p-3">
-                <div
-                  class="flex items-center gap-2 font-semibold"
+              <td class="p-3 w-[60%]">
+                <label
+                  @click.stop
+                  class="flex items-center gap-2 font-semibold cursor-pointer transition-all ease-in-out duration-200 w-fit relative z-20"
                   :class="[
-                    data?.disable
-                      ? 'text-[#686868]'
+                    task?.disable
+                      ? 'text-[#43484E]'
                       : task?.checked
-                      ? 'text-[#808080] line-through'
+                      ? 'text-[#8380FF] line-through'
                       : 'text-[#F3F3F3]',
                   ]"
                 >
-                  <IconLock v-if="data?.disable" />
+                  <div v-if="!task.disable" class="relative size-5">
+                    <input
+                      type="checkbox"
+                      :checked="task?.checked"
+                      v-model="task.checked"
+                      class="appearance-none size-full border-2 rounded border-white checked:bg-[#8380FF] checked:border-[#8380FF]"
+                    />
+                    <div
+                      class="absolute inset-0 flex justify-center items-center"
+                    >
+                      <IconTick
+                        v-if="task.checked"
+                        class="size-4"
+                        stroke="#111113"
+                      />
+                    </div>
+                  </div>
+                  <IconLock v-else />
                   {{ task.heading }}
-                </div>
+                </label>
               </td>
-              <td class="p-3 text-xs text-[#AEAEAE] font-medium">{{ task.estimated_time }}</td>
-              <td class="p-3 flex justify-end">
-                <p
-                  @click="handelModal(task)"
-                  class="text-xs w-fit rounded-lg p-2 border border-[#686868] bg-[#383838] cursor-pointer"
+              <td class="p-3 w-[20%] text-sm text-[#F3F3F3] font-medium">
+                <span
+                  v-if="task.category"
+                  class="p-1 rounded capitalize !leading-4"
                   :class="[
-                    data?.disable
-                      ? 'bg-transparent text-[#686868]'
-                      : 'bg-[#383838]',
+                    task.category === 'career' ||
+                    task.category === 'application'
+                      ? 'bg-[#FFAF38]/60'
+                      : task.category === 'academics'
+                      ? 'bg-[#FF7575]/60'
+                      : task.category === 'extracurricular' ||
+                        task.category === 'common app'
+                      ? 'bg-[#64DB71]/60'
+                      : task.category === 'school list'
+                      ? 'bg-[#9C99FF]/60'
+                      : task.category === 'finances'
+                      ? 'bg-[#8ACBFF]/60'
+                      : task.category === 'decision'
+                      ? 'bg-[#FF7575]/60'
+                      : task.category === 'Visa'
+                      ? 'bg-[#64DB71]/60'
+                      : 'bg-[#9C99FF]/60',
                   ]"
                 >
-                  View detail
+                  {{ task.category }}
+                </span>
+              </td>
+              <td
+                v-if="task.estimated_time"
+                class="p-3 w-[20%] text-sm text-[#f7fdff] font-medium"
+              >
+                <p class="p-1 rounded inline-block bg-[#272a2d]">
+                  {{ task.estimated_time }}
                 </p>
+              </td>
+              <td v-else class="p-3 w-[20%] text-sm text-[#f7fdff] font-medium">
+                <span
+                  class="text-sm font-medium text-[#F7FDFF] bg-[#272A2D] p-1 rounded"
+                >
+                  No due date
+                </span>
               </td>
             </tr>
           </tbody>
@@ -106,10 +148,14 @@ const props = defineProps({
   data: {
     type: Object,
   },
+  dropdown: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const accordionWrapper = ref<HTMLDivElement>();
-const isDropdown = ref<boolean>(false);
+const isDropdown = ref<boolean>(props.dropdown);
 
 const completedTask = computed(() => {
   let checkedTask = props.data?.tasks.filter((item) => item.checked).length;

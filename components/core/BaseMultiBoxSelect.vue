@@ -2,7 +2,7 @@
   <div class="size-full">
     <label
       :for="option"
-      class="flex items-center size-full text-xl font-semibold justify-center rounded-xl cursor-pointer relative text-[#F3F3F3] border-4 text-center"
+      class="flex items-center size-full lg:text-xl font-semibold justify-center rounded-xl cursor-pointer relative text-[#F3F3F3] border-4 text-center"
       :class="[
         !isChecked
           ? 'border-[#292929] bg-[#292929]'

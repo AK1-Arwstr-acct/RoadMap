@@ -7,10 +7,10 @@ interface OptionAttributes {
 interface FormData {
   budget: OptionAttributes | null;
   grade: OptionAttributes | null;
-  gpa: String;
-  ielts: String | null;
-  countries: String[];
-  process: String;
+  gpa: string;
+  ielts: string | null;
+  countries: string[];
+  process: string;
 }
 
 export { OptionAttributes, FormData }
