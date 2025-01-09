@@ -71,9 +71,10 @@
           @click="onSubmit"
           type="submit"
           :disabled="isDisable"
-          class="cursor-pointer disabled:opacity-70 w-full text-xl bg-[#8380FF] text-[#F3F3F3] rounded-lg font-semibold py-3 transition-all ease-in-out duration-200"
+          class="cursor-pointer disabled:opacity-70 w-full text-xl bg-[#8380FF] text-[#F3F3F3] rounded-lg font-semibold py-3 flex justify-center gap-2 transition-all ease-in-out duration-200"
         >
           Create Account
+          <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
         </button>
         <button
           type="submit"
@@ -93,48 +94,69 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
+import { useApi } from "~/composables/useApi";
+import { useToast } from "~/composables/useToast";
+import type { OptionAttributes } from "~/types/home";
+import type { SignUpForm } from "~/types/signUp";
+
 const emit = defineEmits(["updateStep"]);
+const { api } = useApi();
+const { showToast } = useToast();
 
-const props = defineProps({
-  phoneNumber: {
-    type: String,
-    default: "",
-  },
-});
-
-const answers = ref({
+const answers = ref<SignUpForm>({
   userName: "",
   selectedGrade: null,
   email: "",
   password: "",
 });
+const isSubmitting = ref<boolean>(false);
 const isPassword = ref<boolean>(true);
-
-const grade = [
-  {
-    value: "10",
-    label: "10",
-  },
-  {
-    value: "11",
-    label: "11",
-  },
-  {
-    value: "12",
-    label: "12",
-  },
-];
+const grade = ref<OptionAttributes[]>();
 
 const isDisable = computed(() => {
   return (
     !answers.value.userName ||
     !answers.value.selectedGrade ||
-    !answers.value.password ||
+    answers.value.password.length < 8 ||
     !answers.value.email
   );
 });
 
-const onSubmit = () => {
-  emit("updateStep", answers.value);
+const onSubmit = async () => {
+  try {
+    isSubmitting.value = true;
+    const response = await api.post("/v1/sign-up", {
+      name: answers.value.userName,
+      email: answers.value.email,
+      current_class_grade_id: Number(answers.value.selectedGrade?.value),
+      password: answers.value.password,
+    });
+    emit("updateStep", answers.value);
+  } catch (error) {
+    console.log(error.message);
+
+    if (axios.isAxiosError(error)) {
+      let errorMessage;
+      if (error.response?.data.errors) {
+        errorMessage = error.response?.data.errors.email[0];
+      } else errorMessage = error.message;
+      showToast(errorMessage, {
+        type: "warning",
+      });
+    }
+  } finally {
+    isSubmitting.value = false;
+  }
 };
+
+onBeforeMount(async () => {
+  const response = await api.get("/v1/sign-up/get-class-grades");
+  grade.value = response.data.data.map((item) => {
+    return {
+      value: `${item.id}`,
+      label: item.class_name,
+    };
+  });
+});
 </script>

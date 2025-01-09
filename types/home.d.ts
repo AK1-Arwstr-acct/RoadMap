@@ -13,4 +13,9 @@ interface FormData {
   process: string;
 }
 
-export { OptionAttributes, FormData }
+interface PocChat {
+  isSender: boolean,
+  text: string,
+}
+
+export { OptionAttributes, FormData, PocChat }

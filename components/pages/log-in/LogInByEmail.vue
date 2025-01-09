@@ -50,8 +50,8 @@
           type="submit"
           class="w-full disabled:bg-opacity-60 bg-[#8380FF] text-white rounded-lg font-medium p-3 flex text-xl gap-2 justify-center items-center"
         >
-          <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
           Log in
+          <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
         </button>
         <button
           type="submit"
@@ -76,7 +76,8 @@
 <script setup lang="ts">
 const emits = defineEmits(["login", "reset"]);
 
-// const { api } = useApi();
+const { api } = useApi();
+const { showToast } = useToast();
 
 const isPassword = ref<boolean>(true);
 const isSubmitting = ref<boolean>(false);
@@ -87,8 +88,25 @@ const userData = ref({
 
 const onSubmit = async () => {
   try {
+    isSubmitting.value = true;
+    const response = await api.post("/v1/login", {
+      email: userData.value.email,
+      password: userData.value.password,
+    });
+    if (response) {
+      const token = useCookie("token", {
+        maxAge: 3600,
+      });
+      token.value = JSON.stringify(response.data.token);
+    }
     emits("login", userData.value);
-  } catch (error) {}
+  } catch (error) {
+    showToast(error.message, {
+      type: "warning",
+    });
+  } finally {
+    isSubmitting.value = false;
+  }
 };
 
 const reset = () => {

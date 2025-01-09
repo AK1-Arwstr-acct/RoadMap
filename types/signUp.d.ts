@@ -1,3 +1,5 @@
+import type { OptionAttributes } from "./home";
+
 interface Country {
     id: number,
     title: string,
@@ -5,4 +7,11 @@ interface Country {
     flag: string
 }
 
-export { Country };
+interface SignUpForm {
+    userName: string,
+    selectedGrade: OptionAttributes | null,
+    email: string,
+    password: string,
+}
+
+export { Country, SignUpForm };

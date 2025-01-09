@@ -9,5 +9,16 @@ export const useApi = () => {
     },
   });
 
+  const token = useCookie('token')
+  
+  api.interceptors.request.use(config => {
+    if (token.value) {
+      config.headers["Authorization"] = `Bearer ${token.value}`
+    }
+    return config;
+  }, error => {
+    return Promise.reject(error);
+  });
+
   return { api };
 }
