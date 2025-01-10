@@ -11,8 +11,7 @@
             <NuxtImg class="w-[164px]" src="/images/logo/logo.svg" alt="Logo" />
           </div>
           <div class="flex-1">
-            <!-- steps -->
-            <LogInByEmail @login="(value) => login(value)" />
+            <RecoverPassword :email="userData.email" />
           </div>
         </div>
       </div>
@@ -35,14 +34,6 @@ const userData = ref<UserData>({
 });
 const height = ref<number>(0);
 
-const windowHeight = computed(() => {
-  return height.value > 830;
-});
-
-const login = (data: UserData) => {
-  userData.value = data;
-  navigateTo("/");
-};
 const windowSize = () => {
   if (typeof window !== "undefined") {
     height.value = window.innerHeight;

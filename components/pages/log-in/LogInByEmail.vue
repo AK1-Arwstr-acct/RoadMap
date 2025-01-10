@@ -10,11 +10,20 @@
         <p class="text-[#F3F3F3]">
           Kickstart your adventure to study abroad with AI!
         </p>
+        <p class="text-[#F3F3F3] mt-3">
+          New to Arrowster ?
+          <button
+            @click="navigateTo('/signup')"
+            class="text-[#8380FF] font-semibold cursor-pointer underline"
+          >
+            Sign up
+          </button>
+        </p>
       </div>
       <!-- input -->
       <div class="flex flex-col gap-6 remove-shadow">
         <div class="w-full">
-          <label class="uppercase font-medium text-[#E2E6FF]">Your name</label>
+          <label class="uppercase font-medium text-[#E2E6FF]">Your email</label>
           <input
             name="email"
             type="email"
@@ -53,13 +62,15 @@
           Log in
           <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
         </button>
-        <button
+        <a
+          href="https://backend.arrowster.com/auth/google"
+          target="_blank"
           type="submit"
           class="cursor-pointer mt-6 disabled:opacity-70 w-full text-xl bg-white text-[#18191B] rounded-lg font-semibold py-3 flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
         >
-          <span>Sign up with Google Account</span>
+          <span>Sign in with Google Account</span>
           <img src="../../../public/images/googleIcon.png" alt="google" />
-        </button>
+        </a>
         <p class="text-[#B0B4BA] mt-3">
           Forgot your password?
           <button
@@ -74,7 +85,7 @@
   </div>
 </template>
 <script setup lang="ts">
-const emits = defineEmits(["login", "reset"]);
+const emits = defineEmits(["login"]);
 
 const { api } = useApi();
 const { showToast } = useToast();
@@ -95,13 +106,13 @@ const onSubmit = async () => {
     });
     if (response) {
       const token = useCookie("token", {
-        maxAge: 3600,
+        maxAge: 86400,
       });
       token.value = JSON.stringify(response.data.token);
     }
     emits("login", userData.value);
   } catch (error) {
-    showToast(error.message, {
+    showToast(error.response.data.message, {
       type: "warning",
     });
   } finally {
@@ -110,6 +121,6 @@ const onSubmit = async () => {
 };
 
 const reset = () => {
-  emits("reset", userData.value.email);
+  navigateTo("/reset-password");
 };
 </script>

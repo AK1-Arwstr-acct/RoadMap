@@ -11,8 +11,7 @@
             <NuxtImg class="w-[164px]" src="/images/logo/logo.svg" alt="Logo" />
           </div>
           <div class="flex-1">
-            <!-- steps -->
-            <LogInByEmail @login="(value) => login(value)" />
+            <ResetPassword :token="token" />
           </div>
         </div>
       </div>
@@ -24,25 +23,13 @@
   </div>
 </template>
 <script setup lang="ts">
-interface UserData {
-  email: string;
-  password: string;
-}
+import { useRoute } from "vue-router";
 
-const userData = ref<UserData>({
-  email: "",
-  password: "",
-});
+const route = useRoute();
+const token = encodeURIComponent(route.params.token as string);
+
 const height = ref<number>(0);
 
-const windowHeight = computed(() => {
-  return height.value > 830;
-});
-
-const login = (data: UserData) => {
-  userData.value = data;
-  navigateTo("/");
-};
 const windowSize = () => {
   if (typeof window !== "undefined") {
     height.value = window.innerHeight;

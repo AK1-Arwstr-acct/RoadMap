@@ -9,7 +9,6 @@
           Kickstart your adventure to study abroad with AI!
         </p>
       </div>
-      <!--  -->
       <div class="remove-shadow flex flex-wrap gap-6">
         <div class="w-[calc(50%-12px)]">
           <label class="uppercase font-medium text-[#E2E6FF]">Your name</label>
@@ -29,7 +28,7 @@
           v-model="answers.selectedGrade"
         />
         <div class="w-full">
-          <label class="uppercase font-medium text-[#E2E6FF]">Your name</label>
+          <label class="uppercase font-medium text-[#E2E6FF]">Your email</label>
           <input
             name="email"
             type="email"
@@ -60,12 +59,11 @@
               </div>
             </div>
             <p class="text-[#AEAEAE] text-sm mt-1">
-              Recommend password be at least 8 charaters
+              Password should be at least 8 charaters
             </p>
           </div>
         </div>
       </div>
-      <!--  -->
       <div>
         <button
           @click="onSubmit"
@@ -76,13 +74,15 @@
           Create Account
           <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
         </button>
-        <button
+        <a
+          href="https://backend.arrowster.com/auth/google"
+          target="_blank"
           type="submit"
           class="cursor-pointer mt-4 disabled:opacity-70 w-full text-xl bg-white text-[#18191B] rounded-lg font-semibold py-3 flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
         >
           <span>Sign up with Google Account</span>
           <img src="../../../public/images/googleIcon.png" alt="google" />
-        </button>
+        </a>
       </div>
       <p class="text-white text-center">
         Already have account?
@@ -100,9 +100,10 @@ import { useToast } from "~/composables/useToast";
 import type { OptionAttributes } from "~/types/home";
 import type { SignUpForm } from "~/types/signUp";
 
-const emit = defineEmits(["updateStep"]);
+const emit = defineEmits(["updateStep", "signupToken"]);
 const { api } = useApi();
 const { showToast } = useToast();
+const route = useRoute();
 
 const answers = ref<SignUpForm>({
   userName: "",
@@ -132,10 +133,9 @@ const onSubmit = async () => {
       current_class_grade_id: Number(answers.value.selectedGrade?.value),
       password: answers.value.password,
     });
+    emit("signupToken", response.data.token);
     emit("updateStep", answers.value);
   } catch (error) {
-    console.log(error.message);
-
     if (axios.isAxiosError(error)) {
       let errorMessage;
       if (error.response?.data.errors) {
@@ -150,6 +150,35 @@ const onSubmit = async () => {
   }
 };
 
+const fetchUser = async () => {
+  if (route.query.waitlistToken) {
+    try {
+      const waitlistToken = encodeURIComponent(
+        route.query.waitlistToken as string
+      );
+      const response = await api.get(
+        "/v1/sign-up/enrollment-records-using-token",
+        {
+          headers: {
+            waitlistToken: waitlistToken,
+          },
+        }
+      );
+      const user = response.data.data;
+      answers.value.email = user.email;
+      answers.value.userName = user.name;
+      if (user.current_class_grade.class_name && user.current_class_grade.id) {
+        answers.value.selectedGrade = {
+          value: user.current_class_grade.id,
+          label: user.current_class_grade.class_name,
+        };
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
 onBeforeMount(async () => {
   const response = await api.get("/v1/sign-up/get-class-grades");
   grade.value = response.data.data.map((item) => {
@@ -158,5 +187,8 @@ onBeforeMount(async () => {
       label: item.class_name,
     };
   });
+});
+onMounted(() => {
+  fetchUser();
 });
 </script>

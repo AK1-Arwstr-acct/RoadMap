@@ -13,11 +13,11 @@
         Verify email
       </h1>
       <p class="text-[#AEAEAE]">
-        We sent an verification link to <br class="lg:hidden" />
+        We have sent a verification link to <br class="lg:hidden" />
         <span class="text-[#9CA2FF]">{{ email }}</span>
       </p>
       <div class="text-sm text-[#B0B4BA] font-semibold">
-        <button type="button" class="text-[#8380FF] underline">
+        <button @click="resendVerification" type="button" class="text-[#8380FF] underline">
           Resend email verification
         </button>
       </div>
@@ -25,9 +25,11 @@
   </div>
 </template>
 <script setup lang="ts">
-
 const props = defineProps({
   email: {
+    type: String,
+  },
+  signupToken: {
     type: String,
   },
 });
@@ -37,4 +39,22 @@ const emits = defineEmits<{
 }>();
 
 const { api } = useApi();
+const { showToast } = useToast();
+
+const resendVerification = async () => {
+  try {
+    await api.get("/v1/verify-via-email-retry", {
+      headers: {
+        'Authorization': `Bearer ${props.signupToken}`,
+      },
+    });
+    showToast("Email send", {
+      type: "success",
+    });
+  } catch (error) {
+    showToast(error.message, {
+      type: "warning",
+    });
+  }
+};
 </script>

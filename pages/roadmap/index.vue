@@ -10,7 +10,7 @@
         <Transition name="fade">
           <div
             v-if="activeTab === 'home'"
-            class="flex-1 px-6 pb-6 pt-6 size-full space-y-8 overflow-y-auto"
+            class="flex-1 px-6 pb-6 mt-6 size-full space-y-8 overflow-y-auto"
           >
             <div v-if="infoPopup" class="bg-[#111113] sticky top-0 z-30">
               <div

@@ -110,6 +110,23 @@
                     :options="options"
                     class="h-fit text-[#F3F3F3] flex flex-col gap-3 pb-6"
                   />
+                  <!-- <p>Take this MBTI test to discover your true self!</p>
+                  <ul class="flex flex-col gap-1 list-inside list-disc">
+                    <li class="-indent-6 pl-6 marker:content-['-']">
+                      One of the most important elements of a compelling college
+                      application is authentic self-reflection. The ability to
+                      understand and convey your true identity shapes every
+                      aspect of your application.
+                    </li>
+                    <li class="-indent-6 pl-6 marker:content-['+']">
+                      This test serves as a starting point for deeper
+                      self-exploration. Rather than accepting the results at
+                      face value, use them as a catalyst to examine who you are
+                      and what you aspire to achieve. These insights will not
+                      only strengthen your college applications but also guide
+                      your broader life journey.
+                    </li>
+                  </ul> -->
                 </ClientOnly>
                 <div class="mt-3 flex flex-col gap-1">
                   <NuxtLink

@@ -101,8 +101,35 @@
       <div
         v-if="isFlowStart"
         class="fixed z-40 size-full bg-[rgba(26,26,26,0.50)] backdrop-blur-[10px]"
-        :class="{ 'clip-transparent-rectangle': introStep === 5 }"
-      />
+      >
+        <div v-if="introStep === 5" class="size-full flex items-end">
+          <div
+            class="flex items-center gap-2 cursor-pointer w-[400px] p-6 bg-[#111113] relative"
+          >
+            <div
+              class="size-9 min-w-9 border border-white rounded-full overflow-hidden"
+            >
+              <NuxtImg src="/images/user.png" class="size-full object-cover" />
+            </div>
+            <div class="text-[#F3F3F3] font-medium text-nowrap">
+              Damian Nguyen
+            </div>
+            <Transition name="fade">
+              <div
+                v-if="isFlowStart && introStep === 5"
+                class="absolute z-50 bottom-[114px] left-[77px]"
+              >
+                <StepPopup
+                  direction="bottom"
+                  :step="introStep"
+                  @next="nextStep"
+                  @previous="previousStep"
+                />
+              </div>
+            </Transition>
+          </div>
+        </div>
+      </div>
     </Transition>
     <Transition name="slideModal">
       <component
@@ -126,19 +153,6 @@
         class="fixed z-50 top-[196px] right-[630px]"
       >
         <StepPopup
-          :step="introStep"
-          @next="nextStep"
-          @previous="previousStep"
-        />
-      </div>
-    </Transition>
-    <Transition name="fade">
-      <div
-        v-if="isFlowStart && introStep === 5"
-        class="fixed z-50 bottom-[134px] left-[77px]"
-      >
-        <StepPopup
-          direction="bottom"
           :step="introStep"
           @next="nextStep"
           @previous="previousStep"
@@ -236,11 +250,6 @@ watch(
 .fade-enter-to,
 .fade-leave-from {
   opacity: 1;
-}
-
-.clip-transparent-rectangle {
-  position: absolute;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 2000%, 30% 85%, 0 85%);
 }
 
 .bg-gradiant {
