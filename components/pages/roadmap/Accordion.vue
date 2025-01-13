@@ -129,7 +129,7 @@
               </td>
               <td v-else class="p-3 w-[20%] text-sm text-[#f7fdff] font-medium">
                 <span
-                  class="text-sm font-medium text-[#F7FDFF] bg-[#272A2D] p-1 rounded"
+                  class="text-sm font-medium text-[#43484E] p-1 rounded"
                 >
                   No due date
                 </span>

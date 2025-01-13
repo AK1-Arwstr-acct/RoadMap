@@ -45,9 +45,9 @@
           </div>
         </Transition>
       </div>
-      <div v-if="activeTab !== 'user_profile'">
+      <!-- <div v-if="activeTab !== 'user_profile'">
         <AiBar />
-      </div>
+      </div> -->
     </div>
   </section>
   <Transition name="slideModal">

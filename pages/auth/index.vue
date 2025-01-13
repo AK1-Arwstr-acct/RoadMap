@@ -7,8 +7,8 @@ const appStore = useAppStore();
 
 const route = useRoute();
 
-const token = ref(route.params.token);
-const oldUser = ref(route.params.oldUser);
+const token = ref(route.query.token);
+const oldUser = ref(route.query.oldUser);
 const savedtoken = useCookie("token");
 
 onBeforeMount(() => {

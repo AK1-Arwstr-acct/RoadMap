@@ -688,6 +688,7 @@ export const onboardingData = [
             {
                 heading: "Getting started with Arrowster task",
                 estimated_time: '',
+                category: 'tutorial',
                 type: 'optional',
                 checked: false,
                 task_description: `<div><p>Welcome to your personalized study abroad roadmap!</p><p>Our AI and expert counselors are here to guide your journey - from exploring your interests to landing your dream school. Each step is tailored to your goals and timeline.</p><p>Ready to begin your adventure?</p></div>`,
@@ -695,6 +696,7 @@ export const onboardingData = [
             {
                 heading: "How to find school with our AI",
                 estimated_time: '',
+                category: 'tutorial',
                 type: 'optional',
                 checked: false,
                 task_description: `<p>Discover the perfect school for you with our AI-powered tool! This innovative platform helps you explore various educational institutions tailored to your needs. Start by entering your preferences, such as location, subjects of interest, and desired campus culture. Our AI will analyze your input and suggest schools that align with your goals. Take your time to review the recommendations, and don't hesitate to dive deeper into each option to find the best fit for your educational journey!</p>`,
@@ -702,6 +704,7 @@ export const onboardingData = [
             {
                 heading: "Know more about our Counselor",
                 estimated_time: '',
+                category: 'tutorial',
                 type: 'optional',
                 checked: false,
                 task_description: `<p>Meet our three expert counselors: Ken, Thanh, and Hayden. Each of them hails from prestigious universities and brings a wealth of experience in the study abroad sector. They are here to assist you with any questions or guidance you may need on your journey.</p>`,
