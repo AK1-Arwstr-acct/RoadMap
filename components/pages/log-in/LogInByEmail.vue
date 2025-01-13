@@ -85,7 +85,7 @@
   </div>
 </template>
 <script setup lang="ts">
-const emits = defineEmits(["login"]);
+import axios from "axios";
 
 const { api } = useApi();
 const { showToast } = useToast();
@@ -110,13 +110,17 @@ const onSubmit = async () => {
       });
       token.value = JSON.stringify(response.data.token);
     }
-    emits("login", userData.value);
+    response.data.data.oldUser ? navigateTo("/") : navigateTo("/explore");
   } catch (error) {
-    showToast(error.response.data.message, {
-      type: "warning",
-    });
+    if (axios.isAxiosError(error)) {
+      showToast(error.response?.data.message, {
+        type: "warning",
+      });
+    }
   } finally {
     isSubmitting.value = false;
+    userData.value.email = "";
+    userData.value.password = "";
   }
 };
 

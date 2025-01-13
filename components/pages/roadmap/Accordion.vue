@@ -31,7 +31,7 @@
               class="tracking-widest text-xl font-semibold"
               :class="{ 'text-[#686868]': data?.disable }"
             >
-              {{ data?.tasks.filter((item) => item.checked).length }}/{{
+              {{ data?.tasks.filter((item: Tasks) => item.checked).length }}/{{
                 data?.tasks.length
               }}
             </p>
@@ -142,6 +142,8 @@
   </main>
 </template>
 <script setup lang="ts">
+import type { Tasks } from '~/types/home';
+
 const emit = defineEmits(["showTaskModal"]);
 
 const props = defineProps({
@@ -158,29 +160,15 @@ const accordionWrapper = ref<HTMLDivElement>();
 const isDropdown = ref<boolean>(props.dropdown);
 
 const completedTask = computed(() => {
-  let checkedTask = props.data?.tasks.filter((item) => item.checked).length;
+  let checkedTask = props.data?.tasks.filter((item: Tasks) => item.checked).length;
   let totalTasks = props.data?.tasks.length;
   let widthClass = (checkedTask / totalTasks) * 100;
   return `${widthClass.toFixed(2)}%`;
 });
 
-const handelModal = (data) => {
+const handelModal = (data: Tasks) => {
   emit("showTaskModal", data);
 };
-
-//  extra code --- remove after while
-// const tabData = ref(props.data);
-
-// const updateChecked = () => {
-//   emit('updateCheckItem', tabData.value)
-// }
-
-// watch(
-//   () => props.data,
-//   () => {
-//     tabData.value = props.data
-//   }
-// );
 
 watch(
   () => props.data?.view,

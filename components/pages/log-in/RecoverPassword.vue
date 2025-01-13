@@ -24,6 +24,7 @@
           type="email"
           v-model="email"
           autofocus
+          @keydown.enter="onSubmit"
           placeholder="Enter your email"
           class="mt-[7px] bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#E1E1E1] py-2 w-full outline-none focus:border-[#8380FF] transition-all ease-in-out duration-150 appearance-none text-white"
         />
@@ -48,6 +49,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from 'axios';
+
 const emits = defineEmits(["goBack", "recoverPassword"]);
 
 defineProps({
@@ -71,10 +74,15 @@ const onSubmit = async () => {
     showToast("Please check your email for password recovery", {
       type: "success",
     });
-    email.value = "";
   } catch (error) {
     console.error(error);
+    if (axios.isAxiosError(error)) {
+      showToast(error.response?.data.message.email[0], {
+        type: "warning",
+      });
+    }
   } finally {
+    email.value = "";
     isSubmitting.value = false;
   }
 };

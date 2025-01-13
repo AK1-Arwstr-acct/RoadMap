@@ -18,4 +18,19 @@ interface PocChat {
   text: string,
 }
 
-export { OptionAttributes, FormData, PocChat }
+interface Tasks {
+  heading: string;
+  category: string;
+  estimated_time: string;
+  type: string;
+  task_description: string;
+  checked: boolean;
+  resources?: Resources[]
+}
+
+interface Resources {
+  text: string;
+  link: string;
+}
+
+export { OptionAttributes, FormData, PocChat, Tasks }

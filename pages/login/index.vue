@@ -12,7 +12,7 @@
           </div>
           <div class="flex-1">
             <!-- steps -->
-            <LogInByEmail @login="(value) => login(value)" />
+            <LogInByEmail />
           </div>
         </div>
       </div>
@@ -24,25 +24,12 @@
   </div>
 </template>
 <script setup lang="ts">
-interface UserData {
-  email: string;
-  password: string;
-}
-
-const userData = ref<UserData>({
-  email: "",
-  password: "",
-});
 const height = ref<number>(0);
 
 const windowHeight = computed(() => {
   return height.value > 830;
 });
 
-const login = (data: UserData) => {
-  userData.value = data;
-  navigateTo("/");
-};
 const windowSize = () => {
   if (typeof window !== "undefined") {
     height.value = window.innerHeight;

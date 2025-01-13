@@ -64,15 +64,19 @@
           class="cursor-pointer disabled:opacity-70 w-full text-xl bg-[#8380FF] text-[#F3F3F3] rounded-lg font-semibold py-3 flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
         >
           Reset password
+          <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
         </button>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import axios from 'axios';
+
 const emit = defineEmits(["newPassword"]);
 
 const { api } = useApi();
+const { showToast } = useToast();
 
 const props = defineProps({
   token: {
@@ -80,6 +84,7 @@ const props = defineProps({
   },
 });
 
+const isSubmitting = ref<boolean>(false);
 const newPassword = ref<string>("");
 const confirmPassword = ref<string>("");
 const isPassword = ref<boolean>(true);
@@ -91,6 +96,7 @@ const passwordMatch = computed(() => {
 
 const onSubmit = async () => {
   try {
+    isSubmitting.value = true;
     await api.post(
       "/v1/update-password",
       {
@@ -104,7 +110,13 @@ const onSubmit = async () => {
     );
     navigateTo("/login");
   } catch (error) {
-    console.error(error);
+    if (axios.isAxiosError(error)) {
+      showToast(error.response?.data.message.password[0], {
+        type: "warning",
+      });
+    }
+  } finally {
+    isSubmitting.value = false;
   }
 };
 </script>

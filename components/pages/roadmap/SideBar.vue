@@ -20,7 +20,7 @@
     </div>
     <div
       @click="isSideBar = !isSideBar"
-      :class="{ 'hidden': isSideBar }"
+      :class="{ hidden: isSideBar }"
       class="flex justify-center h-[60px] cursor-pointer py-[14px] group-hover:hidden"
     >
       <IconLogoArrowster />
@@ -80,13 +80,15 @@
     </div>
     <!--  -->
     <div class="bg-[#212121] h-[1px] w-full" />
-    <div>
+    <div class="flex items-center justify-between">
       <div
         @click="updateTab('user_profile')"
         class="flex items-center group-hover:justify-start gap-2 cursor-pointer"
         :class="{ 'justify-center': !isSideBar }"
       >
-        <div class="size-9 min-w-9 border border-white rounded-full overflow-hidden">
+        <div
+          class="size-9 min-w-9 border border-white rounded-full overflow-hidden"
+        >
           <NuxtImg src="/images/user.png" class="size-full object-cover" />
         </div>
         <div
@@ -96,18 +98,14 @@
           Damian Nguyen
         </div>
       </div>
+      <div class="cursor-pointer" @click="logout">
+        <IconLogOut />
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 const emit = defineEmits(["toggleSideBar", "updateTab"]);
-
-// defineProps({
-//   isSideBar: {
-//     type: Boolean,
-//     default: true,
-//   },
-// });
 
 const isSideBar = ref<boolean>(true);
 const activeTab = ref<"home" | "school_finder" | "counselor_service">("home");
@@ -115,5 +113,11 @@ const activeTab = ref<"home" | "school_finder" | "counselor_service">("home");
 const updateTab = (item) => {
   activeTab.value = item;
   emit("updateTab", item);
+};
+
+const logout = () => {
+  const token = useCookie("token");
+  token.value = "";
+  navigateTo("/login");
 };
 </script>

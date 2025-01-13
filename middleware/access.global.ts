@@ -3,7 +3,11 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const allowedPaths = ["/signup", "/login", "/reset-password"]
 
     if (allowedPaths.includes(to.path)) {
-        return;
+        if (to.path === "/login" && token.value) {
+            return navigateTo("/");
+        } else {
+            return;
+        }
     }
 
     if (to.path.startsWith("/forget-password")) {

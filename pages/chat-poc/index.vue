@@ -45,6 +45,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import type { PocChat } from "~/types/home";
 
 const { api } = useApi();
@@ -101,10 +102,12 @@ const onSubmit = async () => {
     scrollDown();
   } catch (error) {
     isChatLoading.value = false;
-    const errorMessage = error.message;
-    showToast(errorMessage, {
-      type: "warning",
-    });
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.message;
+      showToast(errorMessage, {
+        type: "warning",
+      });
+    }
   }
 };
 </script>

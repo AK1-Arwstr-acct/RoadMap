@@ -165,6 +165,7 @@
 import TaskModal from "~/components/pages/roadmap/TaskModal.vue";
 import IntroModal from "~/components/pages/explore/IntroModal.vue";
 import useAppStore from "~/stores/AppStore";
+import type { Tasks } from "~/types/home";
 
 const appStore = useAppStore();
 
@@ -176,7 +177,7 @@ const introStep = ref<number>(1);
 const generateRoadmap = ref<boolean>(false);
 const modalData = ref({});
 
-const handelTaskModal = (data) => {
+const handelTaskModal = (data: Tasks) => {
   taskModal.value = !taskModal.value;
   modalData.value = data;
 };
