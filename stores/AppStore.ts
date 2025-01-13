@@ -1,7 +1,16 @@
 import { defineStore } from "pinia";
 import { roadmapData, onboardingData } from "../utils/data"
+import type { UserData } from "../types/home";
 
 const useAppStore = defineStore("appStore", () => {
+    const UserData = ref<UserData>({
+        id: null,
+        name: null,
+        user_name: null,
+        email: null,
+        created_at: null,
+        oldUser: null,
+    });
     const DashboardData = ref(roadmapData);
     const onboardingViewData = ref(onboardingData);
 
@@ -15,10 +24,16 @@ const useAppStore = defineStore("appStore", () => {
         };
     }
 
+    const setUserData = (data: UserData) => {
+        UserData.value = data
+    }
+
     return {
         DashboardData,
         onboardingViewData,
-        chekCountry
+        UserData,
+        chekCountry,
+        setUserData
     }
 });
 

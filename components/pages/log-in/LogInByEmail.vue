@@ -86,9 +86,11 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
+import useAppStore from "~/stores/AppStore";
 
 const { api } = useApi();
 const { showToast } = useToast();
+const appStore = useAppStore();
 
 const isPassword = ref<boolean>(true);
 const isSubmitting = ref<boolean>(false);
@@ -100,7 +102,7 @@ const userData = ref({
 const logout = () => {
   const token = useCookie("token");
   token.value = "";
-}
+};
 
 const onSubmit = async () => {
   try {
@@ -117,6 +119,7 @@ const onSubmit = async () => {
       token.value = JSON.stringify(response.data.token);
     }
     response.data.data.oldUser ? navigateTo("/") : navigateTo("/explore");
+    appStore.setUserData(response.data.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       showToast(error.response?.data.message, {

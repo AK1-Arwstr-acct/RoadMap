@@ -33,4 +33,13 @@ interface Resources {
   link: string;
 }
 
-export { OptionAttributes, FormData, PocChat, Tasks }
+interface UserData {
+  id: number | null;
+  name: string | null;
+  user_name: string | null;
+  email: string | null;
+  created_at: string | null;
+  oldUser: boolean | null;
+}
+
+export { OptionAttributes, FormData, PocChat, Tasks, UserData }

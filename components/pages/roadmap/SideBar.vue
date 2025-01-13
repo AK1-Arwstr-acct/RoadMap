@@ -80,7 +80,7 @@
     </div>
     <!--  -->
     <div class="bg-[#212121] h-[1px] w-full" />
-    <div class="flex items-center justify-between">
+    <div class="flex items-center " :class="[isSideBar ? 'justify-between' : 'group-hover:justify-between justify-center' ]">
       <div
         @click="updateTab('user_profile')"
         class="flex items-center group-hover:justify-start gap-2 cursor-pointer"
@@ -98,7 +98,7 @@
           Damian Nguyen
         </div>
       </div>
-      <div class="cursor-pointer" @click="logout">
+      <div :class="{ 'hidden': !isSideBar }" class="cursor-pointer group-hover:block" @click="logout">
         <IconLogOut />
       </div>
     </div>
