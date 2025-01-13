@@ -43,7 +43,7 @@
           >Home</span
         >
       </div>
-      <div
+      <!-- <div
         class="p-3 flex gap-3 items-center justify-start rounded-lg cursor-pointer overflow-hidden"
         :class="{
           'text-[#8380FF] bg-[rgba(131,128,255,0.20)]':
@@ -76,7 +76,7 @@
           :class="[isSideBar ? 'block' : 'hidden group-hover:block']"
           >Counselor Service</span
         >
-      </div>
+      </div> -->
     </div>
     <!--  -->
     <div class="bg-[#212121] h-[1px] w-full" />

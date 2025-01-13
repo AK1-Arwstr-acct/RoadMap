@@ -63,7 +63,7 @@
           <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
         </button>
         <a
-          href="https://backend.arrowster.com/auth/google"
+          href="https://bk.arrowster.com/auth/google"
           target="_blank"
           type="submit"
           class="cursor-pointer mt-6 disabled:opacity-70 w-full text-xl bg-white text-[#18191B] rounded-lg font-semibold py-3 flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
@@ -97,9 +97,15 @@ const userData = ref({
   password: "",
 });
 
+const logout = () => {
+  const token = useCookie("token");
+  token.value = "";
+}
+
 const onSubmit = async () => {
   try {
     isSubmitting.value = true;
+    logout();
     const response = await api.post("/v1/login", {
       email: userData.value.email,
       password: userData.value.password,
