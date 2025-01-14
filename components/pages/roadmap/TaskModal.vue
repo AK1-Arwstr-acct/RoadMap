@@ -55,7 +55,6 @@
                   >
                     No due date
                   </span>
-                  <!-- <p class="text-[#FFAF38]">20 days left</p> -->
                 </div>
               </div>
             </div>
@@ -69,15 +68,6 @@
                 <IconArrowRight />
               </NuxtLink>
             </div>
-            <!-- <div>
-              <label class="font-medium text-[#E2E6FF]">Result</label>
-              <input
-                name="result"
-                type="text"
-                placeholder="Enter your type"
-                class="mt-1 bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#C5C5C5] py-2 w-full outline-none text-white"
-              />
-            </div> -->
           </div>
           <div
             class="px-6 border-b border-[#383838]/50 flex items-center font-medium"

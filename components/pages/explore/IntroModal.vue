@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed z-40 h-[100dvh] w-full bg-black/60 flex justify-center items-center"
+    class="absolute z-40 h-[100dvh] w-full bg-black/60 flex justify-center items-center isolate"
   >
     <div
       class="text-white bg-radial w-[564px] px-6 py-12 flex flex-col gap-6 rounded-2xl border border-[#9C99FF] shadow-[12px_24px_32px_0px_rgba(149,126,255,0.00)]"

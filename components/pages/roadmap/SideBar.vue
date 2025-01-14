@@ -107,10 +107,12 @@
 <script setup lang="ts">
 const emit = defineEmits(["toggleSideBar", "updateTab"]);
 
-const isSideBar = ref<boolean>(true);
-const activeTab = ref<"home" | "school_finder" | "counselor_service">("home");
+type TabName = "home" | "school_finder" | "counselor_service" | "user_profile";
 
-const updateTab = (item) => {
+const isSideBar = ref<boolean>(true);
+const activeTab = ref<TabName>("home");
+
+const updateTab = (item :TabName) => {
   activeTab.value = item;
   emit("updateTab", item);
 };

@@ -12,7 +12,7 @@ const oldUser = ref(route.query.oldUser);
 const savedtoken = useCookie("token");
 
 onBeforeMount(() => {
-  const parsedOldUser = oldUser.value === "true";
+  const parsedOldUser = oldUser.value === "1";
   parsedOldUser ? navigateTo('/') : navigateTo('/explore');
   if (!savedtoken.value) {
     savedtoken.value = Array.isArray(token.value) ? token.value.join('') : token.value;

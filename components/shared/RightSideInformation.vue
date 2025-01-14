@@ -6,9 +6,6 @@
       src="/images/shared/radial-image.png"
       class="absolute inset-0 object-bottom object-cover size-full"
     />
-    <!-- <div
-    class="bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-[rgba(149,126,255)] via-[#6240FF] to-[#14125C] h-full overflow-hidden flex justify-center items-center"
-  > -->
     <div
       class="relative z-10 flex justify-center items-center gap-8 w-full p-12"
     >
@@ -80,8 +77,3 @@
     </div>
   </div>
 </template>
-<!-- <style scoped>
-.bgRadical{
-  background: radial-gradient(118.74% 117.1% at 74.31% 20.12%, #211F7A 73.38%, #6240FF 100%);
-}
-</style> -->

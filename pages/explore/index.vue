@@ -1,6 +1,6 @@
 <template>
   <section
-    class="bg-[#111113] h-[100dvh] w-full overflow-hidden flex text-white"
+    class="bg-[#111113] h-[100dvh] w-full overflow-hidden flex text-white relative"
   >
     <div class="hidden lg:block relative">
       <div
@@ -45,6 +45,7 @@
             v-if="activeTab === 'home'"
             class="flex-1 p-6 size-full space-y-8 overflow-y-auto"
           >
+            <p class="text-white"></p>
             <div v-for="(data, idx) in appStore.onboardingViewData">
               <Accordion
                 :key="idx"
@@ -55,7 +56,7 @@
             </div>
             <Transition name="fade">
               <div
-                v-if="introStep > 5 || generateRoadmap"
+                v-if="!isFlowStart && isAllTaskCompleted"
                 class="flex items-center p-3 rounded-xl bg-gradiant"
               >
                 <div class="flex-1">
@@ -100,7 +101,7 @@
     <Transition name="fade">
       <div
         v-if="isFlowStart"
-        class="fixed z-40 size-full bg-[rgba(26,26,26,0.50)] backdrop-blur-[10px]"
+        class="absolute z-40 size-full bg-[rgba(26,26,26,0.50)] backdrop-blur-[10px]"
       >
         <div v-if="introStep === 5" class="size-full flex items-end">
           <div
@@ -127,6 +128,25 @@
                 />
               </div>
             </Transition>
+          </div>
+        </div>
+      </div>
+    </Transition>
+    <Transition name="fade">
+      <div v-if="!isFlowStart && isNotification" class="absolute top-6 right-6">
+        <div
+          class="border border-[#36C453] bg-[#07422A] p-3 rounded-lg flex gap-2 w-[288px]"
+        >
+          <div>
+            <IconParty />
+          </div>
+          <div>
+            <p class="text-[#E2E6FF] font-semibold">
+              You have complete all tasks in this section
+            </p>
+          </div>
+          <div class="pt-1 cursor-pointer" @click="isNotification = false">
+            <IconCross />
           </div>
         </div>
       </div>
@@ -169,13 +189,27 @@ import type { Tasks } from "~/types/home";
 
 const appStore = useAppStore();
 
-const activeTab = ref<"home" | "school_finder" | "counselor_service">("home");
+type TabName = "home" | "school_finder" | "counselor_service";
+
+const activeTab = ref<TabName>("home");
 const taskModal = ref<boolean>(false);
 const introModal = ref<boolean>(true);
 const isFlowStart = ref<boolean>(false);
 const introStep = ref<number>(1);
-const generateRoadmap = ref<boolean>(false);
+const isNotification = ref<boolean>(false);
 const modalData = ref({});
+
+const isAllTaskCompleted = computed(() => {
+  let totalCount = 0;
+  let completeCount = 0;
+
+  appStore.onboardingViewData.forEach((item) => {
+    totalCount += item.tasks.length;
+    completeCount += item.tasks.filter((task) => task.checked === true).length;
+  });
+  isNotification.value = completeCount === totalCount;
+  return completeCount === totalCount;
+});
 
 const handelTaskModal = (data: Tasks) => {
   taskModal.value = !taskModal.value;
@@ -184,7 +218,6 @@ const handelTaskModal = (data: Tasks) => {
 
 const closeIntro = () => {
   introModal.value = false;
-  generateRoadmap.value = true;
 };
 
 const startTour = () => {
@@ -205,10 +238,20 @@ const previousStep = () => {
 const closeModal = () => {
   taskModal.value = false;
 };
-const updateTab = (item) => {
+const updateTab = (item: TabName) => {
   activeTab.value = item;
 };
 
+watch(
+  () => isNotification.value,
+  () => {
+    if (isNotification.value) {
+      setTimeout(() => {
+        isNotification.value = false
+      }, 3000);
+    }
+  }
+);
 watch(
   () => introStep.value,
   () => {

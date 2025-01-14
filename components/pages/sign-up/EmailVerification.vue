@@ -17,7 +17,11 @@
         <span class="text-[#9CA2FF]">{{ email }}</span>
       </p>
       <div class="text-sm text-[#B0B4BA] font-semibold">
-        <button @click="resendVerification" type="button" class="text-[#8380FF] underline">
+        <button
+          @click="resendVerification"
+          type="button"
+          class="text-[#8380FF] underline"
+        >
           Resend email verification
         </button>
       </div>
@@ -25,6 +29,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
+
 const props = defineProps({
   email: {
     type: String,
@@ -45,16 +51,18 @@ const resendVerification = async () => {
   try {
     await api.get("/v1/verify-via-email-retry", {
       headers: {
-        'Authorization': `Bearer ${props.signupToken}`,
+        Authorization: `Bearer ${props.signupToken}`,
       },
     });
     showToast("Email send", {
       type: "success",
     });
   } catch (error) {
-    showToast(error.message, {
-      type: "warning",
-    });
+    if (axios.isAxiosError(error)) {
+      showToast(error.message, {
+        type: "warning",
+      });
+    }
   }
 };
 </script>

@@ -62,17 +62,18 @@
 <script setup lang="ts">
 import TaskModal from "~/components/pages/roadmap/TaskModal.vue";
 import useAppStore from "~/stores/AppStore";
+import type { Tasks } from "~/types/home";
 
 const appStore = useAppStore();
 
-const activeTab = ref<
-  "home" | "school_finder" | "counselor_service" | "user_profile"
->("home");
+type TabName = "home" | "school_finder" | "counselor_service" | "user_profile";
+
+const activeTab = ref<TabName>("home");
 const taskModal = ref<boolean>(false);
 const infoPopup = ref<boolean>(true);
 const modalData = ref({});
 
-const handelTaskModal = (data) => {
+const handelTaskModal = (data: Tasks) => {
   taskModal.value = !taskModal.value;
   modalData.value = data;
 };
@@ -80,7 +81,7 @@ const handelTaskModal = (data) => {
 const closeModal = () => {
   taskModal.value = false;
 };
-const updateTab = (item) => {
+const updateTab = (item: TabName) => {
   activeTab.value = item;
 };
 

@@ -32,6 +32,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { Tasks } from '~/types/home';
+
 const props = defineProps({
   task: {
     type: Object,
@@ -43,7 +45,7 @@ const isCompleted = ref<boolean>(false);
 
 const completedTask = computed(() => {
   const totalTasks = props.task.tasks.length;
-  const checkedCount = props.task.tasks.filter((item) => item.checked).length;
+  const checkedCount = props.task.tasks.filter((item: Tasks) => item.checked).length;
   if (totalTasks === checkedCount) {
     isCompleted.value = true;
   } else isCompleted.value = false;

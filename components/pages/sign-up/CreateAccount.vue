@@ -127,7 +127,7 @@ const isDisable = computed(() => {
 const logout = () => {
   const token = useCookie("token");
   token.value = "";
-}
+};
 
 const onSubmit = async () => {
   try {
@@ -187,12 +187,14 @@ const fetchUser = async () => {
 
 onBeforeMount(async () => {
   const response = await api.get("/v1/sign-up/get-class-grades");
-  grade.value = response.data.data.map((item) => {
-    return {
-      value: `${item.id}`,
-      label: item.class_name,
-    };
-  });
+  grade.value = response.data.data.map(
+    (item: { id: number; class_name: string }) => {
+      return {
+        value: `${item.id}`,
+        label: item.class_name,
+      };
+    }
+  );
 });
 onMounted(() => {
   fetchUser();
