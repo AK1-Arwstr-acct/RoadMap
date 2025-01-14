@@ -101,7 +101,7 @@ const userData = ref({
 
 const logout = () => {
   const token = useCookie("token");
-  token.value = "";
+  token.value = null;
 };
 
 const onSubmit = async () => {

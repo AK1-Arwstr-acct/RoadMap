@@ -7,11 +7,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
 
     if (allowedPaths.includes(to.path)) {
-        if (to.path === "/login" && token.value) {
-            return navigateTo("/");
-        } else {
-            return;
-        }
+        return ;
     }
 
     if (to.path.startsWith("/forget-password")) {

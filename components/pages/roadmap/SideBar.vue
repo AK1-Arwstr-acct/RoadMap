@@ -119,7 +119,7 @@ const updateTab = (item :TabName) => {
 
 const logout = () => {
   const token = useCookie("token");
-  token.value = "";
+  token.value = null;
   navigateTo("/login");
 };
 </script>
