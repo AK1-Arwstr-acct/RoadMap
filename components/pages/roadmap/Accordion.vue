@@ -31,7 +31,7 @@
               class="tracking-widest text-xl font-semibold"
               :class="{ 'text-[#686868]': data?.disable }"
             >
-              {{ updatedData.filter((item: Tasks) => item.checked).length }}/{{
+              {{ data?.tasks.filter((item: Tasks) => item.checked).length }}/{{
                 data?.tasks.length
               }}
             </p>
@@ -55,7 +55,7 @@
         <table class="w-full divide-y divide-[#212225]">
           <tbody class="divide-y divide-[#212225]">
             <tr
-              v-for="task in updatedData"
+              v-for="task in data?.tasks"
               @click="handelModal(task)"
               class="cursor-pointer"
             >
@@ -156,13 +156,15 @@ const props = defineProps({
 
 const accordionWrapper = ref<HTMLDivElement>();
 const isDropdown = ref<boolean>(props.dropdown);
-const updatedData = ref<Tasks[]>([]);
 
 const completedTask = computed(() => {
-  let checkedTask = updatedData.value.filter(
-    (item: Tasks) => item.checked
-  ).length;
-  let totalTasks = updatedData.value.length;
+  let checkedTask = 0;
+  if(props.data) {
+    checkedTask = props.data?.tasks.filter(
+      (item: Tasks) => item.checked
+    ).length;
+  }
+  let totalTasks = props.data?.tasks.length;
   let widthClass = (checkedTask / totalTasks) * 100;
   return `${widthClass.toFixed(2)}%`;
 });
@@ -181,15 +183,6 @@ const updateTask = async (id: number, isUpdate: boolean) => {
     console.error(error);
   }
 };
-
-onMounted(() => {
-  updatedData.value = props.data?.tasks.map((item: Tasks) => {
-    return {
-      ...item,
-      checked: item.users.length > 0,
-    };
-  });
-});
 </script>
 <style scoped>
 .fadeDropdown-enter-active,

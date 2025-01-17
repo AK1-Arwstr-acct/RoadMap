@@ -20,7 +20,9 @@ interface PocChat {
 
 interface Tasks {
   id: number;
-  users: Array;
+  users: {
+    id: number;
+  };
   heading: string;
   category: {
     id: number;
