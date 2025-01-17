@@ -23,6 +23,7 @@
                   <input
                     type="checkbox"
                     v-model="modalData.checked"
+                    @change="updateTask(modalData.id, modalData.checked)"
                     class="absolute inset-0 appearance-none size-full border-[3px] 2xl:border-4 rounded border-white checked:bg-[#8380FF] checked:border-[#8380FF]"
                   />
                   <div
@@ -35,7 +36,7 @@
                     />
                   </div>
                 </div>
-                {{ modalData.heading }}
+                {{ modalData.title }}
               </label>
             </div>
             <!-- dates -->
@@ -92,12 +93,14 @@
             </div>
           </div>
           <div class="p-6 flex-1 overflow-hidden">
-            <div class="size-full flex flex-col gap-3 overflow-y-auto no-scrollbar">
+            <div
+              class="size-full flex flex-col gap-3 overflow-y-auto no-scrollbar"
+            >
               <Transition name="slide">
                 <div v-if="tabView === 'overView'" class="size-full">
                   <ClientOnly>
                     <vue-markdown
-                      :source="modalData.task_description || ''"
+                      :source="modalData.description || ''"
                       :options="options"
                       class="h-fit text-[#F3F3F3] flex flex-col gap-3 pb-6"
                     />
@@ -142,8 +145,10 @@
                       name=""
                       type="text"
                       placeholder="Enter Notes"
+                      v-model="note"
+                      @keydown.enter="updateTaskNotes(modalData.id)"
                       class="mt-1 bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#C5C5C5] py-2 w-full outline-none text-white"
-                    />
+                      />
                   </div>
                 </div>
               </Transition>
@@ -155,6 +160,8 @@
   </div>
 </template>
 <script setup lang="ts">
+const { api } = useApi();
+
 const emit = defineEmits(["close"]);
 
 defineProps({
@@ -165,9 +172,32 @@ defineProps({
 });
 
 const tabView = ref<"overView" | "notes">("overView");
+const note = ref<string>("");
 
 const options = {
   html: true,
+};
+
+const updateTask = async (id: number, isUpdate: boolean) => {
+  try {
+    await api.post("v1/roadmap/tasks", {
+      task_id: id,
+      is_complete: isUpdate,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+const updateTaskNotes = async (id: number) => {
+  try {
+    await api.post("v1/roadmap/tasks", {
+      task_id: id,
+      remarks: note.value,
+    });
+    note.value = "";
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
 <style>

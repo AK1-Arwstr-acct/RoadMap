@@ -10,7 +10,7 @@
         <Transition name="fade">
           <div
             v-if="activeTab === 'home'"
-            class="flex-1 px-6 pb-6 mt-6 size-full space-y-8 overflow-y-auto"
+            class="flex-1 px-6 pb-6 pt-6 size-full space-y-8 overflow-y-auto"
           >
             <div v-if="infoPopup" class="bg-[#111113] sticky top-0 z-30">
               <div
@@ -32,7 +32,7 @@
                 </div>
               </div>
             </div>
-            <div v-for="(data, idx) in appStore.DashboardData">
+            <div v-for="(data, idx) in roadmapData">
               <Accordion
                 :key="idx"
                 :data="data"
@@ -64,10 +64,16 @@ import TaskModal from "~/components/pages/roadmap/TaskModal.vue";
 import useAppStore from "~/stores/AppStore";
 import type { Tasks } from "~/types/home";
 
+definePageMeta({
+  layout: "auth-layout",
+});
+
 const appStore = useAppStore();
+const { api } = useApi();
 
 type TabName = "home" | "school_finder" | "counselor_service" | "user_profile";
 
+const roadmapData = ref();
 const activeTab = ref<TabName>("home");
 const taskModal = ref<boolean>(false);
 const infoPopup = ref<boolean>(true);
@@ -85,9 +91,14 @@ const updateTab = (item: TabName) => {
   activeTab.value = item;
 };
 
+const fetchTasks = async () => {
+  const response = await api.get("/v1/roadmap/tasks");
+  roadmapData.value = response.data.data;
+};
+
 onMounted(() => {
-  appStore.chekCountry();
-});
+  fetchTasks();
+})
 </script>
 <style scoped>
 .slideModal-enter-active,

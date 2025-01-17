@@ -31,7 +31,7 @@
               class="tracking-widest text-xl font-semibold"
               :class="{ 'text-[#686868]': data?.disable }"
             >
-              {{ data?.tasks.filter((item: Tasks) => item.checked).length }}/{{
+              {{ updatedData.filter((item: Tasks) => item.checked).length }}/{{
                 data?.tasks.length
               }}
             </p>
@@ -55,7 +55,7 @@
         <table class="w-full divide-y divide-[#212225]">
           <tbody class="divide-y divide-[#212225]">
             <tr
-              v-for="task in data?.tasks"
+              v-for="task in updatedData"
               @click="handelModal(task)"
               class="cursor-pointer"
             >
@@ -64,18 +64,19 @@
                   @click.stop
                   class="flex items-center gap-2 font-semibold cursor-pointer transition-all ease-in-out duration-200 w-fit relative z-20"
                   :class="[
-                    task?.disable
+                    !!task?.disabled
                       ? 'text-[#43484E]'
                       : task?.checked
                       ? 'text-[#8380FF] line-through'
                       : 'text-[#F3F3F3]',
                   ]"
                 >
-                  <div v-if="!task.disable" class="relative size-5">
+                  <div v-if="!!!task.disabled" class="relative size-5">
                     <input
                       type="checkbox"
                       :checked="task?.checked"
                       v-model="task.checked"
+                      @change="updateTask(task.id, task.checked)"
                       class="appearance-none size-full border-2 rounded border-white checked:bg-[#8380FF] checked:border-[#8380FF]"
                     />
                     <div
@@ -89,7 +90,7 @@
                     </div>
                   </div>
                   <IconLock v-else />
-                  {{ task.heading }}
+                  {{ task.title }}
                 </label>
               </td>
               <td class="p-3 w-[20%] text-sm text-[#F3F3F3] font-medium">
@@ -97,26 +98,24 @@
                   v-if="task.category"
                   class="p-1 rounded capitalize !leading-4"
                   :class="[
-                    task.category === 'career' ||
-                    task.category === 'application'
+                    task.category.id === 1 || task.category.id === 5
                       ? 'bg-[#FFAF38]/60'
-                      : task.category === 'academics'
+                      : task.category.id === 2
                       ? 'bg-[#FF7575]/60'
-                      : task.category === 'extracurricular' ||
-                        task.category === 'common app'
+                      : task.category.id === 3 || task.category.id === 7
                       ? 'bg-[#64DB71]/60'
-                      : task.category === 'school list'
+                      : task.category.id === 4
                       ? 'bg-[#9C99FF]/60'
-                      : task.category === 'finances'
+                      : task.category.id === 6
                       ? 'bg-[#8ACBFF]/60'
-                      : task.category === 'decision'
+                      : task.category.id === 8
                       ? 'bg-[#FF7575]/60'
-                      : task.category === 'Visa'
+                      : task.category.id === 9
                       ? 'bg-[#64DB71]/60'
                       : 'bg-[#9C99FF]/60',
                   ]"
                 >
-                  {{ task.category }}
+                  {{ task.category.title }}
                 </span>
               </td>
               <td
@@ -128,9 +127,7 @@
                 </p>
               </td>
               <td v-else class="p-3 w-[20%] text-sm text-[#f7fdff] font-medium">
-                <span
-                  class="text-sm font-medium text-[#43484E] p-1 rounded"
-                >
+                <span class="text-sm font-medium text-[#43484E] p-1 rounded">
                   No due date
                 </span>
               </td>
@@ -142,8 +139,9 @@
   </main>
 </template>
 <script setup lang="ts">
-import type { Tasks } from '~/types/home';
+import type { Tasks } from "~/types/home";
 
+const {api} = useApi();
 const emit = defineEmits(["showTaskModal"]);
 
 const props = defineProps({
@@ -158,10 +156,13 @@ const props = defineProps({
 
 const accordionWrapper = ref<HTMLDivElement>();
 const isDropdown = ref<boolean>(props.dropdown);
+const updatedData = ref<Tasks[]>([]);
 
 const completedTask = computed(() => {
-  let checkedTask = props.data?.tasks.filter((item: Tasks) => item.checked).length;
-  let totalTasks = props.data?.tasks.length;
+  let checkedTask = updatedData.value.filter(
+    (item: Tasks) => item.checked
+  ).length;
+  let totalTasks = updatedData.value.length;
   let widthClass = (checkedTask / totalTasks) * 100;
   return `${widthClass.toFixed(2)}%`;
 });
@@ -170,12 +171,25 @@ const handelModal = (data: Tasks) => {
   emit("showTaskModal", data);
 };
 
-watch(
-  () => props.data?.view,
-  () => {
-    accordionWrapper.value?.scrollIntoView({ behavior: "smooth" });
+const updateTask = async (id: number, isUpdate: boolean) => {
+  try {
+    await api.post('v1/roadmap/tasks',{
+      task_id: id,
+      is_complete: isUpdate
+    })
+  } catch (error) {
+    console.error(error);
   }
-);
+};
+
+onMounted(() => {
+  updatedData.value = props.data?.tasks.map((item: Tasks) => {
+    return {
+      ...item,
+      checked: item.users.length > 0,
+    };
+  });
+});
 </script>
 <style scoped>
 .fadeDropdown-enter-active,

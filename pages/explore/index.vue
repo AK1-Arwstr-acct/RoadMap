@@ -47,7 +47,7 @@
           >
             <p class="text-white"></p>
             <div v-for="(data, idx) in appStore.onboardingViewData">
-              <Accordion
+              <ExploreAccordion
                 :key="idx"
                 :data="data"
                 :dropdown="true"
@@ -154,7 +154,7 @@
     <Transition name="slideModal">
       <component
         v-if="taskModal"
-        :is="TaskModal"
+        :is="ExploreTaskModal"
         @close="closeModal"
         :modalData="modalData"
       />
@@ -182,7 +182,7 @@
   </section>
 </template>
 <script setup lang="ts">
-import TaskModal from "~/components/pages/roadmap/TaskModal.vue";
+import ExploreTaskModal from "~/components/pages/roadmap/ExploreTaskModal.vue";
 import IntroModal from "~/components/pages/explore/IntroModal.vue";
 import useAppStore from "~/stores/AppStore";
 import type { Tasks } from "~/types/home";

@@ -70,21 +70,23 @@
               v-if="steps === 'profile_information'"
               @onSubmit="updateProfileInfo"
               :formData="formData"
+              :isSubmitting="isSubmitting"
             />
             <CountrySelection
               v-else-if="steps === 'country_selection'"
               @onSubmit="updateCountrySelection"
               @backStep="backStep"
-              @updateSelectedCounties = "updateSelectedCounties"
+              @updateSelectedCounties="updateSelectedCounties"
               :selectedCounties="formData.countries"
+              :isSubmitting="isSubmitting"
             />
-            <ProcessSelection
+            <!-- <ProcessSelection
               v-else
               @updateProcessSelection="updateProcessSelection"
               @onSubmit="submitForm"
               @backStep="backStep"
               :selectedProcess="formData.process"
-            />
+            /> -->
           </div>
         </div>
       </div>
@@ -93,8 +95,19 @@
 </template>
 <script setup lang="ts">
 import type { ProfileInformationAnswers } from "~/components/pages/home/ProfileInformation.vue";
-import type { FormData } from "~/types/home";
+import type { FormData, TestScores } from "~/types/home";
+import useAppStore from "~/stores/AppStore";
+import axios from "axios";
 
+definePageMeta({
+  layout: "auth-layout",
+});
+
+const { api } = useApi();
+const appStore = useAppStore();
+const { showToast } = useToast();
+
+const isSubmitting = ref<boolean>(false);
 const steps = ref<"profile_information" | "country_selection" | "your_process">(
   "profile_information"
 );
@@ -123,34 +136,117 @@ const backStep = () => {
   }
 };
 
-const updateProfileInfo = (data: ProfileInformationAnswers) => {
-  steps.value = "country_selection";
-  formData.value.budget = data.selectedBudget;
-  formData.value.grade = data.selectedGrade;
-  formData.value.ielts = data.ielts;
-  formData.value.gpa = data.gpa;
+const updateProfileInfo = async (data: ProfileInformationAnswers) => {
+  try {
+    isSubmitting.value = true;
+    formData.value.budget = data.selectedBudget;
+    formData.value.grade = data.selectedGrade;
+    formData.value.ielts = data.ielts;
+    formData.value.gpa = data.gpa;
+    let budget = data.selectedBudget?.value.split("-") || [];
+
+    await api.post("/v1/student/update-profile-basic-info", {
+      ...(formData.value.ielts && { ielts_score: formData.value.ielts }),
+      cgpa: formData.value.gpa,
+      current_class_grade: formData.value.grade?.value,
+      annual_min_budget: budget[0],
+      annual_max_budget: budget[1],
+    });
+    isSubmitting.value = false;
+    steps.value = "country_selection";
+    await appStore.getUserData();
+  } catch (error) {
+    isSubmitting.value = false;
+    if (axios.isAxiosError(error)) {
+      showToast(error.message, {
+        type: "warning",
+      });
+    }
+  }
 };
-const updateCountrySelection = (selectedCountries: string[]) => {
-  steps.value = "your_process";
-  formData.value.countries = selectedCountries;
-};
-const updateSelectedCounties = (selectedCountries: string[]) => {
-  formData.value.countries = selectedCountries;
-};
-const updateProcessSelection = (item: string) => {
-  formData.value.process = item;
-};
-const submitForm = (item: string) => {
-  updateProcessSelection(item);
-  sessionStorage.setItem("formData", JSON.stringify(formData.value));
-  navigateTo("/roadmap");
+const updateCountrySelection = async (selectedCountries: number[]) => {
+  // steps.value = "your_process";
+  try {
+    isSubmitting.value = true;
+    formData.value.countries = selectedCountries;
+    await api.post("/v1/student/update-profile-basic-info", {
+      cgpa: formData.value.gpa,
+      destination_country_ids: formData.value.countries,
+    });
+    navigateTo("/roadmap");
+    await appStore.getUserData();
+    isSubmitting.value = false;
+  } catch (error) {
+    isSubmitting.value = false;
+    if (axios.isAxiosError(error)) {
+      showToast(error.message, {
+        type: "warning",
+      });
+    }
+  }
 };
 
-onMounted(() => {
-  const userData = JSON.parse(sessionStorage.getItem("formData")!);
-  if (userData) {
-    formData.value = userData;
+// update when user go back to profile screen
+const updateSelectedCounties = (selectedCountries: number[]) => {
+  formData.value.countries = selectedCountries;
+};
+
+// const updateProcessSelection = (item: string) => {
+//   formData.value.process = item;
+// };
+// const submitForm = (item: string) => {
+//   updateProcessSelection(item);
+//   navigateTo("/roadmap");
+// };
+const findScore = (data: TestScores[] | null = null, test: string) => {
+  return data?.find((item) => item.title.toLowerCase() === test)?.score || "";
+};
+
+const transformData = () => {
+  if (appStore.userData) {
+    let countriesArray: number[] = [];
+    const { educational_records } = appStore.userData;
+    appStore.userData.educational_records.want_to_study_countries.forEach(
+      (item: { id: number; title: string }) => {
+        countriesArray.push(item.id);
+      }
+    );
+    formData.value = {
+      ...formData.value,
+      ...(educational_records?.annual_min_budget >= 0 &&
+      educational_records?.annual_max_budget > 0
+        ? {
+            budget: {
+              value: `${educational_records?.annual_min_budget}-${educational_records?.annual_max_budget}`,
+              label: `${educational_records?.annual_min_budget} - ${educational_records?.annual_max_budget}M VND`,
+            },
+          }
+        : {}),
+      gpa: educational_records?.cgpa ? `${educational_records?.cgpa}` : "",
+      ielts: `${findScore(educational_records.test_scores, "ielts")}`,
+      ...(educational_records?.current_class_grade.id &&
+      educational_records?.current_class_grade.class_name
+        ? {
+            grade: {
+              value: `${educational_records?.current_class_grade.id}`,
+              label: `${educational_records?.current_class_grade.class_name}`,
+            },
+          }
+        : {}),
+      countries: countriesArray,
+    };
   }
+};
+
+watch(
+  () => appStore.userData,
+  () => {
+    transformData();
+  }
+);
+
+onMounted(() => {
+  transformData();
 });
 </script>
 <style scoped>

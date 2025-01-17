@@ -16,8 +16,8 @@ onBeforeMount(() => {
   parsedOldUser ? navigateTo('/') : navigateTo('/explore');
   if (!savedtoken.value) {
     savedtoken.value = Array.isArray(token.value) ? token.value.join('') : token.value;
-    appStore.setUserData({
-      ...appStore.UserData,
+    appStore.setUserLoginData({
+      ...appStore.userLoginData,
       oldUser: parsedOldUser,
     });
   }

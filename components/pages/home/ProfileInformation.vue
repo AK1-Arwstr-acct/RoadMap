@@ -1,6 +1,8 @@
 <template>
   <div class="size-full flex flex-col justify-center mt-16 lg:mt-0">
-    <div class="w-full p-6 lg:p-12 flex-1 flex flex-col lg:justify-center gap-6">
+    <div
+      class="w-full p-6 lg:p-12 flex-1 flex flex-col lg:justify-center gap-6"
+    >
       <div class="w-full flex flex-col gap-6">
         <BaseSelectRadio
           label="ANNUAL TUITION BUDGET"
@@ -9,7 +11,7 @@
         />
         <BaseSelectRadio
           label="GRADE"
-          :options="grade"
+          :options="appStore.currentClassGrade"
           v-model="answers.selectedGrade"
         />
         <div class="remove-shadow">
@@ -44,9 +46,10 @@
         <button
           @click="submit"
           :disabled="continueBtnDisabled"
-          class="bg-[#8380FF] w-full rounded-lg font-semibold text-xl leading-6 py-3 disabled:opacity-50"
+          class="bg-[#8380FF] w-full rounded-lg font-semibold text-xl leading-6 py-3 disabled:opacity-50 flex justify-center items-center gap-2"
         >
           Continue
+          <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
         </button>
       </div>
     </div>
@@ -61,14 +64,21 @@ export interface ProfileInformationAnswers {
 }
 </script>
 <script setup lang="ts">
-import type { OptionAttributes, FormData } from "~/types/home";
+import type { OptionAttributes, FormData, ClassGrades } from "~/types/home";
+import useAppStore from "~/stores/AppStore";
 
 const emit = defineEmits(["onSubmit"]);
+const { api } = useApi();
+const appStore = useAppStore();
 
 const props = defineProps({
   formData: {
     type: Object as PropType<FormData>,
   },
+  isSubmitting: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const answers = ref<ProfileInformationAnswers>({
@@ -77,33 +87,20 @@ const answers = ref<ProfileInformationAnswers>({
   ielts: props.formData?.ielts || "",
   gpa: props.formData?.gpa || "",
 });
+const classGrades = ref<ClassGrades[]>([]);
 
 const budget = [
   {
-    value: "0 - 250M VND",
+    value: "0-250",
     label: "0 - 250M VND",
   },
   {
-    value: "0 - 500M VND",
+    value: "0-500",
     label: "0 - 500M VND",
   },
   {
-    value: "0 - 750M VND",
+    value: "0-750",
     label: "0 - 750M VND",
-  },
-];
-const grade = [
-  {
-    value: "10",
-    label: "10",
-  },
-  {
-    value: "11",
-    label: "11",
-  },
-  {
-    value: "12",
-    label: "12",
   },
 ];
 
@@ -135,13 +132,34 @@ const submit = () => {
   emit("onSubmit", answers.value);
 };
 
+// const getClassGrades = async () => {
+//   try {
+//     const response = await api.get(`/v1/sign-up/get-class-grades`);
+//     classGrades.value = response.data.data.map(
+//       (item: { id: number; class_name: string }) => {
+//         return {
+//           value: item.id,
+//           label: item.class_name,
+//         };
+//       }
+//     );
+//     appStore.setCurrentClassGrade(classGrades.value);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
 watch(
   () => props.formData,
   () => {
-    answers.value.selectedBudget = props.formData?.budget || null,
-    answers.value.selectedGrade= props.formData?.grade || null,
-    answers.value.ielts= props.formData?.ielts || "",
-    answers.value.gpa= props.formData?.gpa || ""
+    (answers.value.selectedBudget = props.formData?.budget || null),
+      (answers.value.selectedGrade = props.formData?.grade || null),
+      (answers.value.ielts = props.formData?.ielts || ""),
+      (answers.value.gpa = props.formData?.gpa || "");
   }
 );
+
+onMounted(() => {
+  appStore.getClassGrades();
+});
 </script>

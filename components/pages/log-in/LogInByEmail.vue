@@ -118,8 +118,8 @@ const onSubmit = async () => {
       });
       token.value = JSON.stringify(response.data.token);
     }
+    appStore.setUserLoginData(response.data.data);
     response.data.data.oldUser ? navigateTo("/") : navigateTo("/explore");
-    appStore.setUserData(response.data.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       showToast(error.response?.data.message, {

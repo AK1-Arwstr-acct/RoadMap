@@ -31,19 +31,21 @@
     <div :class="{ 'pointer-events-none': !editMode }">
       <div class="grid grid-cols-2 gap-3 p-3 border-b border-[#383838]">
         <div>
-          <h3 class="font-medium" >GPA Score</h3>
+          <h3 class="font-medium">GPA Score</h3>
           <input
             type="text"
             v-model="scores.gpa"
+            placeholder="N/A"
             class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
             :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
           />
         </div>
         <div>
-          <h3 class="font-medium" >IELTS Score</h3>
+          <h3 class="font-medium">IELTS Score</h3>
           <input
             type="text"
             v-model="scores.ielts"
+            placeholder="N/A"
             class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
             :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
           />
@@ -52,19 +54,21 @@
       <!--  -->
       <div class="grid grid-cols-2 gap-3 p-3 border-b border-[#383838]">
         <div>
-          <h3 class="font-medium" >SAT Score</h3>
+          <h3 class="font-medium">SAT Score</h3>
           <input
             type="text"
             v-model="scores.sat"
+            placeholder="N/A"
             class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
             :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
           />
         </div>
         <div>
-          <h3 class="font-medium" >ACT Score</h3>
+          <h3 class="font-medium">ACT Score</h3>
           <input
             type="text"
             v-model="scores.act"
+            placeholder="N/A"
             class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
             :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
           />
@@ -73,10 +77,11 @@
       <!--  -->
       <div class="grid grid-cols-2 gap-3 p-3">
         <div>
-          <h3 class="font-medium" >AP Score</h3>
+          <h3 class="font-medium">AP Score</h3>
           <input
             type="text"
             v-model="scores.ap"
+            placeholder="N/A"
             class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
             :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
           />
@@ -85,33 +90,59 @@
     </div>
   </main>
   <Transition name="fade">
-      <component
-        :is="ConfirmationModal"
-        v-if="isConfirmationModal"
-        @cancel="cancel"
-        @discard="discadChanges"
-      />
-    </Transition>
+    <component
+      :is="ConfirmationModal"
+      v-if="isConfirmationModal"
+      @cancel="cancel"
+      @discard="discadChanges"
+    />
+  </Transition>
 </template>
 <script setup lang="ts">
+import useAppStore from "~/stores/AppStore";
 import ConfirmationModal from "./ConfirmationModal.vue";
+import type { TestScores } from "~/types/home";
 
+const { api } = useApi();
+const appStore = useAppStore();
+const testScores = ref<TestScores[] | null>(
+  appStore.userData?.educational_records.test_scores ?? null
+);
+
+const findScore = (data: TestScores[] | null = null, test: string) => {
+  return data?.find((item) => item.title.toLowerCase() === test)?.score || "";
+};
 const editMode = ref<boolean>(false);
 const scores = ref({
-  gpa: "N/A",
-  ielts: "N/A",
-  sat: "N/A",
-  act: "N/A",
-  ap: "N/A",
+  gpa: appStore.userData?.educational_records.cgpa,
+  ielts: findScore(testScores.value, "ielts"),
+  sat: findScore(testScores.value, "sat"),
+  act: findScore(testScores.value, "act"),
+  ap: findScore(testScores.value, "ap"),
 });
 const isConfirmationModal = ref<boolean>(false);
 
 const discadChanges = () => {
+  scores.value = {
+    gpa: appStore.userData?.educational_records.cgpa,
+    ielts: findScore(testScores.value, "ielts"),
+    sat: findScore(testScores.value, "sat"),
+    act: findScore(testScores.value, "act"),
+    ap: findScore(testScores.value, "ap"),
+  };
   isConfirmationModal.value = false;
   editMode.value = false;
 };
-const saveChanges = () => {
+const saveChanges = async () => {
   editMode.value = !editMode;
+  await api.post("/v1/student/update-profile-basic-info", {
+    ielts_score: scores.value.ielts,
+    sat_score: scores.value.sat,
+    act_score : scores.value.act,
+    ap_score : scores.value.ap,
+    cgpa: scores.value.gpa,
+  });
+  await appStore.getUserData();
 };
 
 const confirmationPopup = () => {

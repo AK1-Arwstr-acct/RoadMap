@@ -95,7 +95,7 @@
           class="text-[#F3F3F3] font-medium text-nowrap"
           :class="[isSideBar ? 'block' : 'hidden group-hover:block']"
         >
-          Damian Nguyen
+          {{ appStore.userData?.name}}
         </div>
       </div>
       <div :class="{ 'hidden': !isSideBar }" class="cursor-pointer group-hover:block" @click="logout">
@@ -105,7 +105,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import useAppStore from '~/stores/AppStore';
+
 const emit = defineEmits(["toggleSideBar", "updateTab"]);
+const appStore = useAppStore();
 
 type TabName = "home" | "school_finder" | "counselor_service" | "user_profile";
 

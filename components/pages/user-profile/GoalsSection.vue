@@ -5,7 +5,7 @@
     <div class="bg-[#292929] p-3 min-h-[68px] flex items-center">
       <div class="flex justify-between items-center w-full">
         <div class="flex items-center gap-3">
-          <h2 class="text-xl 2xl:text-2xl font-semibold">Scores</h2>
+          <h2 class="text-xl 2xl:text-2xl font-semibold">Goals</h2>
         </div>
         <div>
           <div v-if="!editMode" @click="editMode = true" class="cursor-pointer">
@@ -29,23 +29,23 @@
       </div>
     </div>
     <div :class="{ 'pointer-events-none': !editMode }">
-      <div class="p-3 border-b border-[#383838]">
+      <!-- <div class="p-3 border-b border-[#383838]">
         <h3 class="font-medium">Majors</h3>
         <div class="flex gap-2 items-center mt-1">
           <div v-for="m in majors" class="bg-[#383838] rounded-full px-2 py-1">
             {{ m }}
           </div>
         </div>
-      </div>
+      </div> -->
       <!--  -->
       <div class="p-3 border-b border-[#383838]">
-        <h3 class="font-medium">SAT Score</h3>
+        <h3 class="font-medium">Countries</h3>
         <div class="flex gap-2 items-center mt-1">
           <div
-            v-for="c in countries"
+            v-for="c in countriesList"
             class="bg-[#383838] rounded-full px-2 py-1"
           >
-            {{ c }}
+            {{ c.title }}
           </div>
         </div>
       </div>
@@ -62,12 +62,48 @@
 </template>
 <script setup lang="ts">
 import ConfirmationModal from "./ConfirmationModal.vue";
+import useAppStore from "~/stores/AppStore";
+
+const appStore = useAppStore();
 
 const editMode = ref<boolean>(false);
 const majors = ["Arts & Design", "Architecture", "Engineering"];
 const countries = ["United States", "Australia"];
 
 const isConfirmationModal = ref<boolean>(false);
+const countryOptions = [
+  {
+    id: [182],
+    title: "United States",
+  },
+  {
+    id: [92],
+    title: "United Kingdom",
+  },
+  {
+    id: [185],
+    title: "Australia",
+  },
+  {
+    id: [67, 68, 62, 63, 88, 78, 191, 80, 90],
+    title: "Europe",
+  },
+  {
+    id: [156],
+    title: "Canada",
+  },
+];
+
+const countriesList = computed(() => {
+  const wantToStudy =
+    appStore.userData?.educational_records?.want_to_study_countries.map(
+      (item) => item.id
+    ) || [];
+  const isChecked = (option: number[]) => {
+    return option.some((num) => wantToStudy.includes(num));
+  };
+  return countryOptions.filter((item) => isChecked(item.id));
+});
 
 const discadChanges = () => {
   isConfirmationModal.value = false;
