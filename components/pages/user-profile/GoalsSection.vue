@@ -40,11 +40,14 @@
       <!--  -->
       <div class="p-3 border-b border-[#383838]">
         <h3 class="font-medium">Countries</h3>
-        <div class="flex gap-2 items-center mt-1">
+        <div class="flex gap-2 flex-wrap items-center mt-1">
           <div
             v-for="c in countriesList"
-            class="bg-[#383838] rounded-full px-2 py-1"
+            class="bg-[#383838] rounded-full px-2 py-1 flex items-center gap-2"
           >
+          <div class="size-5 rounded-full overflow-hidden">
+            <img :src="c.flag" alt="" class="size-full object-cover" />
+          </div>
             {{ c.title }}
           </div>
         </div>
@@ -67,30 +70,34 @@ import useAppStore from "~/stores/AppStore";
 const appStore = useAppStore();
 
 const editMode = ref<boolean>(false);
-const majors = ["Arts & Design", "Architecture", "Engineering"];
-const countries = ["United States", "Australia"];
+// const majors = ["Arts & Design", "Architecture", "Engineering"];
 
 const isConfirmationModal = ref<boolean>(false);
 const countryOptions = [
   {
     id: [182],
     title: "United States",
+    flag: '/images/countries/united-states.png'
   },
   {
     id: [92],
     title: "United Kingdom",
+    flag: '/images/countries/uk.png'
   },
   {
     id: [185],
     title: "Australia",
+    flag: '/images/countries/australia.png'
   },
   {
     id: [67, 68, 62, 63, 88, 78, 191, 80, 90],
     title: "Europe",
+    flag: '/images/countries/europe.png'
   },
   {
     id: [156],
     title: "Canada",
+    flag: '/images/countries/canada.png'
   },
 ];
 

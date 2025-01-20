@@ -89,7 +89,7 @@
         <div
           class="size-9 min-w-9 border border-white rounded-full overflow-hidden"
         >
-          <NuxtImg src="/images/user.png" class="size-full object-cover" />
+          <NuxtImg :src="appStore.userImagePreview || appStore.userData?.avatar || '/images/user.png'" class="size-full object-cover" />
         </div>
         <div
           class="text-[#F3F3F3] font-medium text-nowrap"

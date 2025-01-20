@@ -146,7 +146,7 @@
                       type="text"
                       placeholder="Enter Notes"
                       v-model="note"
-                      @keydown.enter="updateTaskNotes(modalData.id)"
+                      @blur="updateTaskNotes(modalData.id)"
                       class="mt-1 bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#C5C5C5] py-2 w-full outline-none text-white"
                       />
                   </div>
@@ -161,10 +161,11 @@
 </template>
 <script setup lang="ts">
 const { api } = useApi();
+// const {showToast} = useToast();
 
 const emit = defineEmits(["close"]);
 
-defineProps({
+const props = defineProps({
   modalData: {
     type: Object,
     default: () => {},
@@ -172,7 +173,7 @@ defineProps({
 });
 
 const tabView = ref<"overView" | "notes">("overView");
-const note = ref<string>("");
+const note = ref<string | null>(props.modalData.remarks);
 
 const options = {
   html: true,
@@ -194,7 +195,9 @@ const updateTaskNotes = async (id: number) => {
       task_id: id,
       remarks: note.value,
     });
-    note.value = "";
+    // showToast("Remarks Submitted", {
+    //     type: "success",
+    //   });
   } catch (error) {
     console.error(error);
   }

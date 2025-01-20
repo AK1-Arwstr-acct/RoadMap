@@ -79,6 +79,7 @@ interface EducationalRecords {
 }
 interface UserData {
   id: number;
+  avatar: string;
   name: string;
   email: string;
   phone_number: string | null;

@@ -17,6 +17,11 @@ const useAppStore = defineStore("appStore", () => {
     const DashboardData = ref(roadmapData);
     const onboardingViewData = ref(onboardingData);
     const currentClassGrade = ref<ClassGrades[]>([]);
+    const userImagePreview = ref<string>('');
+
+    const setUserImagePreview = (data: string) => {
+      userImagePreview.value = data
+    }
 
     const chekCountry = () => {
         const data = sessionStorage.getItem('formData') || null
@@ -63,6 +68,8 @@ const useAppStore = defineStore("appStore", () => {
         userLoginData,
         userData,
         currentClassGrade,
+        userImagePreview,
+        setUserImagePreview,
         chekCountry,
         setUserLoginData,
         getUserData,

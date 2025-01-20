@@ -26,58 +26,71 @@
         </div>
       </div>
       <!--  -->
-      <div
-        class="flex flex-col gap-2 2xl:gap-3"
-        :class="{ 'pointer-events-none': !editMode }"
-      >
+      <div class="flex flex-col gap-2 2xl:gap-3">
         <div
           class="flex justify-between items-center gap-1 2xl:gap-2 text-xl font-semibold"
         >
           <div class="h-1.5 w-full bg-[#383838] rounded-full overflow-hidden">
             <div
               :style="{ width: completedProfile }"
-              class="bg-[#36C453] h-full"
+              class="bg-[#36C453] h-full transition-all ease-in-out duration-1000"
             />
           </div>
           <p>{{ completedProfile }}</p>
         </div>
-        <div class="h-[250px] 2xl:h-[328px] rounded-xl overflow-hidden">
-          <NuxtImg src="/images/user.png" class="size-full object-cover" />
-        </div>
-        <div>
-          <h3 class="font-medium text-[#E2E6FF]">Name</h3>
+        <div
+          class="h-[250px] 2xl:h-[328px] rounded-xl overflow-hidden relative"
+        >
+          <NuxtImg
+            :src="imagePreview || '/images/user.png'"
+            class="size-full object-contain"
+          />
           <input
-            type="text"
-            v-model="data.name"
-            class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
-            :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
+            type="file"
+            accept="image/*"
+            @change="handleImageChange"
+            class="size-full absolute inset-0 cursor-pointer opacity-0"
           />
         </div>
-        <div>
-          <h3 class="font-medium text-[#E2E6FF]">Phone number</h3>
-          <input
-            type="text"
-            v-model="data.phoneNumber"
-            placeholder="N/A"
-            class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
-            :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
+        <div
+          class="flex flex-col gap-2 2xl:gap-3"
+          :class="{ 'pointer-events-none': !editMode }"
+        >
+          <div>
+            <h3 class="font-medium text-[#E2E6FF]">Name</h3>
+            <input
+              type="text"
+              v-model="data.name"
+              class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
+              :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
+            />
+          </div>
+          <div>
+            <h3 class="font-medium text-[#E2E6FF]">Phone number</h3>
+            <input
+              type="text"
+              v-model="data.phoneNumber"
+              placeholder="N/A"
+              class="text-[#AEAEAE] py-2 w-full bg-transparent border-b outline-none"
+              :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
+            />
+          </div>
+          <!--  -->
+          <BaseSelectRadio
+            v-if="editMode"
+            label="Current Grade"
+            :options="appStore.currentClassGrade"
+            v-model="data.grade"
           />
-        </div>
-        <!--  -->
-        <BaseSelectRadio
-          v-if="editMode"
-          label="Current Grade"
-          :options="appStore.currentClassGrade"
-          v-model="data.grade"
-        />
-        <div v-else>
-          <h3 class="font-medium text-[#E2E6FF]">Current Grade</h3>
-          <input
-            type="text"
-            v-model="data.grade.label"
-            class="text-[#AEAEAE] py-3 w-full bg-transparent border-b outline-none"
-            :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
-          />
+          <div v-else>
+            <h3 class="font-medium text-[#E2E6FF]">Current Grade</h3>
+            <input
+              type="text"
+              v-model="data.grade.label"
+              class="text-[#AEAEAE] py-3 w-full bg-transparent border-b outline-none"
+              :class="[editMode ? 'border-[#C5C5C5]' : 'border-transparent']"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -92,15 +105,16 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import ConfirmationModal from "./ConfirmationModal.vue";
 import useAppStore from "~/stores/AppStore";
 
 const appStore = useAppStore();
 const { api } = useApi();
+const { showToast } = useToast();
 
 const editMode = ref<boolean>(false);
 const isConfirmationModal = ref<boolean>(false);
-
 const data = ref({
   name: appStore.userData?.name,
   phoneNumber: appStore.userData?.phone_number,
@@ -109,6 +123,8 @@ const data = ref({
     label: `${appStore.userData?.educational_records.current_class_grade.class_name}`,
   },
 });
+const selectedImage = ref<File | null>(null);
+const imagePreview = ref<string | null>(appStore.userData?.avatar || null);
 
 const completedProfile = computed(() => {
   const totalPoints = 10;
@@ -116,6 +132,7 @@ const completedProfile = computed(() => {
 
   const conditions = [
     !!appStore.userData?.phone_number,
+    !!appStore.userData?.avatar,
     !!appStore.userData?.name,
     !!appStore.userData?.educational_records?.current_class_grade?.id,
     !!appStore.userData?.educational_records?.cgpa,
@@ -127,6 +144,34 @@ const completedProfile = computed(() => {
   const widthClass = (profileProgress / totalPoints) * 100;
   return `${widthClass.toFixed(0)}%`;
 });
+
+const handleImageChange = async (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files[0]) {
+    selectedImage.value = input.files[0];
+    imagePreview.value = URL.createObjectURL(selectedImage.value);
+    try {
+      const formData = new FormData();
+      formData.append("avatar", selectedImage.value);
+      if (appStore.userData?.educational_records.cgpa !== undefined) {
+        formData.append("cgpa", appStore.userData.educational_records.cgpa.toString());
+      }
+      await api.post("/v1/student/update-profile-basic-info", formData, {
+        headers: {
+          "Content-Type": "form-data",
+        },
+      });
+      appStore.setUserImagePreview(imagePreview.value);
+    } catch (error) {
+      imagePreview.value = appStore.userData?.avatar || null
+      if (axios.isAxiosError(error)) {
+        showToast(error.message, {
+          type: "warning",
+        });
+      }
+    }
+  }
+};
 
 const discadChanges = () => {
   data.value = {
