@@ -10,7 +10,7 @@ export const useApi = () => {
   });
 
   const token = useCookie('token')
-  
+
   api.interceptors.request.use(config => {
     if (token.value) {
       config.headers["Authorization"] = `Bearer ${token.value}`
@@ -19,6 +19,16 @@ export const useApi = () => {
   }, error => {
     return Promise.reject(error);
   });
+
+  api.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response && error.response.status === 401) {
+        navigateTo('/login')
+      }
+      return Promise.reject(error);
+    }
+  );
 
   return { api };
 }

@@ -18,7 +18,8 @@
             </button>
             <button
               @click="saveChanges"
-              class="cursor-pointer p-2 border border-[#8380FF] bg-[#8380FF] rounded-lg w-[62px]"
+              :disabled="data.name === ''"
+              class="cursor-pointer p-2 border border-[#8380FF] bg-[#8380FF] rounded-lg w-[62px] disabled:opacity-70 disabled:cursor-not-allowed"
             >
               Save
             </button>
@@ -192,7 +193,7 @@ const saveChanges = async () => {
   try {
     editMode.value = !editMode;
     await api.post("/v1/student/update-profile-basic-info", {
-      name: data.value.name || -1,
+      name: data.value.name,
       phone_number: data.value.phoneNumber || -1,
       current_class_grade: data.value.grade.value,
       cgpa: appStore.userData?.educational_records.cgpa,
