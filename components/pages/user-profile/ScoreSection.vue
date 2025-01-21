@@ -104,6 +104,7 @@ import ConfirmationModal from "./ConfirmationModal.vue";
 import type { TestScores } from "~/types/home";
 
 const { api } = useApi();
+const {showToast} = useToast();
 const appStore = useAppStore();
 const testScores = ref<TestScores[] | null>(
   appStore.userData?.educational_records.test_scores ?? null
@@ -134,15 +135,23 @@ const discadChanges = () => {
   editMode.value = false;
 };
 const saveChanges = async () => {
-  editMode.value = !editMode;
-  await api.post("/v1/student/update-profile-basic-info", {
-    ielts_score: scores.value.ielts,
-    sat_score: scores.value.sat,
-    act_score : scores.value.act,
-    ap_score : scores.value.ap,
-    cgpa: scores.value.gpa,
-  });
-  await appStore.getUserData();
+  try {
+    editMode.value = !editMode;
+    await api.post("/v1/student/update-profile-basic-info", {
+      ielts_score: scores.value.ielts || -1,
+      sat_score: scores.value.sat || -1,
+      act_score: scores.value.act || -1,
+      ap_score: scores.value.ap || -1,
+      cgpa: scores.value.gpa || -1,
+    });
+  } catch (error) {
+    console.error(error);
+    showToast("Something went wrong while updating your profile", {
+        type: "warning",
+      });
+  } finally {
+    await appStore.getUserData();
+  }
 };
 
 const confirmationPopup = () => {
@@ -152,4 +161,18 @@ const confirmationPopup = () => {
 const cancel = () => {
   isConfirmationModal.value = false;
 };
+
+watch(
+  () => appStore.userData,
+  () => {
+    testScores.value =  appStore.userData?.educational_records.test_scores ?? null
+    scores.value = {
+      gpa: appStore.userData?.educational_records.cgpa,
+      ielts: findScore(testScores.value, "ielts"),
+      sat: findScore(testScores.value, "sat"),
+      act: findScore(testScores.value, "act"),
+      ap: findScore(testScores.value, "ap"),
+    };
+  }
+);
 </script>

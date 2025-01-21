@@ -154,7 +154,10 @@ const handleImageChange = async (event: Event) => {
       const formData = new FormData();
       formData.append("avatar", selectedImage.value);
       if (appStore.userData?.educational_records.cgpa !== undefined) {
-        formData.append("cgpa", appStore.userData.educational_records.cgpa.toString());
+        formData.append(
+          "cgpa",
+          appStore.userData.educational_records.cgpa.toString()
+        );
       }
       await api.post("/v1/student/update-profile-basic-info", formData, {
         headers: {
@@ -163,7 +166,7 @@ const handleImageChange = async (event: Event) => {
       });
       appStore.setUserImagePreview(imagePreview.value);
     } catch (error) {
-      imagePreview.value = appStore.userData?.avatar || null
+      imagePreview.value = appStore.userData?.avatar || null;
       if (axios.isAxiosError(error)) {
         showToast(error.message, {
           type: "warning",
@@ -186,14 +189,22 @@ const discadChanges = () => {
   editMode.value = false;
 };
 const saveChanges = async () => {
-  editMode.value = !editMode;
-  await api.post("/v1/student/update-profile-basic-info", {
-    name: data.value.name,
-    phone_number: data.value.phoneNumber,
-    current_class_grade: data.value.grade.value,
-    cgpa: appStore.userData?.educational_records.cgpa,
-  });
-  await appStore.getUserData();
+  try {
+    editMode.value = !editMode;
+    await api.post("/v1/student/update-profile-basic-info", {
+      name: data.value.name || -1,
+      phone_number: data.value.phoneNumber || -1,
+      current_class_grade: data.value.grade.value,
+      cgpa: appStore.userData?.educational_records.cgpa,
+    });
+  } catch (error) {
+    console.error(error);
+    showToast("Something went wrong while updating your profile", {
+      type: "warning",
+    });
+  } finally {
+    await appStore.getUserData();
+  }
 };
 
 const confirmationPopup = () => {
@@ -203,6 +214,21 @@ const confirmationPopup = () => {
 const cancel = () => {
   isConfirmationModal.value = false;
 };
+
+watch(
+  () => appStore.userData,
+  () => {
+    data.value = {
+      name: appStore.userData?.name,
+      phoneNumber: appStore.userData?.phone_number,
+      grade: {
+        value: `${appStore.userData?.educational_records.current_class_grade.id}`,
+        label: `${appStore.userData?.educational_records.current_class_grade.class_name}`,
+      },
+    };
+  }
+);
+
 onMounted(() => {
   appStore.getClassGrades();
 });

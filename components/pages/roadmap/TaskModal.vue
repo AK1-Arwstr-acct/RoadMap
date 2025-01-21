@@ -145,8 +145,8 @@
                       name=""
                       type="text"
                       placeholder="Enter Notes"
-                      v-model="note"
-                      @blur="updateTaskNotes(modalData.id)"
+                      v-model="modalData.remarks"
+                      @blur="updateTask(modalData.id, modalData.checked)"
                       class="mt-1 bg-transparent focus:outline-none focus:ring-0 rounded-none border-b border-[#C5C5C5] py-2 w-full outline-none text-white"
                       />
                   </div>
@@ -161,7 +161,6 @@
 </template>
 <script setup lang="ts">
 const { api } = useApi();
-// const {showToast} = useToast();
 
 const emit = defineEmits(["close"]);
 
@@ -173,7 +172,6 @@ const props = defineProps({
 });
 
 const tabView = ref<"overView" | "notes">("overView");
-const note = ref<string | null>(props.modalData.remarks);
 
 const options = {
   html: true,
@@ -183,21 +181,9 @@ const updateTask = async (id: number, isUpdate: boolean) => {
   try {
     await api.post("v1/roadmap/tasks", {
       task_id: id,
+      ...(props.modalData.remarks && {remarks: props.modalData.remarks}),
       is_complete: isUpdate,
     });
-  } catch (error) {
-    console.error(error);
-  }
-};
-const updateTaskNotes = async (id: number) => {
-  try {
-    await api.post("v1/roadmap/tasks", {
-      task_id: id,
-      remarks: note.value,
-    });
-    // showToast("Remarks Submitted", {
-    //     type: "success",
-    //   });
   } catch (error) {
     console.error(error);
   }

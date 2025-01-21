@@ -32,13 +32,14 @@
                 </div>
               </div>
             </div>
-            <div v-for="(data, idx) in roadmapData">
+            <div v-if="roadmapData.length" v-for="(data, idx) in roadmapData">
               <Accordion
                 :key="idx"
                 :data="data"
                 @showTaskModal="(data) => handelTaskModal(data)"
               />
             </div>
+            <div v-else v-for="i in 4" class="w-full h-14 bg-[#212225]/25 rounded-xl animate-pulse" />
           </div>
           <div v-else-if="activeTab === 'user_profile'" class="size-full">
             <ProfileTab />
@@ -73,11 +74,11 @@ const { api } = useApi();
 
 type TabName = "home" | "school_finder" | "counselor_service" | "user_profile";
 
-const roadmapData = ref();
+const roadmapData = ref([]);
 const activeTab = ref<TabName>("home");
 const taskModal = ref<boolean>(false);
 const infoPopup = ref<boolean>(true);
-const modalData = ref({});
+const modalData = ref<Tasks>();
 
 const handelTaskModal = (data: Tasks) => {
   taskModal.value = !taskModal.value;
