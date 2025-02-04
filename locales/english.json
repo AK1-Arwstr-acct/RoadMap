@@ -1,0 +1,61 @@
+{
+    "discover": {
+        "detail": "Arrowster confidently accompanies students on their path to studying abroad and self-improvement.",
+        "get_started": "Get Started",
+        "heading": "Discover your own study abroad journey.",
+        "i_already_have_an_account": "I already have an account"
+    },
+    "login": {
+        "enter_phone_or_email": "Enter your phone number or email",
+        "heading": "Log in to your account",
+        "login": "Log in",
+        "login_with_google": "Log in with Google",
+        "or": "OR",
+        "phone_or_email": "Phone number or Email",
+        "welcome_back": "Welcome back! Please enter your details.",
+        "password": "Password",
+        "please_verify_your_email_to_continue": "Please verify your email to continue.",
+        "enter_your_password": "Enter your password"
+    },
+    "onboarding": {
+        "academic_heading": "Help us understand your academic profile by sharing the following details",
+        "area_of_study": "Area of study",
+        "budget_heading": "Lastly, could you share a little about your total budget?",
+        "continue": "Continue",
+        "destination_heading": "What about your study destination?",
+        "e_g_11": "e.g. 11",
+        "e_g_7_0": "e.g. 7.0",
+        "gpa": "GPA",
+        "programs_heading": "Could you tell us about your preferred study program and area of interest?",
+        "start_your_journey": "Start your journey",
+        "start_your_journey_heading": "You're all set! Get ready to start your journey with Arrowster!",
+        "your_gpa": "Your GPA (0.0 - 10.0)",
+        "your_grade": "Your grade",
+        "ielts_optional": "IELTS (optional)"
+    },
+    "otp": {
+        "check_sms": "Please check your SMS.",
+        "click_to_resend": "Click to resend",
+        "did_not_get_code": "Didn’t get a code?",
+        "otp_invalid": "OTP invalid",
+        "sent_code": "We've sent a code to",
+        "verify": "Verify"
+    },
+    "signup": {
+        "create_account": "Create account",
+        "create_a_password": "Create a password",
+        "create_your_free_account": "Create your free account",
+        "detail": "Level up your study abroad journey with personalized guidance and unwavering support from Arrowster.",
+        "email": "Email",
+        "enter_your_name": "Enter your name",
+        "name": "Name",
+        "password": "Password",
+        "sign_up_with_google": "Sign up with Google"
+    },
+    "verifyPhone": {
+        "enter_10_digits": "Enter 10 digits",
+        "phone_number": "Phone number",
+        "verify_phone_number": "Verify phone number",
+        "we_ll_need_your_phone_number_to_get_started": "We’ll need your phone number to get started."
+    }
+}

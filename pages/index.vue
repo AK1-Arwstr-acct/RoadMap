@@ -1,265 +1,36 @@
 <template>
-  <div class="h-[100dvh] w-full overflow-x-hidden no-scrollbar">
-    <div class="w-full flex h-[100dvh] lg:h-full min-h-fit">
-      <!-- Left Side -->
-      <div
-        class="w-1/2 min-h-full bg-[#14125C] text-[#F3F3F3] relative isolate hidden lg:flex flex-col"
-      >
-        <div class="absolute inset-0 -z-10">
-          <NuxtImg
-            v-if="steps === 'profile_information'"
-            src="/images/shared/gradient-bg-red.png"
-            class="size-full object-cover object-left-bottom"
-            alt="Background Image"
-          />
-          <NuxtImg
-            v-else-if="steps === 'country_selection'"
-            src="/images/shared/gradient-bg-green.png"
-            class="size-full object-cover object-left-bottom"
-            alt="Background Image"
-          />
-          <NuxtImg
-            v-else
-            src="/images/shared/gradient-bg-blue.png"
-            class="size-full object-cover object-left-bottom"
-            alt="Background Image"
-          />
-        </div>
-        <!-- <div class="w-full h-4 bg-gradient-to-r from-[#8380FF] to-[#ADB2FF]" /> -->
-        <div class="pl-12 pt-8">
-          <NuxtImg class="w-[164px]" src="/images/logo/logo.svg" alt="Logo" />
-        </div>
-        <div class="mt-6 flex-1 flex items-center px-12">
-          <div class="w-full -mt-10">
-            <div
-              class="py-1 px-2 rounded-full w-fit font-semibold"
-              :class="[
-                steps === 'profile_information'
-                  ? 'text-[#5C2C08] bg-[#FFAF38]'
-                  : steps === 'country_selection'
-                  ? 'text-[#07422A] bg-[#36C453]'
-                  : 'text-[#0E265C] bg-[#63B3FF]',
-              ]"
-            >
-              Question
-              {{
-                steps === "profile_information"
-                  ? "1"
-                  : steps === "country_selection"
-                  ? "2"
-                  : "3"
-              }}
-            </div>
-            <h1
-              class="text-7xl leading-[80px] font-semibold"
-              v-html="displayQuestion"
-            />
-          </div>
-        </div>
-      </div>
-      <!-- Right side  -->
-      <div class="w-full lg:w-1/2 h-full min-h-fit bg-[#1A1A1A] text-[#F3F3F3]">
-        <div class="flex flex-col w-full h-full min-h-fit">
-          <NuxtImg
-            class="w-[164px] lg:hidden p-6"
-            src="/images/logo/logo.svg"
-            alt="Logo"
-          />
-          <div class="flex-1">
-            <ProfileInformation
-              v-if="steps === 'profile_information'"
-              @onSubmit="updateProfileInfo"
-              :formData="formData"
-              :isSubmitting="isSubmitting"
-            />
-            <CountrySelection
-              v-else-if="steps === 'country_selection'"
-              @onSubmit="updateCountrySelection"
-              @backStep="backStep"
-              @updateSelectedCounties="updateSelectedCounties"
-              :selectedCounties="formData.countries"
-              :isSubmitting="isSubmitting"
-            />
-            <!-- <ProcessSelection
-              v-else
-              @updateProcessSelection="updateProcessSelection"
-              @onSubmit="submitForm"
-              @backStep="backStep"
-              :selectedProcess="formData.process"
-            /> -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="min-h-svh flex justify-center items-center h-full px-5">
+		<div class="max-w-[864px] w-full flex justify-center gap-12 lg:gap-[84px]">
+			<div class="flex-1 hidden md:block">
+				<img src="/images/good-things-coming.png" alt="Good Things Coming" class="w-full size-full object-contain" />
+			</div>
+			<div class="md:flex-1 py-12">
+				<h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
+					{{ $t("discover.heading") }}
+				</h1>
+				<p class="text-[#717680]">
+					{{ $t("discover.detail") }}
+				</p>
+				<div class="mt-8 space-y-4">
+					<NuxtLinkLocale to="/signup" class="block">
+						<button
+							class="cursor-pointer w-full text-xl text-white bg-[#1570EF] border border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center">
+							{{ $t("discover.get_started") }}
+						</button>
+					</NuxtLinkLocale>
+					<NuxtLinkLocale to="/login" class="block">
+						<button
+							class="cursor-pointer w-full text-xl text-[#414651] border border-[#E1E1E1] rounded-lg font-semibold py-2.5 px-2 flex gap-2 justify-center items-center">
+							{{ $t("discover.i_already_have_an_account") }}
+						</button>
+					</NuxtLinkLocale>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 <script setup lang="ts">
-import type { ProfileInformationAnswers } from "~/components/pages/home/ProfileInformation.vue";
-import type { FormData, TestScores } from "~/types/home";
-import useAppStore from "~/stores/AppStore";
-import axios from "axios";
-
 definePageMeta({
-  layout: "auth-layout",
-});
-
-const { api } = useApi();
-const appStore = useAppStore();
-const { showToast } = useToast();
-
-const isSubmitting = ref<boolean>(false);
-const steps = ref<"profile_information" | "country_selection" | "your_process">(
-  "profile_information"
-);
-const formData = ref<FormData>({
-  budget: null,
-  grade: null,
-  gpa: "",
-  ielts: null,
-  countries: [],
-  process: "",
-});
-
-const displayQuestion = computed(() => {
-  return steps.value === "profile_information"
-    ? "Profile<br/>Information"
-    : steps.value === "country_selection"
-    ? "Select<br/>countries"
-    : "Your process";
-});
-
-const backStep = () => {
-  if (steps.value === "country_selection") {
-    steps.value = "profile_information";
-  } else if (steps.value === "your_process") {
-    steps.value = "country_selection";
-  }
-};
-
-const updateProfileInfo = async (data: ProfileInformationAnswers) => {
-  try {
-    isSubmitting.value = true;
-    formData.value.budget = data.selectedBudget;
-    formData.value.grade = data.selectedGrade;
-    formData.value.ielts = data.ielts;
-    formData.value.gpa = data.gpa;
-    let budget = data.selectedBudget?.value.split("-") || [];
-
-    await api.post("/v1/student/update-profile-basic-info", {
-      ...(formData.value.ielts && { ielts_score: formData.value.ielts }),
-      cgpa: formData.value.gpa,
-      current_class_grade: formData.value.grade?.value,
-      annual_min_budget: budget[0],
-      annual_max_budget: budget[1],
-    });
-    isSubmitting.value = false;
-    steps.value = "country_selection";
-    await appStore.getUserData();
-  } catch (error) {
-    isSubmitting.value = false;
-    if (axios.isAxiosError(error)) {
-      showToast(error.message, {
-        type: "warning",
-      });
-    }
-  }
-};
-const updateCountrySelection = async (selectedCountries: number[]) => {
-  // steps.value = "your_process";
-  try {
-    isSubmitting.value = true;
-    formData.value.countries = selectedCountries;
-    await api.post("/v1/student/update-profile-basic-info", {
-      cgpa: formData.value.gpa,
-      destination_country_ids: formData.value.countries,
-    });
-    navigateTo("/roadmap");
-    await appStore.getUserData();
-    isSubmitting.value = false;
-  } catch (error) {
-    isSubmitting.value = false;
-    if (axios.isAxiosError(error)) {
-      showToast(error.message, {
-        type: "warning",
-      });
-    }
-  }
-};
-
-// update when user go back to profile screen
-const updateSelectedCounties = (selectedCountries: number[]) => {
-  formData.value.countries = selectedCountries;
-};
-
-// const updateProcessSelection = (item: string) => {
-//   formData.value.process = item;
-// };
-// const submitForm = (item: string) => {
-//   updateProcessSelection(item);
-//   navigateTo("/roadmap");
-// };
-const findScore = (data: TestScores[] | null = null, test: string) => {
-  return data?.find((item) => item.title.toLowerCase() === test)?.score || "";
-};
-
-const transformData = () => {
-  if (appStore.userData) {
-    let countriesArray: number[] = [];
-    const { educational_records } = appStore.userData;
-    appStore.userData.educational_records.want_to_study_countries.forEach(
-      (item: { id: number; title: string }) => {
-        countriesArray.push(item.id);
-      }
-    );
-    formData.value = {
-      ...formData.value,
-      ...(educational_records?.annual_min_budget >= 0 &&
-      educational_records?.annual_max_budget > 0
-        ? {
-            budget: {
-              value: `${educational_records?.annual_min_budget}-${educational_records?.annual_max_budget}`,
-              label: `${educational_records?.annual_min_budget} - ${educational_records?.annual_max_budget}M VND`,
-            },
-          }
-        : {}),
-      gpa: educational_records?.cgpa ? `${educational_records?.cgpa}` : "",
-      ielts: `${findScore(educational_records.test_scores, "ielts")}`,
-      ...(educational_records?.current_class_grade.id &&
-      educational_records?.current_class_grade.class_name
-        ? {
-            grade: {
-              value: `${educational_records?.current_class_grade.id}`,
-              label: `${educational_records?.current_class_grade.class_name}`,
-            },
-          }
-        : {}),
-      countries: countriesArray,
-    };
-  }
-};
-
-watch(
-  () => appStore.userData,
-  () => {
-    transformData();
-  }
-);
-
-onMounted(() => {
-  transformData();
+	layout: "main-layout",
 });
 </script>
-<style scoped>
-.bgGradient {
-  background: radial-gradient(
-      68.44% 78.44% at 10% 141.23%,
-      #ffffff 17.18%,
-      rgba(57, 54, 178, 0) 100%
-    ),
-    radial-gradient(
-      97.99% 85.4% at 10% -15.14%,
-      rgba(255, 255, 255) 10.18%,
-      rgba(26, 26, 26, 0.3) 76.45%
-    );
-}
-</style>

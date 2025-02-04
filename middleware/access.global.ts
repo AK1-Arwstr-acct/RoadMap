@@ -1,20 +1,23 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    const token = useCookie("token");
-    const allowedPaths = ["/signup", "/login", "/reset-password"]
+    // if (to.path === '/') {
+    //     return navigateTo('/discover');
+    // }
+    // const token = useCookie("token");
+    // const allowedPaths = ["/signup", "/login", "/reset-password"]
 
-    if (to.path === "/auth") {
-        return;
-    }
+    // if (to.path === "/auth") {
+    //     return;
+    // }
 
-    if (allowedPaths.includes(to.path)) {
-        return ;
-    }
+    // if (allowedPaths.includes(to.path)) {
+    //     return ;
+    // }
 
-    if (to.path.startsWith("/forget-password")) {
-        return;
-      }
+    // if (to.path.startsWith("/forget-password")) {
+    //     return;
+    //   }
 
-    if (!token.value) {
-        return navigateTo("/signup");
-    }
+    // if (!token.value) {
+    //     return navigateTo("/signup");
+    // }
 });

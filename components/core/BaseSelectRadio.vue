@@ -1,48 +1,48 @@
 <template>
   <div class="relative">
-    <p v-if="label" class="font-medium text-[#E2E6FF]">{{ label }}</p>
+    <p v-if="label" class="font-medium text-[#414651] text-sm mb-1.5">{{ label }}</p>
     <div
       @click="isDropdownOpen = !isDropdownOpen"
       @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
-      class="bg-transparent h-12 border-b-[1.5px] border-[#e0e0e0] py-2 w-full transition-colors duration-150 ease-in-out flex justify-between items-center cursor-pointer relative"
+      class="bg-transparent h-12 border border-[#e0e0e0] rounded-lg py-2 pl-[14px] w-full transition-colors duration-150 ease-in-out flex justify-between items-center cursor-pointer relative"
       :class="{
         '!bg-[#f8f8f8] pointer-events-none': disabled,
-        'shadow-dropdown-dropShadow': isDropdownOpen,
-        '!border-[#9CA2FF]': isDropdownOpen,
+        'shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]': isDropdownOpen,
+        '!border-[#84CAFF]': isDropdownOpen,
         '!border-[#EF4646]' : hasError && !selectedOption?.value && !isDropdownOpen
       }"
     >
       <div v-if="!selectedOption?.value" class="flex-1">
-        <p class="text-[#979797] text-left">{{ placeholder }}</p>
+        <p class="text-[#979797] text-left" :class="{'!text-[#181D27]' : isDropdownOpen}">{{ placeholder }}</p>
       </div>
       <div v-else-if="selectedOption?.value && showCheckedLabel" class="flex-1">
-        <p class="text-[#F3F3F3] text-left text-xs">
+        <p class="text-[#717680] text-left text-xs">
           {{ placeholder }}
         </p>
-        <p class="text-[#F3F3F3] text-left w-[calc(100%-24px)] truncate">
+        <p class="text-[#717680] text-left w-[calc(100%-24px)] truncate">
           {{ selectedOption.label }}
         </p>
       </div>
       <div v-else class="flex-1">
-        <p class="text-[#F3F3F3] text-left w-[calc(100%-24px)] truncate">
+        <p class="text-[#181D27] text-left w-[calc(100%-24px)] truncate font-medium">
           {{ selectedOption.label }}
         </p>
       </div>
       <span
         :class="[
           isDropdownOpen
-            ? 'absolute right-0 top-3 transition-transform duration-200 ease-in-out transform rotate-180'
-            : 'absolute right-0 top-3 transition-transform duration-200 ease-in-out',
+            ? 'absolute right-[14px] top-3 transition-transform duration-200 ease-in-out transform rotate-180'
+            : 'absolute right-[14px] top-3 transition-transform duration-200 ease-in-out',
         ]"
       >
-        <IconChevronDown v-if="!loading" height="18" width="18" />
+        <IconChevronDown v-if="!loading" height="18" width="18" stroke="#A4A7AE" />
         <!-- <BaseSpinner v-else color="#475569" width="22px" height="22px" /> -->
       </span>
     </div>
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute left-0 w-full border border-[#e0e0e0] bg-[#1A1A1A] z-20 max-h-[400px] overflow-y-auto py-1.5 rounded-md"
+      class="absolute left-0 w-full border border-[#e0e0e0] bg-white z-20 max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
       :class="[
         direction === 'upward'
           ? label
@@ -56,14 +56,14 @@
       <div
         v-for="(item, index) in options"
         :key="index"
-        class="flex items-center cursor-pointer border-b border-[#686868] last:border-0"
+        class="flex items-center cursor-pointer"
         :class="{
-          'bg-[#14125C]':
+          'bg-[#FAFAFA]':
             mode === 'tick' && selectedOption?.value === item.value,
         }"
       >
         <label
-          class="text-[#5d5f65] text-left cursor-pointer w-full flex items-center gap-2 py-2.5 px-2 truncate"
+          class="text-[#5d5f65] text-left cursor-pointer w-full flex items-center gap-2 py-2.5 px-[14px] truncate"
           :class="{
             'justify-between': mode === 'tick',
           }"
@@ -78,14 +78,11 @@
             :class="{ hidden: mode === 'tick' }"
           />
           <span
-            class="truncate text-[#F3F3F3]"
-            :class="{
-              '!text-[#8380FF]': selectedOption?.value === item.value,
-            }"
+            class="truncate text-[#181D27] font-medium"
             >{{ item.label }}</span
           >
           <span v-if="selectedOption?.value === item.value && mode === 'tick'">
-            <IconTick />
+            <IconTick stroke="#1570EF" stroke-width="2" />
           </span>
         </label>
       </div>

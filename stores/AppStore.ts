@@ -1,81 +1,93 @@
 import { defineStore } from "pinia";
 import { roadmapData, onboardingData } from "../utils/data"
-import type { ClassGrades, CurrentClassGrade, UserData, UserLoginData } from "../types/home";
+import type { ClassGrades, CurrentClassGrade, LanguageLocale, UserData, UserLoginData } from "../types/home";
+import type { AuthUser } from "~/types/auth";
 
 const useAppStore = defineStore("appStore", () => {
-    const { api } = useApi();
+  const { api } = useApi();
+  const { $i18n } = useNuxtApp();
 
-    const userLoginData = ref<UserLoginData>({
-        id: null,
-        name: null,
-        user_name: null,
-        email: null,
-        created_at: null,
-        oldUser: null,
-    });
-    const userData = ref<UserData>()
-    const DashboardData = ref(roadmapData);
-    const onboardingViewData = ref(onboardingData);
-    const currentClassGrade = ref<ClassGrades[]>([]);
-    const userImagePreview = ref<string>('');
+  const locale = ref<string>(`${$i18n.locale.value}`);
+  const authUser = ref<AuthUser>();
+  const userData = ref<UserData>()
+  const DashboardData = ref(roadmapData);
+  const onboardingViewData = ref(onboardingData);
+  const currentClassGrade = ref<ClassGrades[]>([]);
+  const userImagePreview = ref<string>('');
+  const onboardingProgress = ref<string | null>('25%')
 
-    const setUserImagePreview = (data: string) => {
-      userImagePreview.value = data
+  const setOnboardingProgress = (value: string | null) => {
+    onboardingProgress.value = value;
+  }
+  const setLocale = (newLocale: LanguageLocale) => {
+    const matchedLocale = ALL_LOCALES.find(locale => locale.value === newLocale);
+    if (matchedLocale) {
+      $i18n.setLocale(matchedLocale.value as "en" | "vi");
+      locale.value = matchedLocale.value;
+    } else {
+      $i18n.setLocale("en");
+      locale.value = 'en';
     }
+  };
+  const setUserImagePreview = (data: string) => {
+    userImagePreview.value = data
+  }
+  const chekCountry = () => {
+    const data = sessionStorage.getItem('formData') || null
+    if (data) {
+      const countries = JSON.parse(data).countries;
+      DashboardData.value = roadmapData.filter((item) => {
+        return countries.includes(item.country) || item.country === null;
+      })
+    };
+  }
 
-    const chekCountry = () => {
-        const data = sessionStorage.getItem('formData') || null
-        if (data) {
-            const countries = JSON.parse(data).countries;
-            DashboardData.value = roadmapData.filter((item) => {
-                return countries.includes(item.country) || item.country === null;
-            })
-        };
-    }
+  const setAuthUser = (data: AuthUser) => {
+    authUser.value = data
+  }
 
-    const setUserLoginData = (data: UserLoginData) => {
-        userLoginData.value = data
-    }
+  const getUserData = async () => {
+    const response = await api.get("/v1/student/basic-info")
+    userData.value = response.data.data
+  }
 
-    const getUserData = async () => {
-        const response = await api.get("/v1/student/basic-info")
-        userData.value = response.data.data
-    }
-
-    const getClassGrades = async () => {
-        try {
-          const response = await api.get(`/v1/sign-up/get-class-grades`);
-          currentClassGrade.value = response.data.data.map(
-            (item: CurrentClassGrade) => {
-              return {
-                value: item.id,
-                label: item.class_name,
-              };
-            }
-          );
-        } catch (error) {
-          console.error(error);
+  const getClassGrades = async () => {
+    try {
+      const response = await api.get(`/v1/sign-up/get-class-grades`);
+      currentClassGrade.value = response.data.data.map(
+        (item: CurrentClassGrade) => {
+          return {
+            value: item.id,
+            label: item.class_name,
+          };
         }
-      };
-
-    const setCurrentClassGrade = (data: ClassGrades[]) => {
-        currentClassGrade.value = data;
+      );
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    return {
-        DashboardData,
-        onboardingViewData,
-        userLoginData,
-        userData,
-        currentClassGrade,
-        userImagePreview,
-        setUserImagePreview,
-        chekCountry,
-        setUserLoginData,
-        getUserData,
-        getClassGrades,
-        setCurrentClassGrade
-    }
+  const setCurrentClassGrade = (data: ClassGrades[]) => {
+    currentClassGrade.value = data;
+  }
+
+  return {
+    DashboardData,
+    onboardingViewData,
+    authUser,
+    userData,
+    currentClassGrade,
+    userImagePreview,
+    onboardingProgress,
+    setOnboardingProgress,
+    setUserImagePreview,
+    chekCountry,
+    setAuthUser,
+    getUserData,
+    getClassGrades,
+    setCurrentClassGrade,
+    setLocale
+  }
 });
 
 export default useAppStore;

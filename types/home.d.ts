@@ -2,8 +2,8 @@ interface OptionAttributes {
   value: string;
   label: string;
   description?: string;
+  icon?: string;
 }
-
 interface FormData {
   budget: OptionAttributes | null;
   grade: OptionAttributes | null;
@@ -93,5 +93,12 @@ interface UserData {
   created_at: string;
 }
 
+interface UserInput {
+  name: string;
+  email: string;
+  password: string;
+}
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserLoginData, UserData }
+export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
+
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserLoginData, UserData, UserInput }

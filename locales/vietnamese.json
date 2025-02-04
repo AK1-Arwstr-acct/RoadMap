@@ -1,0 +1,61 @@
+{
+    "discover": {
+        "detail": "Arrowster tự tin đồng hành cùng sinh viên trên con đường du học và phát triển bản thân.",
+        "get_started": "Bắt đầu",
+        "heading": "Khám phá hành trình du học của riêng bạn.",
+        "i_already_have_an_account": "Tôi đã có tài khoản"
+    },
+    "login": {
+        "enter_phone_or_email": "Nhập số điện thoại hoặc email của bạn",
+        "heading": "Đăng nhập vào tài khoản của bạn",
+        "login": "Đăng nhập",
+        "login_with_google": "Đăng nhập bằng Google",
+        "or": "HOẶC",
+        "phone_or_email": "Số điện thoại hoặc Email",
+        "welcome_back": "Chào mừng trở lại! Vui lòng nhập thông tin của bạn.",
+        "password": "Mật khẩu",
+        "please_verify_your_email_to_continue": "Vui lòng xác minh email của bạn để tiếp tục.",
+        "enter_your_password": "Nhập mật khẩu của bạn"
+    },
+    "onboarding": {
+        "academic_heading": "Hãy giúp chúng tôi hiểu hồ sơ học tập của bạn bằng cách chia sẻ các thông tin sau",
+        "area_of_study": "Lĩnh vực học tập",
+        "budget_heading": "Cuối cùng, bạn có thể chia sẻ một chút về tổng ngân sách của mình không?",
+        "continue": "Tiếp tục",
+        "destination_heading": "Còn điểm đến du học của bạn thì sao?",
+        "e_g_11": "Ví dụ: 11",
+        "e_g_7_0": "Ví dụ: 7.0",
+        "gpa": "Điểm trung bình (GPA)",
+        "programs_heading": "Bạn có thể cho chúng tôi biết về chương trình học và lĩnh vực bạn quan tâm không?",
+        "start_your_journey": "Bắt đầu hành trình",
+        "start_your_journey_heading": "Bạn đã sẵn sàng! Hãy bắt đầu hành trình của bạn với Arrowster!",
+        "your_gpa": "Điểm trung bình của bạn (0.0 - 10.0)",
+        "your_grade": "Lớp của bạn",
+        "ielts_optional": "IELTS (không bắt buộc)"
+    },
+    "otp": {
+        "check_sms": "Vui lòng kiểm tra SMS của bạn.",
+        "click_to_resend": "Nhấn để gửi lại",
+        "did_not_get_code": "Chưa nhận được mã?",
+        "otp_invalid": "Mã OTP không hợp lệ",
+        "sent_code": "Chúng tôi đã gửi mã tới",
+        "verify": "Xác minh"
+    },
+    "signup": {
+        "create_account": "Tạo tài khoản",
+        "create_a_password": "Tạo mật khẩu",
+        "create_your_free_account": "Tạo tài khoản miễn phí của bạn",
+        "detail": "Nâng tầm hành trình du học của bạn với hướng dẫn cá nhân hóa và sự hỗ trợ không ngừng từ Arrowster.",
+        "email": "Email",
+        "enter_your_name": "Nhập tên của bạn",
+        "name": "Tên",
+        "password": "Mật khẩu",
+        "sign_up_with_google": "Đăng ký bằng Google"
+    },
+    "verifyPhone": {
+        "enter_10_digits": "Nhập 10 chữ số",
+        "phone_number": "Số điện thoại",
+        "verify_phone_number": "Xác minh số điện thoại",
+        "we_ll_need_your_phone_number_to_get_started": "Chúng tôi cần số điện thoại của bạn để bắt đầu."
+    }
+}

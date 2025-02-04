@@ -13,3 +13,12 @@
   transition: background-color 5000s ease-in-out 0s;
   caret-color: white;
 }
+.remove-shadow-bg-white input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  box-shadow: 0 0 0 1000px transparent inset;
+  font-size: 16px;
+  color: black;
+  -webkit-text-fill-color: black;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: black;
+}
