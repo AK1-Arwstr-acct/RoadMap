@@ -65,7 +65,7 @@
           </div>
           <Transition name="fade">
             <div
-              class="absolute left-0 top-[52px] w-full border border-[#e0e0e0] bg-white z-20 max-h-[250px] overflow-y-auto rounded-lg"
+              class="absolute left-0 top-[52px] w-full border border-[#e0e0e0] bg-white z-20 max-h-[260px] overflow-y-auto rounded-lg"
               v-if="isDropdownOpen"
               v-click-outside="closeDropdown"
             >
@@ -107,15 +107,9 @@
             @keydown.enter="submit"
             @keydown="preventNonNumeric"
             class="w-full pr-4 py-2 outline-none text-[#05092C]"
-            :placeholder="t('verifyPhone.enter_10_digits')"
+            placeholder="915 343 643"
           />
         </div>
-        <!-- <p
-          class="text-[#EF4646] text-xs absolute mt-1 transition-all ease-in-out"
-          name="phoneNumber"
-        >
-          {{ errors.phoneNumber }}
-        </p> -->
       </div>
       <div class="mt-6">
         <button
@@ -173,7 +167,11 @@ const selectCountry = (country: Country) => {
 };
 
 const preventNonNumeric = (event: KeyboardEvent) => {
-  if (!/^[0-9]$/.test(event.key) && event.key !== "Backspace" && event.key !== "Tab") {
+  if (
+    !/^[0-9]$/.test(event.key) &&
+    event.key !== "Backspace" &&
+    event.key !== "Tab"
+  ) {
     event.preventDefault();
   }
 };

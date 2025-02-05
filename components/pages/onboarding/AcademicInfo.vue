@@ -67,10 +67,14 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { ClassGrades, CurrentClassGrade } from "~/types/home";
+
 const emit = defineEmits(["submitAcademic"]);
 
 const { t } = useI18n();
 const { api } = useApi();
+
+const classGradeList = ref<ClassGrades[]>([]);
 
 const academicInfo = ref({
   grade: "",
@@ -94,4 +98,24 @@ const onSubmit = async () => {
     isSubmitting.value = false;
   }
 };
+
+const getClassGrades = async () => {
+  try {
+    const response = await api.get(`/api/v1/sign-up/get-class-grades`);
+    classGradeList.value = response.data.data.map(
+      (item: CurrentClassGrade) => {
+        return {
+          value: item.id,
+          label: item.class_name,
+        };
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+onMounted(async () => {
+  await getClassGrades();
+});
 </script>

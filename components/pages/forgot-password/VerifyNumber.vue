@@ -1,19 +1,19 @@
 <template>
   <div class="space-y-5">
     <div class="flex flex-col items-center gap-5">
-      <IconMessageRound />
+      <IconArrowsterLogo />
       <div class="text-center space-y-3">
-        <h1 class="font-semibold text-lg text-[#181D27]">
-          {{ $t("otp.check_sms") }}
-        </h1>
+        <h1 class="font-semibold text-3xl text-[#181D27]">Forgot password?</h1>
         <p class="text-[#535862] text-sm">
-          {{ $t("otp.sent_code") }} {{ userInput }}
+          Please check your SMS.<br />
+          We've sent a code to {{ phoneNumber }} <br />Enter code to reset
+          password.
         </p>
       </div>
     </div>
     <div class="">
       <form @submit.prevent="onSubmit">
-        <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-6">
           <div class="relative">
             <OtpInput
               :key="inputKey"
@@ -30,7 +30,7 @@
               @keydown="blockNonNumeric"
             />
             <div
-              class="text-sm text-gray-600 text-center flex gap-1 justify-center mt-5"
+              class="text-sm text-gray-600 text-center flex gap-1 justify-center mt-1.5"
             >
               <p>{{ $t("otp.did_not_get_code") }}</p>
               <button
@@ -69,8 +69,10 @@ import OtpInput from "vue3-otp-input";
 import useAppStore from "~/stores/AppStore";
 import type { Country, UserSignupDetail } from "~/types/auth";
 
+const emits = defineEmits(["verifyNumber"])
+
 const props = defineProps({
-  userInput: {
+  phoneNumber: {
     type: String,
     default: "",
   },
@@ -130,7 +132,7 @@ const timer = async () => {
 
     try {
       await api.post(`/api/v2/send_otp`, {
-        msisdn: props.userInput,
+        msisdn: props.phoneNumber,
         id: props.selectedOption?.id,
       });
     } catch (apiError) {
@@ -147,44 +149,12 @@ const timer = async () => {
 
 const onSubmit = async () => {
   try {
-    const userDetail: UserSignupDetail | null =
-      (useCookie("signupInfo").value as unknown as UserSignupDetail) || null;
-    if (!userDetail && !route.query.email) {
-      navigateTo(localePath("/signup"));
-      return;
-    }
-
     isSubmitting.value = true;
-    const otpResponse = await api.post(`/api/v2/validate_otp`, {
-      msisdn: props.userInput,
+    const response = await api.post(`/api/v2/validate_otp`, {
+      msisdn: props.phoneNumber,
       otp_code: otp.value,
     });
-    
-    const checkToken = useCookie("token");
-    if (checkToken.value) {
-      checkToken.value = null;
-    }
-
-    const response = await api.post("/api/v1/sign-up", {
-      name: route.query.name ? route.query.name : userDetail.name,
-      email: route.query.email ? route.query.email : userDetail.email,
-      password: route.query.socialId ? null : userDetail.password,
-      socialId: route.query.socialId ? route.query.socialId : null,
-      verify_token: otpResponse.data.data.verify_token,
-      msisdn: props.userInput,
-      country_id: props.selectedOption?.id || null,
-    });
-
-    const token = useCookie("token", {
-      httpOnly: false,
-      secure: true,
-      maxAge: 86400,
-    });
-    token.value = response.data.token;
-    appStore.setAuthUser(response.data.data);
-    const signupInfoCookie = useCookie("signupInfo");
-    signupInfoCookie.value = null;
-    navigateTo(localePath("/signup/verify-phone/continue"));
+    emits('verifyNumber', response.data.data.verify_token)
     isSubmitting.value = false;
   } catch (error) {
     isSubmitting.value = false;

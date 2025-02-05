@@ -1,10 +1,7 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    const route = useRoute();
     const localePath = useLocalePath();
-
-
-    if (route.query.email) {
-        if (route.query.email) {
+    if (to.query.email) {
+        if (to.query.email) {
             return;
         }
         else {
