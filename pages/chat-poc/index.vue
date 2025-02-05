@@ -98,7 +98,7 @@ const onSubmit = async () => {
     isChatLoading.value = true;
     const question = inputQuestion.value;
     inputQuestion.value = "";
-    const response = await api.post(`/v1/ai-conversation/${callApi.value}`, {
+    const response = await api.post(`/api/v1/ai-conversation/${callApi.value}`, {
       ...(callApi.value === "ask-question" && {
         school_usernames: [
           "university_of_sunderland",

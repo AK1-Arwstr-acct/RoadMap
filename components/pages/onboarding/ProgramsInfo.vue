@@ -112,4 +112,9 @@ const { t } = useI18n();
         label: 'uni'
     },
   ]
+
+//   onMounted(async () => {
+//   // const response = await api.get('/api/v1/anonymous-recommendation/types-of-class-grades')
+//   const response = await api.get('/api/v1/anonymous-recommendation/find-program-parent')
+// });
   </script>

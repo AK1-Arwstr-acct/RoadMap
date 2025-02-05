@@ -83,6 +83,7 @@ const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const localePath = useLocalePath();
+const route = useRoute();
 
 const otp = ref<string>("");
 const isValid = ref<boolean>(true);
@@ -128,7 +129,7 @@ const timer = async () => {
     }, 1000);
 
     try {
-      await api.post(`/v2/send_otp`, {
+      await api.post(`/api/v2/send_otp`, {
         msisdn: props.userInput,
         id: props.selectedOption?.id,
       });
@@ -148,22 +149,22 @@ const onSubmit = async () => {
   try {
     const userDetail: UserSignupDetail | null =
       (useCookie("signupInfo").value as unknown as UserSignupDetail) || null;
-    if (!userDetail) {
+    if (!userDetail && !route.query.email) {
       navigateTo(localePath("/signup"));
       return;
     }
 
     isSubmitting.value = true;
-    const otpResponse = await api.post(`/v2/validate_otp`, {
+    const otpResponse = await api.post(`/api/v2/validate_otp`, {
       msisdn: props.userInput,
       otp_code: otp.value,
     });
 
-    const response = await api.post("/v1/sign-up", {
-      name: userDetail.name,
-      email: userDetail.email,
-      current_class_grade_id: null,
-      password: userDetail.password,
+    const response = await api.post("/api/v1/sign-up", {
+      name: route.query.name ? route.query.name : userDetail.name,
+      email: route.query.email ? route.query.email : userDetail.email,
+      password: route.query.socialId ? null : userDetail.password,
+      socialId: route.query.socialId ? route.query.socialId : null,
       verify_token: otpResponse.data.data.verify_token,
       msisdn: props.userInput,
       country_id: props.selectedOption?.id || null,
@@ -176,7 +177,7 @@ const onSubmit = async () => {
     });
     token.value = response.data.token;
     appStore.setAuthUser(response.data.data);
-    const signupInfoCookie = useCookie('signupInfo')
+    const signupInfoCookie = useCookie("signupInfo");
     signupInfoCookie.value = null;
     navigateTo(localePath("/signup/verify-phone/continue"));
     isSubmitting.value = false;
