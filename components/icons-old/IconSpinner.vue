@@ -20,15 +20,15 @@
 defineProps({
   width: {
     type: String,
-    default: "32",
+    default: "24",
   },
   height: {
     type: String,
-    default: "32",
+    default: "24",
   },
   bgColor: {
     type: String,
-    default: "#5836F5",
+    default: "#1570EF",
   },
   stroke: {
     type: String,

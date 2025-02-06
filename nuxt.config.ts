@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   components: [{ path: "~/components", pathPrefix: false }],
   css: ['~/assets/css/main.css', '~/assets/css/global.css'],
-  modules: ['@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n'],
+  modules: ['@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts', '@pinia-plugin-persistedstate/nuxt'],
   i18n: {
     locales: [
       { code: 'en', name: 'English', iso: 'en-US', file: 'english.json' },
@@ -15,6 +15,12 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     langDir: resolve(__dirname, 'locales'),
     lazy: true,
+  },
+  googleFonts: {
+    families: {
+      Archivo: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    },
+    display: 'swap',
   },
   postcss: {
     plugins: {

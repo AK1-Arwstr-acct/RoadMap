@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-screen min-h-fit w-full flex justify-center items-center p-5 pt-24 pb-16"
+    class="min-h-svh w-full flex justify-center items-center p-5 pt-24 pb-16"
   >
     <InputNumber
       v-if="steps === 'input_number'"

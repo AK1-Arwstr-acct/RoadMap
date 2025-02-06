@@ -53,7 +53,7 @@
               :disabled="otp.length !== 4 || isSubmitting"
               class="cursor-pointer disabled:cursor-default disabled:opacity-70 w-full focus:outline-none bg-[#1570EF] text-white rounded-lg font-semibold py-[10px] flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
             >
-              <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
+              <IconSpinner v-if="isSubmitting" class="animate-spin" />
               {{ $t("otp.verify") }}
             </button>
           </div>
@@ -66,7 +66,6 @@
 import axios from "axios";
 import type { PropType } from "vue";
 import OtpInput from "vue3-otp-input";
-import useAppStore from "~/stores/AppStore";
 import type { Country, UserSignupDetail } from "~/types/auth";
 
 const props = defineProps({
@@ -79,7 +78,6 @@ const props = defineProps({
   },
 });
 
-const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const localePath = useLocalePath();
@@ -129,7 +127,7 @@ const timer = async () => {
     }, 1000);
 
     try {
-      await api.post(`/api/v2/send_otp`, {
+      await api.post(`/api/v1/send_otp`, {
         msisdn: props.userInput,
         id: props.selectedOption?.id,
       });
@@ -138,6 +136,7 @@ const timer = async () => {
         type: "error",
       });
       clearInterval(timerInterval);
+      timeLeft.value = 30;
       return;
     }
   } catch (error) {
@@ -181,7 +180,6 @@ const onSubmit = async () => {
       maxAge: 86400,
     });
     token.value = response.data.token;
-    appStore.setAuthUser(response.data.data);
     const signupInfoCookie = useCookie("signupInfo");
     signupInfoCookie.value = null;
     navigateTo(localePath("/signup/verify-phone/continue"));

@@ -11,7 +11,7 @@
       <h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
         {{ $t("onboarding.academic_heading") }}
       </h1>
-      <div class="remove-shadow-bg-white">
+      <!-- <div class="remove-shadow-bg-white">
         <label class="font-medium text-[#414651] text-sm">{{
           $t("onboarding.your_grade")
         }}</label>
@@ -22,7 +22,12 @@
           :placeholder="t('onboarding.e_g_11')"
           class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
         />
-      </div>
+      </div> -->
+      <BaseSelectRadio
+        :label="t('onboarding.your_grade')"
+        :options="classGradeList"
+        v-model="academicInfo.grade"
+      />
       <div class="remove-shadow-bg-white">
         <label class="font-medium text-[#414651] text-sm">{{
           $t("onboarding.gpa")
@@ -60,24 +65,29 @@
         class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
       >
         {{ $t("onboarding.continue") }}
-        <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
+        <IconSpinner v-if="isSubmitting" class="animate-spin" />
         <IconArrowRight v-else fill="#ffffff" />
       </button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import type { ClassGrades, CurrentClassGrade } from "~/types/home";
 
 const emit = defineEmits(["submitAcademic"]);
 
 const { t } = useI18n();
 const { api } = useApi();
+const { showToast } = useToast();
 
 const classGradeList = ref<ClassGrades[]>([]);
 
-const academicInfo = ref({
-  grade: "",
+const academicInfo = ref<{ grade: ClassGrades; gpa: string; ielts: string }>({
+  grade: {
+    value: "",
+    label: "",
+  },
   gpa: "",
   ielts: "",
 });
@@ -87,7 +97,7 @@ const onSubmit = async () => {
   try {
     isSubmitting.value = true;
     api.post("/api/v1/student/update-profile-basic-info", {
-      current_class_grade: academicInfo.value.grade,
+      current_class_grade: academicInfo.value.grade.value,
       cgpa: academicInfo.value.gpa,
       ielts_score: academicInfo.value.ielts,
     });
@@ -102,16 +112,19 @@ const onSubmit = async () => {
 const getClassGrades = async () => {
   try {
     const response = await api.get(`/api/v1/sign-up/get-class-grades`);
-    classGradeList.value = response.data.data.map(
-      (item: CurrentClassGrade) => {
-        return {
-          value: item.id,
-          label: item.class_name,
-        };
-      }
-    );
+    classGradeList.value = response.data.data.map((item: CurrentClassGrade) => {
+      return {
+        value: item.id,
+        label: item.class_name,
+      };
+    });
   } catch (error) {
-    console.error(error);
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
   }
 };
 

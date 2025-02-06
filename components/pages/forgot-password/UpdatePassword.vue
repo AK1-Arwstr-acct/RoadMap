@@ -1,37 +1,37 @@
 <template>
-  <div class="w-[390px] space-y-8">
+  <div class="w-full sm:w-[390px] space-y-8">
     <div class="flex flex-col items-center gap-6">
       <IconArrowsterLogo />
       <div class="text-center space-y-3">
         <h1 class="font-semibold text-3xl text-[#181D27]">
-          Update your password
+          {{ $t('forgotPassword.update_your_password') }}
         </h1>
-        <p class="text-[#535862]">Please enter your new password.</p>
+        <p class="text-[#535862]">{{ $t('forgotPassword.please_enter_new_password') }}</p>
       </div>
     </div>
     <div>
       <div class="remove-shadow-bg-white relative">
-        <label class="font-medium text-[#414651] text-sm">New password</label>
+        <label class="font-medium text-[#414651] text-sm">{{ $t('forgotPassword.new_password') }}</label>
         <div class="relative">
           <input
             name="userInput"
             type="password"
             v-model="userInput.password"
             inputmode="decimal"
-            placeholder="Enter your password"
+            :placeholder="t('forgotPassword.enter_your_password')"
             class="mt-1 rounded-lg border-2 border-[#D5D7DA]' py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           />
         </div>
       </div>
       <div class="remove-shadow-bg-white mt-6">
         <label class="font-medium text-[#414651] text-sm"
-          >Confirm password</label
+          >{{ $t('forgotPassword.confirm_password') }}</label
         >
         <input
           name="userInput"
           type="password"
           v-model="userInput.confirmPassword"
-          placeholder="Confirm your password"
+          :placeholder="t('forgotPassword.confirm_your_password')"
           class="mt-1 rounded-lg border-2 border-[#D5D7DA] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
         />
       </div>
@@ -43,8 +43,8 @@
           "
           class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
         >
-          Save changes
-          <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
+        {{ $t('forgotPassword.save_changes') }}
+          <IconSpinner v-if="isSubmitting" class="animate-spin" />
         </button>
       </div>
     </div>

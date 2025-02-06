@@ -22,7 +22,7 @@ definePageMeta({
 });
 
 const steps = ref<"academic" | "programs" | "destination" | "budget" | "startJourney">(
-  "academic"
+  "destination"
 );
 
 const submitAcademic = () => {

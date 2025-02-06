@@ -1,8 +1,8 @@
 <template>
   <div
-    class="h-screen min-h-fit w-full flex justify-center items-center p-5 pt-24 pb-16"
+    class="min-h-svh w-full flex justify-center items-center p-5 pt-24 pb-16"
   >
-    <div class="w-[390px] space-y-8">
+    <div class="w-full sm:w-[390px] space-y-8">
       <div class="flex flex-col items-center gap-6">
         <IconArrowsterLogo />
         <div class="text-center space-y-3">
@@ -44,8 +44,6 @@
                   <div v-else class="min-w-6 min-h-6">
                     <IconSpinner
                       class="animate-spin"
-                      height="24"
-                      width="24"
                       bgColor="white"
                       stroke="#1570EF"
                     />
@@ -75,11 +73,6 @@
                 v-if="isDropdownOpen"
                 v-click-outside="closeDropdown"
               >
-                <!-- <div class="border-b border-[#E0E0E0] p-2 sticky -top-0.5 sm:top-0 bg-white flex gap-[5px]">
-                                            <IconSearch />
-                                            <input type="text" placeholder="Search for country" v-model="search"
-                                                class="w-full outline-none" />
-                                        </div> -->
                 <div
                   v-for="country in countryCodes"
                   :key="country.id"
@@ -87,13 +80,6 @@
                   :class="{ 'bg-[#FAFAFA]': country.id === selectedOption?.id }"
                   @click="selectCountry(country)"
                 >
-                  <!-- <div>
-                  <img
-                    :src="country.flag"
-                    :alt="`${country.title}_flag`"
-                    class="h-6 w-6"
-                  />
-                </div> -->
                   <div class="text-[#667085] text-sm">
                     {{ country.title }} ({{ country.phone_code }})
                   </div>
@@ -133,7 +119,7 @@
             @click="navigateTo(localePath('/forgot-password'))"
             class="text-sm text-[#175CD3] font-semibold mt-1.5 text-end cursor-pointer"
           >
-            Forgot password?
+            {{ $t("forgotPassword.forgot_password") }}
           </p>
         </div>
         <div class="mt-6">
@@ -145,7 +131,7 @@
             class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
           >
             {{ $t("login.login") }}
-            <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
+            <IconSpinner v-if="isSubmitting" class="animate-spin" />
           </button>
         </div>
         <div class="my-4 flex items-center gap-2">
@@ -163,11 +149,11 @@
           <span>{{ $t("login.login_with_google") }}</span>
         </a>
         <p class="mt-8 text-[#535862] text-sm text-center">
-          Already have an account?
+          {{ $t("login.already_have_an_account") }}
           <span
             @click="navigateTo(localePath('/signup'))"
             class="text-[#175CD3] font-semibold cursor-pointer"
-            >Sign up</span
+            >{{ $t("login.sign_up") }}</span
           >
         </p>
       </div>
@@ -180,14 +166,12 @@ definePageMeta({
 });
 
 import axios from "axios";
-import useAppStore from "~/stores/AppStore";
 import type { Country } from "~/types/auth";
 
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { api } = useApi();
 const { showToast } = useToast();
-const appStore = useAppStore();
 const config = useRuntimeConfig();
 
 const phoneInput = ref<HTMLInputElement | null>(null);
@@ -202,7 +186,6 @@ const userInput = ref<{ phoneNumber: string; password: string }>({
   password: "",
 });
 
-
 const countryCodes = computed(() => {
   if (search.value) {
     return countryOptions.value.filter((item) => {
@@ -212,6 +195,7 @@ const countryCodes = computed(() => {
     return countryOptions.value;
   }
 });
+
 const handleFocus = () => {
   isFocused.value = true;
 };
@@ -225,9 +209,12 @@ const selectCountry = (country: Country) => {
   isDropdownOpen.value = false;
   selectedOption.value = country;
 };
-
 const preventNonNumeric = (event: KeyboardEvent) => {
-  if (!/^[0-9]$/.test(event.key) && event.key !== "Backspace" && event.key !== "Tab") {
+  if (
+    !/^[0-9]$/.test(event.key) &&
+    event.key !== "Backspace" &&
+    event.key !== "Tab"
+  ) {
     event.preventDefault();
   }
 };
@@ -245,7 +232,6 @@ const validateNumber = (event: Event) => {
   }
   userInput.value.phoneNumber = cleanedValue;
 };
-
 const submit = async () => {
   try {
     isSubmitting.value = true;
@@ -253,6 +239,7 @@ const submit = async () => {
     if (checkToken.value) {
       checkToken.value = null;
     }
+
     const response = await api.post("/api/v1/login", {
       emailOrMsisdn: `${selectedOption.value?.phone_code}${userInput.value.phoneNumber}`,
       password: userInput.value.password,
@@ -261,8 +248,7 @@ const submit = async () => {
       maxAge: 86400,
     });
     token.value = JSON.stringify(response.data.token);
-    appStore.setAuthUser(response.data.data);
-    if (response.data.data.oldUser) {
+    if (response.data.data.onboarded) {
       navigateTo(localePath("/dashboard"));
     } else {
       navigateTo(localePath("/onboarding"));
@@ -280,11 +266,10 @@ const submit = async () => {
     userInput.value.phoneNumber = "";
     userInput.value.password = "";
     if (phoneInput.value) {
-      phoneInput.value.value = '';
+      phoneInput.value.value = "";
     }
   }
 };
-
 const getCountries = async () => {
   try {
     const response = await api.get(`/api/v1/country_codes`);

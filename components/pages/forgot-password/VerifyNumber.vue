@@ -3,11 +3,14 @@
     <div class="flex flex-col items-center gap-5">
       <IconArrowsterLogo />
       <div class="text-center space-y-3">
-        <h1 class="font-semibold text-3xl text-[#181D27]">Forgot password?</h1>
+        <h1 class="font-semibold text-3xl text-[#181D27]">
+          {{ $t("forgotPassword.forgot_password") }}
+        </h1>
         <p class="text-[#535862] text-sm">
-          Please check your SMS.<br />
-          We've sent a code to {{ phoneNumber }} <br />Enter code to reset
-          password.
+          {{ $t("forgotPassword.please_check_sms") }}<br />
+          {{ $t("forgotPassword.we_sent_code_to") }} {{ phoneNumber }} <br />{{
+            $t("forgotPassword.enter_code_to_reset_password")
+          }}
         </p>
       </div>
     </div>
@@ -30,7 +33,7 @@
               @keydown="blockNonNumeric"
             />
             <div
-              class="text-sm text-gray-600 text-center flex gap-1 justify-center mt-1.5"
+              class="text-sm text-gray-600 text-center flex gap-1 justify-center mt-5"
             >
               <p>{{ $t("otp.did_not_get_code") }}</p>
               <button
@@ -53,8 +56,8 @@
               :disabled="otp.length !== 4 || isSubmitting"
               class="cursor-pointer disabled:cursor-default disabled:opacity-70 w-full focus:outline-none bg-[#1570EF] text-white rounded-lg font-semibold py-[10px] flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
             >
-              <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
-              {{ $t("otp.verify") }}
+            {{ $t("otp.verify") }}
+            <IconSpinner v-if="isSubmitting" class="animate-spin" />
             </button>
           </div>
         </div>
@@ -69,7 +72,7 @@ import OtpInput from "vue3-otp-input";
 import useAppStore from "~/stores/AppStore";
 import type { Country, UserSignupDetail } from "~/types/auth";
 
-const emits = defineEmits(["verifyNumber"])
+const emits = defineEmits(["verifyNumber"]);
 
 const props = defineProps({
   phoneNumber: {
@@ -131,7 +134,7 @@ const timer = async () => {
     }, 1000);
 
     try {
-      await api.post(`/api/v2/send_otp`, {
+      await api.post(`/api/v1/reset-password`, {
         msisdn: props.phoneNumber,
         id: props.selectedOption?.id,
       });
@@ -140,6 +143,7 @@ const timer = async () => {
         type: "error",
       });
       clearInterval(timerInterval);
+      timeLeft.value = 30;
       return;
     }
   } catch (error) {
@@ -150,11 +154,11 @@ const timer = async () => {
 const onSubmit = async () => {
   try {
     isSubmitting.value = true;
-    const response = await api.post(`/api/v2/validate_otp`, {
+    const response = await api.post(`/api/v1/otp-verify`, {
       msisdn: props.phoneNumber,
       otp_code: otp.value,
     });
-    emits('verifyNumber', response.data.data.verify_token)
+    emits("verifyNumber", response.data.sessionId);
     isSubmitting.value = false;
   } catch (error) {
     isSubmitting.value = false;

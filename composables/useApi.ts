@@ -9,9 +9,9 @@ export const useApi = () => {
     },
   });
 
-  const token = useCookie('token')
-
+  
   api.interceptors.request.use(config => {
+    const token = useCookie('token')
     if (token.value) {
       config.headers["Authorization"] = `Bearer ${token.value}`
     }

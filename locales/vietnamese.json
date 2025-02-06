@@ -5,7 +5,23 @@
         "heading": "Khám phá hành trình du học của riêng bạn.",
         "i_already_have_an_account": "Tôi đã có tài khoản"
     },
+    "forgotPassword": {
+        "forgot_password": "Quên mật khẩu?",
+        "dont_worry": "Đừng lo! Vui lòng nhập số điện thoại của bạn, và chúng tôi sẽ gửi cho bạn một mã",
+        "get_verification_code": "Nhận mã xác minh",
+        "please_check_sms": "Vui lòng kiểm tra tin nhắn SMS.",
+        "we_sent_code_to": "Chúng tôi đã gửi mã đến",
+        "enter_code_to_reset_password": "Nhập mã để đặt lại mật khẩu.",
+        "update_your_password": "Cập nhật mật khẩu của bạn",
+        "please_enter_new_password": "Vui lòng nhập mật khẩu mới của bạn.",
+        "new_password": "Mật khẩu mới",
+        "confirm_password": "Xác nhận mật khẩu",
+        "save_changes": "Lưu thay đổi",
+        "enter_your_password": "Nhập mật khẩu của bạn",
+        "confirm_your_password": "Xác nhận mật khẩu của bạn"
+    },
     "login": {
+        "already_have_an_account": "Bạn đã có tài khoản?",
         "enter_phone_or_email": "Nhập số điện thoại hoặc email của bạn",
         "heading": "Đăng nhập vào tài khoản của bạn",
         "login": "Đăng nhập",
@@ -15,7 +31,8 @@
         "welcome_back": "Chào mừng trở lại! Vui lòng nhập thông tin của bạn.",
         "password": "Mật khẩu",
         "please_verify_your_email_to_continue": "Vui lòng xác minh email của bạn để tiếp tục.",
-        "enter_your_password": "Nhập mật khẩu của bạn"
+        "enter_your_password": "Nhập mật khẩu của bạn",
+        "sign_up": "Đăng ký"
     },
     "onboarding": {
         "academic_heading": "Hãy giúp chúng tôi hiểu hồ sơ học tập của bạn bằng cách chia sẻ các thông tin sau",

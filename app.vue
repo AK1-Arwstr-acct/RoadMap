@@ -1,10 +1,10 @@
 <template>
   <div>
     <NuxtRouteAnnouncer />
-    <LayoutWrapper>
+    <BaseLayoutWrapper>
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
-    </LayoutWrapper>
+    </BaseLayoutWrapper>
   </div>
 </template>

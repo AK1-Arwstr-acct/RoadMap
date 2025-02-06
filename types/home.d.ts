@@ -47,15 +47,6 @@ interface ClassGrades {
   label: string;
 }
 
-interface UserLoginData {
-  id: number | null;
-  name: string | null;
-  user_name: string | null;
-  email: string | null;
-  created_at: string | null;
-  oldUser: boolean | null;
-}
-
 // * user data interfaces
 interface CurrentClassGrade {
   id: number;
@@ -101,4 +92,4 @@ interface UserInput {
 
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserLoginData, UserData, UserInput }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput }

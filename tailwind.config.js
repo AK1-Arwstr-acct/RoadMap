@@ -10,6 +10,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        archivo: ['Archivo', 'sans-serif'],
+      },
       screens: {
         "3xl": "1920px",
       },

@@ -89,11 +89,11 @@
           <span>{{ $t("signup.sign_up_with_google") }}</span>
         </a>
         <p class="mt-8 text-[#535862] text-sm text-center">
-          Already have an account?
+          {{ $t('login.already_have_an_account') }}
           <span
             @click="navigateTo(localePath('/login'))"
             class="text-[#175CD3] font-semibold cursor-pointer"
-            >Log in</span
+            >{{ $t('login.login') }}</span
           >
         </p>
       </div>

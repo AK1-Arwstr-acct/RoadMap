@@ -1,10 +1,9 @@
 export default defineNuxtRouteMiddleware((to, from) => {
     const localePath = useLocalePath();
-    if (to.query.email) {
-        if (to.query.email) {
+    if (to.query.email && to.query.name && to.query.socialId) {
+        if (to.query.email && to.query.name && to.query.socialId) {
             return;
-        }
-        else {
+        } else {
             return navigateTo(localePath('/signup'));
         }
     } else {

@@ -5,8 +5,25 @@
         "heading": "Discover your own study abroad journey.",
         "i_already_have_an_account": "I already have an account"
     },
+    "forgotPassword": {
+        "forgot_password": "Forgot password?",
+        "dont_worry": "Don't worry! Please enter your phone number, and we will send you a code",
+        "get_verification_code": "Get Verification Code",
+        "please_check_sms": "Please check your SMS.",
+        "we_sent_code_to": "We've sent a code to",
+        "enter_code_to_reset_password": "Enter code to reset password.",
+        "update_your_password": "Update your password",
+        "please_enter_new_password": "Please enter your new password.",
+        "new_password": "New password",
+        "confirm_password": "Confirm password",
+        "save_changes": "Save changes",
+        "enter_your_password": "Enter your password",
+        "confirm_your_password": "Confirm your password"
+    },
     "login": {
+        "already_have_an_account": "Already have an account?",
         "enter_phone_or_email": "Enter your phone number or email",
+        "enter_your_password": "Enter your password",
         "heading": "Log in to your account",
         "login": "Log in",
         "login_with_google": "Log in with Google",
@@ -15,7 +32,7 @@
         "welcome_back": "Welcome back! Please enter your details.",
         "password": "Password",
         "please_verify_your_email_to_continue": "Please verify your email to continue.",
-        "enter_your_password": "Enter your password"
+        "sign_up": "Sign up"
     },
     "onboarding": {
         "academic_heading": "Help us understand your academic profile by sharing the following details",

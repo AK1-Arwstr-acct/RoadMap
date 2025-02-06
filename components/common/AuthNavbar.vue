@@ -17,7 +17,7 @@
       />
     </div>
     <div>
-      <LanguageDropdown />
+      <BaseLanguageDropdown />
     </div>
   </div>
 </template>

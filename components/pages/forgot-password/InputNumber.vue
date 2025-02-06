@@ -1,12 +1,13 @@
 <template>
-  <div class="w-[390px] space-y-8">
+  <div class="w-full sm:w-[390px] space-y-8">
     <div class="flex flex-col items-center gap-6">
       <IconArrowsterLogo />
       <div class="text-center space-y-3">
-        <h1 class="font-semibold text-3xl text-[#181D27]">Forgot password?</h1>
+        <h1 class="font-semibold text-3xl text-[#181D27]">
+          {{ $t("forgotPassword.forgot_password") }}
+        </h1>
         <p class="text-[#535862]">
-          Don't worry! Please enter your phone number, and we will send you a
-          code
+          {{ $t("forgotPassword.dont_worry") }}
         </p>
       </div>
     </div>
@@ -42,8 +43,6 @@
                 <div v-else class="min-w-6 min-h-6">
                   <IconSpinner
                     class="animate-spin"
-                    height="24"
-                    width="24"
                     bgColor="white"
                     stroke="#1570EF"
                   />
@@ -59,9 +58,7 @@
             </div>
             <div
               :class="[
-                phoneNumber.length > 0
-                  ? 'text-[#05092C]'
-                  : 'text-[#667085]',
+                phoneNumber.length > 0 ? 'text-[#05092C]' : 'text-[#667085]',
               ]"
             >
               {{ selectedOption?.phone_code }}
@@ -73,11 +70,6 @@
               v-if="isDropdownOpen"
               v-click-outside="closeDropdown"
             >
-              <!-- <div class="border-b border-[#E0E0E0] p-2 sticky -top-0.5 sm:top-0 bg-white flex gap-[5px]">
-                                            <IconSearch />
-                                            <input type="text" placeholder="Search for country" v-model="search"
-                                                class="w-full outline-none" />
-                                        </div> -->
               <div
                 v-for="country in countryCodes"
                 :key="country.id"
@@ -85,13 +77,6 @@
                 :class="{ 'bg-[#FAFAFA]': country.id === selectedOption?.id }"
                 @click="selectCountry(country)"
               >
-                <!-- <div>
-                  <img
-                    :src="country.flag"
-                    :alt="`${country.title}_flag`"
-                    class="h-6 w-6"
-                  />
-                </div> -->
                 <div class="text-[#667085] text-sm">
                   {{ country.title }} ({{ country.phone_code }})
                 </div>
@@ -121,8 +106,8 @@
           :disabled="phoneNumber === ''"
           class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
         >
-          Get Verification Code
-          <BaseSpinner v-if="isSubmitting" color="#FFFFFF" />
+          {{ $t("forgotPassword.get_verification_code") }}
+          <IconSpinner v-if="isSubmitting" class="animate-spin" />
         </button>
       </div>
     </div>
@@ -130,16 +115,12 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import useAppStore from "~/stores/AppStore";
 import type { Country } from "~/types/auth";
 
-const emits = defineEmits(["getCode", "setSelectedCountry"])
+const emits = defineEmits(["getCode", "setSelectedCountry"]);
 
-const { t } = useI18n();
-const localePath = useLocalePath();
 const { api } = useApi();
 const { showToast } = useToast();
-const appStore = useAppStore();
 
 const phoneInput = ref<HTMLInputElement | null>(null);
 const isFocused = ref<boolean>(false);
@@ -196,17 +177,15 @@ const validateNumber = (event: Event) => {
   }
   phoneNumber.value = cleanedValue;
 };
-
 const submit = async () => {
   try {
     isSubmitting.value = true;
     const userNumber = `${selectedOption.value?.phone_code}${phoneNumber.value}`;
-    await api.post(`/api/v1/send_otp`, {
+    await api.post(`/api/v1/reset-password`, {
       msisdn: userNumber,
-      id: selectedOption.value?.id,
     });
-    emits('setSelectedCountry', selectedOption.value)
-    emits('getCode', userNumber);
+    emits("setSelectedCountry", selectedOption.value);
+    emits("getCode", userNumber);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -223,7 +202,6 @@ const submit = async () => {
     }
   }
 };
-
 const getCountries = async () => {
   try {
     const response = await api.get(`/api/v1/country_codes`);

@@ -1,7 +1,7 @@
 <template>
   <div class="w-[490px] space-y-8">
     <h1 class="text-2xl md:text-4xl md:!leading-[44px] font-medium text-center">
-      {{ $t('onboarding.destination_heading') }}
+      {{ $t("onboarding.destination_heading") }}
     </h1>
     <div class="space-y-3">
       <div v-for="(option, index) in countriesList" :key="index">
@@ -30,26 +30,33 @@
       </div>
     </div>
     <button
-      @click="emit('submitDestination')"
+      @click="submit"
       class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5"
     >
-    {{ $t('onboarding.continue') }}
-      <IconArrowRight fill="#ffffff" />
+      {{ $t("onboarding.continue") }}
+      <IconSpinner v-if="isSubmitting" class="animate-spin" />
+      <IconArrowRight v-else fill="#ffffff" />
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
+import axios from "axios";
 import IconAustralia from "~/components/icons/IconAustralia.vue";
 import IconCanada from "~/components/icons/IconCanada.vue";
 import IconEurope from "~/components/icons/IconEurope.vue";
 import IconUK from "~/components/icons/IconUK.vue";
 import IconUS from "~/components/icons/IconUS.vue";
+import useAppStore from "~/stores/AppStore";
 
 const emit = defineEmits(["submitDestination"]);
+const { showToast } = useToast();
+const appStore = useAppStore();
+const { api } = useApi();
 
 // Use an array to store selected option IDs
 const selectedOptionIds = ref<number[]>([]);
+const isSubmitting = ref<boolean>(false);
 
 const countriesList = [
   {
@@ -78,4 +85,43 @@ const countriesList = [
     icon: IconEurope,
   },
 ];
+
+const submit = () => {
+  try {
+    isSubmitting.value = true;
+    // api.post("/api/v1/student/update-profile-basic-info", {
+    //   current_class_grade: academicInfo.value.grade.value,
+    //   cgpa: academicInfo.value.gpa,
+    //   ielts_score: academicInfo.value.ielts,
+    // });
+    emit("submitDestination");
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+
+const getStudyDestination = async () => {
+  const response = await api.post(
+    `/api/v1/anonymous-recommendation/get-location-country`,
+    {
+      class_grade_ids: [
+        appStore.userData?.educational_records.current_class_grade.id,
+      ],
+      cgpa: Number(),
+      uniqueId: appStore.authUser.uuid,
+    }
+  );
+};
+
+onMounted(async () => {
+  await appStore.getUserData();
+  await getStudyDestination();
+});
 </script>
