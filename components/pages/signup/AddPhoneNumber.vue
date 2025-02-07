@@ -26,17 +26,17 @@
         >
           <div class="flex gap-2 items-center justify-center">
             <div
-              class="flex justify-between items-center cursor-pointer rounded px-1 py-2 gap-1"
+              class="flex justify-between items-center cursor-pointer rounded pr-1 pl-2 py-2 gap-1"
               @click="isDropdownOpen = !isDropdownOpen"
               @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
             >
               <div>
-                <img
+                <p
                   v-if="selectedOption"
-                  :src="selectedOption?.flag"
-                  :alt="`${selectedOption?.title}_flag_selected`"
-                  class="min-h-6 min-w-6 h-6 w-6"
-                />
+                  class="min-h-6 min-w-6 h-6 w-6 mt-0.5 uppercase text-[#181D27]"
+                >
+                  {{ selectedOption?.country_code }}
+                </p>
                 <div v-else class="min-w-6 min-h-6">
                   <IconSpinner
                     class="animate-spin"

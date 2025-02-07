@@ -22,7 +22,7 @@ definePageMeta({
 });
 
 const steps = ref<"academic" | "programs" | "destination" | "budget" | "startJourney">(
-  "destination"
+  "academic"
 );
 
 const submitAcademic = () => {
@@ -41,8 +41,8 @@ const submitBudget = () => {
   steps.value = "startJourney";
   appStore.setOnboardingProgress(null);
 };
-
-onMounted(()=>{
+onBeforeMount(async()=>{
+  await appStore.getUserData();
   appStore.setOnboardingProgress('25%');
 })
 </script>

@@ -5,8 +5,6 @@ import type { LanguageLocale, UserData } from "../types/home";
 const useAppStore = defineStore("appStore", () => {
   const { api } = useApi();
   const { $i18n } = useNuxtApp();
-
-  const locale = ref<string>(`${$i18n.locale.value}`);
   const userData = ref<UserData>()
   const DashboardData = ref(roadmapData);
   const onboardingViewData = ref(onboardingData);
@@ -17,12 +15,11 @@ const useAppStore = defineStore("appStore", () => {
   }
   const setLocale = (newLocale: LanguageLocale) => {
     const matchedLocale = ALL_LOCALES.find(locale => locale.value === newLocale);
+    
     if (matchedLocale) {
       $i18n.setLocale(matchedLocale.value as "en" | "vi");
-      locale.value = matchedLocale.value;
     } else {
       $i18n.setLocale("en");
-      locale.value = 'en';
     }
   };
 

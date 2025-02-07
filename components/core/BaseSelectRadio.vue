@@ -36,6 +36,7 @@
         ]"
       >
         <IconChevronDown v-if="!loading" height="18" width="18" stroke="#A4A7AE" />
+        <IconSpinner v-else class="animate-spin" stroke="#A4A7AE" bgColor="#ffffff" width="20" />
       </span>
     </div>
     <div

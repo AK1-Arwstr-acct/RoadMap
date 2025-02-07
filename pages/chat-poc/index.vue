@@ -4,13 +4,15 @@
   >
     <div class="flex flex-col h-full w-1/2">
       <div class="">
-        <button
-          @click="toggleApi"
-          class="px-5 py-2.5 bg-gray-600/50 rounded-lg mb-3 font-medium"
+        <select
+          id="apiSelect"
+          v-model="callApi"
+          class="px-5 py-2.5 bg-gray-600/50 rounded-lg mb-3 font-medium outline-none"
         >
-          Switch to
-          {{ callApi === "ask-question" ? "Scholarship" : "Questions" }}
-        </button>
+          <option v-for="api in apiList" :key="api.value" :value="api.value" class="bg-black/70">
+            {{ api.label }}
+          </option>
+        </select>
       </div>
       <div class="size-full rounded-lg bg-black/30 p-4 flex flex-col gap-5">
         <div
@@ -68,7 +70,22 @@ const chatContainer = ref<HTMLElement | null>(null);
 const inputQuestion = ref<string>("");
 const completeChat = ref<PocChat[]>([]);
 const isChatLoading = ref<boolean>(false);
-const callApi = ref<"ask-question" | "scholarship">("ask-question");
+const callApi = ref<"ask-question" | "scholarship" | "roadmap">("ask-question");
+
+const apiList = [
+  {
+    value: "ask-question",
+    label: "question",
+  },
+  {
+    value: "scholarship",
+    label: "Scholarship",
+  },
+  {
+    value: "roadmap",
+    label: "Roadmap",
+  },
+];
 
 // Function to scroll to the bottom
 const scrollDown = () => {
@@ -98,17 +115,20 @@ const onSubmit = async () => {
     isChatLoading.value = true;
     const question = inputQuestion.value;
     inputQuestion.value = "";
-    const response = await api.post(`/api/v1/ai-conversation/${callApi.value}`, {
-      ...(callApi.value === "ask-question" && {
-        school_usernames: [
-          "university_of_sunderland",
-          "university_of_sussex",
-          "university_of_plymouth",
-          "faulkner_university",
-        ],
-      }),
-      query: question,
-    });
+    const response = await api.post(
+      `/api/v1/ai-conversation/${callApi.value}`,
+      {
+        ...(callApi.value === "ask-question" && {
+          school_usernames: [
+            "university_of_sunderland",
+            "university_of_sussex",
+            "university_of_plymouth",
+            "faulkner_university",
+          ],
+        }),
+        query: question,
+      }
+    );
     isChatLoading.value = false;
     if (response) {
       if (response.data.data) {

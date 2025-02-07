@@ -73,13 +73,16 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import type { ClassGrades, CurrentClassGrade } from "~/types/home";
+import type { ClassGrades, CurrentClassGrade, UserData } from "~/types/home";
+import useAppStore from "~/stores/AppStore";
 
 const emit = defineEmits(["submitAcademic"]);
+
 
 const { t } = useI18n();
 const { api } = useApi();
 const { showToast } = useToast();
+const appStore = useAppStore();
 
 const classGradeList = ref<ClassGrades[]>([]);
 
@@ -96,11 +99,12 @@ const isSubmitting = ref<boolean>(false);
 const onSubmit = async () => {
   try {
     isSubmitting.value = true;
-    api.post("/api/v1/student/update-profile-basic-info", {
+    await api.post("/api/v1/student/update-profile-basic-info", {
       current_class_grade: academicInfo.value.grade.value,
       cgpa: academicInfo.value.gpa,
-      ielts_score: academicInfo.value.ielts,
+      ielts_score: academicInfo.value.ielts || -1,
     });
+    appStore.getUserData();
     emit("submitAcademic");
   } catch (error) {
     console.error(error);
@@ -128,7 +132,25 @@ const getClassGrades = async () => {
   }
 };
 
-onMounted(async () => {
-  await getClassGrades();
+watch(
+  () => appStore.userData,
+  (newValue) => {
+    if (newValue) {
+      academicInfo.value.grade = {
+        value: `${newValue.educational_records.current_class_grade.id}`,
+        label:
+          newValue.educational_records.current_class_grade.class_name,
+      };
+      academicInfo.value.gpa = `${newValue.educational_records.cgpa}`;
+      const ieltsScore = newValue.educational_records.test_scores.find(
+        (item) => item.title.toLowerCase() === "ielts"
+      );
+      academicInfo.value.ielts = ieltsScore ? `${ieltsScore.score}` : "";
+    }
+  }
+);
+
+onMounted(() => {
+  getClassGrades();
 });
 </script>

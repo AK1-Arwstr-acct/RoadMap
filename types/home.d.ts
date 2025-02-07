@@ -82,6 +82,8 @@ interface UserData {
   starting_date: string | null;
   educational_records: EducationalRecords;
   created_at: string;
+  onboarded: boolean;
+  uuid: string;
 }
 
 interface UserInput {

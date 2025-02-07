@@ -48,6 +48,7 @@ import IconEurope from "~/components/icons/IconEurope.vue";
 import IconUK from "~/components/icons/IconUK.vue";
 import IconUS from "~/components/icons/IconUS.vue";
 import useAppStore from "~/stores/AppStore";
+import type { OptionAttributes } from "~/types/home";
 
 const emit = defineEmits(["submitDestination"]);
 const { showToast } = useToast();
@@ -57,6 +58,7 @@ const { api } = useApi();
 // Use an array to store selected option IDs
 const selectedOptionIds = ref<number[]>([]);
 const isSubmitting = ref<boolean>(false);
+const locationOptions = ref<OptionAttributes>();
 
 const countriesList = [
   {
@@ -86,6 +88,13 @@ const countriesList = [
   },
 ];
 
+// watch(
+//   () => selectedOptionIds.value,
+//   () => {
+//     console.log(selectedOptionIds.value);
+//   }
+// );
+
 const submit = () => {
   try {
     isSubmitting.value = true;
@@ -111,17 +120,34 @@ const getStudyDestination = async () => {
   const response = await api.post(
     `/api/v1/anonymous-recommendation/get-location-country`,
     {
-      class_grade_ids: [
-        appStore.userData?.educational_records.current_class_grade.id,
-      ],
-      cgpa: Number(),
-      uniqueId: appStore.authUser.uuid,
+      class_grade_ids: [1], // temp id pass
+      cgpa: Number(appStore.userData?.educational_records.cgpa),
+      uniqueId: appStore.userData?.uuid,
     }
   );
+  if (response.data.data) {
+    locationOptions.value = response.data.data?.map(
+      (item: { country_ids: number[]; title: string }) => {
+        let name = item.title.toLowerCase().split(" ").join("_");
+        return {
+          value: item.country_ids.join(","),
+          label: item.title,
+          icon: name.includes("united_kingdom")
+            ? shallowRef(IconUK)
+            : name.includes("Canada")
+            ? shallowRef(IconCanada)
+            : name.includes("Australia")
+            ? shallowRef(IconAustralia)
+            : name.includes("united_states")
+            ? shallowRef(IconUS)
+            : shallowRef(IconEurope),
+        };
+      }
+    );
+  }
 };
 
 onMounted(async () => {
-  await appStore.getUserData();
   await getStudyDestination();
 });
 </script>

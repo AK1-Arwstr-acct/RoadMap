@@ -4,6 +4,7 @@ export interface Country {
     id: number,
     title: string,
     phone_code: string,
+    country_code: string,
     flag: string
 }
 
