@@ -13,3 +13,7 @@ export const errorList = (error) => {
         return error.response.data.message
     }
 };
+
+export const budgetWithComma = (x: number | string) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

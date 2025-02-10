@@ -36,6 +36,7 @@
     },
     "onboarding": {
         "academic_heading": "Help us understand your academic profile by sharing the following details",
+        "area_of_interest_heading": "Could you tell us about your preferred area of interest?",
         "area_of_study": "Area of study",
         "budget_heading": "Lastly, could you share a little about your total budget?",
         "continue": "Continue",
@@ -43,7 +44,7 @@
         "e_g_11": "e.g. 11",
         "e_g_7_0": "e.g. 7.0",
         "gpa": "GPA",
-        "programs_heading": "Could you tell us about your preferred study program and area of interest?",
+        "programs_heading": "Could you tell us about your preferred study program?",
         "start_your_journey": "Start your journey",
         "start_your_journey_heading": "You're all set! Get ready to start your journey with Arrowster!",
         "your_gpa": "Your GPA (0.0 - 10.0)",

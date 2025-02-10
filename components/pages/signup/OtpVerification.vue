@@ -66,6 +66,7 @@
 import axios from "axios";
 import type { PropType } from "vue";
 import OtpInput from "vue3-otp-input";
+import useAppStore from "~/stores/AppStore";
 import type { Country, UserSignupDetail } from "~/types/auth";
 
 const props = defineProps({
@@ -82,6 +83,7 @@ const { api } = useApi();
 const { showToast } = useToast();
 const localePath = useLocalePath();
 const route = useRoute();
+const appStore = useAppStore();
 
 const otp = ref<string>("");
 const isValid = ref<boolean>(true);
@@ -182,6 +184,8 @@ const onSubmit = async () => {
     token.value = response.data.token;
     const signupInfoCookie = useCookie("signupInfo");
     signupInfoCookie.value = null;
+    await nextTick();
+    appStore.getUserData();
     navigateTo(localePath("/signup/verify-phone/continue"));
     isSubmitting.value = false;
   } catch (error) {

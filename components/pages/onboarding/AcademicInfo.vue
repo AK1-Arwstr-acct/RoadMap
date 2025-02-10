@@ -78,7 +78,6 @@ import useAppStore from "~/stores/AppStore";
 
 const emit = defineEmits(["submitAcademic"]);
 
-
 const { t } = useI18n();
 const { api } = useApi();
 const { showToast } = useToast();
@@ -131,26 +130,31 @@ const getClassGrades = async () => {
     }
   }
 };
+const setAcademicInfo = (userData: UserData) => {
+  academicInfo.value.grade = {
+    value: userData?.educational_records.current_class_grade ? `${(userData?.educational_records.current_class_grade.id)}` : "",
+    label: userData?.educational_records.current_class_grade ? `${(userData?.educational_records.current_class_grade.class_name)}` : "",
+  };
+  academicInfo.value.gpa = userData?.educational_records.cgpa ? `${userData?.educational_records.cgpa}` : "";
+  const ieltsScore = userData?.educational_records.test_scores.find(
+    (item) => item.title.toLowerCase() === "ielts"
+  );
+  academicInfo.value.ielts = ieltsScore ? `${ieltsScore.score}` : "";
+};
 
 watch(
   () => appStore.userData,
   (newValue) => {
     if (newValue) {
-      academicInfo.value.grade = {
-        value: `${newValue.educational_records.current_class_grade.id}`,
-        label:
-          newValue.educational_records.current_class_grade.class_name,
-      };
-      academicInfo.value.gpa = `${newValue.educational_records.cgpa}`;
-      const ieltsScore = newValue.educational_records.test_scores.find(
-        (item) => item.title.toLowerCase() === "ielts"
-      );
-      academicInfo.value.ielts = ieltsScore ? `${ieltsScore.score}` : "";
+      setAcademicInfo(newValue);
     }
   }
 );
 
 onMounted(() => {
   getClassGrades();
+  if(appStore.userData) {
+    setAcademicInfo(appStore.userData);
+  }
 });
 </script>

@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        archivo: ['Archivo', 'sans-serif'],
+        sans: ['Archivo', 'sans-serif'],
       },
       screens: {
         "3xl": "1920px",

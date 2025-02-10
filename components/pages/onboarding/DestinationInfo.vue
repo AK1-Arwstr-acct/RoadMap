@@ -1,15 +1,15 @@
 <template>
-  <div class="w-[490px] space-y-8">
+  <div class="w-full sm:w-[490px] space-y-8">
     <h1 class="text-2xl md:text-4xl md:!leading-[44px] font-medium text-center">
       {{ $t("onboarding.destination_heading") }}
     </h1>
     <div class="space-y-3">
-      <div v-for="(option, index) in countriesList" :key="index">
+      <div v-for="(option, index) in locationOptions" :key="index">
         <label
           :for="`country${index}`"
           class="flex items-center justify-between size-full font-medium rounded-xl cursor-pointer relative border p-3 transition-all ease-in-out duration-200"
           :class="[
-            selectedOptionIds.includes(option.id)
+            option?.value.some((id) => selectedOptionIds.includes(id))
               ? 'border-[#84CAFF] bg-[#D1E9FF]/30 text-[#1849A9]'
               : 'border-[#D5D7DA] text-[#414651]',
           ]"
@@ -18,20 +18,22 @@
             :id="`country${index}`"
             type="checkbox"
             name="countries"
-            :value="option.id"
-            v-model="selectedOptionIds"
+            :value="option.value"
+            :checked="option.value.some((id) => selectedOptionIds.includes(id))"
+            @change="toggleSelection(option.value)"
             class="absolute top-3 right-3 appearance-none"
           />
           <div class="flex items-center gap-3">
             <component :is="option.icon" />
-            {{ option.name }}
+            {{ option.label }}
           </div>
         </label>
       </div>
     </div>
     <button
       @click="submit"
-      class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5"
+      :disabled="selectedOptionIds.length === 0"
+      class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
     >
       {{ $t("onboarding.continue") }}
       <IconSpinner v-if="isSubmitting" class="animate-spin" />
@@ -42,15 +44,17 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import IconAustralia from "~/components/icons/IconAustralia.vue";
-import IconCanada from "~/components/icons/IconCanada.vue";
-import IconEurope from "~/components/icons/IconEurope.vue";
-import IconUK from "~/components/icons/IconUK.vue";
-import IconUS from "~/components/icons/IconUS.vue";
 import useAppStore from "~/stores/AppStore";
-import type { OptionAttributes } from "~/types/home";
+import type { CountriesOptionAttributes } from "~/types/home";
 
+defineProps({
+  locationOptions: {
+    type: Array as PropType<CountriesOptionAttributes[]>,
+    default: () => []
+  }
+});
 const emit = defineEmits(["submitDestination"]);
+
 const { showToast } = useToast();
 const appStore = useAppStore();
 const { api } = useApi();
@@ -58,52 +62,30 @@ const { api } = useApi();
 // Use an array to store selected option IDs
 const selectedOptionIds = ref<number[]>([]);
 const isSubmitting = ref<boolean>(false);
-const locationOptions = ref<OptionAttributes>();
 
-const countriesList = [
-  {
-    id: 1,
-    name: "United Kingdom",
-    icon: IconUK,
-  },
-  {
-    id: 2,
-    name: "Canada",
-    icon: IconCanada,
-  },
-  {
-    id: 3,
-    name: "Australia",
-    icon: IconAustralia,
-  },
-  {
-    id: 4,
-    name: "United States",
-    icon: IconUS,
-  },
-  {
-    id: 5,
-    name: "Europe",
-    icon: IconEurope,
-  },
-];
+const toggleSelection = (ids: number[]) => {
+  const allSelected = ids.every((id) => selectedOptionIds.value.includes(id));
+  if (allSelected) {
+    selectedOptionIds.value = selectedOptionIds.value.filter(
+      (id) => !ids.includes(id)
+    );
+  } else {
+    selectedOptionIds.value = [
+      ...new Set([...selectedOptionIds.value, ...ids]),
+    ];
+  }
+};
 
-// watch(
-//   () => selectedOptionIds.value,
-//   () => {
-//     console.log(selectedOptionIds.value);
-//   }
-// );
-
-const submit = () => {
+const submit = async () => {
   try {
     isSubmitting.value = true;
-    // api.post("/api/v1/student/update-profile-basic-info", {
-    //   current_class_grade: academicInfo.value.grade.value,
-    //   cgpa: academicInfo.value.gpa,
-    //   ielts_score: academicInfo.value.ielts,
-    // });
-    emit("submitDestination");
+    await api.post("/api/v1/student/update-profile-basic-info", {
+      cgpa: appStore.userData?.educational_records.cgpa,
+      destination_country_ids: selectedOptionIds.value,
+    });
+    await appStore.getUserData();
+    const budgets = await getBudgets();
+    emit("submitDestination", budgets);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -115,39 +97,53 @@ const submit = () => {
     isSubmitting.value = false;
   }
 };
-
-const getStudyDestination = async () => {
+const getBudgets = async () => {
+  const countryIds =
+    appStore.userData?.educational_records.want_to_study_countries.map(
+      (item) => item.id
+    );
+  const gradeLevel = appStore.userData?.educational_records.next_class_grade.id;
+  const cgpa = Number(appStore.userData?.educational_records.cgpa);
+  if (!gradeLevel || !countryIds?.length || !cgpa) {
+    return;
+  }
   const response = await api.post(
-    `/api/v1/anonymous-recommendation/get-location-country`,
+    `/api/v1/anonymous-recommendation/budget-range`,
     {
-      class_grade_ids: [1], // temp id pass
-      cgpa: Number(appStore.userData?.educational_records.cgpa),
+      class_grade_ids: [gradeLevel],
+      cgpa: cgpa,
+      country_ids: countryIds,
       uniqueId: appStore.userData?.uuid,
     }
   );
   if (response.data.data) {
-    locationOptions.value = response.data.data?.map(
-      (item: { country_ids: number[]; title: string }) => {
-        let name = item.title.toLowerCase().split(" ").join("_");
+    const budgetList = response.data.data.map(
+      (item: [string | number, string | number]) => {
+        const min =
+          typeof item[0] === "string"
+            ? Number(item[0].replace(/\+/g, ""))
+            : item[0];
+        const max =
+          typeof item[1] === "string"
+            ? Number(item[1].replace(/\+/g, ""))
+            : item[1];
         return {
-          value: item.country_ids.join(","),
-          label: item.title,
-          icon: name.includes("united_kingdom")
-            ? shallowRef(IconUK)
-            : name.includes("Canada")
-            ? shallowRef(IconCanada)
-            : name.includes("Australia")
-            ? shallowRef(IconAustralia)
-            : name.includes("united_states")
-            ? shallowRef(IconUS)
-            : shallowRef(IconEurope),
+          value: `${item[0]}-${!!item[1] ? item[1] : ""}`,
+          label: `$${budgetWithComma(item[0])}  ${
+            !!item[1] ? " - $" + budgetWithComma(item[1]) : ""
+          }`,
+          min: min,
+          max: max,
         };
       }
     );
+    return budgetList;
   }
+  return [];
 };
 
 onMounted(async () => {
-  await getStudyDestination();
+  const preSelected =  appStore.userData?.educational_records.want_to_study_countries.map((item) => item.id);
+  selectedOptionIds.value = preSelected && preSelected.length > 0 ? preSelected : []
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[490px] space-y-8">
+  <div class="w-full sm:w-[490px] space-y-8">
     <h1 class="text-2xl md:text-4xl md:!leading-[44px] font-medium text-center">
       {{ $t("onboarding.programs_heading") }}
     </h1>
@@ -39,19 +39,9 @@
         </label>
       </div>
     </div>
-    <div>
-      <BaseSelectRadio
-        :label="t('onboarding.area_of_study')"
-        :options="coursePreferenceOptions"
-        direction="upward"
-        v-model="selectedCourse"
-        :loading="isCourseLoading"
-        :disabled="selectedProgramId === ''"
-      />
-    </div>
     <button
       @click="submit"
-      :disabled="selectedProgramId === ''"
+      :disabled="!selectedProgramId"
       class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
     >
       {{ $t("onboarding.continue") }}
@@ -63,39 +53,40 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import IconAssociate from "~/components/icons/IconAssociate.vue";
-import IconBachelor from "~/components/icons/IconBachelor.vue";
-import IconMaster from "~/components/icons/IconMaster.vue";
+import type { PropType } from "vue";
 import useAppStore from "~/stores/AppStore";
 import type { OptionAttributes } from "~/types/home";
+import IconAustralia from "~/components/icons/IconAustralia.vue";
+import IconCanada from "~/components/icons/IconCanada.vue";
+import IconEurope from "~/components/icons/IconEurope.vue";
+import IconUK from "~/components/icons/IconUK.vue";
+import IconUS from "~/components/icons/IconUS.vue";
 
-const { t } = useI18n();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
 
+defineProps({
+  programListOptions: {
+    type: Array as PropType<OptionAttributes[]>,
+    default: () => []
+  }
+})
 const emit = defineEmits(["submitProgram"]);
 
 const selectedProgramId = ref<string>("");
 const isSubmitting = ref<boolean>(false);
-const isCourseLoading = ref<boolean>(false);
-const programListOptions = ref<OptionAttributes[]>();
-const coursePreferenceOptions = ref<OptionAttributes[]>();
-const selectedCourse = ref<OptionAttributes>();
 
 const submit = async () => {
   try {
     isSubmitting.value = true;
     await api.post("/api/v1/student/update-profile-basic-info", {
       cgpa: appStore.userData?.educational_records.cgpa,
-      current_class_grade: [
-        appStore.userData?.educational_records.current_class_grade.id,
-      ],
-      super_meta_category_id: selectedCourse.value?.value || null,
-      class_grade_ids: Number(selectedProgramId.value) || null,
+      next_educational_class_grade_id: Number(selectedProgramId.value) || null,
     });
-    appStore.getUserData();
-    emit("submitProgram");
+    await appStore.getUserData();
+    const locations = await getStudyDestination();
+    emit("submitProgram", locations);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -107,91 +98,47 @@ const submit = async () => {
     isSubmitting.value = false;
   }
 };
-
-const getStudyPrograms = async () => {
-  try {
-    const response = await api.get(
-      `/api/v1/anonymous-recommendation/types-of-class-grades?uniqueId=${appStore.userData?.uuid}`
-    );
-    if (response.data.data) {
-      programListOptions.value = response.data.data.map(
-        (item: { id: number; class_name: string }) => {
-          return {
-            value: item.id,
-            label: item.class_name,
-            icon: item.class_name.toLowerCase().includes("bachelor")
-              ? shallowRef(IconBachelor)
-              : item.class_name.toLowerCase().includes("master")
-              ? shallowRef(IconMaster)
-              : shallowRef(IconAssociate),
-          };
-        }
-      );
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorMessage = errorList(error);
-      showToast(errorMessage, {
-        type: "error",
-      });
-    }
+const getStudyDestination = async () => {
+  const gradeLevel = appStore.userData?.educational_records.next_class_grade.id
+  const cgpa = Number(appStore.userData?.educational_records.cgpa)
+  if(!gradeLevel || !cgpa) {
+    return;
   }
-};
-
-const gatAreaofStudies = async (programId: string) => {
-  try {
-    isCourseLoading.value = true;
-    const response = await api.post(
-      "/api/v1/anonymous-recommendation/find-program-parent",
-      {
-        uniqueId: appStore.userData?.uuid,
-        cgpa: appStore.userData?.educational_records.cgpa,
-        class_grade_ids: [Number(programId)],
-        // next_educational_class_grade_id: 1,
+  const response = await api.post(
+    `/api/v1/anonymous-recommendation/get-location-country`,
+    {
+      class_grade_ids: [gradeLevel],
+      cgpa: cgpa,
+      uniqueId: appStore.userData?.uuid,
+    }
+  );
+  if (response.data.data) {
+    const locationOptions = response.data.data?.map(
+      (item: { country_ids: number[]; title: string }) => {
+        let name = item.title.toLowerCase().split(" ").join("_");
+        return {
+          value: item.country_ids,
+          label: item.title,
+          icon: name.includes("united_kingdom")
+            ? shallowRef(IconUK)
+            : name.includes("canada")
+            ? shallowRef(IconCanada)
+            : name.includes("australia")
+            ? shallowRef(IconAustralia)
+            : name.includes("united_states")
+            ? shallowRef(IconUS)
+            : shallowRef(IconEurope),
+        };
       }
     );
-    if (response.data.data) {
-      coursePreferenceOptions.value = response.data.data.map(
-        (item: { id: number; title: string }) => {
-          return {
-            value: item?.id,
-            label: item?.title,
-          };
-        }
-      );
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorMessage = errorList(error);
-      showToast(errorMessage, {
-        type: "error",
-      });
-    }
-  } finally {
-    isCourseLoading.value = false;
+    return locationOptions
   }
+  return [];
 };
 
-watch(
-  () => selectedProgramId.value,
-  (newValue) => {
-    if (newValue !== "") {
-      gatAreaofStudies(newValue);
-    }
+onMounted(() => {
+  if(appStore.userData) {
+    selectedProgramId.value = appStore.userData?.educational_records.next_class_grade.id || "";
   }
-);
-
-// watch(
-//   () => appStore.userData,
-//   (newValue) => {
-//     if (newValue) {
-//       selectedProgramId.value = ''
-//       selectedCourse.value = ''
-//   }
-//   }
-// );
-
-onMounted(async () => {
-  getStudyPrograms();
 });
 </script>

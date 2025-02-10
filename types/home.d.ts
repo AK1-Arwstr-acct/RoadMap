@@ -4,6 +4,12 @@ interface OptionAttributes {
   description?: string;
   icon?: string;
 }
+interface CountriesOptionAttributes {
+  value: number[];
+  label: string;
+  description?: string;
+  icon?: string;
+}
 interface FormData {
   budget: OptionAttributes | null;
   grade: OptionAttributes | null;
@@ -65,6 +71,10 @@ interface EducationalRecords {
   annual_max_budget: number;
   cgpa: number;
   current_class_grade: CurrentClassGrade;
+  next_class_grade: {
+    class_name: string;
+    id: numbe;
+  };
   test_scores: TestScores[];
   want_to_study_countries: StudyCountry[];
 }
@@ -94,4 +104,4 @@ interface UserInput {
 
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput, CountriesOptionAttributes }

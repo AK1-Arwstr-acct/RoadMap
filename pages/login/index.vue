@@ -167,12 +167,14 @@ definePageMeta({
 
 import axios from "axios";
 import type { Country } from "~/types/auth";
+import useAppStore from '~/stores/AppStore';
 
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { api } = useApi();
 const { showToast } = useToast();
 const config = useRuntimeConfig();
+const appStore = useAppStore();
 
 const phoneInput = ref<HTMLInputElement | null>(null);
 const isFocused = ref<boolean>(false);
@@ -248,6 +250,8 @@ const submit = async () => {
       maxAge: 86400,
     });
     token.value = JSON.stringify(response.data.token);
+    await nextTick();
+    await appStore.getUserData();
     if (response.data.data.onboarded) {
       navigateTo(localePath("/dashboard"));
     } else {
