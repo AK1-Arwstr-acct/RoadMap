@@ -73,7 +73,11 @@ interface EducationalRecords {
   current_class_grade: CurrentClassGrade;
   next_class_grade: {
     class_name: string;
-    id: numbe;
+    id: number;
+  };
+  super_meta_category: {
+    title: string;
+    id: number;
   };
   test_scores: TestScores[];
   want_to_study_countries: StudyCountry[];

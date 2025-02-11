@@ -24,6 +24,7 @@ export const useApi = () => {
     response => response,
     error => {
       if (error.response && error.response.status === 401) {
+        useCookie('token').value = null
         navigateTo('/login')
       }
       return Promise.reject(error);

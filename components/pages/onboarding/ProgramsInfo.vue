@@ -99,8 +99,8 @@ const submit = async () => {
   }
 };
 const getStudyDestination = async () => {
-  const gradeLevel = appStore.userData?.educational_records.next_class_grade.id
-  const cgpa = Number(appStore.userData?.educational_records.cgpa)
+  const gradeLevel = appStore.userData?.educational_records.next_class_grade?.id || null;
+  const cgpa = Number(appStore.userData?.educational_records.cgpa) || null;
   if(!gradeLevel || !cgpa) {
     return;
   }
@@ -138,7 +138,7 @@ const getStudyDestination = async () => {
 
 onMounted(() => {
   if(appStore.userData) {
-    selectedProgramId.value = appStore.userData?.educational_records.next_class_grade.id || "";
+    selectedProgramId.value = appStore.userData?.educational_records.next_class_grade?.id || "";
   }
 });
 </script>

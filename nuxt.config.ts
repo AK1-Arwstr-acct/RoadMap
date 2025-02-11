@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   components: [{ path: "~/components", pathPrefix: false }],
   css: ['~/assets/css/main.css', '~/assets/css/global.css'],
-  modules: ['@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts', '@pinia-plugin-persistedstate/nuxt'],
+  modules: ['@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts'],
   i18n: {
     locales: [
       { code: 'en', name: 'English', iso: 'en-US', file: 'english.json' },

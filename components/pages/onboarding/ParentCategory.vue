@@ -65,9 +65,11 @@ const submit = async () => {
 };
 
 onMounted(() => {
-  if(appStore.userData) {
-    // TODO: We need to prepopulate value once added from BE
-    // selectedCourse.value = appStore.userData?
+  if(appStore.userData && appStore.userData.educational_records.super_meta_category) {
+    selectedCourse.value = {
+      label: appStore.userData?.educational_records.super_meta_category?.title,
+      value: `${appStore.userData?.educational_records.super_meta_category?.id}`,
+    }
   }
 })
 </script>

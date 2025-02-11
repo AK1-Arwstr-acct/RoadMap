@@ -1,15 +1,20 @@
 <template>
   <div
-    class="h-[100dvh] w-screen py-12 bg-[#111113] text-white flex justify-center items-center"
+    class="h-dvh w-screen py-12 bg-[#111113] text-white flex justify-center items-center"
   >
-    <div class="flex flex-col h-full w-1/2">
+    <div class="flex flex-col h-full w-full sm:w-2/3 px-5">
       <div class="">
         <select
           id="apiSelect"
           v-model="callApi"
           class="px-5 py-2.5 bg-gray-600/50 rounded-lg mb-3 font-medium outline-none"
         >
-          <option v-for="api in apiList" :key="api.value" :value="api.value" class="bg-black/70">
+          <option
+            v-for="api in apiList"
+            :key="api.value"
+            :value="api.value"
+            class="bg-black/70"
+          >
             {{ api.label }}
           </option>
         </select>
@@ -26,9 +31,9 @@
             class="p-2 bg-gray-800/50 rounded-lg mb-2 w-fit max-w-[70%] text-wrap"
             :class="{ 'self-end': chat.isSender }"
           >
-            <p>
-              {{ chat.text }}
-            </p>
+            <div>
+              <vue-markdown :source="chat.text" :options="options" />
+            </div>
           </div>
           <div
             v-if="isChatLoading"
@@ -70,6 +75,7 @@ const chatContainer = ref<HTMLElement | null>(null);
 const inputQuestion = ref<string>("");
 const completeChat = ref<PocChat[]>([]);
 const isChatLoading = ref<boolean>(false);
+const schoolNames = ref<string[]>();
 const callApi = ref<"ask-question" | "scholarship" | "roadmap">("ask-question");
 
 const apiList = [
@@ -86,7 +92,9 @@ const apiList = [
     label: "Roadmap",
   },
 ];
-
+const options = {
+  html: true,
+};
 // Function to scroll to the bottom
 const scrollDown = () => {
   nextTick(() => {
@@ -119,12 +127,7 @@ const onSubmit = async () => {
       `/api/v1/ai-conversation/${callApi.value}`,
       {
         ...(callApi.value === "ask-question" && {
-          school_usernames: [
-            "university_of_sunderland",
-            "university_of_sussex",
-            "university_of_plymouth",
-            "faulkner_university",
-          ],
+          school_usernames: schoolNames.value,
         }),
         query: question,
       }
@@ -155,10 +158,37 @@ const onSubmit = async () => {
   }
 };
 
+const schoolsList = async () => {
+  try {
+    const response = await api.get("/api/v1/school/name-list");
+    if (response) {
+      schoolNames.value = response.data.data.map(
+        (item: { id: number; name: string }) => {
+          // let filterNames = item.name.toLowerCase().split(" ").join("_");
+          // return filterNames.replace("-", "_");
+          return item.name
+        }
+      );
+    }
+    console.log(schoolNames.value);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.message;
+      showToast(errorMessage, {
+        type: "warning",
+      });
+    }
+  }
+};
+
 watch(
   () => callApi.value,
   () => {
     completeChat.value = [];
   }
 );
+
+onMounted(() => {
+  schoolsList();
+});
 </script>
