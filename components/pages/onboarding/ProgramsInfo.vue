@@ -61,7 +61,9 @@ import IconCanada from "~/components/icons/IconCanada.vue";
 import IconEurope from "~/components/icons/IconEurope.vue";
 import IconUK from "~/components/icons/IconUK.vue";
 import IconUS from "~/components/icons/IconUS.vue";
+import useOnboardingStore from "~/stores/OnboardingStore";
 
+const onboardingStore = useOnboardingStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
@@ -69,9 +71,9 @@ const { showToast } = useToast();
 defineProps({
   programListOptions: {
     type: Array as PropType<OptionAttributes[]>,
-    default: () => []
-  }
-})
+    default: () => [],
+  },
+});
 const emit = defineEmits(["submitProgram"]);
 
 const selectedProgramId = ref<string>("");
@@ -99,9 +101,10 @@ const submit = async () => {
   }
 };
 const getStudyDestination = async () => {
-  const gradeLevel = appStore.userData?.educational_records.next_class_grade?.id || null;
+  const gradeLevel =
+    appStore.userData?.educational_records.next_class_grade?.id || null;
   const cgpa = Number(appStore.userData?.educational_records.cgpa) || null;
-  if(!gradeLevel || !cgpa) {
+  if (!gradeLevel || !cgpa) {
     return;
   }
   const response = await api.post(
@@ -131,14 +134,18 @@ const getStudyDestination = async () => {
         };
       }
     );
-    return locationOptions
+    if (locationOptions) {
+      onboardingStore.setLocationOptions(locationOptions);
+    }
+    return locationOptions;
   }
   return [];
 };
 
 onMounted(() => {
-  if(appStore.userData) {
-    selectedProgramId.value = appStore.userData?.educational_records.next_class_grade?.id || "";
+  if (appStore.userData) {
+    selectedProgramId.value =
+      `${appStore.userData?.educational_records.next_class_grade?.id}` || "";
   }
 });
 </script>

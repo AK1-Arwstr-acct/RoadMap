@@ -1,3 +1,0 @@
-<template>
-    School recommendation
-</template>

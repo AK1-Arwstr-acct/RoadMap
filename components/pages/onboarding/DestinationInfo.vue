@@ -46,15 +46,17 @@
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
 import type { CountriesOptionAttributes } from "~/types/home";
+import useOnboardingStore from "~/stores/OnboardingStore";
 
 defineProps({
   locationOptions: {
     type: Array as PropType<CountriesOptionAttributes[]>,
-    default: () => []
-  }
+    default: () => [],
+  },
 });
 const emit = defineEmits(["submitDestination"]);
 
+const onboardingStore = useOnboardingStore();
 const { showToast } = useToast();
 const appStore = useAppStore();
 const { api } = useApi();
@@ -137,13 +139,19 @@ const getBudgets = async () => {
         };
       }
     );
+    onboardingStore.setBudgetList(budgetList);
+    await nextTick();
     return budgetList;
   }
   return [];
 };
 
 onMounted(async () => {
-  const preSelected =  appStore.userData?.educational_records.want_to_study_countries.map((item) => item.id);
-  selectedOptionIds.value = preSelected && preSelected.length > 0 ? preSelected : []
+  const preSelected =
+    appStore.userData?.educational_records.want_to_study_countries.map(
+      (item) => item.id
+    );
+  selectedOptionIds.value =
+    preSelected && preSelected.length > 0 ? preSelected : [];
 });
 </script>

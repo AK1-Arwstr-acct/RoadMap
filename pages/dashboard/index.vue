@@ -1,16 +1,16 @@
 <template>
-  <div class="h-dvh flex">
+  <div class="h-dvh flex ">
     <Sidebar :currentTab="currentTab" @updateTab="updateTab" />
     <div class="flex-1 bg-[#FAFAFA] flex flex-col">
       <DashboardNav />
-      <div class="flex-1">
+      <div class="flex-1 overflow-hidden">
         <Transition name="fade">
           <div v-if="currentTab === 'home'">home</div>
           <div v-else-if="currentTab === 'sophie'">sophie</div>
           <div v-else-if="currentTab === 'application_tracker'">
             application_tracker
           </div>
-          <SchoolList v-else-if="currentTab === 'schools_list'" />
+          <SchoolsList v-else-if="currentTab === 'schools_list'" />
           <div v-else>setting</div>
         </Transition>
       </div>

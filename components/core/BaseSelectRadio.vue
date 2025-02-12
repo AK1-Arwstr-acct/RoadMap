@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <p v-if="label" class="font-medium text-[#414651] text-sm mb-1.5">{{ label }}</p>
+    <p v-if="label" class="font-medium text-[#414651] text-sm mb-1.5">{{ label }}<span v-if="required" class="text-[#D92D20] font-medium">*</span></p>
     <div
       @click="isDropdownOpen = !isDropdownOpen"
       @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
@@ -115,6 +115,10 @@ const props = defineProps({
     default: false,
   },
   disabled: {
+    type: Boolean,
+    default: false,
+  },
+  required: {
     type: Boolean,
     default: false,
   },

@@ -105,6 +105,9 @@ const getStudyPrograms = async () => {
           };
         }
       );
+      if(programListOptions.value){
+        onboardingStore.setProgramListOptions(programListOptions.value)
+      }
       isProgramsLoaded.value = true;
     }
   } catch (error) {

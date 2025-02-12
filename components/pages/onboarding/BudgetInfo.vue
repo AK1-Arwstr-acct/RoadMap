@@ -43,6 +43,7 @@ import axios from "axios";
 import type { PropType } from "vue";
 import type { OptionAttributes } from "~/types/home";
 import useAppStore from "~/stores/AppStore";
+import useOnboardingStore from "~/stores/OnboardingStore";
 
 const props = defineProps({
   budgetList: {
@@ -52,6 +53,7 @@ const props = defineProps({
 });
 const emit = defineEmits(["submitBudget"]);
 
+const onboardingStore = useOnboardingStore();
 const { api } = useApi();
 const appStore = useAppStore();
 const { showToast } = useToast();
@@ -87,7 +89,7 @@ const submitBudget = async () => {
     });
     await appStore.getUserData();
     const parentCategories = await gatAreaofStudies();
-    emit('submitBudget', parentCategories)
+    emit("submitBudget", parentCategories);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -135,6 +137,9 @@ const gatAreaofStudies = async () => {
           };
         }
       );
+      if (coursePreferenceOptions) {
+        onboardingStore.setCoursePreferenceOptions(coursePreferenceOptions);
+      }
       return coursePreferenceOptions;
     }
     return [];
@@ -149,12 +154,12 @@ const gatAreaofStudies = async () => {
 };
 
 onMounted(() => {
-  if(appStore.userData) {
-    const budget = `${appStore.userData.educational_records.annual_min_budget}-${appStore.userData.educational_records.annual_max_budget}`
+  if (appStore.userData) {
+    const budget = `${appStore.userData.educational_records.annual_min_budget}-${appStore.userData.educational_records.annual_max_budget}`;
     const isBudgetExists = props.budgetList.find((item) => {
       return item.value === budget;
-    })
-    if(isBudgetExists) {
+    });
+    if (isBudgetExists) {
       selectedOptionId.value = budget;
     }
   }
