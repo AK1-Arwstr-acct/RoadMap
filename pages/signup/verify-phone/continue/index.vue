@@ -2,7 +2,7 @@
   <div class="h-screen min-h-fit w-full flex justify-center items-center px-5">
     <div class="w-fit space-y-8">
       <div>
-        <img src="/images/vroom.png" alt="Vroom Vroom" />
+        <img src="/images/v-room.png" alt="Vroom Vroom" />
       </div>
       <div class="px-14">
         <button
