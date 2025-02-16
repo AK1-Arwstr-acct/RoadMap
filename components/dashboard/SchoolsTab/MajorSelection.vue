@@ -72,14 +72,10 @@
 <script setup lang="ts">
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
-import useDashboardStore from "~/stores/dashboardStore";
-
-const emits = defineEmits(["setRecommendationStatus"]);
 
 const { api } = useApi();
 const appStore = useAppStore();
 const { showToast } = useToast();
-const dashboardStore = useDashboardStore();
 
 interface programOptions {
   value: number;
@@ -89,7 +85,6 @@ interface programOptions {
 const majorProgramsList = ref<programOptions[]>([]);
 const selectedLPrograms = ref<number[]>([]);
 const isSubmitting = ref<boolean>(false);
-// const isMajorsChange = ref<boolean>(false);
 
 const isProgramDisable = computed(() => {
   return selectedLPrograms.value.length === 3;
@@ -113,9 +108,53 @@ const submit = async () => {
       next_program_title_ids: selectedLPrograms.value,
     });
     appStore.getUserData();
-    dashboardStore.isMajorsChange = false;
-    emits("setRecommendationStatus", true);
     isSubmitting.value = false;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
+};
+
+const getMajors = async () => {
+  if (!appStore.userData) {
+    return;
+  }
+  try {
+    const response = await api.post(
+      "/api/v1/anonymous-recommendation/find-program-titles",
+      {
+        cgpa: appStore.userData?.educational_records.cgpa,
+        class_grade_ids: [
+          appStore.userData?.educational_records.next_class_grade.id,
+        ],
+        country_ids:
+          appStore.userData?.educational_records.want_to_study_countries.map(
+            (item) => item.id
+          ),
+        max_budget: appStore.userData?.educational_records.annual_max_budget,
+        min_budget: appStore.userData?.educational_records.annual_min_budget,
+        msisdn: appStore.userData?.phone_number,
+        program_title_parent_id:
+          appStore.userData?.educational_records.super_meta_category.id,
+        state_ids: null,
+        uniqueId: appStore.userData?.uuid,
+      }
+    );
+    if (response) {
+      majorProgramsList.value = response.data.data.map(
+        (item: { id: number; title: string }) => {
+          return {
+            value: item.id,
+            label: item.title,
+          };
+        }
+      );
+    }
+    selectedLPrograms.value = appStore.userData.educational_records.next_program_titles.map((item) => item.id);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -128,38 +167,12 @@ const submit = async () => {
 
 watch(
   () => appStore.userData,
-  async (newValue) => {
-    if (!dashboardStore.isMajorsChange) {
-      return;
-    }
-    const response = await api.post(
-      "/api/v1/anonymous-recommendation/find-program-titles",
-      {
-        cgpa: newValue?.educational_records.cgpa,
-        class_grade_ids: [newValue?.educational_records.next_class_grade.id],
-        country_ids: newValue?.educational_records.want_to_study_countries.map(
-          (item) => item.id
-        ),
-        max_budget: newValue?.educational_records.annual_max_budget,
-        min_budget: newValue?.educational_records.annual_min_budget,
-        msisdn: newValue?.phone_number,
-        program_title_parent_id:
-          newValue?.educational_records.super_meta_category.id,
-        state_ids: null,
-        uniqueId: newValue?.uuid,
-      }
-    );
-    if (response) {
-      selectedLPrograms.value = [];
-      majorProgramsList.value = response.data.data.map(
-        (item: { id: number; title: string }) => {
-          return {
-            value: item.id,
-            label: item.title,
-          };
-        }
-      );
-    }
+  async () => {
+    getMajors();
   }
 );
+
+onMounted(() => {
+  getMajors();
+});
 </script>

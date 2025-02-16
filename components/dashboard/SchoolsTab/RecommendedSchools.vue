@@ -14,7 +14,6 @@
         v-for="(school, idx) in dashboardStore.schoolsList"
         :key="idx"
         :programs="school"
-        @openDetail="openDetail"
       />
       <div class="flex justify-center">
         <BasePagination
@@ -22,7 +21,7 @@
             dashboardStore.recommendedSchoolsPagination?.current_page
           "
           :lastPage="dashboardStore.recommendedSchoolsPagination?.last_page"
-          @paginate="(pageNum) => runEngine(pageNum)"
+          @paginate="(pageNum) => getRecommendations(pageNum)"
         />
       </div>
     </div>
@@ -45,17 +44,19 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import SchoolDetailModal from "./SchoolDetailModal.vue";
-import type { OptionAttributes } from "~/types/home";
-import IconRankDown from "../../icons/IconRankDown.vue";
-import IconRankUp from "../../icons/IconRankUp.vue";
-import IconPriceDown from "../../icons/IconPriceDown.vue";
-import IconPriceUp from "../../icons/IconPriceUp.vue";
+import SchoolDetailModal from "~/components/dashboard/SchoolsTab/SchoolDetailModal.vue";
+import IconRankDown from "~/components/icons/IconRankDown.vue";
+import IconRankUp from "~/components/icons/IconRankUp.vue";
+import IconPriceDown from "~/components/icons/IconPriceDown.vue";
+import IconPriceUp from "~/components/icons/IconPriceUp.vue";
 import useDashboardStore from "~/stores/dashboardStore";
-import useAppStore from "~/stores/AppStore";
+import type { OptionAttributes } from "~/types/home";
+
+const emits = defineEmits<{
+  (e: "getRecommendations", pageNo: number): void;
+}>();
 
 const dashboardStore = useDashboardStore();
-const appStore = useAppStore();
 
 const isDetailModal = ref<boolean>(false);
 const sortFilters = ref<OptionAttributes[]>([
@@ -88,30 +89,10 @@ const close = () => {
   isDetailModal.value = false;
 };
 
-const runEngine = async (pageNo: number) => {
-  if (appStore.userData) {
-    if (appStore.userData.educational_records.next_program_titles.length > 0) {
-      await dashboardStore.runEngine(pageNo);
-    } else {
-      await dashboardStore.preRunEngine(pageNo);
-    }
-  }
+const getRecommendations = async (pageNo: number = 1) => {
+  emits("getRecommendations", pageNo);
 };
 
-watch(
-  () => appStore.userData,
-  async () => {
-    if (appStore.userData) {
-      if (
-        appStore.userData.educational_records.next_program_titles.length > 0
-      ) {
-        await dashboardStore.runEngine();
-      } else {
-        await dashboardStore.preRunEngine();
-      }
-    }
-  }
-);
 </script>
 <style scoped>
 .slideModal-enter-active,

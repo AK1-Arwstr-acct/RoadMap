@@ -9,7 +9,6 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const { showToast } = useToast();
     const { api } = useApi();
 
-    const isMajorsChange = ref<boolean>(true);
     const programListOptions = ref<OptionAttributes[]>([])
     const locationOptions = ref<CountriesOptionAttributes[]>([])
     const coursePreferenceOptions = ref<OptionAttributes[]>();
@@ -92,6 +91,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
             }
         }
     }
+
     const setBudgetList = async () => {
         try {
             const response = await api.get(`/api/v1/school/recommended/budget-range`);
@@ -129,7 +129,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const preRunEngine = async (page: number = 1) => {
         try {
             const response = await api.get(
-                `/api/v1/school/recommendation/pre-run-engine?page=${page > 1 ? `?page=${page}` : ''}`
+                `/api/v1/school/recommendation/pre-run-engine?page=${page}`
             );
             if (response) {
                 schoolsList.value = response.data.data;
@@ -149,7 +149,27 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const runEngine = async (page: number = 1) => {
         try {
             const response = await api.get(
-                `/api/v1/school/recommendation/run-engine${page > 1 ? `?page=${page}` : ''}`
+                `/api/v1/school/recommendation/run-engine?page=${page}`
+            );
+            if (response) {
+                schoolsList.value = response.data.data;
+                recommendedSchoolsPagination.value = response.data.pagination;
+                totalSchool.value = response.data.total;
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const errorMessage = errorList(error);
+                showToast(errorMessage, {
+                    type: "error",
+                });
+            }
+        }
+    };
+
+    const runFinalEngine = async (page: number = 1) => {
+        try {
+            const response = await api.get(
+                `/api/v1/school/recommendation/final-engine?page=${page}`
             );
             if (response) {
                 schoolsList.value = response.data.data;
@@ -173,7 +193,6 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         budgetList,
         schoolsList,
         totalSchool,
-        isMajorsChange,
         recommendedSchoolsPagination,
         setBudgetList,
         setCoursePreferenceOptions,
@@ -181,6 +200,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         setProgramListOptions,
         preRunEngine,
         runEngine,
+        runFinalEngine,
     }
 });
 

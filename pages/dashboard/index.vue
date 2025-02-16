@@ -19,39 +19,10 @@
 </template>
 <script setup lang="ts">
 import type { TabName } from "~/types/dashboard";
-import useDashboardStore from "~/stores/dashboardStore";
-import useAppStore from "~/stores/AppStore";
-
-const dashboardStore = useDashboardStore();
-const appStore = useAppStore();
 
 const currentTab = ref<TabName>("schools_list");
 
 const updateTab = (value: TabName) => {
   currentTab.value = value;
 };
-
-onMounted(async () => {
-  await dashboardStore.setProgramListOptions();
-  await dashboardStore.setLocationOptions();
-  await dashboardStore.setBudgetList();
-  await dashboardStore.setCoursePreferenceOptions();
-});
 </script>
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 300ms;
-  transform: all 300ms;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fade-enter-to,
-.fade-leave-from {
-  opacity: 1;
-}
-</style>

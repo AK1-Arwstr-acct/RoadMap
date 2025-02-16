@@ -34,7 +34,7 @@
               ]"
             />
           </div>
-          <span class="text-xl font-semibold capitalize">
+          <span class="text-lg font-semibold capitalize">
             {{ tab.name.split("_").join(" ") }}
           </span>
         </div>
@@ -72,11 +72,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import IconTabHome from "../icons/IconTabHome.vue";
-import IconTabSophie from "../icons/IconTabSophie.vue";
-import IconTabApplication from "../icons/IconTabApplication.vue";
-import IconTabSchool from "../icons/IconTabSchool.vue";
-import IconTabSetting from "../icons/IconTabSetting.vue";
+import IconTabHome from "~/components/icons/IconTabHome.vue";
+import IconTabSophie from "~/components/icons/IconTabSophie.vue";
+import IconTabApplication from "~/components/icons/IconTabApplication.vue";
+import IconTabSchool from "~/components/icons/IconTabSchool.vue";
+import IconTabSetting from "~/components/icons/IconTabSetting.vue";
 import type { TabList, TabName } from "~/types/dashboard";
 
 const emit = defineEmits(["updateTab"]);

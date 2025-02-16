@@ -3,15 +3,30 @@
     class="pt-8 pb-6 h-full flex flex-col gap-6 overflow-y-auto no-scrollbar"
   >
     <UserDataInfo />
-    <SophieRecommendation :isActive="sophieRecommendation" />
-    <WhyTheseSchool />
-    <MajorSelection @setRecommendationStatus="setRecommendationStatus" />
+    <SophieRecommendation :isActive="isActive" />
+    <WhyTheseSchool v-if="isActive" />
+    <MajorSelection />
   </section>
 </template>
 <script setup lang="ts">
-const sophieRecommendation = ref<boolean>(false);
+import useAppStore from '~/stores/AppStore';
 
-const setRecommendationStatus = (value: boolean) => {
-  sophieRecommendation.value = value;
-};
+const appStore = useAppStore();
+
+const isActive = ref<boolean>(false);
+
+watch(
+  () => appStore.userData,
+  async () => {
+    if (appStore.userData) {
+      if (
+        appStore.userData.educational_records.next_program_titles.length > 0
+      ) {
+        isActive.value = true;
+      } else {
+        isActive.value = false;
+      }
+    }
+  }
+);
 </script>

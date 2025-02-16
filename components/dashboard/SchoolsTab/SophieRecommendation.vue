@@ -15,11 +15,12 @@
       </p>
     </div>
     <div class="">
-      <img src="/public/images/discoverJourney.png" alt="Discover Journey" />
+      <img src="/images/discover-journey.png" alt="Discover Journey" />
     </div>
     <button
       :disabled="!isActive"
       class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-2 justify-center items-center"
+      @click="dashboardStore.runFinalEngine()"
     >
       <div class="size-5">
         <IconLock v-if="!isActive" />
@@ -30,24 +31,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import useAppStore from "~/stores/AppStore";
+import useDashboardStore from "~/stores/dashboardStore";
 
-const appStore = useAppStore();
-
-const isActive = ref<boolean>(false);
-
-watch(
-  () => appStore.userData,
-  async () => {
-    if (appStore.userData) {
-      if (
-        appStore.userData.educational_records.next_program_titles.length > 0
-      ) {
-        isActive.value = true;
-      } else {
-        isActive.value = false;
-      }
-    }
+defineProps({
+  isActive: {
+    type: Boolean,
+    default: false
   }
-);
+})
+
+const dashboardStore = useDashboardStore();
 </script>

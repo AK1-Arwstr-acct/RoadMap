@@ -221,7 +221,6 @@ const updateUserData = async () => {
       super_meta_category_id: areaOfStudy.value?.value,
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
-    dashboardStore.isMajorsChange = true;
     await appStore.getUserData();
     isSubmitting.value = false;
     isUpdateDisable.value = true;
