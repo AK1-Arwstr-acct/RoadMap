@@ -9,7 +9,7 @@
           :for="option.label"
           class="flex items-center justify-between size-full font-medium rounded-xl cursor-pointer relative border py-4 pl-4 pr-5 transition-all ease-in-out duration-200"
           :class="[
-            selectedProgramId === option.value
+            selectedProgramId === Number(option.value)
               ? 'border-[#84CAFF] bg-[#D1E9FF]/30 text-[#1849A9]'
               : 'border-[#D5D7DA] text-[#414651]',
           ]"
@@ -29,7 +29,7 @@
           <div
             class="size-5 rounded-full transition-all ease-in-out duration-200 flex justify-center items-center"
             :class="[
-              selectedProgramId === option.value
+              selectedProgramId === Number(option.value)
                 ? 'bg-[#1570EF]'
                 : 'border-[#D5D7DA] border-2',
             ]"
@@ -45,7 +45,7 @@
       class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
     >
       {{ $t("onboarding.continue") }}
-      <IconSpinner v-if="isSubmitting" class="animate-spin" />
+      <IconSpinner v-if="isSubmitting" />
       <IconArrowRight v-else fill="#ffffff" />
     </button>
   </div>
@@ -61,14 +61,12 @@ import IconCanada from "~/components/icons/IconCanada.vue";
 import IconEurope from "~/components/icons/IconEurope.vue";
 import IconUK from "~/components/icons/IconUK.vue";
 import IconUS from "~/components/icons/IconUS.vue";
-import useOnboardingStore from "~/stores/OnboardingStore";
 
-const onboardingStore = useOnboardingStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
 
-defineProps({
+const props = defineProps({
   programListOptions: {
     type: Array as PropType<OptionAttributes[]>,
     default: () => [],
@@ -76,7 +74,7 @@ defineProps({
 });
 const emit = defineEmits(["submitProgram"]);
 
-const selectedProgramId = ref<string>("");
+const selectedProgramId = ref<number>();
 const isSubmitting = ref<boolean>(false);
 
 const submit = async () => {
@@ -101,20 +99,7 @@ const submit = async () => {
   }
 };
 const getStudyDestination = async () => {
-  const gradeLevel =
-    appStore.userData?.educational_records.next_class_grade?.id || null;
-  const cgpa = Number(appStore.userData?.educational_records.cgpa) || null;
-  if (!gradeLevel || !cgpa) {
-    return;
-  }
-  const response = await api.post(
-    `/api/v1/anonymous-recommendation/get-location-country`,
-    {
-      class_grade_ids: [gradeLevel],
-      cgpa: cgpa,
-      uniqueId: appStore.userData?.uuid,
-    }
-  );
+  const response = await api.get(`/api/v1/school/recommended/countries`);
   if (response.data.data) {
     const locationOptions = response.data.data?.map(
       (item: { country_ids: number[]; title: string }) => {
@@ -134,9 +119,6 @@ const getStudyDestination = async () => {
         };
       }
     );
-    if (locationOptions) {
-      onboardingStore.setLocationOptions(locationOptions);
-    }
     return locationOptions;
   }
   return [];
@@ -145,7 +127,7 @@ const getStudyDestination = async () => {
 onMounted(() => {
   if (appStore.userData) {
     selectedProgramId.value =
-      `${appStore.userData?.educational_records.next_class_grade?.id}` || "";
+      appStore.userData?.educational_records.next_class_grade?.id;
   }
 });
 </script>

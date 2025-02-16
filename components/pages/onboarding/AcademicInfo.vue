@@ -2,8 +2,8 @@
   <div class="max-w-[1000px] w-full flex justify-center gap-12 lg:gap-[84px]">
     <div class="flex-1 hidden md:block">
       <img
-        src="/images/adventures.png"
-        alt="Good Things Coming"
+        src="/images/TellMeMore.png"
+        alt="Tell Me More"
         class="w-full size-full object-contain"
       />
     </div>
@@ -11,18 +11,6 @@
       <h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
         {{ $t("onboarding.academic_heading") }}
       </h1>
-      <!-- <div class="remove-shadow-bg-white">
-        <label class="font-medium text-[#414651] text-sm">{{
-          $t("onboarding.your_grade")
-        }}</label>
-        <input
-          name="grade"
-          type="text"
-          v-model="academicInfo.grade"
-          :placeholder="t('onboarding.e_g_11')"
-          class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
-        />
-      </div> -->
       <BaseSelectRadio
         :label="t('onboarding.your_grade')"
         :options="classGradeList"
@@ -65,7 +53,7 @@
         class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
       >
         {{ $t("onboarding.continue") }}
-        <IconSpinner v-if="isSubmitting" class="animate-spin" />
+        <IconSpinner v-if="isSubmitting" />
         <IconArrowRight v-else fill="#ffffff" />
       </button>
     </div>
@@ -132,10 +120,16 @@ const getClassGrades = async () => {
 };
 const setAcademicInfo = (userData: UserData) => {
   academicInfo.value.grade = {
-    value: userData?.educational_records.current_class_grade ? `${(userData?.educational_records.current_class_grade.id)}` : "",
-    label: userData?.educational_records.current_class_grade ? `${(userData?.educational_records.current_class_grade.class_name)}` : "",
+    value: userData?.educational_records.current_class_grade
+      ? `${userData?.educational_records.current_class_grade.id}`
+      : "",
+    label: userData?.educational_records.current_class_grade
+      ? `${userData?.educational_records.current_class_grade.class_name}`
+      : "",
   };
-  academicInfo.value.gpa = userData?.educational_records.cgpa ? `${userData?.educational_records.cgpa}` : "";
+  academicInfo.value.gpa = userData?.educational_records.cgpa
+    ? `${userData?.educational_records.cgpa}`
+    : "";
   const ieltsScore = userData?.educational_records.test_scores.find(
     (item) => item.title.toLowerCase() === "ielts"
   );
@@ -153,7 +147,7 @@ watch(
 
 onMounted(() => {
   getClassGrades();
-  if(appStore.userData) {
+  if (appStore.userData) {
     setAcademicInfo(appStore.userData);
   }
 });

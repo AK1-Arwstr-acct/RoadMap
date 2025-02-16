@@ -2,11 +2,7 @@
   <div class="h-screen min-h-fit w-full flex justify-center items-center px-5">
     <div class="w-fit space-y-8">
       <div class="flex flex-col items-center justify-center">
-        <img
-          src="/images/startJourney.png"
-          alt="start-journey"
-          class="w-[486px]"
-        />
+        <img src="/images/LetsGo.png" alt="Lets Go" />
         <h1
           class="text-2xl md:text-4xl text-center font-medium mt-8 max-w-[486px] w-full"
         >

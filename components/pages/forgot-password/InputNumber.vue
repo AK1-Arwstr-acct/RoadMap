@@ -42,7 +42,6 @@
                 </p>
                 <div v-else class="min-w-6 min-h-6">
                   <IconSpinner
-                    class="animate-spin"
                     bgColor="white"
                     stroke="#1570EF"
                   />
@@ -107,7 +106,7 @@
           class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
         >
           {{ $t("forgotPassword.get_verification_code") }}
-          <IconSpinner v-if="isSubmitting" class="animate-spin" />
+          <IconSpinner v-if="isSubmitting"  />
         </button>
       </div>
     </div>

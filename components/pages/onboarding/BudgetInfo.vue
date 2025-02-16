@@ -32,7 +32,7 @@
       class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5"
     >
       {{ $t("onboarding.continue") }}
-      <IconSpinner v-if="isSubmitting" class="animate-spin" />
+      <IconSpinner v-if="isSubmitting" />
       <IconArrowRight v-else fill="#ffffff" />
     </button>
   </div>
@@ -43,7 +43,6 @@ import axios from "axios";
 import type { PropType } from "vue";
 import type { OptionAttributes } from "~/types/home";
 import useAppStore from "~/stores/AppStore";
-import useOnboardingStore from "~/stores/OnboardingStore";
 
 const props = defineProps({
   budgetList: {
@@ -53,7 +52,6 @@ const props = defineProps({
 });
 const emit = defineEmits(["submitBudget"]);
 
-const onboardingStore = useOnboardingStore();
 const { api } = useApi();
 const appStore = useAppStore();
 const { showToast } = useToast();
@@ -102,31 +100,9 @@ const submitBudget = async () => {
   }
 };
 const gatAreaofStudies = async () => {
-  const countryIds =
-    appStore.userData?.educational_records.want_to_study_countries.map(
-      (item) => item.id
-    );
-  const gradeLevel = appStore.userData?.educational_records.next_class_grade.id;
-  const cgpa = Number(appStore.userData?.educational_records.cgpa);
-  const annual_max_budget =
-    appStore.userData?.educational_records.annual_max_budget || 0;
-  const annual_min_budget =
-    appStore.userData?.educational_records.annual_min_budget || 0;
-
-  if (!gradeLevel || !countryIds?.length || !cgpa) {
-    return;
-  }
   try {
-    const response = await api.post(
-      "/api/v1/anonymous-recommendation/find-program-parent",
-      {
-        class_grade_ids: [gradeLevel],
-        cgpa: cgpa,
-        country_ids: countryIds,
-        uniqueId: appStore.userData?.uuid,
-        max_budget: annual_max_budget,
-        min_budget: annual_min_budget,
-      }
+    const response = await api.get(
+      "/api/v1/school/recommended/get-super-meta-categories"
     );
     if (response.data.data) {
       const coursePreferenceOptions = response.data.data.map(
@@ -137,9 +113,6 @@ const gatAreaofStudies = async () => {
           };
         }
       );
-      if (coursePreferenceOptions) {
-        onboardingStore.setCoursePreferenceOptions(coursePreferenceOptions);
-      }
       return coursePreferenceOptions;
     }
     return [];

@@ -39,7 +39,6 @@
                 </p>
                 <div v-else class="min-w-6 min-h-6">
                   <IconSpinner
-                    class="animate-spin"
                     bgColor="white"
                     stroke="#1570EF"
                   />
@@ -116,7 +115,7 @@
           class="bg-[#1570EF] w-full rounded-lg font-semibold outline-none py-3 text-white disabled:opacity-50 flex justify-center items-center gap-2"
         >
           {{ $t("verifyPhone.verify_phone_number") }}
-          <IconSpinner v-if="isSubmitting" class="animate-spin" />
+          <IconSpinner v-if="isSubmitting"  />
         </button>
       </div>
     </div>

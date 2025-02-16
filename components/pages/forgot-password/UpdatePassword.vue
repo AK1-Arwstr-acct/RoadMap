@@ -44,7 +44,7 @@
           class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
         >
         {{ $t('forgotPassword.save_changes') }}
-          <IconSpinner v-if="isSubmitting" class="animate-spin" />
+          <IconSpinner v-if="isSubmitting"  />
         </button>
       </div>
     </div>

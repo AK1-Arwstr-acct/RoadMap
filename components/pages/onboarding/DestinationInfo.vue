@@ -36,7 +36,7 @@
       class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
     >
       {{ $t("onboarding.continue") }}
-      <IconSpinner v-if="isSubmitting" class="animate-spin" />
+      <IconSpinner v-if="isSubmitting" />
       <IconArrowRight v-else fill="#ffffff" />
     </button>
   </div>
@@ -46,7 +46,6 @@
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
 import type { CountriesOptionAttributes } from "~/types/home";
-import useOnboardingStore from "~/stores/OnboardingStore";
 
 defineProps({
   locationOptions: {
@@ -56,7 +55,6 @@ defineProps({
 });
 const emit = defineEmits(["submitDestination"]);
 
-const onboardingStore = useOnboardingStore();
 const { showToast } = useToast();
 const appStore = useAppStore();
 const { api } = useApi();
@@ -100,24 +98,7 @@ const submit = async () => {
   }
 };
 const getBudgets = async () => {
-  const countryIds =
-    appStore.userData?.educational_records.want_to_study_countries.map(
-      (item) => item.id
-    );
-  const gradeLevel = appStore.userData?.educational_records.next_class_grade.id;
-  const cgpa = Number(appStore.userData?.educational_records.cgpa);
-  if (!gradeLevel || !countryIds?.length || !cgpa) {
-    return;
-  }
-  const response = await api.post(
-    `/api/v1/anonymous-recommendation/budget-range`,
-    {
-      class_grade_ids: [gradeLevel],
-      cgpa: cgpa,
-      country_ids: countryIds,
-      uniqueId: appStore.userData?.uuid,
-    }
-  );
+  const response = await api.get(`/api/v1/school/recommended/budget-range`);
   if (response.data.data) {
     const budgetList = response.data.data.map(
       (item: [string | number, string | number]) => {
@@ -139,7 +120,6 @@ const getBudgets = async () => {
         };
       }
     );
-    onboardingStore.setBudgetList(budgetList);
     await nextTick();
     return budgetList;
   }

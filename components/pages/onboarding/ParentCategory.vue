@@ -15,18 +15,19 @@
       class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
     >
       {{ $t("onboarding.continue") }}
-      <IconSpinner v-if="isSubmitting" class="animate-spin" />
+      <IconSpinner v-if="isSubmitting" />
       <IconArrowRight v-else fill="#ffffff" />
     </button>
   </div>
 </template>
 <script setup lang="ts">
 import axios from "axios";
+import { log } from "console";
 import type { PropType } from "vue";
 import useAppStore from "~/stores/AppStore";
 import type { OptionAttributes } from "~/types/home";
 
-defineProps({
+const props = defineProps({
   coursePreferenceOptions: {
     type: Array as PropType<OptionAttributes[]>,
     default: () => [],
@@ -64,12 +65,16 @@ const submit = async () => {
   }
 };
 
-onMounted(() => {
-  if(appStore.userData && appStore.userData.educational_records.super_meta_category) {
-    selectedCourse.value = {
-      label: appStore.userData?.educational_records.super_meta_category?.title,
-      value: `${appStore.userData?.educational_records.super_meta_category?.id}`,
-    }
+onMounted(async () => {
+  if (
+    appStore.userData &&
+    appStore.userData.educational_records.super_meta_category
+  ) {
+    selectedCourse.value = props.coursePreferenceOptions.find(
+      (item) =>
+        Number(item.value) ===
+        appStore.userData?.educational_records.super_meta_category?.id
+    );
   }
-})
+});
 </script>

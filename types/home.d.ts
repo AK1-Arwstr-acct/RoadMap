@@ -2,7 +2,7 @@ interface OptionAttributes {
   value: string;
   label: string;
   description?: string;
-  icon?: string;
+  icon?: Component;
 }
 interface CountriesOptionAttributes {
   value: number[];
@@ -66,6 +66,10 @@ interface StudyCountry {
   id: number;
   title: string;
 }
+interface Majors {
+  id: number;
+  title: string;
+}
 interface EducationalRecords {
   annual_min_budget: number;
   annual_max_budget: number;
@@ -75,6 +79,7 @@ interface EducationalRecords {
     class_name: string;
     id: number;
   };
+  next_program_titles: Majors[];
   super_meta_category: {
     title: string;
     id: number;

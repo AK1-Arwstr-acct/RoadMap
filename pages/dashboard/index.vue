@@ -1,5 +1,5 @@
 <template>
-  <div class="h-dvh flex ">
+  <div class="h-dvh flex">
     <Sidebar :currentTab="currentTab" @updateTab="updateTab" />
     <div class="flex-1 bg-[#FAFAFA] flex flex-col">
       <DashboardNav />
@@ -19,12 +19,24 @@
 </template>
 <script setup lang="ts">
 import type { TabName } from "~/types/dashboard";
+import useDashboardStore from "~/stores/dashboardStore";
+import useAppStore from "~/stores/AppStore";
+
+const dashboardStore = useDashboardStore();
+const appStore = useAppStore();
 
 const currentTab = ref<TabName>("schools_list");
 
 const updateTab = (value: TabName) => {
   currentTab.value = value;
 };
+
+onMounted(async () => {
+  await dashboardStore.setProgramListOptions();
+  await dashboardStore.setLocationOptions();
+  await dashboardStore.setBudgetList();
+  await dashboardStore.setCoursePreferenceOptions();
+});
 </script>
 <style scoped>
 .fade-enter-active,

@@ -88,9 +88,7 @@ const getStudyPrograms = async () => {
     if (!appStore.userData?.uuid) {
       return;
     }
-    const response = await api.get(
-      `/api/v1/anonymous-recommendation/types-of-class-grades?uniqueId=${appStore.userData.uuid}`
-    );
+    const response = await api.get(`/api/v1/school/recommended/class-grades`);
     if (response.data.data) {
       programListOptions.value = response.data.data.map(
         (item: { id: number; class_name: string }) => {
@@ -105,9 +103,6 @@ const getStudyPrograms = async () => {
           };
         }
       );
-      if(programListOptions.value){
-        onboardingStore.setProgramListOptions(programListOptions.value)
-      }
       isProgramsLoaded.value = true;
     }
   } catch (error) {
