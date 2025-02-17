@@ -51,7 +51,7 @@
         <div class="flex items-center gap-6 font-medium">
           <div>
             <span class="text-[#717680] mr-2">Avg. tuition:</span>
-            <span class="text-gray-900">$17,324</span>
+            <span class="text-gray-900">{{ `${programs.currency.symbol} ${programs.fee}` }}</span>
           </div>
           <div>
             <span class="text-[#717680] mr-2">Ranking:</span>

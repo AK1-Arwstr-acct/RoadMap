@@ -8,7 +8,12 @@
         <p class="text-[#535862]">
           {{ dashboardStore.totalSchool || 0 }} schools match your profile!
         </p>
-        <FilterDropdown placeholder="Sort By" :options="sortFilters" class="" />
+        <FilterDropdown
+          placeholder="Sort By"
+          :options="sortFilters"
+          class=""
+          @update:modelValue="(value: OptionAttributes | null) => selectFilter(value)"
+        />
       </div>
     </div>
     <div class="space-y-6 flex-1 overflow-y-auto custom-scrollbar pb-6">
@@ -64,7 +69,7 @@
       v-if="isDetailModal"
       :isDetailModal="isDetailModal"
       @close="close"
-      :schoolData="dashboardStore.schoolsList[0]"
+      :schoolData="schoolProfile"
     />
   </Transition>
 </template>
@@ -76,6 +81,7 @@ import IconPriceDown from "~/components/icons/IconPriceDown.vue";
 import IconPriceUp from "~/components/icons/IconPriceUp.vue";
 import useDashboardStore from "~/stores/dashboardStore";
 import type { OptionAttributes } from "~/types/home";
+import type { Program } from "~/types/program";
 
 const emits = defineEmits<{
   (e: "getRecommendations", pageNo: number): void;
@@ -83,6 +89,7 @@ const emits = defineEmits<{
 
 const dashboardStore = useDashboardStore();
 
+const schoolProfile = ref<Program>();
 const isDetailModal = ref<boolean>(false);
 const sortFilters = ref<OptionAttributes[]>([
   {
@@ -114,8 +121,25 @@ const groupedSchoolsList = computed(() => {
   return uniqueProgramTitles;
 });
 
-const openDetail = () => {
+const selectFilter = async (filter: OptionAttributes | null) => {
+  const filterKey = {
+    [`sort_by_${
+      filter?.value === "1" || filter?.value === "2" ? "ranking" : "price"
+    }`]: filter?.value === "1" || filter?.value === "3" ? "DESC" : "ASC",
+  };
+  dashboardStore.setSortParam(filterKey);
+  if (dashboardStore.enginePosition === "pre") {
+    dashboardStore.preRunEngine();
+  } else if (dashboardStore.enginePosition === "post") {
+    dashboardStore.runEngine();
+  } else {
+    dashboardStore.runFinalEngine();
+  }
+};
+
+const openDetail = (item: Program) => {
   isDetailModal.value = true;
+  schoolProfile.value = item;
 };
 const close = () => {
   isDetailModal.value = false;

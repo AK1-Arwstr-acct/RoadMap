@@ -26,7 +26,7 @@
       </div>
       <div
         v-if="selectedOption && !isDropdownOpen"
-        @click="() => (selectedOption = null)"
+        @click="clratSortFilter"
         class="cursor-pointer"
       >
         <IconCross fill="#1570EF" />
@@ -86,6 +86,9 @@
 
 <script setup lang="ts">
 import type { OptionAttributes } from "~/types/home";
+import useDashboardStore from "~/stores/dashboardStore";
+
+const dashboardStore = useDashboardStore();
 
 const props = defineProps({
   placeholder: {
@@ -115,6 +118,11 @@ const selectedOption = ref<OptionAttributes | null>(props.modelValue);
 
 const closeDropdown = () => {
   isDropdownOpen.value = false;
+};
+
+const clratSortFilter = () => {
+  selectedOption.value = null;
+  dashboardStore.setSortParam(null);
 };
 
 const onChange = () => {

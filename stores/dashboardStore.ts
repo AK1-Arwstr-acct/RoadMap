@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { CountriesOptionAttributes, OptionAttributes, OverView } from "~/types/home";
+import type { CountriesOptionAttributes, FilterKey, OptionAttributes } from "~/types/home";
 import axios from "axios";
 import type { Program, RecommendationSchoolsPagination } from "~/types/program";
 
@@ -9,6 +9,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const { showToast } = useToast();
     const { api } = useApi();
 
+    const enginePosition = ref<"pre" | "post" | "final">("pre");
+    const sortParam = ref<FilterKey | null>(null);
     const programListOptions = ref<OptionAttributes[]>([])
     const locationOptions = ref<CountriesOptionAttributes[]>([])
     const coursePreferenceOptions = ref<OptionAttributes[]>();
@@ -19,6 +21,12 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         ref<RecommendationSchoolsPagination | null>(null);
     const overViews = ref<string[] | null>([]);
 
+    const setSortParam = (data: FilterKey | null) => {
+        console.log(data);
+        sortParam.value = data
+        console.log(sortParam.value);
+
+    }
     const setProgramListOptions = async () => {
         try {
             const response = await api.get(
@@ -130,12 +138,17 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const preRunEngine = async (page: number = 1) => {
         try {
             const response = await api.get(
-                `/api/v1/school/recommendation/pre-run-engine?page=${page}`
-            );
+                `/api/v1/school/recommendation/pre-run-engine?page=${page}`, {
+                params: {
+                    page,
+                    sort: sortParam.value || null
+                }
+            });
             if (response) {
                 schoolsList.value = response.data.data;
                 recommendedSchoolsPagination.value = response.data.pagination;
                 totalSchool.value = response.data.total;
+                enginePosition.value = "pre";
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -149,13 +162,19 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const runEngine = async (page: number = 1) => {
         try {
-            const response = await api.get(
-                `/api/v1/school/recommendation/run-engine?page=${page}`
-            );
+            console.log("runakdaskldasda", sortParam.value);
+
+            const response = await api.get(`/api/v1/school/recommendation/run-engine`, {
+                params: {
+                    page,
+                    sort: sortParam.value || null
+                }
+            });
             if (response) {
                 schoolsList.value = response.data.data;
                 recommendedSchoolsPagination.value = response.data.pagination;
                 totalSchool.value = response.data.total;
+                enginePosition.value = "post";
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -167,16 +186,22 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         }
     };
 
-    const runFinalEngine = async (page: number = 1) => {
+    const runFinalEngine = async (page: number = 1, sort?: { [key: string]: string }) => {
         try {
             const response = await api.get(
-                `/api/v1/school/recommendation/final-engine?page=${page}`
+                `/api/v1/school/recommendation/final-engine?page=${page}`, {
+                params: {
+                    page,
+                    sort: sortParam.value || null
+                }
+            }
             );
             if (response) {
                 schoolsList.value = response.data.data;
                 recommendedSchoolsPagination.value = response.data.pagination;
                 totalSchool.value = response.data.total;
                 overViews.value = Object.values(response.data.overview);
+                enginePosition.value = "final";
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -196,7 +221,10 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         schoolsList,
         overViews,
         totalSchool,
+        enginePosition,
         recommendedSchoolsPagination,
+        sortParam,
+        setSortParam,
         setBudgetList,
         setCoursePreferenceOptions,
         setLocationOptions,

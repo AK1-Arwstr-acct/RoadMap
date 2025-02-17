@@ -4,7 +4,7 @@
   >
     <div class="py-3 flex justify-between items-center">
       <h1 class="text-[#181D27] font-semibold text-2xl">
-        University of South Florida
+        {{ schoolData.school.name }}
       </h1>
       <div @click="emit('close')" class="cursor-pointer">
         <IconCross fill="#181D27" width="24" height="24" />
@@ -69,7 +69,10 @@
         <div class="flex gap-6 items-center text-[#535862] font-medium">
           <div class="flex items-center gap-2">
             <IconMap />
-            <span>Florida, U.S</span>
+            <span
+              >{{ schoolData.school.address.state }},
+              {{ schoolData.school.address.country }}</span
+            >
           </div>
           <div class="flex items-center gap-2">
             <IconBuilding />
@@ -143,12 +146,18 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { Program } from "~/types/program";
+
 const emit = defineEmits(["close"]);
 
 defineProps({
   isDetailModal: {
     type: Boolean,
     default: false,
+  },
+  schoolData: {
+    type: Object as PropType<Program>,
+    default: () => {},
   },
 });
 

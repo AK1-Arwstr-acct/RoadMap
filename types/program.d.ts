@@ -9,6 +9,10 @@ interface Program {
     program_title: string;
     super_meta_title: string;
     class_grades: ClassGrade[];
+    currency: {
+        title: string;
+        symbol: string;
+    }
 }
 interface School {
     id: number;
