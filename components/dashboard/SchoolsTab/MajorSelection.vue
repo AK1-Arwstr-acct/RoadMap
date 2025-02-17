@@ -124,25 +124,8 @@ const getMajors = async () => {
     return;
   }
   try {
-    const response = await api.post(
-      "/api/v1/anonymous-recommendation/find-program-titles",
-      {
-        cgpa: appStore.userData?.educational_records.cgpa,
-        class_grade_ids: [
-          appStore.userData?.educational_records.next_class_grade.id,
-        ],
-        country_ids:
-          appStore.userData?.educational_records.want_to_study_countries.map(
-            (item) => item.id
-          ),
-        max_budget: appStore.userData?.educational_records.annual_max_budget,
-        min_budget: appStore.userData?.educational_records.annual_min_budget,
-        msisdn: appStore.userData?.phone_number,
-        program_title_parent_id:
-          appStore.userData?.educational_records.super_meta_category.id,
-        state_ids: null,
-        uniqueId: appStore.userData?.uuid,
-      }
+    const response = await api.get(
+      "/api/v1/school/recommended/program-titles"
     );
     if (response) {
       majorProgramsList.value = response.data.data.map(

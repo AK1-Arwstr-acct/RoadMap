@@ -18,15 +18,16 @@
       <img src="/images/discover-journey.png" alt="Discover Journey" />
     </div>
     <button
-      :disabled="!isActive"
+      :disabled="!isActive || isFinalEnginCall"
       class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-2 justify-center items-center"
-      @click="dashboardStore.runFinalEngine()"
+      @click="finalEngine"
     >
       <div class="size-5">
         <IconLock v-if="!isActive" />
         <IconTabSophie v-else class="size-full" />
       </div>
       Unlock AI recommendation
+      <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
     </button>
   </div>
 </template>
@@ -36,9 +37,18 @@ import useDashboardStore from "~/stores/dashboardStore";
 defineProps({
   isActive: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
+const isSubmitting = ref<boolean>(false);
+const isFinalEnginCall = ref<boolean>(false);
 const dashboardStore = useDashboardStore();
+
+const finalEngine = async () => {
+  isSubmitting.value = true;
+  await dashboardStore.runFinalEngine();
+  isSubmitting.value = false;
+  isFinalEnginCall.value = true;
+};
 </script>

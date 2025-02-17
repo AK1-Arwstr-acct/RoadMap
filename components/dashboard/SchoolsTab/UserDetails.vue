@@ -4,14 +4,16 @@
   >
     <UserDataInfo />
     <SophieRecommendation :isActive="isActive" />
-    <WhyTheseSchool v-if="isActive" />
+    <WhyTheseSchool v-if="(dashboardStore.overViews?.length ?? 0) >= 1" />
     <MajorSelection />
   </section>
 </template>
 <script setup lang="ts">
-import useAppStore from '~/stores/AppStore';
+import useAppStore from "~/stores/AppStore";
+import useDashboardStore from "~/stores/dashboardStore";
 
 const appStore = useAppStore();
+const dashboardStore = useDashboardStore();
 
 const isActive = ref<boolean>(false);
 

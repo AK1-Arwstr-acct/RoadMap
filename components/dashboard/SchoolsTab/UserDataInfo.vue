@@ -1,5 +1,7 @@
 <template>
-  <div class="border border-[#E9EAEB] px-5 py-4 bg-white rounded-2xl">
+  <div
+    class="border border-[#E9EAEB] px-5 py-4 bg-white rounded-2xl transition-all ease-in-out duration-200"
+  >
     <div
       class="flex items-center gap-3 cursor-pointer"
       @click="isDetailOpen = !isDetailOpen"
@@ -12,135 +14,133 @@
       </div>
       <p class="font-semibold text-[#111827]">Your Details & Information</p>
     </div>
-    <Transition name="fade">
-      <div v-if="isDetailOpen" class="mt-6 remove-shadow-bg-white">
-        <div>
-          <label class="font-medium text-[#414651] text-sm"
-            >GPA<span class="text-[#D92D20] font-medium">*</span></label
-          >
-          <input
-            name="ielts"
-            type="text"
-            v-model="gpa"
-            placeholder="Enter GPA"
-            class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
-          />
-        </div>
-        <div class="mt-5">
-          <BaseSelectRadio
-            label="Annual total budget (optional)"
-            :options="dashboardStore.budgetList"
-            v-model="annualBudget"
-          />
-        </div>
-        <div class="mt-5">
-          <div class="space-y-3">
-            <p class="font-medium text-[#414651] text-sm">
-              Study destination<span class="text-[#D92D20] font-medium">*</span>
-            </p>
-            <div class="space-y-4">
-              <div
-                v-for="(option, index) in dashboardStore.locationOptions"
-                :key="index"
+    <div
+      ref="content"
+      :style="{ maxHeight: isDetailOpen ? contentHeight + 'px' : '0px' }"
+      class="remove-shadow-bg-white overflow-hidden transition-all ease-in-out duration-500 min-h-0"
+    >
+      <div class="mt-6">
+        <label class="font-medium text-[#414651] text-sm"
+          >GPA<span class="text-[#D92D20] font-medium">*</span></label
+        >
+        <input
+          name="ielts"
+          type="text"
+          v-model="gpa"
+          placeholder="Enter GPA"
+          class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+        />
+      </div>
+      <div class="mt-5">
+        <BaseSelectRadio
+          label="Annual total budget (optional)"
+          :options="dashboardStore.budgetList"
+          v-model="annualBudget"
+        />
+      </div>
+      <div class="mt-5">
+        <div class="space-y-3">
+          <p class="font-medium text-[#414651] text-sm">
+            Study destination<span class="text-[#D92D20] font-medium">*</span>
+          </p>
+          <div class="space-y-4">
+            <div
+              v-for="(option, index) in dashboardStore.locationOptions"
+              :key="index"
+            >
+              <label
+                :for="`country${index}`"
+                class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
               >
-                <label
-                  :for="`country${index}`"
-                  class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
+                <input
+                  :id="`country${index}`"
+                  type="checkbox"
+                  name="countries"
+                  :value="option.value"
+                  :checked="
+                    option.value.some((id: number) =>
+                      selectedLocationOptions.includes(id)
+                    )
+                  "
+                  class="hidden peer"
+                  @change="toggleSelection(option.value)"
+                />
+                <div
+                  class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
+                  :class="[
+                    option?.value.some((id: number) =>
+                      selectedLocationOptions.includes(id)
+                    )
+                      ? 'border-[#1570EF] bg-[#1570EF]'
+                      : 'border-[#D5D7DA]',
+                  ]"
                 >
-                  <input
-                    :id="`country${index}`"
-                    type="checkbox"
-                    name="countries"
-                    :value="option.value"
-                    :checked="
-                      option.value.some((id: number) =>
-                        selectedLocationOptions.includes(id)
-                      )
-                    "
-                    class="hidden peer"
-                    @change="toggleSelection(option.value)"
-                  />
-                  <div
-                    class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
-                    :class="[
+                  <IconTick
+                    v-if="
                       option?.value.some((id: number) =>
                         selectedLocationOptions.includes(id)
                       )
-                        ? 'border-[#1570EF] bg-[#1570EF]'
-                        : 'border-[#D5D7DA]',
-                    ]"
-                  >
-                    <IconTick
-                      v-if="
-                        option?.value.some((id: number) =>
-                          selectedLocationOptions.includes(id)
-                        )
-                      "
-                      stroke="#ffffff"
-                    />
-                  </div>
-                  <div class="flex items-center gap-2 text-[#414651]">
-                    <component
-                      :is="
-                        option.label.toLowerCase().includes('kingdom')
-                          ? IconUK
-                          : option.label.toLowerCase().includes('canada')
-                          ? IconCanada
-                          : option.label.toLowerCase().includes('australia')
-                          ? IconAustralia
-                          : option.label.toLowerCase().includes('states')
-                          ? IconUS
-                          : IconEurope
-                      "
-                      class="w-6 h-6"
-                    />
-                    {{ option.label }}
-                  </div>
-                </label>
-              </div>
+                    "
+                    stroke="#ffffff"
+                  />
+                </div>
+                <div class="flex items-center gap-2 text-[#414651]">
+                  <component
+                    :is="
+                      option.label.toLowerCase().includes('kingdom')
+                        ? IconUK
+                        : option.label.toLowerCase().includes('canada')
+                        ? IconCanada
+                        : option.label.toLowerCase().includes('australia')
+                        ? IconAustralia
+                        : option.label.toLowerCase().includes('states')
+                        ? IconUS
+                        : IconEurope
+                    "
+                    class="w-6 h-6"
+                  />
+                  {{ option.label }}
+                </div>
+              </label>
             </div>
           </div>
         </div>
-        <div class="mt-5">
-          <BaseSelectRadio
-            label="Study program"
-            :required="true"
-            :options="dashboardStore.programListOptions"
-            v-model="studyPrograms"
-          />
-        </div>
-        <div class="mt-5">
-          <BaseSelectRadio
-            label="Area of study"
-            :required="true"
-            :options="dashboardStore.coursePreferenceOptions"
-            v-model="areaOfStudy"
-            direction="upward"
-          />
-        </div>
-        <div class="mt-6 flex gap-3">
-          <button
-            @click="resetUserData"
-            :disabled="isUpdateDisable"
-            class="p-2.5 border border-[#D5D7DA] w-full rounded-lg font-semibold text-sm text-[#414651]"
-          >
-            Reset all
-          </button>
-          <button
-            @click="updateUserData"
-            :disabled="isUpdateDisable"
-            class="p-2.5 bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex justify-center gap-2"
-          >
-            Update
-            <IconSpinner
-              v-if="isSubmitting"
-              class="size-4"
-              bgColor="#ffffff00"
-            />
-          </button>
-        </div>
       </div>
-    </Transition>
+      <div class="mt-5">
+        <BaseSelectRadio
+          label="Study program"
+          :required="true"
+          :options="dashboardStore.programListOptions"
+          v-model="studyPrograms"
+        />
+      </div>
+      <div class="mt-5">
+        <BaseSelectRadio
+          label="Area of study"
+          :required="true"
+          :options="dashboardStore.coursePreferenceOptions"
+          v-model="areaOfStudy"
+          direction="upward"
+        />
+      </div>
+      <div class="mt-6 flex gap-3">
+        <button
+          @click="resetUserData"
+          :disabled="isUpdateDisable"
+          class="p-2.5 border border-[#D5D7DA] w-full rounded-lg font-semibold text-sm text-[#414651]"
+        >
+          Reset all
+        </button>
+        <button
+          @click="updateUserData"
+          :disabled="isUpdateDisable"
+          class="p-2.5 bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex justify-center gap-2"
+        >
+          Update
+          <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -168,6 +168,8 @@ const areaOfStudy = ref<OptionAttributes>();
 const selectedLocationOptions = ref<number[]>([]);
 const isUpdateDisable = ref<boolean>(true);
 let firstRun = true;
+const contentHeight = ref(0);
+const content = ref<HTMLElement | null>(null);
 
 const toggleSelection = (ids: number[]) => {
   const allSelected = ids.every((id) =>
@@ -222,7 +224,6 @@ const updateUserData = async () => {
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
     await appStore.getUserData();
-    isSubmitting.value = false;
     isUpdateDisable.value = true;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -231,6 +232,8 @@ const updateUserData = async () => {
         type: "error",
       });
     }
+  } finally {
+    isSubmitting.value = false;
   }
 };
 
@@ -286,4 +289,16 @@ watch(
     isUpdateDisable.value = false;
   }
 );
+
+const calculateHeight = () => {
+  if (content.value) {
+    contentHeight.value = isDetailOpen.value ? content.value.scrollHeight : 0;
+  }
+};
+
+watch(() => isDetailOpen.value, calculateHeight);
+
+onMounted(() => {
+  calculateHeight();
+});
 </script>

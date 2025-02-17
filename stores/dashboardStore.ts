@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { CountriesOptionAttributes, OptionAttributes } from "~/types/home";
+import type { CountriesOptionAttributes, OptionAttributes, OverView } from "~/types/home";
 import axios from "axios";
 import type { Program, RecommendationSchoolsPagination } from "~/types/program";
 
@@ -17,6 +17,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const schoolsList = ref<Program[]>([]);
     const recommendedSchoolsPagination =
         ref<RecommendationSchoolsPagination | null>(null);
+    const overViews = ref<string[] | null>([]);
 
     const setProgramListOptions = async () => {
         try {
@@ -175,6 +176,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                 schoolsList.value = response.data.data;
                 recommendedSchoolsPagination.value = response.data.pagination;
                 totalSchool.value = response.data.total;
+                overViews.value = Object.values(response.data.overview);
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -192,6 +194,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         coursePreferenceOptions,
         budgetList,
         schoolsList,
+        overViews,
         totalSchool,
         recommendedSchoolsPagination,
         setBudgetList,

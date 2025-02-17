@@ -5,17 +5,42 @@
         Let's find your perfect school match!
       </h1>
       <div class="flex justify-between items-center">
-        <p class="text-[#535862]">{{ dashboardStore.totalSchool || 0 }} schools match your profile!</p>
+        <p class="text-[#535862]">
+          {{ dashboardStore.totalSchool || 0 }} schools match your profile!
+        </p>
         <FilterDropdown placeholder="Sort By" :options="sortFilters" class="" />
       </div>
     </div>
     <div class="space-y-6 flex-1 overflow-y-auto custom-scrollbar pb-6">
-      <SchoolCard
-        v-for="(school, idx) in dashboardStore.schoolsList"
-        :key="idx"
-        :programs="school"
-      />
-      <div class="flex justify-center">
+      <div
+        v-if="(dashboardStore.overViews || []).length > 0"
+        class="space-y-4"
+        v-for="(program, idx) in groupedSchoolsList"
+      >
+        <p class="text-[#181D27] font-semibold text-xl">
+          {{ program }}
+        </p>
+        <div class="space-y-6">
+          <SchoolCard
+            v-for="(school, idx) in dashboardStore.schoolsList.filter(
+              (item) => item.program_title === program
+            )"
+            :key="idx"
+            :programs="school"
+          />
+        </div>
+      </div>
+      <div v-else class="space-y-6">
+        <SchoolCard
+          v-for="(school, idx) in dashboardStore.schoolsList"
+          :key="idx"
+          :programs="school"
+        />
+      </div>
+      <div
+        v-if="(dashboardStore.recommendedSchoolsPagination?.last_page ?? 0) > 1"
+        class="flex justify-center"
+      >
         <BasePagination
           :currentPage="
             dashboardStore.recommendedSchoolsPagination?.current_page
@@ -82,6 +107,13 @@ const sortFilters = ref<OptionAttributes[]>([
   },
 ]);
 
+const groupedSchoolsList = computed(() => {
+  const uniqueProgramTitles = Array.from(
+    new Set(dashboardStore.schoolsList.map((school) => school.program_title))
+  );
+  return uniqueProgramTitles;
+});
+
 const openDetail = () => {
   isDetailModal.value = true;
 };
@@ -92,7 +124,6 @@ const close = () => {
 const getRecommendations = async (pageNo: number = 1) => {
   emits("getRecommendations", pageNo);
 };
-
 </script>
 <style scoped>
 .slideModal-enter-active,
