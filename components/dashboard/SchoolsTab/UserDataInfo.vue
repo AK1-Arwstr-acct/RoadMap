@@ -49,11 +49,11 @@
               :key="index"
             >
               <label
-                :for="`country${index}`"
+                :for="`destination${index}`"
                 class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
               >
                 <input
-                  :id="`country${index}`"
+                  :id="`destination${index}`"
                   type="checkbox"
                   name="countries"
                   :value="option.value"
