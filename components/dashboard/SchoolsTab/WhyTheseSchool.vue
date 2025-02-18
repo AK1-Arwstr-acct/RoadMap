@@ -79,14 +79,13 @@ const typeEffect = () => {
 };
 
 const handleReadMore = () => {
-  typedText.value = typedText.value.replace(
-    /<span[^>]*data-action=['"]read-more['"][^>]*>.*?Read more.*?<\/span>/,
-    ""
-  );
-  
-  console.log("Read more clicked!");
-  textLimit.value += 5000;
-  typeEffect();
+  // typedText.value = typedText.value.replace(
+  //   /<span[^>]*data-action=['"]read-more['"][^>]*>.*?Read more.*?<\/span>/,
+  //   ""
+  // );
+  // textLimit.value += 5000;
+  // typeEffect();
+  showDetailModal.value = true;
 };
 
 onMounted(() => {

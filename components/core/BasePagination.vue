@@ -9,7 +9,7 @@
           class="p-2 w-full h-full flex justify-center items-center"
           @click="$emit('paginate', currentPage - 1)"
         >
-          <IconChevronDown stroke="#E9EAEB" class="transform rotate-90" />
+          <IconChevronDown stroke="#000000" class="transform rotate-90" />
         </span>
       </li>
       <li
@@ -33,7 +33,7 @@
           class="p-2 w-full h-full flex justify-center items-center"
           @click="$emit('paginate', currentPage + 1)"
         >
-        <IconChevronDown stroke="#E9EAEB" class="transform -rotate-90" />
+        <IconChevronDown stroke="#000000" class="transform -rotate-90" />
         </span>
       </li>
     </ul>

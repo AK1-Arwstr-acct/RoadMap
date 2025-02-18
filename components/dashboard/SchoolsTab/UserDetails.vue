@@ -17,18 +17,24 @@ const dashboardStore = useDashboardStore();
 
 const isActive = ref<boolean>(false);
 
+const checkPrograms = () => {
+  if (appStore.userData) {
+    if (appStore.userData.educational_records.next_program_titles.length > 0) {
+      isActive.value = true;
+    } else {
+      isActive.value = false;
+    }
+  }
+};
+
 watch(
   () => appStore.userData,
   async () => {
-    if (appStore.userData) {
-      if (
-        appStore.userData.educational_records.next_program_titles.length > 0
-      ) {
-        isActive.value = true;
-      } else {
-        isActive.value = false;
-      }
-    }
+    checkPrograms();
   }
 );
+
+onMounted(() => {
+  checkPrograms();
+});
 </script>

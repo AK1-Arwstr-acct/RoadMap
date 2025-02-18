@@ -138,7 +138,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const preRunEngine = async (page: number = 1) => {
         try {
             const response = await api.get(
-                `/api/v1/school/recommendation/pre-run-engine?page=${page}`, {
+                `/api/v1/school/recommendation/pre-run-engine`, {
                 params: {
                     page,
                     sort: sortParam.value || null
@@ -162,8 +162,6 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const runEngine = async (page: number = 1) => {
         try {
-            console.log("runakdaskldasda", sortParam.value);
-
             const response = await api.get(`/api/v1/school/recommendation/run-engine`, {
                 params: {
                     page,
@@ -189,7 +187,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const runFinalEngine = async (page: number = 1, sort?: { [key: string]: string }) => {
         try {
             const response = await api.get(
-                `/api/v1/school/recommendation/final-engine?page=${page}`, {
+                `/api/v1/school/recommendation/final-engine`, {
                 params: {
                     page,
                     sort: sortParam.value || null

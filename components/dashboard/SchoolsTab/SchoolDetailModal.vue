@@ -4,7 +4,7 @@
   >
     <div class="py-3 flex justify-between items-center">
       <h1 class="text-[#181D27] font-semibold text-2xl">
-        {{ schoolData.school.name }}
+        {{ schoolData.name }}
       </h1>
       <div @click="emit('close')" class="cursor-pointer">
         <IconCross fill="#181D27" width="24" height="24" />
@@ -14,17 +14,19 @@
     <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-3">
       <h2 class="text-[#181D27] text-lg font-semibold">Admission Stats</h2>
       <p class="text-[#535862] font-medium">
-        Acceptance Rate: <span class="text-[#1570EF] ml-2">44%</span>
+        Acceptance Rate:
+        <span class="text-[#1570EF] ml-2">{{
+          schoolData.admission_stats.acceptance_rate || "N/A"
+        }}</span>
       </p>
       <p class="text-[#535862] font-medium">
         Average Scores:
-        <span class="text-[#1570EF] px-2 border-r border-[#535862]"
-          >SAT 1350</span
+        <span
+          v-for="(score, key) in schoolData.admission_stats.average_scores"
+          :key="key"
+          class="text-[#1570EF] px-2 border-r border-[#535862] last:border-r-0 uppercase"
+          >{{ `${key}: ${score || "N/A"}` }}</span
         >
-        <span class="text-[#1570EF] px-2 border-r border-[#535862]"
-          >IELTS 7.5</span
-        >
-        <span class="text-[#1570EF] px-2">GPA 3.8</span>
       </p>
     </div>
     <!-- carrer -->
@@ -33,10 +35,15 @@
         <h2 class="text-[#181D27] text-lg font-semibold">Career Outcomes</h2>
         <p class="text-[#535862] font-medium">
           Employment Rate:
-          <span class="text-[#1570EF] ml-2">92% within 6 months</span>
+          <span class="text-[#1570EF] ml-2">{{
+            schoolData.career_outcomes.employment_rate || "N/A"
+          }}</span>
         </p>
         <p class="text-[#535862] font-medium">
-          Median Salary: <span class="text-[#1570EF] ml-2">$65,000/year</span>
+          Median Salary:
+          <span class="text-[#1570EF] ml-2">{{
+            schoolData.career_outcomes.median_salary || "N/A"
+          }}</span>
         </p>
       </div>
       <div class="space-y-3">
@@ -45,20 +52,24 @@
         </h2>
         <p class="text-[#535862] font-medium">
           Avg. Financial Aid:
-          <span class="text-[#1570EF] ml-2">$15,000/year</span>
+          <span class="text-[#1570EF] ml-2">{{
+            schoolData.financial_and_aid_cost.average_financial_aid || "N/A"
+          }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Housing & Meals:
-          <span class="text-[#1570EF] ml-2">$12,500/year</span>
+          <span class="text-[#1570EF] ml-2">{{
+            schoolData.financial_and_aid_cost.housing_and_meal || "N/A"
+          }}</span>
         </p>
       </div>
     </div>
     <!-- campus Overview -->
     <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-6">
-      <div class="h-[242px] rounded-xl overflow-hidden">
+      <div v-if="schoolData.cover_photo" class="h-[242px] rounded-xl overflow-hidden">
         <img
-          src="/public/images/school-campus.png"
-          alt="school campus"
+          :src="schoolData.cover_photo || undefined"
+          :alt="schoolData.name"
           class="size-full object-cover"
         />
       </div>
@@ -69,18 +80,20 @@
         <div class="flex gap-6 items-center text-[#535862] font-medium">
           <div class="flex items-center gap-2">
             <IconMap />
-            <span
-              >{{ schoolData.school.address.state }},
-              {{ schoolData.school.address.country }}</span
-            >
+            <span>{{ schoolData.campus_overview.location }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconBuilding />
-            <span>Urban</span>
+            <span>{{ schoolData.campus_overview.type || "N/A" }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconUsers />
-            <span>25,000 students</span>
+            <span
+              >{{
+                schoolData.campus_overview.total_students || "N/A"
+              }}
+              students</span
+            >
           </div>
         </div>
       </div>
@@ -89,11 +102,11 @@
         <div class="flex gap-6 items-center text-[#535862] font-medium">
           <div class="flex items-center gap-2">
             <IconBus />
-            <span>Subway & buses</span>
+            <span>{{ schoolData.surroundings.option_1 || "N/A" }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconOutdoor />
-            <span>Cafes, museums, shopping</span>
+            <span>{{ schoolData.surroundings.option_2 || "N/A" }}</span>
           </div>
         </div>
       </div>
@@ -101,40 +114,51 @@
         <h2 class="text-[#181D27] text-lg font-semibold">Campus Life</h2>
         <p class="text-[#535862] font-medium">
           Housing:
-          <span class="text-[#181D27] ml-2">On & off-campus</span>
+          <span class="text-[#181D27] ml-2">{{
+            schoolData.campus_life.housing || "N/A"
+          }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Extracurriculars:
-          <span class="text-[#181D27] ml-2"
-            >300+ student clubs & sports teams</span
-          >
+          <span class="text-[#181D27] ml-2">{{
+            schoolData.campus_life.extra_curriculum || "N/A"
+          }}</span>
         </p>
       </div>
     </div>
     <!-- about school -->
     <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-6">
-      <div class="h-[242px] rounded-xl overflow-hidden">
+      <div v-if="schoolData.cover_photo" class="h-[242px] rounded-xl overflow-hidden">
         <img
-          src="/public/images/school-campus.png"
-          alt="school campus"
+          :src="schoolData.cover_photo || undefined"
+          :alt="schoolData.name"
           class="size-full object-cover"
         />
       </div>
       <div class="space-y-4">
         <h2 class="text-[#181D27] text-lg font-semibold">
-          About University of South Florida
+          About {{ schoolData.name }}
         </h2>
         <p class="text-[#1570EF] flex items-center gap-2">
           <IconGlobe />
-          <span class="underline">usf.edu</span>
+          <a
+            :href="schoolData.about.website || undefined"
+            class="underline cursor-pointer"
+            >{{ schoolData.about.website || 'N/A' }}</a
+          >
         </p>
         <p class="text-[#535862] flex items-center gap-2">
           <IconMap />
-          <span>4202 E Fowler Ave, Tampa, FL 33620, United States</span>
+          <span>{{
+            `${schoolData.about.country}, ${schoolData.about.state}`
+          }}</span>
         </p>
-        <div class="text-[#535862]">
+        <div v-if="schoolData.about.description" class="text-[#535862]">
           <ClientOnly>
-            <vue-markdown :source="text" :options="options" />
+            <vue-markdown
+              :source="schoolData.about.description"
+              :options="options"
+            />
           </ClientOnly>
         </div>
       </div>
@@ -146,23 +170,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Program } from "~/types/program";
+import type { SchoolDetail } from "~/types/program";
 
 const emit = defineEmits(["close"]);
 
 defineProps({
-  isDetailModal: {
-    type: Boolean,
-    default: false,
-  },
   schoolData: {
-    type: Object as PropType<Program>,
+    type: Object as PropType<SchoolDetail>,
     default: () => {},
   },
 });
-
-const text =
-  "Florida International University is Miami’s Carnegie R1 public research university focused on making a real impact in teaching and research. We are defined by our proven student success techniques, groundbreaking research and high social mobility that uplifts students and accelerates their success. FIU serves a student body of more than 56,000 and 290,000 Panther alumni, with over 10,000 faculty and staff members.";
 
 const options = {
   html: true,

@@ -31,7 +31,8 @@
               (item) => item.program_title === program
             )"
             :key="idx"
-            :programs="school"
+            :program="school"
+            @openDetail="openDetail"
           />
         </div>
       </div>
@@ -39,7 +40,8 @@
         <SchoolCard
           v-for="(school, idx) in dashboardStore.schoolsList"
           :key="idx"
-          :programs="school"
+          :program="school"
+          @openDetail="openDetail"
         />
       </div>
       <div
@@ -60,7 +62,7 @@
     <div
       v-if="isDetailModal"
       @click="isDetailModal = false"
-      class="fixed inset-0 bg-black/60 backdrop-blur-sm"
+      class="fixed inset-0 z-20 bg-black/60 backdrop-blur-sm"
     />
   </Transition>
   <Transition name="slideModal">
@@ -74,22 +76,25 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import SchoolDetailModal from "~/components/dashboard/SchoolsTab/SchoolDetailModal.vue";
+import SchoolDetailModal from "~/components/dashboard/schoolsTab/SchoolDetailModal.vue"
 import IconRankDown from "~/components/icons/IconRankDown.vue";
 import IconRankUp from "~/components/icons/IconRankUp.vue";
 import IconPriceDown from "~/components/icons/IconPriceDown.vue";
 import IconPriceUp from "~/components/icons/IconPriceUp.vue";
 import useDashboardStore from "~/stores/dashboardStore";
 import type { OptionAttributes } from "~/types/home";
-import type { Program } from "~/types/program";
+import type { Program, SchoolDetail } from "~/types/program";
+import axios from "axios";
 
 const emits = defineEmits<{
   (e: "getRecommendations", pageNo: number): void;
 }>();
 
 const dashboardStore = useDashboardStore();
+const { api } = useApi();
+const { showToast } = useToast();
 
-const schoolProfile = ref<Program>();
+const schoolProfile = ref<SchoolDetail>();
 const isDetailModal = ref<boolean>(false);
 const sortFilters = ref<OptionAttributes[]>([
   {
@@ -137,9 +142,18 @@ const selectFilter = async (filter: OptionAttributes | null) => {
   }
 };
 
-const openDetail = (item: Program) => {
-  isDetailModal.value = true;
-  schoolProfile.value = item;
+const openDetail = async (item : SchoolDetail) => {
+  try {
+    schoolProfile.value = item;
+    isDetailModal.value = true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
 };
 const close = () => {
   isDetailModal.value = false;

@@ -9,9 +9,12 @@
       />
     </div>
     <div>
-      <h4 class="text-sm font-semibold text-[#181D27]">AI Recommendation</h4>
+      <h4 class="text-sm font-semibold text-[#181D27]">
+        Overwhelmed by options? {{ isActive }}
+      </h4>
       <p class="text-sm text-[#535862] mt-2">
-        Select your majors to unlock personalized AI recommendations
+        Select your major and our AI will match you with the ones that match
+        100%
       </p>
     </div>
     <div class="">
@@ -24,9 +27,9 @@
     >
       <div class="size-5">
         <IconLock v-if="!isActive" />
-        <IconTabSophie v-else class="size-full" />
+        <IconTabSophie v-else class="size-full" width="20" height="20" />
       </div>
-      Unlock AI recommendation
+      {{ !isActive ? "Unlock" : "Get" }} AI recommendation
       <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
     </button>
   </div>

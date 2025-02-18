@@ -6,7 +6,7 @@
     >
       <div v-for="(option, index) in majorProgramsList" :key="index">
         <label
-          :for="`country${index}`"
+          :for="`program${index}`"
           class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
           :class="{
             '!cursor-default':
@@ -14,7 +14,7 @@
           }"
         >
           <input
-            :id="`country${index}`"
+            :id="`program${index}`"
             type="checkbox"
             name="countries"
             :value="option.value"
