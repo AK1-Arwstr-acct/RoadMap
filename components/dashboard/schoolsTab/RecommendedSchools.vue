@@ -56,6 +56,17 @@
           @paginate="(pageNum) => getRecommendations(pageNum)"
         />
       </div>
+      <Transition name="fade">
+        <div
+          v-if="
+            (Number(dashboardStore.totalSchool) || 0) < 6 &&
+            dashboardStore.enginePosition !== 'final'
+          "
+          class="flex justify-center"
+        >
+          <NoManySchool />
+        </div>
+      </Transition>
     </div>
   </div>
   <Transition name="fade">
@@ -76,7 +87,7 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import SchoolDetailModal from "~/components/dashboard/schoolsTab/SchoolDetailModal.vue"
+import SchoolDetailModal from "~/components/dashboard/SchoolsTab/SchoolDetailModal.vue";
 import IconRankDown from "~/components/icons/IconRankDown.vue";
 import IconRankUp from "~/components/icons/IconRankUp.vue";
 import IconPriceDown from "~/components/icons/IconPriceDown.vue";
@@ -142,7 +153,7 @@ const selectFilter = async (filter: OptionAttributes | null) => {
   }
 };
 
-const openDetail = async (item : SchoolDetail) => {
+const openDetail = async (item: SchoolDetail) => {
   try {
     schoolProfile.value = item;
     isDetailModal.value = true;

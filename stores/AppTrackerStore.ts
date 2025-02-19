@@ -1,21 +1,23 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+import type { Application } from "~/types/dashboard";
 
 const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const { api } = useApi();
     const { showToast } = useToast();
 
 
-    const preApplication = ref([]);
+    const preApplication = ref<Application>();
     const applicationList = ref([]);
-    const postApplication = ref([]);
+    const postApplication = ref<Application>();
 
     const getRoadmapData = async () => {
         try {
             const response = await api.get("/api/v1/roadmap/tasks");
             const roadmapData = response.data.data;
-            preApplication.value = roadmapData.find((item) => item.title.toLowerCase().includes('pre'));
-            postApplication.value = roadmapData.find((item) => item.title.toLowerCase().includes('post'));
+            preApplication.value = roadmapData.find((item: Application) => item.title.toLowerCase().includes('pre'));
+            postApplication.value = roadmapData.find((item: Application) => item.title.toLowerCase().includes('post'));
+            applicationList.value = roadmapData.filter((item: Application) => item.country_title !== null)
 
 
         } catch (error) {

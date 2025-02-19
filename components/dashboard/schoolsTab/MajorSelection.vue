@@ -137,7 +137,7 @@ const getMajors = async () => {
         }
       );
     }
-    // selectedLPrograms.value = appStore.userData.educational_records.next_program_titles.map((item) => item.id);
+    selectedLPrograms.value = appStore.userData.educational_records.next_program_titles.map((item) => item.id);
   } catch (error) {
     selectedLPrograms.value = [];
     if (axios.isAxiosError(error)) {

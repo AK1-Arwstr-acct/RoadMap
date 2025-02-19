@@ -10,4 +10,30 @@ interface TabList {
     icon: Component;
 }
 
-export type { TabList }
+interface Category {
+    id: number;
+    title: string;
+}
+
+interface Task {
+    id: number;
+    title: string;
+    description: string;
+    estimated_time: string;
+    type: string;
+    checked: boolean;
+    remarks: string | null;
+    category: Category;
+    users: [];
+}
+interface Application {
+    id: number;
+    title: string;
+    country_title: string | null;
+    description: string;
+    disabled: number;
+    view: number;
+    tasks: Task[];
+}
+
+export type { TabList, Application, Task }

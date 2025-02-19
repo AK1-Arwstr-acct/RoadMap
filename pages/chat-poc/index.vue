@@ -91,6 +91,10 @@ const apiList = [
     value: "roadmap",
     label: "Roadmap",
   },
+  {
+    value: "use-case",
+    label: "Use Case",
+  },
 ];
 const options = {
   html: true,
@@ -170,7 +174,6 @@ const schoolsList = async () => {
         }
       );
     }
-    console.log(schoolNames.value);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.message;

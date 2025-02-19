@@ -10,7 +10,7 @@
     </div>
     <div>
       <h4 class="text-sm font-semibold text-[#181D27]">
-        Overwhelmed by options? {{ isActive }}
+        Overwhelmed by options?
       </h4>
       <p class="text-sm text-[#535862] mt-2">
         Select your major and our AI will match you with the ones that match

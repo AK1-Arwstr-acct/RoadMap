@@ -1,12 +1,12 @@
 <template>
   <div
     class="rounded-[32px] grid grid-cols-1 lg:grid-cols-2 items-center gap-4 pt-6 px-7 pb-7"
-    :class="[checkCompletedTask ? 'bg-[#FB6514A6]/65' : 'bg-[#F5F5F5]']"
+    :class="[checkCompletedTask ? 'bg-[#12B76AB2]/70' : 'bg-[#F5F5F5]']"
   >
     <div class="flex justify-center items-center">
       <img
-        src="/public/images/post-application.png"
-        alt="Post - Application"
+        src="/public/images/countries-application.png"
+        alt="Application"
         class="w-full h-full max-h-[274px] object-contain"
       />
     </div>
@@ -16,7 +16,7 @@
           class="text-3xl font-semibold capitalize"
           :class="[checkCompletedTask ? 'text-white' : 'text-[#181D27]']"
         >
-          Post - Application
+          Application
         </h3>
         <p
           class="rounded-2xl px-3 font-semibold py-1 text-[#414651]"
@@ -24,7 +24,7 @@
         >
           <span v-if="taskProgress !== '100%'">
             {{ checkCompletedTask }} /
-            {{ appTrackerStore.postApplication?.tasks?.length }}
+            {{ totalTasks }}
           </span>
           <span v-else> Completed! </span>
         </p>
@@ -34,9 +34,6 @@
         :class="[checkCompletedTask ? 'text-white' : 'text-[#717680]']"
       >
         <p class="truncate-paragraph">
-          {{ appTrackerStore.postApplication?.description }}
-        </p>
-        <p>
           After submitting, send final transcripts, confirm enrolment with
           deposits if accepted, handle visa requirements for international
           students, and prepare for university while tracking all deadlines.
@@ -48,7 +45,7 @@
       >
         <div class="w-full bg-white rounded-full h-4">
           <div
-            class="bg-[#EC4A0AD9]/85 h-full rounded-full transition-all ease-in-out duration-300"
+            class="bg-[#039855D9]/85 h-full rounded-full transition-all ease-in-out duration-300"
             :style="{ width: taskProgress }"
           ></div>
         </div>
@@ -58,40 +55,36 @@
         @click="emit('updateStep')"
         class="bg-white text-[#1570EF] font-semibold border border-white rounded-xl px-5 py-3 w-full"
       >
-        <span
-          v-if="
-            checkCompletedTask ===
-            appTrackerStore.postApplication?.tasks?.length
-          "
-          >Review</span
-        >
-        <span v-else-if="checkCompletedTask > 0" class="text-[#DC6803]"
+        <span v-if="checkCompletedTask === totalTasks">Review</span>
+        <span v-else-if="checkCompletedTask > 0" class="text-[#039855]"
           >Continue</span
         >
-        <span v-else>Jump to Post - Application</span>
+        <span v-else>Jump to Application</span>
       </button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import useAppTrackerStore from "~/stores/AppTrackerStore";
+import type { Application } from "~/types/dashboard";
 
 const emit = defineEmits(["updateStep"]);
 
 const appTrackerStore = useAppTrackerStore();
 
 const taskProgress = ref<string>("");
+const totalTasks = ref<number>(0);
 
 const checkCompletedTask = computed(() => {
-  const completedTasks =
-    appTrackerStore.postApplication?.tasks?.filter(
-      (task) => task.checked === true
-    ).length || 0;
-  taskProgress.value = `${
-    (completedTasks / (appTrackerStore.postApplication?.tasks?.length ?? 1)) *
-    100
-  }%`;
-  return completedTasks;
+  let total = 0;
+  let count = 0;
+  appTrackerStore.applicationList.forEach((item: Application) => {
+    total += item.tasks.length || 0;
+    count += item.tasks.filter((task) => task.checked === true).length || 0;
+  });
+  taskProgress.value = `${(count / total) * 100}%`;
+  totalTasks.value = total;
+  return count;
 });
 </script>
 <style scoped>
