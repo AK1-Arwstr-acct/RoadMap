@@ -20,6 +20,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const recommendedSchoolsPagination =
         ref<RecommendationSchoolsPagination | null>(null);
     const overViews = ref<string[] | null>([]);
+    const isFinalEnginCall = ref<boolean>(false);
 
     const setSortParam = (data: FilterKey | null) => {
         console.log(data);
@@ -149,6 +150,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                 recommendedSchoolsPagination.value = response.data.pagination;
                 totalSchool.value = response.data.total;
                 enginePosition.value = "pre";
+                overViews.value = [];
+                isFinalEnginCall.value = false;
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -173,6 +176,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                 recommendedSchoolsPagination.value = response.data.pagination;
                 totalSchool.value = response.data.total;
                 enginePosition.value = "post";
+                overViews.value = [];
+                isFinalEnginCall.value = false;
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -222,6 +227,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         enginePosition,
         recommendedSchoolsPagination,
         sortParam,
+        isFinalEnginCall,
         setSortParam,
         setBudgetList,
         setCoursePreferenceOptions,

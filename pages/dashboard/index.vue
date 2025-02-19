@@ -7,7 +7,7 @@
         <Transition name="fade">
           <div v-if="currentTab === 'home'">home</div>
           <div v-else-if="currentTab === 'sophie'">sophie</div>
-          <TrackerInformations v-else-if="currentTab === 'application_tracker'" />
+           <TrackerInformations v-else-if="currentTab === 'application_tracker'" />
           <SchoolsList v-else-if="currentTab === 'schools_list'" />
           <div v-else>setting</div>
         </Transition>

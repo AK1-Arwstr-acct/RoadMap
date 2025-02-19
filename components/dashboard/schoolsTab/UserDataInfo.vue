@@ -134,7 +134,7 @@
         <button
           @click="updateUserData"
           :disabled="isUpdateDisable"
-          class="p-2.5 bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex justify-center gap-2"
+          class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Update
           <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />

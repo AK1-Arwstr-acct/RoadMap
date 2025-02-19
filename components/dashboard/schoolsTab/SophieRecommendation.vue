@@ -21,7 +21,7 @@
       <img src="/images/discover-journey.png" alt="Discover Journey" />
     </div>
     <button
-      :disabled="!isActive || isFinalEnginCall"
+      :disabled="!isActive || dashboardStore.isFinalEnginCall"
       class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-2 justify-center items-center"
       @click="finalEngine"
     >
@@ -45,13 +45,12 @@ defineProps({
 });
 
 const isSubmitting = ref<boolean>(false);
-const isFinalEnginCall = ref<boolean>(false);
 const dashboardStore = useDashboardStore();
 
 const finalEngine = async () => {
   isSubmitting.value = true;
   await dashboardStore.runFinalEngine();
   isSubmitting.value = false;
-  isFinalEnginCall.value = true;
+  dashboardStore.isFinalEnginCall = true;
 };
 </script>
