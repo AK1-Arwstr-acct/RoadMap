@@ -29,13 +29,16 @@
           v-model="gpa"
           placeholder="Enter GPA"
           class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+          @input="gpaChanged"
         />
       </div>
       <div class="mt-5">
         <BaseSelectRadio
-          label="Annual total budget (optional)"
-          :options="dashboardStore.budgetList"
-          v-model="annualBudget"
+          label="Study program"
+          :required="true"
+          :options="dashboardStore.programListOptions"
+          v-model="studyPrograms"
+          @onChange="programChanged"
         />
       </div>
       <div class="mt-5">
@@ -108,10 +111,12 @@
       </div>
       <div class="mt-5">
         <BaseSelectRadio
-          label="Study program"
-          :required="true"
-          :options="dashboardStore.programListOptions"
-          v-model="studyPrograms"
+          label="Annual total budget"
+          :options="dashboardStore.budgetList"
+          v-model="annualBudget"
+          direction="upward"
+          :loading="isBudgetLoading"
+          @onChange="getProgramParent"
         />
       </div>
       <div class="mt-5">
@@ -121,19 +126,20 @@
           :options="dashboardStore.coursePreferenceOptions"
           v-model="areaOfStudy"
           direction="upward"
+          :loading="isAreaOfStudyLoading"
         />
+        <!-- :class="{ 'pointer-events-none opacity-30': !annualBudget }" -->
       </div>
       <div class="mt-6 flex gap-3">
         <button
           @click="resetUserData"
-          :disabled="isUpdateDisable"
           class="p-2.5 border border-[#D5D7DA] w-full rounded-lg font-semibold text-sm text-[#414651]"
         >
           Reset all
         </button>
         <button
           @click="updateUserData"
-          :disabled="isUpdateDisable"
+          :disabled="!isUpdateBtnDisable"
           class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Update
@@ -166,12 +172,22 @@ const annualBudget = ref<OptionAttributes>();
 const studyPrograms = ref<OptionAttributes>();
 const areaOfStudy = ref<OptionAttributes>();
 const selectedLocationOptions = ref<number[]>([]);
-const isUpdateDisable = ref<boolean>(true);
-let firstRun = true;
 const contentHeight = ref(0);
 const content = ref<HTMLElement | null>(null);
+const isBudgetLoading = ref<boolean>(false);
+const isAreaOfStudyLoading = ref<boolean>(false);
 
-const toggleSelection = (ids: number[]) => {
+const isUpdateBtnDisable = computed(() => {
+  return !!(
+    gpa.value &&
+    studyPrograms.value?.value &&
+    selectedLocationOptions.value.length > 0 &&
+    annualBudget.value?.value &&
+    areaOfStudy.value?.value
+  );
+});
+
+const toggleSelection = async (ids: number[]) => {
   const allSelected = ids.every((id) =>
     selectedLocationOptions.value.includes(id)
   );
@@ -184,6 +200,7 @@ const toggleSelection = (ids: number[]) => {
       ...new Set([...selectedLocationOptions.value, ...ids]),
     ];
   }
+  await getBudgets();
 };
 
 const getMinMax = () => {
@@ -206,9 +223,8 @@ const getMinMax = () => {
 const resetUserData = () => {
   if (appStore.userData) {
     setInitialValues(appStore.userData);
+    gpaChanged();
   }
-  isUpdateDisable.value = true;
-  firstRun = true;
 };
 const updateUserData = async () => {
   try {
@@ -224,7 +240,6 @@ const updateUserData = async () => {
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
     await appStore.getUserData();
-    isUpdateDisable.value = true;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -239,9 +254,10 @@ const updateUserData = async () => {
 
 const setInitialValues = (newValue: UserData) => {
   gpa.value = `${newValue?.educational_records.cgpa}` || "";
-  annualBudget.value = dashboardStore.budgetList?.find((item) =>
-    item.value.includes(`${newValue?.educational_records.annual_max_budget}`)
-  ) || { value: "", label: "" };
+  annualBudget.value =
+    dashboardStore.budgetList?.find((item) =>
+      item.value.includes(`${newValue?.educational_records.annual_max_budget}`)
+    ) || undefined;
   studyPrograms.value = dashboardStore.programListOptions.find(
     (item) =>
       Number(item.value) == newValue?.educational_records.next_class_grade.id
@@ -256,14 +272,136 @@ const setInitialValues = (newValue: UserData) => {
     ) || [];
 };
 
+const programChanged = async () => {
+  try {
+    if (!gpa.value || !studyPrograms.value?.value) {
+      return;
+    }
+    const response = await api.post(
+      "/api/v1/anonymous-recommendation/get-location-country",
+      {
+        cgpa: gpa.value,
+        class_grade_ids: [studyPrograms.value?.value],
+        uniqueId: appStore.userData?.uuid,
+      }
+    );
+    if (response.data.data) {
+      dashboardStore.locationOptions = response.data.data?.map(
+        (item: { country_ids: number[]; title: string }) => {
+          return {
+            value: item.country_ids,
+            label: item.title,
+          };
+        }
+      );
+      const currentCountryIds = dashboardStore.locationOptions
+        .map((option) => option.value)
+        .flat();
+
+      selectedLocationOptions.value = selectedLocationOptions.value.filter(
+        (id) => currentCountryIds.includes(id)
+      );
+    }
+  } catch (error) {}
+};
+
+const getProgramParent = async () => {
+  try {
+    if (
+      !gpa.value ||
+      !annualBudget.value ||
+      selectedLocationOptions.value.length <= 0 ||
+      !studyPrograms.value?.value
+    ) {
+      return;
+    }
+    isAreaOfStudyLoading.value = true;
+    const response = await api.post(
+      "/api/v1/anonymous-recommendation/find-program-parent",
+      {
+        cgpa: gpa.value,
+        class_grade_ids: [studyPrograms.value?.value],
+        country_ids: selectedLocationOptions.value || [],
+        max_budget: (annualBudget.value as { max?: number }).max,
+        min_budget: null,
+        uniqueId: appStore.userData?.uuid,
+      }
+    );
+    dashboardStore.coursePreferenceOptions = response.data.data.map(
+      (item: { id: number; title: string }) => {
+        return {
+          value: item?.id,
+          label: item?.title,
+        };
+      }
+    );
+    isAreaOfStudyLoading.value = false;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getBudgets = async () => {
+  try {
+    isBudgetLoading.value = true;
+    const response = await api.post(
+      "/api/v1/anonymous-recommendation/budget-range",
+      {
+        cgpa: gpa.value,
+        class_grade_ids: [studyPrograms.value?.value],
+        country_ids: selectedLocationOptions.value || [],
+        uniqueId: appStore.userData?.uuid,
+      }
+    );
+    dashboardStore.budgetList = response.data.data.map(
+      (item: [string | number, string | number]) => {
+        const min =
+          typeof item[0] === "string"
+            ? Number(item[0].replace(/\+/g, ""))
+            : item[0];
+        const max =
+          typeof item[1] === "string"
+            ? Number(item[1].replace(/\+/g, ""))
+            : item[1];
+        return {
+          value: `${item[0]}-${!!item[1] ? item[1] : ""}`,
+          label: `${budgetWithComma(item[0])}  ${
+            !!item[1] ? " - " + budgetWithComma(item[1]) : ""
+          }`,
+          min: min,
+          max: max,
+        };
+      }
+    );
+    isBudgetLoading.value = false;
+  } catch (error) {
+    isBudgetLoading.value = false;
+    dashboardStore.budgetList = [];
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
+};
+
+let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const gpaChanged = async () => {
+  if (debounceTimeout) {
+    clearTimeout(debounceTimeout);
+  }
+  debounceTimeout = setTimeout(async () => {
+    await programChanged();
+    await getBudgets();
+    await getProgramParent();
+  }, 1000);
+};
+
 watch(
-  () => [
-    appStore.userData,
-    dashboardStore.budgetList,
-    dashboardStore.programListOptions,
-    dashboardStore.coursePreferenceOptions,
-  ],
-  (newValue) => {
+  () => [appStore.userData],
+  () => {
     if (appStore.userData) {
       setInitialValues(appStore.userData);
     }
@@ -274,19 +412,44 @@ watch(
 );
 
 watch(
-  () => [
-    gpa.value,
-    annualBudget.value,
-    studyPrograms.value,
-    areaOfStudy.value,
-    selectedLocationOptions.value,
-  ],
+  () => dashboardStore.programListOptions,
   () => {
-    if (firstRun) {
-      firstRun = false;
+    studyPrograms.value = dashboardStore.programListOptions.find(
+      (item) =>
+        Number(item.value) ==
+        appStore.userData?.educational_records.next_class_grade.id
+    );
+  }
+);
+watch(
+  () => dashboardStore.budgetList,
+  () => {
+    annualBudget.value =
+      dashboardStore.budgetList?.find((item) =>
+        item.value.includes(
+          `${appStore.userData?.educational_records.annual_max_budget}`
+        )
+      ) || undefined;
+  }
+);
+watch(
+  () => dashboardStore.coursePreferenceOptions,
+  () => {
+    areaOfStudy.value =
+      dashboardStore.coursePreferenceOptions?.find(
+        (item) => Number(item.value) == Number(areaOfStudy.value?.value)
+      ) || undefined;
+
+    if (areaOfStudy.value?.value) {
       return;
     }
-    isUpdateDisable.value = false;
+
+    areaOfStudy.value =
+      dashboardStore.coursePreferenceOptions?.find(
+        (item) =>
+          Number(item.value) ==
+          appStore.userData?.educational_records.super_meta_category.id
+      ) || undefined;
   }
 );
 

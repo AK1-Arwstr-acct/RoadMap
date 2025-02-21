@@ -142,6 +142,7 @@ const props = defineProps({
 
 const emits = defineEmits<{
   (e: "update:modelValue", selectedOptions: OptionAttributes | null): void;
+  (e: "onChange"): void;
 }>();
 
 const isDropdownOpen = ref<boolean>(false);
@@ -154,6 +155,7 @@ const closeDropdown = () => {
 const onChange = () => {
   closeDropdown();
   emits("update:modelValue", selectedOption.value);
+  emits('onChange');
 };
 
 watch(

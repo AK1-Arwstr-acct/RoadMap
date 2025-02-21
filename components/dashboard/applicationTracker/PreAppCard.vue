@@ -4,7 +4,7 @@
   >
     <div class="flex justify-center items-center">
       <img
-        src="/public/images/pre-application.png"
+        src="/images/pre-application.png"
         alt="Pre - Application"
         class="w-full h-full max-h-[274px] object-contain"
       />
@@ -45,13 +45,9 @@
         @click="emit('updateStep')"
         class="bg-white text-[#1570EF] font-semibold border border-white rounded-xl px-5 py-3 w-full"
       >
-        <span
-          v-if="
-            checkCompletedTask === appTrackerStore.preApplication?.tasks?.length
-          "
-          >Review</span
-        >
-        <span v-else>Start here</span>
+        <span v-if="checkCompletedTask === 0">Start here</span>
+        <span v-else-if="checkCompletedTask === appTrackerStore.preApplication?.tasks?.length">Review</span>
+        <span v-else>Continue</span>
       </button>
     </div>
   </div>

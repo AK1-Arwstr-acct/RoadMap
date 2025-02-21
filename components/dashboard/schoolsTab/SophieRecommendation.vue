@@ -10,17 +10,43 @@
     </div>
     <div>
       <h4 class="text-sm font-semibold text-[#181D27]">
-        Overwhelmed by options?
+        <span
+          v-if="
+            dashboardStore.enginePosition === 'final'
+              ? false
+              : (dashboardStore.totalSchool || 0) >= 6
+          "
+        >
+          Overwhelmed by options?
+        </span>
+        <span v-else> We've found your best match! </span>
       </h4>
       <p class="text-sm text-[#535862] mt-2">
-        Select your major and our AI will match you with the ones that match
-        100%
+        <span
+          v-if="
+            dashboardStore.enginePosition === 'final'
+              ? false
+              : (dashboardStore.totalSchool || 0) >= 6
+          "
+        >
+          Select your major and our AI will match you with the ones that match
+          100%
+        </span>
+        <span v-else>
+          Based on your chosen major, this is the top school that fits your
+          profile.
+        </span>
       </p>
     </div>
     <div class="">
       <img src="/images/discover-journey.png" alt="Discover Journey" />
     </div>
     <button
+      v-if="
+        dashboardStore.enginePosition === 'final'
+          ? false
+          : (dashboardStore.totalSchool || 0) >= 6
+      "
       :disabled="!isActive || dashboardStore.isFinalEnginCall"
       class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-2 justify-center items-center"
       @click="finalEngine"

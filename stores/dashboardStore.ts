@@ -15,7 +15,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const locationOptions = ref<CountriesOptionAttributes[]>([])
     const coursePreferenceOptions = ref<OptionAttributes[]>();
     const budgetList = ref<OptionAttributes[]>();
-    const totalSchool = ref<Number | null>(null);
+    const totalSchool = ref<number | null>(null);
     const schoolsList = ref<Program[]>([]);
     const recommendedSchoolsPagination =
         ref<RecommendationSchoolsPagination | null>(null);
@@ -118,7 +118,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                                 : item[1];
                         return {
                             value: `${item[0]}-${!!item[1] ? item[1] : ""}`,
-                            label: `${budgetWithComma(item[0])}  ${!!item[1] ? " -" + budgetWithComma(item[1]) : ""
+                            label: `${budgetWithComma(item[0])}  ${!!item[1] ? " - " + budgetWithComma(item[1]) : ""
                                 }`,
                             min: min,
                             max: max,

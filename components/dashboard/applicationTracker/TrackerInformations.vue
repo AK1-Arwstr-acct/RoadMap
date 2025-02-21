@@ -23,13 +23,13 @@
       </div>
       <!-- application detail -->
       <div v-if="trackeSteps === 'pre_application'">
-        <PreApplicationTasks :application="appTrackerStore.preApplication" />
+        <ApplicationTasks :application="appTrackerStore.preApplication" />
       </div>
       <div v-if="trackeSteps === 'countries_application'">
         <CountriesApplicationTasks />
       </div>
       <div v-if="trackeSteps === 'post_application'">
-        <PostApplicationTasks />
+        <ApplicationTasks :application="appTrackerStore.postApplication" />
       </div>
     </div>
   </div>
