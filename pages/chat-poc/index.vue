@@ -95,6 +95,10 @@ const apiList = [
     value: "use-case",
     label: "Use Case",
   },
+  {
+    value: "sophie",
+    label: "Sophie",
+  },
 ];
 const options = {
   html: true,
