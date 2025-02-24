@@ -43,7 +43,27 @@
             />
             <p class="text-[#414651] text-sm text-nowrap">
               {{ program.school.address.state }},
-              {{ program.school.address.country }}
+              {{
+                program.school.address.country.toLowerCase().includes("kingdom")
+                  ? "UK"
+                  : program.school.address.country
+                      .toLowerCase()
+                      .includes("canada")
+                  ? "CA"
+                  : program.school.address.country
+                      .toLowerCase()
+                      .includes("australia")
+                  ? "AU"
+                  : program.school.address.country
+                      .toLowerCase()
+                      .includes("states")
+                  ? "US"
+                  : program.school.address.country
+                      .toLowerCase()
+                      .includes("europe")
+                  ? "EU"
+                  : ""
+              }}
             </p>
           </div>
         </div>
@@ -51,15 +71,21 @@
         <div class="flex items-center gap-6 font-medium mb-2">
           <div>
             <span class="text-[#717680] mr-2">SAT:</span>
-            <span class="text-[#1570EF]">{{ program.school.admission_stats.average_scores.sat || "N/A" }}</span>
+            <span class="text-[#1570EF]">{{
+              program.school.admission_stats.average_scores.sat || "N/A"
+            }}</span>
           </div>
           <div>
             <span class="text-[#717680] mr-2">IELTS:</span>
-            <span class="text-[#1570EF]">{{ program.school.admission_stats.average_scores.ielts || "N/A" }}</span>
+            <span class="text-[#1570EF]">{{
+              program.school.admission_stats.average_scores.ielts || "N/A"
+            }}</span>
           </div>
           <div>
             <span class="text-[#717680] mr-2">GPA:</span>
-            <span class="text-[#1570EF]">{{ program.school.admission_stats.average_scores.gpa || "N/A" }}</span>
+            <span class="text-[#1570EF]">{{
+              program.school.admission_stats.average_scores.gpa || "N/A"
+            }}</span>
           </div>
         </div>
         <div class="flex items-center gap-6 font-medium">

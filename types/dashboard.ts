@@ -15,6 +15,10 @@ interface Category {
     title: string;
 }
 
+interface Resources {
+    link: string;
+    text: string;
+}
 interface Task {
     id: number;
     title: string;
@@ -23,6 +27,7 @@ interface Task {
     type: string;
     checked: boolean;
     remarks: string | null;
+    resources: Resources[];
     category: Category;
     users: [];
 }

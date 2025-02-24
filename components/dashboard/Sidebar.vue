@@ -35,7 +35,11 @@
             />
           </div>
           <span class="text-lg font-semibold capitalize">
-            {{ tab.name.split("_").join(" ") }}
+            {{
+              tab.name === "application_tracker"
+                ? "Roadmap"
+                : tab.name.split("_").join(" ")
+            }}
           </span>
         </div>
       </div>

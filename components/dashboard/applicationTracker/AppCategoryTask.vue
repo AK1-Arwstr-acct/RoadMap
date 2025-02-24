@@ -10,9 +10,16 @@
         :class="{ '-rotate-90': !isOpen }"
       />
       <p class="text-[#111827] text-xl font-semibold flex-1 capitalize">
-        {{
-          category === "extracurricular" ? "extracurricular activity" : category
-        }}
+        <span v-if="category !== 'country'">
+          {{
+            category === "extracurricular"
+              ? "extracurricular activity"
+              : category
+          }}
+        </span>
+        <span v-else>
+          {{ application.country_title?.split('_').join(' ') }}
+        </span>
       </p>
       <div
         class="py-0.5 px-3 rounded-full font-semibold tracking-wider"
@@ -34,6 +41,14 @@
           filteredTask(category).filter((item) => item.checked == true).length
         }}/{{ filteredTask(category).length }}
       </div>
+      <Transition name="fade">
+        <IconAward
+          v-if="
+            filteredTask(category).filter((item) => item.checked == true)
+              .length === filteredTask(category).length
+          "
+        />
+      </Transition>
     </div>
     <!-- tasks -->
     <div
@@ -44,11 +59,16 @@
       <div
         v-for="(task, idx) in filteredTask(category)"
         :key="idx"
-        @click="emit('openTaskDetail', task)"
+        @click.prevent="handelTaskDetail(task)"
       >
         <label
           :for="`task-${task.id}`"
-          class="mt-6 flex items-center gap-6 size-full rounded-2xl cursor-pointer bg-[#FFFFFF] border border-[#E9EAEB] p-4"
+          class="mt-6 flex items-center gap-6 size-full rounded-2xl cursor-pointer p-4 transition-all ease-in-out duration-200"
+          :class="[
+            appTrackerStore.taskActiveStates[task.id]
+              ? 'border-2 border-[#2E90FA] bg-[#F5FAFF]'
+              : 'border border-[#E9EAEB] bg-[#FFFFFF]',
+          ]"
         >
           <input
             :id="`task-${task.id}`"
@@ -92,12 +112,14 @@
             </div>
           </div>
           <div
-            class="size-6 rounded-full bg-white border border-[#D5D7DA] p-0.5 flex justify-center items-center"
+            class="size-6 rounded-full border flex justify-center items-center"
+            :class="[
+              task.checked
+                ? 'bg-[#1570EF] border-[#1570EF]'
+                : 'bg-white border-[#D5D7DA]',
+            ]"
           >
-            <div
-              v-if="task.checked"
-              class="size-full bg-[#1570EF] rounded-full"
-            />
+            <IconTick stroke="#ffffff" width="15" height="15" />
           </div>
         </label>
       </div>
@@ -105,9 +127,12 @@
   </section>
 </template>
 <script setup lang="ts">
-import type { Application } from "~/types/dashboard";
+import type { Application, Task } from "~/types/dashboard";
+import useAppTrackerStore from "~/stores/AppTrackerStore";
 
 const emit = defineEmits(["openTaskDetail"]);
+
+const appTrackerStore = useAppTrackerStore();
 
 const props = defineProps({
   application: {
@@ -124,7 +149,26 @@ const isOpen = ref<boolean>(false);
 const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
 
+const handelTaskDetail = (task: Task) => {
+  const taskId = task.id;
+  if (appTrackerStore.taskActiveStates[taskId]) {
+    appTrackerStore.taskActiveStates[taskId] = false;
+    emit("openTaskDetail", undefined);
+  } else {
+    appTrackerStore.taskActiveStates[taskId] = true;
+    Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+      if (Number(key) !== taskId) {
+        appTrackerStore.taskActiveStates[Number(key)] = false;
+      }
+    });
+    emit("openTaskDetail", task);
+  }
+};
+
 const filteredTask = (category: string) => {
+  if (props.category === 'country') {
+    return props.application.tasks;
+  }
   const tasks = props.application.tasks.filter((item) =>
     item.category.title.includes(category)
   );

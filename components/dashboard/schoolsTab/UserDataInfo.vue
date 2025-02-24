@@ -98,7 +98,7 @@
                         ? IconAustralia
                         : option.label.toLowerCase().includes('states')
                         ? IconUS
-                        : IconEurope
+                        : ''
                     "
                     class="w-6 h-6"
                   />

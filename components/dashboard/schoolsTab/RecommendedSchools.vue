@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-8 h-full flex flex-col gap-4">
-    <div>
+  <div class="pt-4 h-full flex flex-col">
+    <div class="sticky top-0 bg-[#FAFAFA] pt-4 pb-4" >
       <h1 class="text-[#181D27] text-2xl font-semibold">
         Let's find your perfect school match!
       </h1>

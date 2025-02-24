@@ -6,7 +6,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const { api } = useApi();
     const { showToast } = useToast();
 
-
+    const taskActiveStates = ref<Record<number, boolean>>({});
     const preApplication = ref<Application>();
     const applicationList = ref([]);
     const postApplication = ref<Application>();
@@ -31,6 +31,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     };
 
     return {
+        taskActiveStates,
         preApplication,
         postApplication,
         applicationList,

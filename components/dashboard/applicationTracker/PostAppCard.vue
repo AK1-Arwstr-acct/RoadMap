@@ -36,11 +36,6 @@
         <p class="truncate-paragraph">
           {{ appTrackerStore.postApplication?.description }}
         </p>
-        <p>
-          After submitting, send final transcripts, confirm enrolment with
-          deposits if accepted, handle visa requirements for international
-          students, and prepare for university while tracking all deadlines.
-        </p>
       </div>
       <div
         v-if="checkCompletedTask > 0"

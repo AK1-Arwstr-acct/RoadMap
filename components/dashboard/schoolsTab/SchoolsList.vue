@@ -1,9 +1,9 @@
 <template>
-  <div class="grid grid-cols-10 gap-6 px-6 size-full">
-    <div class="col-span-6 xl:col-span-7 overflow-hidden">
+  <div class="grid grid-cols-10 gap-6 px-6 size-full overflow-y-auto custom-scrollbar">
+    <div class="col-span-6 xl:col-span-7">
       <RecommendedSchools @getRecommendations="getRecommendations" />
     </div>
-    <div class="col-span-4 xl:col-span-3 overflow-hidden">
+    <div class="col-span-4 xl:col-span-3">
       <UserDetails />
     </div>
   </div>

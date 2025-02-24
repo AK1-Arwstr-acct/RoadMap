@@ -1,41 +1,67 @@
 <template>
-  <div class="size-full flex justify-center overflow-y-auto no-scrollbar">
-    <div
-      v-if="trackeSteps === 'application_tabs'"
-      class="space-y-14 h-fit max-w-[772px] px-10 lg:px-0 py-10"
-    >
-      <PreAppCard @updateStep="updateStep('pre_application')" />
-      <CountriesAppCard @updateStep="updateStep('countries_application')" />
-      <PostAppCard @updateStep="updateStep('post_application')" />
+  <section class="flex h-full">
+    <div class="size-full flex justify-center overflow-y-auto no-scrollbar">
+      <div
+        v-if="trackeSteps === 'application_tabs'"
+        class="space-y-14 h-fit max-w-[772px] px-10 lg:px-0 py-10"
+      >
+        <PreAppCard @updateStep="updateStep('pre_application')" />
+        <CountriesAppCard @updateStep="updateStep('countries_application')" />
+        <PostAppCard @updateStep="updateStep('post_application')" />
+      </div>
+      <div v-else class="w-full max-w-[768px] px-5 py-8">
+        <!-- breadcrumbs -->
+        <div class="mb-6 text-[#717680] font-medium flex items-center gap-1.5">
+          <p @click="updateStep('application_tabs')" class="cursor-pointer">
+            Application tracker
+          </p>
+          <IconChevronDown
+            class="transform -rotate-90"
+            stroke="#717680"
+            width="20"
+            height="20"
+          />
+        </div>
+        <!-- application detail -->
+        <div v-if="trackeSteps === 'pre_application'">
+          <ApplicationTasks
+            :application="appTrackerStore.preApplication"
+            @openTaskDetail="openTaskDetail"
+          />
+        </div>
+        <div v-if="trackeSteps === 'countries_application'">
+          <!-- <CountriesApplicationTasks /> -->
+          <ApplicationTasks
+            :application="appTrackerStore.applicationList"
+            @openTaskDetail="openTaskDetail"
+          />
+        </div>
+        <div v-if="trackeSteps === 'post_application'">
+          <ApplicationTasks
+            :application="appTrackerStore.postApplication"
+            @openTaskDetail="openTaskDetail"
+          />
+        </div>
+      </div>
     </div>
-    <div v-else class="w-full max-w-[768px] px-8 py-8">
-      <!-- breadcrumbs -->
-      <div class="mb-6 text-[#717680] font-medium flex items-center gap-1.5">
-        <p @click="updateStep('application_tabs')" class="cursor-pointer">
-          Application tracker
-        </p>
-        <IconChevronDown
-          class="transform -rotate-90"
-          stroke="#717680"
-          width="20"
-          height="20"
+    <Transition name="taskSlide">
+      <div
+        v-if="trackeSteps !== 'application_tabs' && openDetailModal"
+        class="w-fit max-w-[440px] transition-all ease-in-out duration-500 overflow-hidden"
+      >
+        <component
+          :is="TaskDetailSidebar"
+          :taskDetail="taskDetail"
+          @clearDetails="clearDetails"
         />
       </div>
-      <!-- application detail -->
-      <div v-if="trackeSteps === 'pre_application'">
-        <ApplicationTasks :application="appTrackerStore.preApplication" />
-      </div>
-      <div v-if="trackeSteps === 'countries_application'">
-        <CountriesApplicationTasks />
-      </div>
-      <div v-if="trackeSteps === 'post_application'">
-        <ApplicationTasks :application="appTrackerStore.postApplication" />
-      </div>
-    </div>
-  </div>
+    </Transition>
+  </section>
 </template>
 <script setup lang="ts">
 import useAppTrackerStore from "~/stores/AppTrackerStore";
+import TaskDetailSidebar from "./TaskDetailSidebar.vue";
+import type { Task } from "~/types/dashboard";
 
 const appTrackerStore = useAppTrackerStore();
 
@@ -46,12 +72,43 @@ type TrackerSteps =
   | "post_application";
 
 const trackeSteps = ref<TrackerSteps>("application_tabs");
+const taskDetail = ref<Task>();
+const openDetailModal = ref<boolean>(false);
 
 const updateStep = (step: TrackerSteps) => {
   trackeSteps.value = step;
+};
+
+const openTaskDetail = (task: Task) => {
+  if (task) {
+    taskDetail.value = task;
+    openDetailModal.value = true;
+  } else {
+    openDetailModal.value = false;
+  }
+};
+
+const clearDetails = () => {
+  openDetailModal.value = false;
 };
 
 onMounted(async () => {
   appTrackerStore.getRoadmapData();
 });
 </script>
+<style scoped>
+.taskSlide-enter-active,
+.taskSlide-leave-active {
+  transition: width 800ms ease-in-out;
+}
+
+.taskSlide-enter-from,
+.taskSlide-leave-to {
+  width: 0;
+}
+
+.taskSlide-enter-to,
+.taskSlide-leave-from {
+  width: 100%;
+}
+</style>
