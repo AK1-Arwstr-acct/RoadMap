@@ -12,7 +12,7 @@
           :class="{ 'transform -rotate-90': !isDetailOpen }"
         />
       </div>
-      <p class="font-semibold text-[#111827]">Your Details & Information</p>
+      <p class="font-semibold text-[#111827] text-sm">Your Details & Information</p>
     </div>
     <div
       ref="content"

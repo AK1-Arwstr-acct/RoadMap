@@ -1,6 +1,6 @@
 <template>
   <div class="py-5 px-6 rounded-2xl border border-[#E9EAEB] bg-white">
-    <p class="font-medium text-[#414651]">Majors (Pick up to 3 majors)</p>
+    <p class="font-medium text-[#414651] text-sm">Majors (Pick up to 3 majors)</p>
     <div
       class="mt-[14px] space-y-4 max-h-[280px] overflow-y-auto custom-scrollbar"
     >
@@ -41,7 +41,7 @@
             />
           </div>
           <div
-            class="flex items-center gap-2 text-[#414651] transition-all ease-in-out duration-200"
+            class="flex items-center gap-2 text-[#414651] transition-all ease-in-out duration-200 text-sm"
             :class="{
               '!text-[#A4A7AE]':
                 !selectedLPrograms.includes(option.value) && isProgramDisable,

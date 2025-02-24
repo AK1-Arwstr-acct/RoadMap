@@ -51,11 +51,13 @@
       class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-2 justify-center items-center"
       @click="finalEngine"
     >
-      <div class="size-5">
+      <div class="size-4">
         <IconLock v-if="!isActive" />
         <IconTabSophie v-else class="size-full" width="20" height="20" />
       </div>
-      {{ !isActive ? "Unlock" : "Get" }} AI recommendation
+      <span class="text-sm pt-1.5">
+        {{ !isActive ? "Unlock" : "Get" }} AI recommendation
+      </span>
       <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
     </button>
   </div>

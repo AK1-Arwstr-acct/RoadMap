@@ -15,7 +15,7 @@
     <div class="flex-1 overflow-x-auto custom-scrollbar">
       <div class="min-w-fit">
         <div class="flex items-center gap-10 justify-between mb-2">
-          <h3 class="text-lg font-semibold text-[#181D27] text-nowrap">
+          <h3 class="font-medium text-[#181D27] text-nowrap">
             {{ program.school.name }}
           </h3>
           <div
@@ -69,19 +69,19 @@
         </div>
         <p class="text-[#535862] mb-2.5">{{ program.program_title }}</p>
         <div class="flex items-center gap-6 font-medium mb-2">
-          <div>
+          <div class="text-sm">
             <span class="text-[#717680] mr-2">SAT:</span>
             <span class="text-[#1570EF]">{{
               program.school.admission_stats.average_scores.sat || "N/A"
             }}</span>
           </div>
-          <div>
+          <div class="text-sm">
             <span class="text-[#717680] mr-2">IELTS:</span>
             <span class="text-[#1570EF]">{{
               program.school.admission_stats.average_scores.ielts || "N/A"
             }}</span>
           </div>
-          <div>
+          <div class="text-sm">
             <span class="text-[#717680] mr-2">GPA:</span>
             <span class="text-[#1570EF]">{{
               program.school.admission_stats.average_scores.gpa || "N/A"
@@ -89,7 +89,7 @@
           </div>
         </div>
         <div class="flex items-center gap-6 font-medium">
-          <div>
+          <div class="text-sm">
             <span class="text-[#717680] mr-2">Avg. tuition:</span>
             <span class="text-gray-900">
               {{
@@ -101,7 +101,7 @@
               }}
             </span>
           </div>
-          <div>
+          <div class="text-sm">
             <span class="text-[#717680] mr-2">Ranking:</span>
             <span class="text-gray-900">{{
               program.school_ranking || "N/A"
