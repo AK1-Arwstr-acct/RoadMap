@@ -18,24 +18,12 @@
           }}
         </span>
         <span v-else>
-          {{ application.country_title?.split('_').join(' ') }}
+          {{ application.country_title?.split("_").join(" ") }}
         </span>
       </p>
       <div
         class="py-0.5 px-3 rounded-full font-semibold tracking-wider"
-        :class="[
-          category.includes('career') || category.includes('application')
-            ? 'bg-[#FFFAEB] text-[#B54708]'
-            : category.includes('academics')
-            ? 'bg-[#EFF8FF] text-[#175CD3]'
-            : category.includes('extracurricular')
-            ? 'bg-[#ECFDF3] text-[#027A48]'
-            : category.includes('school')
-            ? 'bg-[#FDF2FA] text-[#C11574]'
-            : category.includes('decision')
-            ? 'bg-[#EEF4FF] text-[#3538CD]'
-            : 'bg-[#F0F9FF] text-[#026AA2]',
-        ]"
+        :class="[category === 'country' ? 'bg-[#F5F5F5] text-[#414651]' :  categoryClass(category) ]"
       >
         {{
           filteredTask(category).filter((item) => item.checked == true).length
@@ -85,24 +73,21 @@
             />
           </div>
           <div class="flex-1 space-y-2">
-            <span
-              class="font-medium text-sm py-0.5 px-2.5 rounded-full capitalize"
+            <p
+              class="font-medium text-sm py-0.5 px-2.5 rounded-full capitalize w-fit"
               :class="[
-                category.includes('career') || category.includes('application')
-                  ? 'bg-[#FFFAEB] text-[#B54708]'
-                  : category.includes('academics')
-                  ? 'bg-[#EFF8FF] text-[#175CD3]'
-                  : category.includes('extracurricular')
-                  ? 'bg-[#ECFDF3] text-[#027A48]'
-                  : category.includes('school')
-                  ? 'bg-[#FDF2FA] text-[#C11574]'
-                  : category.includes('decision')
-                  ? 'bg-[#EEF4FF] text-[#3538CD]'
-                  : 'bg-[#F0F9FF] text-[#026AA2]',
+                category === 'country'
+                  ? categoryClass(task.category.title)
+                  : categoryClass(category),
               ]"
             >
-              {{ category.includes("extracurricular") ? "EC" : category }}
-            </span>
+              <span v-if="category !== 'country'">
+                {{ category.includes("extracurricular") ? "EC" : category }}
+              </span>
+              <span v-else>
+                {{ task.category.title }}
+              </span>
+            </p>
             <p class="text-xl text-[#414651] font-semibold">
               {{ task.title }}
             </p>
@@ -149,7 +134,23 @@ const isOpen = ref<boolean>(false);
 const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
 
-const handelTaskDetail = (task: Task) => {
+const categoryClass = (category: string) => {
+  if (category.includes("career") || category.includes("application")) {
+    return "bg-[#FFFAEB] text-[#B54708]";
+  } else if (category.includes("academics") || category.includes('decision')) {
+    return "bg-[#EFF8FF] text-[#175CD3]";
+  } else if (category.includes("extracurricular") || category.includes('finances') || category.includes('scholarships')) {
+    return "bg-[#ECFDF3] text-[#027A48]";
+  } else if (category.includes("school")) {
+    return "bg-[#FDF2FA] text-[#C11574]";
+  } else if (category.includes("decision")) {
+    return "bg-[#EEF4FF] text-[#3538CD]";
+  } else {
+    return "bg-[#F0F9FF] text-[#026AA2]";
+  }
+};
+
+const handelTaskDetail = async (task: Task) => {
   const taskId = task.id;
   if (appTrackerStore.taskActiveStates[taskId]) {
     appTrackerStore.taskActiveStates[taskId] = false;
@@ -163,10 +164,13 @@ const handelTaskDetail = (task: Task) => {
     });
     emit("openTaskDetail", task);
   }
+  setTimeout(() => {
+    calculateHeight();
+  }, 1000);
 };
 
 const filteredTask = (category: string) => {
-  if (props.category === 'country') {
+  if (props.category === "country") {
     return props.application.tasks;
   }
   const tasks = props.application.tasks.filter((item) =>

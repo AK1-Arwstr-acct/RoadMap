@@ -139,7 +139,7 @@
         </button>
         <button
           @click="updateUserData"
-          :disabled="!isUpdateBtnDisable"
+          :disabled="!isUpdateBtnDisable || disabledBtn"
           class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Update
@@ -184,6 +184,24 @@ const isUpdateBtnDisable = computed(() => {
     selectedLocationOptions.value.length > 0 &&
     annualBudget.value?.value &&
     areaOfStudy.value?.value
+  );
+});
+
+const disabledBtn = computed(() => {
+  let countryCheck = appStore.userData?.educational_records.want_to_study_countries
+      .map((item) => item.id)
+      .every((id) => selectedLocationOptions.value.includes(id))
+  
+  return (
+    Number(gpa.value) === appStore.userData?.educational_records.cgpa &&
+    Number(studyPrograms.value?.value) ===
+      appStore.userData?.educational_records.next_class_grade.id &&
+    Number(annualBudget.value?.value.split("-")[1]) ===
+      appStore.userData?.educational_records.annual_max_budget &&
+    Number(areaOfStudy.value?.value) ===
+      appStore.userData?.educational_records.super_meta_category.id &&
+    (appStore.userData?.educational_records.want_to_study_countries.length === selectedLocationOptions.value.length && countryCheck)
+      
   );
 });
 

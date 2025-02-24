@@ -1,7 +1,7 @@
 <template>
   <div
     class="rounded-[32px] grid grid-cols-1 lg:grid-cols-2 items-center gap-4 pt-6 px-7 pb-7"
-    :class="[checkCompletedTask ? 'bg-[#FB6514A6]/65' : 'bg-[#F5F5F5]']"
+    :class="[checkCompletedTask ? 'bg-[#FD853A]' : 'bg-[#F5F5F5]']"
   >
     <div class="flex justify-center items-center">
       <img
@@ -13,13 +13,13 @@
     <div class="">
       <div class="flex justify-between items-center">
         <h3
-          class="text-3xl font-semibold capitalize"
+          class="text-2xl font-semibold capitalize"
           :class="[checkCompletedTask ? 'text-white' : 'text-[#181D27]']"
         >
           Post - Application
         </h3>
         <p
-          class="rounded-2xl px-3 font-semibold py-1 text-[#414651]"
+          class="rounded-2xl px-3 font-semibold py-1 text-[#414651] text-sm"
           :class="[checkCompletedTask ? 'bg-[#F5F5F5]' : 'bg-[#ebebeb]']"
         >
           <span v-if="taskProgress !== '100%'">
@@ -38,22 +38,26 @@
         </p>
       </div>
       <div
-        v-if="checkCompletedTask > 0"
+        v-if="
+          checkCompletedTask !== 0 &&
+          checkCompletedTask !== appTrackerStore.postApplication?.tasks?.length
+        "
         class="flex justify-between items-center gap-3 mb-7"
       >
         <div class="w-full bg-white rounded-full h-4">
           <div
-            class="bg-[#EC4A0AD9]/85 h-full rounded-full transition-all ease-in-out duration-300"
+            class="bg-[#EC4A0A] h-full rounded-full transition-all ease-in-out duration-300"
             :style="{ width: taskProgress }"
           ></div>
         </div>
-        <IconTrophy />
+        <IconTabSophie class="invert" />
       </div>
       <button
         @click="emit('updateStep')"
         class="bg-white text-[#1570EF] font-semibold border border-white rounded-xl px-5 py-3 w-full"
       >
         <span
+          class="text-[#DC6803]"
           v-if="
             checkCompletedTask ===
             appTrackerStore.postApplication?.tasks?.length

@@ -9,7 +9,7 @@
         <CountriesAppCard @updateStep="updateStep('countries_application')" />
         <PostAppCard @updateStep="updateStep('post_application')" />
       </div>
-      <div v-else class="w-full max-w-[768px] px-5 py-8">
+      <div v-else class="w-full max-w-[768px] px-5 py-8 h-fit">
         <!-- breadcrumbs -->
         <div class="mb-6 text-[#717680] font-medium flex items-center gap-1.5">
           <p @click="updateStep('application_tabs')" class="cursor-pointer">
@@ -30,7 +30,6 @@
           />
         </div>
         <div v-if="trackeSteps === 'countries_application'">
-          <!-- <CountriesApplicationTasks /> -->
           <ApplicationTasks
             :application="appTrackerStore.applicationList"
             @openTaskDetail="openTaskDetail"

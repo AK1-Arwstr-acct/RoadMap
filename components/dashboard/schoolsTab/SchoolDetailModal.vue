@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#FDFDFD] rounded-t-xl space-y-5 fixed bottom-0 right-5 w-[90%] md:w-[70%] h-[calc(100dvh-20px)] z-40 py-6 pl-6 pr-8 overflow-y-auto custom-scrollbar"
+    class="bg-[#FDFDFD] rounded-t-xl space-y-5 fixed bottom-0 right-5 w-[90%] md:w-[60%] 2xl:w-1/2 h-[calc(100dvh-20px)] z-40 py-6 pl-6 pr-8 overflow-y-auto custom-scrollbar"
   >
     <div class="py-3 flex justify-between items-center">
       <h1 class="text-[#181D27] font-semibold text-2xl">
@@ -89,6 +89,7 @@
           <div class="flex items-center gap-2">
             <IconUsers />
             <span
+            class="text-nowrap"
               >{{
                 schoolData.campus_overview.total_students || "N/A"
               }}
@@ -165,7 +166,7 @@
     </div>
     <!-- button -->
     <button class="text-white text-sm bg-[#1570EF] rounded-lg w-full py-2.5">
-      Interested? Chat with us now &lt;3
+      Scholarships for this school?
     </button>
   </div>
 </template>

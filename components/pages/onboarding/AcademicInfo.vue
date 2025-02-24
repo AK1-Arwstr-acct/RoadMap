@@ -142,6 +142,9 @@ watch(
     if (newValue) {
       setAcademicInfo(newValue);
     }
+  },
+  {
+    immediate: true,
   }
 );
 

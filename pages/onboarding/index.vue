@@ -55,7 +55,6 @@ const steps = ref<
   | "startJourney"
 >("academic");
 const programListOptions = ref<OptionAttributes[]>();
-const isProgramsLoaded = ref<boolean>(false);
 const locationOptions = ref<CountriesOptionAttributes[]>([]);
 const coursePreferenceOptions = ref<OptionAttributes[]>();
 const budgetList = ref<OptionAttributes[]>();
@@ -103,7 +102,6 @@ const getStudyPrograms = async () => {
           };
         }
       );
-      isProgramsLoaded.value = true;
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -115,16 +113,8 @@ const getStudyPrograms = async () => {
   }
 };
 
-watch(
-  () => appStore.userData,
-  (newValue) => {
-    if (!isProgramsLoaded.value) {
-      getStudyPrograms();
-    }
-  }
-);
-
 onBeforeMount(async () => {
   onboardingStore.setOnboardingProgress("20%");
+  getStudyPrograms();
 });
 </script>
