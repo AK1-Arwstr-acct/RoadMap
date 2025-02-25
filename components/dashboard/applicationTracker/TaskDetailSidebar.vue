@@ -11,10 +11,11 @@
         :href="resource.link"
         target="_blank"
           class="border border-[#E9EAEB] rounded-2xl py-3 pl-4 pr-[27px] flex items-center gap-4 cursor-pointer"
+          :class="{'hidden': !resource.link}"
         >
           <div class="flex-1 space-y-2">
             <span class="bg-[#EFF8FF] py-0.5 px-2 rounded-full text-[#175CD3]">
-              Website / Test
+              Website / Resources
             </span>
             <p class="text-[#414651] font-semibold">{{ resource.text }}</p>
           </div>
@@ -51,10 +52,11 @@
     <div class="border-t border-[#E9EAEB] p-6 space-y-4">
       <button
         @click="handelClick"
-        class="bg-[#1570EF] rounded-lg py-2.5 px-4 flex justify-center items-center gap-2 text-sm text-white font-semibold w-full"
+        class="rounded-lg py-2.5 px-4 flex justify-center items-center gap-2 text-sm font-semibold w-full"
+        :class="[taskDetail?.checked ? 'bg-[#EFF8FF] text-[#175CD3]': 'bg-[#1570EF] text-white']"
       >
         <span>
-          Mark as {{ taskDetail?.checked ? "Uncomplete" : "Complete" }}
+          Mark as {{ taskDetail?.checked ? "Incomplete" : "Complete" }}
         </span>
         <IconTick stroke="#ffffff" />
       </button>

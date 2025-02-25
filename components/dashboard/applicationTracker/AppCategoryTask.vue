@@ -55,7 +55,7 @@
           :class="[
             appTrackerStore.taskActiveStates[task.id]
               ? 'border-2 border-[#2E90FA] bg-[#F5FAFF]'
-              : 'border border-[#E9EAEB] bg-[#FFFFFF]',
+              : 'border-2 border-[#E9EAEB] bg-[#FFFFFF]',
           ]"
         >
           <input

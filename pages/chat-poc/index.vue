@@ -113,14 +113,6 @@ const scrollDown = () => {
   });
 };
 
-const toggleApi = () => {
-  if (callApi.value === "ask-question") {
-    callApi.value = "scholarship";
-  } else {
-    callApi.value = "ask-question";
-  }
-};
-
 const onSubmit = async () => {
   try {
     completeChat.value.push({

@@ -23,6 +23,10 @@ interface PocChat {
   isSender: boolean,
   text: string,
 }
+interface SophieChat {
+  isSender: boolean,
+  text: string,
+}
 
 interface Tasks {
   id: number;
@@ -117,4 +121,4 @@ interface FilterKey {
 
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput, CountriesOptionAttributes, FilterKey }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat }

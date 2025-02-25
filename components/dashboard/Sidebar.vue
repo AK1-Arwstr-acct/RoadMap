@@ -73,7 +73,7 @@ import IconTabSchool from "~/components/icons/IconTabSchool.vue";
 import IconTabSetting from "~/components/icons/IconTabSetting.vue";
 import type { TabList, TabName } from "~/types/dashboard";
 
-const emit = defineEmits(["updateTab", "openSophieModal"]);
+const emit = defineEmits(["updateTab"]);
 
 const localePath = useLocalePath();
 
@@ -109,15 +109,11 @@ const tabList: TabList[] = [
 const activeTab = ref<TabName>(props.currentTab);
 
 const updateTab = (item: TabName) => {
-  if (item === "sophie") {
-    emit("openSophieModal");
-    return;
-  }
   activeTab.value = item;
   emit("updateTab", item);
 };
 
 const getEssay = () => {
-  navigateTo(localePath("/essay"));
+  // navigateTo(localePath("/essay"));
 };
 </script>
