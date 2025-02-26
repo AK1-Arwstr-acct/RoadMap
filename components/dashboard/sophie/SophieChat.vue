@@ -2,7 +2,7 @@
   <section class="flex flex-col gap-2 size-full overflow-hidden">
     <div class="flex-1 overflow-y-auto no-scrollbar">
       <div
-        class="size-full flex flex-col items-center justify-center py-3"
+        class="size-full flex flex-col items-center min-h-fit justify-center py-3 overflow-y-auto"
         v-if="completeChat.length === 0"
       >
         <img
@@ -40,9 +40,9 @@
           <div
             v-for="(chat, index) in completeChat"
             :key="index"
-            class="flex items-start gap-3"
+            class="flex items-start gap-3 w-full"
             :class="{
-              'self-end': chat.isSender,
+              'justify-end': chat.isSender,
             }"
           >
             <div
@@ -103,6 +103,7 @@
             </div>
           </Transition>
           <input
+            v-if="!readOnly"
             type="text"
             placeholder="Message Sophie"
             v-model="inputQuestion"
@@ -116,15 +117,21 @@
     </div>
     <div>
       <p class="text-[#A4A7AE] text-xs text-center">
-        Sophie can make mistakes. Please check important info.
+        <span v-if="!readOnly">
+          Sophie can make mistakes. Please check important info.
+        </span>
+        <span v-else>
+          You can review this chat, but replying or continuing the conversation
+          is currently not available.
+        </span>
       </p>
     </div>
   </section>
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import type { SophieChat } from "~/types/home";
-import { v4 as uuidv4 } from 'uuid';
+import type { ChatDetail, SophieChat } from "~/types/home";
+import { v4 as uuidv4 } from "uuid";
 
 const { api } = useApi();
 const { showToast } = useToast();
@@ -134,6 +141,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  singleChatDetail: {
+    type: Array as PropType<ChatDetail[]>,
+    default: () => [],
+  },
 });
 
 const chatContainer = ref<HTMLElement | null>(null);
@@ -141,6 +152,7 @@ const completeChat = ref<SophieChat[]>([]);
 const inputQuestion = ref<string>("");
 const isChatLoading = ref<boolean>(false);
 const isChatFull = ref<boolean>(false);
+const readOnly = ref<boolean>(false);
 const uuid = ref<string>();
 
 const preQuestion: string[] = [
@@ -189,7 +201,7 @@ const submit = async () => {
     inputQuestion.value = "";
     const response = await api.post(`/api/v1/ai-conversation/sophie`, {
       query: userQuery,
-      sophieSessionId: uuid.value
+      sophieSessionId: uuid.value,
     });
     if (response) {
       if (response.data.data) {
@@ -225,10 +237,35 @@ watch(
   () => props.isNewChat,
   () => {
     completeChat.value = [];
+    uuid.value = uuidv4();
+    readOnly.value = false;
+  }
+);
+
+watch(
+  () => props.singleChatDetail,
+  () => {
+    if (props.singleChatDetail) {
+      let transformChat: SophieChat[] = props.singleChatDetail.map((item) => {
+        if (item.me) {
+          return {
+            isSender: true,
+            text: item.me,
+          };
+        } else {
+          return {
+            isSender: false,
+            text: item.sophie,
+          };
+        }
+      });
+      completeChat.value = transformChat;
+      readOnly.value = true;
+    }
   }
 );
 
 onMounted(() => {
   uuid.value = uuidv4();
-})
+});
 </script>

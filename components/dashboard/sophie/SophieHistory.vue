@@ -1,25 +1,26 @@
 <template>
   <div
-    class="p-6 border-r border-[#E9EAEB] h-full bg-[#FFFEFC] flex flex-col gap-6 overflow-y-auto"
+    class="px-6 pb-6 border-r border-[#E9EAEB] h-full bg-[#FFFEFC] flex flex-col overflow-y-auto custom-scrollbar"
   >
-    <button
-      @click="emit('newChat')"
-      class="border border-[#D5D7DA] bg-white py-2.5 w-full rounded-lg flex justify-center items-center gap-2 text-sm font-semibold text-[#1570EF]"
-    >
-      <IconChat />
-      Start a new chat with Sophie
-    </button>
-    <div class="h-[1px] bg-[#E9EAEB]" />
-    <div class="flex flex-col gap-4 text-[#414651] text-sm">
+  <div class="py-6 bg-[#FFFEFC] sticky top-0 ">
+      <button
+        @click="emit('newChat')"
+        class="border border-[#D5D7DA] bg-white py-2.5 w-full rounded-lg flex justify-center items-center gap-2 text-sm font-semibold text-[#1570EF]"
+      >
+        <IconChat />
+        Start a new chat with Sophie
+      </button>
+  </div>
+    <div class="flex flex-col gap-4 text-[#414651] text-sm border-t border-[#E9EAEB] pt-6">
       <h4 class="font-medium">Recents</h4>
-      <p
+      <div
         class="truncate cursor-pointer"
         v-for="(chat, idx) in chatHistoryArray"
         :key="idx"
         @click="emit('chatDetail', chat.id)"
       >
         {{ chat.title }}
-      </p>
+      </div>
     </div>
   </div>
 </template>

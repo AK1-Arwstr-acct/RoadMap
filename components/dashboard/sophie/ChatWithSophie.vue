@@ -21,12 +21,13 @@
       class="flex-1 pb-4 px-5 w-full max-w-[710px] mx-auto"
       :class="[isModal ? 'pt-[68px]' : 'pt-4']"
     >
-      <SophieChat :isNewChat="isNewChat" />
+      <SophieChat :isNewChat="isNewChat" :singleChatDetail="singleChatDetail" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import axios from "axios";
+import type { ChatDetail } from "~/types/home";
 
 const { api } = useApi();
 const { showToast } = useToast();
@@ -42,6 +43,7 @@ defineProps({
 
 const isNewChat = ref<boolean>(false);
 const chatHistoryArray = ref<{ id: number; title: string }[]>([]);
+const singleChatDetail = ref<ChatDetail[]>([]);
 
 const handelNewChat = () => {
   isNewChat.value = !isNewChat.value;
@@ -51,8 +53,9 @@ const chatDetail = async (id: number) => {
     const response = await api.get(
       `/api/v1/ai-conversation/get-sophie-sessions/chat/${id}`
     );
-    // if (response) {
-    // }
+    if (response) {
+      singleChatDetail.value = response.data.data;
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.message;
