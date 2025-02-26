@@ -38,7 +38,6 @@
 </template>
 <script setup lang="ts">
 import type { TabName } from "~/types/dashboard";
-import SophieModal from "~/components/dashboard/sophie/SophieModal.vue";
 
 const currentTab = ref<TabName>("application_tracker");
 const openSophieModal = ref<boolean>(false);

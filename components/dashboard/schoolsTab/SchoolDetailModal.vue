@@ -66,9 +66,9 @@
     </div>
     <!-- campus Overview -->
     <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-6">
-      <div v-if="schoolData.cover_photo" class="h-[242px] rounded-xl overflow-hidden">
+      <div class="h-[242px] rounded-xl overflow-hidden">
         <img
-          :src="schoolData.cover_photo || undefined"
+          :src="`/images/school-cover/${randomNumber}.jpg`"
           :alt="schoolData.name"
           class="size-full object-cover"
         />
@@ -181,6 +181,8 @@ defineProps({
     default: () => {},
   },
 });
+
+let randomNumber = Math.floor(Math.random() * 25) + 1;
 
 const options = {
   html: true,

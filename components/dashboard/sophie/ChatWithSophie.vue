@@ -11,14 +11,23 @@
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
     <div class="w-[25%] min-w-[300px]">
-      <SophieHistory />
+      <SophieHistory
+        @newChat="handelNewChat"
+        @chatDetail="chatDetail"
+        :chatHistoryArray="chatHistoryArray"
+      />
     </div>
-    <div class="flex-1 pb-4 px-5 w-full max-w-[710px] mx-auto" :class="[isModal ? 'pt-[68px]' : 'pt-4']">
-      <SophieChat />
+    <div
+      class="flex-1 pb-4 px-5 w-full max-w-[710px] mx-auto"
+      :class="[isModal ? 'pt-[68px]' : 'pt-4']"
+    >
+      <SophieChat :isNewChat="isNewChat" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
+
 const { api } = useApi();
 const { showToast } = useToast();
 
@@ -31,12 +40,44 @@ defineProps({
   },
 });
 
-// Get All History
-// {{base}}/api/v1/ai-conversation/get-sophie-sessions
-// GET Single History
-// {{base}}/api/v1/ai-conversation/get-sophie-sessions/chat/33182
+const isNewChat = ref<boolean>(false);
+const chatHistoryArray = ref<{ id: number; title: string }[]>([]);
 
-onMounted( async()=>{
-    await api.get('/api/v1/ai-conversation/get-sophie-sessions')
-})
+const handelNewChat = () => {
+  isNewChat.value = !isNewChat.value;
+};
+const chatDetail = async (id: number) => {
+  try {
+    const response = await api.get(
+      `/api/v1/ai-conversation/get-sophie-sessions/chat/${id}`
+    );
+    // if (response) {
+    // }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.message;
+      showToast(errorMessage, {
+        type: "warning",
+      });
+    }
+  }
+};
+
+onMounted(async () => {
+  try {
+    const response = await api.get(
+      "/api/v1/ai-conversation/get-sophie-sessions"
+    );
+    if (response) {
+      chatHistoryArray.value = response.data.data;
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.message;
+      showToast(errorMessage, {
+        type: "warning",
+      });
+    }
+  }
+});
 </script>

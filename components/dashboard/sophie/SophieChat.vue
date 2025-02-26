@@ -82,31 +82,34 @@
         </div>
         <!-- input -->
         <div class="flex flex-col gap-4">
-            <Transition name="fade">
-                <div
-                  v-if="isChatFull"
-                  class="border border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex items-center justify-between gap-3"
-                >
-                  <div class="text-[#414651] text-sm">
-                    <p class="font-semibold mb-1.5">
-                      You've reached your daily limit for Sophie interactions.
-                    </p>
-                    <p class="">
-                      Please find instructions to upgrade for more access here.
-                    </p>
-                  </div>
-                  <button class="border border-[#D5D7DA] bg-white rounded-lg py-2 px-3.5">
-                    Upgrade now
-                  </button>
-                </div>
-            </Transition>
+          <Transition name="fade">
+            <div
+              v-if="isChatFull"
+              class="border border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex items-center justify-between gap-3"
+            >
+              <div class="text-[#414651] text-sm">
+                <p class="font-semibold mb-1.5">
+                  You've reached your daily limit for Sophie interactions.
+                </p>
+                <p class="">
+                  Please find instructions to upgrade for more access here.
+                </p>
+              </div>
+              <button
+                class="border border-[#D5D7DA] bg-white rounded-lg py-2 px-3.5"
+              >
+                Upgrade now
+              </button>
+            </div>
+          </Transition>
           <input
             type="text"
             placeholder="Message Sophie"
             v-model="inputQuestion"
             @keydown.enter="handleKeydown"
-            :disabled="isChatLoading"
+            :disabled="isChatLoading || isChatFull"
             class="border border-[#D5D7DA] rounded-lg py-2.5 px-3.5 placeholder:font-thin w-full focus:outline-none"
+            :class="{ '#FAFAFA': isChatFull }"
           />
         </div>
       </div>
@@ -121,15 +124,24 @@
 <script setup lang="ts">
 import axios from "axios";
 import type { SophieChat } from "~/types/home";
+import { v4 as uuidv4 } from 'uuid';
 
 const { api } = useApi();
 const { showToast } = useToast();
+
+const props = defineProps({
+  isNewChat: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const chatContainer = ref<HTMLElement | null>(null);
 const completeChat = ref<SophieChat[]>([]);
 const inputQuestion = ref<string>("");
 const isChatLoading = ref<boolean>(false);
 const isChatFull = ref<boolean>(false);
+const uuid = ref<string>();
 
 const preQuestion: string[] = [
   "Personal statement tips?",
@@ -177,6 +189,7 @@ const submit = async () => {
     inputQuestion.value = "";
     const response = await api.post(`/api/v1/ai-conversation/sophie`, {
       query: userQuery,
+      sophieSessionId: uuid.value
     });
     if (response) {
       if (response.data.data) {
@@ -207,4 +220,15 @@ const submit = async () => {
     isChatLoading.value = false;
   }
 };
+
+watch(
+  () => props.isNewChat,
+  () => {
+    completeChat.value = [];
+  }
+);
+
+onMounted(() => {
+  uuid.value = uuidv4();
+})
 </script>
