@@ -14,7 +14,8 @@ import useAppStore from "~/stores/AppStore";
 const appStore = useAppStore();
 
 const hotjarConfig = () => {
-  if (import.meta.client && process.env.NODE_ENV?.toLocaleLowerCase() == 'production') {
+  const runtimeConfig = useRuntimeConfig();
+  if (import.meta.client && runtimeConfig.public.appMode == "app.arrowster.com") {
     (function (h, o, t, j, a, r) {
       h.hj =
         h.hj ||
