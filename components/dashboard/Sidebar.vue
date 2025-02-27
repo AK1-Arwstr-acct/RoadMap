@@ -6,11 +6,7 @@
       <div>
         <NuxtLink to="/" class="flex gap-2.5 items-center">
           <IconArrowsterLogo class="size-8" />
-          <NuxtImg
-            class=" w-32 invert"
-            src="/images/logo/logo.svg"
-            alt="Logo"
-          />
+          <NuxtImg class="w-32 invert" src="/images/logo/logo.svg" alt="Logo" />
         </NuxtLink>
       </div>
       <!-- tabs -->
@@ -101,10 +97,10 @@ const tabList: TabList[] = [
     name: "schools_list",
     icon: IconTabSchool,
   },
-  {
-    name: "setting",
-    icon: IconTabSetting,
-  },
+  // {
+  //   name: "setting",
+  //   icon: IconTabSetting,
+  // },
 ];
 const activeTab = ref<TabName>(props.currentTab);
 
@@ -116,4 +112,11 @@ const updateTab = (item: TabName) => {
 const getEssay = () => {
   // navigateTo(localePath("/essay"));
 };
+
+watch(
+  () => props.currentTab,
+  () => {
+    activeTab.value = props.currentTab;
+  }
+);
 </script>

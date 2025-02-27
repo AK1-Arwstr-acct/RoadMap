@@ -16,16 +16,20 @@
       <p class="text-[#535862] font-medium">
         Acceptance Rate:
         <span class="text-[#1570EF] ml-2">{{
-          schoolData.admission_stats.acceptance_rate || "N/A"
+          schoolData.admission_stats.acceptance_rate || "Coming Soon"
         }}</span>
       </p>
       <p class="text-[#535862] font-medium">
         Average Scores:
-        <span
+        <p
           v-for="(score, key) in schoolData.admission_stats.average_scores"
           :key="key"
-          class="text-[#1570EF] px-2 border-r border-[#535862] last:border-r-0 uppercase"
-          >{{ `${key}: ${score || "N/A"}` }}</span
+          class="text-[#1570EF] px-2 border-r border-[#535862] last:border-r-0 uppercase inline-block"
+          >{{ `${key}: ` }}
+          <span class="capitalize">
+            {{ score || "Coming Soon" }}
+          </span>
+          </p
         >
       </p>
     </div>
@@ -36,13 +40,13 @@
         <p class="text-[#535862] font-medium">
           Employment Rate:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.career_outcomes.employment_rate || "N/A"
+            schoolData.career_outcomes.employment_rate || "Coming Soon"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Median Salary:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.career_outcomes.median_salary || "N/A"
+            schoolData.career_outcomes.median_salary || "Coming Soon"
           }}</span>
         </p>
       </div>
@@ -53,13 +57,13 @@
         <p class="text-[#535862] font-medium">
           Avg. Financial Aid:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.financial_and_aid_cost.average_financial_aid || "N/A"
+            schoolData.financial_and_aid_cost.average_financial_aid || "Coming Soon"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Housing & Meals:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.financial_and_aid_cost.housing_and_meal || "N/A"
+            schoolData.financial_and_aid_cost.housing_and_meal || "Coming Soon"
           }}</span>
         </p>
       </div>
@@ -84,14 +88,14 @@
           </div>
           <div class="flex items-center gap-2">
             <IconBuilding />
-            <span>{{ schoolData.campus_overview.type || "N/A" }}</span>
+            <span>{{ schoolData.campus_overview.type || "Coming Soon" }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconUsers />
             <span
             class="text-nowrap"
               >{{
-                schoolData.campus_overview.total_students || "N/A"
+                schoolData.campus_overview.total_students || "Coming Soon"
               }}
               students</span
             >
@@ -103,11 +107,11 @@
         <div class="flex gap-6 items-center text-[#535862] font-medium">
           <div class="flex items-center gap-2">
             <IconBus />
-            <span>{{ schoolData.surroundings.option_1 || "N/A" }}</span>
+            <span>{{ schoolData.surroundings.option_1 || "Coming Soon" }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconOutdoor />
-            <span>{{ schoolData.surroundings.option_2 || "N/A" }}</span>
+            <span>{{ schoolData.surroundings.option_2 || "Coming Soon" }}</span>
           </div>
         </div>
       </div>
@@ -116,13 +120,13 @@
         <p class="text-[#535862] font-medium">
           Housing:
           <span class="text-[#181D27] ml-2">{{
-            schoolData.campus_life.housing || "N/A"
+            schoolData.campus_life.housing || "Coming Soon"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Extracurriculars:
           <span class="text-[#181D27] ml-2">{{
-            schoolData.campus_life.extra_curriculum || "N/A"
+            schoolData.campus_life.extra_curriculum || "Coming Soon"
           }}</span>
         </p>
       </div>
@@ -145,7 +149,7 @@
           <a
             :href="schoolData.about.website || undefined"
             class="underline cursor-pointer"
-            >{{ schoolData.about.website || 'N/A' }}</a
+            >{{ schoolData.about.website || 'Coming Soon' }}</a
           >
         </p>
         <p class="text-[#535862] flex items-center gap-2">

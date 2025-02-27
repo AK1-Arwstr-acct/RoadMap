@@ -132,9 +132,11 @@
 import axios from "axios";
 import type { ChatDetail, SophieChat } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
+import useDashboardStore from "~/stores/dashboardStore";
 
 const { api } = useApi();
 const { showToast } = useToast();
+const dashboardStore = useDashboardStore();
 
 const props = defineProps({
   isNewChat: {
@@ -144,6 +146,10 @@ const props = defineProps({
   singleChatDetail: {
     type: Array as PropType<ChatDetail[]>,
     default: () => [],
+  },
+  isModal: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -267,5 +273,9 @@ watch(
 
 onMounted(() => {
   uuid.value = uuidv4();
+  if (props.isModal) {
+    inputQuestion.value = dashboardStore.overViews?.join("\n") || "";
+    submit();
+  }
 });
 </script>

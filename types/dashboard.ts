@@ -3,7 +3,8 @@ export type TabName =
     | "sophie"
     | "application_tracker"
     | "schools_list"
-    | "setting";
+    | "setting"
+    | "user_profile";
 
 interface TabList {
     name: TabName;

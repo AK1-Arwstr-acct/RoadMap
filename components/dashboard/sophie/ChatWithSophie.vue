@@ -10,7 +10,7 @@
     >
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
-    <div class="w-[25%] min-w-[300px]">
+    <div class="w-[300px]">
       <SophieHistory
         @newChat="handelNewChat"
         @chatDetail="chatDetail"
@@ -21,7 +21,11 @@
       class="flex-1 pb-4 px-5 w-full max-w-[710px] mx-auto"
       :class="[isModal ? 'pt-[68px]' : 'pt-4']"
     >
-      <SophieChat :isNewChat="isNewChat" :singleChatDetail="singleChatDetail" />
+      <SophieChat
+        :isNewChat="isNewChat"
+        :singleChatDetail="singleChatDetail"
+        :isModal="isModal"
+      />
     </div>
   </div>
 </template>
@@ -34,7 +38,7 @@ const { showToast } = useToast();
 
 const emit = defineEmits(["openSophieModal"]);
 
-defineProps({
+const props = defineProps({
   isModal: {
     type: Boolean,
     default: false,
@@ -47,7 +51,9 @@ const singleChatDetail = ref<ChatDetail[]>([]);
 
 const handelNewChat = () => {
   isNewChat.value = !isNewChat.value;
+  getChatHistory();
 };
+
 const chatDetail = async (id: number) => {
   try {
     const response = await api.get(
@@ -66,7 +72,7 @@ const chatDetail = async (id: number) => {
   }
 };
 
-onMounted(async () => {
+const getChatHistory = async () => {
   try {
     const response = await api.get(
       "/api/v1/ai-conversation/get-sophie-sessions"
@@ -82,5 +88,9 @@ onMounted(async () => {
       });
     }
   }
+};
+
+onMounted(async () => {
+  getChatHistory();
 });
 </script>

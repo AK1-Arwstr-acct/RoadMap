@@ -2,7 +2,7 @@
   <div class="bg-[#EEF4FF] border border-[#E0EAFF] rounded-lg py-5 px-4">
     <div class="flex items-center justify-between gap-3">
       <p class="text-[#181D27] text-sm font-semibold">Why These Schools?</p>
-      <div @click="showDetailModal = true" class="cursor-pointer">
+      <div @click="openSophieModal = true" class="cursor-pointer">
         <IconDoubleArrows />
       </div>
     </div>
@@ -12,26 +12,18 @@
       </div>
     </div>
   </div>
-  <div
-    v-if="showDetailModal"
-    class="fixed inset-0 bg-black/50 backdrop-blur-sm z-20 flex justify-center items-center"
-  >
-    <div
-      v-click-outside="() => (showDetailModal = false)"
-      class="bg-white rounded-xl w-[95%] md:w-[80%] h-[80%] py-5 px-4"
-    >
-      <div>
-        <vue-markdown
-          :source="
-            dashboardStore.overViews
-              ? dashboardStore.overViews.join('<br/><br/>\n')
-              : ''
-          "
-          :options="options"
+  <!-- sophie modal -->
+  <Transition name="fade">
+      <div
+        v-if="openSophieModal"
+        class="fixed bg-black/50 inset-0 z-20 backdrop-blur py-[60px] px-[68px]"
+      >
+        <ChatWithSophie
+          :isModal="true"
+          @openSophieModal="openSophieModal = false"
         />
       </div>
-    </div>
-  </div>
+    </Transition>
 </template>
 
 <script setup lang="ts">
@@ -46,7 +38,7 @@ const index = ref(0);
 const typingText = ref<HTMLElement | null>(null);
 const speed = 10;
 const readMore = ref<boolean>(false);
-const showDetailModal = ref<boolean>(false);
+const openSophieModal = ref<boolean>(false);
 const textLimit = ref<number>(500);
 
 const options = {
@@ -85,7 +77,7 @@ const handleReadMore = () => {
   // );
   // textLimit.value += 5000;
   // typeEffect();
-  showDetailModal.value = true;
+  openSophieModal.value = true;
 };
 
 onMounted(() => {

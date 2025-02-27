@@ -12,14 +12,16 @@
       <!-- <div class="cursor-pointer">
           <IconBell />
       </div> -->
-      <div class="cursor-pointer">
-        <img src="/public/images/user.png" alt="user-icon" class="size-10 rounded-full">
+      <div @click="emit('updateTab', 'user_profile')" class="cursor-pointer">
+        <NuxtImg :src=" appStore.userImagePreview || appStore.userData?.avatar || '/images/avatar-profile-photo.png'" alt="user-icon" class="size-10 rounded-full" />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import useAppStore from '~/stores/AppStore';
+
+const emit = defineEmits(["updateTab"]);
 
 const appStore = useAppStore();
 

@@ -11,7 +11,7 @@
         Start a new chat with Sophie
       </button>
   </div>
-    <div class="flex flex-col gap-4 text-[#414651] text-sm border-t border-[#E9EAEB] pt-6">
+    <div class="flex flex-col gap-4 text-[#414651] text-sm border-t border-[#E9EAEB] pt-6 overflow-x-hidden">
       <h4 class="font-medium">Recents</h4>
       <div
         class="truncate cursor-pointer"

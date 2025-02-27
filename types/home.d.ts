@@ -94,6 +94,7 @@ interface EducationalRecords {
 interface UserData {
   id: number;
   avatar: string;
+  cover_photo: string;
   name: string;
   email: string;
   phone_number: string | null;

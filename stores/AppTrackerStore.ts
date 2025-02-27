@@ -8,7 +8,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
 
     const taskActiveStates = ref<Record<number, boolean>>({});
     const preApplication = ref<Application>();
-    const applicationList = ref([]);
+    const applicationList = ref<Application[]>([]);
     const postApplication = ref<Application>();
 
     const getRoadmapData = async () => {
