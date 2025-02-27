@@ -12,7 +12,7 @@
       <!-- <div class="cursor-pointer">
           <IconBell />
       </div> -->
-      <div @click="emit('updateTab', 'user_profile')" class="cursor-pointer">
+      <div class="cursor-pointer">
         <NuxtImg :src=" appStore.userImagePreview || appStore.userData?.avatar || '/images/avatar-profile-photo.png'" alt="user-icon" class="size-10 rounded-full" />
       </div>
     </div>
