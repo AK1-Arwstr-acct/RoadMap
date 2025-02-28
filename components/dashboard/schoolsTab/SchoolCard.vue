@@ -6,7 +6,7 @@
     <div
       class="rounded-xl overflow-hidden min-w-[122px] w-[122px] h-[122px] flex justify-center items-center"
     >
-      <img
+      <NuxtImg
         :src="program.school.avatar"
         :alt="program.school.name"
         class="size-full object-contain"

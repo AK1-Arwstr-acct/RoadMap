@@ -39,7 +39,7 @@
       </p>
     </div>
     <div class="">
-      <img src="/images/discover-journey.png" alt="Discover Journey" />
+      <NuxtImg src="/images/discover-journey.png" alt="Discover Journey" />
     </div>
     <button
       v-if="

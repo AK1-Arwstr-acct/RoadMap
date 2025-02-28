@@ -71,7 +71,7 @@
     <!-- campus Overview -->
     <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-6">
       <div class="h-[242px] rounded-xl overflow-hidden">
-        <img
+        <NuxtImg
           :src="`/images/school-cover/${randomNumber}.jpg`"
           :alt="schoolData.name"
           class="size-full object-cover"
@@ -134,7 +134,7 @@
     <!-- about school -->
     <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-6">
       <div v-if="schoolData.cover_photo" class="h-[242px] rounded-xl overflow-hidden">
-        <img
+        <NuxtImg
           :src="schoolData.cover_photo || undefined"
           :alt="schoolData.name"
           class="size-full object-cover"

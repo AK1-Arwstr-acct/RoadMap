@@ -2,11 +2,11 @@
   <div
     class="flex items-center gap-6 border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] px-6 py-3"
   >
-    <div>
-      <img
-        src="/images/career.png"
+    <div class="size-[90px]">
+      <NuxtImg
+        :src="imageSrc"
         alt="Achievements career image"
-        class="object-contain"
+        class="object-contain size-full"
       />
     </div>
     <div class="w-full py-4">
@@ -49,6 +49,19 @@ const props = defineProps({
 
 const totalTasksNumber = ref<number>(0);
 const completedTasksNumber = ref<number>(0);
+
+const imageSrc = computed(() => {
+  return props.category?.includes('career')
+    ? '/images/career.png'
+    : props.category?.includes('academics')
+    ? '/images/academic.png'
+    : props.category?.includes('extracurricular')
+    ? '/images/extracurricular.png'
+    : props.category?.includes('school')
+    ? '/images/school-list.png'
+    : '/images/application.png'
+    
+});
 
 const checkCompletedTask = computed(() => {
   if (Array.isArray(props.application)) {

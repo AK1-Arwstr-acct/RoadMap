@@ -140,11 +140,10 @@
         </div>
         <a
           :href="`${config.public.baseURL}/auth/google`"
-          target="_blank"
           type="submit"
           class="cursor-pointer disabled:opacity-70 w-full text-xl text-[#414651] border-2 border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
         >
-          <img src="/images/googleIcon.png" alt="google" />
+          <NuxtImg src="/images/googleIcon.png" alt="google" />
           <span>{{ $t("login.login_with_google") }}</span>
         </a>
         <p class="mt-8 text-[#535862] text-sm text-center">

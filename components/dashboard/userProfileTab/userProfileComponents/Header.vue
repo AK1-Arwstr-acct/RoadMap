@@ -1,8 +1,27 @@
 <template>
   <div class="pb-[42px]">
     <div
-      class="group h-60 bg-gradient-to-tr from-[#A6C0FE] to-[#FFEAF6] relative"
+      class="group h-60 bg-gradient-to-tr from-[#A6C0FE] to-[#FFEAF6] relative flex overflow-hidden"
+      :class="{'justify-end': !coverPhotoPreview}"
     >
+      <NuxtImg
+        v-if="coverPhotoPreview"
+        :src="coverPhotoPreview"
+        alt="Cover Picture"
+        class="size-full object-cover object-center"
+      />
+      <NuxtImg
+        v-else
+        :src="'/images/v-room.png'"
+        alt="Profile Picture"
+        class="object-contain transform scale-150 -translate-x-10"
+      />
+      <input
+        type="file"
+        accept="image/*"
+        @change="handleCoverPhotoChange"
+        class="size-full absolute z-10 inset-0 cursor-pointer opacity-0"
+      />
       <div
         class="absolute inset-0 flex flex-col gap-2 items-center justify-center bg-[#0000004D] opacity-0 group-hover:opacity-100 transition-all duration-200 ease-in-out"
       >
@@ -16,12 +35,14 @@
       <div
         class="flex items-center gap-6 w-full max-w-[752px] -mt-10 relative z-10"
       >
-        <div class="border-4 border-white rounded-[200px] shadow-lg relative">
+        <div
+          class="border-4 border-white bg-white rounded-[200px] shadow-lg relative"
+        >
           <div class="relative rounded-[200px] overflow-hidden group">
             <NuxtImg
               :src="imagePreview || '/images/avatar-profile-photo.png'"
               alt="Profile Picture"
-              class="xl:min-w-40 xl:min-h-40 object-contain"
+              class="min-w-[160px] w-[160px] h-[160px] object-cover"
             />
             <input
               type="file"
@@ -36,7 +57,7 @@
           </div>
         </div>
         <div
-          class="overflow-x-auto pt-16 whitespace-nowrap no-scrollbar max-[250px] sm:w-full flex justify-between items-start"
+          class="pt-16 whitespace-nowrap max-[250px] sm:w-full flex justify-between items-start"
         >
           <div>
             <h2 class="text-2xl xl:text-3xl font-semibold text-[#181D27] mb-4">
@@ -76,14 +97,14 @@
                 v-click-outside="() => (isDropdownOpen = false)"
                 @click="logOut"
                 v-if="isDropdownOpen"
-                class="absolute z-10 right-0 translate-y-2 bg-[#FFFFFF] border border-[#F5F5F5] rounded-lg shadow-2xl"
+                class="absolute z-10 right-0 translate-y-2 bg-[#FFFFFF] border border-[#F5F5F5] rounded-lg shadow-md"
               >
                 <a
                   href="#"
                   class="flex items-center gap-3 w-60 px-4 py-2.5 text-sm text-[#414651] font-medium"
                 >
                   <IconLogout />
-                  Logout
+                  Log out
                 </a>
               </div>
             </div>
@@ -107,6 +128,9 @@ const { showToast } = useToast();
 const isDropdownOpen = ref(false);
 const selectedImage = ref<File | null>(null);
 const imagePreview = ref<string | null>(appStore.userData?.avatar || null);
+const coverPhotoPreview = ref<string | null>(
+  appStore.userData?.cover_photo || null
+);
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
@@ -142,11 +166,43 @@ const handleImageChange = async (event: Event) => {
     } catch (error) {
       imagePreview.value = appStore.userData?.avatar || null;
       if (axios.isAxiosError(error)) {
-      const errorMessage = errorList(error);
-      showToast(errorMessage, {
-        type: "error",
-      });
+        const errorMessage = errorList(error);
+        showToast(errorMessage, {
+          type: "error",
+        });
+      }
     }
+  }
+};
+
+const handleCoverPhotoChange = async (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files[0]) {
+    selectedImage.value = input.files[0];
+    coverPhotoPreview.value = URL.createObjectURL(selectedImage.value);
+    try {
+      const formData = new FormData();
+      formData.append("cover_photo", selectedImage.value);
+      if (appStore.userData?.educational_records.cgpa !== undefined) {
+        formData.append(
+          "cgpa",
+          appStore.userData.educational_records.cgpa.toString()
+        );
+      }
+      await api.post("/api/v1/student/update-profile-basic-info", formData, {
+        headers: {
+          "Content-Type": "form-data",
+        },
+      });
+      appStore.setUserCoverPhotoPreview(coverPhotoPreview.value);
+    } catch (error) {
+      coverPhotoPreview.value = appStore.userData?.cover_photo || null;
+      if (axios.isAxiosError(error)) {
+        const errorMessage = errorList(error);
+        showToast(errorMessage, {
+          type: "error",
+        });
+      }
     }
   }
 };

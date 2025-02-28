@@ -4,30 +4,59 @@
   >
     <div class="flex items-center text-lg font-medium text-[#535862]">
       <IconSun />
-      <h4 class="text-base inline-block">Good morning</h4>
-      <p v-if="appStore.userData?.name" class="text-[#181D27] text-base"><span class="text-[#535862]">,&nbsp;</span>{{ appStore.userData?.name }}</p>
+      <h4 class="text-base inline-block ml-1">{{ getGreeting }}</h4>
+      <p v-if="appStore.userData?.name" class="text-[#181D27] text-base">
+        <span class="text-[#535862]">,&nbsp;</span>{{ appStore.userData?.name }}
+      </p>
     </div>
     <div class="flex gap-4 items-center">
-      <p @click="pricing" class="px-4 py-2.5 border border-[#D5D7DA] rounded-lg font-medium text-[#414651] cursor-pointer text-sm">Pricing</p>
+      <p
+        @click="pricing"
+        class="px-4 py-2.5 border border-[#D5D7DA] rounded-lg font-medium text-[#414651] cursor-pointer text-sm"
+      >
+        Pricing
+      </p>
       <!-- <div class="cursor-pointer">
           <IconBell />
       </div> -->
-      <div class="cursor-pointer">
-        <NuxtImg :src=" appStore.userImagePreview || appStore.userData?.avatar || '/images/avatar-profile-photo.png'" alt="user-icon" class="size-10 rounded-full" />
+      <div @click="emit('updateTab', 'user_profile')" class="cursor-pointer">
+        <NuxtImg
+          :src="
+            appStore.userImagePreview ||
+            appStore.userData?.avatar ||
+            '/images/avatar-profile-photo.png'
+          "
+          alt="user-icon"
+          class="size-10 rounded-full"
+        />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import useAppStore from '~/stores/AppStore';
+import useAppStore from "~/stores/AppStore";
 
 const emit = defineEmits(["updateTab"]);
 
 const appStore = useAppStore();
 
-const localePath = useLocalePath()
+const localePath = useLocalePath();
 
 const pricing = () => {
   // navigateTo(localePath("/pricing"))
-}
+};
+
+const getGreeting = computed(() => {
+  const hours = new Date().getHours();
+
+  if (hours >= 5 && hours < 12) {
+    return "Good Morning";
+  } else if (hours >= 12 && hours < 18) {
+    return "Good Afternoon";
+  } else if (hours >= 18 && hours < 22) {
+    return "Good Evening";
+  } else {
+    return "Good Night";
+  }
+});
 </script>

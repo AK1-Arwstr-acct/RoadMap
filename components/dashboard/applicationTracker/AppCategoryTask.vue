@@ -66,7 +66,7 @@
             class="absolute top-3 right-3 appearance-none"
           />
           <div class="size-[90px]">
-            <img
+            <NuxtImg
               src="/public//images/task-logo.png"
               alt="task logo"
               class="size-full object-contain"

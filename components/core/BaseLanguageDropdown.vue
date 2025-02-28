@@ -9,7 +9,7 @@
       }"
     >
       <div class="size-5 rounded-full overflow-hidden">
-        <img
+        <NuxtImg
           :src="selectedOption?.icon"
           alt=""
           class="size-full object-cover"
@@ -52,7 +52,7 @@
             class="truncate text-[#414651] font-medium flex items-center gap-2"
           >
             <div class="size-5 rounded-full overflow-hidden">
-              <img :src="item?.icon" alt="" class="size-full object-cover" />
+              <NuxtImg :src="item?.icon" alt="" class="size-full object-cover" />
             </div>
             {{ item.label }}</span
           >

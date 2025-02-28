@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-[1000px] w-full flex justify-center gap-12 lg:gap-[84px]">
     <div class="flex-1 hidden md:block">
-      <img
+      <NuxtImg
         src="/images/tell-me-more.png"
         alt="Tell Me More"
         class="w-full size-full object-contain"
@@ -49,7 +49,7 @@
       </div>
       <button
         @click="onSubmit"
-        :disabled="academicInfo.grade === '' || academicInfo.gpa === ''"
+        :disabled="academicInfo.grade.value === '' || academicInfo.gpa === ''"
         class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
       >
         {{ $t("onboarding.continue") }}

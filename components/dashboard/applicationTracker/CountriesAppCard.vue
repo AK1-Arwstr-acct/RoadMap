@@ -4,7 +4,7 @@
     :class="[checkCompletedTask ? 'bg-[#12B76A]' : 'bg-[#F5F5F5]']"
   >
     <div class="flex justify-center items-center">
-      <img
+      <NuxtImg
         src="/public/images/countries-application.png"
         alt="Application"
         class="w-full h-full max-h-[274px] object-contain"

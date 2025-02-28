@@ -79,7 +79,7 @@
                 @click="selectCountry(country)"
               >
                 <!-- <div>
-                  <img
+                  <NuxtImg
                     :src="country.flag"
                     :alt="`${country.title}_flag`"
                     class="h-6 w-6"

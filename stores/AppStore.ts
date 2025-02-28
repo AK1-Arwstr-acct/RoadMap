@@ -6,9 +6,13 @@ const useAppStore = defineStore("appStore", () => {
 	const { $i18n } = useNuxtApp();
 	const userData = ref<UserData>()
 	const userImagePreview = ref<string>('');
+	const userCoverPhotoPreview = ref<string>('');
 
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data
+	}
+	const setUserCoverPhotoPreview = (data: string) => {
+		userCoverPhotoPreview.value = data
 	}
 
 	const setLocale = (newLocale: LanguageLocale) => {
@@ -33,8 +37,10 @@ const useAppStore = defineStore("appStore", () => {
 
 	return {
 		userImagePreview,
+		userCoverPhotoPreview,
 		userData,
 		setUserImagePreview,
+		setUserCoverPhotoPreview,
 		getUserData,
 		setLocale
 	}
