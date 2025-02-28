@@ -159,7 +159,7 @@ const handleImageChange = async (event: Event) => {
       }
       await api.post("/api/v1/student/update-profile-basic-info", formData, {
         headers: {
-          "Content-Type": "form-data",
+          "Content-Type": "multipart/form-data",
         },
       });
       appStore.setUserImagePreview(imagePreview.value);
@@ -191,7 +191,7 @@ const handleCoverPhotoChange = async (event: Event) => {
       }
       await api.post("/api/v1/student/update-profile-basic-info", formData, {
         headers: {
-          "Content-Type": "form-data",
+          "Content-Type": "multipart/form-data",
         },
       });
       appStore.setUserCoverPhotoPreview(coverPhotoPreview.value);
