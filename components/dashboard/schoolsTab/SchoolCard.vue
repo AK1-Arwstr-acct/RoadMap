@@ -17,6 +17,7 @@
         <div class="flex items-center gap-10 justify-between mb-2">
           <h3 class="font-medium text-[#181D27] text-nowrap">
             {{ program.school.name }}
+            {{ program.title }}
           </h3>
           <div
             class="flex justify-center items-center gap-1.5 pr-2.5 pl-1.5 bg-[#F5F5F5] p-1 rounded-xl"
@@ -67,8 +68,8 @@
             </p>
           </div>
         </div>
-        <p class="text-[#535862] mb-px">{{ program.program_title }}</p>
-        <p class="text-[#535862] mb-2.5 text-sm">{{ program.super_meta_title }}</p>
+        <!-- <p class="text-[#535862] mb-px">{{ program.program_title }}</p> -->
+        <p class="text-[#535862] mb-2.5 text-sm">{{ program.program_title }}</p>
         <div class="flex items-center gap-6 font-medium mb-2">
           <div class="text-sm">
             <span class="text-[#717680] mr-2">SAT:</span>

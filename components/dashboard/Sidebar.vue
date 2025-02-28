@@ -41,7 +41,7 @@
         </div>
       </div>
       <!-- AI essay -->
-      <div class="bg-[#EEF4FF] rounded-lg px-4 py-5">
+      <!-- <div class="bg-[#EEF4FF] rounded-lg px-4 py-5">
         <div class="flex gap-1.5">
           <h2 class="text-[#181D27] font-semibold text-sm">AI Essay Editor</h2>
         </div>
@@ -57,7 +57,7 @@
           <p>Get Essay Help Now</p>
           <IconArrowRight fill="#444CE7" />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
