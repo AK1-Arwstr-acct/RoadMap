@@ -5,7 +5,7 @@
       <DashboardNav @updateTab="updateTab" />
       <div class="flex-1 overflow-hidden">
         <Transition name="fade">
-          <div v-if="currentTab === 'home'">home</div>
+          <DashboardHome v-if="currentTab === 'home'" />
           <ChatWithSophie v-else-if="currentTab === 'sophie'" />
           <TrackerInformations
             v-else-if="currentTab === 'application_tracker'"

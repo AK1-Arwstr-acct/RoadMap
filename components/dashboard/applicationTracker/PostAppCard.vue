@@ -5,7 +5,7 @@
   >
     <div class="flex justify-center items-center">
       <NuxtImg
-        src="/public/images/post-application.png"
+        src="/images/post-application.png"
         alt="Post - Application"
         class="w-full h-full max-h-[274px] object-contain"
       />

@@ -84,9 +84,6 @@ const submitParentCategory = async () => {
 };
 const getStudyPrograms = async () => {
   try {
-    if (!appStore.userData?.uuid) {
-      return;
-    }
     const response = await api.get(`/api/v1/school/recommended/class-grades`);
     if (response.data.data) {
       programListOptions.value = response.data.data.map(

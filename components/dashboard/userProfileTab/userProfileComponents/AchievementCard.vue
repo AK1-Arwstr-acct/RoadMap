@@ -59,8 +59,13 @@ const imageSrc = computed(() => {
     ? '/images/extracurricular.png'
     : props.category?.includes('school')
     ? '/images/school-list.png'
+    : props.category?.includes('application')
+    ? '/images/application-post.png'
+    : props.category?.includes('decision')
+    ? '/images/decision.png'
+    : props.category?.includes('visa')
+    ? '/images/visa.png'
     : '/images/application.png'
-    
 });
 
 const checkCompletedTask = computed(() => {

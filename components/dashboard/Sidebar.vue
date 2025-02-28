@@ -14,7 +14,7 @@
         <div
           v-for="(tab, idx) in tabList"
           :key="idx"
-          class="py-2 flex gap-3 items-center justify-start rounded-lg cursor-pointer overflow-hidden"
+          class="py-2 px-2 flex gap-3 items-center justify-start rounded-lg cursor-pointer overflow-hidden"
           :class="[
             activeTab === tab.name
               ? 'text-[#1570EF] bg-[#EFF8FF]'
@@ -86,16 +86,16 @@ const tabList: TabList[] = [
     icon: IconTabHome,
   },
   {
-    name: "sophie",
-    icon: IconTabSophie,
-  },
-  {
     name: "application_tracker",
     icon: IconTabApplication,
   },
   {
     name: "schools_list",
     icon: IconTabSchool,
+  },
+  {
+    name: "sophie",
+    icon: IconTabSophie,
   },
   // {
   //   name: "setting",

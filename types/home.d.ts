@@ -74,6 +74,10 @@ interface Majors {
   id: number;
   title: string;
 }
+interface CurrentLocation {
+  id: number;
+  title: string;
+}
 interface EducationalRecords {
   annual_min_budget: number;
   annual_max_budget: number;
@@ -95,8 +99,10 @@ interface UserData {
   id: number;
   avatar: string;
   cover_photo: string;
+  current_location: CurrentLocation;
   name: string;
   email: string;
+  isEmailVerified : boolean;
   phone_number: string | null;
   user_name: string;
   first_name: string;

@@ -13,8 +13,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const sortParam = ref<FilterKey | null>(null);
     const programListOptions = ref<OptionAttributes[]>([])
     const locationOptions = ref<CountriesOptionAttributes[]>([])
-    const coursePreferenceOptions = ref<OptionAttributes[]>();
-    const budgetList = ref<OptionAttributes[]>();
+    const coursePreferenceOptions = ref<OptionAttributes[]>([]);
+    const budgetList = ref<OptionAttributes[]>([]);
     const totalSchool = ref<number | null>(null);
     const schoolsList = ref<Program[]>([]);
     const recommendedSchoolsPagination =

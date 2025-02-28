@@ -66,10 +66,11 @@
         </div>
       </div>
       <div
+        v-if="userInfo?.educational_records.next_program_titles.length"
         class="lg:col-span-2 border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] flex items-center gap-4 px-6 pt-[18px] pb-3.5"
       >
         <span><IconBookOpen /></span>
-        <div v-if="userInfo?.educational_records.next_program_titles.length">
+        <div>
           <h4
             class="text-xl text-[#181D27] font-semibold mb-2 flex flex-wrap gap-2"
           >

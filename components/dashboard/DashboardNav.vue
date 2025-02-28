@@ -14,7 +14,7 @@
         @click="pricing"
         class="px-4 py-2.5 border border-[#D5D7DA] rounded-lg font-medium text-[#414651] cursor-pointer text-sm"
       >
-        Pricing
+        Upgrade
       </p>
       <!-- <div class="cursor-pointer">
           <IconBell />

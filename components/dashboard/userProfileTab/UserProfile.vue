@@ -2,9 +2,7 @@
   <section class="overflow-y-auto no-scrollbar h-full bg-white">
     <div v-if="currentStep === 'profile'" class="h-full">
       <Header @updateStep="updateStep" />
-      <div
-        class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-16 px-5"
-      >
+      <div class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-16 px-5">
         <PersonelInfo />
         <div>
           <div class="flex justify-between items-center font-semibold mb-5">
@@ -17,7 +15,10 @@
           </div>
           <Achievements />
         </div>
-        <div>
+
+        <!-- AI essay -->
+
+        <!-- <div>
           <div class="flex justify-between items-center font-semibold mb-5">
             <h3 class="text-2xl text-[#181D27]">Your AI Essay</h3>
             <span
@@ -33,16 +34,26 @@
               :essay="essay"
             />
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <AllAchievements
-    v-else-if="currentStep === 'achievement'"
-    @updateStep="updateStep"
+      v-else-if="currentStep === 'achievement'"
+      @updateStep="updateStep"
     />
-    <EssaysList v-else-if="currentStep === 'essay'" @updateStep="updateStep" :essaysList="essaysList" />
-    <AllYourAIEssays v-else-if="currentStep === 'essay_detail'" @updateStep="updateStep" />
-    <EditProfile v-else-if="currentStep === 'edit_profile'" @updateStep="updateStep" />
+    <EssaysList
+      v-else-if="currentStep === 'essay'"
+      @updateStep="updateStep"
+      :essaysList="essaysList"
+    />
+    <AllYourAIEssays
+      v-else-if="currentStep === 'essay_detail'"
+      @updateStep="updateStep"
+    />
+    <EditProfile
+      v-else-if="currentStep === 'edit_profile'"
+      @updateStep="updateStep"
+    />
   </section>
 </template>
 <script setup lang="ts">
@@ -65,7 +76,13 @@ const updateStep = (step: CurrentStep) => {
 };
 
 onMounted(async () => {
-  appTrackerStore.getRoadmapData();
+  if (
+    !appTrackerStore.preApplication &&
+    !appTrackerStore.applicationList.length &&
+    !appTrackerStore.postApplication
+  ) {
+    appTrackerStore.getRoadmapData();
+  }
 });
 
 const essaysList = [

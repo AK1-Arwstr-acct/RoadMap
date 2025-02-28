@@ -74,7 +74,7 @@
               <span class="mx-2 text-[#535862]">•</span>
               <span class="flex items-center gap-1.5">
                 <IconMap />
-                Việt Nam
+                {{ appStore.userData?.current_location.title }}
               </span>
             </div>
           </div>

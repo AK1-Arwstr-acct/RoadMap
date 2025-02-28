@@ -6,7 +6,7 @@
         v-if="completeChat.length === 0"
       >
         <NuxtImg
-          src="/public/images/sophie-chat.png"
+          src="/images/sophie-chat.png"
           alt="sophie"
           class="h-[242px] w-[252px]"
         />
@@ -50,7 +50,7 @@
               class="size-8 rounded-full bg-black overflow-hidden"
             >
               <NuxtImg
-                src="/public/images/chat-bot.png"
+                src="/images/chat-bot.png"
                 alt="chat bot"
                 class="object-cover object-center size-full"
               />
@@ -72,7 +72,7 @@
           >
             <div class="size-8 rounded-full bg-black overflow-hidden">
               <NuxtImg
-                src="/public/images/chat-bot.png"
+                src="/images/chat-bot.png"
                 alt="chat bot"
                 class="object-cover object-center size-full"
               />

@@ -34,9 +34,18 @@ watch(
 
 onMounted(() => {
   getRecommendations();
-  dashboardStore.setProgramListOptions();
-  dashboardStore.setLocationOptions();
-  dashboardStore.setBudgetList();
-  dashboardStore.setCoursePreferenceOptions();
+  if (
+    !(
+      dashboardStore.programListOptions.length &&
+      dashboardStore.locationOptions.length &&
+      dashboardStore.budgetList.length &&
+      dashboardStore.coursePreferenceOptions.length
+    )
+  ) {
+    dashboardStore.setProgramListOptions();
+    dashboardStore.setLocationOptions();
+    dashboardStore.setBudgetList();
+    dashboardStore.setCoursePreferenceOptions();
+  }
 });
 </script>

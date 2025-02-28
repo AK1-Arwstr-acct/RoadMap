@@ -67,7 +67,7 @@
           />
           <div class="size-[90px]">
             <NuxtImg
-              src="/public//images/task-logo.png"
+              :src="imageSrc"
               alt="task logo"
               class="size-full object-contain"
             />
@@ -133,6 +133,24 @@ const props = defineProps({
 const isOpen = ref<boolean>(false);
 const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
+
+const imageSrc = computed(() => {
+  return props.category?.includes('career')
+    ? '/images/career.png'
+    : props.category?.includes('academics')
+    ? '/images/academic.png'
+    : props.category?.includes('extracurricular')
+    ? '/images/extracurricular.png'
+    : props.category?.includes('school')
+    ? '/images/school-list.png'
+    : props.category?.includes('application')
+    ? '/images/application-post.png'
+    : props.category?.includes('decision')
+    ? '/images/decision.png'
+    : props.category?.includes('visa')
+    ? '/images/visa.png'
+    : '/images/application.png'
+});
 
 const categoryClass = (category: string) => {
   if (category.includes("career") || category.includes("application")) {

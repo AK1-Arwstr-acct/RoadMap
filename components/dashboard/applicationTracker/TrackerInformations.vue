@@ -92,7 +92,13 @@ const clearDetails = () => {
 };
 
 onMounted(async () => {
-  appTrackerStore.getRoadmapData();
+  if (
+    !appTrackerStore.preApplication &&
+    !appTrackerStore.applicationList.length &&
+    !appTrackerStore.postApplication
+  ) {
+    appTrackerStore.getRoadmapData();
+  }
 });
 </script>
 <style scoped>
