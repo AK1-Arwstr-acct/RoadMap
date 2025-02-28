@@ -2,12 +2,20 @@
   <div
     class="grid grid-cols-10 gap-6 size-full overflow-y-auto custom-scrollbar p-8 bg-white"
   >
-    <div class="col-span-6 xl:col-span-7">home</div>
+    <div class="col-span-6 xl:col-span-7">
+        
+    </div>
     <div class="col-span-4 xl:col-span-3 flex flex-col gap-16">
       <ArticlesCard :articleDetail="upgradePlan[0]" :isUpgradePlan="true" />
       <div class="flex flex-col gap-5">
-        <p class="text-xl text-[#181D27] font-semibold">Our students achieved</p>
-        <ArticlesCard v-for="(article,idx) in articlesList" :articleDetail="article" :key="idx"/>
+        <p class="text-xl text-[#181D27] font-semibold">
+          Our students achieved
+        </p>
+        <ArticlesCard
+          v-for="(article, idx) in articlesList"
+          :articleDetail="article"
+          :key="idx"
+        />
       </div>
     </div>
   </div>

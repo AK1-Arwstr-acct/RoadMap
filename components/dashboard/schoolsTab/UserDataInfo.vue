@@ -128,7 +128,6 @@
           direction="upward"
           :loading="isAreaOfStudyLoading"
         />
-        <!-- :class="{ 'pointer-events-none opacity-30': !annualBudget }" -->
       </div>
       <div class="mt-6 flex gap-3">
         <button
@@ -139,7 +138,7 @@
         </button>
         <button
           @click="updateUserData"
-          :disabled="!isUpdateBtnDisable || disabledBtn"
+          :disabled="!isUpdateBtnDisable || disabledBtn || isBudgetLoading || isAreaOfStudyLoading"
           class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Update

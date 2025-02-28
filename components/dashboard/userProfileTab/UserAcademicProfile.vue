@@ -121,7 +121,6 @@
             direction="upward"
             :loading="isAreaOfStudyLoading"
           />
-          <!-- :class="{ 'pointer-events-none opacity-30': !annualBudget }" -->
         </div>
       </div>
       <div class="flex justify-end gap-3 border-t border-[#E9EAEB] py-4 px-6">
@@ -133,7 +132,7 @@
         </button>
         <button
           @click="updateUserData"
-          :disabled="!isUpdateBtnDisable || disabledBtn"
+          :disabled="!isUpdateBtnDisable || disabledBtn || isBudgetLoading || isAreaOfStudyLoading"
           class="py-2.5 px-4 bg-[#1570EF] disabled:bg-[#84CAFF] w-fit rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Save changes

@@ -68,7 +68,6 @@
             </p>
           </div>
         </div>
-        <!-- <p class="text-[#535862] mb-px">{{ program.program_title }}</p> -->
         <p class="text-[#535862] mb-2.5 text-sm">{{ program.program_title }}</p>
         <div class="flex items-center gap-6 font-medium mb-2">
           <div class="text-sm">

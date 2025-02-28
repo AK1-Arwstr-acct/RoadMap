@@ -82,7 +82,7 @@
         <a
           :href="`${config.public.baseURL}/auth/google`"
           type="submit"
-          class="cursor-pointer disabled:opacity-70 w-full text-xl text-[#414651] border-2 border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
+          class="cursor-pointer disabled:opacity-70 w-full text-lg text-[#414651] border-2 border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
         >
           <NuxtImg src="/images/googleIcon.png" alt="google" />
           <span>{{ $t("signup.sign_up_with_google") }}</span>

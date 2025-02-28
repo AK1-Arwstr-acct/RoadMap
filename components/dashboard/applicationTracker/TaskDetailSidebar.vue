@@ -61,9 +61,10 @@
         <IconTick stroke="#ffffff" />
       </button>
       <button
+      @click="navigateTo(localePath('/pricing'))"
         class="border border-[#D5D7DA] rounded-lg py-2.5 px-4 text-sm text-[#414651] font-semibold w-full"
       >
-        Review Personal Statement with a Counsellor
+        {{ taskDetail.button_text }}
       </button>
     </div>
   </div>
@@ -74,6 +75,7 @@ import type { Task } from "~/types/dashboard";
 const emit = defineEmits(["clearDetails"]);
 
 const { api } = useApi();
+const localePath = useLocalePath();
 
 const props = defineProps({
   taskDetail: {

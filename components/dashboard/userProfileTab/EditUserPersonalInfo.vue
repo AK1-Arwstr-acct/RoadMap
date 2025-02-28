@@ -214,7 +214,7 @@ const submit = async () => {
       name: userInitialData.value.name,
       cgpa: appStore.userData?.educational_records.cgpa,
       current_class_grade: userInitialData.value.grade.value,
-      email: userInitialData.value.email,
+      email: userInitialData.value.email === appStore.userData?.email ? undefined : userInitialData.value.email,
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
     await appStore.getUserData();

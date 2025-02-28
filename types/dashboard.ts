@@ -26,6 +26,7 @@ interface Task {
     description: string;
     estimated_time: string;
     type: string;
+    button_text: string;
     checked: boolean;
     remarks: string | null;
     resources: Resources[];
