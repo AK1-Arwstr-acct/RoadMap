@@ -111,7 +111,7 @@
           :disabled="disableSubmit"
           class="px-4 py-2.5 text-white font-semibold bg-[#1570EF] disabled:bg-[#B2DDFF] border border-[#B2DDFF] rounded-lg"
         >
-          Save changes
+          Save changes {{ disableSubmit }}
         </button>
       </div>
     </div>
@@ -130,7 +130,6 @@ const { showToast } = useToast();
 
 interface UserInitailData {
   name: string;
-  gpa: string;
   grade: ClassGrades;
   phoneNumber: string;
   email: string;
@@ -142,7 +141,6 @@ const isSubmitting = ref<boolean>(false);
 const classGradeList = ref<ClassGrades[]>([]);
 const userInitialData = ref<UserInitailData>({
   name: "",
-  gpa: "",
   grade: {
     value: "",
     label: "",
@@ -181,10 +179,7 @@ const setAcademicInfo = (userData: UserData) => {
       ? `${userData?.educational_records.current_class_grade.class_name}`
       : "",
   };
-  (userInitialData.value.name = userData?.name),
-    (userInitialData.value.gpa = userData?.educational_records.cgpa
-      ? `${userData?.educational_records.cgpa}`
-      : "");
+  userInitialData.value.name = userData?.name;
   userInitialData.value.email = userData.email;
 };
 
@@ -199,12 +194,23 @@ const resetValues = () => {
 const disableSubmit = computed(() => {
   const data = userInitialData.value;
   const initialData = appStore.userData;
-  return (
-    data.name === initialData?.name &&
-    Number(data.grade.value) ===
-      initialData.educational_records.current_class_grade.id &&
-    data.email === initialData.email
-  );
+
+  const isOneFilled = !!data.currentPassword !== !!data.newPassword;
+  if (isOneFilled) {
+    return true;
+  } else if (
+    data.currentPassword.split("").length &&
+    data.newPassword.split("").length
+  ) {
+    return false;
+  } else {
+    return (
+      data.name === initialData?.name &&
+      Number(data.grade.value) ===
+        initialData.educational_records.current_class_grade.id &&
+      data.email === initialData.email
+    );
+  }
 });
 
 const submit = async () => {
@@ -214,7 +220,16 @@ const submit = async () => {
       name: userInitialData.value.name,
       cgpa: appStore.userData?.educational_records.cgpa,
       current_class_grade: userInitialData.value.grade.value,
-      email: userInitialData.value.email === appStore.userData?.email ? undefined : userInitialData.value.email,
+      email:
+        userInitialData.value.email === appStore.userData?.email
+          ? undefined
+          : userInitialData.value.email,
+      current_password: userInitialData.value.currentPassword
+        ? userInitialData.value.currentPassword
+        : undefined,
+      password: userInitialData.value.newPassword
+        ? userInitialData.value.newPassword
+        : undefined,
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
     await appStore.getUserData();

@@ -3,7 +3,7 @@
     class="grid grid-cols-10 gap-6 size-full overflow-y-auto custom-scrollbar p-8 bg-white"
   >
     <div class="col-span-6 xl:col-span-7">
-        
+        <HomeDetail />
     </div>
     <div class="col-span-4 xl:col-span-3 flex flex-col gap-16">
       <ArticlesCard :articleDetail="upgradePlan[0]" :isUpgradePlan="true" />
