@@ -35,12 +35,12 @@
               >
                 <option selected disabled>VN</option>
               </select> -->
-              <p class="flex justify-center items-center w-full h-full px-4">VN</p>
+              <!-- <p class="flex justify-center items-center w-full h-full px-4 bg-[#f8f8f8] rounded-lg">VN</p>
               <div
                 class="absolute inset-y-0 -right-2 flex items-center pointer-events-none"
               >
                 <IconArrowDownThick />
-              </div>
+              </div> -->
             </div>
             <input
               type="text"
@@ -62,7 +62,7 @@
               class="w-full text-[#181D27] outline-none"
             />
           </div>
-          <p
+          <!-- <p
             v-if="!appStore.userData?.isEmailVerified"
             class="text-sm text-[#535862] mt-1"
           >
@@ -70,7 +70,7 @@
             <a href="#" class="text-sm text-[#535862] border-b border-[#535862]"
               >Verify it now</a
             >
-          </p>
+          </p> -->
         </div>
         <div>
           <label class="block text-[#535862] font-semibold"
