@@ -43,7 +43,7 @@ const appStore = useAppStore();
 const localePath = useLocalePath();
 
 const pricing = () => {
-  // navigateTo(localePath("/pricing"))
+  navigateTo(localePath("/pricing"))
 };
 
 const getGreeting = computed(() => {
