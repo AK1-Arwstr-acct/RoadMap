@@ -30,11 +30,12 @@
           <label class="block text-[#535862] font-semibold">Phone number</label>
           <div class="flex mt-1.5 border border-[#D5D7DA] rounded-lg">
             <div class="relative w-fit">
-              <select
+              <!-- <select
                 class="px-3.5 py-2.5 text-[#181D27] rounded-l-lg outline-none appearance-none"
               >
-                <option>VN</option>
-              </select>
+                <option selected disabled>VN</option>
+              </select> -->
+              <p class="flex justify-center items-center w-full h-full px-4">VN</p>
               <div
                 class="absolute inset-y-0 -right-2 flex items-center pointer-events-none"
               >
@@ -43,8 +44,9 @@
             </div>
             <input
               type="text"
-              value="+84 915 343 643"
+              :value="userInitialData.phoneNumber"
               class="w-full px-3.5 py-2.5 text-[#181D27] outline-none rounded-r-lg"
+              disabled
             />
           </div>
         </div>
@@ -77,12 +79,12 @@
           <div class="relative">
             <input
               v-model="userInitialData.currentPassword"
-              type="password"
+              :type="isShowPassword ? 'text' : 'password'"
               class="w-full mt-1.5 px-3.5 py-2.5 text-[#181D27] border border-[#D5D7DA] rounded-lg outline-none"
             />
-            <span class="absolute right-3 top-6 cursor-pointer"
-              ><IconOpenEye
-            /></span>
+            <span @click="isShowPassword = !isShowPassword" class="absolute right-3 top-6 cursor-pointer">
+              <component :is="!isShowPassword ? IconPasswordEye :IconOpenEye " />
+            </span>
           </div>
         </div>
         <div>
@@ -90,12 +92,12 @@
           <div class="relative">
             <input
               v-model="userInitialData.newPassword"
-              type="password"
+              :type="isShowPassword ? 'text' : 'password'"
               class="w-full mt-1.5 px-3.5 py-2.5 border border-[#D5D7DA] rounded-lg text-[#181D27] outline-none"
             />
-            <span class="absolute right-3 top-6 cursor-pointer"
-              ><IconOpenEye
-            /></span>
+            <span @click="isShowPassword = !isShowPassword" class="absolute right-3 top-6 cursor-pointer">
+              <component :is="!isShowPassword ? IconPasswordEye :IconOpenEye " />
+            </span>
           </div>
         </div>
       </div>
@@ -111,7 +113,7 @@
           :disabled="disableSubmit"
           class="px-4 py-2.5 text-white font-semibold bg-[#1570EF] disabled:bg-[#B2DDFF] border border-[#B2DDFF] rounded-lg"
         >
-          Save changes {{ disableSubmit }}
+          Save changes
         </button>
       </div>
     </div>
@@ -122,6 +124,8 @@ import useDashboardStore from "~/stores/dashboardStore";
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
 import type { ClassGrades, CurrentClassGrade, UserData } from "~/types/home";
+import IconPasswordEye from "~/components/icons/IconPasswordEye.vue"
+import IconOpenEye from "~/components/icons/IconOpenEye.vue"
 
 const appStore = useAppStore();
 const dashboardStore = useDashboardStore();
@@ -137,6 +141,7 @@ interface UserInitailData {
   newPassword: string;
 }
 
+const isShowPassword = ref<boolean>(false);
 const isSubmitting = ref<boolean>(false);
 const classGradeList = ref<ClassGrades[]>([]);
 const userInitialData = ref<UserInitailData>({
@@ -181,6 +186,7 @@ const setAcademicInfo = (userData: UserData) => {
   };
   userInitialData.value.name = userData?.name;
   userInitialData.value.email = userData.email;
+  userInitialData.value.phoneNumber = userData?.phone_number || "";
 };
 
 const resetValues = () => {
