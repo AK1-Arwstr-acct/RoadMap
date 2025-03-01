@@ -239,6 +239,10 @@ const submit = async () => {
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
     await appStore.getUserData();
+    showToast("Profile updated successfully", {
+      type: "success",
+    });
+    resetValues();
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
