@@ -2,7 +2,9 @@
   <div
     class="flex items-center gap-6 border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] px-6 py-3"
   >
-    <div class="size-[90px]">
+    <div
+      :class="[isOngoingBehaviour ? 'min-w-[118px] w-[118px]' : 'size-[90px]']"
+    >
       <NuxtImg
         :src="imageSrc"
         alt="Achievements career image"
@@ -10,7 +12,10 @@
       />
     </div>
     <div class="w-full py-4">
-      <div class="flex justify-between mb-[15px]">
+      <div
+        class="flex justify-between"
+        :class="[isOngoingBehaviour ? 'mb-2' : 'mb-[15px]']"
+      >
         <h4 class="text-xl text-[#181D27] font-semibold capitalize">
           {{
             category?.includes("extracurricular")
@@ -18,23 +23,47 @@
               : category
           }}
         </h4>
-        <span class="text-[18px] font-medium text-[#A4A7AE]">{{
-          `${completedTasksNumber} / ${totalTasksNumber}`
-        }}</span>
+        <span
+          class="text-[18px] font-medium"
+          :class="[isOngoingBehaviour ? 'text-[#535862]' : 'text-[#A4A7AE]']"
+          >{{ `${completedTasksNumber} / ${totalTasksNumber}` }}</span
+        >
       </div>
-      <div class="w-full bg-[#F5F5F5] rounded-xl h-4 overflow-hidden">
+      <div
+        class="flex items-center justify-between gap-3"
+        :class="{ 'mb-5': isOngoingBehaviour }"
+      >
         <div
-          class="bg-[#FDB022] h-full rounded-xl"
-          :style="{
-            width: checkCompletedTask,
-          }"
-        />
+          class="w-full bg-[#F5F5F5] rounded-xl overflow-hidden"
+          :class="[isOngoingBehaviour ? 'h-2.5' : 'h-4']"
+        >
+          <div
+            class="bg-[#FDB022] h-full rounded-xl"
+            :style="{
+              width: checkCompletedTask,
+            }"
+          />
+        </div>
+        <p v-if="isOngoingBehaviour" class="text-nowrap w-fit text-[#535862]">
+          {{ checkCompletedTask }} complete
+        </p>
+      </div>
+      <div v-if="isOngoingBehaviour" class="flex justify-end">
+        <button
+          @click="handleContinue"
+          class="bg-[#1570EF] border border-[#1570EF] rounded-lg py-2 px-3.5 text-white text-sm font-semibold"
+        >
+          Continue
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { Application } from "~/types/dashboard";
+
+const appTrackerStore = useAppTrackerStore();
 
 const props = defineProps({
   category: {
@@ -45,27 +74,31 @@ const props = defineProps({
     type: Object as PropType<Application | Application[]>,
     default: () => {},
   },
+  isOngoingBehaviour: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const totalTasksNumber = ref<number>(0);
 const completedTasksNumber = ref<number>(0);
 
 const imageSrc = computed(() => {
-  return props.category?.includes('career')
-    ? '/images/career.png'
-    : props.category?.includes('academics')
-    ? '/images/academic.png'
-    : props.category?.includes('extracurricular')
-    ? '/images/extracurricular.png'
-    : props.category?.includes('school')
-    ? '/images/school-list.png'
-    : props.category?.includes('application')
-    ? '/images/application-post.png'
-    : props.category?.includes('decision')
-    ? '/images/decision.png'
-    : props.category?.includes('visa')
-    ? '/images/visa.png'
-    : '/images/application.png'
+  return props.category?.includes("career")
+    ? "/images/career.png"
+    : props.category?.includes("academics")
+    ? "/images/academic.png"
+    : props.category?.includes("extracurricular")
+    ? "/images/extracurricular.png"
+    : props.category?.includes("school")
+    ? "/images/school-list.png"
+    : props.category?.includes("application")
+    ? "/images/application-post.png"
+    : props.category?.includes("decision")
+    ? "/images/decision.png"
+    : props.category?.includes("visa")
+    ? "/images/visa.png"
+    : "/images/application.png";
 });
 
 const checkCompletedTask = computed(() => {
@@ -92,4 +125,24 @@ const checkCompletedTask = computed(() => {
     return `${taskProgress.toFixed(0)}%`;
   }
 });
+
+const handleContinue = () => {
+  const preCategories = appTrackerStore.preApplication?.tasks.map(
+    (item) => item.category.title
+  );
+  const preCategoriesFilter = [...new Set(preCategories)];
+  const postCategories = appTrackerStore.preApplication?.tasks.map(
+    (item) => item.category.title
+  );
+  const postCategoriesFilter = [...new Set(postCategories)];
+  if (preCategoriesFilter.includes(props.category)) {
+    appTrackerStore.categoriesGroup = "pre";
+  } else if (postCategoriesFilter.includes(props.category)) {
+    appTrackerStore.categoriesGroup = "post";
+  } else {
+    appTrackerStore.categoriesGroup = "country";
+  }
+  
+  appTrackerStore.ongoingTrack = !appTrackerStore.ongoingTrack;
+};
 </script>

@@ -132,7 +132,14 @@
         </button>
         <button
           @click="updateUserData"
-          :disabled="!isUpdateBtnDisable || disabledBtn || isBudgetLoading || isAreaOfStudyLoading"
+          :disabled="
+            !isUpdateBtnDisable ||
+            disabledBtn ||
+            isBudgetLoading ||
+            isAreaOfStudyLoading ||
+            isLocationLoading ||
+            isGpaChange
+          "
           class="py-2.5 px-4 bg-[#1570EF] disabled:bg-[#84CAFF] w-fit rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Save changes
@@ -169,6 +176,8 @@ const contentHeight = ref(0);
 const content = ref<HTMLElement | null>(null);
 const isBudgetLoading = ref<boolean>(false);
 const isAreaOfStudyLoading = ref<boolean>(false);
+const isLocationLoading = ref<boolean>(false);
+const isGpaChange = ref<boolean>(false);
 
 const isUpdateBtnDisable = computed(() => {
   return !!(
@@ -252,6 +261,9 @@ const updateUserData = async () => {
       super_meta_category_id: areaOfStudy.value?.value,
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
+    showToast("Profile updated successfully", {
+      type: "success",
+    });
     await appStore.getUserData();
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -290,6 +302,7 @@ const programChanged = async () => {
     if (!gpa.value || !studyPrograms.value?.value) {
       return;
     }
+    isLocationLoading.value = true;
     const response = await api.post(
       "/api/v1/anonymous-recommendation/get-location-country",
       {
@@ -315,7 +328,9 @@ const programChanged = async () => {
         (id) => currentCountryIds.includes(id)
       );
     }
-  } catch (error) {}
+  } catch (error) {} finally {
+    isLocationLoading.value = false;
+  }
 };
 
 const getProgramParent = async () => {
@@ -402,6 +417,7 @@ const getBudgets = async () => {
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const gpaChanged = async () => {
+  isGpaChange.value = true;
   if (debounceTimeout) {
     clearTimeout(debounceTimeout);
   }
@@ -409,6 +425,7 @@ const gpaChanged = async () => {
     await programChanged();
     await getBudgets();
     await getProgramParent();
+    isGpaChange.value = false;
   }, 1000);
 };
 

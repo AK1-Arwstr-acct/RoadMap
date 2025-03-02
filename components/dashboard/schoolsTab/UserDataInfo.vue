@@ -12,7 +12,9 @@
           :class="{ 'transform -rotate-90': !isDetailOpen }"
         />
       </div>
-      <p class="font-semibold text-[#111827] text-sm">Your Details & Information</p>
+      <p class="font-semibold text-[#111827] text-sm">
+        Your Details & Information
+      </p>
     </div>
     <div
       ref="content"
@@ -138,7 +140,13 @@
         </button>
         <button
           @click="updateUserData"
-          :disabled="!isUpdateBtnDisable || disabledBtn || isBudgetLoading || isAreaOfStudyLoading"
+          :disabled="
+            !isUpdateBtnDisable ||
+            disabledBtn ||
+            isBudgetLoading ||
+            isAreaOfStudyLoading ||
+            isGpaChange
+          "
           class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Update
@@ -175,6 +183,7 @@ const contentHeight = ref(0);
 const content = ref<HTMLElement | null>(null);
 const isBudgetLoading = ref<boolean>(false);
 const isAreaOfStudyLoading = ref<boolean>(false);
+const isGpaChange = ref<boolean>(false);
 
 const isUpdateBtnDisable = computed(() => {
   return !!(
@@ -187,10 +196,11 @@ const isUpdateBtnDisable = computed(() => {
 });
 
 const disabledBtn = computed(() => {
-  let countryCheck = appStore.userData?.educational_records.want_to_study_countries
+  let countryCheck =
+    appStore.userData?.educational_records.want_to_study_countries
       .map((item) => item.id)
-      .every((id) => selectedLocationOptions.value.includes(id))
-  
+      .every((id) => selectedLocationOptions.value.includes(id));
+
   return (
     Number(gpa.value) === appStore.userData?.educational_records.cgpa &&
     Number(studyPrograms.value?.value) ===
@@ -199,8 +209,9 @@ const disabledBtn = computed(() => {
       appStore.userData?.educational_records.annual_max_budget &&
     Number(areaOfStudy.value?.value) ===
       appStore.userData?.educational_records.super_meta_category.id &&
-    (appStore.userData?.educational_records.want_to_study_countries.length === selectedLocationOptions.value.length && countryCheck)
-      
+    appStore.userData?.educational_records.want_to_study_countries.length ===
+      selectedLocationOptions.value.length &&
+    countryCheck
   );
 });
 
@@ -256,6 +267,9 @@ const updateUserData = async () => {
       super_meta_category_id: areaOfStudy.value?.value,
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
+    showToast("Profile updated successfully", {
+      type: "success",
+    });
     await appStore.getUserData();
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -406,6 +420,7 @@ const getBudgets = async () => {
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const gpaChanged = async () => {
+  isGpaChange.value = true;
   if (debounceTimeout) {
     clearTimeout(debounceTimeout);
   }
@@ -413,6 +428,7 @@ const gpaChanged = async () => {
     await programChanged();
     await getBudgets();
     await getProgramParent();
+    isGpaChange.value = false;
   }, 1000);
 };
 

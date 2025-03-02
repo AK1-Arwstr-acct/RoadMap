@@ -99,6 +99,19 @@ onMounted(async () => {
   ) {
     appTrackerStore.getRoadmapData();
   }
+  if (appTrackerStore.categoriesGroup !== null) {
+    if (appTrackerStore.categoriesGroup === "pre") {
+      trackeSteps.value = "pre_application";
+    } else if (appTrackerStore.categoriesGroup === "post") {
+      trackeSteps.value = "post_application";
+    } else {
+      trackeSteps.value = "countries_application";
+    }
+  }
+});
+
+onUnmounted(() => {
+  appTrackerStore.categoriesGroup = null;
 });
 </script>
 <style scoped>

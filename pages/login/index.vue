@@ -102,7 +102,7 @@
             />
           </div>
         </div>
-        <div class="remove-shadow-bg-white mt-6">
+        <div class="remove-shadow-bg-white mt-6 flex flex-col">
           <label class="font-medium text-[#414651] text-sm">{{
             $t("login.password")
           }}</label>
@@ -116,7 +116,7 @@
           />
           <p
             @click="navigateTo(localePath('/forgot-password'))"
-            class="text-sm text-[#175CD3] font-semibold mt-1.5 text-end cursor-pointer"
+            class="text-sm text-[#175CD3] font-semibold mt-1.5 text-end cursor-pointer self-end"
           >
             {{ $t("forgotPassword.forgot_password") }}
           </p>

@@ -75,16 +75,6 @@ const updateStep = (step: CurrentStep) => {
   currentStep.value = step;
 };
 
-onMounted(async () => {
-  if (
-    !appTrackerStore.preApplication &&
-    !appTrackerStore.applicationList.length &&
-    !appTrackerStore.postApplication
-  ) {
-    appTrackerStore.getRoadmapData();
-  }
-});
-
 const essaysList = [
   {
     title:

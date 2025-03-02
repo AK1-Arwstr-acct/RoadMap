@@ -101,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-end gap-2 px-6 py-4 border-t border-[#E9EAEB]">
+      <div class="flex justify-end gap-2 px-6 py-4 border-t border-[#E9EAEB] text-sm">
         <button
           @click="resetValues"
           class="px-4 py-2.5 text-[#414651] font-semibold border border-[#D5D7DA] rounded-lg"

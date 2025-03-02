@@ -19,11 +19,21 @@
   </div>
 </template>
 <script setup lang="ts">
+import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { TabName } from "~/types/dashboard";
+
+const appTrackerStore = useAppTrackerStore();
 
 const currentTab = ref<TabName>("home");
 
 const updateTab = (value: TabName) => {
   currentTab.value = value;
 };
+
+watch(
+  () => appTrackerStore.ongoingTrack,
+  () => {
+    currentTab.value = "application_tracker";
+  }
+);
 </script>

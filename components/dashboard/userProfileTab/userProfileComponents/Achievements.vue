@@ -7,6 +7,7 @@
       :key="idx"
       :category="category || ''"
       :application="appTrackerStore.preApplication"
+      :isOngoingBehaviour="isOngoingBehaviour"
     />
     <div v-if="isDetailPage" class="flex flex-col gap-6">
       <AchievementCard
@@ -16,6 +17,7 @@
         :key="idx"
         :category="category || ''"
         :application="appTrackerStore.applicationList"
+        :isOngoingBehaviour="isOngoingBehaviour"
       />
       <AchievementCard
         v-for="(category, idx) in categoryList(
@@ -24,6 +26,7 @@
         :key="idx"
         :category="category || ''"
         :application="appTrackerStore.postApplication"
+        :isOngoingBehaviour="isOngoingBehaviour"
       />
     </div>
   </section>
@@ -32,8 +35,12 @@
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { Application } from "~/types/dashboard";
 
-defineProps({
+const props = defineProps({
   isDetailPage: {
+    type: Boolean,
+    default: false,
+  },
+  isOngoingBehaviour: {
     type: Boolean,
     default: false,
   },
@@ -41,13 +48,68 @@ defineProps({
 
 const appTrackerStore = useAppTrackerStore();
 
+const checkIfAppCompleted = (application: Application, category: string) => {
+  const filteredApplication = application?.tasks.filter((task) =>
+    task.category.title.includes(category)
+  );
+  let completedTasksNumber =
+    filteredApplication.filter((task) => task.checked === true).length || 0;
+  let totalTasksNumber = filteredApplication.length;
+  let taskProgress = (completedTasksNumber / (totalTasksNumber ?? 1)) * 100;
+  return taskProgress === 100 ? false : true;
+};
+const checkIfCountryCompleted = (
+  application: Application[],
+  category: string
+) => {
+  const filteredApplication = application?.find((app) =>
+    app.country_title?.includes(category)
+  ) as Application | undefined;
+  let completedTasksNumber =
+    filteredApplication?.tasks.filter((task) => task.checked === true).length ||
+    0;
+  let totalTasksNumber = filteredApplication?.tasks.length || 0;
+  let taskProgress = (completedTasksNumber / (totalTasksNumber ?? 1)) * 100;
+  return taskProgress === 100 ? false : true;
+};
+
 const categoryList = (application: Application | Application[]) => {
   if (Array.isArray(application)) {
     const countries = application.map((item) => item.country_title);
-    return [...new Set(countries)];
+    if (!props.isOngoingBehaviour) {
+      return [...new Set(countries)];
+    }
+    let countriesArray = [...new Set(countries)];
+    let filtredArray: string[] = [];
+    countriesArray.forEach((item) => {
+      if (item && checkIfCountryCompleted(application, item)) {
+        filtredArray.push(item);
+      }
+    });
+    return filtredArray;
   } else {
     const categories = application.tasks.map((item) => item.category.title);
-    return [...new Set(categories)];
+    if (!props.isOngoingBehaviour) {
+      return [...new Set(categories)];
+    }
+    let categoryArray = [...new Set(categories)];
+    let filtredArray: string[] = [];
+    categoryArray.forEach((item: string) => {
+      if (checkIfAppCompleted(application, item)) {
+        filtredArray.push(item);
+      }
+    });
+    return filtredArray;
   }
 };
+
+onMounted(async () => {
+  if (
+    !appTrackerStore.preApplication &&
+    !appTrackerStore.applicationList.length &&
+    !appTrackerStore.postApplication
+  ) {
+    appTrackerStore.getRoadmapData();
+  }
+});
 </script>
