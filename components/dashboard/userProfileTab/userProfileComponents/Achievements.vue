@@ -56,7 +56,7 @@ const checkIfAppCompleted = (application: Application, category: string) => {
     filteredApplication.filter((task) => task.checked === true).length || 0;
   let totalTasksNumber = filteredApplication.length;
   let taskProgress = (completedTasksNumber / (totalTasksNumber ?? 1)) * 100;
-  return taskProgress === 100 ? false : true;
+  return taskProgress === 100 || taskProgress === 0 ? false : true;
 };
 const checkIfCountryCompleted = (
   application: Application[],
@@ -70,7 +70,7 @@ const checkIfCountryCompleted = (
     0;
   let totalTasksNumber = filteredApplication?.tasks.length || 0;
   let taskProgress = (completedTasksNumber / (totalTasksNumber ?? 1)) * 100;
-  return taskProgress === 100 ? false : true;
+  return taskProgress === 100 || taskProgress === 0 ? false : true;
 };
 
 const categoryList = (application: Application | Application[]) => {
