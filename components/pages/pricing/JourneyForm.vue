@@ -229,6 +229,13 @@
 <script setup lang="ts">
 import axios from "axios";
 
+const props = defineProps({
+  selectedPlan: {
+    type: Number,
+    default: 2
+  }
+})
+
 const emits = defineEmits(["updateJourney"]);
 
 const { api } = useApi();
@@ -327,7 +334,7 @@ const submit = async () => {
   try {
     isSubmitting.value = true;
     await api.post("/api/v1/plans/bundle", {
-      plan_id: 1,
+      plan_id: props.selectedPlan,
       parent_phone: formDetails.value.phoneNumber,
       current_school_name: formDetails.value.schoolName,
       financial_support_amount: formDetails.value.financialSupport,

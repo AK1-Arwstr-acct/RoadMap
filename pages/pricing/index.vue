@@ -22,7 +22,7 @@
           <tbody>
             <tr>
               <td class="min-w-[500px] w-full"></td>
-              <td class="min-w-80 2xl:min-w-[450px]">
+              <td class="min-w-80 2xl:min-w-[450px]" :class="[selectedPlan === 2 ? 'bg-white': 'bg-[#F5FAFF]']">
                 <div>
                   <p class="text-[#414651] font-medium text-center">
                     Standard Plan
@@ -30,12 +30,13 @@
                   <p class="text-lg font-semibold text-center mt-1">Free</p>
                   <button
                     class="bg-[#1570EF] text-white p-2.5 rounded-lg w-full mt-4"
+                    @click="selectPlan(1)"
                   >
                     Get started!
                   </button>
                 </div>
               </td>
-              <td class="min-w-80 2xl:min-w-[450px] bg-[#F5FAFF]">
+              <td class="min-w-80 2xl:min-w-[450px]" :class="[selectedPlan === 1 ? 'bg-white': 'bg-[#F5FAFF]']">
                 <div>
                   <p class="text-[#414651] font-medium text-center">
                     Advanced Plan
@@ -45,6 +46,7 @@
                   </p>
                   <button
                     class="bg-[#1570EF] text-white p-2.5 rounded-lg w-full mt-4"
+                    @click="selectPlan(2)"
                   >
                     Get started!
                   </button>
@@ -61,7 +63,7 @@
                   {{ plan.title }}
                 </p>
               </td>
-              <td>
+              <td :class="[selectedPlan === 2 ? 'bg-white': 'bg-[#F5FAFF]']">
                 <p class="flex justify-center">
                   <IconCheckmark v-if="!plan.standardPlan" />
                   <span
@@ -75,7 +77,7 @@
                   </span>
                 </p>
               </td>
-              <td class="bg-[#F5FAFF]">
+              <td :class="[selectedPlan === 1 ? 'bg-white': 'bg-[#F5FAFF]']">
                 <p class="flex justify-center">
                   <IconCheckmark v-if="!plan.standardPlan" />
                   <span
@@ -164,7 +166,7 @@
             <Transition name="fade">
               <!-- form -->
               <div v-if="stepCount === 1">
-                <JourneyForm @updateJourney="updateJourney" />
+                <JourneyForm @updateJourney="updateJourney" :selectedPlan="selectedPlan" />
               </div>
               <!-- chat -->
               <div
@@ -199,6 +201,7 @@
 const localePath = useLocalePath();
 
 const stepCount = ref<number>(1);
+const selectedPlan = ref<number>(2);
 
 const stepsDetail = [
   {
@@ -291,9 +294,13 @@ const benefits = [
       "Get unlimited questions answered with the latest GPT model, tailored just for you. Whether it’s essay feedback or career advice, Sophie is here to help with no limits!",
   },
 ];
+
 const updateJourney = () => {
   stepCount.value = 2;
 };
+const selectPlan = (id: number) => {
+  selectedPlan.value = id;
+}
 // onMounted( async()=>{
 //   await api.get('/api/v1/plans/bundle')
 // })

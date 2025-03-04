@@ -9,6 +9,12 @@
   </div>
 </template>
 <script setup lang="ts">
+useHead({
+  link: [
+    { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+  ]
+})
+
 import useAppStore from "~/stores/AppStore";
 
 const appStore = useAppStore();
