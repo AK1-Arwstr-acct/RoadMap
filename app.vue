@@ -10,6 +10,7 @@
 </template>
 <script setup lang="ts">
 useHead({
+  title: 'Arrowster',
   link: [
     { rel: 'icon', type: 'image/png', href: '/favicon.png' }
   ]
