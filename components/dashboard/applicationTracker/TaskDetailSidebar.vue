@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-[440px] h-full bg-white flex flex-col">
+  <div class="min-w-[440px] h-full bg-white flex flex-col border-l border-[#E9EAEB]">
     <div class="m-6 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
       <h3 class="text-[#414651] font-semibold text-xl">
         {{ taskDetail?.title }}

@@ -1,11 +1,11 @@
 <template>
   <div
-    class="px-6 pb-6 border-r border-[#E9EAEB] h-full bg-[#FFFEFC] flex flex-col overflow-y-auto custom-scrollbar"
+    class="px-6 pb-6 border-r border-[#E9EAEB] h-full w-full bg-[#FDFDFD] flex flex-col overflow-y-auto custom-scrollbar"
   >
   <div class="py-6 bg-[#FFFEFC] sticky top-0 ">
       <button
         @click="emit('newChat')"
-        class="border border-[#D5D7DA] bg-white py-2.5 w-full rounded-lg flex justify-center items-center gap-2 text-sm font-semibold text-[#1570EF]"
+        class="border border-[#D5D7DA] bg-white py-2.5 w-full overflow-hidden text-nowrap rounded-lg flex justify-center items-center gap-2 text-sm font-semibold text-[#1570EF]"
       >
         <IconChat />
         Start a new chat with Sophie

@@ -1,5 +1,5 @@
 <template>
-  <section class="flex h-full">
+  <section class="flex h-full bg-white">
     <div class="size-full flex justify-center overflow-y-auto no-scrollbar">
       <div
         v-if="trackeSteps === 'application_tabs'"
@@ -46,7 +46,7 @@
     <Transition name="taskSlide">
       <div
         v-if="trackeSteps !== 'application_tabs' && openDetailModal"
-        class="w-fit max-w-[440px] transition-all ease-in-out duration-500 overflow-hidden"
+        class="w-fit max-w-[440px] transition-all ease-in-out duration-400 overflow-hidden"
       >
         <component
           :is="TaskDetailSidebar"

@@ -14,13 +14,13 @@
     </div>
     <div class="flex-1 overflow-x-auto custom-scrollbar">
       <div class="min-w-fit">
-        <div class="flex items-center gap-10 justify-between mb-2">
-          <h3 class="font-medium text-[#181D27] text-nowrap">
+        <div class="flex gap-10 justify-between mb-2">
+          <p class="font-medium text-[#181D27] min-w-40 max-w-96 text-wrap">
             {{ program.school.name }}
             {{ program.title }}
-          </h3>
+          </p>
           <div
-            class="flex justify-center items-center gap-1.5 pr-2.5 pl-1.5 bg-[#F5F5F5] p-1 rounded-xl"
+            class="flex justify-center items-center gap-1.5 pr-2.5 pl-1.5 bg-[#F5F5F5] px-1 py-2 rounded-xl h-max"
           >
             <component
               :is="
@@ -42,7 +42,7 @@
               "
               class="size-4"
             />
-            <p class="text-[#414651] text-sm text-nowrap">
+            <p class="text-[#414651] text-sm font-medium text-nowrap">
               {{ program.school.address.state }},
               {{
                 program.school.address.country.toLowerCase().includes("kingdom")
@@ -68,29 +68,29 @@
             </p>
           </div>
         </div>
-        <p class="text-[#535862] mb-2.5 text-sm">{{ program.program_title }}</p>
-        <div class="flex items-center gap-6 font-medium mb-2">
-          <div class="text-sm">
+        <p class="text-[#535862] mb-2.5 text-sm 2xl:text-base">{{ program.program_title }}</p>
+        <div class="flex items-center gap-6 font-medium mb-2 text-sm 2xl:text-base">
+          <div>
             <span class="text-[#717680] mr-2">SAT:</span>
             <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.sat || "N/A"
+              program.school.admission_stats.average_scores.sat || "Updating"
             }}</span>
           </div>
-          <div class="text-sm">
+          <div>
             <span class="text-[#717680] mr-2">IELTS:</span>
             <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.ielts || "N/A"
+              program.school.admission_stats.average_scores.ielts || "Updating"
             }}</span>
           </div>
-          <div class="text-sm">
+          <div>
             <span class="text-[#717680] mr-2">GPA:</span>
             <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.gpa || "N/A"
+              program.school.admission_stats.average_scores.gpa || "Updating"
             }}</span>
           </div>
         </div>
-        <div class="flex items-center gap-6 font-medium">
-          <div class="text-sm">
+        <div class="flex items-center gap-6 text-sm 2xl:text-base">
+          <div>
             <span class="text-[#717680] mr-2">Avg. tuition:</span>
             <span class="text-gray-900">
               {{
@@ -102,10 +102,10 @@
               }}
             </span>
           </div>
-          <div class="text-sm">
+          <div>
             <span class="text-[#717680] mr-2">Ranking:</span>
             <span class="text-gray-900">{{
-              program.school_ranking || "N/A"
+              program.school_ranking || "Updating"
             }}</span>
           </div>
         </div>

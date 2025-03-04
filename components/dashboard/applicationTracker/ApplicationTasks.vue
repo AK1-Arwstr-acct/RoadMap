@@ -1,8 +1,8 @@
 <template>
   <section class="">
     <div class="mb-8">
-      <h1 class="text-[#181D27] font-semibold text-2xl mb-4">
-        {{ Array.isArray(application) ? "Application" : application.title }}
+      <h1 class="text-[#181D27] font-semibold text-2xl mb-4 capitalize">
+        {{ Array.isArray(application) ? "Application" : application.title.toLocaleLowerCase() }}
       </h1>
       <p class="text-[#717680] font-medium mb-6">
         {{ Array.isArray(application) ? "" : application.description }}

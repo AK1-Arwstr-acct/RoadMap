@@ -144,11 +144,11 @@
             <div
               v-for="(setp, idx) in stepsDetail"
               :class="[
-                'py-4 px-6 border-l-4 transition-all ease-in-out duration-150 cursor-pointer',
-                stepCount === idx + 1 ? 'border-white' : 'border-[#2E90FA]',
-                { 'pointer-events-none': idx > 1 },
+                'py-4 px-6 border-l-4 transition-all ease-in-out duration-150',
+                stepCount === idx + 1 || stepCount === idx + 2
+                  ? 'border-white'
+                  : 'border-[#2E90FA]',
               ]"
-              @click="stepCount = idx + 1"
             >
               <h3 class="text-xl font-semibold">
                 Step {{ idx + 1 }} : {{ setp.title }}
@@ -158,22 +158,36 @@
               </p>
             </div>
           </div>
-          <div class="col-span-3">
+          <div class="col-span-3" :class="{
+            '-mt-8': stepCount === 2
+          }">
             <Transition name="fade">
               <!-- form -->
               <div v-if="stepCount === 1">
-				<JourneyForm />
-			  </div>
+                <JourneyForm @updateJourney="updateJourney" />
+              </div>
               <!-- chat -->
-              <div v-else-if="stepCount === 2" class="size-full flex flex-col items-center text-center justify-center" >
-				<NuxtImg src="/images/countries-application.png" class="w-[308px] h-[260px]" />
-				<p class="font-medium text-3xl mt-4">
-					Thank you for your submission! We've received your form and will contact you soon!
-				</p>
-				<button @click="navigateTo(localePath('/dashboard'))" class="bg-white text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8">
-					Back to home
-				</button>
-			  </div>
+              <div
+                v-else-if="stepCount === 2"
+                class="max-w-[484px] mx-auto"
+              >
+              <div class="size-full flex flex-col items-center text-center justify-center">
+                <NuxtImg
+                  src="/images/countries-application.png"
+                  class="w-[308px] h-[260px]"
+                />
+                <p class="font-medium text-3xl mt-4">
+                  Thank you for your submission! We've received your form and
+                  will contact you soon!
+                </p>
+                <button
+                  @click="navigateTo(localePath('/dashboard'))"
+                  class="bg-white text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8"
+                >
+                  Back to home
+                </button>
+              </div>
+              </div>
             </Transition>
           </div>
         </div>
@@ -277,6 +291,12 @@ const benefits = [
       "Get unlimited questions answered with the latest GPT model, tailored just for you. Whether it’s essay feedback or career advice, Sophie is here to help with no limits!",
   },
 ];
+const updateJourney = () => {
+  stepCount.value = 2;
+};
+// onMounted( async()=>{
+//   await api.get('/api/v1/plans/bundle')
+// })
 </script>
 <style scoped>
 .pricing-table table,

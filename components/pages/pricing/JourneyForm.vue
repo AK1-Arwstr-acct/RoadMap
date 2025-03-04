@@ -72,7 +72,9 @@
               type="checkbox"
               name="countries"
               :value="option.title"
-              :checked="formDetails.selectedLocationOptions.includes(option.title)"
+              :checked="
+                formDetails.selectedLocationOptions.includes(option.title)
+              "
               class="hidden peer"
               @change="toggleDestinationsSelection(option.title)"
             />
@@ -85,7 +87,9 @@
               ]"
             >
               <IconTick
-                v-if="formDetails.selectedLocationOptions.includes(option.title)"
+                v-if="
+                  formDetails.selectedLocationOptions.includes(option.title)
+                "
                 stroke="#ffffff"
               />
             </div>
@@ -102,7 +106,7 @@
       <input
         type="text"
         placeholder="e.g. University of Sydney, University of Melbourne"
-        v-model="formDetails.schoolName"
+        v-model="formDetails.dreamSchool"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border border-[#D5D7DA] rounded-lg"
       />
     </div>
@@ -125,24 +129,24 @@
               :id="`contact${index}`"
               type="checkbox"
               name="alternateContact"
-              :value="option.title"
+              :value="option.id"
               :checked="
-                formDetails.selectedAlternativeContact.includes(option.title)
+                formDetails.selectedAlternativeContact.includes(option.id)
               "
               class="hidden peer"
-              @change="toggleAlternativeContact(option.title)"
+              @change="toggleAlternativeContact(option.id)"
             />
             <div
               class="size-5 min-w-5 flex justify-center items-center border-2 rounded-md transition-all"
               :class="[
-                formDetails.selectedAlternativeContact.includes(option.title)
+                formDetails.selectedAlternativeContact.includes(option.id)
                   ? 'border-[#1570EF] bg-[#1570EF]'
                   : 'border-[#D5D7DA]',
               ]"
             >
               <IconTick
                 v-if="
-                  formDetails.selectedAlternativeContact.includes(option.title)
+                  formDetails.selectedAlternativeContact.includes(option.id)
                 "
                 stroke="#ffffff"
               />
@@ -161,7 +165,7 @@
       <input
         type="text"
         placeholder="Account information (Phone number/Username)"
-        v-model="formDetails.schoolName"
+        v-model="formDetails.otherPhoneOrEmail"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border border-[#D5D7DA] rounded-lg"
       />
     </div>
@@ -212,19 +216,32 @@
 
     <!-- button -->
     <button
+      :disabled="isDisable"
       @click="submit"
-      class="bg-[#1570EF] rounded-lg py-3 px-5 flex items-center justify-center gap-2 text-white"
+      class="bg-[#1570EF] rounded-lg py-3 px-5 flex items-center justify-center gap-2 text-white disabled:opacity-70"
     >
       Send to us
-      <IconArrowRight fill="#ffffff" />
+      <IconArrowRight v-if="!isSubmitting" fill="#ffffff" />
+      <IconSpinner v-else stroke="#ffffff" bgColor="transparent" width="20" />
     </button>
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
+
+const emits = defineEmits(["updateJourney"]);
+
+const { api } = useApi();
+const { showToast } = useToast();
+
+const isSubmitting = ref<boolean>(false);
+
 interface FormDetails {
   phoneNumber: string;
   schoolName: string;
   financialSupport: string;
+  otherPhoneOrEmail: string;
+  dreamSchool: string;
   selectedLocationOptions: string[];
   selectedAlternativeContact: string[];
   selectedArrowsterInfo: string[];
@@ -234,6 +251,8 @@ const formDetails = ref<FormDetails>({
   phoneNumber: "+84",
   schoolName: "",
   financialSupport: "",
+  dreamSchool: "",
+  otherPhoneOrEmail: "",
   selectedLocationOptions: [],
   selectedAlternativeContact: [],
   selectedArrowsterInfo: [],
@@ -250,10 +269,10 @@ const studyDestinations = [
 ];
 
 const alternativeContact = [
-  { id: 1, title: "Telegram" },
-  { id: 2, title: "Instagram" },
-  { id: 3, title: "WhatsApp" },
-  { id: 4, title: "Messenger" },
+  { id: "telegram", title: "Telegram" },
+  { id: "instagram", title: "Instagram" },
+  { id: "whatsapp", title: "WhatsApp" },
+  { id: "messenger", title: "Messenger" },
 ];
 
 const arrowsterInfo = [
@@ -274,14 +293,14 @@ const toggleDestinationsSelection = (title: string) => {
     formDetails.value.selectedLocationOptions.push(title);
   }
 };
-const toggleAlternativeContact = (title: string) => {
-  if (formDetails.value.selectedAlternativeContact.includes(title)) {
+const toggleAlternativeContact = (id: string) => {
+  if (formDetails.value.selectedAlternativeContact.includes(id)) {
     let updateIds = formDetails.value.selectedAlternativeContact.filter(
-      (item) => item !== title
+      (item) => item !== id
     );
     formDetails.value.selectedAlternativeContact = updateIds;
   } else {
-    formDetails.value.selectedAlternativeContact.push(title);
+    formDetails.value.selectedAlternativeContact.push(id);
   }
 };
 const toggleArrowsterInfo = (title: string) => {
@@ -295,7 +314,50 @@ const toggleArrowsterInfo = (title: string) => {
   }
 };
 
+const isDisable = computed(() => {
+  return (
+    !formDetails.value.schoolName ||
+    !formDetails.value.financialSupport ||
+    formDetails.value.selectedLocationOptions.length === 0 ||
+    formDetails.value.selectedArrowsterInfo.length === 0
+  );
+});
+
 const submit = async () => {
-  console.log(formDetails.value);
+  try {
+    isSubmitting.value = true;
+    await api.post("/api/v1/plans/bundle", {
+      plan_id: 1,
+      parent_phone: formDetails.value.phoneNumber,
+      current_school_name: formDetails.value.schoolName,
+      financial_support_amount: formDetails.value.financialSupport,
+      financial_support_amount_unit: "vnd",
+      want_to_study_at: formDetails.value.selectedLocationOptions,
+      dream_schools: formDetails.value.dreamSchool,
+      contact_platform: formDetails.value.selectedAlternativeContact,
+      contact_info: formDetails.value.otherPhoneOrEmail,
+      lead_incoming_platform: formDetails.value.selectedArrowsterInfo,
+    });
+    emits("updateJourney");
+    formDetails.value = {
+      phoneNumber: "+84",
+      schoolName: "",
+      financialSupport: "",
+      dreamSchool: "",
+      otherPhoneOrEmail: "",
+      selectedLocationOptions: [],
+      selectedAlternativeContact: [],
+      selectedArrowsterInfo: [],
+    };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isSubmitting.value = false;
+  }
 };
 </script>

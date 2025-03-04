@@ -2,17 +2,17 @@
   <div
     class="bg-white flex justify-between px-6 py-4 border-b border-[#E9EAEB]"
   >
-    <div class="flex items-center text-lg font-medium text-[#535862]">
+    <div class="flex items-center text-xl font-medium text-[#535862]">
       <IconSun />
-      <h4 class="text-base inline-block ml-1">{{ getGreeting }}</h4>
-      <p v-if="appStore.userData?.name" class="text-[#181D27] text-base">
+      <h4 class="inline-block ml-1">{{ getGreeting }}</h4>
+      <p v-if="appStore.userData?.name" class="text-[#181D27]">
         <span class="text-[#535862]">,&nbsp;</span>{{ appStore.userData?.name }}
       </p>
     </div>
     <div class="flex gap-4 items-center">
       <p
         @click="pricing"
-        class="px-4 py-2.5 border border-[#D5D7DA] rounded-lg font-medium text-[#414651] cursor-pointer text-sm"
+        class="px-4 py-2.5 border border-[#175CD3] rounded-lg font-semibold text-[#175CD3] cursor-pointer text-sm"
       >
         Upgrade
       </p>

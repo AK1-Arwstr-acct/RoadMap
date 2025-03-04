@@ -162,12 +162,10 @@ const readOnly = ref<boolean>(false);
 const uuid = ref<string>();
 
 const preQuestion: string[] = [
-  "Personal statement tips?",
-  "Scholarships available?",
-  "Best country to study?",
-  "TOEFL or IELTS prep?",
-  "Admission requirements?",
-  "Help me shortlist schools",
+  "Should I take the TOEFL or the IELTS?",
+  "Which country will suit me most for study abroad?",
+  "How can I craft a good Personal Statement?",
+  "Which major should I choose?",
 ];
 
 const options = {

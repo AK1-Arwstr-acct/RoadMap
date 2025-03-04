@@ -1,11 +1,9 @@
 <template>
-  <div class="flex flex-col gap-16">
+  <div class="flex flex-col gap-16 pb-16">
     <!-- ongoing tasks -->
     <div class="">
-        <h2 class="text-[#181D27] text-xl font-semibold mb-5">
-            Ongoing journey
-        </h2>
-        <Achievements :isDetailPage="true" :isOngoingBehaviour="true" />
+      <h2 class="text-[#181D27] text-xl font-semibold mb-5">Ongoing journey</h2>
+      <Achievements :isDetailPage="true" :isOngoingBehaviour="true" />
     </div>
     <!-- events -->
     <div>
@@ -15,14 +13,31 @@
         </p>
         <p class="font-semibold text-[#175CD3] cursor-pointer">View All</p>
       </div>
-      <div v-for="(item, index) in eventList" :key="index" class="flex gap-6 border border-[#E9EAEB] rounded-2xl p-6 mt-2">
+      <div
+        v-for="(item, index) in eventList"
+        :key="index"
+        class="flex gap-6 border border-[#E9EAEB] rounded-2xl p-6 mt-2"
+      >
         <img :src="item.image" alt="event" />
         <div class="flex flex-col gap-5">
           <p class="text-lg font-semibold">{{ item.title }}</p>
-          <div class="cursor-pointer font-medium">
+          <div class="cursor-pointer font-medium flex items-center gap-1.5">
+            <IconLink width="16" height="16" />
             <p class="text-[#1570EF]">{{ item.link.label }}</p>
           </div>
-          <p class="text-[#535862]">Deadline: {{ item.deadline }}</p>
+          <div class="flex gap-3 justify-between items-center">
+            <p class="text-[#535862] flex items-center gap-1.5">
+              <IconClock stroke="#717680" width="16" height="16" /> Deadline:
+              {{ item.deadline }}
+            </p>
+            <div class="transform -rotate-45 translate-y-2 cursor-pointer">
+              <IconArrowRight
+                height="24"
+                width="24"
+                fill="#1570EF"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -31,39 +46,47 @@
       <p class="text-xl font-semibold text-[#181D27] mb-6">
         Frequently asked questions
       </p>
-      <div class="border border-[#E9EAEB] rounded-2xl px-6 py-8 ">
-        <div v-for="(a, idx) in 5" class="flex flex-col">
-            <div class="flex items-start gap-4">
-              <IconTabSophie class="text-[#ED77FF] size-8" />
-              <div>
-                <p class="text-lg text-[#181D27] font-semibold">
-                  Sed turpis egestas lacus cursus cras.
-                </p>
-                <p class="text-[#535862]">
-                  Venenatis laoreet arcu amet ac ullamcorper. Integer velit faucibus
-                  tellus vel nunc lectus amet.
-                </p>
-              </div>
+      <div class="border border-[#E9EAEB] rounded-2xl px-6 py-8">
+        <div v-for="(faq, idx) in questions" class="flex flex-col">
+          <div class="flex items-start gap-4">
+            <NuxtImg :src="faq.img" class="size-[52px] min-w-[52px]" />
+            <div>
+              <p class="text-lg text-[#181D27] font-semibold">
+                {{ faq.question }}
+              </p>
+              <p class="text-[#535862]">
+                {{ faq.answer }}
+              </p>
             </div>
-            <div v-if="idx+1 !== 5" class="h-px bg-[#E9EAEB] w-[90%] my-8 self-end" />
+          </div>
+          <div
+            v-if="idx + 1 !== questions.length"
+            class="h-px bg-[#E9EAEB] w-[90%] my-8 self-end"
+          />
         </div>
       </div>
     </div>
 
     <!-- social -->
     <div>
-      <p class="text-xl font-semibold text-[#181D27] mb-5">
-        Join Community
-      </p>
+      <p class="text-xl font-semibold text-[#181D27] mb-5">Join Community</p>
       <div class="flex gap-6">
-        <button class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border border-[#E9EAEB] rounded-[14px]">
-            <IconFacebook />
-            Facebook Community
-        </button>
-        <button class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border border-[#E9EAEB] rounded-[14px]">
-            <IconThreads />
-            Threads Community
-        </button>
+        <a
+          href="https://www.facebook.com/groups/8907362185980576"
+          target="_blank"
+          class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border border-[#E9EAEB] rounded-[14px]"
+        >
+          <IconFacebook />
+          Facebook Community
+        </a>
+        <a
+          href="https://www.threads.net/@arrowster.official"
+          target="_blank"
+          class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border border-[#E9EAEB] rounded-[14px]"
+        >
+          <IconThreads />
+          Threads Community
+        </a>
       </div>
     </div>
   </div>
@@ -71,39 +94,67 @@
 <script setup lang="ts">
 const questions = [
   {
-    question: "Sed turpis egestas lacus cursus cras.",
+    img: "/images/visa.png",
+    question: "What countries can Arrowster support me apply to?",
     answer:
-      "Venenatis laoreet arcu amet ac ullamcorper. Integer velit faucibus tellus vel nunc lectus amet.",
+      "We help students apply to US, Canada, Australia, New Zealand, United Kingdom, and Europe (incl. countries such as France, Netherlands, Germany, etc). In Vietnam, we also help students apply to RMIT and BUV.",
+  },
+  {
+    img: "/images/application.png",
+    question: "What can Arrowster mentors help me with?",
+    answer:
+      "We can help you build your application strategy, school list, extracurricular strategy as well as edit materials such as essays and letters of recommendation! We will also work with your family to help you prepare financial statements and visa application.",
+  },
+  {
+    img: "/images/school-list.png",
+    question: "How many schools will Arrowster help me apply to?",
+    answer:
+      "We usually help students apply to 5 schools (can be in multiple countries) for optimal efficiency. In special cases, we can help students apply to 8 schools.",
+  },
+  {
+    img: "/images/application-post.png",
+    question: "What’s the cost to work with Arrowster?",
+    answer:
+      "For students applying to our partner schools, FREE! We have 2,000+ partner schools around the world, including top institutions like University of Sydney. King’s College London, University of Ottawa, etc. If you aim to apply to schools outside our partner list, please consult our FAQ guide here.",
+  },
+  {
+    img: "/images/academic.png",
+    question: "Will I work with you online or offline?",
+    answer:
+      "For most students, we will work online via messages and online meetings. If needed, you can come meet us at our beautiful office in District 1, Ho Chi Minh City! ",
   },
 ];
 
 const eventList = [
   {
     image: "/images/dashboard/home/event-1.png",
-    title: "Mentorship program level-up: Study abroad while becoming a co-creator!",
+    title:
+      "Mentorship program level-up: Study abroad while becoming a co-creator!",
     link: {
       label: "Mentorship program level-up",
-      value: ""
+      value: "",
     },
-    deadline: "07/03/2024"
+    deadline: "07/03/2024",
   },
   {
     image: "/images/dashboard/home/event-2.png",
-    title: "Mentorship program season 2: The journey from ordinary to extraordinary",
+    title:
+      "Mentorship program season 2: The journey from ordinary to extraordinary",
     link: {
       label: "Mentorship program season 2",
-      value: ""
+      value: "",
     },
-    deadline: "23:59 | 07/03/2024"
+    deadline: "23:59 | 07/03/2024",
   },
   {
     image: "/images/dashboard/home/event-3.png",
-    title: "Mentorship program level-up: Study abroad while becoming a co-creator!",
+    title:
+      "Mentorship program level-up: Study abroad while becoming a co-creator!",
     link: {
       label: "Arrowster crash course 2024",
-      value: ""
+      value: "",
     },
-    deadline: "23:59 | 03/01/2025"
+    deadline: "23:59 | 03/01/2025",
   },
 ];
 </script>

@@ -113,5 +113,8 @@ const getStudyPrograms = async () => {
 onBeforeMount(async () => {
   onboardingStore.setOnboardingProgress("20%");
   getStudyPrograms();
+  if (!appStore.userData) {
+    await appStore.getUserData();
+  }
 });
 </script>

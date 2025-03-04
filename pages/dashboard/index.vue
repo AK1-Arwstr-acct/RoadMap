@@ -21,7 +21,9 @@
 <script setup lang="ts">
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { TabName } from "~/types/dashboard";
+import useAppStore from "~/stores/AppStore";
 
+const appStore = useAppStore();
 const appTrackerStore = useAppTrackerStore();
 
 const currentTab = ref<TabName>("home");
@@ -36,4 +38,10 @@ watch(
     currentTab.value = "application_tracker";
   }
 );
+
+onBeforeMount(async () => {
+  if (!appStore.userData) {
+    await appStore.getUserData();
+  }
+});
 </script>

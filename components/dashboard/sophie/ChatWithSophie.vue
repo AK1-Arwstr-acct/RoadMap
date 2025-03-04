@@ -10,12 +10,15 @@
     >
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
-    <div class="w-[300px]">
+    <div :class="['transition-all ease-in-out duration-200 overflow-hidden' , !isModal ? isSidebarOpen ? 'w-[300px]' : 'w-0' : 'w-[300px]']">
       <SophieHistory
         @newChat="handelNewChat"
         @chatDetail="chatDetail"
         :chatHistoryArray="chatHistoryArray"
       />
+    </div>
+    <div v-if="!isModal" @click="isSidebarOpen = !isSidebarOpen" class="p-2 ml-2 mt-2 shadow-md rounded-xl h-fit cursor-pointer">
+      <IconSideBar class="invert" />
     </div>
     <div
       class="flex-1 pb-4 px-5 w-full max-w-[710px] mx-auto"
@@ -46,6 +49,7 @@ const props = defineProps({
 });
 
 const isNewChat = ref<boolean>(false);
+const isSidebarOpen = ref<boolean>(false);
 const chatHistoryArray = ref<{ id: number; title: string }[]>([]);
 const singleChatDetail = ref<ChatDetail[]>([]);
 

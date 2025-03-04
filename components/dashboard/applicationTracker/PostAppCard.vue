@@ -8,6 +8,7 @@
         src="/images/post-application.png"
         alt="Post - Application"
         class="w-full h-full max-h-[274px] object-contain"
+        :class="{'grayscale' : !checkCompletedTask}"
       />
     </div>
     <div class="">

@@ -16,19 +16,23 @@
         {{articleDetail.details}}
       </p>
     </div>
-    <a
-      :href="articleDetail.cta"
+    <button
+    @click="handleClick"
       :class="[
         'py-2 w-full block mt-5 text-center rounded-lg cursor-pointer border text-sm',
         isUpgradePlan ? 'bg-[#1570EF] text-white border-[$1570EF]' : 'border-[#D5D7DA] text-[#535862]',
       ]"
     >
       {{ articleDetail.buttonText }}
-    </a>
+    </button>
   </div>
 </template>
 <script setup lang="ts">
-defineProps({
+import { handleError } from 'vue';
+
+const localePath = useLocalePath();
+
+const props = defineProps({
   articleDetail: {
     type: Object,
     default: () => {},
@@ -38,4 +42,12 @@ defineProps({
     default: false,
   },
 });
+
+const handleClick  =  () => {
+  if (props.isUpgradePlan) {
+    navigateTo(localePath("/pricing"))
+  } else {
+    window.open(props.articleDetail.cta, '_blank')
+  }
+}
 </script>

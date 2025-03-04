@@ -16,7 +16,7 @@
       <p class="text-[#535862] font-medium">
         Acceptance Rate:
         <span class="text-[#1570EF] ml-2">{{
-          schoolData.admission_stats.acceptance_rate || "Coming Soon"
+          schoolData.admission_stats.acceptance_rate || "Updating"
         }}</span>
       </p>
       <p class="text-[#535862] font-medium">
@@ -27,7 +27,7 @@
           class="text-[#1570EF] px-2 border-r border-[#535862] last:border-r-0 uppercase inline-block"
           >{{ `${key}: ` }}
           <span class="capitalize">
-            {{ score || "Coming Soon" }}
+            {{ score || "Updating" }}
           </span>
           </p
         >
@@ -40,13 +40,13 @@
         <p class="text-[#535862] font-medium">
           Employment Rate:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.career_outcomes.employment_rate || "Coming Soon"
+            schoolData.career_outcomes.employment_rate || "Updating"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Median Salary:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.career_outcomes.median_salary || "Coming Soon"
+            schoolData.career_outcomes.median_salary || "Updating"
           }}</span>
         </p>
       </div>
@@ -57,13 +57,13 @@
         <p class="text-[#535862] font-medium">
           Avg. Financial Aid:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.financial_and_aid_cost.average_financial_aid || "Coming Soon"
+            schoolData.financial_and_aid_cost.average_financial_aid || "Updating"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Housing & Meals:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.financial_and_aid_cost.housing_and_meal || "Coming Soon"
+            schoolData.financial_and_aid_cost.housing_and_meal || "Updating"
           }}</span>
         </p>
       </div>
@@ -88,14 +88,14 @@
           </div>
           <div class="flex items-center gap-2">
             <IconBuilding />
-            <span>{{ schoolData.campus_overview.type || "Coming Soon" }}</span>
+            <span>{{ schoolData.campus_overview.type || "Updating" }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconUsers />
             <span
             class="text-nowrap"
               >{{
-                schoolData.campus_overview.total_students || "Coming Soon"
+                schoolData.campus_overview.total_students || "Updating"
               }}
               students</span
             >
@@ -107,11 +107,11 @@
         <div class="flex gap-6 items-center text-[#535862] font-medium">
           <div class="flex items-center gap-2">
             <IconBus />
-            <span>{{ schoolData.surroundings.option_1 || "Coming Soon" }}</span>
+            <span>{{ schoolData.surroundings.option_1 || "Updating" }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconOutdoor />
-            <span>{{ schoolData.surroundings.option_2 || "Coming Soon" }}</span>
+            <span>{{ schoolData.surroundings.option_2 || "Updating" }}</span>
           </div>
         </div>
       </div>
@@ -120,13 +120,13 @@
         <p class="text-[#535862] font-medium">
           Housing:
           <span class="text-[#181D27] ml-2">{{
-            schoolData.campus_life.housing || "Coming Soon"
+            schoolData.campus_life.housing || "Updating"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Extracurriculars:
           <span class="text-[#181D27] ml-2">{{
-            schoolData.campus_life.extra_curriculum || "Coming Soon"
+            schoolData.campus_life.extra_curriculum || "Updating"
           }}</span>
         </p>
       </div>
@@ -147,10 +147,14 @@
         <p class="text-[#1570EF] flex items-center gap-2">
           <IconGlobe />
           <a
-            :href="schoolData.about.website || undefined"
+            v-if="schoolData.about.website"
+            :href="schoolData.about.website"
             class="underline cursor-pointer"
-            >{{ schoolData.about.website || 'Coming Soon' }}</a
-          >
+            >{{ schoolData.about.website }}
+            </a>
+            <p v-else class="text-[#535862]">
+              Updating
+            </p>
         </p>
         <p class="text-[#535862] flex items-center gap-2">
           <IconMap />

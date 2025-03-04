@@ -42,10 +42,7 @@
                     {{ selectedOption?.country_code }}
                   </p>
                   <div v-else class="min-w-6 min-h-6">
-                    <IconSpinner
-                      bgColor="white"
-                      stroke="#1570EF"
-                    />
+                    <IconSpinner bgColor="white" stroke="#1570EF" />
                   </div>
                 </div>
                 <IconChevronDown
@@ -130,7 +127,7 @@
             class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
           >
             {{ $t("login.login") }}
-            <IconSpinner v-if="isSubmitting"  />
+            <IconSpinner v-if="isSubmitting" />
           </button>
         </div>
         <div class="my-4 flex items-center gap-2">
@@ -138,14 +135,13 @@
           <p class="text-[#717680] text-sm">{{ $t("login.or") }}</p>
           <div class="flex-1 h-[1px] bg-[#E9EAEB]" />
         </div>
-        <a
-          :href="`${config.public.baseURL}/auth/google`"
-          type="submit"
-          class="cursor-pointer disabled:opacity-70 w-full text-lg text-[#414651] border-2 border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
+        <button
+          @click="handleClick"
+          class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
         >
-          <NuxtImg src="/images/googleIcon.png" alt="google" />
+          <IconGoogle />
           <span>{{ $t("login.login_with_google") }}</span>
-        </a>
+        </button>
         <p class="mt-8 text-[#535862] text-sm text-center">
           {{ $t("login.already_have_an_account") }}
           <span
@@ -165,7 +161,7 @@ definePageMeta({
 
 import axios from "axios";
 import type { Country } from "~/types/auth";
-import useAppStore from '~/stores/AppStore';
+import useAppStore from "~/stores/AppStore";
 
 const { t } = useI18n();
 const localePath = useLocalePath();
@@ -196,6 +192,13 @@ const countryCodes = computed(() => {
   }
 });
 
+const handleClick = () => {
+  const checkToken = useCookie("token");
+  if (checkToken.value) {
+    checkToken.value = null;
+  }
+  window.location.href = `${config.public.baseURL}/auth/google`;
+}
 const handleFocus = () => {
   isFocused.value = true;
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="pb-[42px]">
     <div
-      class="group h-60 bg-gradient-to-tr from-[#A6C0FE] to-[#FFEAF6] relative flex overflow-hidden"
+      class="group h-60 bg-[#E0EAFF] relative flex overflow-hidden rounded-xl mx-5 lg:mx-10 xl:mx-20"
       :class="{'justify-end': !coverPhotoPreview}"
     >
       <NuxtImg
@@ -14,7 +14,7 @@
         v-else
         :src="'/images/v-room.png'"
         alt="Profile Picture"
-        class="object-contain transform scale-150 -translate-x-10"
+        class="object-contain transform scale-150 -translate-x-20 translate-y-3"
       />
       <input
         type="file"

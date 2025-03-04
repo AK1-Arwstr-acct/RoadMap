@@ -9,7 +9,7 @@
       />
     </div>
     <div>
-      <h4 class="text-sm font-semibold text-[#181D27]">
+      <h4 class="text-sm 2xl:text-lg font-semibold text-[#181D27]">
         <span
           v-if="
             dashboardStore.enginePosition === 'final'
@@ -21,7 +21,7 @@
         </span>
         <span v-else> We've found your best match! </span>
       </h4>
-      <p class="text-sm text-[#535862] mt-2">
+      <p class="text-sm 2xl:text-base text-[#535862] mt-2">
         <span
           v-if="
             dashboardStore.enginePosition === 'final'
@@ -38,28 +38,24 @@
         </span>
       </p>
     </div>
-    <div class="">
-      <NuxtImg src="/images/discover-journey.png" alt="Discover Journey" />
+    <div class="flex justify-center">
+      <NuxtImg src="/images/ai-recommendation.png" alt="Discover Journey" class="w-[164px]" />
     </div>
-    <button
-      v-if="
-        dashboardStore.enginePosition === 'final'
-          ? false
-          : (dashboardStore.totalSchool || 0) >= 6
-      "
+    <div 
+      v-if=" dashboardStore.enginePosition === 'final' ? false : (dashboardStore.totalSchool || 0) >= 6"
       :disabled="!isActive || dashboardStore.isFinalEnginCall"
-      class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-2 justify-center items-center"
+      class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-3 justify-center cursor-pointer"
       @click="finalEngine"
     >
-      <div class="size-4">
+      <div class="flex gap-2 justify-center items-center">
         <IconLock v-if="!isActive" />
-        <IconTabSophie v-else class="size-full" width="20" height="20" />
+        <IconTabSophie v-else width="20" height="20" />
+        <span class="text-sm block">
+          {{ !isActive ? "Unlock" : "Get" }} AI recommendation
+        </span>
+        <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
       </div>
-      <span class="text-sm pt-1.5">
-        {{ !isActive ? "Unlock" : "Get" }} AI recommendation
-      </span>
-      <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
-    </button>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
