@@ -35,6 +35,8 @@
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { Application } from "~/types/dashboard";
 
+const emits = defineEmits(["remainingTask"]);
+
 const props = defineProps({
   isDetailPage: {
     type: Boolean,
@@ -86,6 +88,7 @@ const categoryList = (application: Application | Application[]) => {
         filtredArray.push(item);
       }
     });
+    // totaltasks.value = totaltasks.value + filtredArray.length;
     return filtredArray;
   } else {
     const categories = application.tasks.map((item) => item.category.title);
@@ -99,9 +102,20 @@ const categoryList = (application: Application | Application[]) => {
         filtredArray.push(item);
       }
     });
+    // totaltasks.value = totaltasks.value + filtredArray.length;
     return filtredArray;
   }
 };
+
+const totaltasks1 = ref<number>(
+  categoryList(appTrackerStore.preApplication || []).length
+);
+const totaltasks2 = ref<number>(
+  categoryList(appTrackerStore.applicationList || []).length
+);
+const totaltasks3 = ref<number>(
+  categoryList(appTrackerStore.postApplication || []).length
+);
 
 onMounted(async () => {
   if (
@@ -111,5 +125,11 @@ onMounted(async () => {
   ) {
     appTrackerStore.getRoadmapData();
   }
+
+  if (totaltasks1.value || totaltasks2.value || totaltasks3.value) {
+      emits("remainingTask", true);
+    } else {
+      emits("remainingTask", false);
+    }
 });
 </script>

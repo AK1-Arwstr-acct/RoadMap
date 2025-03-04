@@ -1,9 +1,15 @@
 <template>
   <div class="flex flex-col gap-16 pb-16">
     <!-- ongoing tasks -->
-    <div class="">
-      <h2 class="text-[#181D27] text-xl font-semibold mb-5">Ongoing journey</h2>
-      <Achievements :isDetailPage="true" :isOngoingBehaviour="true" />
+    <div v-show="isRemainingTask">
+      <h2 class="text-[#181D27] text-xl font-semibold mb-5">
+        Ongoing journey
+      </h2>
+      <Achievements
+        :isDetailPage="true"
+        :isOngoingBehaviour="true"
+        @remainingTask="handelRemaining"
+      />
     </div>
     <!-- events -->
     <div>
@@ -31,11 +37,7 @@
               {{ item.deadline }}
             </p>
             <div class="transform -rotate-45 translate-y-2 cursor-pointer">
-              <IconArrowRight
-                height="24"
-                width="24"
-                fill="#1570EF"
-              />
+              <IconArrowRight height="24" width="24" fill="#1570EF" />
             </div>
           </div>
         </div>
@@ -92,6 +94,8 @@
   </div>
 </template>
 <script setup lang="ts">
+const isRemainingTask = ref<boolean>(false);
+
 const questions = [
   {
     img: "/images/visa.png",
@@ -157,4 +161,8 @@ const eventList = [
     deadline: "23:59 | 03/01/2025",
   },
 ];
+
+const handelRemaining = (value : boolean) => {
+  isRemainingTask.value = value;
+};
 </script>

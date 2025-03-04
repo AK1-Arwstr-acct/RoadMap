@@ -41,10 +41,10 @@
     <div class="flex justify-center">
       <NuxtImg src="/images/ai-recommendation.png" alt="Discover Journey" class="w-[164px]" />
     </div>
-    <div 
+    <button 
       v-if=" dashboardStore.enginePosition === 'final' ? false : (dashboardStore.totalSchool || 0) >= 6"
       :disabled="!isActive || dashboardStore.isFinalEnginCall"
-      class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-3 justify-center cursor-pointer"
+      class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-3 justify-center !disabled:cursor-pointer"
       @click="finalEngine"
     >
       <div class="flex gap-2 justify-center items-center">
@@ -55,7 +55,7 @@
         </span>
         <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
       </div>
-    </div>
+    </button>
   </div>
 </template>
 <script setup lang="ts">

@@ -131,7 +131,7 @@ const handleContinue = () => {
     (item) => item.category.title
   );
   const preCategoriesFilter = [...new Set(preCategories)];
-  const postCategories = appTrackerStore.preApplication?.tasks.map(
+  const postCategories = appTrackerStore.postApplication?.tasks.map(
     (item) => item.category.title
   );
   const postCategoriesFilter = [...new Set(postCategories)];
