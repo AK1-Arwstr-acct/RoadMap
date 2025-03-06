@@ -87,7 +87,7 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import SchoolDetailModal from "~/components/dashboard/SchoolsTab/SchoolDetailModal.vue";
+import SchoolDetailModal from "~/components/dashboard/schoolsTab/SchoolDetailModal.vue";
 import IconRankDown from "~/components/icons/IconRankDown.vue";
 import IconRankUp from "~/components/icons/IconRankUp.vue";
 import IconPriceDown from "~/components/icons/IconPriceDown.vue";
