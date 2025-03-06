@@ -1,6 +1,11 @@
 <template>
   <div
     class="flex items-center gap-6 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] px-6 py-3"
+    :class="[
+      isOngoingBehaviour
+        ? 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]'
+        : '',
+    ]"
   >
     <div
       :class="[isOngoingBehaviour ? 'min-w-[118px] w-[118px]' : 'size-[90px]']"
@@ -51,7 +56,7 @@
       <div v-if="isOngoingBehaviour" class="flex justify-end">
         <button
           @click="handleContinue"
-          class="bg-[#1570EF] border-[1.5px] border-[#1570EF] rounded-lg py-2 px-3.5 text-white text-sm font-semibold"
+          class="bg-[#1570EF] border border-[#1570EF] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D] py-2 px-3.5 text-white text-sm font-semibold"
         >
           Continue
         </button>
@@ -142,7 +147,7 @@ const handleContinue = () => {
   } else {
     appTrackerStore.categoriesGroup = "country";
   }
-  
+
   appTrackerStore.ongoingTrack = !appTrackerStore.ongoingTrack;
 };
 </script>

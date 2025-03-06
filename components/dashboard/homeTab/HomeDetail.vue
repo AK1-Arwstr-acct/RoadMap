@@ -2,9 +2,7 @@
   <div class="flex flex-col gap-16 pb-16">
     <!-- ongoing tasks -->
     <div v-show="isRemainingTask">
-      <h2 class="text-[#181D27] text-xl font-semibold mb-5">
-        Ongoing journey
-      </h2>
+      <h2 class="text-[#181D27] text-xl font-semibold mb-5">Ongoing journey</h2>
       <Achievements
         :isDetailPage="true"
         :isOngoingBehaviour="true"
@@ -24,12 +22,15 @@
       <div
         v-for="(item, index) in eventList"
         :key="index"
-        class="flex gap-6 border-[1.5px] border-gray-200 rounded-2xl p-6 mt-2"
+        class="flex gap-6 border-[1.5px] border-gray-200 rounded-2xl p-6 mt-2 shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
       >
         <img :src="item.image" alt="event" />
         <div class="flex flex-col gap-5 w-full">
           <p class="text-lg font-semibold">{{ item.title }}</p>
-          <div class="cursor-pointer font-medium flex items-center gap-1.5" @click="handleNavigate(item.link.value)">
+          <div
+            class="cursor-pointer font-medium flex items-center gap-1.5"
+            @click="handleNavigate(item.link.value)"
+          >
             <IconLink width="16" height="16" strokeWidth="2.5" />
             <p class="text-[#1570EF]">{{ item.link.label }}</p>
           </div>
@@ -38,8 +39,15 @@
               <IconClock stroke="#717680" width="16" height="16" />
               {{ item.deadline }}
             </p>
-            <div class="transform -rotate-45 translate-y-2 cursor-pointer -mt-2">
-              <IconArrowRight height="24" width="24" fill="#1570EF" @click="handleNavigate(item.link.value)" />
+            <div
+              class="transform -rotate-45 translate-y-2 cursor-pointer -mt-2"
+            >
+              <IconArrowRight
+                height="24"
+                width="24"
+                fill="#1570EF"
+                @click="handleNavigate(item.link.value)"
+              />
             </div>
           </div>
         </div>
@@ -78,7 +86,7 @@
         <a
           href="https://www.facebook.com/groups/8907362185980576"
           target="_blank"
-          class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px]"
+          class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
         >
           <IconFacebook />
           Facebook Community
@@ -86,7 +94,7 @@
         <a
           href="https://www.threads.net/@arrowster.official"
           target="_blank"
-          class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px]"
+          class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
         >
           <IconThreads />
           Threads Community
@@ -138,27 +146,28 @@ const eventList = [
       "Mentorship program level-up: Study abroad while becoming a co-creator!",
     link: {
       label: "Mentorship program level-up",
-      value: "https://tally.so/r/3jkMOE?fbclid=IwY2xjawIz3HxleHRuA2FlbQIxMAABHfJs-IpJ5KcUvjSpUGfiGAxRBBPauZD2x7v55cVeFt4GfKLb475VZ42Dig_aem_K0u-PG7XetcBlvexH1Vf-w",
+      value:
+        "https://tally.so/r/3jkMOE?fbclid=IwY2xjawIz3HxleHRuA2FlbQIxMAABHfJs-IpJ5KcUvjSpUGfiGAxRBBPauZD2x7v55cVeFt4GfKLb475VZ42Dig_aem_K0u-PG7XetcBlvexH1Vf-w",
     },
     deadline: "Deadline: 07/03/2024",
   },
   {
     image: "/images/dashboard/home/event-2.png",
-    title:
-      "Giveaway: List of 50 master's scholarships in the UK for 2025-2026",
+    title: "Giveaway: List of 50 master's scholarships in the UK for 2025-2026",
     link: {
       label: "GAUKMasterScholarships",
-      value: "https://tally.so/r/w2DaVV?fbclid=IwY2xjawIz3GRleHRuA2FlbQIxMAABHQJwtUNp3SEiKF6ZELc1HW0h9jbf_93Bcqsm52cPCgK85HCtGbfvM355Cw_aem_GiiqjYjkhR8hxM1AExVEBg",
+      value:
+        "https://tally.so/r/w2DaVV?fbclid=IwY2xjawIz3GRleHRuA2FlbQIxMAABHQJwtUNp3SEiKF6ZELc1HW0h9jbf_93Bcqsm52cPCgK85HCtGbfvM355Cw_aem_GiiqjYjkhR8hxM1AExVEBg",
     },
     deadline: "Ongoing giveaway",
   },
 ];
 
-const handelRemaining = (value : boolean) => {
+const handelRemaining = (value: boolean) => {
   isRemainingTask.value = value;
 };
 
 const handleNavigate = (link: string) => {
-  window.open(link, '_blank');
-}
+  window.open(link, "_blank");
+};
 </script>

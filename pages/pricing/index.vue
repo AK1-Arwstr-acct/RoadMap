@@ -1,6 +1,6 @@
 <template>
   <main>
-    <section class="mx-auto container px-5 mt-5">
+    <section class="w-full mx-auto max-w-[1280px] px-10 mt-5">
       <div class="flex justify-end">
         <span
           @click="navigateTo(localePath('/dashboard'))"
@@ -136,7 +136,7 @@
       </div>
     </section>
     <section class="bg-[#1849A9]">
-      <div class="mx-auto container px-5 py-24 text-white">
+      <div class="w-full mx-auto max-w-[1280px] px-10 py-24 text-white">
         <div>
           <h2 class="text-3xl xl:text-4xl font-semibold mb-5">
             Let’s start your journey together!

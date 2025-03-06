@@ -3,7 +3,7 @@
     <NuxtImg
       :src="articleDetail.image"
       alt="article image"
-      class=" w-full object-cover object-top rounded-lg"
+      class="w-full object-cover object-top rounded-lg"
     />
     <div class="mt-5 flex flex-col gap-2">
       <h2
@@ -12,15 +12,20 @@
       >
         {{ articleDetail.title }}
       </h2>
-      <p class="text-[#535862] text-sm" :class="{'text-center': isUpgradePlan}">
-        {{articleDetail.details}}
+      <p
+        class="text-[#535862] text-sm"
+        :class="{ 'text-center': isUpgradePlan }"
+      >
+        {{ articleDetail.details }}
       </p>
     </div>
     <button
-    @click="handleClick"
+      @click="handleClick"
       :class="[
-        'py-2 w-full block mt-5 text-center rounded-lg cursor-pointer border-[1.5px] text-sm',
-        isUpgradePlan ? 'bg-[#1570EF] text-white border-[$1570EF]' : 'border-gray-200 text-[#535862]',
+        'py-2 w-full block mt-5 text-center rounded-lg cursor-pointer border text-sm shadow-[0px_1px_2px_0px_#0A0D120D]',
+        isUpgradePlan
+          ? 'bg-[#1570EF] text-white border-[$1570EF]'
+          : 'border-gray-300 text-[#535862]',
       ]"
     >
       {{ articleDetail.buttonText }}
@@ -41,11 +46,11 @@ const props = defineProps({
   },
 });
 
-const handleClick  =  () => {
+const handleClick = () => {
   if (props.isUpgradePlan) {
-    navigateTo(localePath("/pricing"))
+    navigateTo(localePath("/pricing"));
   } else {
-    window.open(props.articleDetail.cta, '_blank')
+    window.open(props.articleDetail.cta, "_blank");
   }
-}
+};
 </script>

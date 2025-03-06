@@ -169,6 +169,7 @@ const preQuestion: string[] = [
   "Should I take the TOEFL or the IELTS?",
   "Which country will suit me most for study abroad?",
   "How can I craft a good Personal Statement?",
+  "What scholarships can I apply for?",
   "Which major should I choose?",
 ];
 

@@ -9,7 +9,7 @@
           <IconArrowsterLogo class="size-8 min-w-8" />
           <NuxtImg
             v-if="currentTab !== 'sophie'"
-            class="w-24 invert"
+            class="w-24"
             src="/images/logo/logo.svg"
             alt="Logo"
           />

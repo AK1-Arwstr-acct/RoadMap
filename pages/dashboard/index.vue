@@ -4,16 +4,20 @@
     <div class="flex-1 flex flex-col">
       <DashboardNav @updateTab="updateTab" />
       <div class="flex-1 overflow-hidden">
-        <Transition name="fade">
-          <DashboardHome v-if="currentTab === 'home'" />
-          <ChatWithSophie v-else-if="currentTab === 'sophie'" />
-          <TrackerInformations
-            v-else-if="currentTab === 'application_tracker'"
-          />
-          <SchoolsList v-else-if="currentTab === 'schools_list'" />
-          <div v-else-if="currentTab === 'setting'">setting</div>
-          <UserProfile v-else />
-        </Transition>
+        <div class="size-full overflow-y-auto custom-scrollbar">
+          <div class="h-full w-full" :class="{'max-w-[1150px] mx-auto': currentTab !== 'sophie'}">
+            <Transition name="fade">
+              <DashboardHome v-if="currentTab === 'home'" />
+              <ChatWithSophie v-else-if="currentTab === 'sophie'" />
+              <TrackerInformations
+                v-else-if="currentTab === 'application_tracker'"
+              />
+              <SchoolsList v-else-if="currentTab === 'schools_list'" />
+              <div v-else-if="currentTab === 'setting'">setting</div>
+              <UserProfile v-else />
+            </Transition>
+          </div>
+        </div>
       </div>
     </div>
     <div

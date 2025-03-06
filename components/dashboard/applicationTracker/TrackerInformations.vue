@@ -1,6 +1,6 @@
 <template>
   <section class="flex h-full bg-white">
-    <div class="size-full flex justify-center overflow-y-auto no-scrollbar">
+    <div class="size-full flex justify-center">
       <div
         v-if="trackeSteps === 'application_tabs'"
         class="space-y-14 h-fit max-w-[772px] px-10 lg:px-0 py-10"

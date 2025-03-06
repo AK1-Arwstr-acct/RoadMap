@@ -2,7 +2,7 @@
   <section>
     <div
       @click="isOpen = !isOpen"
-      class="py-4 px-5 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFEFC] flex items-center gap-2 cursor-pointer"
+      class="py-4 px-5 border-[1.5px] border-gray-200 rounded-2xl shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A] bg-[#FFFEFC] flex items-center gap-2 cursor-pointer"
     >
       <IconChevronDown
         stroke="#717680"
@@ -23,7 +23,11 @@
       </p>
       <div
         class="py-0.5 px-3 rounded-full font-semibold tracking-wider"
-        :class="[category === 'country' ? 'bg-[#F5F5F5] text-[#414651]' :  categoryClass(category) ]"
+        :class="[
+          category === 'country'
+            ? 'bg-[#F5F5F5] text-[#414651]'
+            : categoryClass(category),
+        ]"
       >
         {{
           filteredTask(category).filter((item) => item.checked == true).length
@@ -55,7 +59,7 @@
           :class="[
             appTrackerStore.taskActiveStates[task.id]
               ? 'border-2 border-[#2E90FA] bg-[#F5FAFF]'
-              : 'border-2 border-gray-200 bg-[#FFFFFF]',
+              : 'border-[1.5px] border-gray-200 bg-[#FFFFFF]',
           ]"
         >
           <input
@@ -135,29 +139,33 @@ const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
 
 const imageSrc = computed(() => {
-  return props.category?.includes('career')
-    ? '/images/career.png'
-    : props.category?.includes('academics')
-    ? '/images/academic.png'
-    : props.category?.includes('extracurricular')
-    ? '/images/extracurricular.png'
-    : props.category?.includes('school')
-    ? '/images/school-list.png'
-    : props.category?.includes('application')
-    ? '/images/application-post.png'
-    : props.category?.includes('decision')
-    ? '/images/decision.png'
-    : props.category?.includes('visa')
-    ? '/images/visa.png'
-    : '/images/application.png'
+  return props.category?.includes("career")
+    ? "/images/career.png"
+    : props.category?.includes("academics")
+    ? "/images/academic.png"
+    : props.category?.includes("extracurricular")
+    ? "/images/extracurricular.png"
+    : props.category?.includes("school")
+    ? "/images/school-list.png"
+    : props.category?.includes("application")
+    ? "/images/application-post.png"
+    : props.category?.includes("decision")
+    ? "/images/decision.png"
+    : props.category?.includes("visa")
+    ? "/images/visa.png"
+    : "/images/application.png";
 });
 
 const categoryClass = (category: string) => {
   if (category.includes("career") || category.includes("application")) {
     return "bg-[#FFFAEB] text-[#B54708]";
-  } else if (category.includes("academics") || category.includes('decision')) {
+  } else if (category.includes("academics") || category.includes("decision")) {
     return "bg-[#EFF8FF] text-[#175CD3]";
-  } else if (category.includes("extracurricular") || category.includes('finances') || category.includes('scholarships')) {
+  } else if (
+    category.includes("extracurricular") ||
+    category.includes("finances") ||
+    category.includes("scholarships")
+  ) {
     return "bg-[#ECFDF3] text-[#027A48]";
   } else if (category.includes("school")) {
     return "bg-[#FDF2FA] text-[#C11574]";

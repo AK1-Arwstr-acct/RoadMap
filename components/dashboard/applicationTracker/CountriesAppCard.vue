@@ -8,7 +8,7 @@
         src="/images/countries-application.png"
         alt="Application"
         class="w-full h-full max-h-[274px] object-contain"
-        :class="{'grayscale' : !checkCompletedTask}"
+        :class="{ grayscale: !checkCompletedTask }"
       />
     </div>
     <div class="">
@@ -54,9 +54,16 @@
       </div>
       <button
         @click="emit('updateStep')"
-        class="bg-white text-[#1570EF] font-semibold border-[1.5px] border-white rounded-xl px-5 py-3 w-full"
+        class="bg-white text-[#1570EF] font-semibold border border-gray-300 rounded-xl px-5 py-3 w-full"
+        :class="[
+          checkCompletedTask
+            ? 'shadow-[0px_1px_2px_0px_#0A0D120D]'
+            : 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]',
+        ]"
       >
-        <span class="text-[#039855]" v-if="checkCompletedTask === totalTasks">Review</span>
+        <span class="text-[#039855]" v-if="checkCompletedTask === totalTasks"
+          >Review</span
+        >
         <span v-else-if="checkCompletedTask > 0" class="text-[#039855]"
           >Continue</span
         >
