@@ -50,7 +50,7 @@
             placeholder="Ask Somthing . . ."
             @keydown.enter="onSubmit"
             :disabled="isChatLoading"
-            class="bg-transparent border border-white/50 w-full rounded-lg py-2 pl-2 pr-11 outline-none disabled:cursor-wait"
+            class="bg-transparent border-[1.5px] border-white/50 w-full rounded-lg py-2 pl-2 pr-11 outline-none disabled:cursor-wait"
           />
           <button
             @click="onSubmit"

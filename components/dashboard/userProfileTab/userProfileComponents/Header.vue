@@ -2,7 +2,7 @@
   <div class="pb-[42px]">
     <div
       class="group h-60 bg-[#E0EAFF] relative flex overflow-hidden rounded-xl mx-5 lg:mx-10 xl:mx-20"
-      :class="{'justify-end': !coverPhotoPreview}"
+      :class="{ 'justify-end': !coverPhotoPreview }"
     >
       <NuxtImg
         v-if="coverPhotoPreview"
@@ -38,12 +38,26 @@
         <div
           class="border-4 border-white bg-white rounded-[200px] shadow-lg relative"
         >
-          <div class="relative rounded-[200px] overflow-hidden group">
+          <div
+            class="relative rounded-[200px] min-w-[160px] w-[160px] h-[160px] overflow-hidden group"
+          >
             <NuxtImg
-              :src="imagePreview || '/images/avatar-profile-photo.png'"
+              v-if="imagePreview"
+              :src="imagePreview || ''"
               alt="Profile Picture"
-              class="min-w-[160px] w-[160px] h-[160px] object-cover"
+              class="object-cover"
             />
+            <div
+              v-else
+              class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-8xl"
+            >
+              <span>{{
+                appStore.userData?.name
+                  .split(" ")
+                  .map((word) => word[0])
+                  .join("")
+              }}</span>
+            </div>
             <input
               type="file"
               accept="image/*"
@@ -81,14 +95,14 @@
           <div class="flex items-center gap-3">
             <button
               @click="emit('updateStep', 'edit_profile')"
-              class="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#414651] bg-[#FFFFFF] border rounded-lg border-[#D5D7DA]"
+              class="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#414651] bg-[#FFFFFF] border-[1.5px] rounded-lg border-gray-200"
             >
               <span><IconPencil /></span><span>Edit profile</span>
             </button>
             <div class="relative">
               <button
                 @click="toggleDropdown"
-                class="border border-[#D5D7DA] rounded-lg bg-[#FAFAFA] p-2"
+                class="border-[1.5px] border-gray-200 rounded-lg bg-[#FAFAFA] p-2"
               >
                 <span><IconDots /></span>
               </button>
@@ -97,7 +111,7 @@
                 v-click-outside="() => (isDropdownOpen = false)"
                 @click="logOut"
                 v-if="isDropdownOpen"
-                class="absolute z-10 right-0 translate-y-2 bg-[#FFFFFF] border border-[#F5F5F5] rounded-lg shadow-md"
+                class="absolute z-10 right-0 translate-y-2 bg-[#FFFFFF] border-[1.5px] border-gray-200 rounded-lg shadow-md"
               >
                 <a
                   href="#"

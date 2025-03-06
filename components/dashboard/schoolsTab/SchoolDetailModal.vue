@@ -11,7 +11,7 @@
       </div>
     </div>
     <!-- admission status -->
-    <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-3">
+    <div class="border-[1.5px] border-gray-200 rounded-2xl p-6 space-y-3">
       <h2 class="text-[#181D27] text-lg font-semibold">Admission Stats</h2>
       <p class="text-[#535862] font-medium">
         Acceptance Rate:
@@ -24,7 +24,7 @@
         <p
           v-for="(score, key) in schoolData.admission_stats.average_scores"
           :key="key"
-          class="text-[#1570EF] px-2 border-r border-[#535862] last:border-r-0 uppercase inline-block"
+          class="text-[#1570EF] px-2 border-r-[1.5px] border-gray-400 last:border-r-0 uppercase inline-block"
           >{{ `${key}: ` }}
           <span class="capitalize">
             {{ score || "Updating" }}
@@ -34,7 +34,7 @@
       </p>
     </div>
     <!-- carrer -->
-    <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-8">
+    <div class="border-[1.5px] border-gray-200 rounded-2xl p-6 space-y-8">
       <div class="space-y-3">
         <h2 class="text-[#181D27] text-lg font-semibold">Career Outcomes</h2>
         <p class="text-[#535862] font-medium">
@@ -69,7 +69,7 @@
       </div>
     </div>
     <!-- campus Overview -->
-    <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-6">
+    <div class="border-[1.5px] border-gray-200 rounded-2xl p-6 space-y-6">
       <div class="h-[242px] rounded-xl overflow-hidden">
         <NuxtImg
           :src="`/images/school-cover/${randomNumber}.jpg`"
@@ -132,7 +132,7 @@
       </div>
     </div>
     <!-- about school -->
-    <div class="border border-[#E9EAEB] rounded-2xl p-6 space-y-6">
+    <div class="border-[1.5px] border-gray-200 rounded-2xl p-6 space-y-6">
       <div v-if="schoolData.cover_photo" class="h-[242px] rounded-xl overflow-hidden">
         <NuxtImg
           :src="schoolData.cover_photo || undefined"

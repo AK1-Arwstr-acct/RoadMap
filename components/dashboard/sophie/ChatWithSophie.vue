@@ -26,6 +26,7 @@
         :isNewChat="isNewChat"
         :singleChatDetail="singleChatDetail"
         :isModal="isModal"
+        :isSummarizeOverview="isSummarizeOverview"
       />
     </div>
   </div>
@@ -41,6 +42,10 @@ const emit = defineEmits(["openSophieModal"]);
 
 const props = defineProps({
   isModal: {
+    type: Boolean,
+    default: false,
+  },
+  isSummarizeOverview: {
     type: Boolean,
     default: false,
   },

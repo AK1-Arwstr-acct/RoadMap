@@ -7,11 +7,11 @@
       <div v-for="(option, index) in locationOptions" :key="index">
         <label
           :for="`country${index}`"
-          class="flex items-center justify-between size-full font-medium rounded-xl cursor-pointer relative border p-3 transition-all ease-in-out duration-200"
+          class="flex items-center justify-between size-full font-medium rounded-xl cursor-pointer relative border-[1.5px] p-3 transition-all ease-in-out duration-200"
           :class="[
             option?.value.some((id) => selectedOptionIds.includes(id))
               ? 'border-[#84CAFF] bg-[#D1E9FF]/30 text-[#1849A9]'
-              : 'border-[#D5D7DA] text-[#414651]',
+              : 'border-gray-200 text-[#414651]',
           ]"
         >
           <input

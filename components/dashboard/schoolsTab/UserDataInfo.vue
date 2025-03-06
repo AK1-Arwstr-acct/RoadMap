@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-[#E9EAEB] px-5 py-4 bg-white rounded-2xl transition-all ease-in-out duration-200"
+    class="border-[1.5px] border-gray-200 px-5 py-4 bg-white rounded-2xl transition-all ease-in-out duration-200"
   >
     <div
       class="flex items-center gap-3 cursor-pointer"
@@ -30,7 +30,7 @@
           type="text"
           v-model="gpa"
           placeholder="Enter GPA"
-          class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+          class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           @input="gpaChanged"
         />
       </div>
@@ -77,7 +77,7 @@
                       selectedLocationOptions.includes(id)
                     )
                       ? 'border-[#1570EF] bg-[#1570EF]'
-                      : 'border-[#D5D7DA]',
+                      : 'border-gray-200',
                   ]"
                 >
                   <IconTick
@@ -134,7 +134,7 @@
       <div class="mt-6 flex gap-3">
         <button
           @click="resetUserData"
-          class="p-2.5 border border-[#D5D7DA] w-full rounded-lg font-semibold text-sm text-[#414651]"
+          class="p-2.5 border-[1.5px] border-gray-200 w-full rounded-lg font-semibold text-sm text-[#414651]"
         >
           Reset all
         </button>

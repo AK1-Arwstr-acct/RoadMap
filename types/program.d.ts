@@ -40,6 +40,7 @@ export interface ClassGrade {
 interface Address {
     city: string;
     country: string;
+    country_code: string;
     lat: string;
     lng: string;
     state: string;

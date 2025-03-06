@@ -9,7 +9,7 @@
       </p>
     </div>
     <div
-      class="remove-shadow-bg-white bg-white border border-[#E9EAEB] rounded-2xl"
+      class="remove-shadow-bg-white bg-white border-[1.5px] border-gray-200 rounded-2xl"
     >
       <div class="p-6 grid grid-cols-2 gap-6">
         <div class="">
@@ -21,7 +21,7 @@
             type="text"
             v-model="gpa"
             placeholder="Enter GPA"
-            class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+            class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
             @input="gpaChanged"
           />
         </div>
@@ -68,7 +68,7 @@
                               selectedLocationOptions.includes(id)
                             )
                               ? 'border-[#1570EF] bg-[#1570EF]'
-                              : 'border-[#D5D7DA]',
+                              : 'border-gray-200',
                           ]"
                   >
                     <IconTick
@@ -123,10 +123,10 @@
           />
         </div>
       </div>
-      <div class="flex justify-end gap-3 border-t border-[#E9EAEB] py-4 px-6">
+      <div class="flex justify-end gap-3 border-t-[1.5px] border-gray-200 py-4 px-6">
         <button
           @click="resetUserData"
-          class="py-2.5 px-4 border border-[#D5D7DA] w-fit rounded-lg font-semibold text-sm text-[#414651]"
+          class="py-2.5 px-4 border-[1.5px] border-gray-200 w-fit rounded-lg font-semibold text-sm text-[#414651]"
         >
           Cancel
         </button>

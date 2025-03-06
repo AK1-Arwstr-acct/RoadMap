@@ -1,12 +1,18 @@
 <template>
   <div
-    class="h-full w-[310px] px-4 py-6 flex flex-col justify-between gap-6 transition-all transform duration-500 ease-in-out border-r border-[#E9EAEB] overflow-y-auto no-scrollbar"
+    class="h-full py-6 flex flex-col justify-between gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
+    :class="[currentTab === 'sophie' ? 'w-[64px] px-3' : 'w-[224px] px-4']"
   >
     <div class="flex flex-col gap-6">
-      <div>
-        <NuxtLink to="/" class="flex gap-2.5 items-center">
-          <IconArrowsterLogo class="size-8" />
-          <NuxtImg class="w-32 invert" src="/images/logo/logo.svg" alt="Logo" />
+      <div :class="[activeTab !== 'sophie' ? 'px-2' : 'flex justify-center']">
+        <NuxtLink to="/" class="flex gap-2 items-center">
+          <IconArrowsterLogo class="size-8 min-w-8" />
+          <NuxtImg
+            v-if="currentTab !== 'sophie'"
+            class="w-24 invert"
+            src="/images/logo/logo.svg"
+            alt="Logo"
+          />
         </NuxtLink>
       </div>
       <!-- tabs -->
@@ -14,11 +20,15 @@
         <div
           v-for="(tab, idx) in tabList"
           :key="idx"
-          class="py-2 px-2 flex gap-3 items-center justify-start rounded-lg cursor-pointer overflow-hidden"
+          class="py-2 flex items-center rounded-lg cursor-pointer overflow-hidden"
           :class="[
             activeTab === tab.name
               ? 'text-[#1570EF] bg-[#EFF8FF]'
               : 'text-[#414651]',
+
+            activeTab === 'sophie'
+              ? 'px-2 justify-between'
+              : 'px-3 justify-start gap-3',
           ]"
           @click="updateTab(tab.name)"
         >
@@ -31,7 +41,10 @@
               ]"
             />
           </div>
-          <span class="font-medium text-base capitalize">
+          <span
+            v-if="currentTab !== 'sophie'"
+            class="font-medium text-base capitalize text-nowrap"
+          >
             {{
               tab.name === "application_tracker"
                 ? "Roadmap"

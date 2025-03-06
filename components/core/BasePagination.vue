@@ -1,8 +1,8 @@
 <template>
   <nav aria-label="Page navigation example">
-    <ul class="flex justify-center border border-[#e1e1e1] w-max rounded-lg">
+    <ul class="flex justify-center border-[1.5px] border-gray-200 w-max rounded-lg">
       <li
-        class="border-r border-[#e1e1e1] min-w-10 cursor-pointer"
+        class="border-r-[1.5px] border-gray-200 min-w-10 cursor-pointer"
         :class="{ 'pointer-events-none opacity-60': currentPage === 1 }"
       >
         <span
@@ -13,7 +13,7 @@
         </span>
       </li>
       <li
-        class="border-r border-[#e1e1e1] min-w-10 cursor-pointer"
+        class="border-r-[1.5px] border-gray-200 min-w-10 cursor-pointer"
         :class="{ 'bg-[#1570EF] text-white': pageNo === currentPage }"
         v-for="pageNo in makePageNumber"
         :key="pageNo"

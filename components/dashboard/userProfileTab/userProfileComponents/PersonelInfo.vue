@@ -1,9 +1,9 @@
 <template>
-  <div class="pt-[42px] border-t border-[#D5D7DA]">
+  <div class="pt-[42px] border-t-[1.5px] border-gray-200">
     <h3 class="text-2xl font-semibold text-[#181D27] mb-5">Personal info</h3>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-6">
       <div
-        class="border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 items-start"
+        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 items-start"
       >
         <span><IconHeartHexagon /></span>
         <div>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div
-        class="border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5"
+        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5"
       >
         <span><IconGraduationHat /></span>
         <div>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div
-        class="border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5"
+        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5"
       >
         <span><IconCoins /></span>
         <div>
@@ -36,7 +36,7 @@
         </div>
       </div>
       <div
-        class="border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 overflow-hidden"
+        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 overflow-hidden"
       >
         <span><IconBookmark /></span>
         <div class="flex-1">
@@ -47,7 +47,7 @@
         </div>
       </div>
       <div
-        class="lg:col-span-2 border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] flex items-center gap-4 px-6 pt-[18px] pb-3.5"
+        class="lg:col-span-2 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex items-center gap-4 px-6 pt-[18px] pb-3.5"
       >
         <span><IconGlobeNew /></span>
         <div>
@@ -67,7 +67,7 @@
       </div>
       <div
         v-if="userInfo?.educational_records.next_program_titles.length"
-        class="lg:col-span-2 border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] flex items-center gap-4 px-6 pt-[18px] pb-3.5"
+        class="lg:col-span-2 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex items-center gap-4 px-6 pt-[18px] pb-3.5"
       >
         <span><IconBookOpen /></span>
         <div>

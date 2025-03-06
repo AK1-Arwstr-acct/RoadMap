@@ -1,7 +1,7 @@
 <template>
   <div
     @click="schoolDetail"
-    class="bg-[#FFFEFC] border border-[#E9EAEB] rounded-2xl p-6 flex gap-6 cursor-pointer"
+    class="border-[1.5px] border-gray-200 rounded-2xl p-6 flex gap-6 cursor-pointer"
   >
     <div
       class="rounded-xl overflow-hidden min-w-[122px] w-[122px] h-[122px] flex justify-center items-center"
@@ -43,33 +43,17 @@
               class="size-4"
             />
             <p class="text-[#414651] text-sm font-medium text-nowrap">
-              {{ program.school.address.state }},
-              {{
-                program.school.address.country.toLowerCase().includes("kingdom")
-                  ? "UK"
-                  : program.school.address.country
-                      .toLowerCase()
-                      .includes("canada")
-                  ? "CA"
-                  : program.school.address.country
-                      .toLowerCase()
-                      .includes("australia")
-                  ? "AU"
-                  : program.school.address.country
-                      .toLowerCase()
-                      .includes("states")
-                  ? "US"
-                  : program.school.address.country
-                      .toLowerCase()
-                      .includes("europe")
-                  ? "EU"
-                  : ""
-              }}
+              {{ program.school.address.state }}
+              {{ program.school.address.country_code && `, ${program.school.address.country_code}` }}
             </p>
           </div>
         </div>
-        <p class="text-[#535862] mb-2.5 text-sm 2xl:text-base">{{ program.program_title }}</p>
-        <div class="flex items-center gap-6 font-medium mb-2 text-sm 2xl:text-base">
+        <p class="text-[#535862] mb-2.5 text-sm 2xl:text-base">
+          {{ program.program_title }}
+        </p>
+        <div
+          class="flex items-center gap-6 font-medium mb-2 text-sm 2xl:text-base"
+        >
           <div>
             <span class="text-[#717680] mr-2">SAT:</span>
             <span class="text-[#1570EF]">{{

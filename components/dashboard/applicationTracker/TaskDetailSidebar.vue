@@ -1,17 +1,24 @@
 <template>
-  <div class="min-w-[440px] h-full bg-white flex flex-col border-l border-[#E9EAEB]">
+  <div
+    class="min-w-[440px] h-full bg-white flex flex-col border-l-[1.5px] border-gray-200"
+  >
     <div class="m-6 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
-      <h3 class="text-[#414651] font-semibold text-xl">
-        {{ taskDetail?.title }}
-      </h3>
+      <div class="flex justify-between items-start gap-3">
+        <h3 class="text-[#414651] font-semibold text-xl">
+          {{ taskDetail?.title }}
+        </h3>
+        <div @click="emit('clearDetails')" class="cursor-pointer">
+          <IconCross fill="#414651" width="20" height="20" />
+        </div>
+      </div>
       <div class="flex flex-col gap-6">
         <a
-        v-for="(resource, idx) in taskDetail.resources"
-        :key="idx"
-        :href="resource.link"
-        target="_blank"
-          class="border border-[#E9EAEB] rounded-2xl py-3 pl-4 pr-[27px] flex items-center gap-4 cursor-pointer"
-          :class="{'hidden': !resource.link}"
+          v-for="(resource, idx) in taskDetail.resources"
+          :key="idx"
+          :href="resource.link"
+          target="_blank"
+          class="border-[1.5px] border-gray-200 rounded-2xl py-3 pl-4 pr-[27px] flex items-center gap-4 cursor-pointer"
+          :class="{ hidden: !resource.link }"
         >
           <div class="flex-1 space-y-2">
             <span class="bg-[#EFF8FF] py-0.5 px-2 rounded-full text-[#175CD3]">
@@ -49,11 +56,15 @@
         </ClientOnly>
       </div>
     </div>
-    <div class="border-t border-[#E9EAEB] p-6 space-y-4">
+    <div class="border-t-[1.5px] border-gray-200 p-6 space-y-4">
       <button
         @click="handelClick"
         class="rounded-lg py-2.5 px-4 flex justify-center items-center gap-2 text-sm font-semibold w-full"
-        :class="[taskDetail?.checked ? 'bg-[#EFF8FF] text-[#175CD3]': 'bg-[#1570EF] text-white']"
+        :class="[
+          taskDetail?.checked
+            ? 'bg-[#EFF8FF] text-[#175CD3]'
+            : 'bg-[#1570EF] text-white',
+        ]"
       >
         <span>
           Mark as {{ taskDetail?.checked ? "Incomplete" : "Complete" }}
@@ -61,8 +72,8 @@
         <IconTick stroke="#ffffff" />
       </button>
       <button
-      @click="navigateTo(localePath('/pricing'))"
-        class="border border-[#D5D7DA] rounded-lg py-2.5 px-4 text-sm text-[#414651] font-semibold w-full"
+        @click="navigateTo(localePath('/pricing'))"
+        class="border-[1.5px] border-gray-200 rounded-lg py-2.5 px-4 text-sm text-[#414651] font-semibold w-full"
       >
         {{ taskDetail.button_text }}
       </button>
@@ -71,9 +82,11 @@
 </template>
 <script setup lang="ts">
 import type { Task } from "~/types/dashboard";
+import useAppTrackerStore from "~/stores/AppTrackerStore";
 
 const emit = defineEmits(["clearDetails"]);
 
+const appTrackerStore = useAppTrackerStore();
 const { api } = useApi();
 const localePath = useLocalePath();
 
@@ -101,6 +114,8 @@ const handelClick = async () => {
 };
 
 onUnmounted(() => {
-  emit("clearDetails");
+  Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+    appTrackerStore.taskActiveStates[Number(key)] = false;
+  });
 });
 </script>

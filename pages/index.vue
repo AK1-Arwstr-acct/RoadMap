@@ -18,14 +18,14 @@
         <div class="mt-8 space-y-4">
           <NuxtLinkLocale to="/signup" class="block">
             <button
-              class="cursor-pointer w-full text-xl text-white bg-[#1570EF] border border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
+              class="cursor-pointer w-full text-xl text-white bg-[#1570EF] border-[1.5px] border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
             >
               {{ $t("discover.get_started") }}
             </button>
           </NuxtLinkLocale>
           <NuxtLinkLocale to="/login" class="block">
             <button
-              class="cursor-pointer w-full text-xl text-[#414651] border border-[#E1E1E1] rounded-lg font-semibold py-2.5 px-2 flex gap-2 justify-center items-center"
+              class="cursor-pointer w-full text-xl text-[#414651] border-[1.5px] border-gray-200 rounded-lg font-semibold py-2.5 px-2 flex gap-2 justify-center items-center"
             >
               {{ $t("discover.i_already_have_an_account") }}
             </button>

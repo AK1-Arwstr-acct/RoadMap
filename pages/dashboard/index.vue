@@ -1,7 +1,7 @@
 <template>
   <div class="h-dvh flex relative">
     <Sidebar :currentTab="currentTab" @updateTab="updateTab" />
-    <div class="flex-1 bg-[#FAFAFA] flex flex-col">
+    <div class="flex-1 flex flex-col">
       <DashboardNav @updateTab="updateTab" />
       <div class="flex-1 overflow-hidden">
         <Transition name="fade">
@@ -16,6 +16,25 @@
         </Transition>
       </div>
     </div>
+    <div
+      v-if="currentTab !== 'sophie'"
+      @click="openSophieModal = !openSophieModal"
+      class="size-14 absolute bottom-5 right-5 rounded-2xl bg-[#ED77FF] flex justify-center items-center shadow-md cursor-pointer"
+    >
+      <IconTabSophie class="text-white" width="32" height="32" />
+    </div>
+    <!-- sophie modal -->
+    <Transition name="fade">
+      <div
+        v-if="openSophieModal"
+        class="fixed bg-black/50 inset-0 backdrop-blur py-[60px] px-[68px]"
+      >
+        <ChatWithSophie
+          :isModal="true"
+          @openSophieModal="openSophieModal = false"
+        />
+      </div>
+    </Transition>
   </div>
 </template>
 <script setup lang="ts">
@@ -27,6 +46,7 @@ const appStore = useAppStore();
 const appTrackerStore = useAppTrackerStore();
 
 const currentTab = ref<TabName>("home");
+const openSophieModal = ref<boolean>(false);
 
 const updateTab = (value: TabName) => {
   currentTab.value = value;

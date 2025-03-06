@@ -2,7 +2,7 @@
   <section>
     <div
       @click="isOpen = !isOpen"
-      class="py-4 px-5 border border-[#D5D7DA] rounded-2xl bg-[#FFFEFC] flex items-center gap-2 cursor-pointer"
+      class="py-4 px-5 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFEFC] flex items-center gap-2 cursor-pointer"
     >
       <IconChevronDown
         stroke="#717680"
@@ -55,7 +55,7 @@
           :class="[
             appTrackerStore.taskActiveStates[task.id]
               ? 'border-2 border-[#2E90FA] bg-[#F5FAFF]'
-              : 'border-2 border-[#E9EAEB] bg-[#FFFFFF]',
+              : 'border-2 border-gray-200 bg-[#FFFFFF]',
           ]"
         >
           <input
@@ -97,11 +97,11 @@
             </div>
           </div>
           <div
-            class="size-6 rounded-full border flex justify-center items-center"
+            class="size-6 rounded-full border-[1.5px] flex justify-center items-center"
             :class="[
               task.checked
                 ? 'bg-[#1570EF] border-[#1570EF]'
-                : 'bg-white border-[#D5D7DA]',
+                : 'bg-white border-gray-200',
             ]"
           >
             <IconTick stroke="#ffffff" width="15" height="15" />
@@ -170,21 +170,13 @@ const categoryClass = (category: string) => {
 
 const handelTaskDetail = async (task: Task) => {
   const taskId = task.id;
-  if (appTrackerStore.taskActiveStates[taskId]) {
-    appTrackerStore.taskActiveStates[taskId] = false;
-    emit("openTaskDetail", undefined);
-  } else {
-    appTrackerStore.taskActiveStates[taskId] = true;
-    Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
-      if (Number(key) !== taskId) {
-        appTrackerStore.taskActiveStates[Number(key)] = false;
-      }
-    });
-    emit("openTaskDetail", task);
-  }
-  setTimeout(() => {
-    calculateHeight();
-  }, 1000);
+  appTrackerStore.taskActiveStates[taskId] = true;
+  Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+    if (Number(key) !== taskId) {
+      appTrackerStore.taskActiveStates[Number(key)] = false;
+    }
+  });
+  emit("openTaskDetail", task);
 };
 
 const filteredTask = (category: string) => {
@@ -207,5 +199,14 @@ watch(() => isOpen.value, calculateHeight);
 
 onMounted(() => {
   calculateHeight();
+  window.addEventListener("resize", calculateHeight);
+
+  const resizeObserver = new ResizeObserver(calculateHeight);
+  if (content.value) resizeObserver.observe(content.value);
+
+  onUnmounted(() => {
+    window.removeEventListener("resize", calculateHeight);
+    resizeObserver.disconnect();
+  });
 });
 </script>

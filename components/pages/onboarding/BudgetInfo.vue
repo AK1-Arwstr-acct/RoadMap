@@ -7,11 +7,11 @@
       <div v-for="(option, index) in budgetList" :key="index">
         <label
           :for="option.label"
-          class="flex items-center justify-between size-full font-medium rounded-xl cursor-pointer relative border p-4 transition-all ease-in-out duration-200"
+          class="flex items-center justify-between size-full font-medium rounded-xl cursor-pointer relative border-[1.5px] p-4 transition-all ease-in-out duration-200"
           :class="[
             selectedOptionId === option.value
               ? 'border-[#84CAFF] bg-[#D1E9FF]/30 text-[#1849A9]'
-              : 'border-[#D5D7DA] text-[#414651]',
+              : 'border-gray-200 text-[#414651]',
           ]"
         >
           <input

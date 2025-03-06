@@ -25,7 +25,7 @@
               type="text"
               v-model="userInput.name"
               :placeholder="t('signup.enter_your_name')"
-              class="mt-1 rounded-lg border-2 border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+              class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
             />
           </div>
           <div class="remove-shadow-bg-white">
@@ -37,7 +37,7 @@
               type="text"
               v-model="userInput.email"
               placeholder="nguyen@example.com"
-              class="mt-1 rounded-lg border-2 border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+              class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
             />
           </div>
           <div class="remove-shadow-bg-white">
@@ -56,7 +56,7 @@
                 :type="isShowPassword ? 'text' : 'password'"
                 v-model="userInput.password"
                 :placeholder="t('signup.create_a_password')"
-                class="mt-1 rounded-lg border-2 border-[#E1E1E1] py-2.5 pl-[14px] pr-8 w-full outline-none appearance-none text-gray-900"
+                class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 pl-[14px] pr-8 w-full outline-none appearance-none text-gray-900"
               />
             </div>
           </div>
@@ -81,7 +81,7 @@
         </div>
         <button
           @click="handleClick"
-          class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
+          class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
         >
            <IconGoogle />
           <span>{{ $t("signup.sign_up_with_google") }}</span>

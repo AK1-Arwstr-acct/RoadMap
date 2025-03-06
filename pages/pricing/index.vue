@@ -22,7 +22,10 @@
           <tbody>
             <tr>
               <td class="min-w-[500px] w-full"></td>
-              <td class="min-w-80 2xl:min-w-[450px]" :class="[selectedPlan === 2 ? 'bg-white': 'bg-[#F5FAFF]']">
+              <td
+                class="min-w-80 2xl:min-w-[450px] transition-all ease-in-out duration-150"
+                :class="[selectedPlan === 2 ? 'bg-white' : 'bg-[#F5FAFF]']"
+              >
                 <div>
                   <p class="text-[#414651] font-medium text-center">
                     Standard Plan
@@ -36,7 +39,10 @@
                   </button>
                 </div>
               </td>
-              <td class="min-w-80 2xl:min-w-[450px]" :class="[selectedPlan === 1 ? 'bg-white': 'bg-[#F5FAFF]']">
+              <td
+                class="min-w-80 2xl:min-w-[450px] transition-all ease-in-out duration-150"
+                :class="[selectedPlan === 1 ? 'bg-white' : 'bg-[#F5FAFF]']"
+              >
                 <div>
                   <p class="text-[#414651] font-medium text-center">
                     Advanced Plan
@@ -63,7 +69,7 @@
                   {{ plan.title }}
                 </p>
               </td>
-              <td :class="[selectedPlan === 2 ? 'bg-white': 'bg-[#F5FAFF]']">
+              <td :class="[selectedPlan === 2 ? 'bg-white' : 'bg-[#F5FAFF]']">
                 <p class="flex justify-center">
                   <IconCheckmark v-if="!plan.standardPlan" />
                   <span
@@ -77,7 +83,7 @@
                   </span>
                 </p>
               </td>
-              <td :class="[selectedPlan === 1 ? 'bg-white': 'bg-[#F5FAFF]']">
+              <td :class="[selectedPlan === 1 ? 'bg-white' : 'bg-[#F5FAFF]']">
                 <p class="flex justify-center">
                   <IconCheckmark v-if="!plan.standardPlan" />
                   <span
@@ -160,35 +166,41 @@
               </p>
             </div>
           </div>
-          <div class="col-span-3" :class="{
-            '-mt-8': stepCount === 2
-          }">
+          <div
+            ref="formWrapper"
+            class="col-span-3"
+            :class="{
+              '-mt-8': stepCount === 2,
+            }"
+          >
             <Transition name="fade">
               <!-- form -->
               <div v-if="stepCount === 1">
-                <JourneyForm @updateJourney="updateJourney" :selectedPlan="selectedPlan" />
+                <JourneyForm
+                  @updateJourney="updateJourney"
+                  :selectedPlan="selectedPlan"
+                />
               </div>
               <!-- chat -->
-              <div
-                v-else-if="stepCount === 2"
-                class="max-w-[484px] mx-auto"
-              >
-              <div class="size-full flex flex-col items-center text-center justify-center">
-                <NuxtImg
-                  src="/images/countries-application.png"
-                  class="w-[308px] h-[260px]"
-                />
-                <p class="font-medium text-3xl mt-4">
-                  Thank you for your submission! We've received your form and
-                  will contact you soon!
-                </p>
-                <button
-                  @click="navigateTo(localePath('/dashboard'))"
-                  class="bg-white text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8"
+              <div v-else-if="stepCount === 2" class="max-w-[484px] mx-auto">
+                <div
+                  class="size-full flex flex-col items-center text-center justify-center"
                 >
-                  Back to home
-                </button>
-              </div>
+                  <NuxtImg
+                    src="/images/countries-application.png"
+                    class="w-[308px] h-[260px]"
+                  />
+                  <p class="font-medium text-3xl mt-4">
+                    Thank you for your submission! We've received your form and
+                    will contact you soon!
+                  </p>
+                  <button
+                    @click="navigateTo(localePath('/dashboard'))"
+                    class="bg-white text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8"
+                  >
+                    Back to home
+                  </button>
+                </div>
               </div>
             </Transition>
           </div>
@@ -202,6 +214,7 @@ const localePath = useLocalePath();
 
 const stepCount = ref<number>(1);
 const selectedPlan = ref<number>(2);
+const formWrapper = ref<HTMLElement | null>(null);
 
 const stepsDetail = [
   {
@@ -300,7 +313,10 @@ const updateJourney = () => {
 };
 const selectPlan = (id: number) => {
   selectedPlan.value = id;
-}
+  nextTick(() => {
+    formWrapper.value?.scrollIntoView({ behavior: "smooth" });
+  });
+};
 // onMounted( async()=>{
 //   await api.get('/api/v1/plans/bundle')
 // })
@@ -309,7 +325,7 @@ const selectPlan = (id: number) => {
 .pricing-table table,
 td,
 th {
-  border: 1px solid #e9eaeb;
+  border: 1.5px solid #d1d5db;
 }
 .pricing-table td {
   padding: 24px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5 px-6 rounded-2xl border border-[#E9EAEB] bg-white">
+  <div class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-white">
     <p class="font-medium text-[#414651] text-sm">Majors (Pick up to 3 majors)</p>
     <div
       class="mt-[14px] space-y-4 max-h-[280px] overflow-y-auto custom-scrollbar"
@@ -26,12 +26,12 @@
             "
           />
           <div
-            class="size-5 flex justify-center items-center border-2 rounded-md transition-all border-[#D5D7DA]"
+            class="size-5 flex justify-center items-center border-2 rounded-md transition-all border-gray-200"
             :class="[
               selectedLPrograms.includes(option.value)
                 ? '!border-[#1570EF] bg-[#1570EF]'
                 : {
-                    'bg-[#F5F5F5] !border-[#E9EAEB]': isProgramDisable,
+                    'bg-[#F5F5F5] !border-gray-200': isProgramDisable,
                   },
             ]"
           >
@@ -56,7 +56,7 @@
       <button
         @click="submit"
         :disabled="selectedLPrograms.length < 1"
-        class="border border-[#D5D7DA] w-full py-2.5 rounded-lg font-semibold text-sm text-[#414651] disabled:opacity-80 flex gap-2 justify-center"
+        class="border-[1.5px] border-gray-200 w-full py-2.5 rounded-lg font-semibold text-sm text-[#414651] disabled:opacity-80 flex gap-2 justify-center"
       >
         Select Major
         <IconSpinner

@@ -19,7 +19,7 @@
             v-model="userInput.password"
             inputmode="decimal"
             :placeholder="t('forgotPassword.enter_your_password')"
-            class="mt-1 rounded-lg border-2 border-[#D5D7DA]' py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+            class="mt-1 rounded-lg border-2 border-gray-200' py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           />
         </div>
       </div>
@@ -32,7 +32,7 @@
           type="password"
           v-model="userInput.confirmPassword"
           :placeholder="t('forgotPassword.confirm_your_password')"
-          class="mt-1 rounded-lg border-2 border-[#D5D7DA] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+          class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
         />
       </div>
       <div class="mt-6">

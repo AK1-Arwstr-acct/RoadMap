@@ -18,11 +18,11 @@
             {{ $t("verifyPhone.phone_number") }}
           </label>
           <div
-            class="relative border rounded-lg flex items-center gap-2 p-1"
+            class="relative border-[1.5px] rounded-lg flex items-center gap-2 p-1"
             :class="[
               isFocused
                 ? '!border-[#84CAFF] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]'
-                : 'border-[#E1E1E1]',
+                : 'border-gray-200',
             ]"
             tabindex="0"
             @focus="handleFocus"
@@ -65,7 +65,7 @@
             </div>
             <Transition name="fade">
               <div
-                class="absolute left-0 top-[52px] w-full border border-[#e0e0e0] bg-white z-20 max-h-[260px] overflow-y-auto rounded-lg"
+                class="absolute left-0 top-[52px] w-full border-[1.5px] border-gray-200 bg-white z-20 max-h-[260px] overflow-y-auto rounded-lg"
                 v-if="isDropdownOpen"
                 v-click-outside="closeDropdown"
               >
@@ -109,7 +109,7 @@
             v-model="userInput.password"
             @keydown.enter="submit"
             :placeholder="t('login.enter_your_password')"
-            class="mt-1 rounded-lg border-2 border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+            class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           />
           <p
             @click="navigateTo(localePath('/forgot-password'))"
@@ -137,7 +137,7 @@
         </div>
         <button
           @click="handleClick"
-          class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-[#E1E1E1] rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
+          class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
         >
           <IconGoogle />
           <span>{{ $t("login.login_with_google") }}</span>

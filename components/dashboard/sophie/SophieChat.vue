@@ -18,14 +18,14 @@
           rows="3"
           v-model="inputQuestion"
           @keydown.enter="handleKeydown"
-          class="w-full px-3.5 py-2.5 border border-[#D5D7DA] rounded-xl mt-6 focus:outline-none resize-none placeholder:font-light min-h-fit"
+          class="w-full px-3.5 py-2.5 border-[1.5px] border-gray-200 rounded-xl mt-6 focus:outline-none resize-none placeholder:font-light min-h-fit"
         />
         <div class="flex justify-center flex-wrap mt-3 gap-3">
           <div
             v-for="(question, idx) in preQuestion"
             :key="idx"
             @click="handelPreQuestion(question)"
-            class="border border-[#D5D7DA] py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer"
+            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer"
           >
             {{ question }}
           </div>
@@ -85,7 +85,7 @@
           <Transition name="fade">
             <div
               v-if="isChatFull"
-              class="border border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex items-center justify-between gap-3"
+              class="border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex items-center justify-between gap-3"
             >
               <div class="text-[#414651] text-sm">
                 <p class="font-semibold mb-1.5">
@@ -96,7 +96,7 @@
                 </p>
               </div>
               <button
-                class="border border-[#D5D7DA] bg-white rounded-lg py-2 px-3.5"
+                class="border-[1.5px] border-gray-200 bg-white rounded-lg py-2 px-3.5"
               >
                 Upgrade now
               </button>
@@ -109,7 +109,7 @@
             v-model="inputQuestion"
             @keydown.enter="handleKeydown"
             :disabled="isChatLoading || isChatFull"
-            class="border border-[#D5D7DA] rounded-lg py-2.5 px-3.5 placeholder:font-thin w-full focus:outline-none"
+            class="border-[1.5px] border-gray-200 rounded-lg py-2.5 px-3.5 placeholder:font-thin w-full focus:outline-none"
             :class="{ '#FAFAFA': isChatFull }"
           />
         </div>
@@ -148,6 +148,10 @@ const props = defineProps({
     default: () => [],
   },
   isModal: {
+    type: Boolean,
+    default: false,
+  },
+  isSummarizeOverview: {
     type: Boolean,
     default: false,
   },
@@ -271,7 +275,7 @@ watch(
 
 onMounted(() => {
   uuid.value = uuidv4();
-  if (props.isModal) {
+  if (props.isSummarizeOverview) {
     inputQuestion.value = `Please summarize my school list \n  ${dashboardStore.overViews?.join("\n")}`;
     submit();
   }

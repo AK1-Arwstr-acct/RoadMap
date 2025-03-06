@@ -8,7 +8,7 @@
         Parent's phone number (Optional)
       </p>
       <div
-        class="flex mt-1.5 border border-[#D5D7DA] rounded-lg overflow-hidden"
+        class="flex mt-1.5 border-[1.5px] border-gray-200 rounded-lg overflow-hidden"
       >
         <div class="w-full flex">
           <p
@@ -28,24 +28,24 @@
     </div>
     <!-- school name -->
     <div>
-      <p class="text-[#414651] text-sm font-medium">Your school name</p>
+      <p class="text-[#414651] text-sm font-medium">Your school name *</p>
       <input
         type="text"
         placeholder="e.g. THPT Nhân Chính"
         v-model="formDetails.schoolName"
-        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border border-[#D5D7DA] rounded-lg"
+        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
       />
     </div>
     <!-- financial support -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        How much financial support can your family provide per year?
+        How much financial support can your family provide per year? *
       </p>
       <input
         type="text"
         placeholder="e.g. 500,000,000VND"
         v-model="formDetails.financialSupport"
-        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border border-[#D5D7DA] rounded-lg"
+        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
       />
       <p class="text-sm text-[#535862] mt-1.5">
         This information will help advisors guide you toward the most suitable
@@ -56,7 +56,7 @@
 
     <!-- countries -->
     <div>
-      <p class="font-medium text-[#414651] text-sm mb-4">I want to study at</p>
+      <p class="font-medium text-[#414651] text-sm mb-4">I want to study at *</p>
       <div class="flex gap-4 flex-wrap">
         <div
           v-for="(option, index) in studyDestinations"
@@ -83,7 +83,7 @@
               :class="[
                 formDetails.selectedLocationOptions.includes(option.title)
                   ? 'border-[#1570EF] bg-[#1570EF]'
-                  : 'border-[#D5D7DA]',
+                  : 'border-gray-200',
               ]"
             >
               <IconTick
@@ -101,19 +101,19 @@
     <!-- draem school -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        Share some of your dream schools here
+        Share some of your dream schools here *
       </p>
       <input
         type="text"
         placeholder="e.g. University of Sydney, University of Melbourne"
         v-model="formDetails.dreamSchool"
-        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border border-[#D5D7DA] rounded-lg"
+        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
       />
     </div>
     <!-- alternative contact -->
     <div>
       <p class="font-medium text-[#414651] text-sm mb-4">
-        Alternative contact platform (if you don’t use Zalo)
+        Alternative contact platform (if you don’t use Zalo) *
       </p>
       <div class="flex gap-4 flex-wrap">
         <div
@@ -141,7 +141,7 @@
               :class="[
                 formDetails.selectedAlternativeContact.includes(option.id)
                   ? 'border-[#1570EF] bg-[#1570EF]'
-                  : 'border-[#D5D7DA]',
+                  : 'border-gray-200',
               ]"
             >
               <IconTick
@@ -160,19 +160,19 @@
     <div>
       <p class="text-[#414651] text-sm font-medium">
         If you don't have a Vietnamese phone number, please leave your easiest
-        contact information below!
+        contact information below! *
       </p>
       <input
         type="text"
         placeholder="Account information (Phone number/Username)"
         v-model="formDetails.otherPhoneOrEmail"
-        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border border-[#D5D7DA] rounded-lg"
+        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
       />
     </div>
     <!-- arrowster Info -->
     <div class="">
       <p class="font-medium text-[#414651] text-sm mb-4">
-        How did you hear about Arrowster?
+        How did you hear about Arrowster? *
       </p>
       <div class="flex gap-4 flex-wrap">
         <div
@@ -200,7 +200,7 @@
               :class="[
                 formDetails.selectedArrowsterInfo.includes(option.title)
                   ? 'border-[#1570EF] bg-[#1570EF]'
-                  : 'border-[#D5D7DA]',
+                  : 'border-gray-200',
               ]"
             >
               <IconTick
@@ -325,7 +325,10 @@ const isDisable = computed(() => {
   return (
     !formDetails.value.schoolName ||
     !formDetails.value.financialSupport ||
+    !formDetails.value.dreamSchool ||
+    !formDetails.value.otherPhoneOrEmail ||
     formDetails.value.selectedLocationOptions.length === 0 ||
+    formDetails.value.selectedAlternativeContact.length === 0 ||
     formDetails.value.selectedArrowsterInfo.length === 0
   );
 });
@@ -335,7 +338,7 @@ const submit = async () => {
     isSubmitting.value = true;
     await api.post("/api/v1/plans/bundle", {
       plan_id: props.selectedPlan,
-      parent_phone: formDetails.value.phoneNumber,
+      parent_phone: formDetails.value.phoneNumber.length > 6 ? formDetails.value.phoneNumber : null ,
       current_school_name: formDetails.value.schoolName,
       financial_support_amount: formDetails.value.financialSupport,
       financial_support_amount_unit: "vnd",

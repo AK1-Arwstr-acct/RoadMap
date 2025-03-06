@@ -92,7 +92,7 @@
         </p>
       </div>
       <button
-        class="border border-[#D5D7DA] rounded-lg text-sm text-[#414651] font-semibold px-3.5 py-2 flex-shrink-0"
+        class="border-[1.5px] border-gray-200 rounded-lg text-sm text-[#414651] font-semibold px-3.5 py-2 flex-shrink-0"
       >
         Make my essay 10x better
       </button>

@@ -107,29 +107,23 @@ const categoryList = (application: Application | Application[]) => {
   }
 };
 
-const totaltasks1 = ref<number>(
-  categoryList(appTrackerStore.preApplication || []).length
-);
-const totaltasks2 = ref<number>(
-  categoryList(appTrackerStore.applicationList || []).length
-);
-const totaltasks3 = ref<number>(
-  categoryList(appTrackerStore.postApplication || []).length
-);
-
 onMounted(async () => {
   if (
     !appTrackerStore.preApplication &&
     !appTrackerStore.applicationList.length &&
     !appTrackerStore.postApplication
   ) {
-    appTrackerStore.getRoadmapData();
+    await appTrackerStore.getRoadmapData();
   }
 
-  if (totaltasks1.value || totaltasks2.value || totaltasks3.value) {
-      emits("remainingTask", true);
-    } else {
-      emits("remainingTask", false);
-    }
+  if (
+    categoryList(appTrackerStore.preApplication || []).length ||
+    categoryList(appTrackerStore.applicationList || []).length ||
+    categoryList(appTrackerStore.postApplication || []).length
+  ) {
+    emits("remainingTask", true);
+  } else {
+    emits("remainingTask", false);
+  }
 });
 </script>

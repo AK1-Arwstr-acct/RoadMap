@@ -1,6 +1,6 @@
 <template>
   <div class="pt-4 h-full flex flex-col">
-    <div class="sticky top-0 bg-[#FAFAFA] pt-4 pb-4" >
+    <div class="sticky top-0 pt-4 pb-4 bg-white" >
       <h1 class="text-[#181D27] text-2xl font-semibold">
         Let's find your perfect school match!
       </h1>
@@ -87,7 +87,7 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import SchoolDetailModal from "~/components/dashboard/schoolsTab/SchoolDetailModal.vue";
+import SchoolDetailModal from "~/components/dashboard/SchoolsTab/SchoolDetailModal.vue";
 import IconRankDown from "~/components/icons/IconRankDown.vue";
 import IconRankUp from "~/components/icons/IconRankUp.vue";
 import IconPriceDown from "~/components/icons/IconPriceDown.vue";

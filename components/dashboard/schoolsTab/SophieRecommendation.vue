@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-5 px-4 bg-[#EEF4FF] border border-[#E0EAFF] rounded-lg space-y-5"
+    class="py-5 px-4 bg-[#EEF4FF] border-[1.5px] border-[#E0EAFF] rounded-lg space-y-5"
   >
     <div class="w-full h-2 rounded-full bg-[#D1E9FF]">
       <div

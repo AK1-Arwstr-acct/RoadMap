@@ -6,7 +6,9 @@
         Update your photo and personal details here.
       </p>
     </div>
-    <div class="bg-white shadow-sm mt-6 rounded-xl border border-[#E9EAEB]">
+    <div
+      class="bg-white shadow-sm mt-6 rounded-xl border-[1.5px] border-gray-200"
+    >
       <div class="p-6 flex flex-col gap-6">
         <div class="sm:flex gap-6">
           <div class="sm:w-1/2 mb-6 sm:mb-0">
@@ -15,7 +17,7 @@
               type="text"
               v-model="userInitialData.name"
               placeholder="Enter Name"
-              class="w-full mt-1.5 px-3.5 py-2.5 border border-[#D5D7DA] text-[#181D27] rounded-lg outline-none"
+              class="w-full mt-1.5 px-3.5 py-2.5 border-[1.5px] border-gray-200 text-[#181D27] rounded-lg outline-none"
             />
           </div>
           <div class="sm:w-1/2">
@@ -28,7 +30,7 @@
         </div>
         <div>
           <label class="block text-[#535862] font-semibold">Phone number</label>
-          <div class="flex mt-1.5 border border-[#D5D7DA] rounded-lg">
+          <div class="flex mt-1.5 border-[1.5px] border-gray-200 rounded-lg">
             <div class="relative w-fit">
               <!-- <select
                 class="px-3.5 py-2.5 text-[#181D27] rounded-l-lg outline-none appearance-none"
@@ -53,7 +55,7 @@
         <div>
           <label class="block text-[#535862] font-semibold">Email</label>
           <div
-            class="mt-1 px-3.5 py-2.5 flex items-center gap-2 border border-[#D5D7DA] rounded-lg"
+            class="mt-1 px-3.5 py-2.5 flex items-center gap-2 border-[1.5px] border-gray-200 rounded-lg"
           >
             <span><IconEmail /></span>
             <input
@@ -62,15 +64,17 @@
               class="w-full text-[#181D27] outline-none"
             />
           </div>
-          <!-- <p
+          <p
             v-if="!appStore.userData?.isEmailVerified"
             class="text-sm text-[#535862] mt-1"
           >
             Your email has not been confirmed.
-            <a href="#" class="text-sm text-[#535862] border-b border-[#535862]"
-              >Verify it now</a
+            <span
+              @click="verifyEmail"
+              class="text-sm text-[#535862] border-b-[1.5px] border-[#535862] cursor-pointer"
+              >Verify it now</span
             >
-          </p> -->
+          </p>
         </div>
         <div>
           <label class="block text-[#535862] font-semibold"
@@ -80,10 +84,15 @@
             <input
               v-model="userInitialData.currentPassword"
               :type="isShowPassword ? 'text' : 'password'"
-              class="w-full mt-1.5 px-3.5 py-2.5 text-[#181D27] border border-[#D5D7DA] rounded-lg outline-none"
+              class="w-full mt-1.5 px-3.5 py-2.5 text-[#181D27] border-[1.5px] border-gray-200 rounded-lg outline-none"
             />
-            <span @click="isShowPassword = !isShowPassword" class="absolute right-3 top-6 cursor-pointer">
-              <component :is="!isShowPassword ? IconPasswordEye :IconOpenEye " />
+            <span
+              @click="isShowPassword = !isShowPassword"
+              class="absolute right-3 top-6 cursor-pointer"
+            >
+              <component
+                :is="!isShowPassword ? IconPasswordEye : IconOpenEye"
+              />
             </span>
           </div>
         </div>
@@ -93,25 +102,32 @@
             <input
               v-model="userInitialData.newPassword"
               :type="isShowPassword ? 'text' : 'password'"
-              class="w-full mt-1.5 px-3.5 py-2.5 border border-[#D5D7DA] rounded-lg text-[#181D27] outline-none"
+              class="w-full mt-1.5 px-3.5 py-2.5 border-[1.5px] border-gray-200 rounded-lg text-[#181D27] outline-none"
             />
-            <span @click="isShowPassword = !isShowPassword" class="absolute right-3 top-6 cursor-pointer">
-              <component :is="!isShowPassword ? IconPasswordEye :IconOpenEye " />
+            <span
+              @click="isShowPassword = !isShowPassword"
+              class="absolute right-3 top-6 cursor-pointer"
+            >
+              <component
+                :is="!isShowPassword ? IconPasswordEye : IconOpenEye"
+              />
             </span>
           </div>
         </div>
       </div>
-      <div class="flex justify-end gap-2 px-6 py-4 border-t border-[#E9EAEB] text-sm">
+      <div
+        class="flex justify-end gap-2 px-6 py-4 border-t-[1.5px] border-gray-200 text-sm"
+      >
         <button
           @click="resetValues"
-          class="px-4 py-2.5 text-[#414651] font-semibold border border-[#D5D7DA] rounded-lg"
+          class="px-4 py-2.5 text-[#414651] font-semibold border-[1.5px] border-gray-200 rounded-lg"
         >
           Cancel
         </button>
         <button
           @click="submit"
           :disabled="disableSubmit"
-          class="px-4 py-2.5 text-white font-semibold bg-[#1570EF] disabled:bg-[#B2DDFF] border border-[#B2DDFF] rounded-lg"
+          class="px-4 py-2.5 text-white font-semibold bg-[#1570EF] disabled:bg-[#B2DDFF] border-[1.5px] border-[#B2DDFF] rounded-lg"
         >
           Save changes
         </button>
@@ -124,8 +140,8 @@ import useDashboardStore from "~/stores/dashboardStore";
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
 import type { ClassGrades, CurrentClassGrade, UserData } from "~/types/home";
-import IconPasswordEye from "~/components/icons/IconPasswordEye.vue"
-import IconOpenEye from "~/components/icons/IconOpenEye.vue"
+import IconPasswordEye from "~/components/icons/IconPasswordEye.vue";
+import IconOpenEye from "~/components/icons/IconOpenEye.vue";
 
 const appStore = useAppStore();
 const dashboardStore = useDashboardStore();
@@ -218,6 +234,19 @@ const disableSubmit = computed(() => {
     );
   }
 });
+
+const verifyEmail = async () => {
+  try {
+    await api.get('/api/v1/verify-via-email-retry')
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
+};
 
 const submit = async () => {
   try {

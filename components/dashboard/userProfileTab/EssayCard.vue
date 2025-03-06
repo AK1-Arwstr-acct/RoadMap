@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-[#D5D7DA] rounded-2xl bg-[#FFFFFF] px-6 py-5 text-justify cursor-pointer"
+    class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] px-6 py-5 text-justify cursor-pointer"
   >
     <h3 class="text-lg font-semibold text-[#181D27] mb-4">
       {{ essay.title }}

@@ -7,11 +7,11 @@
       <div v-for="(option, index) in programListOptions" :key="index">
         <label
           :for="option.label"
-          class="flex items-center justify-between size-full font-medium rounded-xl cursor-pointer relative border py-4 pl-4 pr-5 transition-all ease-in-out duration-200"
+          class="flex items-center justify-between size-full font-medium rounded-xl cursor-pointer relative border-[1.5px] py-4 pl-4 pr-5 transition-all ease-in-out duration-200"
           :class="[
             selectedProgramId === Number(option.value)
               ? 'border-[#84CAFF] bg-[#D1E9FF]/30 text-[#1849A9]'
-              : 'border-[#D5D7DA] text-[#414651]',
+              : 'border-gray-200 text-[#414651]',
           ]"
         >
           <input
@@ -31,7 +31,7 @@
             :class="[
               selectedProgramId === Number(option.value)
                 ? 'bg-[#1570EF]'
-                : 'border-[#D5D7DA] border-2',
+                : 'border-gray-200 border-2',
             ]"
           >
             <IconTick width="16" height="16" stroke="#ffffff" />

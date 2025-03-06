@@ -3,7 +3,7 @@
     <div
       @click="isDropdownOpen = !isDropdownOpen"
       @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
-      class="bg-white rounded-xl border-[1.5px] border-[#e0e0e0] py-2.5 px-4 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer"
+      class="bg-white rounded-xl border-[1.5px] border-gray-200 py-2.5 px-4 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer"
       :class="{
         'shadow-[0px_0px_0px_4px_rgba(225,225,225,0.24)]': isDropdownOpen,
       }"
@@ -30,7 +30,7 @@
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute right-0 w-[240px] border border-[#e0e0e0] bg-white z-20 overflow-y-auto px-1.5 py-1.5 rounded-xl top-[54px]"
+      class="absolute right-0 w-[240px] border-[1.5px] border-gray-200 bg-white z-20 overflow-y-auto px-1.5 py-1.5 rounded-xl top-[54px]"
     >
       <div
         v-for="(item, index) in ALL_LOCALES"

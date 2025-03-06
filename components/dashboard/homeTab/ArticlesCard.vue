@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-[#E9EAEB] rounded-2xl p-6">
+  <div class="border-[1.5px] border-gray-200 rounded-2xl p-6">
     <NuxtImg
       :src="articleDetail.image"
       alt="article image"
@@ -19,8 +19,8 @@
     <button
     @click="handleClick"
       :class="[
-        'py-2 w-full block mt-5 text-center rounded-lg cursor-pointer border text-sm',
-        isUpgradePlan ? 'bg-[#1570EF] text-white border-[$1570EF]' : 'border-[#D5D7DA] text-[#535862]',
+        'py-2 w-full block mt-5 text-center rounded-lg cursor-pointer border-[1.5px] text-sm',
+        isUpgradePlan ? 'bg-[#1570EF] text-white border-[$1570EF]' : 'border-gray-200 text-[#535862]',
       ]"
     >
       {{ articleDetail.buttonText }}
@@ -28,8 +28,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { handleError } from 'vue';
-
 const localePath = useLocalePath();
 
 const props = defineProps({

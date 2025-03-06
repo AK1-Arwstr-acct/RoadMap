@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#EEF4FF] border border-[#E0EAFF] rounded-lg py-5 px-4">
+  <div class="bg-[#EEF4FF] border-[1.5px] border-[#E0EAFF] rounded-lg py-5 px-4">
     <div class="flex items-center justify-between gap-3">
       <p class="text-[#181D27] text-sm font-semibold">Why These Schools?</p>
       <div @click="openSophieModal = true" class="cursor-pointer">
@@ -20,6 +20,7 @@
       >
         <ChatWithSophie
           :isModal="true"
+          :isSummarizeOverview="true"
           @openSophieModal="openSophieModal = false"
         />
       </div>

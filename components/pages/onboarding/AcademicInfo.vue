@@ -26,7 +26,7 @@
             type="text"
             v-model="academicInfo.gpa"
             :placeholder="t('onboarding.e_g_7_0')"
-            class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+            class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           />
           <div
             class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -44,7 +44,7 @@
           type="text"
           v-model="academicInfo.ielts"
           :placeholder="t('onboarding.e_g_7_0')"
-          class="mt-1 rounded-lg border-2 shadow-sm border-[#E1E1E1] py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+          class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
         />
       </div>
       <button

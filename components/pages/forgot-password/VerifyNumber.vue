@@ -101,7 +101,7 @@ const inputclasses = computed(() => {
   return [
     "focus:caret-transparent text-[#1570EF] text-5xl placeholder:text-5xl text-center focus:placeholder:text-[#1570EF] w-16 h-16 md:w-20 md:h-20 rounded-[10px] outline-none focus:border-[#84CAFF] focus:shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)] transition-all ease-in-out duration-200",
     isValid.value
-      ? "border border-[#D0D5DD] text-[#9CA3AF]"
+      ? "border-[1.5px] border-[#D0D5DD] text-[#9CA3AF]"
       : "border-2 border-[#F76369] placeholder:text-[#F76369] text-[#F76369]",
   ].join(" ");
 });

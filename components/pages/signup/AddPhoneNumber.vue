@@ -14,11 +14,11 @@
           {{ $t("verifyPhone.phone_number") }}
         </label>
         <div
-          class="relative border rounded-lg flex items-center gap-2 p-1"
+          class="relative border-[1.5px] rounded-lg flex items-center gap-2 p-1"
           :class="[
             isFocused
               ? '!border-[#84CAFF] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]'
-              : 'border-[#E1E1E1]',
+              : 'border-gray-200',
           ]"
           tabindex="0"
           @focus="handleFocus"
@@ -62,11 +62,11 @@
           </div>
           <Transition name="fade">
             <div
-              class="absolute left-0 top-[52px] w-full border border-[#e0e0e0] bg-white z-20 max-h-[260px] overflow-y-auto rounded-lg"
+              class="absolute left-0 top-[52px] w-full border-[1.5px] border-gray-200 bg-white z-20 max-h-[260px] overflow-y-auto rounded-lg"
               v-if="isDropdownOpen"
               v-click-outside="closeDropdown"
             >
-              <!-- <div class="border-b border-[#E0E0E0] p-2 sticky -top-0.5 sm:top-0 bg-white flex gap-[5px]">
+              <!-- <div class="border-b-[1.5px] border-gray-200 p-2 sticky -top-0.5 sm:top-0 bg-white flex gap-[5px]">
                                             <IconSearch />
                                             <input type="text" placeholder="Search for country" v-model="search"
                                                 class="w-full outline-none" />

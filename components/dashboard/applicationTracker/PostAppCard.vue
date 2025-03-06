@@ -55,7 +55,7 @@
       </div>
       <button
         @click="emit('updateStep')"
-        class="bg-white text-[#1570EF] font-semibold border border-white rounded-xl px-5 py-3 w-full"
+        class="bg-white text-[#1570EF] font-semibold border-[1.5px] border-white rounded-xl px-5 py-3 w-full"
       >
         <span
           class="text-[#DC6803]"
