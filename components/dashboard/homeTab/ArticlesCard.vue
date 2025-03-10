@@ -1,11 +1,9 @@
 <template>
   <div class="border-[1.5px] border-gray-200 rounded-2xl p-6">
-    <NuxtImg
+    <img
       :src="articleDetail.image"
       alt="article image"
       class="w-full object-cover object-top rounded-lg"
-      loading="eager"
-      preload
     />
     <div class="mt-5 flex flex-col gap-2">
       <h2

@@ -7,13 +7,11 @@
       <div :class="[activeTab !== 'sophie' ? 'px-2' : 'flex justify-center']">
         <div @click="handleLogo" class="flex gap-2 items-center cursor-pointer">
           <IconArrowsterLogo class="size-8 min-w-8" />
-          <NuxtImg
+          <img
             v-if="currentTab !== 'sophie'"
             class="w-24"
             src="/images/logo/logo.svg"
             alt="Logo"
-            loading="eager"
-            preload
           />
         </div>
       </div>

@@ -6,12 +6,10 @@
     >
       <div class="flex justify-between items-start">
         <NuxtLink to="/" class="flex gap-2 items-center">
-          <NuxtImg 
+          <img 
             src="/images/logo/logo.svg"
             alt="Logo"
             class="w-44 h-7"
-            loading="eager"
-            preload
           />
         </NuxtLink>
         <div @click="navigateTo(localePath('/dashboard'))" class="cursor-pointer">
@@ -20,11 +18,9 @@
       </div>
       <div class="flex-1 md:p-6 flex justify-center items-center">
         <div class="flex flex-col gap-8 items-center max-w-[668px]">
-          <NuxtImg
+          <img
             src="/images/pre-application.png"
             class="w-[536px]"
-            loading="eager"
-            preload
           />
           <div class="">
             <h1 class="text-[#181D27] font-semibold text-2xl text-center sm:text-[34px]">

@@ -3,12 +3,10 @@
     <!-- question -->
     <div class="flex items-center gap-3">
       <div class="size-8 rounded-full bg-black overflow-hidden">
-        <NuxtImg
+        <img
           src="/images/chat-bot.png"
           alt="chat bot"
           class="object-cover object-center size-full"
-          loading="eager"
-          preload
         />
       </div>
       <p class="text-[#414651]">

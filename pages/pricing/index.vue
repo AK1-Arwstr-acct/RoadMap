@@ -194,11 +194,9 @@
                 <div
                   class="size-full flex flex-col items-center text-center justify-center"
                 >
-                  <NuxtImg
+                  <img
                     src="/images/countries-application.png"
                     class="w-[308px] h-[260px]"
-                    loading="eager"
-                    preload
                   />
                   <p class="font-medium text-3xl mt-4">
                     Thank you for your submission! We've received your form and

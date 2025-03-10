@@ -2,11 +2,9 @@
   <div class="h-screen min-h-fit w-full flex justify-center items-center px-5">
     <div class="w-fit space-y-8">
       <div>
-        <NuxtImg 
+        <img 
           src="/images/v-room.png"
           alt="Vroom Vroom"
-          loading="eager"
-          preload
         />
       </div>
       <div class="px-14">

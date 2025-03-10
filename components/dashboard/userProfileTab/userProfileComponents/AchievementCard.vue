@@ -10,12 +10,10 @@
     <div
       :class="[isOngoingBehaviour ? 'min-w-[118px] w-[118px]' : 'size-[90px]']"
     >
-      <NuxtImg
+      <img
         :src="imageSrc"
         alt="Achievements career image"
         class="object-contain size-full"
-        loading="eager"
-        preload
       />
     </div>
     <div class="w-full py-4">

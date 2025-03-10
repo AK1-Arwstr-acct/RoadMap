@@ -4,13 +4,11 @@
     :class="[checkCompletedTask ? 'bg-[#12B76A]' : 'bg-[#F5F5F5]']"
   >
     <div class="flex justify-center items-center">
-      <NuxtImg
+      <img
         src="/images/countries-application.png"
         alt="Application"
         class="w-full h-full max-h-[274px] object-contain"
         :class="{ grayscale: !checkCompletedTask }"
-        loading="eager"
-        preload
       />
     </div>
     <div class="">

@@ -9,12 +9,10 @@
       }"
     >
       <div class="size-5 rounded-full overflow-hidden">
-        <NuxtImg
+        <img
           :src="selectedOption?.icon"
           alt=""
           class="size-full object-cover"
-          loading="eager"
-          preload
         />
       </div>
       <div class="flex-1">
