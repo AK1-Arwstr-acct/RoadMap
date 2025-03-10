@@ -61,10 +61,10 @@ const onSubmit = async () => {
   try {
     scrollDown();
     isChatLoading.value = true;
-    const response = await api.get(`/api/v1/ai-conversation/essay`);
+    const response = await api.get(`/api/v1/ai-conversation/generate_an_essay`);
     isChatLoading.value = false;
     if (response) {
-      // essay.value = response.data.data;
+      essay.value = response.data.data;
     }
     scrollDown();
   } catch (error) {
