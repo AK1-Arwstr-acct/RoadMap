@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-16 pb-[312px]">
+  <div class="flex flex-col gap-16">
     <!-- ongoing tasks -->
     <div v-show="isRemainingTask">
       <h2 class="text-[#181D27] text-xl font-semibold mb-5">Ongoing journey</h2>
