@@ -9,6 +9,7 @@
         :src="coverPhotoPreview"
         alt="Cover Picture"
         class="size-full object-cover object-center"
+        loading="eager"
         preload
       />
       <NuxtImg
@@ -16,6 +17,7 @@
         :src="'/images/v-room.png'"
         alt="Profile Picture"
         class="object-contain transform scale-150 -translate-x-20 translate-y-3"
+        loading="eager"
         preload
       />
       <input
@@ -48,6 +50,7 @@
               :src="imagePreview || ''"
               alt="Profile Picture"
               class="object-cover"
+              loading="eager"
               preload
             />
             <div

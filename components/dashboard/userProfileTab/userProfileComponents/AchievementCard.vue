@@ -14,6 +14,7 @@
         :src="imageSrc"
         alt="Achievements career image"
         class="object-contain size-full"
+        loading="eager"
         preload
       />
     </div>

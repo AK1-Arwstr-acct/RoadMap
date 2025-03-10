@@ -83,6 +83,7 @@
                     :src="country.flag"
                     :alt="`${country.title}_flag`"
                     class="h-6 w-6"
+                    loading="eager"
                     preload
                   />
                 </div> -->

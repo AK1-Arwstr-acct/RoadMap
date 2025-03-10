@@ -197,6 +197,7 @@
                   <NuxtImg
                     src="/images/countries-application.png"
                     class="w-[308px] h-[260px]"
+                    loading="eager"
                     preload
                   />
                   <p class="font-medium text-3xl mt-4">

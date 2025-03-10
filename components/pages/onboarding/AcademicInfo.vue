@@ -5,6 +5,7 @@
         src="/images/tell-me-more.png"
         alt="Tell Me More"
         class="w-full size-full object-contain"
+        loading="eager"
         preload
       />
     </div>

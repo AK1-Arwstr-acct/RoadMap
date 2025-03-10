@@ -13,6 +13,7 @@
           :src="selectedOption?.icon"
           alt=""
           class="size-full object-cover"
+          loading="eager"
           preload
         />
       </div>

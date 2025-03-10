@@ -10,6 +10,7 @@
         :src="program.school.avatar"
         :alt="program.school.name"
         class="size-full object-contain"
+        loading="eager"
         preload
       />
     </div>

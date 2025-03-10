@@ -9,6 +9,7 @@
         alt="Application"
         class="w-full h-full max-h-[274px] object-contain"
         :class="{ grayscale: !checkCompletedTask }"
+        loading="eager"
         preload
       />
     </div>

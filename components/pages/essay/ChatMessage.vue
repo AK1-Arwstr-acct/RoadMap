@@ -7,6 +7,7 @@
           src="/images/chat-bot.png"
           alt="chat bot"
           class="object-cover object-center size-full"
+          loading="eager"
           preload
         />
       </div>

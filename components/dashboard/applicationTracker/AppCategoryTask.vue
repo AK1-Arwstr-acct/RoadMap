@@ -74,6 +74,7 @@
               :src="imageSrc"
               alt="task logo"
               class="size-full object-contain"
+              loading="eager"
               preload
             />
           </div>
