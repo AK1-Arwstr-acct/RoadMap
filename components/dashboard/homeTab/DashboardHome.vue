@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex gap-16 size-full p-8 bg-white"
+    class="flex gap-16 w-full p-8 bg-white"
   >
     <div class="flex-1">
         <HomeDetail />

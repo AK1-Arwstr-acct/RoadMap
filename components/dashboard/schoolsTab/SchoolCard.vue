@@ -58,19 +58,19 @@
           <div>
             <span class="text-[#717680] mr-2">SAT:</span>
             <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.sat || "Updating"
+              program.school.admission_stats.average_scores.sat || "Coming Soon"
             }}</span>
           </div>
           <div>
             <span class="text-[#717680] mr-2">IELTS:</span>
             <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.ielts || "Updating"
+              program.school.admission_stats.average_scores.ielts || "Coming Soon"
             }}</span>
           </div>
           <div>
             <span class="text-[#717680] mr-2">GPA:</span>
             <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.gpa || "Updating"
+              program.school.admission_stats.average_scores.gpa || "Coming Soon"
             }}</span>
           </div>
         </div>
@@ -90,7 +90,7 @@
           <div>
             <span class="text-[#717680] mr-2">Ranking:</span>
             <span class="text-gray-900">{{
-              program.school_ranking || "Updating"
+              program.school_ranking || "Coming Soon"
             }}</span>
           </div>
         </div>

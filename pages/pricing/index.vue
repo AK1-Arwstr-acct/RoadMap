@@ -1,6 +1,6 @@
 <template>
   <main>
-    <section class="w-full mx-auto max-w-[1280px] px-10 mt-5">
+    <section class="2xl:max-w-full mx-auto max-w-[1280px] px-10 mt-5">
       <div class="flex justify-end">
         <span
           @click="navigateTo(localePath('/dashboard'))"
@@ -17,7 +17,9 @@
         <span class="text-[#1570EF]">500 students</span> toward their goals. See
         how our counsellor can help you!
       </p>
-      <div class="pt-8 overflow-x-auto pricing-table">
+      <div
+        class="pt-8 overflow-x-auto pricing-table"
+      >
         <table class="w-full border-collapse min-w-[800px]">
           <tbody>
             <tr>
@@ -27,12 +29,16 @@
                 :class="[selectedPlan === 2 ? 'bg-white' : 'bg-[#F5FAFF]']"
               >
                 <div>
-                  <p class="text-[#414651] font-medium text-center">
+                  <p class="text-[#414651] text-lg font-medium text-center">
                     Standard Plan
                   </p>
-                  <p class="text-lg font-semibold text-center mt-1">Free</p>
+                  <p
+                    class="text-[#181D27] text-3xl font-semibold text-center mt-1"
+                  >
+                    Free
+                  </p>
                   <button
-                    class="bg-[#1570EF] text-white p-2.5 rounded-lg w-full mt-4"
+                    class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-4 shadow-sm"
                     @click="selectPlan(1)"
                   >
                     Get started!
@@ -44,14 +50,16 @@
                 :class="[selectedPlan === 1 ? 'bg-white' : 'bg-[#F5FAFF]']"
               >
                 <div>
-                  <p class="text-[#414651] font-medium text-center">
+                  <p class="text-[#414651] text-lg font-medium text-center">
                     Advanced Plan
                   </p>
-                  <p class="text-lg font-semibold text-center mt-1">
+                  <p
+                    class="text-[#181D27] text-3xl font-semibold text-center mt-1"
+                  >
                     50,000,000 VND
                   </p>
                   <button
-                    class="bg-[#1570EF] text-white p-2.5 rounded-lg w-full mt-4"
+                    class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-4 shadow-sm"
                     @click="selectPlan(2)"
                   >
                     Get started!
@@ -75,7 +83,7 @@
                   <span
                     v-else
                     :class="{
-                      ' rounded-full bg-[#EFF8FF] text-[#175CD3] py-1 px-3':
+                      ' rounded-full bg-[#EFF8FF] text-[#175CD3] text-sm font-medium py-1 px-3':
                         plan.standardPlan.toLocaleLowerCase() === 'unlimited',
                     }"
                   >
@@ -89,7 +97,7 @@
                   <span
                     v-else
                     :class="{
-                      ' rounded-full bg-[#EFF8FF] text-[#175CD3] py-1 px-3 text-center':
+                      ' rounded-full bg-[#EFF8FF] text-[#175CD3] text-sm font-medium py-1 px-3 text-center':
                         plan.standardPlan.toLocaleLowerCase() === 'unlimited',
                     }"
                   >

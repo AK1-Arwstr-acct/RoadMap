@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-16 pb-16">
+  <div class="flex flex-col gap-16 pb-[312px]">
     <!-- ongoing tasks -->
     <div v-show="isRemainingTask">
       <h2 class="text-[#181D27] text-xl font-semibold mb-5">Ongoing journey</h2>
@@ -11,9 +11,9 @@
     </div>
     <!-- events -->
     <div>
-      <div class="flex justify-between items-center">
-        <p class="text-xl font-semibold text-[#181D27] mb-6">
-          Upcoming events and programs for you
+      <div class="flex justify-between items-center mb-5">
+        <p class="text-xl font-semibold text-[#181D27]">
+          Upcoming programs and resources for you
         </p>
         <a href="https://www.facebook.com/Arrowster.Official" target="_blank">
           <p class="font-semibold text-[#175CD3] cursor-pointer">View All</p>
@@ -22,7 +22,7 @@
       <div
         v-for="(item, index) in eventList"
         :key="index"
-        class="flex gap-6 border-[1.5px] border-gray-200 rounded-2xl p-6 mt-2 shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
+        class="flex gap-6 border-[1.5px] border-gray-200 rounded-2xl p-6 mb-6 shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
       >
         <img :src="item.image" alt="event" />
         <div class="flex flex-col gap-5 w-full">

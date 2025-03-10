@@ -16,7 +16,7 @@
       <p class="text-[#535862] font-medium">
         Acceptance Rate:
         <span class="text-[#1570EF] ml-2">{{
-          schoolData.admission_stats.acceptance_rate || "Updating"
+          schoolData.admission_stats.acceptance_rate || "Coming Soon"
         }}</span>
       </p>
       <p class="text-[#535862] font-medium">
@@ -27,7 +27,7 @@
           class="text-[#1570EF] px-2 border-r-[1.5px] border-gray-400 last:border-r-0 uppercase inline-block"
           >{{ `${key}: ` }}
           <span class="capitalize">
-            {{ score || "Updating" }}
+            {{ score || "Coming Soon" }}
           </span>
           </p
         >
@@ -40,13 +40,13 @@
         <p class="text-[#535862] font-medium">
           Employment Rate:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.career_outcomes.employment_rate || "Updating"
+            schoolData.career_outcomes.employment_rate || "Coming Soon"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Median Salary:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.career_outcomes.median_salary || "Updating"
+            schoolData.career_outcomes.median_salary || "Coming Soon"
           }}</span>
         </p>
       </div>
@@ -57,13 +57,13 @@
         <p class="text-[#535862] font-medium">
           Avg. Financial Aid:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.financial_and_aid_cost.average_financial_aid || "Updating"
+            schoolData.financial_and_aid_cost.average_financial_aid || "Coming Soon"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Housing & Meals:
           <span class="text-[#1570EF] ml-2">{{
-            schoolData.financial_and_aid_cost.housing_and_meal || "Updating"
+            schoolData.financial_and_aid_cost.housing_and_meal || "Coming Soon"
           }}</span>
         </p>
       </div>
@@ -89,14 +89,14 @@
           </div>
           <div class="flex items-center gap-2">
             <IconBuilding />
-            <span>{{ schoolData.campus_overview.type || "Updating" }}</span>
+            <span>{{ schoolData.campus_overview.type || "Coming Soon" }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconUsers />
             <span
             class="text-nowrap"
               >{{
-                schoolData.campus_overview.total_students || "Updating"
+                schoolData.campus_overview.total_students || "Coming Soon"
               }}
               students</span
             >
@@ -108,11 +108,11 @@
         <div class="flex gap-6 items-center text-[#535862] font-medium">
           <div class="flex items-center gap-2">
             <IconBus />
-            <span>{{ schoolData.surroundings.option_1 || "Updating" }}</span>
+            <span>{{ schoolData.surroundings.option_1 || "Coming Soon" }}</span>
           </div>
           <div class="flex items-center gap-2">
             <IconOutdoor />
-            <span>{{ schoolData.surroundings.option_2 || "Updating" }}</span>
+            <span>{{ schoolData.surroundings.option_2 || "Coming Soon" }}</span>
           </div>
         </div>
       </div>
@@ -121,13 +121,13 @@
         <p class="text-[#535862] font-medium">
           Housing:
           <span class="text-[#181D27] ml-2">{{
-            schoolData.campus_life.housing || "Updating"
+            schoolData.campus_life.housing || "Coming Soon"
           }}</span>
         </p>
         <p class="text-[#535862] font-medium">
           Extracurriculars:
           <span class="text-[#181D27] ml-2">{{
-            schoolData.campus_life.extra_curriculum || "Updating"
+            schoolData.campus_life.extra_curriculum || "Coming Soon"
           }}</span>
         </p>
       </div>
@@ -155,7 +155,7 @@
             >{{ schoolData.about.website }}
             </a>
             <p v-else class="text-[#535862]">
-              Updating
+              Coming Soon
             </p>
         </p>
         <p class="text-[#535862] flex items-center gap-2">
@@ -175,7 +175,7 @@
       </div>
     </div>
     <!-- button -->
-    <button class="text-white text-sm bg-[#1570EF] rounded-lg w-full py-2.5">
+    <button @click="handleClick" class="text-white text-sm bg-[#1570EF] rounded-lg w-full py-2.5">
       Scholarships for this school?
     </button>
   </div>
@@ -192,9 +192,15 @@ defineProps({
   },
 });
 
+const localePath = useLocalePath();
+
 let randomNumber = Math.floor(Math.random() * 25) + 1;
 
 const options = {
   html: true,
 };
+
+const handleClick = () => {
+  navigateTo(localePath('/pricing'))
+}
 </script>
