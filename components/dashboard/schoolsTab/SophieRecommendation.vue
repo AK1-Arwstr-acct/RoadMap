@@ -39,8 +39,10 @@
       </p>
     </div>
     <div class="flex justify-center">
-      <img 
+      <NuxtImg 
         src="/images/ai-recommendation.png" alt="Discover Journey" class="w-[164px]"
+        loading="eager"
+        preload
       />
     </div>
     <button 

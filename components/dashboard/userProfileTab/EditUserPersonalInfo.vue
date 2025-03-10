@@ -276,6 +276,7 @@ const submit = async () => {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
       showToast(errorMessage, {
+        autoClose: 5000,
         type: "error",
       });
     }

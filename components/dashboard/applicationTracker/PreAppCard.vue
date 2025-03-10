@@ -3,10 +3,12 @@
     class="bg-[#2E90FA] rounded-[32px] grid grid-cols-1 lg:grid-cols-2 items-center gap-4 pt-6 px-7 pb-7"
   >
     <div class="flex justify-center items-center">
-      <img
+      <NuxtImg
         src="/images/pre-application.png"
         alt="Pre - Application"
         class="w-full h-full max-h-[274px] object-contain"
+        loading="eager"
+        preload
       />
     </div>
     <div class="">

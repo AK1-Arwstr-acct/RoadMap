@@ -1,10 +1,12 @@
 <template>
   <div class="max-w-[1000px] w-full flex justify-center gap-12 lg:gap-[84px]">
     <div class="flex-1 hidden md:block">
-      <img
+      <NuxtImg
         src="/images/tell-me-more.png"
         alt="Tell Me More"
         class="w-full size-full object-contain"
+        loading="eager"
+        preload
       />
     </div>
     <div class="md:flex-1 space-y-5 md:space-y-8 w-[80%]">

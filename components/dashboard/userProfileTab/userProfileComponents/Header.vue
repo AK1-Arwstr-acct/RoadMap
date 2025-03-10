@@ -4,17 +4,21 @@
       class="group h-60 bg-[#E0EAFF] relative flex overflow-hidden rounded-xl mx-auto  max-w-[1050px]"
       :class="{ 'justify-end': !coverPhotoPreview }"
     >
-      <img
+      <NuxtImg
         v-if="coverPhotoPreview"
         :src="coverPhotoPreview"
         alt="Cover Picture"
         class="size-full object-cover object-center"
+        loading="eager"
+        preload
       />
-      <img
+      <NuxtImg
         v-else
         :src="'/images/v-room.png'"
         alt="Profile Picture"
         class="object-contain transform scale-150 -translate-x-20 translate-y-3"
+        loading="eager"
+        preload
       />
       <input
         type="file"
@@ -41,11 +45,13 @@
           <div
             class="relative rounded-[200px] min-w-[160px] w-[160px] h-[160px] overflow-hidden group"
           >
-            <img
+            <NuxtImg
               v-if="imagePreview"
               :src="imagePreview || ''"
               alt="Profile Picture"
               class="object-cover"
+              loading="eager"
+              preload
             />
             <div
               v-else

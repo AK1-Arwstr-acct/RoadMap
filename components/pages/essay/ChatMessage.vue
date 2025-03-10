@@ -3,10 +3,12 @@
     <!-- question -->
     <div class="flex items-center gap-3">
       <div class="size-8 rounded-full bg-black overflow-hidden">
-        <img
+        <NuxtImg
           src="/images/chat-bot.png"
           alt="chat bot"
           class="object-cover object-center size-full"
+          loading="eager"
+          preload
         />
       </div>
       <p class="text-[#414651]">
@@ -23,14 +25,13 @@
           @click="editMode = true"
           class="hidden cursor-pointer group-hover:block absolute left-1 top-1/2 transform -translate-y-1/2"
         />
-        <p class="py-3 px-4 rounded-lg w-fit bg-[#E8E8E8]/50 text-[#414651]">
-          {{ tempData }}
-        </p>
+        <div v-html="tempData" class="py-3 px-4 rounded-lg w-fit bg-[#E8E8E8]/50 text-[#414651]" />
       </div>
       <div v-else class="py-3 px-4 rounded-lg bg-[#E8E8E8]/50 border w-full">
-        <input
-          type="text"
-          v-model="tempData"
+        <div
+          ref="editableDiv"
+          contenteditable="true"
+          v-html="tempData"
           class="w-full text-[#414651] bg-transparent outline-none mb-3"
         />
         <div class="flex justify-end gap-3">
@@ -67,9 +68,13 @@ const props = defineProps({
 
 const tempData = ref<string>(props.answer);
 const editMode = ref<boolean>(false);
+const editableDiv = ref<HTMLDivElement | null>(null);
 
 const updateAnswer = () => {
-  emits("editAnswer", tempData.value);
+  if (editableDiv.value) {
+    tempData.value = editableDiv.value.innerText.trim();
+    emits("editAnswer", tempData.value);
+  }
   editMode.value = false;
 };
 

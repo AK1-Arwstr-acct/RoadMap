@@ -262,6 +262,7 @@ const updateUserData = async () => {
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
     showToast("Profile updated successfully", {
+      autoClose: 5000,
       type: "success",
     });
     await appStore.getUserData();

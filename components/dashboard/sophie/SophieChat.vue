@@ -5,10 +5,12 @@
         class="size-full flex flex-col items-center min-h-fit justify-center py-3 overflow-y-auto"
         v-if="completeChat.length === 0"
       >
-        <img
+        <NuxtImg
           src="/images/sophie-chat.png"
           alt="sophie"
           class="h-[242px] w-[252px]"
+          loading="eager"
+          preload
         />
         <span class="text-[#414651] text-xl font-medium mt-6">
           How can Sophie help you today?
@@ -49,10 +51,12 @@
               v-if="!chat.isSender"
               class="size-8 rounded-full bg-black overflow-hidden"
             >
-              <img
+              <NuxtImg
                 src="/images/chat-bot.png"
                 alt="chat bot"
                 class="object-cover object-center size-full"
+                loading="eager"
+                preload
               />
             </div>
             <div
@@ -71,10 +75,12 @@
             class="w-fit text-[#A4A7AE] font-thin flex items-center gap-3"
           >
             <div class="size-8 rounded-full bg-black overflow-hidden">
-              <img
+              <NuxtImg
                 src="/images/chat-bot.png"
                 alt="chat bot"
                 class="object-cover object-center size-full"
+                loading="eager"
+                preload
               />
             </div>
             <span> Sophie is checking your information... </span>

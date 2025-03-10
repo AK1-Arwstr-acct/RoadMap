@@ -70,10 +70,12 @@
             class="absolute top-3 right-3 appearance-none"
           />
           <div class="size-[90px]">
-            <img
+            <NuxtImg
               :src="imageSrc"
               alt="task logo"
               class="size-full object-contain"
+              loading="eager"
+              preload
             />
           </div>
           <div class="flex-1 space-y-2">

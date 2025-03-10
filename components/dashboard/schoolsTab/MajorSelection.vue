@@ -1,6 +1,11 @@
 <template>
-  <div class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-white">
-    <p class="font-medium text-[#414651] text-sm">Majors (Pick up to 3 majors)</p>
+  <div
+    v-if="majorProgramsList.length"
+    class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-white"
+  >
+    <p class="font-medium text-[#414651] text-sm">
+      Majors (Pick up to 3 majors)
+    </p>
     <div
       class="mt-[14px] space-y-4 max-h-[280px] overflow-y-auto custom-scrollbar"
     >
@@ -52,21 +57,6 @@
         </label>
       </div>
     </div>
-    <div class="mt-6">
-      <button
-        @click="submit"
-        :disabled="selectedLPrograms.length < 1"
-        class="border-[1.5px] border-gray-200 w-full py-2.5 rounded-lg font-semibold text-sm text-[#414651] disabled:opacity-80 flex gap-2 justify-center"
-      >
-        Select Major
-        <IconSpinner
-          v-if="isSubmitting"
-          class="size-4"
-          bgColor="#ffffff00"
-          stroke="#414651"
-        />
-      </button>
-    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -84,11 +74,12 @@ interface programOptions {
 
 const majorProgramsList = ref<programOptions[]>([]);
 const selectedLPrograms = ref<number[]>([]);
-const isSubmitting = ref<boolean>(false);
 
 const isProgramDisable = computed(() => {
   return selectedLPrograms.value.length === 3;
 });
+
+let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const toggleSelection = (id: number) => {
   if (selectedLPrograms.value.includes(id)) {
@@ -98,17 +89,21 @@ const toggleSelection = (id: number) => {
   } else {
     selectedLPrograms.value.push(id);
   }
+  if (debounceTimeout) {
+    clearTimeout(debounceTimeout);
+  }
+  debounceTimeout = setTimeout(async () => {
+    submit();
+  }, 1000);
 };
 
 const submit = async () => {
   try {
-    isSubmitting.value = true;
     await api.post("/api/v1/student/update-profile-basic-info", {
       cgpa: appStore.userData?.educational_records.cgpa,
       next_program_title_ids: selectedLPrograms.value,
     });
     appStore.getUserData();
-    isSubmitting.value = false;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -124,9 +119,7 @@ const getMajors = async () => {
     return;
   }
   try {
-    const response = await api.get(
-      "/api/v1/school/recommended/program-titles"
-    );
+    const response = await api.get("/api/v1/school/recommended/program-titles");
     if (response) {
       majorProgramsList.value = response.data.data.map(
         (item: { id: number; title: string }) => {
@@ -137,7 +130,10 @@ const getMajors = async () => {
         }
       );
     }
-    selectedLPrograms.value = appStore.userData.educational_records.next_program_titles.map((item) => item.id);
+    selectedLPrograms.value =
+      appStore.userData.educational_records.next_program_titles.map(
+        (item) => item.id
+      );
   } catch (error) {
     selectedLPrograms.value = [];
     if (axios.isAxiosError(error)) {
