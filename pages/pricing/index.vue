@@ -1,6 +1,6 @@
 <template>
   <main>
-    <section class="2xl:max-w-full mx-auto max-w-[1280px] px-10 mt-5">
+    <section class="w-full mx-auto max-w-[1216px] px-5 mt-8">
       <div class="flex justify-end">
         <span
           @click="navigateTo(localePath('/dashboard'))"
@@ -23,9 +23,9 @@
         <table class="w-full border-collapse min-w-[800px]">
           <tbody>
             <tr>
-              <td class="min-w-[500px] w-full"></td>
+              <td class="min-w-[358px] w-full"></td>
               <td
-                class="min-w-80 2xl:min-w-[450px] transition-all ease-in-out duration-150"
+                class="min-w-[358px] max-w-[358px] transition-all ease-in-out duration-150"
                 :class="[selectedPlan === 2 ? 'bg-white' : 'bg-[#F5FAFF]']"
               >
                 <div>
@@ -46,7 +46,7 @@
                 </div>
               </td>
               <td
-                class="min-w-80 2xl:min-w-[450px] transition-all ease-in-out duration-150"
+                class="min-w-[358px] max-w-[358px] transition-all ease-in-out duration-150"
                 :class="[selectedPlan === 1 ? 'bg-white' : 'bg-[#F5FAFF]']"
               >
                 <div>
@@ -70,7 +70,7 @@
             <tr
               v-for="(plan, idx) in plansList"
               :key="idx"
-              class="text-[#181D27] last:text-[#717680] text-sm text-center"
+              class="text-[#181D27] last:text-[#717680] text-center"
             >
               <td>
                 <p class="text-[#181D27] font-semibold sm:text-xl text-start">
@@ -144,7 +144,7 @@
       </div>
     </section>
     <section class="bg-[#1849A9]">
-      <div class="w-full mx-auto max-w-[1280px] px-10 py-24 text-white">
+      <div class="w-full mx-auto max-w-[1216px] px-5 py-24 mt-8 text-white">
         <div>
           <h2 class="text-3xl xl:text-4xl font-semibold mb-5">
             Let’s start your journey together!
@@ -155,7 +155,7 @@
           </p>
         </div>
         <!-- steps -->
-        <div class="grid grid-cols-1 lg:grid-cols-7 gap-5 mt-16">
+        <div class="grid grid-cols-1 lg:grid-cols-8 gap-5 mt-16">
           <div class="lg:col-span-4 flex flex-col gap-6">
             <div
               v-for="(setp, idx) in stepsDetail"
@@ -176,7 +176,7 @@
           </div>
           <div
             ref="formWrapper"
-            class="col-span-3"
+            class="col-span-4"
             :class="{
               '-mt-8': stepCount === 2,
             }"
