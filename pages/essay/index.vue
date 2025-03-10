@@ -6,7 +6,7 @@
     >
       <div class="flex justify-between items-start">
         <NuxtLink to="/" class="flex gap-2 items-center">
-          <NuxtImg class="w-44 h-7" src="/images/logo/logo.svg" alt="Logo" />
+          <NuxtImg loading="eager" class="w-44 h-7" src="/images/logo/logo.svg" alt="Logo" />
         </NuxtLink>
         <div @click="navigateTo(localePath('/dashboard'))" class="cursor-pointer">
           <IconCross fill="#717680" width="32" height="32" />
@@ -14,7 +14,7 @@
       </div>
       <div class="flex-1 md:p-6 flex justify-center items-center">
         <div class="flex flex-col gap-8 items-center max-w-[668px]">
-          <NuxtImg src="/images/pre-application.png" class="w-[536px]" />
+          <NuxtImg loading="eager" src="/images/pre-application.png" class="w-[536px]" />
           <div class="">
             <h1 class="text-[#181D27] font-semibold text-2xl text-center sm:text-[34px]">
               Welcome to Your Personal Essay Journey!

@@ -1,7 +1,7 @@
 <template>
   <div
     class="bg-white size-full overflow-hidden flex"
-    :class="{ 'rounded-xl drop-shadow-lg relative': isModal }"
+    :class="{ 'rounded-xl drop-shadow-lg relative max-w-[1302px] max-h-[904px] ': isModal }"
   >
     <div
       v-if="isModal"

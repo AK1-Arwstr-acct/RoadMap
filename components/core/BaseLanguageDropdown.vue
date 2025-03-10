@@ -13,6 +13,7 @@
           :src="selectedOption?.icon"
           alt=""
           class="size-full object-cover"
+          loading="eager"
         />
       </div>
       <div class="flex-1">
@@ -52,7 +53,7 @@
             class="truncate text-[#414651] font-medium flex items-center gap-2"
           >
             <div class="size-5 rounded-full overflow-hidden">
-              <NuxtImg :src="item?.icon" alt="" class="size-full object-cover" />
+              <NuxtImg loading="eager" :src="item?.icon" alt="" class="size-full object-cover" />
             </div>
             {{ item.label }}</span
           >

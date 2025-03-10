@@ -1,7 +1,7 @@
 <template>
-  <div class="pb-[42px]">
+  <div class="pb-[42px] px-4">
     <div
-      class="group h-60 bg-[#E0EAFF] relative flex overflow-hidden rounded-xl mx-5 lg:mx-10 xl:mx-20"
+      class="group h-60 bg-[#E0EAFF] relative flex overflow-hidden rounded-xl mx-auto  max-w-[1050px]"
       :class="{ 'justify-end': !coverPhotoPreview }"
     >
       <NuxtImg
@@ -9,12 +9,14 @@
         :src="coverPhotoPreview"
         alt="Cover Picture"
         class="size-full object-cover object-center"
+        loading="eager"
       />
       <NuxtImg
         v-else
         :src="'/images/v-room.png'"
         alt="Profile Picture"
         class="object-contain transform scale-150 -translate-x-20 translate-y-3"
+        loading="eager"
       />
       <input
         type="file"
@@ -46,6 +48,7 @@
               :src="imagePreview || ''"
               alt="Profile Picture"
               class="object-cover"
+              loading="eager"
             />
             <div
               v-else

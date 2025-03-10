@@ -16,7 +16,7 @@
         />
       </div>
     </div>
-    <div class="space-y-6 flex-1 overflow-y-auto custom-scrollbar pb-6">
+    <div class="space-y-6 flex-1 pb-6">
       <div
         v-if="(dashboardStore.overViews || []).length > 0"
         class="space-y-4"

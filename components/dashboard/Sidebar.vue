@@ -5,15 +5,16 @@
   >
     <div class="flex flex-col gap-6">
       <div :class="[activeTab !== 'sophie' ? 'px-2' : 'flex justify-center']">
-        <NuxtLink to="/" class="flex gap-2 items-center">
+        <div @click="handleLogo" class="flex gap-2 items-center cursor-pointer">
           <IconArrowsterLogo class="size-8 min-w-8" />
           <NuxtImg
             v-if="currentTab !== 'sophie'"
             class="w-24"
             src="/images/logo/logo.svg"
             alt="Logo"
+            loading="eager"
           />
-        </NuxtLink>
+        </div>
       </div>
       <!-- tabs -->
       <div class="space-y-1">
@@ -122,8 +123,12 @@ const updateTab = (item: TabName) => {
   emit("updateTab", item);
 };
 
-const getEssay = () => {
-  // navigateTo(localePath("/essay"));
+const handleLogo = () => {
+  if (activeTab.value === "home") {
+    navigateTo(localePath("/dashboard"));
+  } else {
+    emit("updateTab", "home");
+  }
 };
 
 watch(

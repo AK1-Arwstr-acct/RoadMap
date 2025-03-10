@@ -1,5 +1,5 @@
 <template>
-  <section class="overflow-y-auto no-scrollbar h-full bg-white">
+  <section class="bg-white">
     <div v-if="currentStep === 'profile'" class="h-full">
       <Header @updateStep="updateStep" />
       <div class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-16 px-5">

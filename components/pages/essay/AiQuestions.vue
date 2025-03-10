@@ -12,73 +12,137 @@
           />
         </div>
         <div class="w-7 h-[42px]">
-          <NuxtImg src="/images/bulb.png" class="size-full object-contain" />
+          <NuxtImg loading="eager" src="/images/bulb.png" class="size-full object-contain" />
         </div>
       </div>
       <h1 class="text-[#181D27] text-2xl 2xl:text-3xl font-medium text-center">
-        Let's Get to Know You a Little Bit
+        {{
+          phase !== "chooseStyle"
+            ? `Let's Get to Know You a Little Bit`
+            : "Questions specific to your chosen essay style!"
+        }}
       </h1>
     </div>
     <!-- chat -->
-    <div class="w-[60%] xl:w-[50%] flex-1 flex flex-col gap-2 overflow-hidden">
-      <div class="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-8">
-        <!-- question 1 -->
-        <div class="flex items-center gap-3">
-          <div class="size-8 rounded-full bg-black overflow-hidden">
-            <NuxtImg
-              src="/images/chat-bot.png"
-              alt="chat bot"
-              class="object-cover object-center size-full"
-            />
-          </div>
-          <p class="text-[#414651]">
-            Hi there, can you tell me about your year of birth?
-          </p>
-        </div>
-        <!-- answer 1 -->
-        <div v-if="answersList.birthYear" class="flex justify-end">
-          <div
-            v-if="!editBirth"
-            class="flex items-center gap-3 group w-fit max-w-[538px]"
-          >
-            <IconPencil
-              @click="editBirthYear"
-              class="hidden cursor-pointer group-hover:block"
-            />
-            <p
-              class="py-3 px-4 rounded-lg w-fit bg-[#E8E8E8]/50 text-[#414651]"
-            >
-              {{ answersList.birthYear }}
-            </p>
-          </div>
-          <div
-            v-else
-            class="py-3 px-4 rounded-lg bg-[#E8E8E8]/50 border w-full"
-          >
-            <input
-              type="text"
-              v-model="tempBirthYear"
-              class="w-full text-[#414651] bg-transparent outline-none mb-3"
-            />
-            <div class="flex justify-end gap-3">
-              <button
-                @click="cancelBirthEdit"
-                class="py-2 px-3.5 text-[#414651] text-sm font-semibold border border-[#D5D7DA] bg-white rounded-lg"
-              >
-                Cancel
-              </button>
-              <button
-                @click="updateBirthYear"
-                class="py-2 px-3.5 text-white text-sm font-semibold border border-[#1570EF] bg-[#1570EF] rounded-lg"
-              >
-                Update
-              </button>
+    <div
+      v-if="phase === 'keepGoing'"
+      class="w-full max-w-[592px] flex flex-col items-center gap-8"
+    >
+      <NuxtImg loading="eager" src="/images/countries-application.png" class="w-[536px]" />
+      <h1
+        class="text-[#181D27] font-semibold text-2xl text-center justify-center sm:text-[34px]"
+      >
+        Great progress! We're starting to build a picture of your unique voice.
+      </h1>
+      <div class="flex flex-col items-center justify-center gap-5">
+        <button
+          @click="phase = 'chooseStyle'"
+          class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold flex justify-center items-center gap-2 w-[360px]"
+        >
+          Keep going
+          <IconArrowRight fill="#ffffff" width="20" height="20" />
+        </button>
+        <p @click="phase = 'questionPhase'" class="text-[#535862] font-semibold cursor-pointer">Go back and make some changes</p>
+      </div>
+    </div>
+    <div
+      v-else
+      class="w-[60%] xl:w-[50%] flex-1 flex flex-col gap-2 overflow-hidden border"
+    >
+      <div ref="chatContainer" class="flex-1 overflow-y-auto no-scrollbar pb-4">
+        <!--  -->
+        <div
+          v-if="phase === 'questionPhase'"
+          class="size-full h-fit flex flex-col gap-8"
+        >
+          <ChatMessage
+            question="Hi there, can you tell me about your year of birth?"
+            :answer="answersList.birthYear"
+            @editAnswer="(value) => (answersList.birthYear = value)"
+          />
+          <ChatMessage
+            v-if="questionStep >= 2"
+            question="What school(s) are you planning to apply to? If you don't have one yet, just write N/A for this question <3"
+            :answer="answersList.schoolName"
+            @editAnswer="(value) => (answersList.schoolName = value)"
+          />
+          <ChatMessage
+            v-if="questionStep >= 3"
+            question="What's your (intended) major?"
+            :answer="answersList.major"
+            @editAnswer="(value) => (answersList.major = value)"
+          />
+          <ChatMessage
+            v-if="questionStep >= 4"
+            question="What's the core message you want to convey?"
+            :answer="answersList.message"
+            @editAnswer="(value) => (answersList.message = value)"
+          />
+          <!--  -->
+          <div v-if="questionStep === 5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="size-8 rounded-full bg-black overflow-hidden">
+                <NuxtImg
+                  src="/images/chat-bot.png"
+                  alt="chat bot"
+                  class="object-cover object-center size-full"
+                  loading="eager"
+                />
+              </div>
+              <p class="text-[#414651]">
+                What's the style of your personal statement
+              </p>
+            </div>
+            <!-- options -->
+            <div class="flex justify-end">
+              <div class="flex flex-col gap-3 group w-[95%]">
+                <!--  -->
+                <div v-for="(option, index) in statementList" :key="index">
+                  <label
+                    :for="option"
+                    class="flex items-center justify-between gap-2 size-full font-medium rounded-xl cursor-pointer relative border-[1.5px] p-4 transition-all ease-in-out duration-200 shadow-[0px_1px_2px_0px_#0A0D120F]"
+                    :class="[
+                      answersList.personalStatement === option
+                        ? 'border-[#84CAFF] bg-[#EFF8FF] text-[#175CD3]'
+                        : 'border-gray-200 text-[#414651]',
+                    ]"
+                  >
+                    <input
+                      :id="option"
+                      type="radio"
+                      name="personal statement"
+                      :value="option"
+                      v-model="answersList.personalStatement"
+                      class="absolute top-3 right-3 appearance-none"
+                    />
+                    {{ option }}
+                    <div
+                      class="size-5 rounded-full transition-all ease-in-out duration-200 flex justify-center items-center"
+                      :class="[
+                        answersList.personalStatement === option
+                          ? 'bg-[#1570EF]'
+                          : 'border-gray-200 border-2',
+                      ]"
+                    >
+                      <IconTick width="16" height="16" stroke="#ffffff" />
+                    </div>
+                  </label>
+                </div>
+                <!--  -->
+              </div>
             </div>
           </div>
+        </div>
+        <div
+          v-else-if="phase === 'chooseStyle'"
+          class="size-full h-fit flex flex-col gap-8"
+        >
+          bbb
         </div>
       </div>
       <div>
         <div
+          v-if="questionStep < 5"
           class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
         >
           <input
@@ -86,6 +150,7 @@
             :placeholder="questionStep === 1 ? '2.g. 2007' : ''"
             class="flex-1 outline-none"
             v-model="inputText"
+            @keydown.enter="handleNext"
           />
           <button
             @click="handleNext"
@@ -106,32 +171,35 @@
 <script setup lang="ts">
 const emit = defineEmits(["goBack"]);
 
+const chatContainer = ref<HTMLElement | null>(null);
 const inputText = ref<string>("");
-
 const questionStep = ref<number>(1);
-const editBirth = ref<boolean>(false);
+const phase = ref<"questionPhase" | "keepGoing" | "chooseStyle">(
+  "questionPhase"
+);
+const statementList = [
+  "Narrative-Driven: Sharing vivid, immersive stories from your life",
+  "Reflective-Philosophical: Drawing thoughtful lessons from your experiences",
+  "Metaphorical/Symbolic: Using meaningful objects or skills to tell your story",
+  "Growth and Transformation: Before-and-after snapshots of the soul",
+  "Cultural Identity/Family Dynamic: Exploring how your childhood shaped you",
+];
 
 const answersList = ref({
   birthYear: "",
   schoolName: "",
   major: "",
   message: "",
+  personalStatement: "",
 });
 
-const tempBirthYear = ref<string>('');
-
-const editBirthYear = () => {
-  editBirth.value = true;
-  tempBirthYear.value = answersList.value.birthYear;
-};
-const updateBirthYear = () => {
-  answersList.value.birthYear = tempBirthYear.value;
-  editBirth.value = false;
-};
-
-const cancelBirthEdit = () => {
-  editBirth.value = false;
-  tempBirthYear.value = answersList.value.birthYear;
+const scrollDown = () => {
+  nextTick(() => {
+    if (chatContainer.value) {
+      chatContainer.value.scrollTop =
+        chatContainer.value.scrollHeight - chatContainer.value.clientHeight;
+    }
+  });
 };
 
 const handleNext = () => {
@@ -145,7 +213,7 @@ const handleNext = () => {
     answersList.value.message = inputText.value;
   }
   questionStep.value += 1;
-  console.log(answersList.value);
+  scrollDown();
 };
 
 watch(
@@ -162,6 +230,14 @@ watch(
   },
   {
     immediate: true,
+  }
+);
+
+watch(
+  () => answersList.value.personalStatement,
+  () => {
+    console.log(answersList.value);
+    phase.value = "keepGoing";
   }
 );
 </script>

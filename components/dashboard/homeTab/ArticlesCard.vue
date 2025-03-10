@@ -4,6 +4,7 @@
       :src="articleDetail.image"
       alt="article image"
       class="w-full object-cover object-top rounded-lg"
+      loading="eager"
     />
     <div class="mt-5 flex flex-col gap-2">
       <h2

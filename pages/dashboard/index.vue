@@ -4,8 +4,22 @@
     <div class="flex-1 flex flex-col">
       <DashboardNav @updateTab="updateTab" />
       <div class="flex-1 overflow-hidden">
-        <div class="size-full overflow-y-auto custom-scrollbar">
-          <div class="h-full w-full" :class="{'max-w-[1150px] mx-auto': currentTab !== 'sophie'}">
+        <div
+          class="size-full"
+          :class="{
+            'overflow-y-auto custom-scrollbar':
+              currentTab !== 'application_tracker',
+          }"
+        >
+          <div
+            class="h-full w-full"
+            :class="{
+              'max-w-[1150px] mx-auto':
+                currentTab !== 'sophie' &&
+                currentTab !== 'application_tracker' &&
+                currentTab !== 'user_profile',
+            }"
+          >
             <Transition name="fade">
               <DashboardHome v-if="currentTab === 'home'" />
               <ChatWithSophie v-else-if="currentTab === 'sophie'" />
@@ -31,7 +45,7 @@
     <Transition name="fade">
       <div
         v-if="openSophieModal"
-        class="fixed bg-black/50 inset-0 backdrop-blur py-[60px] px-[68px]"
+        class="fixed bg-black/50 inset-0 backdrop-blur py-[60px] px-[68px] flex justify-center items-center"
       >
         <ChatWithSophie
           :isModal="true"

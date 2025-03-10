@@ -6,6 +6,7 @@
           src="/images/get-started.png"
           alt="Get Started"
           class="w-full size-full object-contain"
+          loading="eager"
         />
       </div>
       <div class="md:flex-1 py-12">

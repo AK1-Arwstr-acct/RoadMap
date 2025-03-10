@@ -75,6 +75,7 @@
           :src="`/images/school-cover/${randomNumber}.jpg`"
           :alt="schoolData.name"
           class="size-full object-cover"
+          loading="eager"
         />
       </div>
       <div>
@@ -138,6 +139,7 @@
           :src="schoolData.cover_photo || undefined"
           :alt="schoolData.name"
           class="size-full object-cover"
+          loading="eager"
         />
       </div>
       <div class="space-y-4">

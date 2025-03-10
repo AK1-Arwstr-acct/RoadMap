@@ -39,7 +39,7 @@
       </p>
     </div>
     <div class="flex justify-center">
-      <NuxtImg src="/images/ai-recommendation.png" alt="Discover Journey" class="w-[164px]" />
+      <NuxtImg loading="eager" src="/images/ai-recommendation.png" alt="Discover Journey" class="w-[164px]" />
     </div>
     <button 
       v-if=" dashboardStore.enginePosition === 'final' ? false : (dashboardStore.totalSchool || 0) >= 6"
