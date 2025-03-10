@@ -12,7 +12,7 @@
           />
         </div>
         <div class="w-7 h-[42px]">
-          <NuxtImg loading="eager" src="/images/bulb.png" class="size-full object-contain" />
+          <NuxtImg preload src="/images/bulb.png" class="size-full object-contain" />
         </div>
       </div>
       <h1 class="text-[#181D27] text-2xl 2xl:text-3xl font-medium text-center">
@@ -28,7 +28,7 @@
       v-if="phase === 'keepGoing'"
       class="w-full max-w-[592px] flex flex-col items-center gap-8"
     >
-      <NuxtImg loading="eager" src="/images/countries-application.png" class="w-[536px]" />
+      <NuxtImg preload src="/images/countries-application.png" class="w-[536px]" />
       <h1
         class="text-[#181D27] font-semibold text-2xl text-center justify-center sm:text-[34px]"
       >
@@ -86,7 +86,7 @@
                   src="/images/chat-bot.png"
                   alt="chat bot"
                   class="object-cover object-center size-full"
-                  loading="eager"
+                  preload
                 />
               </div>
               <p class="text-[#414651]">

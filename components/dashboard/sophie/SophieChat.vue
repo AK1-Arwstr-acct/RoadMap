@@ -9,7 +9,7 @@
           src="/images/sophie-chat.png"
           alt="sophie"
           class="h-[242px] w-[252px]"
-          loading="eager"
+          preload
         />
         <span class="text-[#414651] text-xl font-medium mt-6">
           How can Sophie help you today?
@@ -54,7 +54,7 @@
                 src="/images/chat-bot.png"
                 alt="chat bot"
                 class="object-cover object-center size-full"
-                loading="eager"
+                preload
               />
             </div>
             <div
@@ -77,7 +77,7 @@
                 src="/images/chat-bot.png"
                 alt="chat bot"
                 class="object-cover object-center size-full"
-                loading="eager"
+                preload
               />
             </div>
             <span> Sophie is checking your information... </span>

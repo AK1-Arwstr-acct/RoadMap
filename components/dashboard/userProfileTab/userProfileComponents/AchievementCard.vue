@@ -14,7 +14,7 @@
         :src="imageSrc"
         alt="Achievements career image"
         class="object-contain size-full"
-        loading="eager"
+        preload
       />
     </div>
     <div class="w-full py-4">

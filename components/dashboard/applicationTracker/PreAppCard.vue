@@ -7,7 +7,7 @@
         src="/images/pre-application.png"
         alt="Pre - Application"
         class="w-full h-full max-h-[274px] object-contain"
-        loading="eager"
+        preload
       />
     </div>
     <div class="">

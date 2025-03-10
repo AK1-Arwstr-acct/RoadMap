@@ -12,7 +12,7 @@
             class="w-24"
             src="/images/logo/logo.svg"
             alt="Logo"
-            loading="eager"
+            preload
           />
         </div>
       </div>

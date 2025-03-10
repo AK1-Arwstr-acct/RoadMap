@@ -61,7 +61,7 @@
       <div class="border-[1.5px] border-gray-200 rounded-2xl px-6 py-8">
         <div v-for="(faq, idx) in questions" class="flex flex-col">
           <div class="flex items-start gap-4">
-            <NuxtImg loading="eager" :src="faq.img" class="size-[52px] min-w-[52px]" />
+            <NuxtImg preload :src="faq.img" class="size-[52px] min-w-[52px]" />
             <div>
               <p class="text-lg text-[#181D27] font-semibold">
                 {{ faq.question }}

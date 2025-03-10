@@ -31,7 +31,7 @@
           :src="appStore.userImagePreview || appStore.userData?.avatar"
           alt="user-icon"
           class="size-full"
-          loading="eager"
+          preload
         />
         <div
           v-else
