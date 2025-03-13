@@ -110,8 +110,8 @@
       <div class="flex flex-col md:flex-row gap-8 py-16">
         <div class="w-full md:w-1/2">
           <div class="w-full md:w-11/12">
-            <h1 class="text-4xl text-[#181D27] font-semibold">
-              Unlock Exclusive Benefits – Join<br />Us for Premium Features! 
+            <h1 class="text-3xl text-[#181D27] font-semibold">
+              Unlock Exclusive Benefits – Join <br class="hidden lg:block" />Us for Premium Features! 
             </h1>
             <p class="text-xl text-[#535862] font-medium mt-5">
               Access advanced features that streamline your application. Working
