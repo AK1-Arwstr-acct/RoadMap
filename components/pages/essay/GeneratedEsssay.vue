@@ -3,7 +3,10 @@
     <div
       class="flex w-full justify-between items-center py-8 px-28 border-b border-[#E9EAEB]"
     >
-      <NuxtLink to="/" class="flex gap-2 items-center">
+      <div
+        @click="navigateTo(localePath('/dashboard'))"
+        class="flex gap-2 items-center cursor-pointer"
+      >
         <NuxtImg
           src="/images/logo/logo.svg"
           alt="Logo"
@@ -11,7 +14,7 @@
           loading="eager"
           preload
         />
-      </NuxtLink>
+      </div>
       <button
         class="py-2.5 px-5 text-sm font-semibold text-white bg-[#1570EF] rounded-lg"
       >

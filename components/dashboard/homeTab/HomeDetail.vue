@@ -9,6 +9,7 @@
         @remainingTask="handelRemaining"
       />
     </div>
+    <PendingTaskSkeleton v-if="isTaskLoading" />
     <!-- events -->
     <div>
       <div class="flex justify-between items-center mb-5">
@@ -61,8 +62,9 @@
       <div class="border-[1.5px] border-gray-200 rounded-2xl px-6 py-8">
         <div v-for="(faq, idx) in questions" class="flex flex-col">
           <div class="flex items-start gap-4">
-            <NuxtImg 
-              :src="faq.img" class="size-[52px] min-w-[52px]"
+            <NuxtImg
+              :src="faq.img"
+              class="size-[52px] min-w-[52px]"
               loading="eager"
               preload
             />
@@ -109,6 +111,7 @@
 </template>
 <script setup lang="ts">
 const isRemainingTask = ref<boolean>(false);
+const isTaskLoading = ref<boolean>(true);
 
 const questions = [
   {
@@ -169,6 +172,7 @@ const eventList = [
 
 const handelRemaining = (value: boolean) => {
   isRemainingTask.value = value;
+  isTaskLoading.value = false;
 };
 
 const handleNavigate = (link: string) => {

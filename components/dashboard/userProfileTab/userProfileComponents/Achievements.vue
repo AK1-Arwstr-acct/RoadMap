@@ -58,6 +58,9 @@ const checkIfAppCompleted = (application: Application, category: string) => {
     filteredApplication.filter((task) => task.checked === true).length || 0;
   let totalTasksNumber = filteredApplication.length;
   let taskProgress = (completedTasksNumber / (totalTasksNumber ?? 1)) * 100;
+  if (!props.isOngoingBehaviour) {
+    return taskProgress === 0 ? false : true;
+  }
   return taskProgress === 100 || taskProgress === 0 ? false : true;
 };
 const checkIfCountryCompleted = (
@@ -72,15 +75,18 @@ const checkIfCountryCompleted = (
     0;
   let totalTasksNumber = filteredApplication?.tasks.length || 0;
   let taskProgress = (completedTasksNumber / (totalTasksNumber ?? 1)) * 100;
+  if (!props.isOngoingBehaviour) {
+    return taskProgress === 0 ? false : true;
+  }
   return taskProgress === 100 || taskProgress === 0 ? false : true;
 };
 
 const categoryList = (application: Application | Application[]) => {
   if (Array.isArray(application)) {
     const countries = application.map((item) => item.country_title);
-    if (!props.isOngoingBehaviour) {
-      return [...new Set(countries)];
-    }
+    // if (!props.isOngoingBehaviour) {
+    //   return [...new Set(countries)];
+    // }
     let countriesArray = [...new Set(countries)];
     let filtredArray: string[] = [];
     countriesArray.forEach((item) => {
@@ -88,13 +94,12 @@ const categoryList = (application: Application | Application[]) => {
         filtredArray.push(item);
       }
     });
-    // totaltasks.value = totaltasks.value + filtredArray.length;
     return filtredArray;
   } else {
     const categories = application.tasks.map((item) => item.category.title);
-    if (!props.isOngoingBehaviour) {
-      return [...new Set(categories)];
-    }
+    // if (!props.isOngoingBehaviour) {
+    //   return [...new Set(categories)];
+    // }
     let categoryArray = [...new Set(categories)];
     let filtredArray: string[] = [];
     categoryArray.forEach((item: string) => {
@@ -102,7 +107,6 @@ const categoryList = (application: Application | Application[]) => {
         filtredArray.push(item);
       }
     });
-    // totaltasks.value = totaltasks.value + filtredArray.length;
     return filtredArray;
   }
 };

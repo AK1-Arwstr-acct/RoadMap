@@ -17,9 +17,7 @@
         <span class="text-[#1570EF]">500 students</span> toward their goals. See
         how our counsellor can help you!
       </p>
-      <div
-        class="pt-8 overflow-x-auto pricing-table"
-      >
+      <div class="pt-8 overflow-x-auto pricing-table">
         <table class="w-full border-collapse min-w-[800px]">
           <tbody>
             <tr>
@@ -126,13 +124,13 @@
           <div
             v-for="(item, index) in benefits"
             :key="index"
-            class="flex gap-5"
+            class="flex items-start gap-5"
           >
-            <div>
+            <div class="min-w-[90px] max-w-[90px] h-[90px]">
               <img
                 :src="item.icon"
                 alt="smart school"
-                class="min-w-24 min-h-24"
+                class="size-full object-contain"
               />
             </div>
             <div>
@@ -293,25 +291,25 @@ const plansList = [
 
 const benefits = [
   {
-    icon: "/images/pricing/smart-school.png",
+    icon: "/images/school-list.png",
     title: "Smart school comparison",
     description:
       "Compare schools with ease! Simply add all your options and see them side by side, with personalized scores to help you find the perfect match.",
   },
   {
-    icon: "/images/pricing/instant-roadmap.png",
+    icon: "/images/decision.png",
     title: "Instant roadmap check in",
     description:
       "No more waiting! Send direct updates to your counsellor anytime you need guidance, just with one click. You’re in control, with real-time communication to keep your journey moving forward!",
   },
   {
-    icon: "/images/pricing/ai-essay.png",
+    icon: "/images/application.png",
     title: "AI essay editor",
     description:
       "Generate 5+ essays per day and get instant feedback whenever you need it. Send your essays to your counsellor with just one click and keep improving!",
   },
   {
-    icon: "/images/pricing/sophie.png",
+    icon: "/images/ai-recommendation.png",
     title: "Sophie – Your AI assistant",
     description:
       "Get unlimited questions answered with the latest GPT model, tailored just for you. Whether it’s essay feedback or career advice, Sophie is here to help with no limits!",

@@ -2,13 +2,25 @@
   <section class="size-full overflow-hidden flex flex-col items-center">
     <div class="py-7 px-10 sm:px-20 xl:px-[170px] flex flex-col gap-10 w-full">
       <div class="flex items-center gap-6">
-        <div @click="emit('goBack')" class="cursor-pointer">
+        <div
+          v-if="phase !== 'chooseStyle'"
+          @click="emit('goBack')"
+          class="cursor-pointer"
+        >
           <IconCross fill="#717680" width="32" height="32" />
+        </div>
+        <div v-else @click="phase = 'keepGoing'" class="cursor-pointer">
+          <IconArrowDownThick
+            stroke="#717680"
+            width="32"
+            height="32"
+            class="transform rotate-90"
+          />
         </div>
         <div class="flex-1 rounded-full bg-[#F5F5F5] overflow-hidden h-3">
           <div
             class="h-full bg-[#1570EF] rounded-full transition-all ease-in-out duration-700"
-            :style="{ maxWidth: '200px' }"
+            :style="{ maxWidth: `${essayStore.essayProgress}%` }"
           />
         </div>
         <div class="w-7 h-[42px]">
@@ -154,14 +166,17 @@
         <div>
           <div
             v-if="questionStep < 5 && phase === 'questionPhase'"
-            class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
+            class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex items-start gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
           >
-            <input
+            <textarea
+              ref="textarea"
               type="text"
               :placeholder="questionStep === 1 ? '2.g. 2007' : ''"
-              class="flex-1 outline-none"
+              class="w-full outline-none resize-none custom-scrollbar my-auto"
               v-model="inputText"
-              @keydown.enter="handleNext"
+              @input="adjustHeight"
+              rows="1"
+              autofocus
             />
             <button
               @click="handleNext"
@@ -177,15 +192,20 @@
           </p>
         </div>
       </div>
-      <EssayStyle v-else />
+      <EssayStyle v-else :basicAnswersList="answersList" />
     </div>
   </section>
 </template>
 <script setup lang="ts">
+import useEssayStore from "~/stores/essayStore";
+
+const essayStore = useEssayStore();
+
 const emit = defineEmits(["goBack"]);
 
 const chatContainer = ref<HTMLElement | null>(null);
 const inputText = ref<string>("");
+const textarea = ref<HTMLTextAreaElement | null>(null);
 const questionStep = ref<number>(1);
 const phase = ref<"questionPhase" | "keepGoing" | "chooseStyle">(
   "questionPhase"
@@ -220,13 +240,28 @@ const handleNext = () => {
     answersList.value.birthYear = inputText.value;
   } else if (questionStep.value === 2) {
     answersList.value.schoolName = inputText.value;
+    essayStore.essayProgress += 10;
   } else if (questionStep.value === 3) {
     answersList.value.major = inputText.value;
+    essayStore.essayProgress += 10;
   } else if (questionStep.value === 4) {
     answersList.value.message = inputText.value;
+    essayStore.essayProgress += 10;
   }
+  inputText.value = "";
   questionStep.value += 1;
+  if (questionStep.value === 5) {
+    essayStore.essayProgress += 10;
+  }
   scrollDown();
+};
+
+const adjustHeight = () => {
+  const el = textarea.value;
+  if (el) {
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 100) + "px";
+  }
 };
 
 const handelStatement = (value: string) => {
@@ -234,20 +269,11 @@ const handelStatement = (value: string) => {
   answersList.value.personalStatement = value;
 };
 
-watch(
-  () => questionStep.value,
-  () => {
-    if (questionStep.value === 1) {
-      inputText.value = "2008";
-    } else if (questionStep.value === 4) {
-      inputText.value =
-        "I love solving puzzles, and coding feels like one big puzzle! I want to study computer science at this university so I can build cool apps that help people and make life easier.";
-    } else {
-      inputText.value = "";
-    }
-  },
-  {
-    immediate: true,
-  }
-);
+onMounted(() => {
+  adjustHeight();
+  essayStore.essayProgress += 10;
+});
+onUnmounted(() => {
+  essayStore.essayProgress = 0;
+});
 </script>

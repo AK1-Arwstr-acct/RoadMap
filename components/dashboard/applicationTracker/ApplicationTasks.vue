@@ -2,10 +2,14 @@
   <section class="">
     <div class="mb-8">
       <h1 class="text-[#181D27] font-semibold text-2xl mb-4 capitalize">
-        {{ Array.isArray(application) ? "Application" : application.title.toLocaleLowerCase() }}
+        {{
+          Array.isArray(application)
+            ? "Application"
+            : application.title.toLocaleLowerCase()
+        }}
       </h1>
       <p class="text-[#717680] font-medium mb-6">
-        {{ Array.isArray(application) ? "" : application.description }}
+        {{ Array.isArray(application) ? countriesDescription : application.description }}
       </p>
       <div class="flex items-center">
         <div class="bg-[#E9EAEB] h-2 w-[354px] rounded-full">
@@ -46,7 +50,9 @@
         <div class="flex-1 text-[#181D27]">
           <p class="font-semibold mb-1.5">Missed the Deadline? No Worries!</p>
           <p class="font-medium text-sm">
-            <span class="text-[#1570EF] cursor-pointer"> Contact our counselors </span>
+            <span class="text-[#1570EF] cursor-pointer">
+              Contact our counselors
+            </span>
             <span>
               to see how we can create a new plan just for you. You’re still in
               the game!
@@ -59,7 +65,7 @@
       </div>
     </Transition>
     <!--  -->
-    <div class="space-y-6">
+    <div class="flex flex-col gap-6">
       <div v-for="(category, index) in categoryList" :key="index">
         <AppCategoryTask
           v-if="Array.isArray(application) && filterByCountry(category)"
@@ -91,6 +97,8 @@ const props = defineProps({
 
 const missDeadline = ref<boolean>(true);
 const countriesTaskLength = ref<number>(0);
+const countriesDescription =
+  "Complete your application package by writing an engaging personal statement, gathering strong recommendations and transcripts, preparing financial aid materials if needed, and submitting everything before deadlines.";
 
 const checkCompletedTask = computed(() => {
   if (Array.isArray(props.application)) {

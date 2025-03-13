@@ -11,7 +11,7 @@
     />
     <button
       @click="submit"
-      :disabled="!selectedCourse"
+      :disabled="!selectedCourse || isSubmitting"
       class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
     >
       {{ $t("onboarding.continue") }}

@@ -22,6 +22,7 @@
     },
     "login": {
         "already_have_an_account": "Bạn đã có tài khoản?",
+        "don_t_have_an_account": "Bạn chưa có tài khoản?",
         "enter_phone_or_email": "Nhập số điện thoại hoặc email của bạn",
         "heading": "Đăng nhập vào tài khoản của bạn",
         "login": "Đăng nhập",

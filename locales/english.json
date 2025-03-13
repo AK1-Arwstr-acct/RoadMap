@@ -22,6 +22,7 @@
     },
     "login": {
         "already_have_an_account": "Already have an account?",
+        "don_t_have_an_account": "Don’t have an account?",
         "enter_phone_or_email": "Enter your phone number or email",
         "enter_your_password": "Enter your password",
         "heading": "Log in to your account",

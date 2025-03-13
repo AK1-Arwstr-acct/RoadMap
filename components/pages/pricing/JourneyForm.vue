@@ -91,7 +91,7 @@
     </div>
     <!-- school name -->
     <div>
-      <p class="text-[#414651] text-sm font-medium">Your school name *</p>
+      <p class="text-[#414651] text-sm font-medium">Your school name <span class="text-[#F04438]">*</span></p>
       <input
         type="text"
         placeholder="e.g. THPT Nhân Chính"
@@ -102,7 +102,7 @@
     <!-- financial support -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        How much financial support can your family provide per year? *
+        How much financial support can your family provide per year? <span class="text-[#F04438]">*</span>
       </p>
       <input
         type="text"
@@ -120,7 +120,7 @@
     <!-- countries -->
     <div>
       <p class="font-medium text-[#414651] text-sm mb-4">
-        I want to study at *
+        I want to study at <span class="text-[#F04438]">*</span>
       </p>
       <div class="flex gap-4 flex-wrap">
         <div
@@ -166,7 +166,7 @@
     <!-- draem school -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        Share some of your dream schools here *
+        Share some of your dream schools here <span class="text-[#F04438]">*</span>
       </p>
       <input
         type="text"
@@ -178,7 +178,7 @@
     <!-- alternative contact -->
     <div>
       <p class="font-medium text-[#414651] text-sm mb-4">
-        Alternative contact platform (if you don’t use Zalo) *
+        Alternative contact platform (if you don’t use Zalo) <span class="text-[#F04438]">*</span>
       </p>
       <div class="flex gap-4 flex-wrap">
         <div
@@ -225,7 +225,7 @@
     <div>
       <p class="text-[#414651] text-sm font-medium">
         If you don't have a Vietnamese phone number, please leave your easiest
-        contact information below! *
+        contact information below! <span class="text-[#F04438]">*</span>
       </p>
       <input
         type="text"
@@ -237,7 +237,7 @@
     <!-- arrowster Info -->
     <div class="">
       <p class="font-medium text-[#414651] text-sm mb-4">
-        How did you hear about Arrowster? *
+        How did you hear about Arrowster? <span class="text-[#F04438]">*</span>
       </p>
       <div class="flex gap-4 flex-wrap">
         <div
@@ -281,7 +281,7 @@
 
     <!-- button -->
     <button
-      :disabled="isDisable"
+      :disabled="isDisable || isSubmitting"
       @click="submit"
       class="bg-[#1570EF] rounded-lg py-3 px-5 flex items-center justify-center gap-2 text-white disabled:opacity-70"
     >

@@ -1,8 +1,10 @@
 <template>
   <div
-    class="min-w-[440px] h-full bg-white flex flex-col border-l-[1.5px] border-gray-200"
+    class="min-w-[380px] h-full bg-white flex flex-col border-l-[1.5px] border-gray-200"
   >
-    <div class="m-6 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
+    <div
+      class="px-6 pt-6 mb-6 flex-1 flex flex-col gap-6 overflow-y-auto custom-scrollbar"
+    >
       <div class="flex justify-between items-start gap-3">
         <h3 class="text-[#414651] font-semibold text-xl">
           {{ taskDetail?.title }}
@@ -20,12 +22,7 @@
           class="border-[1.5px] border-gray-200 rounded-2xl py-3 pl-4 pr-[27px] flex items-center gap-4 cursor-pointer"
           :class="{ hidden: !resource.link }"
         >
-          <div class="flex-1 space-y-2">
-            <span class="bg-[#EFF8FF] py-0.5 px-2 rounded-full text-[#175CD3]">
-              Website / Resources
-            </span>
-            <p class="text-[#414651] font-semibold">{{ resource.text }}</p>
-          </div>
+          <p class="text-[#414651] font-semibold flex-1">{{ resource.text }}</p>
           <IconLink />
         </a>
       </div>
@@ -69,7 +66,7 @@
         <span>
           Mark as {{ taskDetail?.checked ? "Incomplete" : "Complete" }}
         </span>
-        <IconTick stroke="#ffffff" />
+        <IconTick v-if="!taskDetail?.checked" stroke="#ffffff" />
       </button>
       <button
         @click="navigateTo(localePath('/pricing'))"
@@ -114,6 +111,7 @@ const handelClick = async () => {
 };
 
 onUnmounted(() => {
+  emit("clearDetails");
   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
     appTrackerStore.taskActiveStates[Number(key)] = false;
   });

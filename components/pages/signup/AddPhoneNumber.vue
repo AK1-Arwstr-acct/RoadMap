@@ -192,12 +192,12 @@ const validateNumber = (event: Event) => {
 const submit = async () => {
   try {
     isSubmitting.value = true;
+    emits("setSelectedCountry", selectedOption.value);
     const userNumber = `${selectedOption.value?.phone_code}${phoneNumber.value}`;
     await api.post(`/api/v1/send_otp`, {
       msisdn: userNumber,
       id: selectedOption.value?.id,
     });
-    emits("setSelectedCountry", selectedOption.value);
     emits("verifyPhoneNumber", userNumber);
   } catch (error) {
     console.error(error);

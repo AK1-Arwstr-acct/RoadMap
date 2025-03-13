@@ -28,8 +28,8 @@
     </div>
     <button
       @click="submitBudget"
-      :disabled="!selectedOptionId"
-      class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5"
+      :disabled="!selectedOptionId || isSubmitting"
+      class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
     >
       {{ $t("onboarding.continue") }}
       <IconSpinner v-if="isSubmitting" />

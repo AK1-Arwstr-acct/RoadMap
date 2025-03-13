@@ -145,7 +145,8 @@
             disabledBtn ||
             isBudgetLoading ||
             isAreaOfStudyLoading ||
-            isGpaChange
+            isGpaChange || 
+            isSubmitting
           "
           class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >

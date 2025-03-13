@@ -1,7 +1,11 @@
 <template>
   <div class="flex gap-10 xl:gap-14 px-6 size-full">
-    <div class="flex-1 h-fit">
-      <RecommendedSchools @getRecommendations="getRecommendations" />
+    <div class="flex-1">
+      <RecommendedSchools
+        v-if="!dashboardStore.isSchoolsLoading"
+        @getRecommendations="getRecommendations"
+      />
+      <RecommendedSchoolSkeleton v-else />
     </div>
     <div class="w-[312px]">
       <UserDetails />

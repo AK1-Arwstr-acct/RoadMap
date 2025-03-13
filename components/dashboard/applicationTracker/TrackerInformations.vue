@@ -3,11 +3,23 @@
     <div class="w-full flex justify-center overflow-y-auto no-scrollbar">
       <div
         v-if="trackeSteps === 'application_tabs'"
-        class="space-y-14 h-fit max-w-[772px] px-10 lg:px-0 py-10"
+        class="h-fit max-w-[772px] px-10 lg:px-0 py-10 w-full"
       >
-        <PreAppCard @updateStep="updateStep('pre_application')" />
-        <CountriesAppCard @updateStep="updateStep('countries_application')" />
-        <PostAppCard @updateStep="updateStep('post_application')" />
+        <div
+          class="flex flex-col gap-14"
+          v-if="
+            !appTrackerStore.preApplication &&
+            !appTrackerStore.applicationList.length &&
+            !appTrackerStore.postApplication
+          "
+        >
+          <RoadmapSkeleton v-for="a in 3" />
+        </div>
+        <div v-else class="flex flex-col gap-14">
+          <PreAppCard @updateStep="updateStep('pre_application')" />
+          <CountriesAppCard @updateStep="updateStep('countries_application')" />
+          <PostAppCard @updateStep="updateStep('post_application')" />
+        </div>
       </div>
       <div v-else class="w-full max-w-[768px] px-5 py-8 h-fit">
         <!-- breadcrumbs -->
@@ -46,7 +58,7 @@
     <Transition name="taskSlide">
       <div
         v-if="trackeSteps !== 'application_tabs' && openDetailModal"
-        class="w-fit max-w-[440px] transition-all ease-in-out duration-400 overflow-hidden"
+        class="w-fit max-w-[380px] transition-all ease-in-out duration-400 overflow-hidden"
       >
         <component
           :is="TaskDetailSidebar"

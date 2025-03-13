@@ -126,10 +126,11 @@
         </button>
         <button
           @click="submit"
-          :disabled="disableSubmit"
-          class="px-4 py-2.5 text-white font-semibold bg-[#1570EF] disabled:bg-[#B2DDFF] border-[1.5px] border-[#B2DDFF] rounded-lg"
+          :disabled="disableSubmit || isSubmitting"
+          class="px-4 py-2.5 text-white font-semibold bg-[#1570EF] disabled:bg-[#B2DDFF] border-[1.5px] border-[#B2DDFF] rounded-lg flex items-center gap-2"
         >
           Save changes
+          <IconSpinner width="20" bgColor="transparent" v-if="isSubmitting"  />
         </button>
       </div>
     </div>

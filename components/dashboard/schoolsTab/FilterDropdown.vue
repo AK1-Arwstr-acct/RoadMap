@@ -123,6 +123,7 @@ const closeDropdown = () => {
 const clratSortFilter = () => {
   selectedOption.value = null;
   dashboardStore.setSortParam(null);
+  emits("update:modelValue", null);
 };
 
 const onChange = () => {

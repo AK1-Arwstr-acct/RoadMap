@@ -143,7 +143,7 @@
           <span>{{ $t("login.login_with_google") }}</span>
         </button>
         <p class="mt-8 text-[#535862] text-sm text-center">
-          {{ $t("login.already_have_an_account") }}
+          {{ $t("login.don_t_have_an_account") }}
           <span
             @click="navigateTo(localePath('/signup'))"
             class="text-[#175CD3] font-semibold cursor-pointer"

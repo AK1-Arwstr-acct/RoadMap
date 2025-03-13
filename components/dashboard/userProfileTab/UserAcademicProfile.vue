@@ -138,7 +138,8 @@
             isBudgetLoading ||
             isAreaOfStudyLoading ||
             isLocationLoading ||
-            isGpaChange
+            isGpaChange || 
+            isSubmitting
           "
           class="py-2.5 px-4 bg-[#1570EF] disabled:bg-[#84CAFF] w-fit rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >

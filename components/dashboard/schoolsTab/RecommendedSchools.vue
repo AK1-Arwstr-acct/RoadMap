@@ -1,6 +1,6 @@
 <template>
   <div class="pt-4 h-full flex flex-col">
-    <div class="sticky top-0 pt-4 pb-4 bg-white" >
+    <div class="sticky top-0 pt-4 pb-4 bg-white">
       <h1 class="text-[#181D27] text-2xl font-semibold">
         Let's find your perfect school match!
       </h1>
@@ -12,6 +12,7 @@
           placeholder="Sort By"
           :options="sortFilters"
           class=""
+          :modelValue="dashboardStore.selectedFilter"
           @update:modelValue="(value: OptionAttributes | null) => selectFilter(value)"
         />
       </div>
@@ -59,7 +60,8 @@
       <Transition name="fade">
         <div
           v-if="
-            (dashboardStore.totalSchool || 0) < 6 && dashboardStore.totalSchool !== null &&
+            (dashboardStore.totalSchool || 0) < 6 &&
+            dashboardStore.totalSchool !== null &&
             dashboardStore.enginePosition !== 'final'
           "
           class="flex justify-center"
@@ -138,12 +140,15 @@ const groupedSchoolsList = computed(() => {
 });
 
 const selectFilter = async (filter: OptionAttributes | null) => {
-  const filterKey = {
-    [`sort_by_${
-      filter?.value === "1" || filter?.value === "2" ? "ranking" : "price"
-    }`]: filter?.value === "1" || filter?.value === "3" ? "DESC" : "ASC",
-  };
-  dashboardStore.setSortParam(filterKey);
+  dashboardStore.selectedFilter = filter;
+  if (filter !== null) {
+    const filterKey = {
+      [`sort_by_${
+        filter?.value === "1" || filter?.value === "2" ? "ranking" : "price"
+      }`]: filter?.value === "1" || filter?.value === "3" ? "DESC" : "ASC",
+    };
+    dashboardStore.setSortParam(filterKey);
+  }
   if (dashboardStore.enginePosition === "pre") {
     dashboardStore.preRunEngine();
   } else if (dashboardStore.enginePosition === "post") {

@@ -37,9 +37,10 @@
         :class="[checkCompletedTask ? 'text-white' : 'text-[#717680]']"
       >
         <p class="truncate-paragraph">
-          After submitting, send final transcripts, confirm enrolment with
-          deposits if accepted, handle visa requirements for international
-          students, and prepare for university while tracking all deadlines.
+          Complete your application package by writing an engaging personal
+          statement, gathering strong recommendations and transcripts, preparing
+          financial aid materials if needed, and submitting everything before
+          deadlines.
         </p>
       </div>
       <div

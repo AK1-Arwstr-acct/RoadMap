@@ -46,7 +46,7 @@
     <div
       ref="content"
       :style="{ maxHeight: isOpen ? contentHeight + 'px' : '0px' }"
-      class="overflow-hidden transition-all ease-in-out duration-500"
+      class="overflow-hidden transition-all ease-in-out duration-500 pb-1.5"
     >
       <div
         v-for="(task, idx) in filteredTask(category)"

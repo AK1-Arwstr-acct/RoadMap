@@ -10,8 +10,6 @@
         :src="program.school.avatar"
         :alt="program.school.name"
         class="size-full object-contain"
-        loading="eager"
-        preload
       />
     </div>
     <div class="flex-1 overflow-x-auto custom-scrollbar">

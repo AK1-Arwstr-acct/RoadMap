@@ -24,8 +24,14 @@
         class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex items-start gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
       >
         <textarea
+          ref="textarea"
+          @input="adjustHeight"
           type="text"
-          placeholder="e.g. losing debate team leadership position..."
+          :placeholder="
+            questionStep === 1
+              ? 'e.g. losing debate team leadership position...'
+              : ''
+          "
           class="flex-1 outline-none resize-none custom-scrollbar placeholder:font-thin"
           rows="4"
           v-model="inputText"
@@ -42,52 +48,115 @@
       <div v-else class="flex justify-center">
         <button
           @click="handleSubmit"
-          class="flex items-center gap-2 text-white py-2.5 px-4 bg-[#1570EF] rounded-lg font-semibold"
+          :disabled="isSubmitting"
+          class="flex items-center gap-2 text-white py-2.5 px-4 bg-[#1570EF] rounded-lg font-semibold disabled:opacity-60"
         >
           Submit
-          <IconArrowRight fill="#ffffff" width="20" height="20" />
+          <IconArrowRight
+            v-if="!isSubmitting"
+            fill="#ffffff"
+            width="20"
+            height="20"
+          />
+          <IconSpinner v-else class="size-4" bgColor="#ffffff00" />
         </button>
       </div>
-      <Transition name="fade">
-        <p
-          v-if="questionStep < 3"
-          class="text-sm text-[#A4A7AE] text-center pt-4 pb-6"
-        >
-          No need to rush here, take your time to think
-        </p>
-        <p v-else class="text-sm text-[#A4A7AE] text-center pt-4 pb-6">
-          Great job! Thanks for sharing all these details. We'll now craft the
-          perfect essay just for you. Sit back and relax - your essay will be
-          ready shortly!
-        </p>
-      </Transition>
+      <p
+        v-if="questionStep < 3"
+        class="text-sm text-[#A4A7AE] text-center pt-4 pb-6"
+      >
+        No need to rush here, take your time to think
+      </p>
+      <p v-else class="text-sm text-[#A4A7AE] text-center pt-4 pb-6">
+        Great job! Thanks for sharing all these details. We'll now craft the
+        perfect essay just for you. Sit back and relax - your essay will be
+        ready shortly!
+      </p>
     </div>
   </section>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import useEssayStore from "~/stores/essayStore";
 
 const essayStore = useEssayStore();
+const { api } = useApi();
+const { showToast } = useToast();
 
+const props = defineProps({
+  basicAnswersList: {
+    type: Object,
+    default: () => {},
+  },
+});
+
+const textarea = ref<HTMLTextAreaElement | null>(null);
 const inputText = ref<string>("");
 const questionStep = ref<number>(1);
+const isSubmitting = ref<boolean>(false);
 
 const answersList = ref({
   answerFist: "",
   answerSecond: "",
 });
 
+const adjustHeight = () => {
+  const el = textarea.value;
+  if (el) {
+    el.style.height = "auto";
+    el.style.height =
+      Math.min(el.scrollHeight, questionStep.value === 1 ? 100 : 250) + "px";
+  }
+};
+
 const handleNext = () => {
   if (questionStep.value === 1) {
     answersList.value.answerFist = inputText.value;
+    essayStore.essayProgress += 25;
   } else if (questionStep.value === 2) {
     answersList.value.answerSecond = inputText.value;
+    essayStore.essayProgress += 25;
   }
   questionStep.value += 1;
   inputText.value = "";
 };
 
-const handleSubmit = () => {
-  essayStore.setFinalEssay();
+const handleSubmit = async () => {
+  try {
+    isSubmitting.value = true;
+    const response = await api.post(
+      "/api/v1/ai-conversation/generate_an_essay",
+      {
+        dob: props.basicAnswersList.birthYear,
+        dream_school: props.basicAnswersList.schoolName,
+        major: props.basicAnswersList.major,
+        core_message: props.basicAnswersList.message,
+        personal_statement: props.basicAnswersList.personalStatement,
+        any_regrets: answersList.value.answerFist,
+        lesson_from_regrets: answersList.value.answerSecond,
+        future_goals:
+          "I aspire to become a software engineer specializing in AI, developing solutions that enhance accessibility and efficiency in underserved communities",
+      }
+    );
+    const details = {
+      title:
+        "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
+      essayText: response.data.data,
+    };
+    essayStore.setFinalEssay(details);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isSubmitting.value = false;
+  }
 };
+
+onMounted(() => {
+  adjustHeight();
+});
 </script>

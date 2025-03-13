@@ -9,6 +9,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const { showToast } = useToast();
     const { api } = useApi();
 
+    const selectedFilter = ref<OptionAttributes | null>(null);
+    const isSchoolsLoading = ref<boolean>(false);
     const enginePosition = ref<"pre" | "post" | "final">("pre");
     const sortParam = ref<FilterKey | null>(null);
     const programListOptions = ref<OptionAttributes[]>([])
@@ -23,10 +25,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const isFinalEnginCall = ref<boolean>(false);
 
     const setSortParam = (data: FilterKey | null) => {
-        console.log(data);
-        sortParam.value = data
-        console.log(sortParam.value);
-
+        sortParam.value = data;
     }
     const setProgramListOptions = async () => {
         try {
@@ -138,11 +137,12 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const preRunEngine = async (page: number = 1) => {
         try {
+            isSchoolsLoading.value = true;
             const response = await api.get(
                 `/api/v1/school/recommendation/pre-run-engine`, {
                 params: {
                     page,
-                    sort: sortParam.value || null
+                    ...(sortParam.value)
                 }
             });
             if (response) {
@@ -160,15 +160,18 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                     type: "error",
                 });
             }
+        } finally {
+            isSchoolsLoading.value = false;
         }
     };
 
     const runEngine = async (page: number = 1) => {
         try {
+            isSchoolsLoading.value = true;
             const response = await api.get(`/api/v1/school/recommendation/run-engine`, {
                 params: {
                     page,
-                    sort: sortParam.value || null
+                    ...(sortParam.value)
                 }
             });
             if (response) {
@@ -186,16 +189,19 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                     type: "error",
                 });
             }
+        } finally {
+            isSchoolsLoading.value = false;
         }
     };
 
     const runFinalEngine = async (page: number = 1, sort?: { [key: string]: string }) => {
         try {
+            isSchoolsLoading.value = true;
             const response = await api.get(
                 `/api/v1/school/recommendation/final-engine`, {
                 params: {
                     page,
-                    sort: sortParam.value || null
+                    ...(sortParam.value)
                 }
             }
             );
@@ -213,10 +219,14 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                     type: "error",
                 });
             }
+        } finally {
+            isSchoolsLoading.value = false;
         }
     };
 
     return {
+        selectedFilter,
+        isSchoolsLoading,
         programListOptions,
         locationOptions,
         coursePreferenceOptions,

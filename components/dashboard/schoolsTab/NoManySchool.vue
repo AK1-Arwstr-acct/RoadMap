@@ -6,8 +6,14 @@
       If you'd like more guidance or personalized suggestions, our team is here
       to help!
     </p>
-    <button class="text-sm font-semibold text-white py-2 px-3.5 bg-[#1570EF] rounded-lg mt-5">
-        Talk to our team
+    <button
+      @click="navigateTo(localePath('/pricing'))"
+      class="text-sm font-semibold text-white py-2 px-3.5 bg-[#1570EF] rounded-lg mt-5"
+    >
+      Talk to our team
     </button>
   </div>
 </template>
+<script setup lang="ts">
+const localePath = useLocalePath();
+</script>

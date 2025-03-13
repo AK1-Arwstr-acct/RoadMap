@@ -2,6 +2,7 @@
   <div
     v-if="majorProgramsList.length"
     class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-white"
+    :class="{ 'pointer-events-none': dashboardStore.isSchoolsLoading }"
   >
     <p class="font-medium text-[#414651] text-sm">
       Majors (Pick up to 3 majors)
@@ -58,14 +59,17 @@
       </div>
     </div>
   </div>
+  <MajorSekeleton v-else />
 </template>
 <script setup lang="ts">
+import useDashboardStore from "~/stores/dashboardStore";
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
 
 const { api } = useApi();
 const appStore = useAppStore();
 const { showToast } = useToast();
+const dashboardStore = useDashboardStore();
 
 interface programOptions {
   value: number;
@@ -89,22 +93,25 @@ const toggleSelection = (id: number) => {
   } else {
     selectedLPrograms.value.push(id);
   }
-  if (debounceTimeout) {
-    clearTimeout(debounceTimeout);
-  }
-  debounceTimeout = setTimeout(async () => {
-    submit();
-  }, 1000);
+  submit();
+  // if (debounceTimeout) {
+  //   clearTimeout(debounceTimeout);
+  // }
+  // debounceTimeout = setTimeout(async () => {
+  //   submit();
+  // }, 1000);
 };
 
 const submit = async () => {
   try {
+    dashboardStore.isSchoolsLoading = true;
     await api.post("/api/v1/student/update-profile-basic-info", {
       cgpa: appStore.userData?.educational_records.cgpa,
       next_program_title_ids: selectedLPrograms.value,
     });
     appStore.getUserData();
   } catch (error) {
+    dashboardStore.isSchoolsLoading = false;
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
       showToast(errorMessage, {
