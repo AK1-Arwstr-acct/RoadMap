@@ -26,7 +26,7 @@
         @click="emit('updateTab', 'user_profile')"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
-        <NuxtImg
+        <img
           v-if="appStore.userData?.avatar"
           :src="appStore.userImagePreview || appStore.userData?.avatar"
           alt="user-icon"
