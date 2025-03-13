@@ -50,9 +50,11 @@
         <div class="flex-1 text-[#181D27]">
           <p class="font-semibold mb-1.5">Missed the Deadline? No Worries!</p>
           <p class="font-medium text-sm">
-            <span class="text-[#1570EF] cursor-pointer">
-              Contact our counselors
-            </span>
+            <NuxtLinkLocale to="/pricing">
+              <span class="text-[#1570EF] cursor-pointer">
+                Contact our counselors 
+              </span>
+            </NuxtLinkLocale>
             <span>
               to see how we can create a new plan just for you. You’re still in
               the game!

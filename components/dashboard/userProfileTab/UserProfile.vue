@@ -4,7 +4,7 @@
       <Header @updateStep="updateStep" />
       <div class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-16 px-5">
         <PersonelInfo />
-        <div>
+        <div  v-show="showAchievements">
           <div class="flex justify-between items-center font-semibold mb-5">
             <h3 class="text-2xl text-[#181D27]">Your achievement</h3>
             <span
@@ -13,7 +13,9 @@
               >View All</span
             >
           </div>
-          <Achievements />
+          <Achievements
+            @remainingTask="(value) => (showAchievements = value)"
+          />
         </div>
 
         <!-- AI essay -->
@@ -70,6 +72,7 @@ type CurrentStep =
   | "essay_detail";
 
 const currentStep = ref<CurrentStep>("profile");
+const showAchievements = ref<boolean>(false);
 
 const updateStep = (step: CurrentStep) => {
   currentStep.value = step;

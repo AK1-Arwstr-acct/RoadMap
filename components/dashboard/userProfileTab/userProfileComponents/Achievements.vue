@@ -1,31 +1,20 @@
 <template>
   <section class="flex flex-col gap-6">
-    <AchievementCard
-      v-for="(category, idx) in categoryList(
-        appTrackerStore.preApplication || []
-      )"
-      :key="idx"
-      :category="category || ''"
-      :application="appTrackerStore.preApplication"
-      :isOngoingBehaviour="isOngoingBehaviour"
-    />
     <div v-if="isDetailPage" class="flex flex-col gap-6">
       <AchievementCard
-        v-for="(category, idx) in categoryList(
-          appTrackerStore.applicationList || []
-        )"
+        v-for="(item, idx) in selectedCategoriesAll"
         :key="idx"
-        :category="category || ''"
-        :application="appTrackerStore.applicationList"
+        :category="item.category"
+        :application="appTrackerStore[item.source as 'preApplication' | 'applicationList' | 'postApplication']"
         :isOngoingBehaviour="isOngoingBehaviour"
       />
+    </div>
+    <div v-else class="flex flex-col gap-6">
       <AchievementCard
-        v-for="(category, idx) in categoryList(
-          appTrackerStore.postApplication || []
-        )"
+        v-for="(item, idx) in selectedCategories"
         :key="idx"
-        :category="category || ''"
-        :application="appTrackerStore.postApplication"
+        :category="item.category"
+        :application="appTrackerStore[item.source as 'preApplication' | 'applicationList' | 'postApplication']"
         :isOngoingBehaviour="isOngoingBehaviour"
       />
     </div>
@@ -49,6 +38,45 @@ const props = defineProps({
 });
 
 const appTrackerStore = useAppTrackerStore();
+
+const categoryLists = ref([
+  { list: appTrackerStore.preApplication || [], source: "preApplication" },
+  { list: appTrackerStore.applicationList || [], source: "applicationList" },
+  { list: appTrackerStore.postApplication || [], source: "postApplication" },
+]);
+
+const selectedCategories = computed(() => {
+  let result: { category: string; source: string }[] = [];
+  let totalNeeded = 4;
+
+  for (const { list, source } of categoryLists.value) {
+    const categories = categoryList(list);
+    if (categories.length > 0) {
+      const takeCount = Math.min(totalNeeded, categories.length);
+      result.push(
+        ...categories
+          .slice(0, takeCount)
+          .map((cat) => ({ category: cat, source }))
+      );
+      totalNeeded -= takeCount;
+      if (totalNeeded <= 0) break;
+    }
+  }
+
+  return result;
+});
+
+const selectedCategoriesAll = computed(() => {
+  let result: { category: string; source: string }[] = [];
+
+  for (const { list, source } of categoryLists.value) {
+    const categories = categoryList(list);
+    if (categories.length > 0) {
+      result.push(...categories.map((cat) => ({ category: cat, source })));
+    }
+  }
+  return result;
+});
 
 const checkIfAppCompleted = (application: Application, category: string) => {
   const filteredApplication = application?.tasks.filter((task) =>
@@ -110,6 +138,27 @@ const categoryList = (application: Application | Application[]) => {
     return filtredArray;
   }
 };
+
+watch(
+  () => [
+    appTrackerStore.preApplication,
+    appTrackerStore.applicationList.length,
+    appTrackerStore.postApplication,
+  ],
+  () => {
+    categoryLists.value = [
+      { list: appTrackerStore.preApplication || [], source: "preApplication" },
+      {
+        list: appTrackerStore.applicationList || [],
+        source: "applicationList",
+      },
+      {
+        list: appTrackerStore.postApplication || [],
+        source: "postApplication",
+      },
+    ];
+  }
+);
 
 onMounted(async () => {
   if (
