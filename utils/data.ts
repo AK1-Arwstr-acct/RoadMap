@@ -66,7 +66,7 @@ export const roadmapData = [
                     },
                     {
                         "text": "Choosing/Changing a Major: Identifying Interests and Skills (Self-assesment Worksheet)",
-                        "link": "https://www.up.edu/career/career_resource_library/choosingmajors.pdf",
+                        "link": "https://www.forbes.com/sites/goldiechan/2024/05/20/myers-briggs-personality-types/",
                     }
                 ],
                 "task_description": "<p>Choose a major suitable to you, based on your interests, results of your MBTI test and also your career quiz.</p><p>Finalizing your major early will help you in choosing ECs related to your chosen major that will carry more weight in your college application.</p>",

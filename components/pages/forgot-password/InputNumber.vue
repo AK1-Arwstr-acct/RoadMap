@@ -106,7 +106,7 @@
           class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
         >
           {{ $t("forgotPassword.get_verification_code") }}
-          <IconSpinner v-if="isSubmitting"  />
+          <IconSpinner class="size-5" v-if="isSubmitting"  />
         </button>
       </div>
     </div>

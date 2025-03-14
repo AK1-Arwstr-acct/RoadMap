@@ -136,7 +136,7 @@
     <!-- about school -->
     <div class="border-[1.5px] border-gray-200 rounded-2xl p-6 space-y-6">
       <div v-if="schoolData.cover_photo" class="h-[242px] rounded-xl overflow-hidden">
-        <NuxtImg
+        <img
           :src="schoolData.cover_photo || undefined"
           :alt="schoolData.name"
           class="size-full object-cover"

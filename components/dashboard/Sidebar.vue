@@ -50,6 +50,8 @@
             {{
               tab.name === "application_tracker"
                 ? "Roadmap"
+                : tab.name === "ai_essay_editor"
+                ? "AI Essay Editor"
                 : tab.name.split("_").join(" ")
             }}
           </span>
@@ -81,6 +83,7 @@ import IconTabHome from "~/components/icons/IconTabHome.vue";
 import IconTabSophie from "~/components/icons/IconTabSophie.vue";
 import IconTabApplication from "~/components/icons/IconTabApplication.vue";
 import IconTabSchool from "~/components/icons/IconTabSchool.vue";
+import IconTabEssayEditor from "../icons/IconTabEssayEditor.vue";
 import IconTabSetting from "~/components/icons/IconTabSetting.vue";
 import type { TabList, TabName } from "~/types/dashboard";
 
@@ -112,6 +115,10 @@ const tabList: TabList[] = [
     name: "sophie",
     icon: IconTabSophie,
   },
+  {
+    name: "ai_essay_editor",
+    icon: IconTabEssayEditor,
+  },
   // {
   //   name: "setting",
   //   icon: IconTabSetting,
@@ -120,8 +127,12 @@ const tabList: TabList[] = [
 const activeTab = ref<TabName>(props.currentTab);
 
 const updateTab = (item: TabName) => {
-  activeTab.value = item;
-  emit("updateTab", item);
+  if (item !== "ai_essay_editor") {
+    activeTab.value = item;
+    emit("updateTab", item);
+  } else {
+    navigateTo(localePath("/essay"));
+  }
 };
 
 const handleLogo = () => {

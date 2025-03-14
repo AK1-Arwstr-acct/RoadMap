@@ -58,7 +58,7 @@
             width="20"
             height="20"
           />
-          <IconSpinner v-else class="size-4" bgColor="#ffffff00" />
+          <IconSpinner v-else class="size-3.5" bgColor="#ffffff00" />
         </button>
       </div>
       <p
@@ -124,26 +124,45 @@ const handleNext = () => {
 const handleSubmit = async () => {
   try {
     isSubmitting.value = true;
+    const payload: {
+      dob: string;
+      dream_school: string;
+      major: string;
+      core_message: string;
+      personal_statement: string;
+      any_regrets: string;
+      lesson_from_regrets: string;
+      future_goals?: string;
+      generated_essay?: string;
+    } = {
+      dob: props.basicAnswersList.birthYear,
+      dream_school: props.basicAnswersList.schoolName,
+      major: props.basicAnswersList.major,
+      core_message: props.basicAnswersList.message,
+      personal_statement: props.basicAnswersList.personalStatement,
+      any_regrets: answersList.value.answerFist,
+      lesson_from_regrets: answersList.value.answerSecond,
+      future_goals:
+        "I aspire to become a software engineer specializing in AI, developing solutions that enhance accessibility and efficiency in underserved communities",
+    };
     const response = await api.post(
       "/api/v1/ai-conversation/generate_an_essay",
-      {
-        dob: props.basicAnswersList.birthYear,
-        dream_school: props.basicAnswersList.schoolName,
-        major: props.basicAnswersList.major,
-        core_message: props.basicAnswersList.message,
-        personal_statement: props.basicAnswersList.personalStatement,
-        any_regrets: answersList.value.answerFist,
-        lesson_from_regrets: answersList.value.answerSecond,
-        future_goals:
-          "I aspire to become a software engineer specializing in AI, developing solutions that enhance accessibility and efficiency in underserved communities",
-      }
+      payload
     );
+
+    const regex = /^Title:\s*(.+)\nEssay:\s*(.+)$/s;
+    const match = response.data.data.match(regex);
+    const title = match[1];
+    const essay = match[2];
+
     const details = {
-      title:
-        "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
-      essayText: response.data.data,
+      title: title,
+      essayText: essay,
     };
     essayStore.setFinalEssay(details);
+    const { future_goals, ...newPayload } = payload;
+    newPayload.generated_essay = response.data.data;
+    essayStore.essayPayload = newPayload;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);

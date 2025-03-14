@@ -107,7 +107,7 @@ const submit = async () => {
     dashboardStore.isSchoolsLoading = true;
     await api.post("/api/v1/student/update-profile-basic-info", {
       cgpa: appStore.userData?.educational_records.cgpa,
-      next_program_title_ids: selectedLPrograms.value,
+      next_program_title_ids: selectedLPrograms.value.length ? selectedLPrograms.value : -1,
     });
     appStore.getUserData();
   } catch (error) {

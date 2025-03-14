@@ -83,7 +83,19 @@
                 preload
               />
             </div>
-            <span> Sophie is checking your information... </span>
+            <span class="flex justify-center items-center">
+              <div class="flex space-x-2">
+                <div
+                  class="size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:0s] ease-in-out"
+                ></div>
+                <div
+                  class="size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:200ms] ease-in-out"
+                ></div>
+                <div
+                  class="size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:400ms] ease-in-out"
+                ></div>
+              </div>
+            </span>
           </div>
         </div>
         <!-- input -->
@@ -283,7 +295,9 @@ watch(
 onMounted(() => {
   uuid.value = uuidv4();
   if (props.isSummarizeOverview) {
-    inputQuestion.value = `Please summarize my school list \n  ${dashboardStore.overViews?.join("\n")}`;
+    inputQuestion.value = `Please summarize my school list \n  ${dashboardStore.overViews?.join(
+      "\n"
+    )}`;
     submit();
   }
 });

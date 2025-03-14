@@ -144,7 +144,7 @@
           class="py-2.5 px-4 bg-[#1570EF] disabled:bg-[#84CAFF] w-fit rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Save changes
-          <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
+          <IconSpinner v-if="isSubmitting" width="14" height="14" bgColor="#ffffff00" />
         </button>
       </div>
     </div>

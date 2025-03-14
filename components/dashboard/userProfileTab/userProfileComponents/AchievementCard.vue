@@ -26,7 +26,7 @@
         <h4 class="text-xl text-[#181D27] font-semibold capitalize">
           {{
             category?.includes("extracurricular")
-              ? "extracurricular actiivity"
+              ? "extracurricular activity"
               : category
           }}
         </h4>

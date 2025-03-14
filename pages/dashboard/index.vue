@@ -1,5 +1,5 @@
 <template>
-  <div class="h-dvh flex relative">
+  <div class="h-dvh hidden lg:flex relative">
     <Sidebar :currentTab="currentTab" @updateTab="updateTab" />
     <div class="flex-1 flex flex-col">
       <DashboardNav @updateTab="updateTab" />
@@ -53,6 +53,27 @@
         />
       </div>
     </Transition>
+  </div>
+  <div
+    class="lg:hidden flex flex-col items-center gap-4 h-dvh bg-[#f5faff] overflow-hidden w-screen"
+  >
+    <div class="mt-16">
+      <NuxtImg src="/images/logo/logo.svg" class="w-[130px] h-[22px]" />
+    </div>
+    <div class="flex-1 w-full flex justify-center items-center px-5">
+      <div class="flex flex-col items-center">
+        <NuxtImg src="/images/v-room.png" class="max-w-[310px]" />
+        <p class="font-medium text-[#181D27] text-center w-[80%]">
+          To fully experience our website, we recommend accessing it via a
+          desktop or larger device.
+        </p>
+      </div>
+    </div>
+    <div>
+      <p class="text-[#EE46BC] text-sm font-medium pb-4">
+        {{ `Thank you <3` }}
+      </p>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

@@ -40,7 +40,7 @@
                   ? IconUS
                   : IconEurope
               "
-              class="size-4"
+              class="w-4 max-w-4 h-4 max-h-4"
             />
             <p class="text-[#414651] text-sm font-medium text-nowrap">
               {{ program.school.address.state }}

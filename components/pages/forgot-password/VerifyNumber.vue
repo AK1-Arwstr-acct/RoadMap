@@ -57,7 +57,7 @@
               class="cursor-pointer disabled:cursor-default disabled:opacity-70 w-full focus:outline-none bg-[#1570EF] text-white rounded-lg font-semibold py-[10px] flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
             >
             {{ $t("otp.verify") }}
-            <IconSpinner v-if="isSubmitting"  />
+            <IconSpinner class="size-5" v-if="isSubmitting"  />
             </button>
           </div>
         </div>

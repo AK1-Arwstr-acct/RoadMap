@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-svh flex justify-center items-center h-full px-5">
-    <div class="max-w-[864px] w-full flex justify-center gap-12 lg:gap-[84px]">
-      <div class="flex-1 hidden md:block">
+    <div class="max-w-[864px] w-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-[84px]">
+      <div class="flex-1">
         <NuxtImg
           src="/images/get-started.png"
           alt="Get Started"
-          class="w-full size-full object-contain"
+          class="w-full size-full object-contain max-w-[400px]"
           loading="eager"
           preload
         />

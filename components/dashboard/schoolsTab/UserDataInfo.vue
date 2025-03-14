@@ -151,7 +151,7 @@
           class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Update
-          <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
+          <IconSpinner v-if="isSubmitting" class="size-3.5" bgColor="#ffffff00" />
         </button>
       </div>
     </div>

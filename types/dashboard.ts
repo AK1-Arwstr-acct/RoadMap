@@ -4,6 +4,7 @@ export type TabName =
     | "application_tracker"
     | "schools_list"
     | "setting"
+    | "ai_essay_editor"
     | "user_profile";
 
 interface TabList {

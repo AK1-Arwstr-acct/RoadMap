@@ -4,7 +4,7 @@
       class="group h-60 bg-[#E0EAFF] relative flex overflow-hidden rounded-xl mx-auto  max-w-[1050px]"
       :class="{ 'justify-end': !coverPhotoPreview }"
     >
-      <NuxtImg
+      <img
         v-if="coverPhotoPreview"
         :src="coverPhotoPreview"
         alt="Cover Picture"
@@ -45,7 +45,7 @@
           <div
             class="relative rounded-[200px] min-w-[160px] w-[160px] h-[160px] overflow-hidden group"
           >
-            <NuxtImg
+            <img
               v-if="imagePreview"
               :src="imagePreview || ''"
               alt="Profile Picture"

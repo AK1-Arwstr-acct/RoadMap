@@ -15,7 +15,7 @@
       class="w-full text-white bg-[#1570EF] rounded-lg flex gap-3 items-center justify-center py-2.5 disabled:opacity-70"
     >
       {{ $t("onboarding.continue") }}
-      <IconSpinner v-if="isSubmitting" />
+      <IconSpinner class="size-5" v-if="isSubmitting" />
       <IconArrowRight v-else fill="#ffffff" />
     </button>
   </div>
