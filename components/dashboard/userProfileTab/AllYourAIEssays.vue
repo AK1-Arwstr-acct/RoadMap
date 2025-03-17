@@ -24,7 +24,7 @@
       </ClientOnly>
     </div>
     <div class="h-px bg-[#E9EAEB] mx-auto my-[42px]"></div>
-    <div class="flex items-start gap-6">
+    <div class="flex items-start gap-6 pb-16">
       <div class="flex gap-4">
         <IconTabSophie
           width="56"

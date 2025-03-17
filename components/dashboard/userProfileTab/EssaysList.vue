@@ -19,7 +19,7 @@
     </div>
     <div class="flex flex-col gap-6">
       <EssayCard
-        v-for="(essay, idx) in essayStore.usereEssayList"
+        v-for="(essay, idx) in essayStore.userEssayList"
         :key="idx"
         :essay="essay"
         @click="openDetail(essay.generated_essay)"

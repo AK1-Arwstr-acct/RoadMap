@@ -20,7 +20,7 @@
 
         <!-- AI essay -->
 
-        <div>
+        <div v-if="essayStore.userEssayList.length">
           <div class="flex justify-between items-center font-semibold mb-5">
             <h3 class="text-2xl text-[#181D27]">Your AI Essay</h3>
             <span
@@ -29,14 +29,12 @@
               >View All</span
             >
           </div>
-          <div
-            v-if="essayStore.usereEssayList.length"
-            class="flex flex-col gap-6"
-          >
+          <div class="flex flex-col gap-6">
             <EssayCard
-              v-for="(essay, idx) in essayStore.usereEssayList.slice(0, 2)"
+              v-for="(essay, idx) in essayStore.userEssayList.slice(0, 2)"
               :key="idx"
               :essay="essay"
+              @click="openDetail(essay.generated_essay)"
             />
           </div>
         </div>
@@ -78,43 +76,19 @@ const updateStep = (step: CurrentStep) => {
   currentStep.value = step;
 };
 
-const essaysList = [
-  {
-    title:
-      "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
-    text: "Losing the debate team leadership position was a humbling experience, but it ultimately shaped me in ways I didn’t expect. At first, I saw it as a failure, ys I didn’t expect. At first, I saw it as a failure, questioning whether I wa...",
-  },
-  {
-    title:
-      "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
-    text: "Losing the debate team leadership position was a humbling experience, but it ultimately shaped me in ways I didn’t expect. At first, I saw it as a failure, ys I didn’t expect. At first, I saw it as a failure, questioning whether I wa...",
-  },
-  {
-    title:
-      "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
-    text: "Losing the debate team leadership position was a humbling experience, but it ultimately shaped me in ways I didn’t expect. At first, I saw it as a failure, ys I didn’t expect. At first, I saw it as a failure, questioning whether I wa...",
-  },
-  {
-    title:
-      "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
-    text: "Losing the debate team leadership position was a humbling experience, but it ultimately shaped me in ways I didn’t expect. At first, I saw it as a failure, ys I didn’t expect. At first, I saw it as a failure, questioning whether I wa...",
-  },
-  {
-    title:
-      "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
-    text: "Losing the debate team leadership position was a humbling experience, but it ultimately shaped me in ways I didn’t expect. At first, I saw it as a failure, ys I didn’t expect. At first, I saw it as a failure, questioning whether I wa...",
-  },
-  {
-    title:
-      "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
-    text: "Losing the debate team leadership position was a humbling experience, but it ultimately shaped me in ways I didn’t expect. At first, I saw it as a failure, ys I didn’t expect. At first, I saw it as a failure, questioning whether I wa...",
-  },
-  {
-    title:
-      "Beyond the Title: How Embracing Setbacks Transformed My Understanding of Leadership and Success",
-    text: "Losing the debate team leadership position was a humbling experience, but it ultimately shaped me in ways I didn’t expect. At first, I saw it as a failure, ys I didn’t expect. At first, I saw it as a failure, questioning whether I wa...",
-  },
-];
+const openDetail = (essayDetail: string) => {
+  const regex = /^Title:\s*(.+)\nEssay:\s*(.+)$/s;
+  const match = essayDetail.match(regex) || [];
+  const title = match[1];
+  const essay = match[2];
+
+  const details = {
+    title: title,
+    essayText: essay,
+  };
+  essayStore.setFinalEssay(details);
+  currentStep.value = "essay_detail";
+};
 
 onMounted(async () => {
   essayStore.getEssayList();
