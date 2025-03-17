@@ -4,7 +4,7 @@
       <Header @updateStep="updateStep" />
       <div class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-16 px-5">
         <PersonelInfo />
-        <div  v-show="showAchievements">
+        <div v-show="showAchievements">
           <div class="flex justify-between items-center font-semibold mb-5">
             <h3 class="text-2xl text-[#181D27]">Your achievement</h3>
             <span
@@ -20,7 +20,7 @@
 
         <!-- AI essay -->
 
-        <!-- <div>
+        <div>
           <div class="flex justify-between items-center font-semibold mb-5">
             <h3 class="text-2xl text-[#181D27]">Your AI Essay</h3>
             <span
@@ -36,7 +36,7 @@
               :essay="essay"
             />
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
     <AllAchievements
@@ -61,6 +61,7 @@
 <script setup lang="ts">
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 
+const { api } = useApi();
 const appTrackerStore = useAppTrackerStore();
 const emit = defineEmits(["updateTab"]);
 
@@ -115,4 +116,8 @@ const essaysList = [
     text: "Losing the debate team leadership position was a humbling experience, but it ultimately shaped me in ways I didn’t expect. At first, I saw it as a failure, ys I didn’t expect. At first, I saw it as a failure, questioning whether I wa...",
   },
 ];
+
+// onMounted(async () => {
+//   await api.get("/api/v1/student/get-my-generated-essay");
+// });
 </script>

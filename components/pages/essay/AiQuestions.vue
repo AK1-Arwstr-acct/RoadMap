@@ -1,5 +1,5 @@
 <template>
-  <section class="size-full overflow-hidden flex flex-col items-center">
+  <section class="size-full overflow-hidden flex flex-col items-center" :class="{'overflow-y-auto pb-4' : phase === 'keepGoing'}">
     <div class="py-7 px-10 sm:px-20 xl:px-[170px] flex flex-col gap-10 w-full">
       <div class="flex items-center gap-6">
         <div
@@ -72,14 +72,14 @@
         </p>
       </div>
     </div>
-    <div v-else class="w-[60%] xl:w-[50%] flex-1 overflow-hidden">
+    <div v-else class="w-full flex-1 overflow-hidden">
       <div
         v-if="phase === 'questionPhase'"
         class="size-full flex flex-col gap-2 overflow-hidden"
       >
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto no-scrollbar pb-4"
+          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-20 md:px-40 2xl:px-96"
         >
           <div class="size-full h-fit flex flex-col gap-8">
             <ChatMessage
@@ -163,7 +163,7 @@
             </div>
           </div>
         </div>
-        <div>
+        <div class="px-20 md:px-40 2xl:px-96">
           <div
             v-if="questionStep < 5 && phase === 'questionPhase'"
             class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex items-start gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
@@ -175,6 +175,8 @@
               class="w-full outline-none resize-none custom-scrollbar my-auto"
               v-model="inputText"
               @input="adjustHeight"
+              @keydown.enter.exact.prevent="handleNext"
+              @keydown.enter.ctrl.prevent="addNewLine"
               rows="1"
               autofocus
             />
@@ -235,7 +237,7 @@ const scrollDown = () => {
   });
 };
 
-const handleNext = () => {
+const handleNext = async () => {
   if (questionStep.value === 1) {
     answersList.value.birthYear = inputText.value;
   } else if (questionStep.value === 2) {
@@ -254,6 +256,8 @@ const handleNext = () => {
     essayStore.essayProgress += 10;
   }
   scrollDown();
+  await nextTick();
+  adjustHeight();
 };
 
 const adjustHeight = () => {
@@ -262,6 +266,11 @@ const adjustHeight = () => {
     el.style.height = "auto";
     el.style.height = Math.min(el.scrollHeight, 100) + "px";
   }
+};
+const addNewLine = async () => {
+  inputText.value += "\n";
+  await nextTick();
+  adjustHeight();
 };
 
 const handelStatement = (value: string) => {

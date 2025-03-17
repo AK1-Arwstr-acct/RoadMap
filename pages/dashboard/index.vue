@@ -45,7 +45,7 @@
     <Transition name="fade">
       <div
         v-if="openSophieModal"
-        class="fixed bg-black/50 inset-0 backdrop-blur py-[60px] px-[68px] flex justify-center items-center"
+        class="fixed bg-black/50 inset-0 z-50 isolate backdrop-blur py-[60px] px-[68px] flex justify-center items-center"
       >
         <ChatWithSophie
           :isModal="true"

@@ -19,7 +19,8 @@
           placeholder="Message Sophie"
           rows="3"
           v-model="inputQuestion"
-          @keydown.enter="handleKeydown"
+          @keydown.enter.exact.prevent="submit"
+          @keydown.enter.ctrl.prevent="addNewLine"
           class="w-full px-3.5 py-2.5 border-[1.5px] border-gray-200 rounded-xl mt-6 focus:outline-none resize-none placeholder:font-light min-h-fit"
         />
         <div class="flex justify-center flex-wrap mt-3 gap-3">
@@ -120,14 +121,17 @@
               </button>
             </div>
           </Transition>
-          <input
+          <textarea
             v-if="!readOnly"
-            type="text"
+            ref="textarea"
             placeholder="Message Sophie"
             v-model="inputQuestion"
-            @keydown.enter="handleKeydown"
+            @keydown.enter.exact.prevent="submit"
+            @keydown.enter.ctrl.prevent="addNewLine"
             :disabled="isChatLoading || isChatFull"
-            class="border-[1.5px] border-gray-200 rounded-lg py-2.5 px-3.5 placeholder:font-thin w-full focus:outline-none"
+            rows="1"
+            autofocus
+            class="border-[1.5px] border-gray-200 rounded-lg py-2.5 px-3.5 placeholder:font-thin w-full focus:outline-none resize-none"
             :class="{ '#FAFAFA': isChatFull }"
           />
         </div>
@@ -156,6 +160,8 @@ const { api } = useApi();
 const { showToast } = useToast();
 const dashboardStore = useDashboardStore();
 
+const emit = defineEmits(["isChatLoading"]);
+
 const props = defineProps({
   isNewChat: {
     type: Boolean,
@@ -182,6 +188,7 @@ const isChatLoading = ref<boolean>(false);
 const isChatFull = ref<boolean>(false);
 const readOnly = ref<boolean>(false);
 const uuid = ref<string>();
+const textarea = ref<HTMLTextAreaElement | null>(null);
 
 const preQuestion: string[] = [
   "Should I take the TOEFL or the IELTS?",
@@ -195,12 +202,20 @@ const options = {
   html: true,
 };
 
-const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    submit();
+const adjustHeight = () => {
+  const el = textarea.value;
+  if (el) {
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 100) + "px";
   }
 };
+
+const addNewLine = async () => {
+  inputQuestion.value += "\n";
+  await nextTick();
+  adjustHeight();
+};
+
 const handelPreQuestion = (question: string) => {
   inputQuestion.value = question;
   submit();
@@ -218,6 +233,7 @@ const scrollDown = () => {
 
 const submit = async () => {
   try {
+    emit("isChatLoading", true);
     completeChat.value.push({
       isSender: true,
       text: inputQuestion.value,
@@ -226,6 +242,8 @@ const submit = async () => {
     isChatLoading.value = true;
     const userQuery = inputQuestion.value;
     inputQuestion.value = "";
+    await nextTick();
+    adjustHeight();
     const response = await api.post(`/api/v1/ai-conversation/sophie`, {
       query: userQuery,
       sophieSessionId: uuid.value,
@@ -257,6 +275,7 @@ const submit = async () => {
     }
   } finally {
     isChatLoading.value = false;
+    emit("isChatLoading", false);
   }
 };
 

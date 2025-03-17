@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-4 h-full flex flex-col">
-    <div class="sticky top-0 pt-4 pb-4 bg-white">
+  <div class="pt-4 pb-1 h-fit flex flex-col">
+    <div class="sticky top-0 pt-4 pb-3 bg-white">
       <h1 class="text-[#181D27] text-2xl font-semibold">
         Let's find your perfect school match!
       </h1>
@@ -17,7 +17,7 @@
         />
       </div>
     </div>
-    <div class="space-y-6 flex-1 pb-6">
+    <div class="flex-1 flex flex-col gap-6 pb-6 mr-px">
       <div
         v-if="(dashboardStore.overViews || []).length > 0"
         class="space-y-4"
@@ -26,7 +26,7 @@
         <p class="text-[#181D27] font-semibold text-xl">
           {{ program }}
         </p>
-        <div class="space-y-6">
+        <div class="flex flex-col gap-6">
           <SchoolCard
             v-for="(school, idx) in dashboardStore.schoolsList.filter(
               (item) => item.program_title === program
@@ -37,7 +37,7 @@
           />
         </div>
       </div>
-      <div v-else class="space-y-6">
+      <div v-else class="flex flex-col gap-6">
         <SchoolCard
           v-for="(school, idx) in dashboardStore.schoolsList"
           :key="idx"

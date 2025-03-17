@@ -2,7 +2,7 @@
   <section class="size-full flex flex-col gap-2">
     <div ref="chatContainer" class="flex-1 flex flex-col gap-2 overflow-hidden">
       <div
-        class="pb-4 overflow-y-auto no-scrollbar h-full flex flex-col gap-8"
+        class="pb-4 overflow-y-auto no-scrollbar h-full flex flex-col gap-8 px-20 md:px-40 2xl:px-96"
         :class="{ 'justify-end': questionStep === 1 }"
       >
         <ChatMessage
@@ -18,7 +18,7 @@
         />
       </div>
     </div>
-    <div>
+    <div class="px-20 md:px-40 2xl:px-96">
       <div
         v-if="questionStep < 3"
         class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex items-start gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
@@ -26,6 +26,8 @@
         <textarea
           ref="textarea"
           @input="adjustHeight"
+          @keydown.enter.exact.prevent="handleNext"
+          @keydown.enter.ctrl.prevent="addNewLine"
           type="text"
           :placeholder="
             questionStep === 1
@@ -108,8 +110,13 @@ const adjustHeight = () => {
       Math.min(el.scrollHeight, questionStep.value === 1 ? 100 : 250) + "px";
   }
 };
+const addNewLine = async () => {
+  inputText.value += "\n";
+  await nextTick();
+  adjustHeight();
+};
 
-const handleNext = () => {
+const handleNext = async () => {
   if (questionStep.value === 1) {
     answersList.value.answerFist = inputText.value;
     essayStore.essayProgress += 25;
@@ -119,6 +126,8 @@ const handleNext = () => {
   }
   questionStep.value += 1;
   inputText.value = "";
+  await nextTick();
+  adjustHeight();
 };
 
 const handleSubmit = async () => {

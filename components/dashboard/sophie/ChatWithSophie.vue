@@ -1,7 +1,10 @@
 <template>
   <div
     class="bg-white size-full overflow-hidden flex"
-    :class="{ 'rounded-xl drop-shadow-lg relative max-w-[1302px] max-h-[904px] ': isModal }"
+    :class="{
+      'rounded-xl drop-shadow-lg relative max-w-[1302px] max-h-[904px] ':
+        isModal,
+    }"
   >
     <div
       v-if="isModal"
@@ -10,7 +13,7 @@
     >
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
-    <div class="w-[300px]">
+    <div class="w-[300px]" :class="{ 'pointer-events-none': isChatLoading }">
       <SophieHistory
         @newChat="handelNewChat"
         @chatDetail="chatDetail"
@@ -27,6 +30,7 @@
         :singleChatDetail="singleChatDetail"
         :isModal="isModal"
         :isSummarizeOverview="isSummarizeOverview"
+        @isChatLoading="(value) => (isChatLoading = value)"
       />
     </div>
   </div>
@@ -51,6 +55,7 @@ const props = defineProps({
   },
 });
 
+const isChatLoading = ref<boolean>(false);
 const isNewChat = ref<boolean>(false);
 const chatHistoryArray = ref<{ id: number; title: string }[]>([]);
 const singleChatDetail = ref<ChatDetail[]>([]);
