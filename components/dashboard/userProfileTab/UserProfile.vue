@@ -29,9 +29,12 @@
               >View All</span
             >
           </div>
-          <div class="flex flex-col gap-6">
+          <div
+            v-if="essayStore.usereEssayList.length"
+            class="flex flex-col gap-6"
+          >
             <EssayCard
-              v-for="(essay, idx) in essaysList.slice(0, 2)"
+              v-for="(essay, idx) in essayStore.usereEssayList.slice(0, 2)"
               :key="idx"
               :essay="essay"
             />
@@ -43,11 +46,7 @@
       v-else-if="currentStep === 'achievement'"
       @updateStep="updateStep"
     />
-    <EssaysList
-      v-else-if="currentStep === 'essay'"
-      @updateStep="updateStep"
-      :essaysList="essaysList"
-    />
+    <EssaysList v-else-if="currentStep === 'essay'" @updateStep="updateStep" />
     <AllYourAIEssays
       v-else-if="currentStep === 'essay_detail'"
       @updateStep="updateStep"
@@ -59,10 +58,10 @@
   </section>
 </template>
 <script setup lang="ts">
-import useAppTrackerStore from "~/stores/AppTrackerStore";
+import useEssayStore from "~/stores/essayStore";
 
 const { api } = useApi();
-const appTrackerStore = useAppTrackerStore();
+const essayStore = useEssayStore();
 const emit = defineEmits(["updateTab"]);
 
 type CurrentStep =
@@ -117,7 +116,7 @@ const essaysList = [
   },
 ];
 
-// onMounted(async () => {
-//   await api.get("/api/v1/student/get-my-generated-essay");
-// });
+onMounted(async () => {
+  essayStore.getEssayList();
+});
 </script>

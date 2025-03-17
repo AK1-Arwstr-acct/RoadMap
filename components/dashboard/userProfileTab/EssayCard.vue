@@ -3,19 +3,28 @@
     class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] px-6 py-5 text-justify cursor-pointer"
   >
     <h3 class="text-lg font-semibold text-[#181D27] mb-4">
-      {{ essay.title }}
+      {{ parsedEssay.title }}
     </h3>
     <p class="text-[#414651] truncate-paragraph">
-        {{ essay.text }}
+      {{ parsedEssay.essay }}
     </p>
   </div>
 </template>
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   essay: {
-    type: Object as PropType<{ title: string; text: string }>,
+    type: Object,
     default: () => {},
   },
+});
+
+const parsedEssay = computed(() => {
+  const regex = /^Title:\s*(.+)\nEssay:\s*(.+)$/s;
+  const match = props.essay.generated_essay.match(regex);
+  return {
+    title: match[1],
+    essay: match[2],
+  };
 });
 </script>
 <style scoped>

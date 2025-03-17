@@ -19,25 +19,40 @@
     </div>
     <div class="flex flex-col gap-6">
       <EssayCard
-        v-for="(essay, idx) in essaysList"
+        v-for="(essay, idx) in essayStore.usereEssayList"
         :key="idx"
         :essay="essay"
-        @click="openDetail"
+        @click="openDetail(essay.generated_essay)"
       />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-const emit = defineEmits(["updateStep"]);
+import useEssayStore from "~/stores/essayStore";
+
+const essayStore = useEssayStore();
+
+const emit = defineEmits(["updateStep", "openDetail"]);
 
 defineProps({
   essaysList: {
-    type: Array as PropType<{ title: string; text: string }[]>,
+    type: Array,
     default: () => [],
   },
 });
 
-const openDetail = () => {
+const openDetail = (essayDetail: string) => {
+  const regex = /^Title:\s*(.+)\nEssay:\s*(.+)$/s;
+  const match = essayDetail.match(regex) || [];
+  const title = match[1];
+  const essay = match[2];
+
+  const details = {
+    title: title,
+    essayText: essay,
+  };
+  essayStore.setFinalEssay(details);
+
   emit("updateStep", "essay_detail");
 };
 </script>

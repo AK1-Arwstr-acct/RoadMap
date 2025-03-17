@@ -17,7 +17,7 @@
       </div>
       <button
         @click="submit"
-        :disabled="isSubmitting"
+        :disabled="isSubmitting || isSubmitedBefore"
         class="py-2.5 px-5 text-sm font-semibold text-white bg-[#1570EF] rounded-lg flex items-center gap-2 disabled:opacity-60"
       >
         Save to Profile
@@ -80,6 +80,7 @@ const { showToast } = useToast();
 const localePath = useLocalePath();
 
 const isSubmitting = ref<boolean>(false);
+const isSubmitedBefore = ref<boolean>(false);
 
 const options = {
   html: true,
@@ -88,6 +89,9 @@ const options = {
 const submit = async () => {
   try {
     isSubmitting.value = true;
+    if (isSubmitedBefore.value) {
+      return;
+    }
     await api.post(
       "/api/v1/student/save-essay-to-profile",
       essayStore.essayPayload
@@ -95,6 +99,7 @@ const submit = async () => {
     showToast("Profile updated successfully", {
       type: "success",
     });
+    isSubmitedBefore.value = true;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
