@@ -1,12 +1,13 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+import type { EssayData } from "~/types/home";
 
 const useEssayStore = defineStore("essayStore", () => {
     const { api } = useApi();
     const { showToast } = useToast();
 
     const essayProgress = ref<number>(0);
-    const userEssayList = ref([])
+    const userEssayList = ref<EssayData[]>([]);
     const finalEssay = ref<{ title: string, essayText: string }>()
     const essayPayload = ref();
 

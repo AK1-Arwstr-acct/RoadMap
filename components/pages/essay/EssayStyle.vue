@@ -159,15 +159,7 @@ const handleSubmit = async () => {
       payload
     );
 
-    const regex = /^Title:\s*(.+)\nEssay:\s*(.+)$/s;
-    const match = response.data.data.match(regex);
-    const title = match[1];
-    const essay = match[2];
-
-    const details = {
-      title: title,
-      essayText: essay,
-    };
+    const details = filterEssay(response.data.data);
     essayStore.setFinalEssay(details);
     const { future_goals, ...newPayload } = payload;
     newPayload.generated_essay = response.data.data;

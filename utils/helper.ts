@@ -17,3 +17,15 @@ export const errorList = (error) => {
 export const budgetWithComma = (x: number | string) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+export const filterEssay = (value: string) => {
+    const regex = /^Title:\s*(.+)\nEssay:\s*(.+)$/s;
+    const match = value.match(regex) || [];
+    const title = match[1];
+    const essay = match[2];
+
+    return {
+        title: title,
+        essayText: essay,
+    }
+}

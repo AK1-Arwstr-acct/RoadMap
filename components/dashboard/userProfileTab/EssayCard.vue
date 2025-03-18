@@ -6,7 +6,7 @@
       {{ parsedEssay.title }}
     </h3>
     <p class="text-[#414651] truncate-paragraph">
-      {{ parsedEssay.essay }}
+      {{ parsedEssay.essayText }}
     </p>
   </div>
 </template>
@@ -19,12 +19,7 @@ const props = defineProps({
 });
 
 const parsedEssay = computed(() => {
-  const regex = /^Title:\s*(.+)\nEssay:\s*(.+)$/s;
-  const match = props.essay.generated_essay.match(regex);
-  return {
-    title: match[1],
-    essay: match[2],
-  };
+  return filterEssay(props.essay.generated_essay);
 });
 </script>
 <style scoped>

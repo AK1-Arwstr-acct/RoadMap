@@ -42,15 +42,7 @@ defineProps({
 });
 
 const openDetail = (essayDetail: string) => {
-  const regex = /^Title:\s*(.+)\nEssay:\s*(.+)$/s;
-  const match = essayDetail.match(regex) || [];
-  const title = match[1];
-  const essay = match[2];
-
-  const details = {
-    title: title,
-    essayText: essay,
-  };
+  const details = filterEssay(essayDetail);
   essayStore.setFinalEssay(details);
 
   emit("updateStep", "essay_detail");

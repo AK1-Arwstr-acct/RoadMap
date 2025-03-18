@@ -132,6 +132,18 @@ interface FilterKey {
   [key: `sort_by_${"ranking" | "price"}`]: "DESC" | "ASC";
 }
 
+interface EssayData {
+  any_regrets: string;
+  core_message: string;
+  dob: string;
+  dream_school: string;
+  future_goals: string | null;
+  generated_essay: string;
+  lesson_from_regrets: string;
+  major: string;
+  personal_statement: string;
+}
+
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, ChatDetail }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, ChatDetail, EssayData }
