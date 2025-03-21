@@ -11,6 +11,9 @@
 <script setup lang="ts">
 useHead({
   title: 'Arrowster',
+  meta: [
+    { property: 'og:image', content: '/images/ogimage.png' },
+  ],
   link: [
     { rel: 'icon', type: 'image/png', href: '/favicon.png' }
   ]
