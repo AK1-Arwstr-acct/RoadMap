@@ -3,7 +3,7 @@
     class="size-full rounded-2xl bg-white text-[#414651] overflow-hidden p-6 flex flex-col gap-6"
   >
     <!-- phoneNumber -->
-    <div class="relative remove-shadow-bg-white">
+    <!-- <div class="relative remove-shadow-bg-white">
       <label class="text-sm text-[#344054] font-medium mb-3">
         Parent's phone number (Optional)
       </label>
@@ -88,7 +88,7 @@
           placeholder="915 343 643"
         />
       </div>
-    </div>
+    </div> -->
     <!-- school name -->
     <div>
       <p class="text-[#414651] text-sm font-medium">Your school name <span class="text-[#F04438]">*</span></p>
@@ -160,6 +160,9 @@
             </div>
             {{ option.title }}
           </label>
+        </div>
+        <div v-show="formDetails.selectedLocationOptions.includes('Other')" class="w-full">
+          <input v-model="otherText" class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg" placeholder="Please specify" />
         </div>
       </div>
     </div>
@@ -235,7 +238,7 @@
       />
     </div>
     <!-- arrowster Info -->
-    <div class="">
+    <!-- <div>
       <p class="font-medium text-[#414651] text-sm mb-4">
         How did you hear about Arrowster? <span class="text-[#F04438]">*</span>
       </p>
@@ -277,7 +280,7 @@
           </label>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- button -->
     <button
@@ -334,6 +337,7 @@ const isDropdownOpen = ref<boolean>(false);
 const selectedOption = ref<Country | null>(null);
 const search = ref<string>("");
 const countryOptions = ref<Country[]>([]);
+const otherText = ref<string>("");
 
 const studyDestinations = [
   { id: 1, title: "United Kingdom" },
@@ -343,13 +347,14 @@ const studyDestinations = [
   { id: 5, title: "Europe" },
   { id: 6, title: "Vietnam International University" },
   { id: 7, title: "New Zealand" },
+  { id: 7, title: "Other" },
 ];
 
 const alternativeContact = [
   { id: "telegram", title: "Telegram" },
-  { id: "instagram", title: "Instagram" },
+  // { id: "instagram", title: "Instagram" },
   { id: "whatsapp", title: "WhatsApp" },
-  { id: "messenger", title: "Messenger" },
+  // { id: "messenger", title: "Messenger" },
 ];
 
 const arrowsterInfo = [
@@ -402,10 +407,10 @@ const isDisable = computed(() => {
     !formDetails.value.schoolName ||
     !formDetails.value.financialSupport ||
     !formDetails.value.dreamSchool ||
-    !formDetails.value.otherPhoneOrEmail ||
-    formDetails.value.selectedLocationOptions.length === 0 ||
-    formDetails.value.selectedAlternativeContact.length === 0 ||
-    formDetails.value.selectedArrowsterInfo.length === 0
+    // !formDetails.value.otherPhoneOrEmail ||
+    formDetails.value.selectedLocationOptions.length === 0
+    // formDetails.value.selectedAlternativeContact.length === 0 ||
+    // formDetails.value.selectedArrowsterInfo.length === 0
   );
 });
 const countryCodes = computed(() => {
@@ -452,6 +457,11 @@ const toggleArrowsterInfo = (title: string) => {
 const submit = async () => {
   try {
     isSubmitting.value = true;
+    const isOther = formDetails.value.selectedLocationOptions.includes('Other');
+    let tempLocation = formDetails.value.selectedLocationOptions
+    if(isOther) {
+      tempLocation = [...formDetails.value.selectedLocationOptions.filter(item => item !== 'Other'), otherText.value]
+    }
     await api.post("/api/v1/plans/bundle", {
       plan_id: props.selectedPlan,
       parent_phone:
@@ -461,7 +471,7 @@ const submit = async () => {
       current_school_name: formDetails.value.schoolName,
       financial_support_amount: formDetails.value.financialSupport,
       financial_support_amount_unit: "vnd",
-      want_to_study_at: formDetails.value.selectedLocationOptions,
+      want_to_study_at: tempLocation,
       dream_schools: formDetails.value.dreamSchool,
       contact_platform: formDetails.value.selectedAlternativeContact,
       contact_info: formDetails.value.otherPhoneOrEmail,

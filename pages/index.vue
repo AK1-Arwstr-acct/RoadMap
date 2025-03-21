@@ -5,7 +5,7 @@
         <NuxtImg
           src="/images/get-started.png"
           alt="Get Started"
-          class="w-full size-full object-contain max-w-[400px]"
+          class="w-full size-full object-contain max-w-[300px] sm:max-w-[400px]"
           loading="eager"
           preload
         />

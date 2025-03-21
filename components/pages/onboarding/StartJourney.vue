@@ -4,7 +4,7 @@
       <div class="flex flex-col items-center justify-center">
         <NuxtImg 
           src="/images/lets-go.png" alt="Lets Go"
-          class="max-w-[300px] sm:max-w-[450px] aspect-square"
+          class="max-w-[300px] sm:max-w-[450px]"
           loading="eager"
           preload
         />
