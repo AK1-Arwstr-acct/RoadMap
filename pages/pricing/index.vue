@@ -230,18 +230,18 @@ const stepsDetail = [
     description: "This helps us understand your profile and goals better.",
   },
   {
-    title: "Meet us for a 30' chat",
+    title: "Meet us for a 15’ chat",
     description:
       "Our mentors will answer your questions and see if you’re a good fit for Arrowster.",
   },
   {
-    title: "Connect us with your family",
-    description: "We will confirm your study abroad plans with your parents",
+    title: "Confirm your study abroad plan",
+    description: "We will confirm your study abroad plan with your parents",
   },
   {
     title: "Welcome to Arrowster!",
     description:
-      "If selected, you will be onboarded to our exclusive student community and get early access to new AI features!",
+      "If selected, you will be onboarded to our exclusive student community and start working with us for your application!",
   },
 ];
 
