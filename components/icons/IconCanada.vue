@@ -1,12 +1,12 @@
 <template>
   <svg
-    width="32"
-    height="32"
-    viewBox="0 0 40 42"
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#clip0_12832_1028)">
+    <g clip-path="url(#clip0_14708_2662)">
       <path
         d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z"
         fill="#F0F0F0"
@@ -25,7 +25,7 @@
       />
     </g>
     <defs>
-      <clipPath id="clip0_12832_1028">
+      <clipPath id="clip0_14708_2662">
         <rect width="40" height="40" fill="white" />
       </clipPath>
     </defs>

@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-svh flex justify-center items-center h-full px-5">
-    <div class="max-w-[864px] w-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-[84px]">
-      <div class="flex-1">
+  <div class="min-h-svh flex justify-center items-center h-full px-5 mt-">
+    <div class="max-w-[864px] w-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-[84px] h-full">
+      <div class="flex-1 pt-12 sm:pt-0">
         <NuxtImg
           src="/images/get-started.png"
           alt="Get Started"
@@ -10,12 +10,13 @@
           preload
         />
       </div>
-      <div class="md:flex-1 py-12">
+      <div class="md:flex-1 pb-12 sm:pb-0">
         <h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
-          {{ $t("discover.heading") }}
+          You're 2 minutes away from...
         </h1>
         <p class="text-[#717680]">
-          {{ $t("discover.detail") }}
+          5 powerful AI tools - from school matching to essay help, 100+ pages of exclusive study abroad materials, hours of sharing sessions from our team mentors<br /><br />
+          What are you waiting for?
         </p>
         <div class="mt-8 space-y-4">
           <NuxtLinkLocale to="/signup" class="block">

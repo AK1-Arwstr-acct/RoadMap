@@ -42,7 +42,7 @@
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute left-0 w-full border-[1.5px] border-gray-200 bg-white z-20 max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
+      class="absolute left-0 w-full border-[1.5px] border-gray-200 bg-white z-20 max-h-[300px] sm:max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
       :class="[
         direction === 'upward'
           ? label

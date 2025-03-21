@@ -3,7 +3,7 @@
     <h1 class="text-2xl md:text-4xl md:!leading-[44px] font-medium text-center">
       {{ $t("onboarding.destination_heading") }}
     </h1>
-    <div class="space-y-3">
+    <div class="flex flex-col gap-3">
       <div v-for="(option, index) in locationOptions" :key="index">
         <label
           :for="`country${index}`"

@@ -160,7 +160,7 @@ const onSubmit = async () => {
       msisdn: props.userInput,
       otp_code: otp.value,
     });
-    
+
     const checkToken = useCookie("token");
     if (checkToken.value) {
       checkToken.value = null;
@@ -186,7 +186,7 @@ const onSubmit = async () => {
     signupInfoCookie.value = null;
     await nextTick();
     appStore.getUserData();
-    navigateTo(localePath("/signup/verify-phone/continue"));
+    navigateTo(localePath("/onboarding"));
     isSubmitting.value = false;
   } catch (error) {
     isSubmitting.value = false;

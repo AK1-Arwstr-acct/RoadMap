@@ -8,13 +8,13 @@
         <ChatMessage
           question="What happened? Consider a time when things didn’t go as expected, like failing a test or losing a role."
           :answer="answersList.answerFist"
-          @editAnswer="(value) => (answersList.answerFist = value)"
+          @editAnswer="(value : string) => (answersList.answerFist = value)"
         />
         <ChatMessage
           v-if="questionStep >= 2"
           question="How has this experience impacted you? Did you learn something, gain confidence, or change your mindset?"
           :answer="answersList.answerSecond"
-          @editAnswer="(value) => (answersList.answerSecond = value)"
+          @editAnswer="(value : string) => (answersList.answerSecond = value)"
         />
       </div>
     </div>
@@ -154,16 +154,29 @@ const handleSubmit = async () => {
       future_goals:
         "I aspire to become a software engineer specializing in AI, developing solutions that enhance accessibility and efficiency in underserved communities",
     };
-    const response = await api.post(
-      "/api/v1/ai-conversation/generate_an_essay",
-      payload
-    );
 
-    const details = filterEssay(response.data.data);
-    essayStore.setFinalEssay(details);
-    const { future_goals, ...newPayload } = payload;
-    newPayload.generated_essay = response.data.data;
-    essayStore.essayPayload = newPayload;
+    if (essayStore.isPublic) {
+      await api.post(
+        "/api/v1/session-based-journey/generate_an_essay",
+        payload,
+        {
+          headers: {
+            "X-auth-token": essayStore.publicUserToken,
+          },
+        }
+      );
+      essayStore.tryFreeArrowster = true;
+    } else {
+      const response = await api.post(
+        "/api/v1/ai-conversation/generate_an_essay",
+        payload
+      );
+      const details = filterEssay(response.data.data);
+      essayStore.setFinalEssay(details);
+      const { future_goals, ...newPayload } = payload;
+      newPayload.generated_essay = response.data.data;
+      essayStore.essayPayload = newPayload;
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);

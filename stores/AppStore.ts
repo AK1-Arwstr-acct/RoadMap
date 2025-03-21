@@ -7,6 +7,7 @@ const useAppStore = defineStore("appStore", () => {
 	const userData = ref<UserData>()
 	const userImagePreview = ref<string>('');
 	const userCoverPhotoPreview = ref<string>('');
+	const authenticatedUser = ref<boolean>(false);
 
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data
@@ -35,10 +36,21 @@ const useAppStore = defineStore("appStore", () => {
 		}
 	}
 
+	const checkAuthenticatedUser = () => {
+		const tokenExists = useCookie("token");
+		tokenExists.value ? authenticatedUser.value = true : authenticatedUser.value = false;
+	}
+
+	onMounted(()=>{
+		checkAuthenticatedUser();
+	})
+
 	return {
 		userImagePreview,
 		userCoverPhotoPreview,
+		authenticatedUser,
 		userData,
+		checkAuthenticatedUser,
 		setUserImagePreview,
 		setUserCoverPhotoPreview,
 		getUserData,

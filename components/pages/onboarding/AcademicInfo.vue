@@ -9,8 +9,8 @@
         preload
       />
     </div>
-    <div class="md:flex-1 space-y-5 md:space-y-8 w-[80%]">
-      <h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
+    <div class="md:flex-1 space-y-5 md:space-y-8 sm:w-[80%]">
+      <h1 class="mb-4 text-[#181D27] text-xl md:text-3xl font-medium">
         {{ $t("onboarding.academic_heading") }}
       </h1>
       <BaseSelectRadio
@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      <div class="remove-shadow-bg-white">
+      <!-- <div class="remove-shadow-bg-white">
         <label class="font-medium text-[#414651] text-sm">{{
           $t("onboarding.ielts_optional")
         }}</label>
@@ -48,7 +48,7 @@
           :placeholder="t('onboarding.e_g_7_0')"
           class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
         />
-      </div>
+      </div> -->
       <button
         @click="onSubmit"
         :disabled="academicInfo.grade.value === '' || academicInfo.gpa === '' || isSubmitting"

@@ -133,6 +133,7 @@ interface FilterKey {
 }
 
 interface EssayData {
+  id: number;
   any_regrets: string;
   core_message: string;
   dob: string;

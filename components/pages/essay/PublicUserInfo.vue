@@ -1,21 +1,31 @@
 <template>
   <div
-    class="min-h-svh w-full flex justify-center items-center p-5 pt-24 pb-16"
+    class="w-full flex justify-center items-center p-5 pt-24 pb-16"
   >
-    <div class="w-full sm:w-[390px] space-y-8">
-      <div class="flex flex-col items-center gap-6">
-        <IconArrowsterLogo />
-        <div class="text-center space-y-3">
-          <h1 class="font-semibold text-3xl text-[#181D27]">
-            {{ $t("login.heading") }}
-          </h1>
-          <p class="text-[#535862]">{{ $t("login.welcome_back") }}</p>
-        </div>
-      </div>
+    <div class="w-full sm:w-[390px]">
+      <h1 class="font-semibold text-3xl text-[#181D27] mb-8">
+        Could you share a few personal details with us?
+      </h1>
       <div>
-        <div class="relative remove-shadow-bg-white">
+        <div class="remove-shadow-bg-white flex flex-col">
+          <label class="font-medium text-[#414651] text-sm"
+            >Your email<span class="text-[#F04438]">*</span></label
+          >
+          <input
+            name="userEmail"
+            type="email"
+            v-model="userInput.email"
+            @keydown.enter="submit"
+            placeholder="nguyen@example.com"
+            class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+          />
+          <p class="text-sm text-[#535862] mt-1.5">
+            We will send you your draft essay through email.
+          </p>
+        </div>
+        <div class="relative remove-shadow-bg-white mt-6">
           <label class="text-sm text-[#344054] font-medium mb-2">
-            {{ $t("verifyPhone.phone_number") }}
+            Phone number (Optional)
           </label>
           <div
             class="relative border-[1.5px] rounded-lg flex items-center gap-2 p-1"
@@ -98,58 +108,21 @@
               placeholder="915 343 643"
             />
           </div>
-        </div>
-        <div class="remove-shadow-bg-white mt-6 flex flex-col">
-          <label class="font-medium text-[#414651] text-sm">{{
-            $t("login.password")
-          }}</label>
-          <input
-            name="userInput"
-            type="password"
-            v-model="userInput.password"
-            @keydown.enter="submit"
-            :placeholder="t('login.enter_your_password')"
-            class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
-          />
-          <p
-            @click="navigateTo(localePath('/forgot-password'))"
-            class="text-sm text-[#175CD3] font-semibold mt-1.5 text-end cursor-pointer self-end"
-          >
-            {{ $t("forgotPassword.forgot_password") }}
+          <p class="text-sm text-[#535862] mt-1.5">
+            Feel free to leave your contact info if you're interested.
           </p>
         </div>
         <div class="mt-6">
           <button
             @click="submit"
-            :disabled="
-              userInput.phoneNumber === '' || userInput.password === ''
-            "
+            :disabled="userInput.email === ''"
             class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
           >
-            {{ $t("login.login") }}
+            Continue
             <IconSpinner v-if="isSubmitting" />
+            <IconArrowRight v-else fill="#ffffff" />
           </button>
         </div>
-        <div class="my-4 flex items-center gap-2">
-          <div class="flex-1 h-[1px] bg-[#E9EAEB]" />
-          <p class="text-[#717680] text-sm">{{ $t("login.or") }}</p>
-          <div class="flex-1 h-[1px] bg-[#E9EAEB]" />
-        </div>
-        <button
-          @click="handleClick"
-          class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
-        >
-          <IconGoogle />
-          <span>{{ $t("login.login_with_google") }}</span>
-        </button>
-        <p class="mt-8 text-[#535862] text-sm text-center">
-          {{ $t("login.don_t_have_an_account") }}
-          <span
-            @click="navigateTo(localePath('/signup'))"
-            class="text-[#175CD3] font-semibold cursor-pointer"
-            >{{ $t("login.sign_up") }}</span
-          >
-        </p>
       </div>
     </div>
   </div>
@@ -161,14 +134,13 @@ definePageMeta({
 
 import axios from "axios";
 import type { Country } from "~/types/auth";
-import useAppStore from "~/stores/AppStore";
+import useEssayStore from "~/stores/essayStore";
 
-const { t } = useI18n();
-const localePath = useLocalePath();
+const essayStore = useEssayStore();
+const emit = defineEmits(["submit"]);
+
 const { api } = useApi();
 const { showToast } = useToast();
-const config = useRuntimeConfig();
-const appStore = useAppStore();
 
 const phoneInput = ref<HTMLInputElement | null>(null);
 const isFocused = ref<boolean>(false);
@@ -177,9 +149,9 @@ const selectedOption = ref<Country | null>(null);
 const search = ref<string>("");
 const countryOptions = ref<Country[]>([]);
 const isSubmitting = ref<boolean>(false);
-const userInput = ref<{ phoneNumber: string; password: string }>({
+const userInput = ref<{ phoneNumber: string; email: string }>({
   phoneNumber: "",
-  password: "",
+  email: "",
 });
 
 const countryCodes = computed(() => {
@@ -192,13 +164,6 @@ const countryCodes = computed(() => {
   }
 });
 
-const handleClick = () => {
-  const checkToken = useCookie("token");
-  if (checkToken.value) {
-    checkToken.value = null;
-  }
-  window.location.href = `${config.public.baseURL}/auth/google`;
-};
 const handleFocus = () => {
   isFocused.value = true;
 };
@@ -235,30 +200,19 @@ const validateNumber = (event: Event) => {
   }
   userInput.value.phoneNumber = cleanedValue;
 };
+
 const submit = async () => {
   try {
     isSubmitting.value = true;
-    const checkToken = useCookie("token");
-    if (checkToken.value) {
-      checkToken.value = null;
-    }
 
-    const response = await api.post("/api/v1/login", {
-      emailOrMsisdn: `${selectedOption.value?.phone_code}${userInput.value.phoneNumber}`,
-      password: userInput.value.password,
+    const response = await api.post("/api/v1/session-based-journey/session", {
+      msisdn: userInput.value.phoneNumber
+        ? `${selectedOption.value?.phone_code}${userInput.value.phoneNumber}`
+        : null,
+      email: userInput.value.email,
     });
-    const token = useCookie("token", {
-      maxAge: 86400,
-    });
-    token.value = JSON.stringify(response.data.token);
-    await nextTick();
-    await appStore.getUserData();
-    await appStore.checkAuthenticatedUser();
-    if (response.data.data.onboarded) {
-      navigateTo(localePath("/dashboard"));
-    } else {
-      navigateTo(localePath("/onboarding"));
-    }
+    emit("submit");
+    essayStore.publicUserToken = response.data.data.token;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -270,12 +224,13 @@ const submit = async () => {
   } finally {
     isSubmitting.value = false;
     userInput.value.phoneNumber = "";
-    userInput.value.password = "";
+    userInput.value.email = "";
     if (phoneInput.value) {
       phoneInput.value.value = "";
     }
   }
 };
+
 const getCountries = async () => {
   try {
     const response = await api.get(`/api/v1/country_codes`);

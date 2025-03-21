@@ -7,7 +7,6 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const { showToast } = useToast();
 
     const ongoingTrack = ref<boolean>(false);
-    const categoriesGroup = ref<"pre" | "country" | "post" | null>(null);
     const taskActiveStates = ref<Record<number, boolean>>({});
     const preApplication = ref<Application>();
     const applicationList = ref<Application[]>([]);
@@ -34,7 +33,6 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
 
     return {
         ongoingTrack,
-        categoriesGroup,
         taskActiveStates,
         preApplication,
         postApplication,

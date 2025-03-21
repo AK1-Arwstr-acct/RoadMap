@@ -1,15 +1,16 @@
 export type TabName =
     | "home"
     | "sophie"
-    | "application_tracker"
-    | "schools_list"
+    | "roadmap"
+    | "schools list"
     | "setting"
-    | "ai_essay_editor"
+    | "ai essay editor"
     | "user_profile";
 
 interface TabList {
     name: TabName;
     icon: Component;
+    route: string;
 }
 
 interface Category {

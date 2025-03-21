@@ -1,102 +1,62 @@
 <template>
-  <div class="h-dvh hidden lg:flex relative">
-    <Sidebar :currentTab="currentTab" @updateTab="updateTab" />
-    <div class="flex-1 flex flex-col">
-      <DashboardNav @updateTab="updateTab" />
-      <div class="flex-1 overflow-hidden">
-        <div
-          class="size-full"
-          :class="{
-            'overflow-y-auto custom-scrollbar':
-              currentTab !== 'application_tracker',
-          }"
-        >
-          <div
-            class="h-full w-full"
-            :class="{
-              'max-w-[1150px] mx-auto':
-                currentTab !== 'sophie' &&
-                currentTab !== 'application_tracker' &&
-                currentTab !== 'user_profile',
-            }"
-          >
-            <Transition name="fade">
-              <DashboardHome v-if="currentTab === 'home'" />
-              <ChatWithSophie v-else-if="currentTab === 'sophie'" />
-              <TrackerInformations
-                v-else-if="currentTab === 'application_tracker'"
-              />
-              <SchoolsList v-else-if="currentTab === 'schools_list'" />
-              <div v-else-if="currentTab === 'setting'">setting</div>
-              <UserProfile v-else />
-            </Transition>
+  <div class="size-full overflow-y-auto custom-scrollbar">
+    <div class="h-full w-full max-w-[1150px] mx-auto">
+      <div class="flex gap-16 w-full px-8 pt-8 pb-24 bg-white">
+        <div class="flex-1">
+          <HomeDetail />
+        </div>
+        <div class="max-w-[364px] flex flex-col gap-16">
+          <ArticlesCard :articleDetail="upgradePlan[0]" :isUpgradePlan="true" />
+          <div class="flex flex-col gap-5">
+            <p class="text-xl text-[#181D27] font-semibold">
+              Our students achieved
+            </p>
+            <ArticlesCard
+              v-for="(article, idx) in articlesList"
+              :articleDetail="article"
+              :key="idx"
+            />
           </div>
         </div>
       </div>
     </div>
-    <div
-      v-if="currentTab !== 'sophie'"
-      @click="openSophieModal = !openSophieModal"
-      class="size-14 absolute bottom-5 right-5 rounded-2xl bg-[#ED77FF] flex justify-center items-center shadow-md cursor-pointer"
-    >
-      <IconTabSophie class="text-white" width="32" height="32" />
-    </div>
-    <!-- sophie modal -->
-    <Transition name="fade">
-      <div
-        v-if="openSophieModal"
-        class="fixed bg-black/50 inset-0 z-50 isolate backdrop-blur py-[60px] px-[68px] flex justify-center items-center"
-      >
-        <ChatWithSophie
-          :isModal="true"
-          @openSophieModal="openSophieModal = false"
-        />
-      </div>
-    </Transition>
-  </div>
-  <div
-    class="lg:hidden flex flex-col items-center gap-4 h-dvh bg-[#f5faff] overflow-hidden w-screen"
-  >
-    <div class="mt-16">
-      <NuxtImg src="/images/logo/logo.svg" class="w-[130px] h-[22px]" />
-    </div>
-    <div class="flex-1 w-full flex justify-center items-center px-5">
-      <div class="flex flex-col items-center">
-        <NuxtImg src="/images/v-room.png" class="max-w-[310px]" />
-        <p class="font-medium text-[#181D27] text-center w-[80%]">
-          To fully experience our website, we recommend accessing it via a
-          desktop or larger device.
-        </p>
-      </div>
-    </div>
-    <div>
-      <p class="text-[#EE46BC] text-sm font-medium pb-4">
-        {{ `Thank you <3` }}
-      </p>
-    </div>
   </div>
 </template>
 <script setup lang="ts">
-import useAppTrackerStore from "~/stores/AppTrackerStore";
-import type { TabName } from "~/types/dashboard";
 import useAppStore from "~/stores/AppStore";
 
+definePageMeta({
+  layout: "dashboard-layout",
+});
+
 const appStore = useAppStore();
-const appTrackerStore = useAppTrackerStore();
 
-const currentTab = ref<TabName>("home");
-const openSophieModal = ref<boolean>(false);
-
-const updateTab = (value: TabName) => {
-  currentTab.value = value;
-};
-
-watch(
-  () => appTrackerStore.ongoingTrack,
-  () => {
-    currentTab.value = "application_tracker";
-  }
-);
+const upgradePlan = [
+  {
+    image: "/images/dashboard/home/article-img.png",
+    title: "Transform your application with mentors from Harvard, UPenn & more",
+    details:
+      "Strategic training, one-on-one reviews, and exclusive AI tools that deliver results. Our mentees have 100% success rate at top universities worldwide.",
+    buttonText: "View Plan",
+    cta: "",
+  },
+];
+const articlesList = [
+  {
+    image: "/images/dashboard/home/article-1.png",
+    title: "",
+    details: `Meet Quỳnh Anh, who secured scholarships worth $176,000 at Depauw and $167,000 at Augustana! Once ready to abandon her US dreams due to fears and complex applications, she found transformation with Arrowster mentors. "Thanh showed me countless pathways when lost, Toàn provided 24/7 support, and Ken (Oxford, Harvard) offered straightforward guidance. Previously traumatized by counselors, now I comfortably ask anything—even sending midnight essays with detailed feedback by morning."`,
+    buttonText: "Read more about Jennifer’s story",
+    cta: "https://www.facebook.com/Arrowster.Official/posts/pfbid0g7PW9e1wm5iA2T6vqEcAZJnzyT1rUStAaA5SiWfB4NZWPJ9HSy8Ffbyh5sBa2niQl",
+  },
+  {
+    image: "/images/dashboard/home/article-2.png",
+    title: "",
+    details: `Meet Cao Tiến, who secured scholarships worth $100,000 at Franklin & Marshall, $120,000 at Baylor, and $80,000 at Arizona State. Working with mentor Hoài Thanh, he navigated through 8-9 revisions—even during holidays—to craft an authentic essay that stood out. "Online guides say 'tell your story' but few show HOW within 650 words. Having a knowledgeable mentor helped me see my story from different angles, despite the 'intense' feedback."`,
+    buttonText: "Read more about Tien’s story",
+    cta: "https://www.facebook.com/share/p/1QVcAcVWQX/",
+  },
+];
 
 onBeforeMount(async () => {
   if (!appStore.userData) {
