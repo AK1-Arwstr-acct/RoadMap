@@ -1,5 +1,6 @@
 <template>
-  <div class="h-dvh hidden lg:flex relative">
+  <!-- <div class="h-dvh hidden lg:flex relative"> -->
+  <div class="h-dvh flex relative">
     <Sidebar />
     <div class="flex-1 flex flex-col">
       <DashboardNav />
@@ -27,7 +28,7 @@
       </div>
     </Transition>
   </div>
-  <div
+  <!-- <div
     class="lg:hidden flex flex-col items-center gap-4 h-dvh bg-[#f5faff] overflow-y-auto no-scrollbar w-screen"
   >
     <div class="mt-8">
@@ -72,7 +73,7 @@
         {{ `Thank you <3` }}
       </p>
     </div>
-  </div>
+  </div> -->
 </template>
 <script setup lang="ts">
 const route = useRoute();
