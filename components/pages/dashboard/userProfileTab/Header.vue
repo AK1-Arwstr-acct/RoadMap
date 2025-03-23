@@ -115,17 +115,16 @@
               <!-- Dropdown -->
               <div
                 v-click-outside="() => (isDropdownOpen = false)"
-                @click="logOut"
                 v-if="isDropdownOpen"
-                class="absolute z-10 right-0 translate-y-2 bg-[#FFFFFF] border-[1.5px] border-gray-200 rounded-lg shadow-md"
+                @click="logOut"
+                class="absolute z-10 isolate right-0 translate-y-2 bg-[#FFFFFF] border-[1.5px] border-gray-200 rounded-lg shadow-md"
               >
-                <a
-                  href="#"
-                  class="flex items-center gap-3 w-60 px-4 py-2.5 text-sm text-[#414651] font-medium"
+                <div
+                  class="flex items-center gap-3 w-60 px-4 py-2.5 text-sm text-[#414651] font-medium cursor-pointer"
                 >
                   <IconLogout />
                   Log out
-                </a>
+                </div>
               </div>
             </div>
           </div>
@@ -159,7 +158,8 @@ const logOut = async () => {
   if (checkToken.value) {
     checkToken.value = null;
   }
-  await appStore.checkAuthenticatedUser();
+  appStore.checkAuthenticatedUser();
+  await navigateTo(localePath("/login"));
 };
 
 const handleImageChange = async (event: Event) => {
