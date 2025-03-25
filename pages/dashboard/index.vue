@@ -5,17 +5,83 @@
         <div class="flex-1">
           <HomeDetail />
         </div>
-        <div class="max-w-[364px] flex flex-col gap-16">
-          <ArticlesCard :articleDetail="upgradePlan[0]" :isUpgradePlan="true" />
+        <div
+          class="max-w-[364px] flex flex-col gap-5 border-[1.5px] border-gray-200 p-6 rounded-2xl"
+        >
+          <!-- <ArticlesCard :articleDetail="upgradePlan[0]" :isUpgradePlan="true" /> -->
+          <div class="pb-5 border-b border-gray-200 flex flex-col gap-5">
+            <div class="">
+              <h3 class="text-[#181D27] text-2xl font-semibold">
+                Sophie AI + Mentorship Success Program - Trusted by students
+                from Top Universities
+              </h3>
+              <p class="text-[#535862] mt-3">
+                AI tools + Expert guidance = Success
+              </p>
+              <div class="flex justify-center mt-8">
+                <NuxtImg src="/images/home-application.png" class="h-[100px]" />
+              </div>
+            </div>
+            <!-- power tool -->
+            <div
+              class="border border-[#84CAFF] bg-[#EFF8FF] rounded-lg py-4 px-5"
+            >
+              <h2 class="text-[#1570EF] font-semibold">AI-Powered Tools</h2>
+              <div class="mt-4 flex flex-col gap-4">
+                <div>
+                  <h3 class="text-[#1849A9] font-semibold">
+                    Smart School Matching
+                  </h3>
+                  <p class="text-[#1570EF]">
+                    Get AI-recommended best-fit schools.
+                  </p>
+                </div>
+                <div>
+                  <h3 class="text-[#1849A9] font-semibold">
+                    AI Essay Generator
+                  </h3>
+                  <p class="text-[#1570EF]">
+                    Instantly draft high-quality essays.
+                  </p>
+                </div>
+                <div>
+                  <h3 class="text-[#1849A9] font-semibold">
+                    AI Chat Assistant
+                  </h3>
+                  <p class="text-[#1570EF]">
+                    Ask anything and get instant help.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Expert Mentorship Section -->
+            <div class="p-5 border border-[#FEC84B] bg-[#FFFAEB] rounded-lg">
+              <h2 class="text-[#DC6803] font-semibold">Expert Mentorship</h2>
+              <p class="mt-5 text-[#93370D] font-semibold">
+                Besides this AI product, we also offer mentoring services!
+              </p>
+              <ul class="mt-3 text-[#DC6803] flex flex-col gap-3">
+                <li>1-1 support for essays, scholarships, extracurriculars</li>
+                <li>Exclusive training & resources</li>
+                <li>With mentors from Harvard, UPenn, Yonsei, and more</li>
+              </ul>
+              <p class="mt-3 text-[#93370D] font-semibold">For free!</p>
+            </div>
+          </div>
           <div class="flex flex-col gap-5">
             <p class="text-xl text-[#181D27] font-semibold">
               Our students achieved
             </p>
-            <ArticlesCard
-              v-for="(article, idx) in articlesList"
-              :articleDetail="article"
-              :key="idx"
-            />
+            <ArticlesCard :articleDetail="articlesList[0]" />
+            <div class="h-px bg-gray-200" />
+            <ArticlesCard :articleDetail="articlesList[1]" />
+            <div class="h-px bg-gray-200" />
+            <button
+              @click="navigateTo($localePath('/pricing'))"
+              class="font-semibold text-sm text-white bg-[#1570EF] rounded-lg py-2.5 px-4 shadow-[0px_1px_2px_0px_#0A0D120D]"
+            >
+              Get Your Personalized Plan in 60 Seconds
+            </button>
           </div>
         </div>
       </div>
