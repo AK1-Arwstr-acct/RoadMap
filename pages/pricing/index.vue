@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <section class="w-full mx-auto max-w-[1216px] px-5 mt-8">
+  <main v-if="stepCount === 1">
+    <section class="w-full mx-auto max-w-[1216px] px-5 mt-8 mb-20">
       <div class="flex justify-end">
         <span
           @click="navigateTo(localePath('/dashboard'))"
@@ -10,108 +10,23 @@
         </span>
       </div>
       <h1 class="text-4xl text-[#181D27] font-semibold">
-        A great application journey<br />starts with a plan! 
+        Your study abroad success starts <br />here – Get the perfect plan for
+        you
       </h1>
-      <p class="text-lg text-[#535862] font-medium mt-5">
-        We've guided over
-        <span class="text-[#1570EF]">500 students</span> toward their goals. See
-        how our counsellor can help you!
+      <p class="text-lg text-[#535862] mt-5">
+        Join
+        <span class="text-[#1570EF]">500+ students</span> who secured top
+        university admissions with our AI + expert mentorship
       </p>
-      <div class="pt-8 overflow-x-auto pricing-table">
-        <table class="w-full border-collapse min-w-[800px]">
-          <tbody>
-            <tr>
-              <td class="min-w-[358px] w-full"></td>
-              <td
-                class="min-w-[358px] max-w-[358px] transition-all ease-in-out duration-150"
-                :class="[selectedPlan === 2 ? 'bg-white' : 'bg-[#F5FAFF]']"
-              >
-                <div>
-                  <p class="text-[#414651] text-lg font-medium text-center">
-                    Standard Plan
-                  </p>
-                  <p
-                    class="text-[#181D27] text-3xl font-semibold text-center mt-1"
-                  >
-                    Free
-                  </p>
-                  <button
-                    class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-4 shadow-sm"
-                    @click="selectPlan(1)"
-                  >
-                    Get started!
-                  </button>
-                </div>
-              </td>
-              <td
-                class="min-w-[358px] max-w-[358px] transition-all ease-in-out duration-150"
-                :class="[selectedPlan === 1 ? 'bg-white' : 'bg-[#F5FAFF]']"
-              >
-                <div>
-                  <p class="text-[#414651] text-lg font-medium text-center">
-                    Advanced Plan
-                  </p>
-                  <p
-                    class="text-[#181D27] text-3xl font-semibold text-center mt-1"
-                  >
-                    50,000,000 VND
-                  </p>
-                  <button
-                    class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-4 shadow-sm"
-                    @click="selectPlan(2)"
-                  >
-                    Get started!
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr
-              v-for="(plan, idx) in plansList"
-              :key="idx"
-              class="text-[#181D27] last:text-[#717680] text-center"
-            >
-              <td>
-                <p class="text-[#181D27] font-semibold sm:text-xl text-start">
-                  {{ plan.title }}
-                </p>
-              </td>
-              <td :class="[selectedPlan === 2 ? 'bg-white' : 'bg-[#F5FAFF]']">
-                <p class="flex justify-center">
-                  <IconCheckmark v-if="!plan.standardPlan" />
-                  <span
-                    v-else
-                    :class="{
-                      ' rounded-full bg-[#EFF8FF] text-[#175CD3] text-sm font-medium py-1 px-3':
-                        plan.standardPlan.toLocaleLowerCase() === 'unlimited',
-                    }"
-                  >
-                    {{ plan.standardPlan }}
-                  </span>
-                </p>
-              </td>
-              <td :class="[selectedPlan === 1 ? 'bg-white' : 'bg-[#F5FAFF]']">
-                <p class="flex justify-center">
-                  <IconCheckmark v-if="!plan.standardPlan" />
-                  <span
-                    v-else
-                    :class="{
-                      ' rounded-full bg-[#EFF8FF] text-[#175CD3] text-sm font-medium py-1 px-3 text-center':
-                        plan.standardPlan.toLocaleLowerCase() === 'unlimited',
-                    }"
-                  >
-                    {{ plan.advancedPlan }}
-                  </span>
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="pt-8 overflow-x-auto">
+        <PricingTable @selectPlan="selectPlan" />
       </div>
-      <div class="flex flex-col md:flex-row gap-8 py-16">
+      <!-- <div class="flex flex-col md:flex-row gap-8 py-16">
         <div class="w-full md:w-1/2">
           <div class="w-full md:w-11/12">
             <h1 class="text-3xl text-[#181D27] font-semibold">
-              Unlock Exclusive Benefits – Join <br class="hidden lg:block" />Us for Premium Features! 
+              Unlock Exclusive Benefits – Join <br class="hidden lg:block" />Us
+              for Premium Features! 
             </h1>
             <p class="text-xl text-[#535862] font-medium mt-5">
               Access advanced features that streamline your application. Working
@@ -139,6 +54,14 @@
             </div>
           </div>
         </div>
+      </div> -->
+    </section>
+    <section class="my-[144px] w-full max-w-[876px] mx-auto px-5">
+      <p class="text-[#181D27] text-center text-4xl font-semibold">
+        Frequently asked questions
+      </p>
+      <div class="border-[1.5px] border-gray-200 rounded-2xl px-6 mt-14">
+        <PricingFaq :faqList="faq" />
       </div>
     </section>
     <section class="bg-[#1849A9]">
@@ -172,56 +95,48 @@
               </p>
             </div>
           </div>
-          <div
-            ref="formWrapper"
-            class="col-span-4"
-            :class="{
-              '-mt-8': stepCount === 2,
-            }"
-          >
-            <Transition name="fade">
-              <!-- form -->
-              <div v-if="stepCount === 1">
-                <JourneyForm
-                  @updateJourney="updateJourney"
-                  :selectedPlan="selectedPlan"
-                />
-              </div>
-              <!-- chat -->
-              <div v-else-if="stepCount === 2" class="max-w-[484px] mx-auto">
-                <div
-                  class="size-full flex flex-col items-center text-center justify-center"
-                >
-                  <NuxtImg
-                    src="/images/countries-application.png"
-                    class="w-[308px] h-[260px]"
-                    loading="eager"
-                    preload
-                  />
-                  <p class="font-medium text-3xl mt-4">
-                    Thank you for your submission! We've received your form and
-                    will contact you soon!
-                  </p>
-                  <button
-                    @click="navigateTo(localePath('/dashboard'))"
-                    class="bg-white text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8"
-                  >
-                    Back to home
-                  </button>
-                </div>
-              </div>
-            </Transition>
+          <div ref="formWrapper" class="col-span-4">
+            <!-- form -->
+            <JourneyForm
+              @updateJourney="updateJourney"
+              :selectedPlan="selectedPlan"
+            />
           </div>
         </div>
       </div>
     </section>
   </main>
+  <div
+    v-else
+    class="bg-[#1849A9] flex justify-center items-center h-dvh w-screen"
+  >
+    <div
+      class="max-w-[484px] mx-auto flex flex-col items-center text-center justify-center"
+    >
+      <NuxtImg
+        src="/images/countries-application.png"
+        class="w-[383px] h-[324px]"
+        loading="eager"
+        preload
+      />
+      <p class="font-medium text-3xl mt-4 text-white">
+        Thank you for your submission! We've received your form and will contact
+        you soon!
+      </p>
+      <button
+        @click="navigateTo(localePath('/dashboard'))"
+        class="bg-white text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8 max-w-[330px]"
+      >
+        Back to home
+      </button>
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
 const localePath = useLocalePath();
 
 const stepCount = ref<number>(1);
-const selectedPlan = ref<number>(2);
+const selectedPlan = ref<number>(3);
 const formWrapper = ref<HTMLElement | null>(null);
 
 const stepsDetail = [
@@ -242,50 +157,6 @@ const stepsDetail = [
     title: "Welcome to Arrowster!",
     description:
       "If selected, you will be onboarded to our exclusive student community and start working with us for your application!",
-  },
-];
-
-const plansList = [
-  {
-    title: "Discover the ideal career",
-    standardPlan: "",
-    advancedPlan: "",
-  },
-  {
-    title: "Find the perfect schools",
-    standardPlan: "",
-    advancedPlan: "",
-  },
-  {
-    title: "Craft compelling essays recommendation letter",
-    standardPlan: "",
-    advancedPlan: "",
-  },
-  {
-    title: "Securing scholarship opportunities",
-    standardPlan: "",
-    advancedPlan: "",
-  },
-  {
-    title: "Navigate visa and paperworks",
-    standardPlan: "",
-    advancedPlan: "",
-  },
-  {
-    title: "Number of countries supported",
-    standardPlan: "Unlimited",
-    advancedPlan: "Unlimited",
-  },
-  {
-    title: "Number of schools supported",
-    standardPlan: "5-8 partner schools of Arrowster",
-    advancedPlan: "10 schools, not limited to partner schools",
-  },
-  {
-    title: "",
-    standardPlan: "*5,000,000VND deposit",
-    advancedPlan:
-      "*The Advanced Plan is only open to students with SAT of 1500 and above. Contact us for details!",
   },
 ];
 
@@ -316,6 +187,34 @@ const benefits = [
   },
 ];
 
+const faq = [
+  {
+    question: "What countries can Arrowster support me in applying to?",
+    answer:
+      "We help students apply to US, Canada, Australia, New Zealand, United Kingdom, and Europe (incl. countries such as France, Netherlands, Germany, etc). In Vietnam, we also help students apply to RMIT and BUV.",
+  },
+  {
+    question: "What are partner schools?",
+    answer:
+      "These are schools we partner with - this means we can help students secure higher admission rates and exclusive scholarships. Since partner universities provide Arrowster with a commission upon successful enrollment, we only require a refundable deposit from students to ensure commitment.",
+  },
+  {
+    question: "What schools do you partner with?",
+    answer:
+      "We partner with top institutions in the world, including all schools in Australia & UK (except Oxford & Cambridge), Top 10 Universities in Canada, Top 50-150 Universities in US, Applied Science Universities in Europe, and more. View our partner school lists here.",
+  },
+  {
+    question: "Who are my mentors?",
+    answer:
+      "You’ll work with mentors who have studied abroad and won scholarships at best universities such as Harvard University, Yonsei University, University of Pennsylvania, etc. We also connect students with experts in their majors to learn about their careers.",
+  },
+  {
+    question: "Will I work with you online or offline?",
+    answer:
+      "For most students, we will work online via messages and online meetings. If needed, you can come meet us at our beautiful office in District 1, Ho Chi Minh City!",
+  },
+];
+
 const updateJourney = () => {
   stepCount.value = 2;
 };
@@ -329,13 +228,3 @@ const selectPlan = (id: number) => {
 //   await api.get('/api/v1/plans/bundle')
 // })
 </script>
-<style scoped>
-.pricing-table table,
-td,
-th {
-  border: 1.5px solid #d1d5db;
-}
-.pricing-table td {
-  padding: 24px;
-}
-</style>

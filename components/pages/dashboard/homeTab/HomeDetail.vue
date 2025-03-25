@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-16">
     <!-- ongoing tasks -->
-    <div v-show="isRemainingTask">
+    <!-- <div v-show="isRemainingTask">
       <h2 class="text-[#181D27] text-xl font-semibold mb-5">Ongoing journey</h2>
       <Achievements
         :isDetailPage="true"
@@ -9,7 +9,58 @@
         @remainingTask="handelRemaining"
       />
     </div>
-    <PendingTaskSkeleton v-if="isTaskLoading" />
+    <PendingTaskSkeleton v-if="isTaskLoading" /> -->
+
+    <!-- all in one place -->
+
+    <div class="">
+      <h1 class="text-[#181D27] font-semibold text-3xl">
+        All in one place — Get into your dream school with Sophie AI + Expert
+        mentorship
+      </h1>
+      <p class="text-[#535862] mt-4">
+        Personalized guidance, strategic tools, and 1-on-1 mentorship to help
+        you succeed.
+      </p>
+      <div class="mt-[42px] flex flex-col gap-8">
+        <div
+          v-for="(step, idx) in stepsList"
+          :key="idx"
+          class="flex items-center gap-[26px]"
+        >
+          <div
+            class="h-9 w-9 min-w-9 rounded-full bg-[#1570EF] text-white text-xl font-semibold flex items-center justify-center relative"
+          >
+            <p>{{ idx + 1 }}</p>
+            <div
+              v-if="idx + 1 != stepsList.length"
+              class="h-[100px] w-0 absolute top-11 border-2 border-[#0E69E2]/70 border-dashed"
+            ></div>
+          </div>
+          <div
+            class="border-[1.5px] border-gray-200 rounded-2xl p-3 w-full flex items-center gap-4"
+          >
+            <NuxtImg :src="step.image" class="w-24" />
+            <div class="">
+              <p class="text-[#181D27] font-semibold">{{ step.title }}</p>
+              <p class="text-[#535862] mt-1 mb-4">
+                {{ step.description }}
+              </p>
+              <div
+                @click="navigateTo($localePath(step.navigate.navigateTo))"
+                class="flex items-center gap-2 cursor-pointer"
+              >
+                <p class="text-[#175CD3] font-semibold">
+                  {{ step.navigate.text }}
+                </p>
+                <IconArrowRight height="20" width="20" fill="#175CD3" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- events -->
     <div>
       <div class="flex justify-between items-center mb-5">
@@ -25,17 +76,33 @@
         :key="index"
         class="flex gap-6 border-[1.5px] border-gray-200 rounded-2xl p-6 mb-6 shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
       >
-        <img :src="item.image" alt="event" class="w-40 h-40" />
+        <div
+          class="w-[144px] min-w-[144px] h-[144px] border-[1.5px] border-gray-200 rounded-lg overflow-hidden relative"
+        >
+          <img :src="item.image" alt="event" class="size-full" />
+          <div
+            v-if="!item.link.value"
+            class="absolute inset-0 bg-black/50 flex items-center justify-center"
+          >
+            <IconLock class="size-[42px]" strokeWidth="1.5" />
+          </div>
+        </div>
         <div class="flex flex-col gap-5 w-full">
           <p class="text-lg font-semibold">{{ item.title }}</p>
-          <p class="text-[#535862]">{{ item.description }}</p>
-          <div class="flex gap-3 justify-between items-center">
-            <p class="text-[#1570EF] flex items-center gap-1.5 cursor-pointer" @click="handleNavigate(item.link.value)">
+          <p class="text-[#535862] flex-1">{{ item.description }}</p>
+          <div
+            v-if="item.link.value"
+            class="flex gap-3 justify-between items-center"
+          >
+            <p
+              class="text-[#1570EF] flex items-center gap-1.5 cursor-pointer"
+              @click="handleNavigate(item.link.value)"
+            >
               <span class="min-w-4 min-h-4">
                 <IconLink width="16" height="16" strokeWidth="2.5" />
               </span>
               <span class="border-b border-[#1570EF]">
-                {{ item.title }}
+                {{ item.link.text }}
               </span>
             </p>
             <div
@@ -49,11 +116,17 @@
               />
             </div>
           </div>
+          <div v-else class="flex items-center gap-2 cursor-pointer">
+            <p class="text-[#1570EF] font-semibold">
+              {{ item.link.text }}
+            </p>
+            <IconArrowRight height="20" width="20" fill="#1570EF" />
+          </div>
         </div>
       </div>
     </div>
     <!-- Faqs -->
-    <div>
+    <!-- <div>
       <p class="text-xl font-semibold text-[#181D27] mb-6">
         Frequently asked questions
       </p>
@@ -81,16 +154,16 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- social -->
     <div>
       <p class="text-xl font-semibold text-[#181D27] mb-5">Join Community</p>
-      <div class="flex gap-6">
+      <div class="flex gap-6 flex-wrap">
         <a
           href="https://www.facebook.com/groups/8907362185980576"
           target="_blank"
-          class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
+          class="flex items-center w-[calc(50%-12px)] gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
         >
           <IconFacebook />
           Facebook Community
@@ -98,10 +171,18 @@
         <a
           href="https://www.threads.net/@arrowster.official"
           target="_blank"
-          class="flex items-center w-full gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
+          class="flex items-center w-[calc(50%-12px)] gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
         >
           <IconThreads />
           Threads Community
+        </a>
+        <a
+          href="https://discord.gg/xahYuU2H"
+          target="_blank"
+          class="flex items-center w-[calc(50%-12px)] gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
+        >
+          <IconDiscord />
+          Discord Community
         </a>
       </div>
     </div>
@@ -144,37 +225,119 @@ const questions = [
   },
 ];
 
+// const eventList = [
+//   {
+//     image: "/images/dashboard/home/event-1.png",
+//     title: "100 pages Study Abroad Handbook",
+//     description: "Insider playbook: How to navigate in the process, admission strategies and hacks from students who've been there and won the game",
+//     link: {
+//       value: "https://docs.google.com/document/d/1Pl2w7QN0SztPoa-JLdhIUiUBwcmawdaCMJkuYHaNdmQ/edit?usp=sharing",
+//     },
+//   },
+//   {
+//     image: "/images/dashboard/home/event-2.png",
+//     title: "6 steps to ace your study abroad journey",
+//     description: "How to approach the application process strategically, avoid common pitfalls, and implement insider techniques that most students don't know about.",
+//     link: {
+//       value: "https://fb.watch/ysNqZBCNRr/",
+//     },
+//   },
+//   {
+//     image: "/images/dashboard/home/event-3.png",
+//     title: "Strategic Major Selection Framework",
+//     description: "The insider's approach to choosing the right major that aligns with your strengths and maximizes your chances",
+//     link: {
+//       value: "https://drive.google.com/file/d/19QNdmeAuJ7CLy_5uylI6bA_IksMCLqWH/view?usp=sharing",
+//     },
+//   },
+//   {
+//     image: "/images/dashboard/home/event-4.png",
+//     title: "Letter of Recommendation Guideline",
+//     description: "Master the art of securing powerful recommendations that make admissions officers take notice",
+//     link: {
+//       value: "https://drive.google.com/file/d/1SclcvXZXTHSLnv2tmWlg_5ivOABAQI9L/view?usp=sharing",
+//     },
+//   },
+// ];
 const eventList = [
   {
-    image: "/images/dashboard/home/event-1.png",
-    title: "100 pages Study Abroad Handbook",
-    description: "Insider playbook: How to navigate in the process, admission strategies and hacks from students who've been there and won the game",
+    image: "/images/application-post.png",
+    title: "Arrowster Exclusive Study Abroad Handbook",
+    description:
+      "100 pages covering every topic of study abroad: choosing major, building profile, applying for scholarships, writing essays, and more!",
     link: {
-      value: "https://docs.google.com/document/d/1Pl2w7QN0SztPoa-JLdhIUiUBwcmawdaCMJkuYHaNdmQ/edit?usp=sharing",
+      text: "Read here",
+      value:
+        "https://docs.google.com/document/d/1Pl2w7QN0SztPoa-JLdhIUiUBwcmawdaCMJkuYHaNdmQ/edit?usp=sharing",
     },
   },
   {
-    image: "/images/dashboard/home/event-2.png",
-    title: "6 steps to ace your study abroad journey",
-    description: "How to approach the application process strategically, avoid common pitfalls, and implement insider techniques that most students don't know about.",
+    image: "/images/application.png",
+    title:
+      "Training Session 1: How to Select the Best Major for Jobs after Graduation",
+    description:
+      "Sharing session by our mentor Thanh (Harvard MBA) on a strategic framework to choose the right major and prepare to get a job after graduation.",
     link: {
-      value: "https://fb.watch/ysNqZBCNRr/",
+      text: "Exclusive Content – Work with us to access",
+      value: "",
     },
   },
   {
-    image: "/images/dashboard/home/event-3.png",
-    title: "Strategic Major Selection Framework",
-    description: "The insider's approach to choosing the right major that aligns with your strengths and maximizes your chances",
+    image: "/images/decision.png",
+    title: "Centralised Scholarship (2025-2026)",
+    description:
+      "List of scholarships for Vietnamese students across all countries (US, Australia, Canada, Europe, etc).",
     link: {
-      value: "https://drive.google.com/file/d/19QNdmeAuJ7CLy_5uylI6bA_IksMCLqWH/view?usp=sharing",
+      text: "Exclusive Content – Work with us to access",
+      value: "",
+    },
+  },
+];
+
+const stepsList = [
+  {
+    image: "/images/tell-me-more.png",
+    title: "Schools list",
+    description: "Find your perfect-fit schools with AI recommendations.",
+    navigate: {
+      text: "Find Your Best-Fit Schools in 60 Seconds",
+      navigateTo: "/school-list",
     },
   },
   {
-    image: "/images/dashboard/home/event-4.png",
-    title: "Letter of Recommendation Guideline",
-    description: "Master the art of securing powerful recommendations that make admissions officers take notice",
-    link: {
-      value: "https://drive.google.com/file/d/1SclcvXZXTHSLnv2tmWlg_5ivOABAQI9L/view?usp=sharing",
+    image: "/images/sophie-chat.png",
+    title: "Sophie Assistant",
+    description: "Ask questions anytime and get instant guidance.",
+    navigate: {
+      text: "Chat with Sophie AI for Free",
+      navigateTo: "/sophie",
+    },
+  },
+  {
+    image: "/images/post-application.png",
+    title: "Roadmap",
+    description: "See deadlines and track what you need to prepare.",
+    navigate: {
+      text: "View your Plan",
+      navigateTo: "/roadmap",
+    },
+  },
+  {
+    image: "/images/ai-recommendation.png",
+    title: "AI Essay Editor",
+    description: "Get AI-crafted essay drafts tailored to your unique story.",
+    navigate: {
+      text: "Generate Your Essay Now",
+      navigateTo: "/ai-essay",
+    },
+  },
+  {
+    image: "/images/v-room-short.png",
+    title: "Expert Mentorship",
+    description: "1-on-1 mentorship to craft your perfect application plan.",
+    navigate: {
+      text: "Talk to a Mentor",
+      navigateTo: "/pricing",
     },
   },
 ];
