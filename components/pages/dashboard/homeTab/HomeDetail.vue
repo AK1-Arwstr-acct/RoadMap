@@ -192,38 +192,38 @@
 const isRemainingTask = ref<boolean>(false);
 const isTaskLoading = ref<boolean>(true);
 
-const questions = [
-  {
-    img: "/images/visa.png",
-    question: "What countries can Arrowster support me apply to?",
-    answer:
-      "We help students apply to US, Canada, Australia, New Zealand, United Kingdom, and Europe (incl. countries such as France, Netherlands, Germany, etc). In Vietnam, we also help students apply to RMIT and BUV.",
-  },
-  {
-    img: "/images/application.png",
-    question: "What can Arrowster mentors help me with?",
-    answer:
-      "We can help you build your application strategy, school list, extracurricular strategy as well as edit materials such as essays and letters of recommendation! We will also work with your family to help you prepare financial statements and visa application.",
-  },
-  {
-    img: "/images/school-list.png",
-    question: "How many schools will Arrowster help me apply to?",
-    answer:
-      "We usually help students apply to 5 schools (can be in multiple countries) for optimal efficiency. In special cases, we can help students apply to 8 schools.",
-  },
-  {
-    img: "/images/application-post.png",
-    question: "What’s the cost to work with Arrowster?",
-    answer:
-      "For students applying to our partner schools, FREE! We have 2,000+ partner schools around the world, including top institutions like University of Sydney. King’s College London, University of Ottawa, etc. If you aim to apply to schools outside our partner list, please consult our FAQ guide here.",
-  },
-  {
-    img: "/images/academic.png",
-    question: "Will I work with you online or offline?",
-    answer:
-      "For most students, we will work online via messages and online meetings. If needed, you can come meet us at our beautiful office in District 1, Ho Chi Minh City! ",
-  },
-];
+// const questions = [
+//   {
+//     img: "/images/visa.png",
+//     question: "What countries can Arrowster support me apply to?",
+//     answer:
+//       "We help students apply to US, Canada, Australia, New Zealand, United Kingdom, and Europe (incl. countries such as France, Netherlands, Germany, etc). In Vietnam, we also help students apply to RMIT and BUV.",
+//   },
+//   {
+//     img: "/images/application.png",
+//     question: "What can Arrowster mentors help me with?",
+//     answer:
+//       "We can help you build your application strategy, school list, extracurricular strategy as well as edit materials such as essays and letters of recommendation! We will also work with your family to help you prepare financial statements and visa application.",
+//   },
+//   {
+//     img: "/images/school-list.png",
+//     question: "How many schools will Arrowster help me apply to?",
+//     answer:
+//       "We usually help students apply to 5 schools (can be in multiple countries) for optimal efficiency. In special cases, we can help students apply to 8 schools.",
+//   },
+//   {
+//     img: "/images/application-post.png",
+//     question: "What’s the cost to work with Arrowster?",
+//     answer:
+//       "For students applying to our partner schools, FREE! We have 2,000+ partner schools around the world, including top institutions like University of Sydney. King’s College London, University of Ottawa, etc. If you aim to apply to schools outside our partner list, please consult our FAQ guide here.",
+//   },
+//   {
+//     img: "/images/academic.png",
+//     question: "Will I work with you online or offline?",
+//     answer:
+//       "For most students, we will work online via messages and online meetings. If needed, you can come meet us at our beautiful office in District 1, Ho Chi Minh City! ",
+//   },
+// ];
 
 // const eventList = [
 //   {
@@ -342,10 +342,10 @@ const stepsList = [
   },
 ];
 
-const handelRemaining = (value: boolean) => {
-  isRemainingTask.value = value;
-  isTaskLoading.value = false;
-};
+// const handelRemaining = (value: boolean) => {
+//   isRemainingTask.value = value;
+//   isTaskLoading.value = false;
+// };
 
 const handleNavigate = (link: string) => {
   window.open(link, "_blank");

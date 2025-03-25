@@ -161,8 +161,9 @@
             {{ option.title }}
           </label>
         </div>
-        <div v-show="formDetails.selectedLocationOptions.includes('Other')" class="w-full">
-          <input v-model="otherText" class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg" placeholder="Please specify" />
+        <div v-show="formDetails.selectedLocationOptions.includes('Other')" class="w-full mt-2">
+          <p class="text-[#414651] text-sm font-medium">Can you specify for us?</p>
+          <input v-model="otherText" class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg" placeholder="e.g. Korean" />
         </div>
       </div>
     </div>

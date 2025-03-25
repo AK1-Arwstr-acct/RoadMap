@@ -238,7 +238,9 @@ const submit = async () => {
     emit("isChatLoading", true);
     completeChat.value.push({
       isSender: true,
-      text: !props.isSummarizeOverview ? inputQuestion.value : "",
+      text: !props.isSummarizeOverview
+        ? inputQuestion.value
+        : dashboardStore.overViews?.join("\n") || "",
     });
     // if(!props.isSummarizeOverview){
     // }

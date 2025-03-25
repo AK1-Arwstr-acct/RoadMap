@@ -7,19 +7,15 @@
         <td
           class="min-w-[260px] max-w-[260px] transition-all ease-in-out duration-150"
         >
-          <div class="flex flex-col h-[229px]">
-            <p class="text-[#414651] text-lg font-medium text-center">
-              Starter Plan
+          <div class="flex flex-col">
+            <p class="text-[#414651] font-medium text-center">Starter Plan</p>
+            <p
+              class="text-[#181D27] text-xl font-semibold text-center mt-1.5 uppercase"
+            >
+              Free
             </p>
-            <div class="flex-1">
-              <p
-                class="text-[#181D27] text-2xl font-semibold text-center mt-1.5 uppercase"
-              >
-                Free
-              </p>
-            </div>
             <button
-              class="bg-[#EFF8FF] border border-[#EFF8FF] text-[#175CD3] font-semibold px-[18px] py-2.5 rounded-lg w-full mt-4 shadow-sm"
+              class="bg-[#EFF8FF] border border-[#EFF8FF] text-[#175CD3] font-semibold px-[18px] py-2.5 rounded-lg w-full mt-6 shadow-sm"
               @click="emit('selectPlan', 3)"
             >
               Current plan
@@ -33,22 +29,15 @@
         <td
           class="min-w-[260px] max-w-[260px] transition-all ease-in-out duration-150 bg-white"
         >
-          <div class="flex flex-col h-[229px]">
-            <p class="text-[#414651] text-lg font-medium text-center">
-              Standard Plan
+          <div class="flex flex-col">
+            <p class="text-[#414651] font-medium text-center">Standard Plan</p>
+            <p
+              class="text-[#181D27] text-xl font-semibold text-center mt-1.5 uppercase"
+            >
+              Free
             </p>
-            <div class="flex-1">
-              <p
-                class="text-[#181D27] text-2xl font-semibold text-center mt-1.5 uppercase"
-              >
-                Free
-              </p>
-              <p class="text-sm text-[#181D27] text-center mt-1.5">
-                (*5,000,000 VND refundable deposit for slot reservation)
-              </p>
-            </div>
             <button
-              class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-4 shadow-sm"
+              class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
               @click="emit('selectPlan', 1)"
             >
               Continue with Standard
@@ -62,22 +51,15 @@
         <td
           class="min-w-[260px] max-w-[260px] transition-all ease-in-out duration-150 bg-white"
         >
-          <div class="flex flex-col h-[229px]">
-            <p class="text-[#414651] text-lg font-medium text-center">
-              Advanced Plan
+          <div class="flex flex-col">
+            <p class="text-[#414651] font-medium text-center">Advanced Plan</p>
+            <p
+              class="text-[#181D27] text-xl font-semibold text-center mt-1.5 text-nowrap"
+            >
+              50,000,000 VND
             </p>
-            <div class="flex-1">
-              <p
-                class="text-[#181D27] text-2xl font-semibold text-center mt-1.5 text-nowrap"
-              >
-                50,000,000 VND
-              </p>
-              <p class="text-sm text-[#181D27] text-center mt-1.5">
-                (*Requires SAT 1500+, limited slots)
-              </p>
-            </div>
             <button
-              class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-4 shadow-sm"
+              class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
               @click="emit('selectPlan', 2)"
             >
               Apply for Mentorship
@@ -97,33 +79,40 @@
         }"
       >
         <td class="!py-5">
-          <p class="text-[#181D27] font-semibold text-start" :class="[isHeading(plan) ? 'sm:text-xl' : 'sm:text-lg']">
+          <p
+            class="font-medium text-start"
+            :class="[
+              isHeading(plan)
+                ? 'sm:text-lg text-[#181D27]'
+                : 'sm:text-base text-[#414651]',
+            ]"
+          >
             {{ plan.title }}
           </p>
         </td>
-        <td class="!py-5">
+        <td class="!py-2">
           <p v-if="!isHeading(plan)" class="flex justify-center">
             <IconCheckmark v-if="plan.starterPlan === 'available'" />
             <IconCrossCircle v-else-if="plan.starterPlan === 'N/A'" />
-            <span v-else class="text-[#181D27] font-medium">
+            <span v-else class="text-[#181D27]">
               {{ plan.starterPlan }}
             </span>
           </p>
         </td>
-        <td class="!py-5">
+        <td class="!py-2">
           <p v-if="!isHeading(plan)" class="flex justify-center">
             <IconCheckmark v-if="plan.standardPlan === 'available'" />
             <IconCrossCircle v-else-if="plan.standardPlan === 'N/A'" />
-            <span v-else class="text-[#181D27] font-medium">
+            <span v-else class="text-[#181D27]">
               {{ plan.standardPlan }}
             </span>
           </p>
         </td>
-        <td class="!py-5">
+        <td class="!py-2">
           <p v-if="!isHeading(plan)" class="flex justify-center">
             <IconCheckmark v-if="plan.advancedPlan === 'available'" />
             <IconCrossCircle v-else-if="plan.advancedPlan === 'N/A'" />
-            <span v-else class="text-[#181D27] font-medium">
+            <span v-else class="text-[#181D27]">
               {{ plan.advancedPlan }}
             </span>
           </p>
