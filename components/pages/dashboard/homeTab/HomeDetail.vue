@@ -81,7 +81,7 @@
         >
           <img :src="item.image" alt="event" class="size-full" />
           <div
-            v-if="!item.link.value"
+            v-if="item.locked"
             class="absolute inset-0 bg-black/50 flex items-center justify-center"
           >
             <IconLock class="size-[42px]" strokeWidth="1.5" />
@@ -270,6 +270,7 @@ const eventList = [
       value:
         "https://docs.google.com/document/d/1Pl2w7QN0SztPoa-JLdhIUiUBwcmawdaCMJkuYHaNdmQ/edit?usp=sharing",
     },
+    locked: false,
   },
   {
     image: "/images/application.png",
@@ -281,6 +282,7 @@ const eventList = [
       text: "Exclusive Content – Work with us to access",
       value: "/pricing",
     },
+    locked: true,
   },
   {
     image: "/images/decision.png",
@@ -291,6 +293,7 @@ const eventList = [
       text: "Exclusive Content – Work with us to access",
       value: "/pricing",
     },
+    locked: true,
   },
 ];
 
