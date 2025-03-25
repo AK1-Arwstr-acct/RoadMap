@@ -279,7 +279,7 @@ const eventList = [
       "Sharing session by our mentor Thanh (Harvard MBA) on a strategic framework to choose the right major and prepare to get a job after graduation.",
     link: {
       text: "Exclusive Content – Work with us to access",
-      value: "",
+      value: "/pricing",
     },
   },
   {
@@ -289,7 +289,7 @@ const eventList = [
       "List of scholarships for Vietnamese students across all countries (US, Australia, Canada, Europe, etc).",
     link: {
       text: "Exclusive Content – Work with us to access",
-      value: "",
+      value: "/pricing",
     },
   },
 ];
