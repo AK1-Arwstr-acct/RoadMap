@@ -1,15 +1,11 @@
 <template>
   <div v-for="(faq, index) in faqList" :key="index" class="">
-    <div class="flex items-start gap-4 py-8" :class="[{'border-b border-gray-200' : index+1 != faqList.length}]">
-      <NuxtImg
-        v-if="isOpen[index]"
-        src="/images/visa.png"
-        class="size-[52px] min-w-[52px]"
-        loading="eager"
-        preload
-      />
+    <div
+      class="flex items-start gap-4 py-8"
+      :class="[{ 'border-b border-gray-200': index + 1 != faqList.length }]"
+    >
       <div class="flex-1">
-        <p class="text-lg text-[#181D27] font-semibold">
+        <p class="text-lg text-[#181D27] font-medium">
           {{ faq.question }}
         </p>
         <div
@@ -21,7 +17,7 @@
           <p class="text-[#535862]">{{ faq.answer }}</p>
         </div>
       </div>
-      <div class="cursor-pointer" @click="toggleAnswer(index)">
+      <div class="cursor-pointer p-px" @click="toggleAnswer(index)">
         <IconMinusCircle v-if="isOpen[index]" />
         <IconPlusCircle v-else />
       </div>

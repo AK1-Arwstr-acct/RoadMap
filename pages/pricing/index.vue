@@ -57,7 +57,7 @@
       </div> -->
     </section>
     <section class="my-[144px] w-full max-w-[876px] mx-auto px-5">
-      <p class="text-[#181D27] text-center text-4xl font-semibold">
+      <p class="text-[#181D27] text-center text-4xl font-medium">
         Frequently asked questions
       </p>
       <div class="border-[1.5px] border-gray-200 rounded-2xl px-6 mt-14">
