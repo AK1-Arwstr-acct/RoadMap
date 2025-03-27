@@ -1,3 +1,198 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Default styles for anchor links */
+.suggestion-container a:link {
+    color: #0000EE; /* Default link color */
+    text-decoration: underline; /* Default underline */
+    cursor: auto; /* Default cursor */
+  }
+  
+  .suggestion-container a:visited {
+    color: #551A8B; /* Default visited link color */
+    text-decoration: underline; /* Default underline */
+    cursor: auto; /* Default cursor */
+  }
+  
+  .suggestion-container a:hover {
+    color: #EE0000; /* Default hover color */
+    text-decoration: underline; /* Default underline */
+    cursor: pointer; /* Default cursor on hover */
+  }
+  
+  .suggestion-container a:active {
+    color: #FF0000; /* Default active color */
+    text-decoration: underline; /* Default underline */
+    cursor: pointer; /* Default cursor on active */
+  }
+  
+  /* Default styles for paragraphs */
+  .suggestion-container p {
+    margin: 1em 0; /* Default margins for paragraphs */
+    line-height: 1.5; /* Default line height */
+  }
+  
+  /* Default styles for headings (h1 to h6) */
+  .suggestion-container h1 {
+    margin: 0.67em 0; /* Default margins for h1 */
+    font-size: 2em; /* Default font size */
+  }
+  
+  .suggestion-container h2 {
+    margin: 0.75em 0; /* Default margins for h2 */
+    font-size: 1.5em; /* Default font size */
+  }
+  
+  .suggestion-container h3 {
+    margin: 0.83em 0; /* Default margins for h3 */
+    font-size: 1.17em; /* Default font size */
+  }
+  
+  .suggestion-container h4 {
+    margin: 1.12em 0; /* Default margins for h4 */
+    font-size: 1em; /* Default font size */
+  }
+  
+  .suggestion-container h5 {
+    margin: 1.5em 0; /* Default margins for h5 */
+    font-size: 0.83em; /* Default font size */
+  }
+  
+  .suggestion-container h6 {
+    margin: 1.67em 0; /* Default margins for h6 */
+    font-size: 0.67em; /* Default font size */
+  }
+  
+  /* Default styles for unordered lists */
+  .suggestion-container ul {
+    margin: 1em 0; /* Default margins */
+    padding: 0 40px; /* Default padding for nested list items */
+    list-style-type: disc; /* Default bullet style */
+  }
+  
+  /* Default styles for ordered lists */
+  .suggestion-container ol {
+    margin: 1em 0; /* Default margins */
+    padding: 0 40px; /* Default padding for nested list items */
+    list-style-type: decimal; /* Default numbering style */
+  }
+  
+  /* Default styles for list items */
+  .suggestion-container li {
+    margin: 0; /* Default margins for list items */
+    padding: 0; /* Default padding for list items */
+  }
+  
+  /* Default styles for blockquotes */
+  .suggestion-container blockquote {
+    margin: 1em 0; /* Default margins */
+    padding: 0 20px; /* Default padding */
+    border-left: 5px solid #ddd; /* Default border style */
+  }
+  
+  /* Default styles for code blocks */
+  .suggestion-container pre {
+    margin: 1em 0; /* Default margins */
+    padding: 10px; /* Default padding */
+    background-color: #f5f5f5; /* Default background color */
+    border: 1px solid #ddd; /* Default border */
+    overflow: auto; /* Default overflow handling */
+  }
+  
+  /* Default styles for inline code */
+  .suggestion-container code {
+    font-family: monospace; /* Default font family */
+    background-color: #f5f5f5; /* Default background color */
+    border: 1px solid #ddd; /* Default border */
+    padding: 0 4px; /* Default padding */
+    border-radius: 4px; /* Default border radius */
+  }
+  
+  /* Default styles for images */
+  .suggestion-container img {
+    border: 0; /* Default border */
+    max-width: 100%; /* Default width */
+    height: auto; /* Default height */
+  }
+  
+  /* Default styles for tables */
+  .suggestion-container table {
+    border-collapse: collapse; /* Default border collapse */
+    width: 100%; /* Default width */
+    margin: 1em 0; /* Default margins */
+  }
+  
+  /* Default styles for table cells */
+  .suggestion-container th,
+  .suggestion-container td {
+    border: 1px solid #ddd; /* Default border */
+    padding: 8px; /* Default padding */
+    text-align: left; /* Default text alignment */
+  }
+  
+  /* Default styles for form elements */
+  .suggestion-container input,
+  .suggestion-container textarea,
+  .suggestion-container select {
+    margin: 0; /* Default margin */
+    padding: 8px; /* Default padding */
+    font-family: Arial, sans-serif; /* Default font family */
+  }
+  
+  /* Default styles for buttons */
+  .suggestion-container button {
+    padding: 8px 12px; /* Default padding */
+    border: 1px solid #ddd; /* Default border */
+    background-color: #fff; /* Default background color */
+    cursor: pointer; /* Default cursor */
+    font-family: Arial, sans-serif; /* Default font family */
+  }
+  
+  /* Default styles for form labels */
+  .suggestion-container label {
+    display: block; /* Default display */
+    margin-bottom: 4px; /* Default margin */
+    font-weight: bold; /* Default font weight */
+  }
+  
+  /* Default styles for fieldsets */
+  .suggestion-container fieldset {
+    border: 1px solid #ddd; /* Default border */
+    padding: 10px; /* Default padding */
+    margin: 0; /* Default margin */
+  }
+  
+  .suggestion-container legend {
+    font-weight: bold; /* Default font weight */
+  }
+  
+  /* Default styles for textareas */
+  .suggestion-container textarea {
+    resize: vertical; /* Default resize behavior */
+  }
+  
+  /* Default styles for select elements */
+  .suggestion-container select {
+    cursor: pointer; /* Default cursor */
+  }
+  
+  /* Default styles for spans */
+  .suggestion-container span {
+    /* No default styles */
+  }
+  
+  /* Default styles for strong elements */
+  .suggestion-container strong {
+    font-weight: bold; /* Default font weight */
+  }
+  
+  /* Default styles for em elements */
+  .suggestion-container em {
+    font-style: italic; /* Default font style */
+  }
+  
+  /* Default styles for small elements */
+  .suggestion-container small {
+    font-size: 0.8em; /* Default font size */
+  }

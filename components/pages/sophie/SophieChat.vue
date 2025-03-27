@@ -63,7 +63,7 @@
               />
             </div>
             <div
-              class="mb-8 w-fit max-w-[90%] text-wrap text-[#414651]"
+              class="mb-8 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
               :class="{
                 'bg-[#FAFAFA] py-2 px-3 rounded-lg': chat.isSender,
               }"
@@ -242,8 +242,6 @@ const submit = async () => {
         ? inputQuestion.value
         : dashboardStore.overViews?.join("\n") || "",
     });
-    // if(!props.isSummarizeOverview){
-    // }
     scrollDown();
     isChatLoading.value = true;
     const userQuery = inputQuestion.value;

@@ -1,8 +1,8 @@
 <template>
   <div
-    class="w-full flex justify-center items-center p-5 pt-24 pb-16"
+    class="w-full flex justify-center items-center pt-24 pb-16"
   >
-    <div class="w-full sm:w-[390px]">
+    <div class="w-full md:w-[390px]">
       <h1 class="font-semibold text-3xl text-[#181D27] mb-8">
         Could you share a few personal details with us?
       </h1>

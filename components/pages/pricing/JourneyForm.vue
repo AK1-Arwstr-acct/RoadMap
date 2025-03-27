@@ -1,6 +1,6 @@
 <template>
   <div
-    class="size-full rounded-2xl bg-white text-[#414651] overflow-hidden p-6 flex flex-col gap-6"
+    class="size-full rounded-2xl bg-white text-[#414651] overflow-hidden p-4 sm:p-6 flex flex-col gap-6"
   >
     <!-- phoneNumber -->
     <!-- <div class="relative remove-shadow-bg-white">
@@ -91,7 +91,9 @@
     </div> -->
     <!-- school name -->
     <div>
-      <p class="text-[#414651] text-sm font-medium">Your school name <span class="text-[#F04438]">*</span></p>
+      <p class="text-[#414651] text-sm font-medium">
+        Your school name <span class="text-[#F04438]">*</span>
+      </p>
       <input
         type="text"
         placeholder="e.g. THPT Nhân Chính"
@@ -102,7 +104,8 @@
     <!-- financial support -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        How much financial support can your family provide per year? <span class="text-[#F04438]">*</span>
+        How much financial support can your family provide per year?
+        <span class="text-[#F04438]">*</span>
       </p>
       <input
         type="text"
@@ -122,7 +125,7 @@
       <p class="font-medium text-[#414651] text-sm mb-4">
         I want to study at <span class="text-[#F04438]">*</span>
       </p>
-      <div class="flex gap-4 flex-wrap">
+      <div class="flex flex-col md:flex-row gap-4 flex-wrap">
         <div
           v-for="(option, index) in studyDestinations"
           :key="index"
@@ -161,16 +164,26 @@
             {{ option.title }}
           </label>
         </div>
-        <div v-show="formDetails.selectedLocationOptions.includes('Other')" class="w-full mt-2">
-          <p class="text-[#414651] text-sm font-medium">Can you specify for us?</p>
-          <input v-model="otherText" class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg" placeholder="e.g. Korean" />
+        <div
+          v-show="formDetails.selectedLocationOptions.includes('Other')"
+          class="w-full mt-2"
+        >
+          <p class="text-[#414651] text-sm font-medium">
+            Can you specify for us?
+          </p>
+          <input
+            v-model="otherText"
+            class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
+            placeholder="e.g. Korean"
+          />
         </div>
       </div>
     </div>
     <!-- draem school -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        Share some of your dream schools here <span class="text-[#F04438]">*</span>
+        Share some of your dream schools here
+        <span class="text-[#F04438]">*</span>
       </p>
       <input
         type="text"
@@ -182,9 +195,10 @@
     <!-- alternative contact -->
     <div>
       <p class="font-medium text-[#414651] text-sm mb-4">
-        Alternative contact platform (if you don’t use Zalo) <span class="text-[#F04438]">*</span>
+        Alternative contact platform (if you don’t use Zalo)
+        <!-- <span class="text-[#F04438]">*</span> -->
       </p>
-      <div class="flex gap-4 flex-wrap">
+      <div class="flex flex-col md:flex-row gap-4 flex-wrap">
         <div
           v-for="(option, index) in alternativeContact"
           :key="index"
@@ -229,7 +243,8 @@
     <div>
       <p class="text-[#414651] text-sm font-medium">
         If you don't have a Vietnamese phone number, please leave your easiest
-        contact information below! <span class="text-[#F04438]">*</span>
+        contact information below!
+        <!-- <span class="text-[#F04438]">*</span> -->
       </p>
       <input
         type="text"
@@ -348,7 +363,7 @@ const studyDestinations = [
   { id: 5, title: "Europe" },
   { id: 6, title: "Vietnam International University" },
   { id: 7, title: "New Zealand" },
-  { id: 7, title: "Other" },
+  { id: 8, title: "Other" },
 ];
 
 const alternativeContact = [
@@ -458,10 +473,15 @@ const toggleArrowsterInfo = (title: string) => {
 const submit = async () => {
   try {
     isSubmitting.value = true;
-    const isOther = formDetails.value.selectedLocationOptions.includes('Other');
-    let tempLocation = formDetails.value.selectedLocationOptions
-    if(isOther) {
-      tempLocation = [...formDetails.value.selectedLocationOptions.filter(item => item !== 'Other'), otherText.value]
+    const isOther = formDetails.value.selectedLocationOptions.includes("Other");
+    let tempLocation = formDetails.value.selectedLocationOptions;
+    if (isOther) {
+      tempLocation = [
+        ...formDetails.value.selectedLocationOptions.filter(
+          (item) => item !== "Other"
+        ),
+        otherText.value,
+      ];
     }
     await api.post("/api/v1/plans/bundle", {
       plan_id: props.selectedPlan,

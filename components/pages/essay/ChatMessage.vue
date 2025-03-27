@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-8">
     <!-- question -->
     <div class="flex items-center gap-3">
-      <div class="size-8 rounded-full bg-black overflow-hidden">
+      <div class="size-6 min-w-6 sm:size-8 sm:min-w-8 rounded-full bg-black overflow-hidden">
         <NuxtImg
           src="/images/chat-bot.png"
           alt="chat bot"
@@ -11,7 +11,7 @@
           preload
         />
       </div>
-      <p class="text-[#414651]">
+      <p class="text-[#414651] text-sm sm:text-base">
         {{ question }}
       </p>
     </div>
@@ -27,7 +27,7 @@
         />
         <div
           v-html="tempData"
-          class="py-3 px-4 rounded-lg w-fit bg-[#E8E8E8]/50 text-[#414651]"
+          class="py-3 px-4 rounded-lg w-fit bg-[#E8E8E8]/50 text-[#414651] text-sm sm:text-base"
         />
       </div>
       <div v-else class="py-3 px-4 rounded-lg bg-[#E8E8E8]/50 border w-full">
@@ -36,7 +36,7 @@
           contenteditable="true"
           v-html="tempData"
           @input="checkAnswer"
-          class="w-full text-[#414651] bg-transparent outline-none mb-3"
+          class="w-full text-[#414651] bg-transparent outline-none mb-3 text-sm sm:text-base"
         />
         <div class="flex justify-end gap-3">
           <button

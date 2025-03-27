@@ -1,12 +1,12 @@
 <template>
-  <div class="bg-[#EEF4FF] border-[1.5px] border-[#E0EAFF] rounded-lg py-5 px-4">
-    <div class="flex items-center justify-between gap-3">
+  <div class="bg-[#EEF4FF] border-[1.5px] border-[#E0EAFF] rounded-lg py-5">
+    <div class="flex items-center justify-between gap-3 px-4">
       <p class="text-[#181D27] text-sm font-semibold">Why These Schools?</p>
       <div @click="openSophieModal = true" class="cursor-pointer">
         <IconDoubleArrows />
       </div>
     </div>
-    <div class="mt-4 relative">
+    <div class="mt-4 relative suggestion-container">
       <div>
         <vue-markdown ref="typingText" :source="typedText" :options="options" />
       </div>

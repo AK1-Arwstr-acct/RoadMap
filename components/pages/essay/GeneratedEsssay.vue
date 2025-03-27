@@ -1,16 +1,16 @@
 <template>
-  <div class="size-full flex flex-col items-center">
+  <div class="h-fit flex flex-col items-center">
     <div
-      class="flex w-full justify-between items-center py-8 px-28 border-b border-[#E9EAEB]"
+      class="flex w-full justify-between items-center py-5 sm:py-8 px-5 sm:px-28 md:border-b border-[#E9EAEB]"
     >
       <div
         @click="navigateTo(localePath('/dashboard'))"
-        class="flex gap-2 items-center cursor-pointer"
+        class="hidden md:flex gap-2 items-center cursor-pointer"
       >
         <NuxtImg
           src="/images/logo/logo.svg"
           alt="Logo"
-          class="w-44 h-7"
+          class="w-40 md:w-44 h-6 md:h-7"
           loading="eager"
           preload
         />
@@ -18,7 +18,7 @@
       <button
         @click="submit"
         :disabled="isSubmitting || isSubmitedBefore"
-        class="py-2.5 px-5 text-sm font-semibold text-white bg-[#1570EF] rounded-lg flex items-center gap-2 disabled:opacity-60"
+        class="py-2.5 px-5 text-xs sm:text-sm font-semibold text-white bg-[#1570EF] rounded-lg flex items-center gap-2 disabled:opacity-60"
       >
         Save to Profile
         <IconSpinner v-if="isSubmitting" class="size-3.5" bgColor="#ffffff00" />
@@ -27,7 +27,7 @@
     <div
       class="flex-1 w-full flex justify-center overflow-y-auto custom-scrollbar"
     >
-      <div class="w-[50%] h-fit py-[42px]">
+      <div class="px-5 sm:w-[70%] md:w-[50%] h-fit py-[12px] md:py-[42px]">
         <div>
           <h1 class="text-[#181D27] text-3xl font-medium mb-8">
             {{ essayStore.finalEssay?.title }}
@@ -42,18 +42,18 @@
             </ClientOnly>
           </div>
         </div>
-        <div class="h-px bg-[#E9EAEB] my-[42px]" />
-        <div class="flex justify-between gap-6 items-start">
+        <div class="h-px bg-[#E9EAEB] my-6 md:my-[42px]" />
+        <div class="flex flex-col md:flex-row justify-between gap-6 items-end md:items-start">
           <div class="flex gap-3">
             <NuxtImg
               src="/images/chatbot.png"
-              class="w-[74px] h-[70px] object-contain"
+              class="w-[64px] sm:w-[74px] h-[60px] sm:h-[70px] object-contain"
             />
             <div>
-              <h3 class="text-[#181D27] font-medium">
+              <h3 class="text-[#181D27] font-medium text-sm sm:text-base">
                 We've also sent this essay to your email.
               </h3>
-              <p class="text-[#535862] text-sm mt-1.5">
+              <p class="text-[#535862] text-xs sm:text-sm mt-1.5">
                 This is far from good though. Want to know how to customise it
                 even more and make it 10x better?
               </p>
@@ -61,7 +61,7 @@
           </div>
           <button
             @click="navigateTo(localePath('/pricing'))"
-            class="text-[#414651] w-fit text-nowrap font-semibold text-sm py-2 px-3.5 border border-[#D5D7DA] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D]"
+            class="text-[#414651] w-full sm:w-fit text-nowrap font-semibold text-sm py-2 px-3.5 border border-[#D5D7DA] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D]"
           >
             Make my essay 10x better
           </button>

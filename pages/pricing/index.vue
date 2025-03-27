@@ -1,25 +1,32 @@
 <template>
   <main v-if="stepCount === 1">
-    <section class="w-full mx-auto max-w-[1216px] px-5 mt-8 mb-20">
-      <div class="flex justify-end">
-        <span
-          @click="navigateTo(localePath('/dashboard'))"
-          class="cursor-pointer"
-        >
-          <IconCross fill="#A4A7AE" width="24" height="24" />
-        </span>
+    <section class="w-full mx-auto max-w-[1216px] px-0 mt-8 mb-10">
+      <div class="px-5">
+        <div class="flex justify-end">
+          <span
+            @click="navigateTo(localePath('/dashboard'))"
+            class="cursor-pointer"
+          >
+            <IconCross fill="#A4A7AE" width="24" height="24" />
+          </span>
+        </div>
+        <h1 class="text-4xl text-[#181D27] font-semibold">
+          Your study abroad success starts <br />here – Get the perfect plan for
+          you
+        </h1>
+        <p class="md:text-lg text-[#535862] mt-5">
+          Join
+          <span class="text-[#1570EF]">500+ students</span> who secured top
+          university admissions with our AI + expert mentorship
+        </p>
       </div>
-      <h1 class="text-4xl text-[#181D27] font-semibold">
-        Your study abroad success starts <br />here – Get the perfect plan for
-        you
-      </h1>
-      <p class="text-lg text-[#535862] mt-5">
-        Join
-        <span class="text-[#1570EF]">500+ students</span> who secured top
-        university admissions with our AI + expert mentorship
-      </p>
-      <div class="pt-8 overflow-x-auto">
-        <PricingTable @selectPlan="selectPlan" />
+      <div class="pt-8 overflow-x-auto md:px-5">
+        <PricingTable @selectPlan="selectPlan" :plansList="plansList"  class="hidden md:block"/>
+        <div class="md:hidden px-5 py-5 flex flex-col gap-3">
+          <StarterPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
+          <StandardPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
+          <AdvancedPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
+        </div>
       </div>
       <!-- <div class="flex flex-col md:flex-row gap-8 py-16">
         <div class="w-full md:w-1/2">
@@ -56,32 +63,32 @@
         </div>
       </div> -->
     </section>
-    <section class="my-[144px] w-full max-w-[876px] mx-auto px-5">
-      <p class="text-[#181D27] text-center text-4xl font-medium">
+    <section class="py-5 md:py-[70px] w-full max-w-[876px] mx-auto px-5">
+      <p class="text-[#181D27] md:text-center text-2xl md:text-4xl font-semibold">
         Frequently asked questions
       </p>
-      <div class="border-[1.5px] border-gray-200 rounded-2xl px-6 mt-14">
+      <div class="md:border-[1.5px] border-gray-200 rounded-2xl md:px-3 sm:px-6 mt-4 md:mt-14">
         <PricingFaq :faqList="faq" />
       </div>
     </section>
     <section class="bg-[#1849A9]">
-      <div class="w-full mx-auto max-w-[1216px] px-5 py-24 mt-8 text-white">
+      <div class="w-full mx-auto max-w-[1216px] px-5 py-12 sm:py-16 md:py-24 mt-8 text-white">
         <div>
-          <h2 class="text-3xl xl:text-4xl font-semibold mb-5">
+          <h2 class="text-2xl sm:text-3xl xl:text-4xl font-semibold mb-5">
             Let’s start your journey together!
           </h2>
-          <p class="text-[#D1E9FF] text-lg xl:text-xl">
+          <p class="text-[#D1E9FF] sm:text-lg xl:text-xl">
             You can reach us anytime via &nbsp;
             <span class="text-white">+84 915 343 643</span>
           </p>
         </div>
         <!-- steps -->
-        <div class="grid grid-cols-1 lg:grid-cols-8 gap-5 mt-16">
-          <div class="lg:col-span-4 flex flex-col gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-8 gap-5 mt-10 sm:mt-16">
+          <div class="col-span-4 flex flex-col gap-6">
             <div
               v-for="(setp, idx) in stepsDetail"
               :class="[
-                'py-4 px-6 border-l-4 transition-all ease-in-out duration-150',
+                'py-2 md:py-4 px-6 border-l-4 transition-all ease-in-out duration-150',
                 stepCount === idx + 1 || stepCount === idx + 2
                   ? 'border-white'
                   : 'border-[#2E90FA]',
@@ -95,7 +102,7 @@
               </p>
             </div>
           </div>
-          <div ref="formWrapper" class="col-span-4">
+          <div ref="formWrapper" class="col-span-4 mt-5 lg:mt-0">
             <!-- form -->
             <JourneyForm
               @updateJourney="updateJourney"
@@ -119,13 +126,13 @@
         loading="eager"
         preload
       />
-      <p class="font-medium text-3xl mt-4 text-white">
+      <p class="font-medium text-lg sm:text-3xl mt-4 text-white">
         Thank you for your submission! We've received your form and will contact
         you soon!
       </p>
       <button
         @click="navigateTo(localePath('/dashboard'))"
-        class="bg-white text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8 max-w-[330px]"
+        class="bg-white text-sm sm:text-base text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8 max-w-[330px]"
       >
         Back to home
       </button>
@@ -133,6 +140,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { Plan } from '~/types/home';
+
 const localePath = useLocalePath();
 
 const stepCount = ref<number>(1);
@@ -212,6 +221,93 @@ const faq = [
     question: "Will I work with you online or offline?",
     answer:
       "For most students, we will work online via messages and online meetings. If needed, you can come meet us at our beautiful office in District 1, Ho Chi Minh City!",
+  },
+];
+
+const plansList: Plan[] = [
+  {
+    title: "Pre-Application Support",
+    starterPlan: "",
+    standardPlan: "",
+    advancedPlan: "",
+  },
+  {
+    title: "Study Abroad Roadmap (Step-by-Step Guide)",
+    starterPlan: "available",
+    standardPlan: "available",
+    advancedPlan: "available",
+  },
+  {
+    title: "Career & Major Discovery",
+    starterPlan: "N/A",
+    standardPlan: "available",
+    advancedPlan: "available",
+  },
+  {
+    title: "Exclusive Training Sessions",
+    starterPlan: "N/A",
+    standardPlan: "available",
+    advancedPlan: "available",
+  },
+  {
+    title: "Application Support",
+    starterPlan: "",
+    standardPlan: "",
+    advancedPlan: "",
+  },
+  {
+    title: "Shortlisting Schools with 1-1 Mentor Review",
+    starterPlan: "N/A",
+    standardPlan: "available",
+    advancedPlan: "available",
+  },
+  {
+    title: "Extracurricular & Scholarship Mentorship",
+    starterPlan: "N/A",
+    standardPlan: "available",
+    advancedPlan: "available",
+  },
+  {
+    title: "Direct 1:1 Counselor (private chat; weekly calls)",
+    starterPlan: "N/A",
+    standardPlan: "available",
+    advancedPlan: "available",
+  },
+  {
+    title: "Exclusive Resources",
+    starterPlan: "Limited Access",
+    standardPlan: "Full Access",
+    advancedPlan: "Full Access",
+  },
+  {
+    title: "Drafting Essays with AI",
+    starterPlan: "3 essays/month, no feedback",
+    standardPlan: "Unlimited, 1-1 mentor feedback",
+    advancedPlan: "Unlimited, 1-1 mentor feedback",
+  },
+  {
+    title: "Post-Application Support",
+    starterPlan: "",
+    standardPlan: "",
+    advancedPlan: "",
+  },
+  {
+    title: "Visa & Financial Proof Paperwork",
+    starterPlan: "N/A",
+    standardPlan: "available",
+    advancedPlan: "available",
+  },
+  {
+    title: "Number of School Applications Supported",
+    starterPlan: "N/A",
+    standardPlan: "5 Partner Schools of Arrowster",
+    advancedPlan: "10 Schools (Not Limited to Partner Schools)",
+  },
+  {
+    title: "",
+    starterPlan: "",
+    standardPlan: "*5,000,000 VND refundable deposit for slot reservation",
+    advancedPlan: "*Requires SAT 1500+, limited slots",
   },
 ];
 

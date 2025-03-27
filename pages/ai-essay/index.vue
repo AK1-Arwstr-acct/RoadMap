@@ -1,22 +1,69 @@
 <template>
-  <main class="h-dvh">
+  <main class="h-dvh flex flex-col">
+    <div class="py-5 px-3 border-b border-gray-200 md:hidden">
+      <div class="flex justify-between items-center">
+        <div
+          @click="navigateTo(localePath('/dashboard'))"
+          class="cursor-pointer flex items-center gap-2"
+        >
+          <IconArrowsterLogo class="size-8 min-w-8" />
+          <NuxtImg
+            src="/images/logo/logo.svg"
+            alt="Logo"
+            class="w-full h-5"
+            loading="eager"
+            preload
+          />
+        </div>
+        <div
+          v-if="essayStore.isPublic"
+          @click="navigateTo(localePath('/dashboard'))"
+          class="cursor-pointer"
+        >
+          <IconCross fill="#717680" class="size-6 md:size-8" />
+        </div>
+        <div
+          v-else
+          @click="navigateTo(localePath('/dashboard/profile'))"
+          class="cursor-pointer rounded-full overflow-hidden size-10"
+        >
+          <img
+            v-if="appStore.userData?.avatar"
+            :src="appStore.userImagePreview || appStore.userData?.avatar"
+            alt="user-icon"
+            class="size-full"
+          />
+          <div
+            v-else
+            class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
+          >
+            <span>{{
+              appStore.userData?.name
+                .split(" ")
+                .map((word) => word[0])
+                .join("")
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       v-if="!essayStore.finalEssay && !essayStore.tryFreeArrowster"
-      class="size-full"
+      class="flex-1 overflow-hidden"
     >
       <div
         v-if="!isAiQuestionStart"
-        class="size-full p-8 flex flex-col overflow-y-auto no-scrollbar"
+        class="size-full p-4 md:p-8 flex flex-col overflow-y-auto no-scrollbar"
       >
-        <div class="flex justify-between items-start">
+        <div class="hidden md:flex justify-between items-start">
           <div
             @click="navigateTo(localePath('/dashboard'))"
-            class="flex gap-2 items-center cursor-pointer"
+            class="cursor-pointer"
           >
             <NuxtImg
               src="/images/logo/logo.svg"
               alt="Logo"
-              class="w-44 h-7"
+              class="w-40 md:w-44 h-6 md:h-7"
               loading="eager"
               preload
             />
@@ -26,7 +73,7 @@
             @click="navigateTo(localePath('/dashboard'))"
             class="cursor-pointer"
           >
-            <IconCross fill="#717680" width="32" height="32" />
+            <IconCross fill="#717680" class="size-6 md:size-8" />
           </div>
         </div>
         <div class="flex-1 md:p-6 flex justify-center items-center">
@@ -34,30 +81,32 @@
           <div v-else class="flex flex-col gap-8 items-center max-w-[668px]">
             <NuxtImg
               src="/images/pre-application.png"
-              class="w-[536px]"
+              class="w-[300px] md:w-[536px]"
               loading="eager"
               preload
             />
             <div class="">
               <h1
-                class="text-[#181D27] font-semibold text-2xl text-center sm:text-[34px]"
+                class="text-[#181D27] font-semibold text-xl text-center sm:text-[34px]"
               >
                 Welcome to Your Personal Essay Journey!
               </h1>
-              <p class="text-center text-[#535862] text-lg mt-4">
+              <p class="text-center text-[#535862] md:text-lg mt-4">
                 Take a deep breath - you're in the right place. We're here to
                 help you craft your best essay, whether you're just starting or
                 polishing your final draft. Take your time to think and explore
                 - your unique voice matters.
               </p>
             </div>
-            <div class="flex flex-col items-center justify-center gap-5">
+            <div class="flex flex-col items-center justify-center gap-5 w-full">
               <button
                 @click="handelNext"
-                class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold flex items-center gap-2"
+                class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold w-full sm:max-w-48 flex justify-center"
               >
-                Okay, let's begin
-                <IconArrowRight fill="#ffffff" width="20" height="20" />
+                <span class="flex justify-center items-center gap-2 w-max">
+                  Okay, let's begin
+                  <IconArrowRight fill="#ffffff" width="20" height="20" />
+                </span>
               </button>
               <p
                 @click="navigateTo(localePath('/dashboard'))"
@@ -97,7 +146,9 @@
 </template>
 <script setup lang="ts">
 import useEssayStore from "~/stores/essayStore";
+import useAppStore from "~/stores/AppStore";
 
+const appStore = useAppStore();
 const essayStore = useEssayStore();
 
 const localePath = useLocalePath();

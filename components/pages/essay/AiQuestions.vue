@@ -1,29 +1,34 @@
 <template>
-  <section class="size-full overflow-hidden flex flex-col items-center" :class="{'overflow-y-auto pb-4' : phase === 'keepGoing'}">
-    <div class="py-7 px-10 sm:px-20 xl:px-[170px] flex flex-col gap-10 w-full">
+  <section
+    class="size-full overflow-hidden flex flex-col items-center"
+    :class="{ 'overflow-y-auto pb-4': phase === 'keepGoing' }"
+  >
+    <div
+      class="py-5 md:py-7 px-5 sm:px-20 xl:px-[170px] flex flex-col gap-6 md:gap-10 w-full"
+    >
       <div class="flex items-center gap-6">
         <div
           v-if="phase !== 'chooseStyle'"
           @click="emit('goBack')"
-          class="cursor-pointer"
+          class="cursor-pointer hidden md:block"
         >
-          <IconCross fill="#717680" width="32" height="32" />
+          <IconCross fill="#717680" class="size-6 md:size-8" />
         </div>
-        <div v-else @click="phase = 'keepGoing'" class="cursor-pointer">
+        <div v-else @click="phase = 'keepGoing'" class="cursor-pointer hidden md:block">
           <IconArrowDownThick
             stroke="#717680"
-            width="32"
-            height="32"
-            class="transform rotate-90"
+            class="transform rotate-90 size-6 md:size-8"
           />
         </div>
-        <div class="flex-1 rounded-full bg-[#F5F5F5] overflow-hidden h-3">
+        <div
+          class="flex-1 w-full rounded-full bg-[#F5F5F5] overflow-hidden h-2 md:h-3"
+        >
           <div
-            class="h-full bg-[#1570EF] rounded-full transition-all ease-in-out duration-700"
+            class="h-full bg-[#1570EF] rounded-full transition-all ease-in-out duration-700 w-full"
             :style="{ maxWidth: `${essayStore.essayProgress}%` }"
           />
         </div>
-        <div class="w-7 h-[42px]">
+        <div class="w-5 md:w-7 h-[34px] md:h-[42px] hidden md:block">
           <NuxtImg
             src="/images/bulb.png"
             class="size-full object-contain"
@@ -32,7 +37,9 @@
           />
         </div>
       </div>
-      <h1 class="text-[#181D27] text-2xl 2xl:text-3xl font-medium text-center">
+      <h1
+        class="text-[#181D27] text-xl md:text-2xl 2xl:text-3xl font-medium text-center"
+      >
         {{
           phase !== "chooseStyle"
             ? `Let's Get to Know You a Little Bit`
@@ -43,16 +50,16 @@
     <!-- chat -->
     <div
       v-if="phase === 'keepGoing'"
-      class="w-full max-w-[592px] flex flex-col items-center gap-8"
+      class="w-full max-w-[592px] flex flex-col items-center gap-8 px-5"
     >
       <NuxtImg
         src="/images/countries-application.png"
-        class="w-[536px]"
+        class="w-[300px] md:w-[536px]"
         loading="eager"
         preload
       />
       <h1
-        class="text-[#181D27] font-semibold text-2xl text-center justify-center sm:text-[34px]"
+        class="text-[#181D27] font-semibold text-xl text-center justify-center sm:text-[34px]"
       >
         Great progress! We're starting to build a picture of your unique voice.
       </h1>
@@ -79,7 +86,7 @@
       >
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-20 md:px-40 2xl:px-96"
+          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-5 sm:px-20 md:px-40 2xl:px-96"
         >
           <div class="size-full h-fit flex flex-col gap-8">
             <ChatMessage
@@ -129,7 +136,7 @@
                     <label
                       :for="option"
                       @click="handelStatement(option)"
-                      class="flex items-center justify-between gap-2 size-full font-medium rounded-xl cursor-pointer relative border-[1.5px] p-4 transition-all ease-in-out duration-200 shadow-[0px_1px_2px_0px_#0A0D120F]"
+                      class="flex items-center justify-between gap-2 size-full font-medium rounded-xl cursor-pointer relative border-[1.5px] p-3 sm:p-4 transition-all ease-in-out duration-200 shadow-[0px_1px_2px_0px_#0A0D120F]"
                       :class="[
                         answersList.personalStatement === option
                           ? 'border-[#84CAFF] bg-[#EFF8FF] text-[#175CD3]'
@@ -146,7 +153,7 @@
                       />
                       {{ option }}
                       <div
-                        class="size-5 rounded-full transition-all ease-in-out duration-200 flex justify-center items-center"
+                        class="size-5 min-w-5 rounded-full transition-all ease-in-out duration-200 flex justify-center items-center"
                         :class="[
                           answersList.personalStatement === option
                             ? 'bg-[#1570EF]'
@@ -163,7 +170,7 @@
             </div>
           </div>
         </div>
-        <div class="px-20 md:px-40 2xl:px-96">
+        <div class="px-5 sm:px-20 md:px-40 2xl:px-96">
           <div
             v-if="questionStep < 5 && phase === 'questionPhase'"
             class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex items-start gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
@@ -183,13 +190,13 @@
             <button
               @click="handleNext"
               :disabled="!inputText"
-              class="flex items-center gap-2 text-white py-2 px-3.5 bg-[#1570EF] rounded-lg disabled:opacity-40"
+              class="flex items-center gap-2 text-white text-sm sm:text-base py-2 px-3.5 bg-[#1570EF] rounded-lg disabled:opacity-40"
             >
               Next
               <IconArrowRight fill="#ffffff" />
             </button>
           </div>
-          <p class="text-sm text-[#A4A7AE] text-center pt-4 pb-6">
+          <p class="text-xs sm:text-sm text-[#A4A7AE] text-center py-4">
             No need to rush here, take your time to think
           </p>
         </div>

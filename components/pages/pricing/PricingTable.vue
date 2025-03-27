@@ -15,7 +15,7 @@
               Free
             </p>
             <button
-              class="bg-[#EFF8FF] border border-[#EFF8FF] text-[#175CD3] font-semibold px-[18px] py-2.5 rounded-lg w-full mt-6 shadow-sm"
+              class="bg-[#EFF8FF] border border-[#EFF8FF] text-sm sm:text-base text-[#175CD3] font-semibold px-[18px] py-2.5 rounded-lg w-full mt-6 shadow-sm"
               @click="emit('selectPlan', 3)"
             >
               Current plan
@@ -37,7 +37,7 @@
               Free
             </p>
             <button
-              class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
+              class="bg-[#1570EF] text-white text-sm sm:text-base font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
               @click="emit('selectPlan', 1)"
             >
               Continue with Standard
@@ -59,7 +59,7 @@
               50,000,000 VND
             </p>
             <button
-              class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
+              class="bg-[#1570EF] text-white text-sm sm:text-base font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
               @click="emit('selectPlan', 2)"
             >
               Apply for Mentorship
@@ -83,8 +83,8 @@
             class="font-medium text-start"
             :class="[
               isHeading(plan)
-                ? 'sm:text-lg text-[#181D27]'
-                : 'sm:text-base text-[#414651]',
+                ? 'text-sm sm:text-lg text-[#181D27]'
+                : 'text-sm sm:text-base text-[#414651]',
             ]"
           >
             {{ plan.title }}
@@ -94,7 +94,7 @@
           <p v-if="!isHeading(plan)" class="flex justify-center">
             <IconCheckmark v-if="plan.starterPlan === 'available'" />
             <IconCrossCircle v-else-if="plan.starterPlan === 'N/A'" />
-            <span v-else class="text-[#181D27]">
+            <span v-else class="text-[#181D27] text-sm sm:text-base">
               {{ plan.starterPlan }}
             </span>
           </p>
@@ -103,7 +103,7 @@
           <p v-if="!isHeading(plan)" class="flex justify-center">
             <IconCheckmark v-if="plan.standardPlan === 'available'" />
             <IconCrossCircle v-else-if="plan.standardPlan === 'N/A'" />
-            <span v-else class="text-[#181D27]">
+            <span v-else class="text-[#181D27] text-sm sm:text-base">
               {{ plan.standardPlan }}
             </span>
           </p>
@@ -112,7 +112,7 @@
           <p v-if="!isHeading(plan)" class="flex justify-center">
             <IconCheckmark v-if="plan.advancedPlan === 'available'" />
             <IconCrossCircle v-else-if="plan.advancedPlan === 'N/A'" />
-            <span v-else class="text-[#181D27]">
+            <span v-else class="text-[#181D27] text-sm sm:text-base">
               {{ plan.advancedPlan }}
             </span>
           </p>
@@ -122,107 +122,16 @@
   </table>
 </template>
 <script setup lang="ts">
+import type { Plan } from "~/types/home";
+
 const emit = defineEmits(["selectPlan"]);
 
-interface Plan {
-  starterPlan: string;
-  standardPlan: string;
-  advancedPlan: string;
-  title: string;
-}
-
-const plansList: Plan[] = [
-  // {
-  //   title: "Number of School Applications Supported",
-  //   starterPlan: "N/A",
-  //   standardPlan: "5 Partner Schools of Arrowster",
-  //   advancedPlan: "10 Schools (Not Limited to Partner Schools)",
-  // },
-  {
-    title: "Pre-Application Support",
-    starterPlan: "",
-    standardPlan: "",
-    advancedPlan: "",
+defineProps({
+  plansList: {
+    type: Array as PropType<Plan[]>,
+    default: () => [],
   },
-  {
-    title: "Study Abroad Roadmap (Step-by-Step Guide)",
-    starterPlan: "available",
-    standardPlan: "available",
-    advancedPlan: "available",
-  },
-  {
-    title: "Career & Major Discovery",
-    starterPlan: "N/A",
-    standardPlan: "available",
-    advancedPlan: "available",
-  },
-  {
-    title: "Exclusive Training Sessions",
-    starterPlan: "N/A",
-    standardPlan: "available",
-    advancedPlan: "available",
-  },
-  {
-    title: "Application Support",
-    starterPlan: "",
-    standardPlan: "",
-    advancedPlan: "",
-  },
-  {
-    title: "Shortlisting Schools with 1-1 Mentor Review",
-    starterPlan: "N/A",
-    standardPlan: "available",
-    advancedPlan: "available",
-  },
-  {
-    title: "Extracurricular & Scholarship Mentorship",
-    starterPlan: "N/A",
-    standardPlan: "available",
-    advancedPlan: "available",
-  },
-  {
-    title: "Direct 1:1 Counselor (private chat; weekly calls)",
-    starterPlan: "N/A",
-    standardPlan: "available",
-    advancedPlan: "available",
-  },
-  {
-    title: "Exclusive Resources",
-    starterPlan: "Limited Access",
-    standardPlan: "Full Access",
-    advancedPlan: "Full Access",
-  },
-  {
-    title: "Drafting Essays with AI",
-    starterPlan: "3 essays/month, no feedback",
-    standardPlan: "Unlimited, 1-1 mentor feedback",
-    advancedPlan: "Unlimited, 1-1 mentor feedback",
-  },
-  {
-    title: "Post-Application Support",
-    starterPlan: "",
-    standardPlan: "",
-    advancedPlan: "",
-  },
-  {
-    title: "Visa & Financial Proof Paperwork",
-    starterPlan: "N/A",
-    standardPlan: "available",
-    advancedPlan: "available",
-  },
-  {
-    title: "Number of School Applications Supported",
-    starterPlan: "N/A",
-    standardPlan: "5 Partner Schools of Arrowster",
-    advancedPlan: "10 Schools (Not Limited to Partner Schools)",
-  },
-  {
-    title: "",
-    starterPlan: "",
-    standardPlan: "*5,000,000 VND refundable deposit for slot reservation",
-    advancedPlan: "*Requires SAT 1500+, limited slots",
-  },
-];
+});
 
 const isHeading = (plan: Plan) => {
   return (
