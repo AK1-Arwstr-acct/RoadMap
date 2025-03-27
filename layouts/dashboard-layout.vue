@@ -1,9 +1,9 @@
 <template>
-  <div class="h-dvh hidden lg:flex relative">
-    <Sidebar />
+  <div class="h-dvh flex relative">
+    <Sidebar class="hidden sm:block" />
     <div class="flex-1 flex flex-col">
       <DashboardNav />
-      <div class="flex-1 overflow-hidden">
+      <div class="flex-1 w-screen md:w-full overflow-hidden">
         <slot />
       </div>
     </div>
@@ -18,7 +18,7 @@
     <Transition name="fade">
       <div
         v-if="openSophieModal"
-        class="fixed bg-black/50 inset-0 z-50 isolate backdrop-blur py-[60px] px-[68px] flex justify-center items-center"
+        class="fixed bg-black/50 inset-0 z-50 isolate backdrop-blur py-10 lg:py-[60px] px-4 lg:px-[68px] flex justify-center items-center"
       >
         <ChatWithSophie
           :isModal="true"
@@ -27,8 +27,8 @@
       </div>
     </Transition>
   </div>
-  <div
-    class="lg:hidden flex flex-col items-center gap-4 h-dvh bg-[#f5faff] overflow-y-auto no-scrollbar w-screen"
+  <!-- <div
+    class="!hidden flex flex-col items-center gap-4 h-dvh bg-[#f5faff] overflow-y-auto no-scrollbar w-screen"
   >
     <div class="mt-8">
       <NuxtImg src="/images/logo/logo.svg" class="w-[130px] h-[22px]" />
@@ -72,7 +72,7 @@
         {{ `Thank you <3` }}
       </p>
     </div>
-  </div>
+  </div> -->
 </template>
 <script setup lang="ts">
 const route = useRoute();

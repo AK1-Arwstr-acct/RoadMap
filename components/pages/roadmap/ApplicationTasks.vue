@@ -5,11 +5,15 @@
         {{
           Array.isArray(application)
             ? "Application"
-            : application.title.toLocaleLowerCase()
+            : application?.title?.toLocaleLowerCase() || "Application"
         }}
       </h1>
       <p class="text-[#717680] font-medium mb-6">
-        {{ Array.isArray(application) ? countriesDescription : application.description }}
+        {{
+          Array.isArray(application)
+            ? countriesDescription
+            : application?.description || ""
+        }}
       </p>
       <div class="flex items-center">
         <div class="bg-[#E9EAEB] h-2 w-[354px] rounded-full">
@@ -20,16 +24,16 @@
             }"
           />
         </div>
-        <span class="text-[#414651] font-medium ml-3 mr-6">
+        <span class="text-[#414651] font-medium ml-3 mr-6 text-nowrap">
           {{ checkCompletedTask }} complete
         </span>
         <span
-          class="py-0.5 px-2.5 bg-[#EFF8FF] text-[#175CD3] rounded-full text-sm font-medium"
+          class="py-0.5 px-2.5 bg-[#EFF8FF] text-[#175CD3] rounded-full text-sm font-medium text-nowrap"
         >
           {{
             Array.isArray(application)
               ? countriesTaskLength
-              : application.tasks.length || 0
+              : application?.tasks?.length || "0"
           }}
           Steps
         </span>
@@ -52,7 +56,7 @@
           <p class="font-medium text-sm">
             <NuxtLinkLocale to="/pricing">
               <span class="text-[#1570EF] cursor-pointer">
-                Contact our counselors 
+                Contact our counselors
               </span>
             </NuxtLinkLocale>
             <span>
@@ -107,18 +111,19 @@ const checkCompletedTask = computed(() => {
     let totalTasks = 0;
     let checkedTasks = 0;
     props.application.forEach((app) => {
-      totalTasks += app.tasks.length;
-      checkedTasks += app.tasks.filter((item) => item.checked === true).length;
+      totalTasks += app.tasks?.length;
+      checkedTasks += app.tasks?.filter((item) => item.checked === true).length;
     });
     countriesTaskLength.value = totalTasks;
     let taskProgress = (checkedTasks / totalTasks) * 100;
     return `${taskProgress.toFixed(0)}%`;
   } else {
+    if (!props.application?.tasks) return "0%";
     const completedTasks =
-      props.application.tasks?.filter((task) => task.checked === true).length ||
+      props.application.tasks.filter((task) => task.checked === true).length ||
       0;
     let taskProgress =
-      (completedTasks / (props.application.tasks?.length ?? 1)) * 100;
+      (completedTasks / (props.application.tasks.length || 1)) * 100;
     return `${taskProgress.toFixed(0)}%`;
   }
 });
@@ -127,12 +132,13 @@ const categoryList = computed(() => {
   if (Array.isArray(props.application)) {
     const countries = props.application.map((item) => item.country_title);
     return [...new Set(countries)];
-  } else {
+  } else if (props.application?.tasks) {
     const categories = props.application.tasks.map(
-      (item) => item.category.title
+      (item) => item.category?.title || ""
     );
     return [...new Set(categories)];
   }
+  return [];
 });
 
 const openDetail = (task: Task) => {

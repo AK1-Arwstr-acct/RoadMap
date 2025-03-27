@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="mb-6">
-      <h2 class="text-[#181D27] text-lg font-semibold">
+      <h2 class="text-[#181D27] text-sm md:text-lg font-semibold">
         Academic details info
       </h2>
       <p class="text-[#535862] text-sm">
@@ -11,7 +11,7 @@
     <div
       class="remove-shadow-bg-white bg-white border-[1.5px] border-gray-200 rounded-2xl"
     >
-      <div class="p-6 grid grid-cols-2 gap-6">
+      <div class="p-6 flex flex-col md:grid md:grid-cols-2 gap-6">
         <div class="">
           <label class="font-medium text-[#414651] text-sm"
             >GPA<span class="text-[#D92D20] font-medium">*</span></label

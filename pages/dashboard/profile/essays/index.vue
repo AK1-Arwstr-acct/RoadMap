@@ -2,7 +2,7 @@
   <div class="size-full overflow-y-auto custom-scrollbar">
     <div class="max-w-[752px] px-4 mx-auto mt-8 mb-16">
       <div class="mb-5">
-        <h3 class="text-2xl font-semibold text-[#181D27]">All Your AI Essay</h3>
+        <h3 class="text-xl md:text-2xl font-semibold text-[#181D27]">All Your AI Essay</h3>
       </div>
       <div class="flex flex-col gap-6">
         <EssayCard

@@ -25,7 +25,10 @@ const parsedEssay = computed(() => {
 <style scoped>
 .truncate-paragraph {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 5;
+  @media (min-width: 768px) {
+    -webkit-line-clamp: 2;
+  }
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

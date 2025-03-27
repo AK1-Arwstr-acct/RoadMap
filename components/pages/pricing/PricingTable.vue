@@ -142,10 +142,14 @@ const isHeading = (plan: Plan) => {
 };
 </script>
 <style scoped>
-.pricing-table table,
+.pricing-table,
 td,
 th {
-  border: 1.5px solid #f5f5f5;
+  border: 1px solid #E9EAEB;
+}
+.pricing-table,
+table {
+  border: 1.5px solid #E9EAEB;
 }
 .pricing-table td {
   padding: 24px;

@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-[#FAFAFA] h-full overflow-y-auto no-scrollbar">
+  <section class="bg-white md:bg-[#FAFAFA] h-full overflow-y-auto no-scrollbar">
     <div class="max-w-[640px] px-4 mx-auto mt-8 mb-16">
       <h3 class="text-[#181D27] text-2xl font-semibold mb-8">Edit profile</h3>
       <div class="flex flex-col gap-8">

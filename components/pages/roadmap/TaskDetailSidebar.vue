@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-w-[380px] h-full bg-white flex flex-col border-l-[1.5px] border-gray-200"
+    class="w-screen md:w-auto md:min-w-[380px] h-full bg-white flex flex-col border-l-[1.5px] border-gray-200"
   >
     <div
       class="px-6 pt-6 mb-6 flex-1 flex flex-col gap-6 overflow-y-auto custom-scrollbar"
@@ -53,7 +53,7 @@
         </ClientOnly>
       </div>
     </div>
-    <div class="border-t-[1.5px] border-gray-200 p-6 space-y-4">
+    <div class="border-t-[1.5px] border-gray-200 p-3 md:p-6 space-y-4">
       <button
         @click="handelClick"
         class="border border-[#1570EF] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D] py-2.5 px-4 flex justify-center items-center gap-2 text-sm font-semibold w-full"

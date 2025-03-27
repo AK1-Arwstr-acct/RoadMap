@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center gap-6 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] px-6 py-3"
+    class="flex items-center gap-6 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] py-4 px-4 md:px-6 md:py-3"
     :class="[
       isOngoingBehaviour
         ? 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]'
@@ -8,7 +8,7 @@
     ]"
   >
     <div
-      :class="[isOngoingBehaviour ? 'min-w-[118px] w-[118px]' : 'size-[90px]']"
+      :class="[isOngoingBehaviour ? 'min-w-[118px] w-[118px]' : 'size-[56px] min-w-[56px] md:min-w-[90px] md:size-[90px]']"
     >
       <NuxtImg
         :src="imageSrc"
@@ -18,12 +18,12 @@
         preload
       />
     </div>
-    <div class="w-full py-4">
+    <div class="w-full py-2 md:py-4">
       <div
         class="flex justify-between"
         :class="[isOngoingBehaviour ? 'mb-2' : 'mb-[15px]']"
       >
-        <h4 class="text-xl text-[#181D27] font-semibold capitalize">
+        <h4 class="md:text-xl text-[#181D27] font-semibold capitalize">
           {{
             category?.includes("extracurricular")
               ? "extracurricular activity"
@@ -31,7 +31,7 @@
           }}
         </h4>
         <span
-          class="text-[18px] font-medium"
+          class="text-sm md:text-[18px] font-medium"
           :class="[isOngoingBehaviour ? 'text-[#535862]' : 'text-[#A4A7AE]']"
           >{{ `${completedTasksNumber} / ${totalTasksNumber}` }}</span
         >
@@ -42,7 +42,7 @@
       >
         <div
           class="w-full bg-[#F5F5F5] rounded-xl overflow-hidden"
-          :class="[isOngoingBehaviour ? 'h-2.5' : 'h-4']"
+          :class="[isOngoingBehaviour ? 'h-2.5' : 'h-2 md:h-4']"
         >
           <div
             class="bg-[#FDB022] h-full rounded-xl"

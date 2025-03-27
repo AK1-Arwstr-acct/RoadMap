@@ -1,36 +1,69 @@
 <template>
-  <section class="flex flex-col gap-2 size-full overflow-hidden">
+  <section class="flex flex-col gap-2 size-full overflow-hidden h-full">
     <div class="flex-1 overflow-y-auto no-scrollbar">
       <div
-        class="size-full flex flex-col items-center min-h-fit justify-center py-3 overflow-y-auto"
+        class="md:size-full w-[calc(100%-8px)] h-full flex flex-col items-center min-h-fit md:justify-center py-3 overflow-y-auto"
         v-if="completeChat.length === 0"
       >
-        <NuxtImg
-          src="/images/sophie-chat.png"
-          alt="sophie"
-          class="h-[242px] w-[252px]"
-          loading="eager"
-          preload
-        />
-        <span class="text-[#414651] text-xl font-medium mt-6">
-          How can Sophie help you today?
-        </span>
-        <textarea
-          placeholder="Message Sophie"
-          rows="3"
-          v-model="inputQuestion"
-          @keydown.enter.exact.prevent="submit"
-          @keydown.enter.ctrl.prevent="addNewLine"
-          class="w-full px-3.5 py-2.5 border-[1.5px] border-gray-200 rounded-xl mt-6 focus:outline-none resize-none placeholder:font-light min-h-fit"
-        />
-        <div class="flex justify-center flex-wrap mt-3 gap-3">
-          <div
-            v-for="(question, idx) in preQuestion"
-            :key="idx"
-            @click="handelPreQuestion(question)"
-            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer"
-          >
-            {{ question }}
+        <div class="flex-1 flex flex-col items-center justify-center w-full">
+          <NuxtImg
+            src="/images/sophie-chat.png"
+            alt="sophie"
+            class="w-[100px] md:h-[242px] md:w-[252px]"
+            loading="eager"
+            preload
+          />
+          <span class="text-[#414651] text-sm md:text-xl font-medium mt-6">
+            How can Sophie help you today?
+          </span>
+          <!-- deskop -->
+          <div class="hidden md:block">
+            <textarea
+              placeholder="Message Sophie"
+              rows="3"
+              v-model="inputQuestion"
+              @keydown.enter.exact.prevent="submit"
+              @keydown.enter.ctrl.prevent="addNewLine"
+              class="w-full px-3.5 py-2.5 border-[1.5px] border-gray-200 rounded-xl mt-6 focus:outline-none resize-none placeholder:font-light min-h-fit"
+            />
+            <div class="flex justify-center flex-wrap mt-3 gap-3">
+              <div
+                v-for="(question, idx) in preQuestion"
+                :key="idx"
+                @click="handelPreQuestion(question)"
+                class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer"
+              >
+                {{ question }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- mobile -->
+        <div class="md:hidden w-full">
+          <div class="w-full overflow-hidden">
+            <div class="flex overflow-x-auto mt-3 gap-3 w-full">
+              <div
+                v-for="(question, idx) in preQuestion"
+                :key="idx"
+                @click="handelPreQuestion(question)"
+                class="bg-[#E8E8E880] py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap"
+              >
+                {{ question }}
+              </div>
+            </div>
+          </div>
+          <div class="relative mt-6">
+            <input
+              placeholder="Message Sophie"
+              v-model="inputQuestion"
+              class="w-full pl-3.5 pr-12 py-2.5 border-[1.5px] border-gray-200 rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"
+            />
+            <div
+              v-if="inputQuestion.length > 0"
+              class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1/2 transform -translate-y-1/2 right-2 -rotate-90 p-2.5"
+            >
+              <IconArrowRight />
+            </div>
           </div>
         </div>
       </div>
@@ -63,9 +96,10 @@
               />
             </div>
             <div
-              class="mb-8 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+              class="mb-4 md:mb-8 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
               :class="{
-                'bg-[#FAFAFA] py-2 px-3 rounded-lg': chat.isSender,
+                'bg-[#FAFAFA] py-1 md:py-2 px-2 md:px-3 rounded-lg':
+                  chat.isSender,
               }"
             >
               <div>
@@ -89,13 +123,13 @@
             <span class="flex justify-center items-center">
               <div class="flex space-x-2">
                 <div
-                  class="size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:0s] ease-in-out"
+                  class="size-3 md:size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:0s] ease-in-out"
                 ></div>
                 <div
-                  class="size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:200ms] ease-in-out"
+                  class="size-3 md:size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:200ms] ease-in-out"
                 ></div>
                 <div
-                  class="size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:400ms] ease-in-out"
+                  class="size-3 md:size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:400ms] ease-in-out"
                 ></div>
               </div>
             </span>
@@ -123,23 +157,36 @@
               </button>
             </div>
           </Transition>
-          <textarea
-            v-if="!readOnly"
-            ref="textarea"
-            placeholder="Message Sophie"
-            v-model="inputQuestion"
-            @keydown.enter.exact.prevent="submit"
-            @keydown.enter.ctrl.prevent="addNewLine"
-            :disabled="isChatLoading || isChatFull"
-            rows="1"
-            autofocus
-            class="border-[1.5px] border-gray-200 rounded-lg py-2.5 px-3.5 placeholder:font-thin w-full focus:outline-none resize-none"
-            :class="{ '#FAFAFA': isChatFull }"
-          />
+          <div
+            class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
+            :class="{
+              'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading,
+            }"
+          >
+            <textarea
+              v-if="!readOnly"
+              ref="textarea"
+              placeholder="Message Sophie"
+              v-model="inputQuestion"
+              @keydown.enter.exact.prevent="submit"
+              @keydown.enter.ctrl.prevent="addNewLine"
+              :disabled="isChatLoading || isChatFull"
+              rows="1"
+              autofocus
+              class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 px-3.5"
+            />
+            <button
+              :disabled="isChatLoading || isChatFull"
+              @click="submit"
+              class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1.5 transform right-2 -rotate-90 p-2"
+            >
+              <IconArrowRight />
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    <div>
+    <div v-if="completeChat.length !== 0">
       <p class="text-[#A4A7AE] text-xs text-center">
         <span v-if="!readOnly">
           Sophie can make mistakes. Please check important info.
@@ -300,7 +347,7 @@ watch(
         if (item.me) {
           return {
             isSender: true,
-            text: item.me,
+            text: item.me.replace("Please summarize my school list \n  ", ""),
           };
         } else {
           return {
@@ -312,6 +359,9 @@ watch(
       completeChat.value = transformChat;
       readOnly.value = true;
     }
+  },
+  {
+    immediate: true,
   }
 );
 

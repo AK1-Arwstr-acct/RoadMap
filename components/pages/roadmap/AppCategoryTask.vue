@@ -9,7 +9,7 @@
         class="transform transition-all ease-in-out duration-300"
         :class="{ '-rotate-90': !isOpen }"
       />
-      <p class="text-[#111827] text-xl font-semibold flex-1 capitalize">
+      <p class="text-[#111827] text-lg md:text-xl font-semibold flex-1 capitalize">
         <span v-if="category !== 'country'">
           {{
             category === "extracurricular"
@@ -55,7 +55,7 @@
       >
         <label
           :for="`task-${task.id}`"
-          class="mt-6 flex items-center gap-6 size-full rounded-2xl cursor-pointer p-4 transition-all ease-in-out duration-200"
+          class="mt-6 flex items-center gap-3 md:gap-6 size-full rounded-2xl cursor-pointer p-4 transition-all ease-in-out duration-200"
           :class="[
             appTrackerStore.taskActiveStates[task.id]
               ? 'border-2 border-[#2E90FA] bg-[#F5FAFF]'
@@ -80,7 +80,7 @@
           </div>
           <div class="flex-1 space-y-2">
             <p
-              class="font-medium text-sm py-0.5 px-2.5 rounded-full capitalize w-fit"
+              class="font-medium text-xs md:text-sm py-0.5 px-2.5 rounded-full capitalize w-fit"
               :class="[
                 category === 'country'
                   ? categoryClass(task.category.title)
@@ -94,16 +94,16 @@
                 {{ task.category.title }}
               </span>
             </p>
-            <p class="text-xl text-[#414651] font-semibold">
+            <p class="md:text-xl text-[#414651] font-semibold">
               {{ task.title }}
             </p>
-            <div class="flex items-center gap-1.5 text-[#414651] text-sm">
+            <div class="flex items-center gap-1.5 text-[#414651] text-xs md:text-sm">
               <IconClock />
               <span> {{ task.estimated_time }} </span>
             </div>
           </div>
           <div
-            class="size-6 rounded-full border-[1.5px] flex justify-center items-center"
+            class="size-4 md:size-6 rounded-full border-[1.5px] flex justify-center items-center"
             :class="[
               task.checked
                 ? 'bg-[#1570EF] border-[#1570EF]'

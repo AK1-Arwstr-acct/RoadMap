@@ -1,19 +1,29 @@
 <template>
   <div class="relative">
-    <p v-if="label" class="font-medium text-[#414651] text-sm mb-1.5">{{ label }}<span v-if="required" class="text-[#D92D20] font-medium">*</span></p>
+    <p v-if="label" class="font-medium text-[#414651] text-sm mb-1.5">
+      {{ label
+      }}<span v-if="required" class="text-[#D92D20] font-medium">*</span>
+    </p>
     <div
       @click="isDropdownOpen = !isDropdownOpen"
       @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
       class="bg-white h-12 border-[1.5px] border-gray-200 rounded-lg py-2 pl-[14px] w-full transition-colors duration-150 ease-in-out flex justify-between items-center cursor-pointer relative"
       :class="{
         '!bg-[#f8f8f8] pointer-events-none': disabled,
-        'shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]': isDropdownOpen,
+        'shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]':
+          isDropdownOpen,
         '!border-[#84CAFF]': isDropdownOpen,
-        '!border-[#EF4646]' : hasError && !selectedOption?.value && !isDropdownOpen
+        '!border-[#EF4646]':
+          hasError && !selectedOption?.value && !isDropdownOpen,
       }"
     >
       <div v-if="!selectedOption?.value" class="flex-1">
-        <p class="text-[#979797] text-left" :class="{'!text-[#181D27]' : isDropdownOpen}">{{ placeholder }}</p>
+        <p
+          class="text-[#979797] text-left"
+          :class="{ '!text-[#181D27]': isDropdownOpen }"
+        >
+          {{ placeholder }}
+        </p>
       </div>
       <div v-else-if="selectedOption?.value && showCheckedLabel" class="flex-1">
         <p class="text-[#717680] text-left text-xs">
@@ -24,7 +34,9 @@
         </p>
       </div>
       <div v-else class="flex-1">
-        <p class="text-[#181D27] text-left w-[calc(100%-24px)] truncate font-medium">
+        <p
+          class="text-[#181D27] text-left w-[calc(100%-24px)] truncate font-medium"
+        >
           {{ selectedOption.label }}
         </p>
       </div>
@@ -35,7 +47,12 @@
             : 'absolute right-[14px] top-3 transition-transform duration-200 ease-in-out',
         ]"
       >
-        <IconChevronDown v-if="!loading" height="18" width="18" stroke="#A4A7AE" />
+        <IconChevronDown
+          v-if="!loading"
+          height="18"
+          width="18"
+          stroke="#A4A7AE"
+        />
         <IconSpinner v-else stroke="#A4A7AE" bgColor="#ffffff" width="20" />
       </span>
     </div>
@@ -77,10 +94,9 @@
             class="min-w-5 h-5 cursor-pointer"
             :class="{ hidden: mode === 'tick' }"
           />
-          <span
-            class="truncate text-[#181D27] font-medium"
-            >{{ item.label }}</span
-          >
+          <span class="truncate text-[#181D27] font-medium">{{
+            item.label
+          }}</span>
           <span v-if="selectedOption?.value === item.value && mode === 'tick'">
             <IconTick stroke="#1570EF" stroke-width="2" />
           </span>
@@ -91,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import type { OptionAttributes } from '~/types/home';
+import type { OptionAttributes } from "~/types/home";
 
 const props = defineProps({
   placeholder: {
@@ -104,7 +120,7 @@ const props = defineProps({
   },
   modelValue: {
     type: Object as PropType<OptionAttributes | null>,
-    default: null
+    default: null,
   },
   label: {
     type: String,
@@ -155,7 +171,7 @@ const closeDropdown = () => {
 const onChange = () => {
   closeDropdown();
   emits("update:modelValue", selectedOption.value);
-  emits('onChange');
+  emits("onChange");
 };
 
 watch(

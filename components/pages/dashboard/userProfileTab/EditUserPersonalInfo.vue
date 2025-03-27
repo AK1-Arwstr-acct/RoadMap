@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2 class="text-[#181D27] text-lg font-semibold">Personal Info</h2>
+      <h2 class="text-[#181D27] text-sm md:text-lg font-semibold">Personal Info</h2>
       <p class="text-[#535862] text-sm">
         Update your photo and personal details here.
       </p>

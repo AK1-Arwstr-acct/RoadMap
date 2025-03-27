@@ -2,7 +2,7 @@
   <div class="size-full">
     <section class="flex h-full bg-white">
       <div class="w-full flex justify-center overflow-y-auto no-scrollbar">
-        <div class="h-fit max-w-[772px] px-10 lg:px-0 py-10 w-full">
+        <div class="h-fit max-w-[772px] px-5 md:px-10 lg:px-0 py-10 w-full">
           <div
             class="flex flex-col gap-14"
             v-if="
@@ -13,10 +13,15 @@
           >
             <RoadmapSkeleton v-for="a in 3" />
           </div>
-          <div v-else class="flex flex-col gap-14">
-            <PreAppCard />
-            <CountriesAppCard />
-            <PostAppCard />
+          <div v-else>
+            <h1 class="mb-8 text-[#181D27] text-2xl font-semibold md:hidden">
+              Roadmap
+            </h1>
+            <div class="flex flex-col gap-14">
+              <PreAppCard />
+              <CountriesAppCard />
+              <PostAppCard />
+            </div>
           </div>
         </div>
       </div>

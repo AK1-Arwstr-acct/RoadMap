@@ -1,12 +1,12 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
     <div class="h-full w-full max-w-[1150px] mx-auto">
-      <div class="flex gap-16 w-full px-8 pt-8 pb-24 bg-white">
+      <div class="flex flex-col md:flex-row gap-8 lg:gap-16 w-full px-5 md:px-8 pt-8 pb-24 bg-white">
         <div class="flex-1">
           <HomeDetail />
         </div>
         <div
-          class="max-w-[364px] flex flex-col gap-5 border-[1.5px] border-gray-200 p-6 rounded-2xl"
+          class="md:max-w-[364px] flex flex-col gap-5 md:border-[1.5px] border-gray-200 md:p-6 rounded-2xl h-fit"
         >
           <!-- <ArticlesCard :articleDetail="upgradePlan[0]" :isUpgradePlan="true" /> -->
           <div class="pb-5 border-b border-gray-200 flex flex-col gap-5">
@@ -84,6 +84,7 @@
             </button>
           </div>
         </div>
+        <EventsAndSocials class="md:hidden" />
       </div>
     </div>
   </div>

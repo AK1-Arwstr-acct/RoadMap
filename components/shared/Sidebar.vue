@@ -2,7 +2,7 @@
   <div
     class="h-full py-6 flex flex-col justify-between gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
     :class="[
-      route.path.includes('/sophie') ? 'w-[64px] px-3' : 'w-[224px] px-4',
+      route.path.includes('/sophie') ? 'w-[64px] px-3' : 'w-[64px] px-3 lg:w-[224px] lg:px-4',
     ]"
   >
     <div class="flex flex-col gap-6">
@@ -16,6 +16,7 @@
           <NuxtImg
             v-if="!route.path.includes('/sophie')"
             class="w-24"
+            :class="{'hidden lg:block' : !route.path.includes('/sophie')}"
             src="/images/logo/logo.svg"
             alt="Logo"
             loading="eager"

@@ -1,7 +1,7 @@
 <template>
-  <div class="pb-[42px] px-4">
+  <div class="pb-8 md:pb-[42px] pt-6 md:pt-0 md:px-4">
     <div
-      class="group h-60 bg-[#E0EAFF] relative flex overflow-hidden rounded-xl mx-auto max-w-[1050px]"
+      class="group h-48 md:h-60 bg-[#E0EAFF] relative flex overflow-hidden md:rounded-xl mx-auto max-w-[1050px]"
       :class="{ 'justify-end': !coverPhotoPreview }"
     >
       <img
@@ -37,13 +37,13 @@
     </div>
     <div class="flex justify-center px-5">
       <div
-        class="flex items-center gap-6 w-full max-w-[752px] -mt-10 relative z-10"
+        class="flex flex-col md:flex-row items-start md:items-center gap-6 w-full max-w-[752px] -mt-14 md:-mt-10 relative z-10"
       >
         <div
           class="border-4 border-white bg-white rounded-[200px] shadow-lg relative"
         >
           <div
-            class="relative rounded-[200px] min-w-[160px] w-[160px] h-[160px] overflow-hidden group"
+            class="relative rounded-[200px] w-24 h-24 min-w-24 md:min-w-[160px] md:w-[160px] md:h-[160px] overflow-hidden group"
           >
             <img
               v-if="imagePreview"
@@ -77,7 +77,7 @@
           </div>
         </div>
         <div
-          class="pt-16 whitespace-nowrap max-[250px] sm:w-full flex justify-between items-start"
+          class="md:pt-16 whitespace-nowrap max-[250px] sm:w-full flex flex-col md:flex-row justify-between items-start"
         >
           <div>
             <h2 class="text-2xl xl:text-3xl font-semibold text-[#181D27] mb-4">
@@ -120,7 +120,7 @@
                 class="absolute z-10 isolate right-0 translate-y-2 bg-[#FFFFFF] border-[1.5px] border-gray-200 rounded-lg shadow-md"
               >
                 <div
-                  class="flex items-center gap-3 w-60 px-4 py-2.5 text-sm text-[#414651] font-medium cursor-pointer"
+                  class="flex items-center gap-3 w-40 md:w-60 px-4 py-2.5 text-sm text-[#414651] font-medium cursor-pointer"
                 >
                   <IconLogout />
                   Log out

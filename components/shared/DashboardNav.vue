@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white flex justify-between px-6 py-4 border-b-[1.5px] border-gray-200"
+    class="bg-white hidden md:flex justify-between px-6 py-4 border-b-[1.5px] border-gray-200"
   >
     <div class="flex items-center text-xl font-medium text-[#535862]">
       <IconMorning v-if="time >= 5 && time < 12" />
@@ -17,11 +17,50 @@
         @click="pricing"
         class="px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
       >
-        Upgrade
+        Get Started – Talk to Us
       </p>
       <!-- <div class="cursor-pointer">
           <IconBell />
       </div> -->
+      <div
+        @click="navigateTo(localePath('/dashboard/profile'))"
+        class="cursor-pointer rounded-full overflow-hidden size-10"
+      >
+        <img
+          v-if="appStore.userData?.avatar"
+          :src="appStore.userImagePreview || appStore.userData?.avatar"
+          alt="user-icon"
+          class="size-full"
+        />
+        <div
+          v-else
+          class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
+        >
+          <span>{{
+            appStore.userData?.name
+              .split(" ")
+              .map((word) => word[0])
+              .join("")
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5 px-3 border-b border-gray-200 md:hidden">
+    <div class="flex justify-between items-center">
+      <div
+        @click="navigateTo(localePath('/dashboard'))"
+        class="cursor-pointer flex items-center gap-2"
+      >
+        <IconArrowsterLogo class="size-8 min-w-8" />
+        <NuxtImg
+          src="/images/logo/logo.svg"
+          alt="Logo"
+          class="w-full h-5"
+          loading="eager"
+          preload
+        />
+      </div>
       <div
         @click="navigateTo(localePath('/dashboard/profile'))"
         class="cursor-pointer rounded-full overflow-hidden size-10"
