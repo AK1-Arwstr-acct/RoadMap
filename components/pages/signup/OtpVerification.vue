@@ -179,7 +179,7 @@ const onSubmit = async () => {
     const token = useCookie("token", {
       httpOnly: false,
       secure: true,
-      maxAge: 86400,
+      maxAge: 604800,
     });
     token.value = response.data.token;
     const signupInfoCookie = useCookie("signupInfo");

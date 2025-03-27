@@ -249,6 +249,8 @@ const submit = async () => {
     });
     const token = useCookie("token", {
       maxAge: 604800,
+      httpOnly: false,
+      secure: true,
     });
     token.value = JSON.stringify(response.data.token);
     await nextTick();
