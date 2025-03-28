@@ -16,14 +16,6 @@
           />
         </div>
         <div
-          v-if="essayStore.isPublic"
-          @click="navigateTo(localePath('/dashboard'))"
-          class="cursor-pointer"
-        >
-          <IconCross fill="#717680" class="size-6 md:size-8" />
-        </div>
-        <div
-          v-else
           @click="isMobileSideBarOpen = true"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
