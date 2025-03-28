@@ -1,7 +1,9 @@
 <template>
   <div>
     <div>
-      <h2 class="text-[#181D27] text-sm md:text-lg font-semibold">Personal Info</h2>
+      <h2 class="text-[#181D27] text-sm md:text-lg font-semibold">
+        Personal Info
+      </h2>
       <p class="text-[#535862] text-sm">
         Update your photo and personal details here.
       </p>
@@ -130,7 +132,12 @@
           class="px-4 py-2.5 text-white font-semibold bg-[#1570EF] disabled:bg-[#B2DDFF] border-[1.5px] border-[#B2DDFF] rounded-lg flex items-center gap-2"
         >
           Save changes
-          <IconSpinner width="14" height="14" bgColor="transparent" v-if="isSubmitting"  />
+          <IconSpinner
+            width="14"
+            height="14"
+            bgColor="transparent"
+            v-if="isSubmitting"
+          />
         </button>
       </div>
     </div>
@@ -238,7 +245,7 @@ const disableSubmit = computed(() => {
 
 const verifyEmail = async () => {
   try {
-    await api.get('/api/v1/verify-via-email-retry')
+    await api.get("/api/v1/verify-via-email-retry");
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);

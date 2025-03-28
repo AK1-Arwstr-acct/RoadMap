@@ -22,7 +22,6 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import { log } from "console";
 import type { PropType } from "vue";
 import useAppStore from "~/stores/AppStore";
 import type { OptionAttributes } from "~/types/home";

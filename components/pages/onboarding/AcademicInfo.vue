@@ -17,6 +17,8 @@
         :label="t('onboarding.your_grade')"
         :options="classGradeList"
         v-model="academicInfo.grade"
+        :disabled="classGradeList.length === 0"
+        :loading="classGradeList.length === 0"
       />
       <div class="remove-shadow-bg-white">
         <label class="font-medium text-[#414651] text-sm">{{
@@ -30,11 +32,6 @@
             :placeholder="t('onboarding.e_g_7_0')"
             class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           />
-          <div
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-          >
-            <IconHelpCircle />
-          </div>
         </div>
       </div>
       <!-- <div class="remove-shadow-bg-white">

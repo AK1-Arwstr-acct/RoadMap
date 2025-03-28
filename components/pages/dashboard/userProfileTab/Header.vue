@@ -57,12 +57,7 @@
               v-else
               class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-8xl"
             >
-              <span>{{
-                appStore.userData?.name
-                  .split(" ")
-                  .map((word) => word[0])
-                  .join("")
-              }}</span>
+              <span>{{ appStore.userData?.name.charAt(0) }}</span>
             </div>
             <input
               type="file"
@@ -88,7 +83,7 @@
                 <IconAwardNew />
                 {{
                   appStore.userData?.educational_records.current_class_grade
-                    .class_name
+                    .class_name || ''
                 }}
               </span>
               <span class="mx-2 text-[#535862]">•</span>

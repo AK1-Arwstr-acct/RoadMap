@@ -1,23 +1,26 @@
 <template>
   <div class="pt-4 pb-1 h-fit flex flex-col">
-    <div class="sticky top-0 pt-4 pb-3 bg-white">
+    <div class="md:sticky top-0 pt-4 pb-3 bg-white">
       <h1 class="text-[#181D27] text-2xl font-semibold">
         Let's find your perfect school match!
       </h1>
-      <div class="flex justify-between items-center">
+      <div
+        class="flex flex-col md:flex-row justify-between md:items-center w-full gap-2 md:gap-0"
+      >
         <p class="text-[#535862]">
           {{ dashboardStore.totalSchool || 0 }} schools match your profile!
         </p>
         <FilterDropdown
           placeholder="Sort By"
           :options="sortFilters"
-          class=""
+          class="self-end hidden md:block"
           :modelValue="dashboardStore.selectedFilter"
           @update:modelValue="(value: OptionAttributes | null) => selectFilter(value)"
         />
       </div>
     </div>
-    <div class="flex-1 flex flex-col gap-6 pb-6 mr-px">
+    <UserDataInfo class="md:hidden my-6" />
+    <div class="flex-1 flex flex-col gap-6 md:pb-6 mr-px">
       <div
         v-if="(dashboardStore.overViews || []).length > 0"
         class="space-y-4"

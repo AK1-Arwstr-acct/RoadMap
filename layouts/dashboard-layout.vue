@@ -1,7 +1,7 @@
 <template>
-  <div class="h-dvh flex relative">
+  <div class="h-dvh w-screen flex relative">
     <Sidebar class="hidden md:block" />
-    <div class="flex-1 flex flex-col">
+    <div class="flex-1 overflow-hidden flex flex-col">
       <DashboardNav />
       <div class="flex-1 w-screen md:w-full overflow-hidden">
         <slot />

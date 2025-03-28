@@ -24,7 +24,7 @@
             class="absolute top-3 right-3 appearance-none"
           />
           <div class="flex items-center gap-3">
-            <component :is="option.icon" />
+            <component :is="option.icon" class="p-px bg-transparent" />
             {{ option.label }}
           </div>
         </label>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#2E90FA] rounded-[32px] grid grid-cols-1 lg:grid-cols-2 items-center gap-4 pt-6 px-7 pb-7"
+    class="bg-[#2E90FA] rounded-[32px] grid grid-cols-1 lg:grid-cols-2 items-center gap-4 pt-6 px-6 md:px-7 pb-7"
   >
     <div class="flex justify-center items-center">
       <NuxtImg
@@ -17,7 +17,7 @@
           Pre - Application
         </h3>
         <p
-          class="bg-[#F5F5F5] rounded-2xl text-sm px-3 font-semibold py-1 text-[#414651]"
+          class="bg-[#F5F5F5] rounded-2xl text-sm px-3 font-semibold py-1 text-[#414651] text-nowrap"
         >
           <span v-if="taskProgress !== '100%'">
             {{ checkCompletedTask }} /

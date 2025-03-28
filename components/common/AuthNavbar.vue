@@ -16,9 +16,9 @@
         :style="{ width: onboardingStore.onboardingProgress }"
       />
     </div>
-    <div>
+    <!-- <div>
       <BaseLanguageDropdown />
-    </div>
+    </div> -->
   </div>
 </template>
 <script setup lang="ts">

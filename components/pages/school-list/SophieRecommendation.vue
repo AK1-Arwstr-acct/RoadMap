@@ -2,7 +2,7 @@
   <div
     class="py-5 px-4 bg-[#EEF4FF] border-[1.5px] border-[#E0EAFF] rounded-lg space-y-5"
   >
-    <div class="w-full h-2 rounded-full bg-[#D1E9FF]">
+    <div class="w-full h-2 rounded-full bg-[#D1E9FF] hidden md:block">
       <div
         class="bg-[#1570EF] rounded-full h-full transition-all ease-in-out duration-1000"
         :style="{ width: isActive ? '100%' : '80%' }"
@@ -38,15 +38,21 @@
         </span>
       </p>
     </div>
-    <div class="flex justify-center">
-      <NuxtImg 
-        src="/images/ai-recommendation.png" alt="Discover Journey" class="w-[164px]"
+    <div class="hidden md:flex justify-center">
+      <NuxtImg
+        src="/images/ai-recommendation.png"
+        alt="Discover Journey"
+        class="w-[164px]"
         loading="eager"
         preload
       />
     </div>
-    <button 
-      v-if=" dashboardStore.enginePosition === 'final' ? false : (dashboardStore.totalSchool || 0) >= 6"
+    <button
+      v-if="
+        dashboardStore.enginePosition === 'final'
+          ? false
+          : (dashboardStore.totalSchool || 0) >= 6
+      "
       :disabled="!isActive || dashboardStore.isFinalEnginCall"
       class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-3 justify-center !disabled:cursor-pointer"
       @click="finalEngine"

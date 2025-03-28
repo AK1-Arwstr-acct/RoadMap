@@ -14,17 +14,17 @@
   </div>
   <!-- sophie modal -->
   <Transition name="fade">
-      <div
-        v-if="openSophieModal"
-        class="fixed bg-black/50 inset-0 z-20 backdrop-blur py-[60px] px-[68px]"
-      >
-        <ChatWithSophie
-          :isModal="true"
-          :isSummarizeOverview="true"
-          @openSophieModal="openSophieModal = false"
-        />
-      </div>
-    </Transition>
+    <div
+      v-if="openSophieModal"
+      class="fixed bg-black/50 inset-0 z-50 isolate backdrop-blur py-10 lg:py-[60px] px-4 lg:px-[68px] flex justify-center items-center"
+    >
+      <ChatWithSophie
+        :isModal="true"
+        :isSummarizeOverview="true"
+        @openSophieModal="openSophieModal = false"
+      />
+    </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">

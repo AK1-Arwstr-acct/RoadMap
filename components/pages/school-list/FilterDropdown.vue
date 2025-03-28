@@ -45,7 +45,7 @@
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute right-0 top-[52px] w-[320px] border-[1.5px] border-gray-200 bg-white z-20 max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
+      class="absolute right-0 top-[52px] w-[150%] md:w-[320px] border-[1.5px] border-gray-200 bg-white z-20 max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
     >
       <div
         v-for="(item, index) in options"

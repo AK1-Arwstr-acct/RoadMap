@@ -16,6 +16,7 @@
           />
         </div>
         <div
+          v-if="appStore.authenticatedUser"
           @click="isMobileSideBarOpen = true"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
@@ -29,13 +30,19 @@
             v-else
             class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
           >
-            <span>{{
-              appStore.userData?.name
-                .split(" ")
-                .map((word) => word[0])
-                .join("")
-            }}</span>
+            <span>{{ appStore.userData?.name.charAt(0) }}</span>
           </div>
+        </div>
+        <div
+          v-else
+          @click="isMobileSideBarOpen = true"
+          class="cursor-pointer rounded-full overflow-hidden size-10"
+        >
+          <NuxtImg
+            src="/images/chat-bot.png"
+            alt="user-icon"
+            class="size-full"
+          />
         </div>
       </div>
     </div>
@@ -43,7 +50,7 @@
       <div class="px-5">
         <div class="hidden md:flex justify-end">
           <span
-            @click="navigateTo(localePath('/dashboard'))"
+            @click="navigateTo($localePath('/dashboard'))"
             class="cursor-pointer"
           >
             <IconCross fill="#A4A7AE" width="24" height="24" />
@@ -122,15 +129,9 @@
       <div
         class="w-full mx-auto max-w-[1216px] px-5 py-12 sm:py-16 md:py-24 mt-8 text-white"
       >
-        <div>
-          <h2 class="text-2xl sm:text-3xl xl:text-4xl font-semibold mb-5">
-            Let’s start your journey together!
-          </h2>
-          <p class="text-[#D1E9FF] sm:text-lg xl:text-xl">
-            You can reach us anytime via &nbsp;
-            <span class="text-white">+84 915 343 643</span>
-          </p>
-        </div>
+        <h2 class="text-2xl sm:text-3xl xl:text-4xl font-semibold mb-5">
+          Let’s start your journey together!
+        </h2>
         <!-- steps -->
         <div class="grid grid-cols-1 lg:grid-cols-8 gap-5 mt-10 sm:mt-16">
           <div class="col-span-4 flex flex-col gap-6">

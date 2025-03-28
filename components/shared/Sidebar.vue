@@ -4,7 +4,7 @@
     :class="[
       route.path.includes('/sophie')
         ? 'w-[64px] px-3'
-        : 'w-[64px] px-3 lg:w-[224px] lg:px-4',
+        : 'w-[64px] px-3 lg:w-[224px] lg:min-w-[224px] lg:px-4',
     ]"
   >
     <div class="flex flex-col gap-6">

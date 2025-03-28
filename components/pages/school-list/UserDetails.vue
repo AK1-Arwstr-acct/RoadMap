@@ -1,8 +1,8 @@
 <template>
   <section
-    class="pt-8 pb-6 h-full flex flex-col gap-6"
+    class="md:pt-8 pb-6 h-full flex flex-col gap-6"
   >
-    <UserDataInfo />
+    <UserDataInfo class="hidden md:block" />
     <SophieRecommendation :isActive="isActive" />
     <WhyTheseSchool v-if="(dashboardStore.overViews?.length ?? 0) >= 1" />
     <MajorSelection />

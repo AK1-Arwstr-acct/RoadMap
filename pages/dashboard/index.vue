@@ -1,7 +1,9 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
     <div class="h-full w-full max-w-[1150px] mx-auto">
-      <div class="flex flex-col md:flex-row gap-8 lg:gap-16 w-full px-5 md:px-8 pt-8 pb-24 bg-white">
+      <div
+        class="flex flex-col md:flex-row gap-8 lg:gap-16 w-full px-5 md:px-8 pt-8 pb-24 bg-white"
+      >
         <div class="flex-1">
           <HomeDetail />
         </div>

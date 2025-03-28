@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-screen md:w-full relative">
+  <div class="h-full w-full md:w-full relative">
     <section class="flex h-full bg-white">
       <div class="w-full flex justify-center overflow-y-auto no-scrollbar">
         <div class="w-full max-w-[768px] px-5 py-8 h-fit">
@@ -27,7 +27,7 @@
       <Transition name="taskSlide">
         <div
           v-if="openDetailModal"
-          class="w-screen md:w-fit absolute inset-0 md:relative md:max-w-[380px] transition-all ease-in-out duration-400 overflow-hidden"
+          class="w-screen md:w-fit fixed top-20 md:top-0 inset-0 md:relative md:max-w-[380px] transition-all ease-in-out duration-400 overflow-hidden"
         >
           <component
             :is="TaskDetailSidebar"

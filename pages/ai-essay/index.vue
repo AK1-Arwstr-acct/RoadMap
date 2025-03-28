@@ -16,6 +16,7 @@
           />
         </div>
         <div
+          v-if="appStore.authenticatedUser"
           @click="isMobileSideBarOpen = true"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
@@ -29,13 +30,19 @@
             v-else
             class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
           >
-            <span>{{
-              appStore.userData?.name
-                .split(" ")
-                .map((word) => word[0])
-                .join("")
-            }}</span>
+            <span>{{ appStore.userData?.name.charAt(0) }}</span>
           </div>
+        </div>
+        <div
+          v-else
+          @click="isMobileSideBarOpen = true"
+          class="cursor-pointer rounded-full overflow-hidden size-10"
+        >
+          <NuxtImg
+            src="/images/chat-bot.png"
+            alt="user-icon"
+            class="size-full"
+          />
         </div>
       </div>
     </div>

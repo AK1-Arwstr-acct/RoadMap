@@ -21,7 +21,7 @@
         <span><IconGraduationHat class="size-8 md:size-full" /></span>
         <div>
           <h4 class="md:text-xl text-[#181D27] font-semibold mb-2">
-            {{ userInfo?.educational_records.next_class_grade.class_name }}
+            {{ userInfo?.educational_records.next_class_grade.class_name || '' }}
           </h4>
           <h6 class="text-[#A4A7AE]">Study program</h6>
         </div>

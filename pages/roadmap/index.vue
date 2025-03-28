@@ -2,7 +2,7 @@
   <div class="size-full">
     <section class="flex h-full bg-white">
       <div class="w-full flex justify-center overflow-y-auto no-scrollbar">
-        <div class="h-fit max-w-[772px] px-5 md:px-10 lg:px-0 py-10 w-full">
+        <div class="h-fit max-w-[772px] px-4 md:px-10 lg:px-0 py-10 w-full">
           <div
             class="flex flex-col gap-14"
             v-if="

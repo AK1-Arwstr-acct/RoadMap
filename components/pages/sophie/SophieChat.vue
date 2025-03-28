@@ -2,7 +2,7 @@
   <section class="flex flex-col gap-2 size-full overflow-hidden h-full">
     <div class="flex-1 overflow-y-auto no-scrollbar">
       <div
-        class="md:size-full w-[calc(100%-8px)] h-full flex flex-col items-center min-h-fit md:justify-center py-3 overflow-y-auto"
+        class="md:size-full w-[calc(100%-8px)] max-w-[710px] mx-auto h-full flex flex-col items-center min-h-fit md:justify-center py-3 overflow-y-auto"
         v-if="completeChat.length === 0"
       >
         <div class="flex-1 flex flex-col items-center justify-center w-full">
@@ -59,6 +59,7 @@
               class="w-full pl-3.5 pr-12 py-2.5 border-[1.5px] border-gray-200 rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"
             />
             <div
+              @click="submit"
               v-if="inputQuestion.length > 0"
               class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1/2 transform -translate-y-1/2 right-2 -rotate-90 p-2.5"
             >
@@ -67,7 +68,10 @@
           </div>
         </div>
       </div>
-      <div v-else class="size-full overflow-hidden flex flex-col gap-4">
+      <div
+        v-else
+        class="size-full overflow-hidden max-w-[710px] mx-auto flex flex-col gap-4"
+      >
         <!-- chat -->
         <div
           ref="chatContainer"
@@ -85,7 +89,7 @@
           >
             <div
               v-if="!chat.isSender"
-              class="size-8 rounded-full bg-black overflow-hidden"
+              class="size-8 min-w-8 rounded-full bg-black overflow-hidden"
             >
               <NuxtImg
                 src="/images/chat-bot.png"
@@ -98,8 +102,7 @@
             <div
               class="mb-4 md:mb-8 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
               :class="{
-                'bg-[#FAFAFA] py-1 md:py-2 px-2 md:px-3 rounded-lg':
-                  chat.isSender,
+                'bg-[#FAFAFA] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
               }"
             >
               <div>
@@ -111,7 +114,7 @@
             v-if="isChatLoading"
             class="w-fit text-[#A4A7AE] font-thin flex items-center gap-3"
           >
-            <div class="size-8 rounded-full bg-black overflow-hidden">
+            <div class="size-8 min-w-8 rounded-full bg-black overflow-hidden">
               <NuxtImg
                 src="/images/chat-bot.png"
                 alt="chat bot"
@@ -123,13 +126,13 @@
             <span class="flex justify-center items-center">
               <div class="flex space-x-2">
                 <div
-                  class="size-3 md:size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:0s] ease-in-out"
+                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:0s] ease-in-out"
                 ></div>
                 <div
-                  class="size-3 md:size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:200ms] ease-in-out"
+                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:200ms] ease-in-out"
                 ></div>
                 <div
-                  class="size-3 md:size-4 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:400ms] ease-in-out"
+                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:400ms] ease-in-out"
                 ></div>
               </div>
             </span>
@@ -359,9 +362,6 @@ watch(
       completeChat.value = transformChat;
       readOnly.value = true;
     }
-  },
-  {
-    immediate: true,
   }
 );
 

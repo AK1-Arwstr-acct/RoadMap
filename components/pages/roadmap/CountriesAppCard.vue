@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-[32px] grid grid-cols-1 lg:grid-cols-2 items-center gap-4 pt-6 px-7 pb-7"
+    class="rounded-[32px] grid grid-cols-1 lg:grid-cols-2 items-center gap-4 pt-6 px-6 md:px-7 pb-7"
     :class="[checkCompletedTask ? 'bg-[#12B76A]' : 'bg-[#F5F5F5]']"
   >
     <div class="flex justify-center items-center">
@@ -22,7 +22,7 @@
           Application
         </h3>
         <p
-          class="rounded-2xl px-3 font-semibold py-1 text-[#414651] text-sm"
+          class="rounded-2xl px-3 font-semibold py-1 text-[#414651] text-sm text-nowrap"
           :class="[checkCompletedTask ? 'bg-[#F5F5F5]' : 'bg-[#ebebeb]']"
         >
           <span v-if="taskProgress !== '100%'">

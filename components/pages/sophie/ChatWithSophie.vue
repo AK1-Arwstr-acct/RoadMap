@@ -25,7 +25,7 @@
       />
     </div>
     <div
-      class="flex-1 pb-4 px-5 w-full max-w-[710px] mx-auto hidden md:block"
+      class="flex-1 pb-4 px-5 w-full hidden md:block"
       :class="[isModal ? 'pt-[68px]' : 'pt-4']"
     >
       <SophieChat

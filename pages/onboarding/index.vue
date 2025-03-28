@@ -91,9 +91,9 @@ const getStudyPrograms = async () => {
           return {
             value: item.id,
             label: item.class_name,
-            icon: item.class_name.toLowerCase().includes("bachelor")
+            icon: item.class_name?.toLowerCase().includes("bachelor")
               ? shallowRef(IconBachelor)
-              : item.class_name.toLowerCase().includes("master")
+              : item.class_name?.toLowerCase().includes("master")
               ? shallowRef(IconMaster)
               : shallowRef(IconAssociate),
           };

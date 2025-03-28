@@ -1,10 +1,10 @@
 <template>
   <div
     @click="schoolDetail"
-    class="border-[1.5px] border-gray-200 rounded-2xl p-6 flex gap-6 cursor-pointer"
+    class="border-[1.5px] border-gray-200 rounded-2xl p-6 flex flex-col lg:flex-row gap-6 cursor-pointer"
   >
     <div
-      class="rounded-xl overflow-hidden min-w-[122px] w-[122px] h-[122px] flex justify-center items-center"
+      class="rounded-xl overflow-hidden w-[84px] h-[84px] lg:min-w-[122px] lg:w-[122px] lg:h-[122px] flex justify-center items-center"
     >
       <img
         :src="program.school.avatar"
@@ -14,8 +14,12 @@
     </div>
     <div class="flex-1 overflow-x-auto custom-scrollbar">
       <div class="min-w-fit">
-        <div class="flex gap-10 justify-between items-start mb-2">
-          <p class="font-medium text-[#181D27] min-w-40 max-w-96 text-wrap">
+        <div
+          class="flex flex-col lg:flex-row gap-2 lg:gap-10 justify-between items-start mb-2"
+        >
+          <p
+            class="font-medium text-[#181D27] min-w-40 max-w-96 text-wrap order-1 lg:order-none"
+          >
             {{ program.school.name }}
             {{ program.title }}
           </p>
@@ -59,7 +63,7 @@
           {{ program.program_title }}
         </p>
         <div
-          class="flex items-center gap-6 font-medium mb-2 text-sm 2xl:text-base"
+          class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6 font-medium mb-2 text-sm 2xl:text-base"
         >
           <div>
             <span class="text-[#717680] mr-2">SAT:</span>
