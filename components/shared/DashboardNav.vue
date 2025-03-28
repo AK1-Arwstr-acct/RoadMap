@@ -1,4 +1,5 @@
 <template>
+  <!-- Desktop View -->
   <div
     class="bg-white hidden md:flex justify-between px-6 py-4 border-b-[1.5px] border-gray-200"
   >
@@ -46,6 +47,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Mobile View -->
   <div class="py-5 px-3 border-b border-gray-200 md:hidden">
     <div class="flex justify-between items-center">
       <div
@@ -62,7 +65,7 @@
         />
       </div>
       <div
-        @click="navigateTo(localePath('/dashboard/profile'))"
+        @click="isMobileSideBarOpen = true"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
         <img
@@ -84,19 +87,40 @@
         </div>
       </div>
     </div>
+    <!--  -->
+    <Transition name="fade">
+    <div
+      v-if="isMobileSideBarOpen"
+      @click="isMobileSideBarOpen = false"
+      class="fixed inset-0 z-20 bg-black/60 backdrop-blur-sm"
+    />
+  </Transition>
+    <Transition name="slideModal">
+      <component
+        :is="MobileSideBar"
+        v-if="isMobileSideBarOpen"
+        @close="close"
+      />
+    </Transition>
   </div>
 </template>
 <script setup lang="ts">
 import useAppStore from "~/stores/AppStore";
+import MobileSideBar from "./MobileSideBar.vue";
 
 const appStore = useAppStore();
 
 const localePath = useLocalePath();
 
 const time = ref<number>(0);
+const isMobileSideBarOpen = ref<boolean>(false);
 
 const pricing = () => {
   navigateTo(localePath("/pricing"));
+};
+
+const close = () => {
+  isMobileSideBarOpen.value = false;
 };
 
 const getGreeting = computed(() => {
@@ -113,3 +137,22 @@ const getGreeting = computed(() => {
   }
 });
 </script>
+<style scoped>
+.slideModal-enter-active,
+.slideModal-leave-active {
+  transition: all 400ms;
+  transform: all 400ms;
+}
+
+.slideModal-enter-from,
+.slideModal-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slideModal-enter-to,
+.slideModal-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+</style>

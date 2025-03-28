@@ -18,20 +18,7 @@
       <form @submit.prevent="onSubmit">
         <div class="flex flex-col gap-6">
           <div class="relative">
-            <OtpInput
-              :key="inputKey"
-              class="flex gap-3"
-              :input-classes="inputclasses"
-              inputType="number"
-              :num-inputs="4"
-              inputmode="numeric"
-              v-model:value="otp"
-              :should-auto-focus="true"
-              :should-focus-order="true"
-              :placeholder="['-', '-', '-', '-']"
-              @on-change="handleOnChange"
-              @keydown="blockNonNumeric"
-            />
+            <BaseOtpInput v-model:model-value="otp" :isOtpValid="isValid" />
             <div
               class="text-sm text-gray-600 text-center flex gap-1 justify-center mt-5"
             >
@@ -53,11 +40,11 @@
               @keydown.enter="onSubmit"
               type="submit"
               @click="onSubmit"
-              :disabled="otp.length !== 4 || isSubmitting"
+              :disabled="!isValidOtp || isSubmitting"
               class="cursor-pointer disabled:cursor-default disabled:opacity-70 w-full focus:outline-none bg-[#1570EF] text-white rounded-lg font-semibold py-[10px] flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
             >
-            {{ $t("otp.verify") }}
-            <IconSpinner class="size-5" v-if="isSubmitting"  />
+              {{ $t("otp.verify") }}
+              <IconSpinner class="size-5" v-if="isSubmitting" />
             </button>
           </div>
         </div>
@@ -68,9 +55,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import type { PropType } from "vue";
-import OtpInput from "vue3-otp-input";
-import useAppStore from "~/stores/AppStore";
-import type { Country, UserSignupDetail } from "~/types/auth";
+import type { Country } from "~/types/auth";
 
 const emits = defineEmits(["verifyNumber"]);
 
@@ -84,41 +69,23 @@ const props = defineProps({
   },
 });
 
-const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
-const localePath = useLocalePath();
-const route = useRoute();
 
-const otp = ref<string>("");
+const otp = ref<string[]>(["-", "-", "-", "-"]);
 const isValid = ref<boolean>(true);
 const isSubmitting = ref<boolean>(false);
 const timeLeft = ref<number>(30);
 const inputKey = ref<number>(0);
 const submitButton = ref<HTMLElement | null>(null);
 
-const inputclasses = computed(() => {
-  return [
-    "focus:caret-transparent text-[#1570EF] text-5xl placeholder:text-5xl text-center focus:placeholder:text-[#1570EF] w-16 h-16 md:w-20 md:h-20 rounded-[10px] outline-none focus:border-[#84CAFF] focus:shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)] transition-all ease-in-out duration-200",
-    isValid.value
-      ? "border-[1.5px] border-[#D0D5DD] text-[#9CA3AF]"
-      : "border-2 border-[#F76369] placeholder:text-[#F76369] text-[#F76369]",
-  ].join(" ");
+const isValidOtp = computed(() => {
+  return otp.value.every((digit) => /^\d$/.test(digit));
 });
-
-const blockNonNumeric = (event: KeyboardEvent) => {
-  const key = event.key;
-  if (!/^\d$/.test(key)) {
-    event.preventDefault();
-  }
-};
-
-const handleOnChange = () => {
-  isValid.value = true;
-};
 
 const timer = async () => {
   try {
+    otp.value = ["-", "-", "-", "-"];
     if (timeLeft.value === undefined || timeLeft.value === 0) {
       timeLeft.value = 30;
     }
@@ -156,14 +123,14 @@ const onSubmit = async () => {
     isSubmitting.value = true;
     const response = await api.post(`/api/v1/otp-verify`, {
       msisdn: props.phoneNumber,
-      otp_code: otp.value,
+      otp_code: otp.value.join(""),
     });
     emits("verifyNumber", response.data.sessionId);
     isSubmitting.value = false;
   } catch (error) {
     isSubmitting.value = false;
     inputKey.value += 1;
-    otp.value = "";
+    otp.value = ["-", "-", "-", "-"];
     isValid.value = false;
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);

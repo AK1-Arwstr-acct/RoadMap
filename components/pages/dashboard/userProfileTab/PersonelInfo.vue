@@ -16,7 +16,7 @@
         </div>
       </div>
       <div
-        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5"
+        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 items-center md:items-start"
       >
         <span><IconGraduationHat class="size-8 md:size-full" /></span>
         <div>
@@ -27,7 +27,7 @@
         </div>
       </div>
       <div
-        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5"
+        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 items-center md:items-start"
       >
         <span><IconCoins class="size-8 md:size-full" /></span>
         <div>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div
-        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 overflow-hidden"
+        class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 overflow-hidden items-center md:items-start"
       >
         <span><IconBookmark class="size-8 md:size-full" /></span>
         <div class="flex-1">
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div
-        class="lg:col-span-2 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex items-center gap-4 px-6 pt-[18px] pb-3.5"
+        class="lg:col-span-2 border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex items-center md:items-start gap-4 px-6 pt-[18px] pb-3.5"
       >
         <span><IconGlobeNew class="size-8 md:size-full" /></span>
         <div>

@@ -1,4 +1,5 @@
 export type TabName =
+    | "profile"
     | "home"
     | "sophie"
     | "roadmap"

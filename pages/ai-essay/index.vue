@@ -24,7 +24,7 @@
         </div>
         <div
           v-else
-          @click="navigateTo(localePath('/dashboard/profile'))"
+          @click="isMobileSideBarOpen = true"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
           <img
@@ -143,10 +143,22 @@
       <GeneratedEsssay v-else />
     </div>
   </main>
+  <!--  -->
+  <Transition name="fade">
+    <div
+      v-if="isMobileSideBarOpen"
+      @click="isMobileSideBarOpen = false"
+      class="fixed inset-0 z-20 bg-black/60 backdrop-blur-sm"
+    />
+  </Transition>
+  <Transition name="slideModal">
+    <component :is="MobileSideBar" v-if="isMobileSideBarOpen" @close="close" />
+  </Transition>
 </template>
 <script setup lang="ts">
 import useEssayStore from "~/stores/essayStore";
 import useAppStore from "~/stores/AppStore";
+import MobileSideBar from "~/components/shared/MobileSideBar.vue";
 
 const appStore = useAppStore();
 const essayStore = useEssayStore();
@@ -155,9 +167,13 @@ const localePath = useLocalePath();
 
 const isAiQuestionStart = ref<boolean>(false);
 const getUserInfo = ref<boolean>(false);
+const isMobileSideBarOpen = ref<boolean>(false);
 
 const goBack = () => {
   isAiQuestionStart.value = false;
+};
+const close = () => {
+  isMobileSideBarOpen.value = false;
 };
 
 const handelNext = () => {
@@ -173,3 +189,22 @@ const startQuestions = () => {
   isAiQuestionStart.value = true;
 };
 </script>
+<style scoped>
+.slideModal-enter-active,
+.slideModal-leave-active {
+  transition: all 400ms;
+  transform: all 400ms;
+}
+
+.slideModal-enter-from,
+.slideModal-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slideModal-enter-to,
+.slideModal-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+</style>

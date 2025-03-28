@@ -1,6 +1,6 @@
 <template>
   <div class="h-dvh flex relative">
-    <Sidebar class="hidden sm:block" />
+    <Sidebar class="hidden md:block" />
     <div class="flex-1 flex flex-col">
       <DashboardNav />
       <div class="flex-1 w-screen md:w-full overflow-hidden">
