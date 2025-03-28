@@ -1,8 +1,47 @@
 <template>
   <main v-if="stepCount === 1">
+    <div class="py-5 px-3 border-b border-gray-200 md:hidden">
+      <div class="flex justify-between items-center">
+        <div
+          @click="navigateTo(localePath('/dashboard'))"
+          class="cursor-pointer flex items-center gap-2"
+        >
+          <IconArrowsterLogo class="size-8 min-w-8" />
+          <NuxtImg
+            src="/images/logo/logo.svg"
+            alt="Logo"
+            class="w-full h-5"
+            loading="eager"
+            preload
+          />
+        </div>
+        <div
+          @click="isMobileSideBarOpen = true"
+          class="cursor-pointer rounded-full overflow-hidden size-10"
+        >
+          <img
+            v-if="appStore.userData?.avatar"
+            :src="appStore.userImagePreview || appStore.userData?.avatar"
+            alt="user-icon"
+            class="size-full"
+          />
+          <div
+            v-else
+            class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
+          >
+            <span>{{
+              appStore.userData?.name
+                .split(" ")
+                .map((word) => word[0])
+                .join("")
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <section class="w-full mx-auto max-w-[1216px] px-0 mt-8 mb-10">
       <div class="px-5">
-        <div class="flex justify-end">
+        <div class="hidden md:flex justify-end">
           <span
             @click="navigateTo(localePath('/dashboard'))"
             class="cursor-pointer"
@@ -21,7 +60,11 @@
         </p>
       </div>
       <div class="pt-8 overflow-x-auto md:px-5">
-        <PricingTable @selectPlan="selectPlan" :plansList="plansList"  class="hidden md:block"/>
+        <PricingTable
+          @selectPlan="selectPlan"
+          :plansList="plansList"
+          class="hidden md:block"
+        />
         <div class="md:hidden px-5 py-5 flex flex-col gap-3">
           <StarterPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
           <StandardPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
@@ -64,15 +107,21 @@
       </div> -->
     </section>
     <section class="py-5 md:py-[70px] w-full max-w-[876px] mx-auto px-5">
-      <p class="text-[#181D27] md:text-center text-2xl md:text-4xl font-semibold">
+      <p
+        class="text-[#181D27] md:text-center text-2xl md:text-4xl font-semibold"
+      >
         Frequently asked questions
       </p>
-      <div class="md:border-[1.5px] border-gray-200 rounded-2xl md:px-3 sm:px-6 mt-4 md:mt-14">
+      <div
+        class="md:border-[1.5px] border-gray-200 rounded-2xl md:px-3 sm:px-6 mt-4 md:mt-14"
+      >
         <PricingFaq :faqList="faq" />
       </div>
     </section>
     <section class="bg-[#1849A9]">
-      <div class="w-full mx-auto max-w-[1216px] px-5 py-12 sm:py-16 md:py-24 mt-8 text-white">
+      <div
+        class="w-full mx-auto max-w-[1216px] px-5 py-12 sm:py-16 md:py-24 mt-8 text-white"
+      >
         <div>
           <h2 class="text-2xl sm:text-3xl xl:text-4xl font-semibold mb-5">
             Let’s start your journey together!
@@ -138,15 +187,30 @@
       </button>
     </div>
   </div>
+  <!--  -->
+  <Transition name="fade">
+    <div
+      v-if="isMobileSideBarOpen"
+      @click="isMobileSideBarOpen = false"
+      class="fixed inset-0 z-20 bg-black/60 backdrop-blur-sm"
+    />
+  </Transition>
+  <Transition name="slideModal">
+    <component :is="MobileSideBar" v-if="isMobileSideBarOpen" @close="close" />
+  </Transition>
 </template>
 <script setup lang="ts">
-import type { Plan } from '~/types/home';
+import type { Plan } from "~/types/home";
+import useAppStore from "~/stores/AppStore";
+import MobileSideBar from "~/components/shared/MobileSideBar.vue";
 
+const appStore = useAppStore();
 const localePath = useLocalePath();
 
 const stepCount = ref<number>(1);
 const selectedPlan = ref<number>(3);
 const formWrapper = ref<HTMLElement | null>(null);
+const isMobileSideBarOpen = ref<boolean>(false);
 
 const stepsDetail = [
   {
@@ -314,6 +378,10 @@ const plansList: Plan[] = [
 const updateJourney = () => {
   stepCount.value = 2;
 };
+const close = () => {
+  isMobileSideBarOpen.value = false;
+};
+
 const selectPlan = (id: number) => {
   selectedPlan.value = id;
   nextTick(() => {
@@ -324,3 +392,22 @@ const selectPlan = (id: number) => {
 //   await api.get('/api/v1/plans/bundle')
 // })
 </script>
+<style scoped>
+.slideModal-enter-active,
+.slideModal-leave-active {
+  transition: all 400ms;
+  transform: all 400ms;
+}
+
+.slideModal-enter-from,
+.slideModal-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slideModal-enter-to,
+.slideModal-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+</style>
