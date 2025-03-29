@@ -125,7 +125,7 @@ const onSubmit = async () => {
     isSubmitting.value = true;
     const otpResponse = await api.post(`/api/v2/validate_otp`, {
       msisdn: props.userInput,
-      otp_code: otp.value,
+      otp_code: otp.value.join(""),
     });
 
     const checkToken = useCookie("token");
