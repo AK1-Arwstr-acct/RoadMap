@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute top-0 left-0 w-full flex justify-between items-center px-5 sm::px-8 mt-5 sm:mt-8"
+    class="absolute top-0 right-0 left-0 w-full flex justify-between items-center px-5 sm::px-8 mt-5 sm:mt-8"
   >
     <div class="w-32 sm:w-[172px]">
       <NuxtLinkLocale to="/">
@@ -16,9 +16,10 @@
         :style="{ width: onboardingStore.onboardingProgress }"
       />
     </div>
-    <!-- <div>
-      <BaseLanguageDropdown />
-    </div> -->
+    <!-- temprory width to set the view after commenting dropdown -->
+    <div class="w-[150px]"> 
+      <!-- <BaseLanguageDropdown /> -->
+    </div>
   </div>
 </template>
 <script setup lang="ts">

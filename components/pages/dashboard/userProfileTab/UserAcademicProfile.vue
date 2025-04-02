@@ -51,7 +51,6 @@
                 :key="index"
               >
                 <label
-                  :for="`destination${index}`"
                   class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
                 >
                   <input
@@ -86,7 +85,7 @@
                       stroke="#ffffff"
                     />
                   </div>
-                  <div class="flex items-center gap-2 text-[#414651]">
+                  <div class="flex items-center gap-2 text-[#414651]" :for="`destination${index}`">
                     <component
                       :is="
                         option.label.toLowerCase().includes('kingdom')
