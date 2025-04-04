@@ -20,6 +20,7 @@
               v-model="userInitialData.name"
               placeholder="Enter Name"
               class="w-full mt-1.5 px-3.5 py-2.5 border-[1.5px] border-gray-200 text-[#181D27] rounded-lg outline-none"
+              data-hj-allow
             />
           </div>
           <div class="sm:w-1/2">
@@ -51,6 +52,7 @@
               :value="userInitialData.phoneNumber"
               class="w-full px-3.5 py-2.5 text-[#181D27] outline-none rounded-r-lg"
               disabled
+              data-hj-allow
             />
           </div>
         </div>
@@ -64,6 +66,7 @@
               type="email"
               v-model="userInitialData.email"
               class="w-full text-[#181D27] outline-none"
+              data-hj-allow
             />
           </div>
           <p

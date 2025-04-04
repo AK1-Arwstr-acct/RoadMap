@@ -96,6 +96,7 @@
             @keydown="preventNonNumeric"
             class="w-full pr-4 py-2 outline-none text-[#05092C]"
             placeholder="915 343 643"
+            data-hj-allow
           />
         </div>
       </div>

@@ -150,6 +150,7 @@
                         :value="option"
                         v-model="answersList.personalStatement"
                         class="absolute top-3 right-3 appearance-none"
+                        data-hj-allow
                       />
                       {{ option }}
                       <div
@@ -186,6 +187,7 @@
               @keydown.enter.ctrl.prevent="addNewLine"
               rows="1"
               autofocus
+              data-hj-allow
             />
             <button
               @click="handleNext"

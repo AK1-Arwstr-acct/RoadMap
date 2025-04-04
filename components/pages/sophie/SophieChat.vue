@@ -25,6 +25,7 @@
               @keydown.enter.exact.prevent="submit"
               @keydown.enter.ctrl.prevent="addNewLine"
               class="w-full px-3.5 py-2.5 border-[1.5px] border-gray-200 rounded-xl mt-6 focus:outline-none resize-none placeholder:font-light min-h-fit"
+              data-hj-allow
             />
             <div class="flex justify-center flex-wrap mt-3 gap-3">
               <div
@@ -57,6 +58,7 @@
               placeholder="Message Sophie"
               v-model="inputQuestion"
               class="w-full pl-3.5 pr-12 py-2.5 border-[1.5px] border-gray-200 rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"
+              data-hj-allow
             />
             <div
               @click="submit"
@@ -177,6 +179,7 @@
               rows="1"
               autofocus
               class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
+              data-hj-allow
             />
             <button
               :disabled="isChatLoading || isChatFull"

@@ -18,6 +18,7 @@
             @keydown.enter="submit"
             placeholder="nguyen@example.com"
             class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+            data-hj-allow
           />
           <p class="text-sm text-[#535862] mt-1.5">
             We will send you your draft essay through email.
@@ -106,6 +107,7 @@
               @keydown="preventNonNumeric"
               class="w-full pr-4 py-2 outline-none text-[#05092C]"
               placeholder="915 343 643"
+              data-hj-allow
             />
           </div>
           <p class="text-sm text-[#535862] mt-1.5">

@@ -31,6 +31,7 @@
             v-model="academicInfo.gpa"
             :placeholder="t('onboarding.e_g_7_0')"
             class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+            data-hj-allow
           />
         </div>
       </div>
@@ -44,6 +45,7 @@
           v-model="academicInfo.ielts"
           :placeholder="t('onboarding.e_g_7_0')"
           class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+          data-hj-allow
         />
       </div> -->
       <button

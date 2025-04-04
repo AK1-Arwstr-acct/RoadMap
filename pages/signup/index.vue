@@ -26,6 +26,7 @@
               v-model="userInput.name"
               :placeholder="t('signup.enter_your_name')"
               class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+              data-hj-allow
             />
           </div>
           <div class="remove-shadow-bg-white">
@@ -38,6 +39,7 @@
               v-model="userInput.email"
               placeholder="nguyen@example.com"
               class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+              data-hj-allow
             />
           </div>
           <div class="remove-shadow-bg-white">

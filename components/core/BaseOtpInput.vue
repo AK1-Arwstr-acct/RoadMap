@@ -17,6 +17,7 @@
       @click="isValid = true"
       @keydown="(event) => handleKeydown(event, index)"
       @mouseup.prevent="selectText"
+      data-hj-allow
     />
   </div>
 </template>

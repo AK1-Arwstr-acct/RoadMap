@@ -69,7 +69,7 @@
               <!-- <div class="border-b-[1.5px] border-gray-200 p-2 sticky -top-0.5 sm:top-0 bg-white flex gap-[5px]">
                                             <IconSearch />
                                             <input type="text" placeholder="Search for country" v-model="search"
-                                                class="w-full outline-none" />
+                                                class="w-full outline-none" data-hj-allow />
                                         </div> -->
               <div
                 v-for="country in countryCodes"
@@ -107,6 +107,7 @@
             @keydown="preventNonNumeric"
             class="w-full pr-4 py-2 outline-none text-[#05092C]"
             placeholder="915 343 643"
+            data-hj-allow
           />
         </div>
       </div>

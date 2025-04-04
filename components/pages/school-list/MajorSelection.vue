@@ -30,6 +30,7 @@
             :disabled="
               isProgramDisable && !selectedLPrograms.includes(option.value)
             "
+            data-hj-allow
           />
           <div
             class="size-5 flex justify-center items-center border-2 rounded-md transition-all border-gray-200"

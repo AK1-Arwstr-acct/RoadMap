@@ -153,6 +153,7 @@ const onSubmit = async () => {
     signupInfoCookie.value = null;
     await nextTick();
     appStore.getUserData();
+    appStore.checkAuthenticatedUser();
     navigateTo(localePath("/onboarding"));
     isSubmitting.value = false;
   } catch (error) {

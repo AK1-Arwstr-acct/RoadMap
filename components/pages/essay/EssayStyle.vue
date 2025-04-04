@@ -37,6 +37,7 @@
           class="flex-1 outline-none resize-none custom-scrollbar placeholder:font-thin"
           rows="4"
           v-model="inputText"
+          data-hj-allow
         />
         <button
           @click="handleNext"

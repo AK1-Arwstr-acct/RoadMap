@@ -32,6 +32,7 @@
           placeholder="Enter GPA"
           class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           @input="gpaChanged"
+          data-hj-allow
         />
       </div>
       <div class="mt-5">

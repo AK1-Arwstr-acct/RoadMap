@@ -86,6 +86,7 @@
           @keydown="preventNonNumeric"
           class="w-full pr-4 py-2 outline-none text-[#05092C]"
           placeholder="915 343 643"
+          data-hj-allow
         />
       </div>
     </div> -->
@@ -99,6 +100,7 @@
         placeholder="e.g. THPT Nhân Chính"
         v-model="formDetails.schoolName"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
+        data-hj-allow
       />
     </div>
     <!-- financial support -->
@@ -112,6 +114,7 @@
         placeholder="e.g. 500,000,000VND"
         v-model="formDetails.financialSupport"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
+        data-hj-allow
       />
       <p class="text-sm text-[#535862] mt-1.5">
         This information will help advisors guide you toward the most suitable
@@ -175,6 +178,7 @@
             v-model="otherText"
             class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
             placeholder="e.g. Korean"
+            data-hj-allow
           />
         </div>
       </div>
@@ -190,6 +194,7 @@
         placeholder="e.g. University of Sydney, University of Melbourne"
         v-model="formDetails.dreamSchool"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
+        data-hj-allow
       />
     </div>
     <!-- alternative contact -->
@@ -251,6 +256,7 @@
         placeholder="Account information (Phone number/Username)"
         v-model="formDetails.otherPhoneOrEmail"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
+        data-hj-allow
       />
     </div>
     <!-- arrowster Info -->
