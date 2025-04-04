@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-8 md:pb-[42px] pt-6 md:pt-0 md:px-4">
+  <div class="pb-8 md:pb-[42px] md:px-4">
     <div
       class="group h-48 md:h-60 bg-[#E0EAFF] relative flex overflow-hidden md:rounded-xl mx-auto max-w-[1050px]"
       :class="{ 'justify-end': !coverPhotoPreview }"
@@ -55,7 +55,7 @@
             />
             <div
               v-else
-              class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-8xl"
+              class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-6xl md:text-8xl"
             >
               <span>{{ appStore.userData?.name.charAt(0) }}</span>
             </div>

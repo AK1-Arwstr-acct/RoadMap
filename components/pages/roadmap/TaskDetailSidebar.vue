@@ -13,18 +13,35 @@
           <IconCross fill="#414651" width="20" height="20" />
         </div>
       </div>
+      <div
+        v-if="
+          taskDetail?.title
+            .toLocaleLowerCase()
+            .includes('write personal statement') ||
+          taskDetail?.title
+            .toLocaleLowerCase()
+            .includes('write supplemental essays')
+        "
+        @click="navigateTo(localePath('/ai-essay'))"
+        class="rounded-xl bg-[#2E90FA] py-3 px-4 flex justify-between items-center gap-2 shadow-[0px_0px_0px_4px_#EFF8FF] cursor-pointer"
+      >
+        <div class="font-semibold text-white flex items-center gap-2">
+          <IconTabSophie />
+          Sophie AI Essay Editor
+        </div>
+        <IconArrowRight fill="#ffffff" width="24" height="24" />
+      </div>
       <div class="flex flex-col gap-6">
-        <a
+        <div
           v-for="(resource, idx) in taskDetail.resources"
           :key="idx"
-          :href="resource.link"
-          target="_blank"
+          @click="handelResources(resource.link)"
           class="border-[1.5px] border-gray-200 rounded-2xl py-3 pl-4 pr-[27px] flex items-center gap-4 cursor-pointer"
           :class="{ hidden: !resource.link }"
         >
           <p class="text-[#414651] font-semibold flex-1">{{ resource.text }}</p>
           <IconLink />
-        </a>
+        </div>
       </div>
       <div v-if="taskDetail.description" class="text-[#181D27]">
         <ClientOnly>
@@ -76,16 +93,91 @@
       </button>
     </div>
   </div>
+
+  <!-- paywall -->
+
+  <Transition name="fade">
+    <div
+      v-if="progressSoftPaywall"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center"
+    >
+      <div
+        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
+      >
+        <div class="flex flex-col items-center">
+          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
+          <p class="text-[#181D27] text-lg font-semibold text-center">
+            Sign up to track your progress!
+          </p>
+          <p class="text-[#535862] text-sm text-center mt-2">
+            Mark tasks as complete and keep track of your journey toward your
+            dream school. Sign up now to save your progress!
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            @click="progressSoftPaywall = false"
+            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
+          >
+            Cancel
+          </button>
+          <button
+            @click="navigateTo(localePath('/signup'))"
+            class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+          >
+            Sign up for free
+          </button>
+        </div>
+      </div>
+    </div>
+  </Transition>
+  <Transition name="fade">
+    <div
+      v-if="resourcesSoftPaywall"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center px-5"
+    >
+      <div
+        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
+      >
+        <div class="flex flex-col items-center">
+          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
+          <p class="text-[#181D27] text-lg font-semibold text-center">
+            Sign up to access all resources
+          </p>
+          <p class="text-[#535862] text-sm text-center mt-2">
+            Save your progress, track your journey, and unlock all the resources
+            you need to reach your dream school!
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            @click="resourcesSoftPaywall = false"
+            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
+          >
+            Cancel
+          </button>
+          <button
+            @click="navigateTo(localePath('/signup'))"
+            class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+          >
+            Sign up for free
+          </button>
+        </div>
+      </div>
+    </div>
+  </Transition>
 </template>
 <script setup lang="ts">
 import type { Task } from "~/types/dashboard";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
+import useAppStore from "~/stores/AppStore";
 
 const emit = defineEmits(["clearDetails"]);
 
 const appTrackerStore = useAppTrackerStore();
 const { api } = useApi();
 const localePath = useLocalePath();
+const appStore = useAppStore();
 
 const props = defineProps({
   taskDetail: {
@@ -94,12 +186,19 @@ const props = defineProps({
   },
 });
 
+const progressSoftPaywall = ref<boolean>(false);
+const resourcesSoftPaywall = ref<boolean>(false);
+
 const options = {
   html: true,
 };
 
 const handelClick = async () => {
   try {
+    if (!appStore.authenticatedUser) {
+      progressSoftPaywall.value = true;
+      return;
+    }
     props.taskDetail.checked = !props.taskDetail?.checked;
     await api.post("/api/v1/roadmap/tasks", {
       task_id: props.taskDetail?.id,
@@ -108,6 +207,14 @@ const handelClick = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+const handelResources = (link: string) => {
+  if (!appStore.authenticatedUser) {
+    resourcesSoftPaywall.value = true;
+    return;
+  }
+  window.open(link, "_blank");
 };
 
 onUnmounted(() => {

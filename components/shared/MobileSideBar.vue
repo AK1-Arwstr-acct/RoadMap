@@ -6,7 +6,11 @@
       <div
         class="flex justify-between items-center p-4 border-b border-gray-200"
       >
-        <div @click="handleLogo" class="flex gap-2 items-center cursor-pointer">
+        <div
+          v-if="!appStore.authenticatedUser"
+          @click="handleLogo"
+          class="flex gap-2 items-center cursor-pointer"
+        >
           <IconArrowsterLogo class="size-8 min-w-8" />
           <NuxtImg
             class="w-24"
@@ -15,6 +19,27 @@
             loading="eager"
             preload
           />
+        </div>
+        <div v-else @click="handleProfile" class="flex items-center gap-2">
+          <div class="cursor-pointer rounded-full overflow-hidden size-10">
+            <img
+              v-if="appStore.userData?.avatar"
+              :src="appStore.userImagePreview || appStore.userData?.avatar"
+              alt="user-icon"
+              class="size-full"
+            />
+            <div
+              v-else
+              class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
+            >
+              <span>{{ appStore.userData?.name.charAt(0) }}</span>
+            </div>
+          </div>
+          <p
+            class="text-[#414651] font-semibold w-fit border-b border-[#414651]/50 leading-4"
+          >
+            {{ appStore.userData?.name }}
+          </p>
         </div>
         <div class="" @click="emit('close')">
           <IconCross width="24" height="24" fill="#717680" />
@@ -84,6 +109,29 @@
           </div>
         </div> -->
     </div>
+    <div class="px-4 pb-6">
+      <button
+        v-if="appStore.authenticatedUser"
+        @click="talkToUs"
+        class="bg-[#1570EF] w-full text-white py-2.5 font-semibold rounded-lg"
+      >
+        Talk to Us
+      </button>
+      <div v-else class="flex flex-col gap-3">
+        <button
+          @click="navigateTo(localePath('/signup'))"
+          class="border border-[#1570EF] bg-[#1570EF] p-2.5 px-3.5 rounded-lg w-full text-white text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+        >
+          Sign up
+        </button>
+        <button
+          @click="navigateTo(localePath('/login'))"
+          class="border border-gray-200 py-2.5 px-3.5 rounded-lg w-full text-[#414651] text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+        >
+          Log in
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -95,18 +143,20 @@ import IconTabEssayEditor from "../icons/IconTabEssayEditor.vue";
 import IconProfileTab from "../icons/IconProfileTab.vue";
 import IconTabSetting from "~/components/icons/IconTabSetting.vue";
 import type { TabList, TabName } from "~/types/dashboard";
+import useAppStore from "~/stores/AppStore";
 
 const emit = defineEmits(["updateTab", "close"]);
 
+const appStore = useAppStore();
 const localePath = useLocalePath();
 const route = useRoute();
 
 const tabList: TabList[] = [
-  {
-    name: "profile",
-    icon: IconProfileTab,
-    route: "/dashboard/profile",
-  },
+  // {
+  //   name: "profile",
+  //   icon: IconProfileTab,
+  //   route: "/dashboard/profile",
+  // },
   {
     name: "home",
     icon: IconTabHome,
@@ -145,6 +195,14 @@ const updateTab = (item: string) => {
 
 const handleLogo = () => {
   navigateTo(localePath("/dashboard"));
+  emit("close");
+};
+const talkToUs = () => {
+  navigateTo(localePath("/pricing"));
+  emit("close");
+};
+const handleProfile = () => {
+  navigateTo(localePath("/dashboard/profile"));
   emit("close");
 };
 </script>

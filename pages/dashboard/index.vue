@@ -14,8 +14,7 @@
           <div class="pb-5 border-b border-gray-200 flex flex-col gap-5">
             <div class="">
               <h3 class="text-[#181D27] text-2xl font-semibold">
-                Sophie AI + Mentorship Success Program - Trusted by students
-                from Top Universities
+                Trusted by students from Top Universities
               </h3>
               <p class="text-[#535862] mt-3">
                 AI tools + Expert guidance = Success
@@ -72,18 +71,18 @@
           </div>
           <div class="flex flex-col gap-5">
             <p class="text-xl text-[#181D27] font-semibold">
-              Our students achieved
+              Our students' achievements
             </p>
             <ArticlesCard :articleDetail="articlesList[0]" />
             <div class="h-px bg-gray-200" />
             <ArticlesCard :articleDetail="articlesList[1]" />
-            <div class="h-px bg-gray-200" />
-            <button
+            <!-- <div class="h-px bg-gray-200" /> -->
+            <!-- <button
               @click="navigateTo($localePath('/pricing'))"
               class="font-semibold text-sm text-white bg-[#1570EF] rounded-lg py-2.5 px-4 shadow-[0px_1px_2px_0px_#0A0D120D]"
             >
               Get Your Personalized Plan in 60 Seconds
-            </button>
+            </button> -->
           </div>
         </div>
         <EventsAndSocials class="md:hidden" />

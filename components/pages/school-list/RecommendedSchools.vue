@@ -19,7 +19,7 @@
         />
       </div>
     </div>
-    <UserDataInfo class="md:hidden my-6" />
+    <UserDataInfo v-if="isMobileOrTablet" class="my-6" />
     <div class="flex-1 flex flex-col gap-6 md:pb-6 mr-px">
       <div
         v-if="(dashboardStore.overViews || []).length > 0"
@@ -110,6 +110,7 @@ const dashboardStore = useDashboardStore();
 const { api } = useApi();
 const { showToast } = useToast();
 
+const width = ref<number>(0);
 const schoolProfile = ref<SchoolDetail>();
 const isDetailModal = ref<boolean>(false);
 const sortFilters = ref<OptionAttributes[]>([
@@ -140,6 +141,10 @@ const groupedSchoolsList = computed(() => {
     new Set(dashboardStore.schoolsList.map((school) => school.program_title))
   );
   return uniqueProgramTitles;
+});
+
+const isMobileOrTablet = computed(() => {
+  return width.value < 768 ? true : false;
 });
 
 const selectFilter = async (filter: OptionAttributes | null) => {
@@ -181,6 +186,21 @@ const close = () => {
 const getRecommendations = async (pageNo: number = 1) => {
   emits("getRecommendations", pageNo);
 };
+
+const windowSize = () => {
+  if (typeof window !== "undefined") {
+    width.value = window.innerWidth;
+  }
+};
+
+onMounted(() => {
+  windowSize();
+  window.addEventListener("resize", windowSize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", windowSize);
+});
 </script>
 <style scoped>
 .slideModal-enter-active,

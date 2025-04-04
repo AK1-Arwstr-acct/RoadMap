@@ -15,8 +15,7 @@
 
     <div class="">
       <h1 class="text-[#181D27] font-semibold text-3xl">
-        All in one place — Get into your dream school with Sophie AI + Expert
-        mentorship
+        Get into your dream school with Sophie AI + Expert mentorship
       </h1>
       <p class="text-[#535862] mt-4">
         Personalized guidance, strategic tools, and 1-on-1 mentorship to help

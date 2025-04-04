@@ -4,7 +4,7 @@
     <div>
       <div class="flex justify-between items-center mb-5">
         <p class="text-xl font-semibold text-[#181D27]">
-          Upcoming programs and resources for you
+          Programs and resources for you
         </p>
         <a href="https://www.facebook.com/Arrowster.Official" target="_blank">
           <p class="font-semibold text-[#175CD3] cursor-pointer text-nowrap">

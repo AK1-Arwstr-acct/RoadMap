@@ -1,10 +1,12 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import type { Application, TabName } from "~/types/dashboard";
+import useAppStore from "./AppStore";
 
 const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const { api } = useApi();
     const { showToast } = useToast();
+    const appStore = useAppStore();
 
     const ongoingTrack = ref<boolean>(false);
     const taskActiveStates = ref<Record<number, boolean>>({});
@@ -14,7 +16,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
 
     const getRoadmapData = async () => {
         try {
-            const response = await api.get("/api/v1/roadmap/tasks");
+            const response = await api.get(`${appStore.authenticatedUser ? '/api/v1/roadmap/tasks' : 'api/v1/session-based-journey/roadmap/tasks'}`);
             const roadmapData = response.data.data;
             preApplication.value = roadmapData.find((item: Application) => item.title.toLowerCase().includes('pre'));
             postApplication.value = roadmapData.find((item: Application) => item.title.toLowerCase().includes('post'));

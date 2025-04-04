@@ -13,12 +13,12 @@
         <span class="text-[#535862]">,&nbsp;</span>{{ appStore.userData?.name }}
       </p>
     </div>
-    <div class="flex gap-6 items-center">
+    <div v-if="appStore.authenticatedUser" class="flex gap-6 items-center">
       <p
         @click="pricing"
         class="px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
       >
-        Get Started – Talk to Us
+        Talk to Us
       </p>
       <!-- <div class="cursor-pointer">
           <IconBell />
@@ -48,6 +48,20 @@
       >
         <NuxtImg src="/images/chat-bot.png" alt="user-icon" class="size-full" />
       </div>
+    </div>
+    <div v-else class="flex gap-3">
+      <button
+        @click="navigateTo(localePath('/login'))"
+        class="border border-gray-200 py-2.5 px-3.5 rounded-lg text-[#414651] text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+      >
+        Log in
+      </button>
+      <button
+        @click="navigateTo(localePath('/signup'))"
+        class="border border-[#1570EF] bg-[#1570EF] p-2.5 px-3.5 rounded-lg text-white text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+      >
+        Sign up
+      </button>
     </div>
   </div>
 

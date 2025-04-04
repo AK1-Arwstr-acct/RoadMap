@@ -1,6 +1,6 @@
 /* No Scrollbar */
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 /* Custom Scrollbar */
@@ -25,28 +25,57 @@
 
 /* remove inner shadows of input */
 .remove-shadow-bg-white input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px transparent inset;
-  box-shadow: 0 0 0 1000px transparent inset;
-  font-size: 16px;
-  color: black;
-  -webkit-text-fill-color: black;
-  transition: background-color 5000s ease-in-out 0s;
-  caret-color: black;
+	-webkit-box-shadow: 0 0 0 1000px transparent inset;
+	box-shadow: 0 0 0 1000px transparent inset;
+	font-size: 16px;
+	color: black;
+	-webkit-text-fill-color: black;
+	transition: background-color 5000s ease-in-out 0s;
+	caret-color: black;
 }
 
 /* Fade effect */
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 300ms;
-  transform: all 300ms;
+	transition: all 300ms;
+	transform: all 300ms;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-  opacity: 0;
+	opacity: 0;
 }
 
 .fade-enter-to,
 .fade-leave-from {
-  opacity: 1;
+	opacity: 1;
+}
+
+/* Custom Toast Styles */
+.custom-toast-container {
+	display: flex;
+	align-items: center;
+	background-color: #252B37 !important;
+	border-radius: 12px !important;
+	padding: 14px 16px !important;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.custom-toast {
+	display: flex;
+	align-items: center;
+	background-color: transparent !important;
+	color: #ffffff !important;
+	padding: 0px !important;
+	font-weight: 500;
+}
+
+.custom-toast .toast-icon {
+	margin-right: 10px;
+	font-size: 18px;
+}
+
+.Toastify__progress-bar {
+	/* height: 4px !important; */
+	background-color: transparent !important;
 }

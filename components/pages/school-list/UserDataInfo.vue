@@ -95,7 +95,10 @@
                     stroke="#ffffff"
                   />
                 </div>
-                <div class="flex items-center gap-2 text-[#414651]" :for="`destination${index}`">
+                <div
+                  class="flex items-center gap-2 text-[#414651]"
+                  :for="`destination${index}`"
+                >
                   <component
                     :is="
                       option.label.toLowerCase().includes('kingdom')
