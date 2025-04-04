@@ -176,7 +176,7 @@
               :disabled="isChatLoading || isChatFull"
               rows="1"
               autofocus
-              class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12"
+              class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
             />
             <button
               :disabled="isChatLoading || isChatFull"
