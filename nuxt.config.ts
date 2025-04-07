@@ -32,6 +32,7 @@ export default defineNuxtConfig({
     public: {
       baseURL: process.env.NUXT_APP_API_BASE_URL,
       appMode: process.env.NUXT_APP_MODE,
+      googleAnalytics: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS,
     },
   },
 })
