@@ -42,8 +42,6 @@
   </div>
 </template>
 <script setup lang="ts">
-const { t } = useI18n();
-
 definePageMeta({
   layout: "main-layout",
 });
@@ -55,14 +53,12 @@ const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `
 
 useHead(
   computed(() => ({
-    title: t("meta.homepage.title"),
-    meta: [
-      {
-        name: "description",
-        content: t("meta.homepage.description"),
-      },
-    ],
     link: [
+      {
+        rel: 'preload',
+        href: '/images/get-started.png',
+        as: 'image',
+      },
       {
         rel: "canonical",
         href: canonicalUrl,

@@ -11,14 +11,19 @@
 <script setup lang="ts">
 
 const { locale } = useI18n();
+const { t } = useI18n();
 
 useHead(
   computed(() => ({
     htmlAttrs: {
       lang: locale.value,
     },
-    title: 'Arrowster',
+    title: t("meta.homepage.title"),
     meta: [
+      {
+        name: "description",
+        content: t("meta.homepage.description"),
+      },
       { property: 'og:image', content: '/images/ogimage.png' },
     ],
     link: [
