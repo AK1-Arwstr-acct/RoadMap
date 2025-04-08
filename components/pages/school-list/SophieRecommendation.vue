@@ -39,12 +39,11 @@
       </p>
     </div>
     <div class="hidden md:flex justify-center">
-      <NuxtImg
+      <img
         src="/images/ai-recommendation.png"
         alt="Discover Journey"
         class="w-[164px]"
         loading="eager"
-        preload
       />
     </div>
     <button

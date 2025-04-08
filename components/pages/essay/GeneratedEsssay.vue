@@ -7,12 +7,11 @@
         @click="navigateTo(localePath('/dashboard'))"
         class="hidden md:flex gap-2 items-center cursor-pointer"
       >
-        <NuxtImg
+        <img
           src="/images/logo/logo.svg"
           alt="Logo"
           class="w-40 md:w-44 h-6 md:h-7"
           loading="eager"
-          preload
         />
       </div>
       <button
@@ -45,7 +44,7 @@
         <div class="h-px bg-[#E9EAEB] my-6 md:my-[42px]" />
         <div class="flex flex-col md:flex-row justify-between gap-6 items-end md:items-start">
           <div class="flex gap-3">
-            <NuxtImg
+            <img
               src="/images/chatbot.png"
               class="w-[64px] sm:w-[74px] h-[60px] sm:h-[70px] object-contain"
             />

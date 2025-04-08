@@ -31,11 +31,11 @@
     class="!hidden flex flex-col items-center gap-4 h-dvh bg-[#f5faff] overflow-y-auto no-scrollbar w-screen"
   >
     <div class="mt-8">
-      <NuxtImg src="/images/logo/logo.svg" class="w-[130px] h-[22px]" />
+      <img src="/images/logo/logo.svg" class="w-[130px] h-[22px]" loading="eager" />
     </div>
     <div class="flex-1 w-full flex flex-col items-center px-5">
       <div class="flex flex-col items-center">
-        <NuxtImg src="/images/pre-application.png" class="max-w-[310px]" />
+        <img src="/images/pre-application.png" class="max-w-[310px]" loading="eager" />
         <p class="font-medium text-[#181D27] text-center w-[80%]">
           To fully experience our website, we recommend accessing it via a
           desktop or larger device.
@@ -43,7 +43,7 @@
       </div>
       <div class="bg-white p-4 mt-4 w-full max-w-[350px] rounded-xl">
         <div class="border border-[#E9EAEB] rounded-lg overflow-hidden">
-          <NuxtImg src="/images/handbook.png" class="w-full h-[200px]" />
+          <img src="/images/handbook.png" class="w-full h-[200px]" loading="eager" />
         </div>
         <div class="mt-4">
           <h2 class="text-lg font-semibold text-[#181D27] text-center">

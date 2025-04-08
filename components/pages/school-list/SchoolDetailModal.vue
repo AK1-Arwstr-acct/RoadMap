@@ -7,8 +7,8 @@
     </div>
     <!-- mobile header -->
     <div class="h-[200px] md:hidden -order-3 relative isolate mb-10">
-      <NuxtImg :src="`/images/school-cover/${randomNumber}.jpg`" :alt="schoolData.name" class="size-full object-cover"
-        loading="eager" preload />
+      <img :src="`/images/school-cover/${randomNumber}.jpg`" :alt="schoolData.name" class="size-full object-cover"
+        loading="eager" />
       <div
         class="size-24 min-w-24 absolute -bottom-10 left-4 z-10 border-2 border-white bg-white rounded-[200px] shadow-lg overflow-hidden">
         <img :src="schoolData.avatar" :alt="schoolData.name" class="object-cover" />
@@ -102,8 +102,8 @@
       <!-- campus Overview -->
       <div class="border-[1.5px] border-gray-200 rounded-2xl p-6 flex flex-col gap-6">
         <div class="h-[242px] rounded-xl overflow-hidden hidden md:block">
-          <NuxtImg :src="`/images/school-cover/${randomNumber}.jpg`" :alt="schoolData.name"
-            class="size-full object-cover" loading="eager" preload />
+          <img :src="`/images/school-cover/${randomNumber}.jpg`" :alt="schoolData.name"
+            class="size-full object-cover" loading="eager" />
         </div>
         <div>
           <h2 class="text-[#181D27] text-lg font-semibold mb-3">

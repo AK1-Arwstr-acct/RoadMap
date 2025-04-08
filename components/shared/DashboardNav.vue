@@ -46,7 +46,7 @@
         @click="isMobileSideBarOpen = true"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
-        <NuxtImg src="/images/chat-bot.png" alt="user-icon" class="size-full" />
+        <img src="/images/chat-bot.png" alt="user-icon" class="size-full" loading="eager" />
       </div>
     </div>
     <div v-else class="flex gap-3">
@@ -73,12 +73,11 @@
         class="cursor-pointer flex items-center gap-2"
       >
         <IconArrowsterLogo class="size-8 min-w-8" />
-        <NuxtImg
+        <img
           src="/images/logo/logo.svg"
           alt="Logo"
           class="w-full h-5"
           loading="eager"
-          preload
         />
       </div>
       <div
@@ -104,7 +103,7 @@
         @click="isMobileSideBarOpen = true"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
-        <NuxtImg src="/images/chat-bot.png" alt="user-icon" class="size-full" />
+        <img src="/images/chat-bot.png" alt="user-icon" class="size-full" loading="eager" />
       </div>
     </div>
     <!--  -->

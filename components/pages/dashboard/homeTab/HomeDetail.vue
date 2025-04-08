@@ -39,7 +39,7 @@
           <div
             class="border-[1.5px] border-gray-200 rounded-2xl p-3 w-full flex flex-col lg:flex-row lg:items-center gap-4"
           >
-            <NuxtImg :src="step.image" class="w-24" />
+            <img :src="step.image" class="w-24" loading="eager" />
             <div class="">
               <p class="text-[#181D27] font-semibold">{{ step.title }}</p>
               <p class="text-[#535862] mt-1 mb-4">

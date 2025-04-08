@@ -6,12 +6,11 @@
         v-if="completeChat.length === 0"
       >
         <div class="flex-1 flex flex-col items-center justify-center w-full">
-          <NuxtImg
+          <img
             src="/images/sophie-chat.png"
             alt="sophie"
             class="w-[100px] md:h-[242px] md:w-[252px]"
             loading="eager"
-            preload
           />
           <span class="text-[#414651] text-sm md:text-xl font-medium mt-6">
             How can Sophie help you today?
@@ -93,12 +92,11 @@
               v-if="!chat.isSender"
               class="size-8 min-w-8 rounded-full bg-black overflow-hidden"
             >
-              <NuxtImg
+              <img
                 src="/images/chat-bot.png"
                 alt="chat bot"
                 class="object-cover object-center size-full"
                 loading="eager"
-                preload
               />
             </div>
             <div
@@ -117,12 +115,11 @@
             class="w-fit text-[#A4A7AE] font-thin flex items-center gap-3"
           >
             <div class="size-8 min-w-8 rounded-full bg-black overflow-hidden">
-              <NuxtImg
+              <img
                 src="/images/chat-bot.png"
                 alt="chat bot"
                 class="object-cover object-center size-full"
                 loading="eager"
-                preload
               />
             </div>
             <span class="flex justify-center items-center">

@@ -2,11 +2,10 @@
   <div class="w-full flex justify-center items-center px-5">
     <div class="w-fit space-y-8">
       <div class="flex flex-col items-center justify-center">
-        <NuxtImg 
+        <img 
           src="/images/lets-go.png" alt="Lets Go"
           class="max-w-[300px] sm:max-w-[450px]"
           loading="eager"
-          preload
         />
         <h1
           class="text-2xl md:text-3xl text-center font-medium mt-8 max-w-[486px] w-full"

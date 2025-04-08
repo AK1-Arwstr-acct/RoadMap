@@ -7,12 +7,11 @@
           class="cursor-pointer flex items-center gap-2"
         >
           <IconArrowsterLogo class="size-8 min-w-8" />
-          <NuxtImg
+          <img
             src="/images/logo/logo.svg"
             alt="Logo"
             class="w-full h-5"
             loading="eager"
-            preload
           />
         </div>
         <div
@@ -38,10 +37,11 @@
           @click="isMobileSideBarOpen = true"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
-          <NuxtImg
+          <img
             src="/images/chat-bot.png"
             alt="user-icon"
             class="size-full"
+            loading="eager"
           />
         </div>
       </div>
@@ -170,11 +170,9 @@
     <div
       class="max-w-[484px] mx-auto flex flex-col items-center text-center justify-center"
     >
-      <NuxtImg
+      <img
         src="/images/countries-application.png"
         class="w-[383px] h-[324px]"
-        loading="eager"
-        preload
       />
       <p class="font-medium text-lg sm:text-3xl mt-4 text-white">
         Thank you for your submission! We've received your form and will contact

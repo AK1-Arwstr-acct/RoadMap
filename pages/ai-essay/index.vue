@@ -7,12 +7,11 @@
           class="cursor-pointer flex items-center gap-2"
         >
           <IconArrowsterLogo class="size-8 min-w-8" />
-          <NuxtImg
+          <img
             src="/images/logo/logo.svg"
             alt="Logo"
             class="w-full h-5"
             loading="eager"
-            preload
           />
         </div>
         <div
@@ -38,10 +37,11 @@
           @click="isMobileSideBarOpen = true"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
-          <NuxtImg
+          <img
             src="/images/chat-bot.png"
             alt="user-icon"
             class="size-full"
+            loading="eager"
           />
         </div>
       </div>
@@ -59,12 +59,11 @@
             @click="navigateTo(localePath('/dashboard'))"
             class="cursor-pointer"
           >
-            <NuxtImg
+            <img
               src="/images/logo/logo.svg"
               alt="Logo"
               class="w-40 md:w-44 h-6 md:h-7"
               loading="eager"
-              preload
             />
           </div>
           <div
@@ -78,13 +77,12 @@
         <div class="flex-1 md:p-6 flex justify-center items-center">
           <PublicUserInfo v-if="getUserInfo" @submit="startQuestions" />
           <div v-else class="flex flex-col gap-8 items-center max-w-[668px]">
-            <NuxtImg
+            <img
               src="/images/pre-application.png"
               class="w-[300px] md:w-[536px]"
               loading="eager"
-              preload
             />
-            <div class="">
+            <div>
               <h1
                 class="text-[#181D27] font-semibold text-xl text-center sm:text-[34px]"
               >

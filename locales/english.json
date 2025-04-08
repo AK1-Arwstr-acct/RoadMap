@@ -76,5 +76,11 @@
         "phone_number": "Phone number",
         "verify_phone_number": "Verify phone number",
         "we_ll_need_your_phone_number_to_get_started": "We’ll need your phone number to get started."
+    },
+    "meta": {
+        "homepage": {
+            "title": "Arrowster - Discover your own study abroad journey",
+            "description": "Arrowster is a U.S. based education company offering comprehensive study abroad consulting services powered by advanced technology"
+        }
     }
 }

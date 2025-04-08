@@ -9,15 +9,23 @@
   </div>
 </template>
 <script setup lang="ts">
-useHead({
-  title: 'Arrowster',
-  meta: [
-    { property: 'og:image', content: '/images/ogimage.png' },
-  ],
-  link: [
-    { rel: 'icon', type: 'image/png', href: '/favicon.png' }
-  ]
-})
+
+const { locale } = useI18n();
+
+useHead(
+  computed(() => ({
+    htmlAttrs: {
+      lang: locale.value,
+    },
+    title: 'Arrowster',
+    meta: [
+      { property: 'og:image', content: '/images/ogimage.png' },
+    ],
+    link: [
+      { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+    ]
+  }))
+);
 
 import useAppStore from "~/stores/AppStore";
 
@@ -25,7 +33,7 @@ const appStore = useAppStore();
 
 const hotjarConfig = () => {
   const runtimeConfig = useRuntimeConfig();
-  if (import.meta.client && runtimeConfig.public.appMode == "app.arrowster.com") {
+  if (import.meta.client && runtimeConfig.public.appMode == "https://app.arrowster.com") {
     (function (h, o, t, j, a, r) {
       h.hj =
         h.hj ||

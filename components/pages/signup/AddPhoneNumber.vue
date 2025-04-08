@@ -66,11 +66,6 @@
               v-if="isDropdownOpen"
               v-click-outside="closeDropdown"
             >
-              <!-- <div class="border-b-[1.5px] border-gray-200 p-2 sticky -top-0.5 sm:top-0 bg-white flex gap-[5px]">
-                                            <IconSearch />
-                                            <input type="text" placeholder="Search for country" v-model="search"
-                                                class="w-full outline-none" data-hj-allow />
-                                        </div> -->
               <div
                 v-for="country in countryCodes"
                 :key="country.id"
@@ -78,15 +73,6 @@
                 :class="{ 'bg-[#FAFAFA]': country.id === selectedOption?.id }"
                 @click="selectCountry(country)"
               >
-                <!-- <div>
-                  <NuxtImg
-                    :src="country.flag"
-                    :alt="`${country.title}_flag`"
-                    class="h-6 w-6"
-                    loading="eager"
-                    preload
-                  />
-                </div> -->
                 <div class="text-[#667085] text-sm">
                   {{ country.title }} ({{ country.phone_code }})
                 </div>

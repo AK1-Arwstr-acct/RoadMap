@@ -12,12 +12,11 @@
           class="flex gap-2 items-center cursor-pointer"
         >
           <IconArrowsterLogo class="size-8 min-w-8" />
-          <NuxtImg
+          <img
             class="w-24"
             src="/images/logo/logo.svg"
             alt="Logo"
             loading="eager"
-            preload
           />
         </div>
         <div v-else @click="handleProfile" class="flex items-center gap-2">

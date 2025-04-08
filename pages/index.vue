@@ -4,14 +4,12 @@
       class="max-w-[864px] w-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-[84px] h-full"
     >
       <div class="flex-1 pt-12 sm:pt-0">
-        <NuxtImg
+        <img
           src="/images/get-started.png"
           alt="Get Started"
           class="w-full size-full object-contain max-w-[300px] sm:max-w-[400px]"
           loading="eager"
-          preload
-          format="webp"
-          />
+        />
       </div>
       <div class="md:flex-1 pb-12 sm:pb-0">
         <h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
@@ -44,7 +42,47 @@
   </div>
 </template>
 <script setup lang="ts">
+const { t } = useI18n();
+
 definePageMeta({
   layout: "main-layout",
 });
+
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}`;
+
+useHead(
+  computed(() => ({
+    title: t("meta.homepage.title"),
+    meta: [
+      {
+        name: "description",
+        content: t("meta.homepage.description"),
+      },
+    ],
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
 </script>

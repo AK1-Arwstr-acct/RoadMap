@@ -29,11 +29,10 @@
           />
         </div>
         <div class="w-5 md:w-7 h-[34px] md:h-[42px] hidden md:block">
-          <NuxtImg
+          <img
             src="/images/bulb.png"
             class="size-full object-contain"
             loading="eager"
-            preload
           />
         </div>
       </div>
@@ -52,11 +51,10 @@
       v-if="phase === 'keepGoing'"
       class="w-full max-w-[592px] flex flex-col items-center gap-8 px-5"
     >
-      <NuxtImg
+      <img
         src="/images/countries-application.png"
         class="w-[300px] md:w-[536px]"
         loading="eager"
-        preload
       />
       <h1
         class="text-[#181D27] font-semibold text-xl text-center justify-center sm:text-[34px]"
@@ -116,12 +114,11 @@
             <div v-if="questionStep === 5">
               <div class="flex items-center gap-3 mb-3">
                 <div class="size-8 rounded-full bg-black overflow-hidden">
-                  <NuxtImg
+                  <img
                     src="/images/chat-bot.png"
                     alt="chat bot"
                     class="object-cover object-center size-full"
                     loading="eager"
-                    preload
                   />
                 </div>
                 <p class="text-[#414651]">

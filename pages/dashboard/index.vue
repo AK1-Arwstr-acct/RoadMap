@@ -20,7 +20,7 @@
                 AI tools + Expert guidance = Success
               </p>
               <div class="flex justify-center mt-8">
-                <NuxtImg src="/images/home-application.png" class="h-[100px]" />
+                <img src="/images/home-application.png" class="h-[100px]" loading="eager" />
               </div>
             </div>
             <!-- power tool -->

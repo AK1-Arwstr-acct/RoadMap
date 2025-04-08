@@ -12,13 +12,12 @@
         loading="eager"
         preload
       />
-      <NuxtImg
+      <img
         v-else
         :src="'/images/v-room.png'"
         alt="Profile Picture"
         class="object-contain transform scale-150 -translate-x-20 translate-y-3"
         loading="eager"
-        preload
       />
       <input
         type="file"
