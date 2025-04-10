@@ -66,6 +66,41 @@
       </div>
     </button>
   </div>
+  <Transition name="fade">
+    <div
+      v-if="isPublicPaywall"
+      class="fixed z-50 inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center px-5"
+    >
+      <div
+        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
+      >
+        <div class="flex flex-col items-center">
+          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
+          <p class="text-[#181D27] text-lg font-semibold text-center">
+            Sign up to continue using AI recommendations!
+          </p>
+          <p class="text-[#535862] text-sm text-center mt-2">
+            You've reached the limit for AI recommendations. Sign up now to
+            continue exploring more personalized options!
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            @click="isPublicPaywall = false"
+            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
+          >
+            Cancel
+          </button>
+          <button
+            @click="navigateTo(localePath('/signup'))"
+            class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+          >
+            Sign up for free
+          </button>
+        </div>
+      </div>
+    </div>
+  </Transition>
 </template>
 <script setup lang="ts">
 import useDashboardStore from "~/stores/dashboardStore";
@@ -77,10 +112,17 @@ defineProps({
   },
 });
 
-const isSubmitting = ref<boolean>(false);
+const localePath = useLocalePath();
 const dashboardStore = useDashboardStore();
 
+const isPublicPaywall = ref<boolean>(false);
+const isSubmitting = ref<boolean>(false);
+
 const finalEngine = async () => {
+  if (dashboardStore.isSchoolListPublic) {
+    isPublicPaywall.value = true;
+    return;
+  }
   isSubmitting.value = true;
   await dashboardStore.runFinalEngine();
   isSubmitting.value = false;

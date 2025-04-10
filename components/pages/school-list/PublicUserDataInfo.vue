@@ -42,85 +42,86 @@
           :options="dashboardStore.programListOptions"
           v-model="studyPrograms"
           @onChange="programChanged"
-          :disabled="isGpaChange"
         />
       </div>
-      <div class="mt-5">
-        <div
-          class="flex flex-col gap-3"
-          :class="[
-            { 'pointer-events-none': isLocationchange || isGpaChange },
-            { 'animate-pulse': isLocationLoading },
-          ]"
-        >
-          <p class="font-medium text-[#414651] text-sm">
-            Study destination<span class="text-[#D92D20] font-medium">*</span>
-          </p>
-          <div class="flex flex-col gap-4">
-            <div
-              v-for="(option, index) in dashboardStore.locationOptions"
-              :key="index"
-            >
-              <label
-                class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
+      <Transition name="fade">
+        <div class="mt-5" v-if="dashboardStore.locationOptions.length">
+          <div
+            class="flex flex-col gap-3"
+            :class="[
+              { 'pointer-events-none': isLocationchange || isGpaChange },
+              { 'animate-pulse': isLocationLoading },
+            ]"
+          >
+            <p class="font-medium text-[#414651] text-sm">
+              Study destination<span class="text-[#D92D20] font-medium">*</span>
+            </p>
+            <div class="flex flex-col gap-4">
+              <div
+                v-for="(option, index) in dashboardStore.locationOptions"
+                :key="index"
               >
-                <input
-                  :id="`destination${index}`"
-                  type="checkbox"
-                  name="countries"
-                  :value="option.value"
-                  :checked="
-                    option.value.some((id: number) =>
-                      selectedLocationOptions.includes(id)
-                    )
-                  "
-                  class="hidden peer"
-                  @change="toggleSelection(option.value)"
-                />
-                <div
-                  class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
-                  :class="[
-                    option?.value.some((id: number) =>
-                      selectedLocationOptions.includes(id)
-                    )
-                      ? 'border-[#1570EF] bg-[#1570EF]'
-                      : 'border-gray-200',
-                  ]"
+                <label
+                  class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
                 >
-                  <IconTick
-                    v-if="
-                      option?.value.some((id: number) =>
-                        selectedLocationOptions.includes(id)
-                      )
-                    "
-                    stroke="#ffffff"
+                  <input
+                    :id="`destination${index}`"
+                    type="checkbox"
+                    name="countries"
+                    :value="option.value"
+                    :checked="
+                        option.value.some((id: number) =>
+                          selectedLocationOptions.includes(id)
+                        )
+                      "
+                    class="hidden peer"
+                    @change="toggleSelection(option.value)"
                   />
-                </div>
-                <div
-                  class="flex items-center gap-2 text-[#414651]"
-                  :for="`destination${index}`"
-                >
-                  <component
-                    :is="
-                      option.label.toLowerCase().includes('kingdom')
-                        ? IconUK
-                        : option.label.toLowerCase().includes('canada')
-                        ? IconCanada
-                        : option.label.toLowerCase().includes('australia')
-                        ? IconAustralia
-                        : option.label.toLowerCase().includes('states')
-                        ? IconUS
-                        : IconEurope
-                    "
-                    class="w-6 h-6"
-                  />
-                  {{ option.label }}
-                </div>
-              </label>
+                  <div
+                    class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
+                    :class="[
+                        option?.value.some((id: number) =>
+                          selectedLocationOptions.includes(id)
+                        )
+                          ? 'border-[#1570EF] bg-[#1570EF]'
+                          : 'border-gray-200',
+                      ]"
+                  >
+                    <IconTick
+                      v-if="
+                          option?.value.some((id: number) =>
+                            selectedLocationOptions.includes(id)
+                          )
+                        "
+                      stroke="#ffffff"
+                    />
+                  </div>
+                  <div
+                    class="flex items-center gap-2 text-[#414651]"
+                    :for="`destination${index}`"
+                  >
+                    <component
+                      :is="
+                        option.label.toLowerCase().includes('kingdom')
+                          ? IconUK
+                          : option.label.toLowerCase().includes('canada')
+                          ? IconCanada
+                          : option.label.toLowerCase().includes('australia')
+                          ? IconAustralia
+                          : option.label.toLowerCase().includes('states')
+                          ? IconUS
+                          : IconEurope
+                      "
+                      class="w-6 h-6"
+                    />
+                    {{ option.label }}
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Transition>
       <div class="mt-5">
         <BaseSelectRadio
           label="Annual total budget"
@@ -128,12 +129,7 @@
           v-model="annualBudget"
           direction="upward"
           :loading="isBudgetLoading"
-          :disabled="
-            !dashboardStore.locationOptions.length ||
-            isLocationchange ||
-            isLocationLoading ||
-            isGpaChange
-          "
+          :disabled="!dashboardStore.budgetList.length || isBudgetLoading"
           @onChange="getProgramParent"
         />
       </div>
@@ -145,10 +141,8 @@
           v-model="areaOfStudy"
           direction="upward"
           :disabled="
-            !dashboardStore.locationOptions.length ||
-            isLocationchange ||
-            isLocationLoading ||
-            isGpaChange
+            !dashboardStore.coursePreferenceOptions.length ||
+            isAreaOfStudyLoading
           "
           :loading="isAreaOfStudyLoading"
         />
@@ -162,14 +156,7 @@
         </button>
         <button
           @click="updateUserData"
-          :disabled="
-            !isUpdateBtnDisable ||
-            disabledBtn ||
-            isBudgetLoading ||
-            isAreaOfStudyLoading ||
-            isGpaChange ||
-            isSubmitting
-          "
+          :disabled="!isUpdateBtnDisable"
           class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
           Update
@@ -224,26 +211,6 @@ const isUpdateBtnDisable = computed(() => {
   );
 });
 
-const disabledBtn = computed(() => {
-  let countryCheck =
-    appStore.userData?.educational_records.want_to_study_countries
-      .map((item) => item.id)
-      .every((id) => selectedLocationOptions.value.includes(id));
-
-  return (
-    Number(gpa.value) === appStore.userData?.educational_records.cgpa &&
-    Number(studyPrograms.value?.value) ===
-      appStore.userData?.educational_records.next_class_grade.id &&
-    Number(annualBudget.value?.value.split("-")[1]) ===
-      appStore.userData?.educational_records.annual_max_budget &&
-    Number(areaOfStudy.value?.value) ===
-      appStore.userData?.educational_records.super_meta_category.id &&
-    appStore.userData?.educational_records.want_to_study_countries.length ===
-      selectedLocationOptions.value.length &&
-    countryCheck
-  );
-});
-
 const toggleSelection = async (ids: number[]) => {
   const allSelected = ids.every((id) =>
     selectedLocationOptions.value.includes(id)
@@ -259,7 +226,6 @@ const toggleSelection = async (ids: number[]) => {
   }
   isLocationchange.value = true;
   await getBudgets();
-  await getProgramParent();
   isLocationchange.value = false;
 };
 
@@ -281,28 +247,37 @@ const getMinMax = () => {
 };
 
 const resetUserData = () => {
-  if (appStore.userData) {
-    setInitialValues(appStore.userData);
-    gpaChanged();
-  }
+  gpa.value = "";
+  studyPrograms.value = undefined;
+  selectedLocationOptions.value = [];
+  annualBudget.value = undefined;
+  areaOfStudy.value = undefined;
+  dashboardStore.locationOptions = [];
+  dashboardStore.budgetList = [];
+  dashboardStore.coursePreferenceOptions = [];
+  dashboardStore.isPublicMajorEnable = false;
 };
+
 const updateUserData = async () => {
   try {
-    const { min, max } = getMinMax();
     isSubmitting.value = true;
+    const token = useCookie("publicUserData", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
+    const { min, max } = getMinMax();
     const payload = {
       cgpa: gpa.value,
-      annual_min_budget: min,
-      annual_max_budget: max,
-      destination_country_ids: selectedLocationOptions.value,
-      next_educational_class_grade_id: studyPrograms.value?.value,
-      super_meta_category_id: areaOfStudy.value?.value,
+      class_grade_ids: studyPrograms.value?.value,
+      min_budget: min,
+      max_budget: max,
+      country_ids: selectedLocationOptions.value,
+      program_title_parent_id: areaOfStudy.value?.value,
     };
-    await api.post("/api/v1/student/update-profile-basic-info", payload);
-    showToast("Profile updated successfully", {
-      type: "success",
-    });
-    await appStore.getUserData();
+    token.value = JSON.stringify(payload);
+    dashboardStore.programTitleParentId = areaOfStudy.value?.value || "";
+    await dashboardStore.preRunEngine();
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -315,39 +290,30 @@ const updateUserData = async () => {
   }
 };
 
-const setInitialValues = (newValue: UserData) => {
-  gpa.value = `${newValue?.educational_records.cgpa}` || "";
-  studyPrograms.value = dashboardStore.programListOptions.find(
-    (item) =>
-      Number(item.value) == newValue?.educational_records.next_class_grade.id
-  );
-  selectedLocationOptions.value =
-    appStore.userData?.educational_records.want_to_study_countries.map(
-      (item) => item.id
-    ) || [];
-  //
-  annualBudget.value =
-    dashboardStore.budgetList?.find((item) =>
-      item.value.includes(`${newValue?.educational_records.annual_max_budget}`)
-    ) || undefined;
-  areaOfStudy.value = dashboardStore.coursePreferenceOptions?.find(
-    (item) =>
-      Number(item.value) == newValue?.educational_records.super_meta_category.id
-  );
-};
-
 const programChanged = async () => {
   try {
     if (!gpa.value || !studyPrograms.value?.value) {
       return;
     }
+    selectedLocationOptions.value = [];
+    annualBudget.value = undefined;
+    areaOfStudy.value = undefined;
+    dashboardStore.locationOptions = [];
+    dashboardStore.budgetList = [];
+    dashboardStore.coursePreferenceOptions = [];
     isLocationLoading.value = true;
+    const publicToken = useCookie("publicToken");
     const response = await api.post(
-      "/api/v1/anonymous-recommendation/get-location-country",
+      "/api/v2/session-based-journey/school-recommended/countries",
       {
         cgpa: gpa.value,
         class_grade_ids: [studyPrograms.value?.value],
-        uniqueId: appStore.userData?.uuid,
+        // uniqueId: appStore.userData?.uuid,
+      },
+      {
+        headers: {
+          "X-auth-token": publicToken.value,
+        },
       }
     );
     if (response.data.data) {
@@ -359,28 +325,8 @@ const programChanged = async () => {
           };
         }
       );
-      if (!dashboardStore.locationOptions.length) {
-        areaOfStudy.value = undefined;
-        annualBudget.value = undefined;
-      }
-      const currentCountryIds = dashboardStore.locationOptions
-        .map((option) => option.value)
-        .flat();
-      const preSelection = selectedLocationOptions.value;
-      selectedLocationOptions.value = selectedLocationOptions.value.filter(
-        (id) => currentCountryIds.includes(id)
-      );
-      if (
-        !(
-          preSelection.length === selectedLocationOptions.value.length &&
-          preSelection.every((id) => selectedLocationOptions.value.includes(id))
-        )
-      ) {
-        isLocationchange.value = true;
-        await getBudgets();
-        await getProgramParent();
-        isLocationchange.value = false;
-      }
+      await nextTick();
+      calculateHeight();
       isLocationLoading.value = false;
     }
   } catch (error) {}
@@ -388,24 +334,18 @@ const programChanged = async () => {
 
 const getProgramParent = async () => {
   try {
-    if (
-      !gpa.value ||
-      !annualBudget.value ||
-      selectedLocationOptions.value.length <= 0 ||
-      !studyPrograms.value?.value
-    ) {
-      return;
-    }
     isAreaOfStudyLoading.value = true;
+    const publicToken = useCookie("publicToken");
     const response = await api.post(
-      "/api/v1/anonymous-recommendation/find-program-parent",
+      "/api/v2/session-based-journey/school-recommended/get-super-meta-categories",
       {
-        cgpa: gpa.value,
-        class_grade_ids: [studyPrograms.value?.value],
-        country_ids: selectedLocationOptions.value || [],
-        max_budget: (annualBudget.value as { max?: number }).max,
         min_budget: null,
-        uniqueId: appStore.userData?.uuid,
+        max_budget: (annualBudget.value as { max?: number }).max,
+      },
+      {
+        headers: {
+          "X-auth-token": publicToken.value,
+        },
       }
     );
     dashboardStore.coursePreferenceOptions = response.data.data.map(
@@ -425,13 +365,16 @@ const getProgramParent = async () => {
 const getBudgets = async () => {
   try {
     isBudgetLoading.value = true;
+    const publicToken = useCookie("publicToken");
     const response = await api.post(
-      "/api/v1/anonymous-recommendation/budget-range",
+      "/api/v2/session-based-journey/school-recommended/budget-range",
       {
-        cgpa: gpa.value,
-        class_grade_ids: [studyPrograms.value?.value],
         country_ids: selectedLocationOptions.value || [],
-        uniqueId: appStore.userData?.uuid,
+      },
+      {
+        headers: {
+          "X-auth-token": publicToken.value,
+        },
       }
     );
     dashboardStore.budgetList = response.data.data.map(
@@ -476,65 +419,9 @@ const gpaChanged = async () => {
   }
   debounceTimeout = setTimeout(async () => {
     await programChanged();
-    await getBudgets();
-    await getProgramParent();
     isGpaChange.value = false;
   }, 1000);
 };
-
-watch(
-  () => [appStore.userData],
-  () => {
-    if (appStore.userData) {
-      setInitialValues(appStore.userData);
-    }
-  },
-  {
-    immediate: true,
-  }
-);
-
-watch(
-  () => dashboardStore.programListOptions,
-  () => {
-    studyPrograms.value = dashboardStore.programListOptions.find(
-      (item) =>
-        Number(item.value) ==
-        appStore.userData?.educational_records.next_class_grade.id
-    );
-  }
-);
-watch(
-  () => dashboardStore.budgetList,
-  () => {
-    annualBudget.value =
-      dashboardStore.budgetList?.find((item) =>
-        item.value.includes(
-          `${appStore.userData?.educational_records.annual_max_budget}`
-        )
-      ) || undefined;
-  }
-);
-watch(
-  () => dashboardStore.coursePreferenceOptions,
-  () => {
-    areaOfStudy.value =
-      dashboardStore.coursePreferenceOptions?.find(
-        (item) => Number(item.value) == Number(areaOfStudy.value?.value)
-      ) || undefined;
-
-    if (areaOfStudy.value?.value) {
-      return;
-    }
-
-    areaOfStudy.value =
-      dashboardStore.coursePreferenceOptions?.find(
-        (item) =>
-          Number(item.value) ==
-          appStore.userData?.educational_records.super_meta_category.id
-      ) || undefined;
-  }
-);
 
 const calculateHeight = () => {
   if (content.value) {
@@ -546,9 +433,5 @@ watch(() => isDetailOpen.value, calculateHeight);
 
 onMounted(() => {
   calculateHeight();
-  if (!dashboardStore.locationOptions.length) {
-    areaOfStudy.value = undefined;
-    annualBudget.value = undefined;
-  }
 });
 </script>

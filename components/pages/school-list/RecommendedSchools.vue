@@ -5,6 +5,7 @@
         Let's find your perfect school match!
       </h1>
       <div
+        v-if="!(dashboardStore.isSchoolListPublic && !dashboardStore.schoolsList.length)"
         class="flex flex-col md:flex-row justify-between md:items-center w-full gap-2 md:gap-0"
       >
         <p class="text-[#535862]">
@@ -19,11 +20,19 @@
         />
       </div>
     </div>
-    <UserDataInfo v-if="isMobileOrTablet" class="my-6" />
-    <div class="flex-1 flex flex-col gap-6 md:pb-6 mr-px">
+    <div v-if="isMobileOrTablet" class="my-6">
+      <PublicUserDataInfo v-if="dashboardStore.isSchoolListPublic" />
+      <UserDataInfo v-else />
+    </div>
+    <PublicInfo
+      v-if="
+        dashboardStore.isSchoolListPublic && !dashboardStore.schoolsList.length
+      "
+    />
+    <div v-else class="flex-1 flex flex-col gap-6 md:pb-6 mr-px">
       <div
         v-if="(dashboardStore.overViews || []).length > 0"
-        class="space-y-4"
+        class="flex flex-col gap-4"
         v-for="(program, idx) in groupedSchoolsList"
       >
         <p class="text-[#181D27] font-semibold text-xl">

@@ -1,16 +1,27 @@
 <template>
-  <section
-    class="md:pt-8 pb-6 h-full flex flex-col gap-6"
-  >
-    <UserDataInfo class="hidden md:block" />
+  <section class="md:pt-8 pb-6 h-full flex flex-col gap-6">
+    <PublicUserDataInfo
+      v-if="dashboardStore.isSchoolListPublic"
+      class="hidden md:block"
+    />
+    <UserDataInfo v-else class="hidden md:block" />
     <SophieRecommendation :isActive="isActive" />
     <WhyTheseSchool v-if="(dashboardStore.overViews?.length ?? 0) >= 1" />
-    <MajorSelection />
+    <MajorSekeleton v-if="isTokenLoading" />
+    <MajorSelection v-else-if="!dashboardStore.isSchoolListPublic" />
+    <PublicMajorsSelection v-else />
   </section>
 </template>
 <script setup lang="ts">
 import useAppStore from "~/stores/AppStore";
 import useDashboardStore from "~/stores/dashboardStore";
+
+defineProps({
+  isTokenLoading: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const appStore = useAppStore();
 const dashboardStore = useDashboardStore();
@@ -31,6 +42,16 @@ watch(
   () => appStore.userData,
   async () => {
     checkPrograms();
+  }
+);
+watch(
+  () => dashboardStore.selectedPublicMajors,
+  async (newValue) => {
+    if (newValue.length > 0) {
+      isActive.value = true;
+    } else {
+      isActive.value = false;
+    }
   }
 );
 

@@ -20,6 +20,13 @@
         "enter_your_password": "Nhập mật khẩu của bạn",
         "confirm_your_password": "Xác nhận mật khẩu của bạn"
     },
+    "homepage": {
+    "title": "Chỉ còn 2 phút nữa là bạn sẽ...",
+    "description": {
+        "part1": "5 công cụ AI mạnh mẽ – từ việc tìm trường phù hợp đến hỗ trợ viết luận, hơn 100 trang tài liệu du học độc quyền, hàng giờ chia sẻ từ các mentor trong đội ngũ của chúng tôi",
+        "part2": "Bạn còn chờ gì nữa?"
+    }
+    },
     "login": {
         "already_have_an_account": "Bạn đã có tài khoản?",
         "don_t_have_an_account": "Bạn chưa có tài khoản?",

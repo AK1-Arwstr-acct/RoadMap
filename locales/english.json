@@ -20,6 +20,13 @@
         "enter_your_password": "Enter your password",
         "confirm_your_password": "Confirm your password"
     },
+    "homepage": {
+        "title": "You're 2 minutes away from...",
+        "description": {
+            "part1": "5 powerful AI tools - from school matching to essay help, 100+ pages of exclusive study abroad materials, hours of sharing sessions from our team mentors",
+            "part2": "What are you waiting for?"
+        }
+    },
     "login": {
         "already_have_an_account": "Already have an account?",
         "don_t_have_an_account": "Don’t have an account?",

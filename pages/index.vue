@@ -13,13 +13,10 @@
       </div>
       <div class="md:flex-1 pb-12 sm:pb-0">
         <h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
-          You're 2 minutes away from...
+          {{ $t("homepage.title") }}
         </h1>
         <p class="text-[#717680]">
-          5 powerful AI tools - from school matching to essay help, 100+ pages
-          of exclusive study abroad materials, hours of sharing sessions from
-          our team mentors<br /><br />
-          What are you waiting for?
+          {{ $t("homepage.description.part1") }}<br /><br />{{ $t("homepage.description.part2") }}
         </p>
         <div class="mt-8 space-y-4">
           <NuxtLinkLocale to="/signup" class="block">

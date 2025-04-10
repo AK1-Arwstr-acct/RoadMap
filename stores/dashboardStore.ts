@@ -2,13 +2,15 @@ import { defineStore } from "pinia";
 import type { CountriesOptionAttributes, FilterKey, OptionAttributes } from "~/types/home";
 import axios from "axios";
 import type { Program, RecommendationSchoolsPagination } from "~/types/program";
-
+import useAppStore from "./AppStore";
 
 const useDashboardStore = defineStore("dashboardStore", () => {
 
     const { showToast } = useToast();
     const { api } = useApi();
+    const appStore = useAppStore();
 
+    const isSchoolListPublic = ref<boolean>(!appStore.authenticatedUser);
     const selectedFilter = ref<OptionAttributes | null>(null);
     const isSchoolsLoading = ref<boolean>(false);
     const enginePosition = ref<"pre" | "post" | "final">("pre");
@@ -23,16 +25,33 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         ref<RecommendationSchoolsPagination | null>(null);
     const overViews = ref<string[] | null>([]);
     const isFinalEnginCall = ref<boolean>(false);
+    // for public user
+    const programTitleParentId = ref<string>('');
+    const selectedPublicMajors = ref<number[]>([]);
+    const isPublicMajorEnable = ref<boolean>(false);
 
     const setSortParam = (data: FilterKey | null) => {
         sortParam.value = data;
     }
     const setProgramListOptions = async () => {
         try {
-            const response = await api.get(
-                `/api/v1/school/recommended/class-grades`
-            );
-            if (response.data.data) {
+            let response;
+            if (isSchoolListPublic.value) {
+                const publicToken = useCookie('publicToken');
+                response = await api.get(
+                    `/api/v2/session-based-journey/school-recommended/class-grades`,
+                    {
+                        headers: {
+                            "X-auth-token": publicToken.value,
+                        },
+                    }
+                );
+            } else {
+                response = await api.get(
+                    `/api/v1/school/recommended/class-grades`
+                );
+            }
+            if (response?.data.data) {
                 programListOptions.value = response.data.data.map(
                     (item: { id: number; class_name: string }) => {
                         return {
@@ -138,13 +157,37 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const preRunEngine = async (page: number = 1) => {
         try {
             isSchoolsLoading.value = true;
-            const response = await api.get(
-                `/api/v1/school/recommendation/pre-run-engine`, {
-                params: {
-                    page,
-                    ...(sortParam.value)
-                }
-            });
+            let response;
+
+            if (isSchoolListPublic.value) {
+                const publicToken = useCookie('publicToken');
+                response = await api.post(
+                    `/api/v2/session-based-journey/recommendation/pre-run-engine`,
+                    {
+                        program_title_parent_id: programTitleParentId.value,
+                        ...(sortParam.value)
+                    },
+                    {
+                        params: {
+                            page,
+                            // ...(sortParam.value)
+                        },
+                        headers: {
+                            "X-auth-token": publicToken.value,
+                        },
+                    }
+                );
+                isPublicMajorEnable.value = true;
+
+            } else {
+                response = await api.get(
+                    `/api/v1/school/recommendation/pre-run-engine`, {
+                    params: {
+                        page,
+                        ...(sortParam.value)
+                    }
+                });
+            }
             if (response) {
                 schoolsList.value = response.data.data;
                 recommendedSchoolsPagination.value = response.data.pagination;
@@ -168,12 +211,32 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const runEngine = async (page: number = 1) => {
         try {
             isSchoolsLoading.value = true;
-            const response = await api.get(`/api/v1/school/recommendation/run-engine`, {
-                params: {
-                    page,
-                    ...(sortParam.value)
-                }
-            });
+            let response;
+            if (isSchoolListPublic.value) {
+                const publicToken = useCookie('publicToken');
+                response = await api.post(`/api/v2/session-based-journey/recommendation/run-engine`,
+                    {
+                        program_title_ids: selectedPublicMajors.value,
+                        ...(sortParam.value)
+                    },
+                    {
+                        params: {
+                            page,
+                            // ...(sortParam.value)
+                        },
+                        headers: {
+                            "X-auth-token": publicToken.value,
+                        },
+                    }
+                );
+            } else {
+                response = await api.get(`/api/v1/school/recommendation/run-engine`, {
+                    params: {
+                        page,
+                        ...(sortParam.value)
+                    }
+                });
+            }
             if (response) {
                 schoolsList.value = response.data.data;
                 recommendedSchoolsPagination.value = response.data.pagination;
@@ -224,7 +287,23 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         }
     };
 
+    const removePublicUserData = () => {
+        programTitleParentId.value = '';
+        selectedPublicMajors.value = [];
+        isPublicMajorEnable.value = false;
+        const publicToken = useCookie('publicToken');
+        publicToken.value = null;
+        const publicUserData = useCookie('publicUserData');
+        publicUserData.value = null;
+    }
+
+    watch(() => appStore.authenticatedUser, () => {
+        isSchoolListPublic.value = !appStore.authenticatedUser;
+        removePublicUserData();
+    })
+
     return {
+        isSchoolListPublic,
         selectedFilter,
         isSchoolsLoading,
         programListOptions,
@@ -238,6 +317,9 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         recommendedSchoolsPagination,
         sortParam,
         isFinalEnginCall,
+        programTitleParentId,
+        isPublicMajorEnable,
+        selectedPublicMajors,
         setSortParam,
         setBudgetList,
         setCoursePreferenceOptions,

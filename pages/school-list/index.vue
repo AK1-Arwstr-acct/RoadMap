@@ -10,14 +10,16 @@
         </div>
         <div class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14">
           <div class="flex-1">
+            <RecommendedSchoolSkeleton
+              v-if="dashboardStore.isSchoolsLoading || isTokenLoading"
+            />
             <RecommendedSchools
-              v-if="!dashboardStore.isSchoolsLoading"
+              v-else
               @getRecommendations="getRecommendations"
             />
-            <RecommendedSchoolSkeleton v-else />
           </div>
           <div class="w-full md:w-[312px]">
-            <UserDetails />
+            <UserDetails :isTokenLoading="isTokenLoading" />
           </div>
         </div>
       </div>
@@ -34,7 +36,10 @@ definePageMeta({
 
 const appStore = useAppStore();
 const dashboardStore = useDashboardStore();
+const { api } = useApi();
+
 const isActive = ref<boolean>(false);
+const isTokenLoading = ref<boolean>(true);
 
 const checkPrograms = () => {
   if (appStore.userData) {
@@ -47,6 +52,14 @@ const checkPrograms = () => {
 };
 
 const getRecommendations = async (pageNo: number = 1) => {
+  if (dashboardStore.isSchoolListPublic) {
+    if (dashboardStore.selectedPublicMajors.length > 0) {
+      await dashboardStore.runEngine(pageNo);
+    } else {
+      await dashboardStore.preRunEngine(pageNo);
+    }
+    return;
+  }
   if (appStore.userData) {
     if (appStore.userData.educational_records.next_program_titles.length > 0) {
       await dashboardStore.runEngine(pageNo);
@@ -64,7 +77,23 @@ watch(
   }
 );
 
-onMounted(() => {
+onMounted(async () => {
+  if (dashboardStore.isSchoolListPublic) { 
+    const response = await api.get("/api/v1/session-based-journey/session");
+    if (response.data) {
+      const token = useCookie("publicToken", {
+        maxAge: 604800,
+        httpOnly: false,
+        secure: true,
+      });
+      token.value = JSON.stringify(response.data.data.token);
+      await nextTick();
+      dashboardStore.setProgramListOptions();
+      isTokenLoading.value = false;
+    }
+    return;
+  }
+  isTokenLoading.value = false;
   getRecommendations();
   if (
     !(
