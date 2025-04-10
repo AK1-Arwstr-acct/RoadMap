@@ -1,4 +1,24 @@
 {
+    "dashboard": {
+        "sidebar": {
+            "menu": {
+                "home": "Home",
+                "roadmap": "Roadmap",
+                "schools_list": "Schools List",
+                "sophie": "Sophie",
+                "ai_essay": "AI Essay Editor"
+            }
+        },
+        "navbar": {
+            "morning": "Good Morning",
+            "afternoon": "Good Afternoon",
+            "evening": "Good Evening",
+            "night": "Good Night"
+        },
+        "talk_to_us": "Talk to Us",
+        "login": "Log in",
+        "signup": "Sign up"
+    },
     "discover": {
         "detail": "Just 2 minutes away from unlocking 5 powerful AI tools—from school matching to essay help—plus 100+ pages of exclusive study abroad guides",
         "get_started": "Get Started",

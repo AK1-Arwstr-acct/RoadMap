@@ -140,8 +140,7 @@ import IconTabApplication from "~/components/icons/IconTabApplication.vue";
 import IconTabSchool from "~/components/icons/IconTabSchool.vue";
 import IconTabEssayEditor from "../icons/IconTabEssayEditor.vue";
 import IconProfileTab from "../icons/IconProfileTab.vue";
-import IconTabSetting from "~/components/icons/IconTabSetting.vue";
-import type { TabList, TabName } from "~/types/dashboard";
+import type { TabList } from "~/types/dashboard";
 import useAppStore from "~/stores/AppStore";
 
 const emit = defineEmits(["updateTab", "close"]);
@@ -149,6 +148,7 @@ const emit = defineEmits(["updateTab", "close"]);
 const appStore = useAppStore();
 const localePath = useLocalePath();
 const route = useRoute();
+const { t } = useI18n();
 
 const tabList: TabList[] = [
   // {
@@ -157,34 +157,30 @@ const tabList: TabList[] = [
   //   route: "/dashboard/profile",
   // },
   {
-    name: "home",
+    name: t("dashboard.sidebar.menu.home"),
     icon: IconTabHome,
     route: "/dashboard",
   },
   {
-    name: "roadmap",
+    name: t("dashboard.sidebar.menu.roadmap"),
     icon: IconTabApplication,
     route: "/roadmap",
   },
   {
-    name: "schools list",
+    name: t("dashboard.sidebar.menu.schools_list"),
     icon: IconTabSchool,
     route: "/school-list",
   },
   {
-    name: "sophie",
+    name: t("dashboard.sidebar.menu.sophie"),
     icon: IconTabSophie,
     route: "/sophie",
   },
   {
-    name: "ai essay editor",
+    name: t("dashboard.sidebar.menu.ai_essay"),
     icon: IconTabEssayEditor,
     route: "/ai-essay",
   },
-  // {
-  //   name: "setting",
-  //   icon: IconTabSetting,
-  // },
 ];
 
 const updateTab = (item: string) => {

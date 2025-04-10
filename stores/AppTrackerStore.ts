@@ -1,6 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import type { Application, TabName } from "~/types/dashboard";
+import type { Application } from "~/types/dashboard";
 import useAppStore from "./AppStore";
 
 const useAppTrackerStore = defineStore("appTrackerStore", () => {

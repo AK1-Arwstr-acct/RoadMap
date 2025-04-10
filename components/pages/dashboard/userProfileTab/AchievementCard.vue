@@ -21,13 +21,13 @@
         class="flex justify-between"
         :class="[isOngoingBehaviour ? 'mb-2' : 'mb-[15px]']"
       >
-        <h4 class="md:text-xl text-[#181D27] font-semibold capitalize">
+        <p class="md:text-xl text-[#181D27] font-semibold capitalize">
           {{
             category?.includes("extracurricular")
               ? "extracurricular activity"
               : category
           }}
-        </h4>
+        </p>
         <span
           class="text-sm md:text-[18px] font-medium"
           :class="[isOngoingBehaviour ? 'text-[#535862]' : 'text-[#A4A7AE]']"

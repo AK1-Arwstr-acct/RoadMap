@@ -34,6 +34,35 @@ definePageMeta({
   layout: "dashboard-layout",
 });
 
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/school-list`;
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/school-list`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/school-list`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/school-list`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
+
 const appStore = useAppStore();
 const dashboardStore = useDashboardStore();
 const { api } = useApi();

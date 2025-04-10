@@ -1,4 +1,24 @@
 {
+    "dashboard": {
+        "sidebar": {
+            "menu": {
+                "home": "Trang chủ",
+                "roadmap": "Lộ trình",
+                "schools_list": "Danh sách trường",
+                "sophie": "Sophie",
+                "ai_essay": "Trình chỉnh sửa luận AI"
+            }
+        },
+        "navbar": {
+            "morning": "Chào buổi sáng",
+            "afternoon": "Chào buổi chiều",
+            "evening": "Chào buổi tối",
+            "night": "Chúc ngủ ngon"
+        },
+        "talk_to_us": "Trò chuyện với chúng tôi",
+        "login": "Đăng nhập",
+        "signup": "Đăng ký"
+    },
     "discover": {
         "detail": "Chỉ 2 phút nữa là bạn sẽ mở khóa 5 công cụ AI mạnh mẽ—từ việc tìm trường phù hợp đến hỗ trợ viết bài—cộng thêm hơn 100 trang hướng dẫn du học độc quyền.",
         "get_started": "Bắt đầu",

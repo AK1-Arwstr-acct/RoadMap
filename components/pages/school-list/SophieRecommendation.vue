@@ -9,7 +9,7 @@
       />
     </div>
     <div>
-      <h4 class="text-sm 2xl:text-lg font-semibold text-[#181D27]">
+      <p class="text-sm 2xl:text-lg font-semibold text-[#181D27]">
         <span
           v-if="
             dashboardStore.enginePosition === 'final'
@@ -20,7 +20,7 @@
           Overwhelmed by options?
         </span>
         <span v-else> We've found your best match! </span>
-      </h4>
+      </p>
       <p class="text-sm 2xl:text-base text-[#535862] mt-2">
         <span
           v-if="

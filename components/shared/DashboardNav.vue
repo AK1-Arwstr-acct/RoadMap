@@ -14,32 +14,31 @@
       </p>
     </div>
     <div v-if="appStore.authenticatedUser" class="flex gap-6 items-center">
-      <p
-        @click="pricing"
-        class="px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
-      >
-        Talk to Us
-      </p>
-      <!-- <div class="cursor-pointer">
-          <IconBell />
-      </div> -->
+      <NuxtLinkLocale to="/pricing">
+        <p
+          class="px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
+        >
+          {{ t('dashboard.talk_to_us') }}
+        </p>
+      </NuxtLinkLocale>
       <div
         v-if="appStore.authenticatedUser"
-        @click="navigateTo(localePath('/dashboard/profile'))"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
-        <img
-          v-if="appStore.userData?.avatar"
-          :src="appStore.userImagePreview || appStore.userData?.avatar"
-          alt="user-icon"
-          class="size-full"
-        />
-        <div
-          v-else
-          class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
-        >
-          <span>{{ appStore.userData?.name.charAt(0) }}</span>
-        </div>
+        <NuxtLinkLocale to="/dashboard/profile">
+          <img
+            v-if="appStore.userData?.avatar"
+            :src="appStore.userImagePreview || appStore.userData?.avatar"
+            alt="user-icon"
+            class="size-full"
+          />
+          <div
+            v-else
+            class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
+          >
+            <span>{{ appStore.userData?.name.charAt(0) }}</span>
+          </div>
+        </NuxtLinkLocale>
       </div>
       <div
         v-else
@@ -50,36 +49,39 @@
       </div>
     </div>
     <div v-else class="flex gap-3">
-      <button
-        @click="navigateTo(localePath('/login'))"
-        class="border border-gray-200 py-2.5 px-3.5 rounded-lg text-[#414651] text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
-      >
-        Log in
-      </button>
-      <button
-        @click="navigateTo(localePath('/signup'))"
-        class="border border-[#1570EF] bg-[#1570EF] p-2.5 px-3.5 rounded-lg text-white text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
-      >
-        Sign up
-      </button>
+      <NuxtLinkLocale to="/login">
+        <button
+          class="border border-gray-200 py-2.5 px-3.5 rounded-lg text-[#414651] text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+        >
+          {{ t("dashboard.login") }}
+        </button>
+      </NuxtLinkLocale>
+      <NuxtLinkLocale to="/signup">
+        <button
+          class="border border-[#1570EF] bg-[#1570EF] p-2.5 px-3.5 rounded-lg text-white text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+        >
+        {{ t("dashboard.signup") }}
+        </button>
+      </NuxtLinkLocale>
     </div>
   </div>
 
   <!-- Mobile View -->
   <div class="py-5 px-3 border-b border-gray-200 md:hidden">
     <div class="flex justify-between items-center">
-      <div
-        @click="navigateTo(localePath('/dashboard'))"
-        class="cursor-pointer flex items-center gap-2"
-      >
-        <IconArrowsterLogo class="size-8 min-w-8" />
-        <img
-          src="/images/logo/logo.svg"
-          alt="Logo"
-          class="w-full h-5"
-          loading="eager"
-        />
-      </div>
+      <NuxtLinkLocale to="/dashboard" class="no-underline">
+        <div
+          class="cursor-pointer flex items-center gap-2"
+        >
+          <IconArrowsterLogo class="size-8 min-w-8" />
+          <img
+            src="/images/logo/logo.svg"
+            alt="Logo"
+            class="w-full h-5"
+            loading="eager"
+          />
+        </div>
+      </NuxtLinkLocale>
       <div
         v-if="appStore.authenticatedUser"
         @click="isMobileSideBarOpen = true"
@@ -106,7 +108,6 @@
         <img src="/images/chat-bot.png" alt="user-icon" class="size-full" loading="eager" />
       </div>
     </div>
-    <!--  -->
     <Transition name="fade">
       <div
         v-if="isMobileSideBarOpen"
@@ -128,15 +129,10 @@ import useAppStore from "~/stores/AppStore";
 import MobileSideBar from "./MobileSideBar.vue";
 
 const appStore = useAppStore();
-
-const localePath = useLocalePath();
+const { t } = useI18n();
 
 const time = ref<number>(0);
 const isMobileSideBarOpen = ref<boolean>(false);
-
-const pricing = () => {
-  navigateTo(localePath("/pricing"));
-};
 
 const close = () => {
   isMobileSideBarOpen.value = false;
@@ -146,13 +142,13 @@ const getGreeting = computed(() => {
   const hours = new Date().getHours();
   time.value = hours;
   if (hours >= 5 && hours < 12) {
-    return "Good Morning";
+    return t("dashboard.navbar.morning");
   } else if (hours >= 12 && hours < 18) {
-    return "Good Afternoon";
+    return t("dashboard.navbar.afternoon");
   } else if (hours >= 18 && hours < 22) {
-    return "Good Evening";
+    return t("dashboard.navbar.evening");
   } else {
-    return "Good Night";
+    return t("dashboard.navbar.night");
   }
 });
 </script>
