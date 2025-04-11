@@ -86,7 +86,6 @@
               </div>
             </Transition>
             <input
-              type="number"
               name="phoneNumber"
               ref="phoneInput"
               inputmode="numeric"
@@ -113,12 +112,13 @@
             :placeholder="t('login.enter_your_password')"
             class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           />
-          <p
-            @click="navigateTo(localePath('/forgot-password'))"
-            class="text-sm text-[#175CD3] font-semibold mt-1.5 text-end cursor-pointer self-end"
-          >
-            {{ $t("forgotPassword.forgot_password") }}
-          </p>
+          <NuxtLinkLocale :to="'/forgot-password'" class="w-full">
+            <p
+              class="text-sm text-[#175CD3] font-semibold mt-1.5 text-end cursor-pointer self-end"
+            >
+              {{ $t("forgotPassword.forgot_password") }}
+            </p>
+          </NuxtLinkLocale>
         </div>
         <div class="mt-6">
           <button
@@ -146,11 +146,11 @@
         </button>
         <p class="mt-8 text-[#535862] text-sm text-center">
           {{ $t("login.don_t_have_an_account") }}
-          <span
-            @click="navigateTo(localePath('/signup'))"
-            class="text-[#175CD3] font-semibold cursor-pointer"
-            >{{ $t("login.sign_up") }}</span
-          >
+          <NuxtLinkLocale :to="'/signup'">
+            <span class="text-[#175CD3] font-semibold cursor-pointer">{{
+              $t("login.sign_up")
+            }}</span>
+          </NuxtLinkLocale>
         </p>
       </div>
     </div>
@@ -171,6 +171,39 @@ const { api } = useApi();
 const { showToast } = useToast();
 const config = useRuntimeConfig();
 const appStore = useAppStore();
+
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/login`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/login`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/login`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/login`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
 
 const phoneInput = ref<HTMLInputElement | null>(null);
 const isFocused = ref<boolean>(false);

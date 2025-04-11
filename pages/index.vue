@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-svh flex justify-center items-center h-full px-5 mt-">
+  <div class="min-h-svh flex justify-center items-center h-full px-5">
     <div
       class="max-w-[864px] w-full flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-[84px] h-full"
     >

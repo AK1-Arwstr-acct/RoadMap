@@ -82,7 +82,7 @@
                 <IconAwardNew />
                 {{
                   appStore.userData?.educational_records.current_class_grade
-                    .class_name || ''
+                    .class_name || ""
                 }}
               </span>
               <span class="mx-2 text-[#535862]">•</span>
@@ -93,12 +93,12 @@
             </div>
           </div>
           <div class="flex items-center gap-3">
-            <button
-              @click="navigateTo(localePath('/dashboard/profile/edit'))"
+            <NuxtLinkLocale
+              :to="'/dashboard/profile/edit'"
               class="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#414651] bg-[#FFFFFF] border-[1.5px] rounded-lg border-gray-200"
             >
               <span><IconPencil /></span><span>Edit profile</span>
-            </button>
+            </NuxtLinkLocale>
             <div class="relative">
               <button
                 @click="toggleDropdown"

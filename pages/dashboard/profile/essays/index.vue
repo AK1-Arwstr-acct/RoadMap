@@ -26,6 +26,37 @@ definePageMeta({
   layout: "dashboard-layout",
 });
 
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/dashboard/profile/essays`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/dashboard/profile/essays`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/dashboard/profile/essays`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/dashboard/profile/essays`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
+
 const openDetail = (essayDetail: EssayData) => {
   const details = filterEssay(essayDetail.generated_essay);
   essayStore.setFinalEssay(details);

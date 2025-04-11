@@ -133,12 +133,13 @@
           >
             Cancel
           </button>
-          <button
-            @click="navigateTo(localePath('/signup'))"
-            class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
-          >
-            Sign up for free
-          </button>
+          <NuxtLinkLocale :to="'/signup'" class="w-full">
+            <button
+              class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+            >
+              Sign up for free
+            </button>
+          </NuxtLinkLocale>
         </div>
       </div>
     </div>

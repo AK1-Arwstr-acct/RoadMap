@@ -20,7 +20,11 @@
                 AI tools + Expert guidance = Success
               </p>
               <div class="flex justify-center mt-8">
-                <img src="/images/home-application.png" class="h-[100px]" loading="eager" />
+                <img
+                  src="/images/home-application.png"
+                  class="h-[100px]"
+                  loading="eager"
+                />
               </div>
             </div>
             <!-- power tool -->
@@ -77,12 +81,13 @@
             <div class="h-px bg-gray-200" />
             <ArticlesCard :articleDetail="articlesList[1]" />
             <!-- <div class="h-px bg-gray-200" /> -->
-            <!-- <button
-              @click="navigateTo($localePath('/pricing'))"
+            <!-- <NuxtLinkLocale :to="'/pricing'">
+               <button
               class="font-semibold text-sm text-white bg-[#1570EF] rounded-lg py-2.5 px-4 shadow-[0px_1px_2px_0px_#0A0D120D]"
-            >
+              >
               Get Your Personalized Plan in 60 Seconds
-            </button> -->
+            </button>
+          </NuxtLinkLocale> -->
           </div>
         </div>
         <EventsAndSocials class="md:hidden" />
@@ -96,6 +101,69 @@ import useAppStore from "~/stores/AppStore";
 definePageMeta({
   layout: "dashboard-layout",
 });
+
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/dashboard`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "preload",
+        href: "/images/home-application.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/tell-me-more.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/sophie-chat.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/post-application.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/ai-recommendation.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/v-room-short.png",
+        as: "image",
+      },
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/dashboard`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/dashboard`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/dashboard`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
 
 const appStore = useAppStore();
 

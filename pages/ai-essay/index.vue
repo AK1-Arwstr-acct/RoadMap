@@ -2,18 +2,17 @@
   <main class="h-dvh flex flex-col">
     <div class="py-5 px-3 border-b border-gray-200 md:hidden">
       <div class="flex justify-between items-center">
-        <div
-          @click="navigateTo(localePath('/dashboard'))"
-          class="cursor-pointer flex items-center gap-2"
-        >
-          <IconArrowsterLogo class="size-8 min-w-8" />
-          <img
-            src="/images/logo/logo.svg"
-            alt="Logo"
-            class="w-full h-5"
-            loading="eager"
-          />
-        </div>
+        <NuxtLinkLocale :to="'/dashboard'">
+          <div class="cursor-pointer flex items-center gap-2">
+            <IconArrowsterLogo class="size-8 min-w-8" />
+            <img
+              src="/images/logo/logo.svg"
+              alt="Logo"
+              class="w-full h-5"
+              loading="eager"
+            />
+          </div>
+        </NuxtLinkLocale>
         <div
           v-if="appStore.authenticatedUser"
           @click="isMobileSideBarOpen = true"
@@ -55,24 +54,21 @@
         class="size-full p-4 md:p-8 flex flex-col overflow-y-auto no-scrollbar"
       >
         <div class="hidden md:flex justify-between items-start">
-          <div
-            @click="navigateTo(localePath('/dashboard'))"
-            class="cursor-pointer"
-          >
-            <img
-              src="/images/logo/logo.svg"
-              alt="Logo"
-              class="w-40 md:w-44 h-6 md:h-7"
-              loading="eager"
-            />
-          </div>
-          <div
-            v-if="!getUserInfo"
-            @click="navigateTo(localePath('/dashboard'))"
-            class="cursor-pointer"
-          >
-            <IconCross fill="#717680" class="size-6 md:size-8" />
-          </div>
+          <NuxtLinkLocale :to="'/dashboard'">
+            <div class="cursor-pointer">
+              <img
+                src="/images/logo/logo.svg"
+                alt="Logo"
+                class="w-40 md:w-44 h-6 md:h-7"
+                loading="eager"
+              />
+            </div>
+          </NuxtLinkLocale>
+          <NuxtLinkLocale :to="'/dashboard'">
+            <div v-if="!getUserInfo" class="cursor-pointer">
+              <IconCross fill="#717680" class="size-6 md:size-8" />
+            </div>
+          </NuxtLinkLocale>
         </div>
         <div class="flex-1 md:p-6 flex justify-center items-center">
           <PublicUserInfo v-if="getUserInfo" @submit="startQuestions" />
@@ -105,12 +101,11 @@
                   <IconArrowRight fill="#ffffff" width="20" height="20" />
                 </span>
               </button>
-              <p
-                @click="navigateTo(localePath('/dashboard'))"
-                class="text-[#535862] font-semibold cursor-pointer"
-              >
-                Go back
-              </p>
+              <NuxtLinkLocale :to="'/dashboard'">
+                <p class="text-[#535862] font-semibold cursor-pointer">
+                  Go back
+                </p>
+              </NuxtLinkLocale>
             </div>
             <!-- upgrade popup -->
             <!-- <div
@@ -156,6 +151,44 @@
 import useEssayStore from "~/stores/essayStore";
 import useAppStore from "~/stores/AppStore";
 import MobileSideBar from "~/components/shared/MobileSideBar.vue";
+
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/ai-essay`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "preload",
+        href: "/images/pre-application.png",
+        as: "image",
+      },
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/ai-essay`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/ai-essay`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/ai-essay`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
 
 const appStore = useAppStore();
 const essayStore = useEssayStore();

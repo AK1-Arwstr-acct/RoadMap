@@ -117,18 +117,20 @@
         Talk to Us
       </button>
       <div v-else class="flex flex-col gap-3">
-        <button
-          @click="navigateTo(localePath('/signup'))"
-          class="border border-[#1570EF] bg-[#1570EF] p-2.5 px-3.5 rounded-lg w-full text-white text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
-        >
-          Sign up
-        </button>
-        <button
-          @click="navigateTo(localePath('/login'))"
-          class="border border-gray-200 py-2.5 px-3.5 rounded-lg w-full text-[#414651] text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
-        >
-          Log in
-        </button>
+        <NuxtLinkLocale :to="'/signup'" class="w-full">
+          <button
+            class="border border-[#1570EF] bg-[#1570EF] p-2.5 px-3.5 rounded-lg w-full text-white text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+          >
+            Sign up
+          </button>
+        </NuxtLinkLocale>
+        <NuxtLinkLocale :to="'/login'" class="w-full">
+          <button
+            class="border border-gray-200 py-2.5 px-3.5 rounded-lg w-full text-[#414651] text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+          >
+            Log in
+          </button>
+        </NuxtLinkLocale>
       </div>
     </div>
   </div>

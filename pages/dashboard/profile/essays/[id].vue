@@ -30,12 +30,14 @@
             more and make it 10x better?
           </p>
         </div>
-        <button
-          @click="navigateTo(localePath('/pricing'))"
-          class="text-[#414651] w-full sm:w-fit text-nowrap font-semibold text-sm py-2 px-3.5 border border-[#D5D7DA] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D]"
-        >
-          Make my essay 10x better
-        </button>
+        <div>
+          <NuxtLinkLocale
+            :to="'/pricing'"
+            class="text-[#414651] w-full text-center sm:w-fit text-nowrap font-semibold text-sm py-2 px-3.5 border border-[#D5D7DA] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D]"
+          >
+            Make my essay 10x better
+          </NuxtLinkLocale>
+        </div>
       </div>
     </div>
   </div>
@@ -46,6 +48,40 @@ import useEssayStore from "~/stores/essayStore";
 definePageMeta({
   layout: "dashboard-layout",
 });
+
+const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/dashboard/profile/essays/${route.params.id}`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/dashboard/profile/essays/${route.params.id}`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/dashboard/profile/essays/${route.params.id}`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/dashboard/profile/essays/${route.params.id}`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
 
 const essayStore = useEssayStore();
 const localePath = useLocalePath();

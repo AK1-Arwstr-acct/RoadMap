@@ -37,6 +37,52 @@ definePageMeta({
 
 const appTrackerStore = useAppTrackerStore();
 
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/roadmap`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: 'preload',
+        href: '/images/pre-application.png',
+        as: 'image',
+      },
+      {
+        rel: 'preload',
+        href: '/images/countries-application.png',
+        as: 'image',
+      },
+      {
+        rel: 'preload',
+        href: '/images/post-application.png',
+        as: 'image',
+      },
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/roadmap`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/roadmap`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/roadmap`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
+
 onMounted(async () => {
   if (
     !appTrackerStore.preApplication &&

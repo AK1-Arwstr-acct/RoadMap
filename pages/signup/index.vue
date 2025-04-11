@@ -85,16 +85,16 @@
           @click="handleClick"
           class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
         >
-           <IconGoogle />
+          <IconGoogle />
           <span>{{ $t("signup.sign_up_with_google") }}</span>
         </button>
         <p class="mt-8 text-[#535862] text-sm text-center">
-          {{ $t('login.already_have_an_account') }}
-          <span
-            @click="navigateTo(localePath('/login'))"
-            class="text-[#175CD3] font-semibold cursor-pointer"
-            >{{ $t('login.login') }}</span
-          >
+          {{ $t("login.already_have_an_account") }}
+          <NuxtLinkLocale :to="'/login'">
+            <span class="text-[#175CD3] font-semibold cursor-pointer">{{
+              $t("login.login")
+            }}</span>
+          </NuxtLinkLocale>
         </p>
       </div>
     </div>
@@ -106,6 +106,39 @@ import type { UserInput } from "~/types/home";
 definePageMeta({
   layout: "main-layout",
 });
+
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/signup`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/signup`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/signup`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/signup`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
 
 const { t } = useI18n();
 const localePath = useLocalePath();
@@ -124,7 +157,7 @@ const handleClick = () => {
     checkToken.value = null;
   }
   window.location.href = `${config.public.baseURL}/auth/google`;
-}
+};
 const onSubmit = () => {
   const signupInfo = useCookie("signupInfo", {
     httpOnly: false,

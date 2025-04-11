@@ -36,10 +36,17 @@ definePageMeta({
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
-const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/school-list`;
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/school-list`;
 useHead(
   computed(() => ({
     link: [
+      {
+        rel: "preload",
+        href: "/images/ai-recommendation.png",
+        as: "image",
+      },
       {
         rel: "canonical",
         href: canonicalUrl,
@@ -107,7 +114,7 @@ watch(
 );
 
 onMounted(async () => {
-  if (dashboardStore.isSchoolListPublic) { 
+  if (dashboardStore.isSchoolListPublic) {
     const response = await api.get("/api/v1/session-based-journey/session");
     if (response.data) {
       const token = useCookie("publicToken", {

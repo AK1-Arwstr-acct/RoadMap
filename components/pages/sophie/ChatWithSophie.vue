@@ -102,6 +102,18 @@
 import axios from "axios";
 import type { ChatDetail } from "~/types/home";
 
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "preload",
+        href: "/images/sophie-chat.png",
+        as: "image",
+      },
+    ],
+  }))
+);
+
 const { api } = useApi();
 const { showToast } = useToast();
 

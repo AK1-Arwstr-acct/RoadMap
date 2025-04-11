@@ -255,6 +255,7 @@ const resetUserData = () => {
   dashboardStore.locationOptions = [];
   dashboardStore.budgetList = [];
   dashboardStore.coursePreferenceOptions = [];
+  dashboardStore.selectedPublicMajors = [];
   dashboardStore.isPublicMajorEnable = false;
 };
 

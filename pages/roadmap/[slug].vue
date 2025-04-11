@@ -51,6 +51,39 @@ definePageMeta({
 const appTrackerStore = useAppTrackerStore();
 const route = useRoute();
 
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/roadmap/${route.params.slug}`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/roadmap/${route.params.slug}`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/roadmap/${route.params.slug}`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/roadmap/${route.params.slug}`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
+
 type TrackerSteps =
   | "pre_application"
   | "countries_application"
