@@ -12,6 +12,7 @@
   </div>
 </template>
 <script setup lang="ts">
+
 const deviceType = useDeviceType();
 
 const desktop = {
