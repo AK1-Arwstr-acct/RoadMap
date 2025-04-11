@@ -11,7 +11,7 @@
         loading="eager" />
       <div
         class="size-24 min-w-24 absolute -bottom-10 left-4 z-10 border-2 border-white bg-white rounded-[200px] shadow-lg overflow-hidden">
-        <img :src="schoolData.avatar" :alt="schoolData.name" class="object-cover" />
+        <img :src="schoolData.avatar" :alt="schoolData.name" class="size-full object-contain" />
       </div>
     </div>
     <!--  -->

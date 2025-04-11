@@ -86,6 +86,7 @@
               </div>
             </Transition>
             <input
+              type="number"
               name="phoneNumber"
               ref="phoneInput"
               inputmode="numeric"
