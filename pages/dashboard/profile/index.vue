@@ -7,7 +7,9 @@
           <PersonelInfo />
           <div v-show="showAchievements">
             <div class="flex justify-between items-center font-semibold mb-5">
-              <h3 class="text-xl md:text-2xl text-[#181D27]">Your achievement</h3>
+              <h3 class="text-xl md:text-2xl text-[#181D27]">
+                Your achievement
+              </h3>
               <span
                 @click="
                   navigateTo(localePath('/dashboard/profile/achievements'))
@@ -26,11 +28,12 @@
           <div v-if="essayStore.userEssayList.length">
             <div class="flex justify-between items-center font-semibold mb-5">
               <h3 class="text-xl md:text-2xl text-[#181D27]">Your AI Essay</h3>
-              <span
-                @click="navigateTo(localePath('/dashboard/profile/essays'))"
-                class="text-sm md:text-[18px] text-[#175CD3] cursor-pointer"
-                >View All</span
-              >
+              <NuxtLinkLocale :to="'/dashboard/profile/essays'">
+                <span
+                  class="text-sm md:text-[18px] text-[#175CD3] cursor-pointer"
+                  >View All</span
+                >
+              </NuxtLinkLocale>
             </div>
             <div class="flex flex-col gap-6">
               <EssayCard
@@ -53,6 +56,39 @@ import type { EssayData } from "~/types/home";
 definePageMeta({
   layout: "dashboard-layout",
 });
+
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/dashboard/profile`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/dashboard/profile`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/dashboard/profile`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/dashboard/profile`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
 
 const { api } = useApi();
 const essayStore = useEssayStore();

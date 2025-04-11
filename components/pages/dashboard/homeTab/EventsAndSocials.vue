@@ -58,12 +58,12 @@
             </div>
           </div>
           <div v-else class="flex items-center gap-2 cursor-pointer">
-            <p
+            <NuxtLinkLocale
               class="text-[#1570EF] font-semibold cursor-pointer"
-              @click="navigateTo($localePath(item.link.value))"
+              :to="item.link.value"
             >
               {{ item.link.text }}
-            </p>
+            </NuxtLinkLocale>
             <IconArrowRight height="20" width="20" fill="#1570EF" />
           </div>
         </div>

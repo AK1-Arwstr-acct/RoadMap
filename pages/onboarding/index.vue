@@ -41,6 +41,47 @@ definePageMeta({
   layout: "main-layout",
 });
 
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/onboarding`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: 'preload',
+        href: '/images/tell-me-more.png',
+        as: 'image',
+      },
+      {
+        rel: 'preload',
+        href: '/images/lets-go.png',
+        as: 'image',
+      },
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/onboarding`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/onboarding`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/onboarding`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
+
 const appStore = useAppStore();
 const onboardingStore = useOnboardingStore();
 const { showToast } = useToast();

@@ -45,15 +45,15 @@
               <p class="text-[#535862] mt-1 mb-4">
                 {{ step.description }}
               </p>
-              <div
-                @click="navigateTo($localePath(step.navigate.navigateTo))"
+              <NuxtLinkLocale
+                :to="step.navigate.navigateTo"
                 class="flex items-center gap-2 cursor-pointer"
               >
                 <p class="text-[#175CD3] font-semibold text-sm lg:text-base">
                   {{ step.navigate.text }}
                 </p>
                 <IconArrowRight height="20" width="20" fill="#175CD3" />
-              </div>
+              </NuxtLinkLocale>
             </div>
           </div>
         </div>

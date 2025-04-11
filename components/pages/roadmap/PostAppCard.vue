@@ -54,28 +54,30 @@
         </div>
         <IconTabSophie class="invert" />
       </div>
-      <button
-        @click="navigateTo(localePath('/roadmap/post-application'))"
-        class="bg-white text-[#1570EF] font-semibold border border-gray-300 rounded-xl px-5 py-3 w-full"
-        :class="[
-          checkCompletedTask
-            ? 'shadow-[0px_1px_2px_0px_#0A0D120D]'
-            : 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]',
-        ]"
-      >
-        <span
-          class="text-[#DC6803]"
-          v-if="
-            checkCompletedTask ===
-            appTrackerStore.postApplication?.tasks?.length
-          "
-          >Review</span
+      <NuxtLinkLocale :to="'/roadmap/post-application'">
+        <div
+          :to="'/roadmap/post-application'"
+          class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl px-5 py-3 w-full"
+          :class="[
+            checkCompletedTask
+              ? 'shadow-[0px_1px_2px_0px_#0A0D120D]'
+              : 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]',
+          ]"
         >
-        <span v-else-if="checkCompletedTask > 0" class="text-[#DC6803]"
-          >Continue</span
-        >
-        <span v-else>Jump to Post - Application</span>
-      </button>
+          <span
+            class="text-[#DC6803]"
+            v-if="
+              checkCompletedTask ===
+              appTrackerStore.postApplication?.tasks?.length
+            "
+            >Review</span
+          >
+          <span v-else-if="checkCompletedTask > 0" class="text-[#DC6803]"
+            >Continue</span
+          >
+          <span v-else>Jump to Post - Application</span>
+        </div>
+      </NuxtLinkLocale>
     </div>
   </div>
 </template>

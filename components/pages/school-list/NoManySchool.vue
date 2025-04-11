@@ -6,12 +6,14 @@
       If you'd like more guidance or personalized suggestions, our team is here
       to help!
     </p>
-    <button
-      @click="navigateTo(localePath('/pricing'))"
-      class="text-sm font-semibold text-white py-2 px-3.5 bg-[#1570EF] rounded-lg mt-5"
-    >
-      Talk to our team
-    </button>
+    <div>
+      <NuxtLinkLocale
+        :to="'/pricing'"
+        class="text-sm font-semibold text-white py-2 px-3.5 bg-[#1570EF] rounded-lg mt-5"
+      >
+        Talk to our team
+      </NuxtLinkLocale>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

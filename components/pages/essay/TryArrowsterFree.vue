@@ -16,12 +16,12 @@
         </h1>
       </div>
       <div class="flex justify-center">
-        <button
-          @click="navigateTo(localePath('/pricing'))"
+        <NuxtLinkLocale
+          :to="'/pricing'"
           class="w-full text-white bg-[#1570EF] rounded-lg py-2.5 max-w-[360px] font-semibold"
         >
           Try Arrowster for Free
-        </button>
+        </NuxtLinkLocale>
       </div>
     </div>
   </div>

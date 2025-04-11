@@ -20,7 +20,7 @@
           <img
             v-if="!route.path.includes('/sophie')"
             class="w-24"
-            :class="{ 'hidden lg:block': !route.path.includes('/sophie') }"
+            :class="{ 'hidden xl:block': !route.path.includes('/sophie') }"
             src="/images/logo/logo.svg"
             alt="Logo"
             loading="eager"

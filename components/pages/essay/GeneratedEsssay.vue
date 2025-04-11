@@ -3,8 +3,8 @@
     <div
       class="flex w-full justify-between items-center py-5 sm:py-8 px-5 sm:px-28 md:border-b border-[#E9EAEB]"
     >
-      <div
-        @click="navigateTo(localePath('/dashboard'))"
+      <NuxtLinkLocale
+        :to="'/dashboard'"
         class="hidden md:flex gap-2 items-center cursor-pointer"
       >
         <img
@@ -13,7 +13,7 @@
           class="w-40 md:w-44 h-6 md:h-7"
           loading="eager"
         />
-      </div>
+      </NuxtLinkLocale>
       <button
         @click="submit"
         :disabled="isSubmitting || isSubmitedBefore"
@@ -58,12 +58,12 @@
               </p>
             </div>
           </div>
-          <button
-            @click="navigateTo(localePath('/pricing'))"
+          <NuxtLinkLocale
+            :to="'/pricing'"
             class="text-[#414651] w-full sm:w-fit text-nowrap font-semibold text-sm py-2 px-3.5 border border-[#D5D7DA] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D]"
           >
             Make my essay 10x better
-          </button>
+          </NuxtLinkLocale>
         </div>
       </div>
     </div>

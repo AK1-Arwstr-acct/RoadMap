@@ -2,18 +2,17 @@
   <main v-if="stepCount === 1">
     <div class="py-5 px-3 border-b border-gray-200 md:hidden">
       <div class="flex justify-between items-center">
-        <div
-          @click="navigateTo(localePath('/dashboard'))"
-          class="cursor-pointer flex items-center gap-2"
-        >
-          <IconArrowsterLogo class="size-8 min-w-8" />
-          <img
-            src="/images/logo/logo.svg"
-            alt="Logo"
-            class="w-full h-5"
-            loading="eager"
-          />
-        </div>
+        <NuxtLinkLocale :to="'/dashboard'">
+          <div class="cursor-pointer flex items-center gap-2">
+            <IconArrowsterLogo class="size-8 min-w-8" />
+            <img
+              src="/images/logo/logo.svg"
+              alt="Logo"
+              class="w-full h-5"
+              loading="eager"
+            />
+          </div>
+        </NuxtLinkLocale>
         <div
           v-if="appStore.authenticatedUser"
           @click="isMobileSideBarOpen = true"
@@ -49,12 +48,11 @@
     <section class="w-full mx-auto max-w-[1216px] px-0 mt-8 mb-10">
       <div class="px-5">
         <div class="hidden md:flex justify-end">
-          <span
-            @click="navigateTo($localePath('/dashboard'))"
-            class="cursor-pointer"
-          >
-            <IconCross fill="#A4A7AE" width="24" height="24" />
-          </span>
+          <NuxtLinkLocale :to="'/dashboard'">
+            <span class="cursor-pointer">
+              <IconCross fill="#A4A7AE" width="24" height="24" />
+            </span>
+          </NuxtLinkLocale>
         </div>
         <h1 class="text-4xl text-[#181D27] font-semibold">
           Your study abroad success starts <br />here – Get the perfect plan for
@@ -178,12 +176,13 @@
         Thank you for your submission! We've received your form and will contact
         you soon!
       </p>
-      <button
-        @click="navigateTo(localePath('/dashboard'))"
-        class="bg-white text-sm sm:text-base text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8 max-w-[330px]"
-      >
-        Back to home
-      </button>
+      <NuxtLinkLocale :to="'/dashboard'" class="w-full">
+        <button
+          class="bg-white text-sm sm:text-base text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8 max-w-[330px]"
+        >
+          Back to home
+        </button>
+      </NuxtLinkLocale>
     </div>
   </div>
   <!--  -->
@@ -205,6 +204,39 @@ import MobileSideBar from "~/components/shared/MobileSideBar.vue";
 
 const appStore = useAppStore();
 const localePath = useLocalePath();
+
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/pricing`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/pricing`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/pricing`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/pricing`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
 
 const stepCount = ref<number>(1);
 const selectedPlan = ref<number>(3);

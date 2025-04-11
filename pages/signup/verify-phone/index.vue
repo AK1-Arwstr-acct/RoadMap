@@ -22,6 +22,37 @@ definePageMeta({
   middleware: "verify-data"
 });
 
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/verify-phone`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/verify-phone`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/verify-phone`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/verify-phone`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
+
 const steps = ref<"inputPhoneNumber" | "otpVerification">("inputPhoneNumber");
 const phoneNumber = ref<string>("");
 const selectedOption = ref<Country>();

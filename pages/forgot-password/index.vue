@@ -23,6 +23,37 @@ definePageMeta({
   layout: "main-layout",
 });
 
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/forgot-password`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/forgot-password`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/forgot-password`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/forgot-password`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
+
 const steps = ref<"input_number" | "verify_number" | "update_password">(
   "input_number"
 );

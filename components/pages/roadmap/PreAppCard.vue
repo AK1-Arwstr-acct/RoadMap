@@ -45,19 +45,21 @@
         </div>
         <IconTabSophie class="invert" />
       </div>
-      <button
-        @click="navigateTo(localePath('/roadmap/pre-application'))"
-        class="bg-white text-[#1570EF] font-semibold border border-gray-300 rounded-xl shadow-[0px_1px_2px_0px_#0A0D120D] px-5 py-3 w-full"
-      >
-        <span v-if="checkCompletedTask === 0">Start here</span>
-        <span
-          v-else-if="
-            checkCompletedTask === appTrackerStore.preApplication?.tasks?.length
-          "
-          >Review</span
+      <NuxtLinkLocale :to="'/roadmap/pre-application'">
+        <div
+          class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl shadow-[0px_1px_2px_0px_#0A0D120D] px-5 py-3 w-full"
         >
-        <span v-else>Continue</span>
-      </button>
+          <span v-if="checkCompletedTask === 0">Start here</span>
+          <span
+            v-else-if="
+              checkCompletedTask ===
+              appTrackerStore.preApplication?.tasks?.length
+            "
+            >Review</span
+          >
+          <span v-else>Continue</span>
+        </div>
+      </NuxtLinkLocale>
     </div>
   </div>
 </template>

@@ -11,7 +11,7 @@
         loading="eager" />
       <div
         class="size-24 min-w-24 absolute -bottom-10 left-4 z-10 border-2 border-white bg-white rounded-[200px] shadow-lg overflow-hidden">
-        <img :src="schoolData.avatar" :alt="schoolData.name" class="object-cover" />
+        <img :src="schoolData.avatar" :alt="schoolData.name" class="size-full object-contain" />
       </div>
     </div>
     <!--  -->
@@ -189,10 +189,11 @@
         </div>
       </div>
       <!-- button -->
-      <button @click="handleClick"
-        class="text-white text-sm bg-[#1570EF] rounded-lg w-full py-2.5 -order-1 md:order-none">
+      <NuxtLinkLocale
+      :to="'/pricing'"
+        class="text-white text-sm bg-[#1570EF] rounded-lg w-full p-2.5 text-center -order-1 md:order-none">
         Scholarships for this school?
-      </button>
+      </NuxtLinkLocale>
     </div>
   </div>
 </template>
@@ -215,8 +216,4 @@ let randomNumber = Math.floor(Math.random() * 25) + 1;
 const options = {
   html: true,
 };
-
-const handleClick = () => {
-  navigateTo(localePath('/pricing'))
-}
 </script>

@@ -14,12 +14,12 @@
         </h1>
       </div>
       <div class="px-14">
-        <button
-          @click="navigateTo(localePath('/dashboard'))"
+        <NuxtLinkLocale
+          :to="'/dashboard'"
           class="w-full text-white bg-[#1570EF] rounded-lg py-2.5"
         >
           {{ $t("onboarding.start_your_journey") }}
-        </button>
+        </NuxtLinkLocale>
       </div>
     </div>
   </div>

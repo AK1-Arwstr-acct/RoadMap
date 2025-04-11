@@ -13,7 +13,7 @@
           <IconCross fill="#414651" width="20" height="20" />
         </div>
       </div>
-      <div
+      <NuxtLinkLocale
         v-if="
           taskDetail?.title
             .toLocaleLowerCase()
@@ -22,7 +22,7 @@
             .toLocaleLowerCase()
             .includes('write supplemental essays')
         "
-        @click="navigateTo(localePath('/ai-essay'))"
+        :to="'/ai-essay'"
         class="rounded-xl bg-[#2E90FA] py-3 px-4 flex justify-between items-center gap-2 shadow-[0px_0px_0px_4px_#EFF8FF] cursor-pointer"
       >
         <div class="font-semibold text-white flex items-center gap-2">
@@ -30,7 +30,7 @@
           Sophie AI Essay Editor
         </div>
         <IconArrowRight fill="#ffffff" width="24" height="24" />
-      </div>
+      </NuxtLinkLocale>
       <div class="flex flex-col gap-6">
         <div
           v-for="(resource, idx) in taskDetail.resources"
@@ -85,12 +85,14 @@
         </span>
         <IconTick v-if="!taskDetail?.checked" stroke="#ffffff" />
       </button>
-      <button
-        @click="navigateTo(localePath('/pricing'))"
-        class="border border-gray-300 rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D] py-2.5 px-4 text-sm text-[#414651] font-semibold w-full"
-      >
-        {{ taskDetail.button_text }}
-      </button>
+      <div>
+        <NuxtLinkLocale
+          :to="'/pricing'"
+          class="border border-gray-300 rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D] py-2.5 px-4 text-sm text-[#414651] font-semibold w-full text-center"
+        >
+          {{ taskDetail.button_text }}
+        </NuxtLinkLocale>
+      </div>
     </div>
   </div>
 
@@ -121,12 +123,12 @@
           >
             Cancel
           </button>
-          <button
-            @click="navigateTo(localePath('/signup'))"
-            class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+          <NuxtLinkLocale
+            :to="'/signup'"
+            class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
           >
             Sign up for free
-          </button>
+          </NuxtLinkLocale>
         </div>
       </div>
     </div>
@@ -156,12 +158,12 @@
           >
             Cancel
           </button>
-          <button
-            @click="navigateTo(localePath('/signup'))"
-            class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+          <NuxtLinkLocale
+            :to="'/signup'"
+            class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
           >
             Sign up for free
-          </button>
+          </NuxtLinkLocale>
         </div>
       </div>
     </div>
