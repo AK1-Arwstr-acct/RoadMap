@@ -2,7 +2,7 @@
   <div
     class="border border-gray-200 rounded-2xl shadow-[0px_12px_16px_-4px_#0A0D1214] px-6 pb-8 pt-10 flex flex-col items-center"
   >
-    <h3 class="text-[#181D27] font-semibold text-3xl">50,000,000 VND</h3>
+    <p class="text-[#181D27] font-semibold text-3xl">50,000,000 VND</p>
     <p class="mt-4 text-xl text-[#181D27] font-medium">Advanced Plan</p>
     <p class="text-[#535862]">1-1 mentor support</p>
     <div class="flex flex-col gap-4 w-full mt-8">

@@ -16,7 +16,7 @@
       </button>
     </div>
     <div class="text-[#414651] text-sm pt-6 overflow-x-hidden">
-      <h4 class="font-medium px-2 mb-4">Recents</h4>
+      <p class="font-medium px-2 mb-4">Recents</p>
       <div class="flex flex-col">
         <div
           class="truncate cursor-pointer p-2 rounded-lg"
@@ -32,6 +32,7 @@
   </div>
 </template>
 <script setup lang="ts">
+
 const emit = defineEmits(["newChat", "chatDetail"]);
 defineProps({
   chatHistoryArray: {

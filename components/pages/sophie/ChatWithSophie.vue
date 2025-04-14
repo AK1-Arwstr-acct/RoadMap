@@ -14,7 +14,8 @@
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
     <div
-      class="w-[300px] hidden md:block"
+      v-if="deviceType !== 'mobile'"
+      class="w-[300px]"
       :class="{ 'pointer-events-none': isChatLoading }"
     >
       <SophieHistory
@@ -25,7 +26,8 @@
       />
     </div>
     <div
-      class="flex-1 pb-4 px-5 w-full hidden md:block"
+      v-if="deviceType !== 'mobile'"
+      class="flex-1 pb-4 px-5 w-full"
       :class="[isModal ? 'pt-[68px]' : 'pt-4']"
     >
       <SophieChat
@@ -37,7 +39,7 @@
       />
     </div>
     <!-- Mobile view -->
-    <div class="md:hidden w-full flex flex-col gap-1">
+    <div v-if="deviceType === 'mobile'" class="w-full flex flex-col gap-1">
       <div class="py-4 px-6 border-b border-gray-200">
         <div
           class="border border-[#F5F5F5] bg-[#FAFAFA] rounded-lg p-1 flex gap-2"
@@ -101,6 +103,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import type { ChatDetail } from "~/types/home";
+import useSophieStore from "~/stores/sophieStore";
 
 useHead(
   computed(() => ({
@@ -116,8 +119,10 @@ useHead(
 
 const { api } = useApi();
 const { showToast } = useToast();
+const sophieStore = useSophieStore();
 
 const emit = defineEmits(["openSophieModal"]);
+const deviceType = useDeviceType();
 
 const props = defineProps({
   isModal: {
@@ -144,9 +149,22 @@ const handelNewChat = () => {
 
 const chatDetail = async (id: number) => {
   try {
-    const response = await api.get(
-      `/api/v1/ai-conversation/get-sophie-sessions/chat/${id}`
-    );
+    let response;
+    if (sophieStore.isSophiePublic) {
+      const publicToken = useCookie("publicToken");
+      response = await api.get(
+        `/api/v1/session-based-journey/ai-conversation/get-sophie-sessions/chat/${id}`,
+        {
+          headers: {
+            "X-auth-token": publicToken.value,
+          },
+        }
+      );
+    } else {
+      response = await api.get(
+        `/api/v1/ai-conversation/get-sophie-sessions/chat/${id}`
+      );
+    }
     if (response) {
       singleChatDetail.value = response.data.data;
     }
@@ -164,9 +182,20 @@ const chatDetail = async (id: number) => {
 
 const getChatHistory = async () => {
   try {
-    const response = await api.get(
-      "/api/v1/ai-conversation/get-sophie-sessions"
-    );
+    let response;
+    if (sophieStore.isSophiePublic) {
+      const publicToken = useCookie("publicToken");
+      response = await api.get(
+        "/api/v1/session-based-journey/ai-conversation/get-sophie-sessions",
+        {
+          headers: {
+            "X-auth-token": publicToken.value,
+          },
+        }
+      );
+    } else {
+      response = await api.get("/api/v1/ai-conversation/get-sophie-sessions");
+    }
     if (response) {
       chatHistoryArray.value = response.data.data;
     }
@@ -181,6 +210,25 @@ const getChatHistory = async () => {
 };
 
 onMounted(async () => {
-  getChatHistory();
+  if (!sophieStore.isSophiePublic) {
+    getChatHistory();
+  } else {
+    const publicToken = useCookie("publicToken");
+    if (!publicToken.value) {
+      const response = await api.get("/api/v1/session-based-journey/session");
+      if (response.data) {
+        const tokenValue = JSON.stringify(response.data.data.token);
+        const token = useCookie("publicToken", {
+          maxAge: 10800,
+          httpOnly: false,
+          secure: true,
+        });
+        token.value = tokenValue;
+        // await nextTick();
+      }
+    } else {
+      getChatHistory();
+    }
+  }
 });
 </script>

@@ -14,12 +14,12 @@
     </div>
     <div class="">
       <div class="flex justify-between items-center">
-        <h3
+        <p
           class="text-2xl font-semibold capitalize"
           :class="[checkCompletedTask ? 'text-white' : 'text-[#181D27]']"
         >
           Application
-        </h3>
+        </p>
         <p
           class="rounded-2xl px-3 font-semibold py-1 text-[#414651] text-sm text-nowrap"
           :class="[checkCompletedTask ? 'bg-[#F5F5F5]' : 'bg-[#ebebeb]']"

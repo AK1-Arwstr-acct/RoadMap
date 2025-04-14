@@ -8,7 +8,7 @@
       <IconAfternoon v-else-if="time >= 12 && time < 18" />
       <IconEvening v-else-if="time >= 18 && time < 22" />
       <IconNight v-else />
-      <h4 class="inline-block ml-1">{{ getGreeting }}</h4>
+      <p class="inline-block ml-1">{{ getGreeting }}</p>
       <p v-if="appStore.userData?.name" class="text-[#181D27]">
         <span class="text-[#535862]">,&nbsp;</span>{{ appStore.userData?.name }}
       </p>

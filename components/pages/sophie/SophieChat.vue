@@ -12,11 +12,11 @@
             class="w-[100px] md:h-[242px] md:w-[252px]"
             loading="eager"
           />
-          <span class="text-[#414651] text-sm md:text-xl font-medium mt-6">
+          <h1 class="text-[#414651] text-sm md:text-xl font-medium mt-6">
             How can Sophie help you today?
-          </span>
+          </h1>
           <!-- deskop -->
-          <div class="hidden md:block">
+          <div v-if="deviceType !== 'mobile'">
             <textarea
               placeholder="Message Sophie"
               rows="3"
@@ -39,7 +39,7 @@
           </div>
         </div>
         <!-- mobile -->
-        <div class="md:hidden w-full">
+        <div v-if="deviceType === 'mobile'" class="w-full">
           <div class="w-full overflow-hidden">
             <div class="flex overflow-x-auto mt-3 gap-3 w-full">
               <div
@@ -70,10 +70,7 @@
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="size-full overflow-hidden max-w-[710px] mx-auto flex flex-col gap-4"
-      >
+      <div v-else class="size-full overflow-hidden flex flex-col gap-4">
         <!-- chat -->
         <div
           ref="chatContainer"
@@ -84,7 +81,7 @@
               (item) => item.text !== ''
             )"
             :key="index"
-            class="flex items-start gap-3 w-full"
+            class="flex items-start gap-3 w-full max-w-[710px] mx-auto"
             :class="{
               'justify-end': chat.isSender,
             }"
@@ -113,7 +110,7 @@
           </div>
           <div
             v-if="isChatLoading"
-            class="w-fit text-[#A4A7AE] font-thin flex items-center gap-3"
+            class="w-full text-[#A4A7AE] font-thin flex items-center gap-3 max-w-[710px] mx-auto"
           >
             <div class="size-8 min-w-8 rounded-full bg-black overflow-hidden">
               <img
@@ -139,7 +136,7 @@
           </div>
         </div>
         <!-- input -->
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 w-full max-w-[710px] mx-auto">
           <Transition name="fade">
             <div
               v-if="isChatFull"
@@ -190,7 +187,7 @@
         </div>
       </div>
     </div>
-    <div v-if="completeChat.length !== 0">
+    <div v-if="completeChat.length !== 0" class="w-full max-w-[710px] mx-auto">
       <p class="text-[#A4A7AE] text-xs text-center">
         <span v-if="!readOnly">
           Sophie can make mistakes. Please check important info.
@@ -208,10 +205,13 @@ import axios from "axios";
 import type { ChatDetail, SophieChat } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
 import useDashboardStore from "~/stores/dashboardStore";
+import useSophieStore from "~/stores/sophieStore";
 
 const { api } = useApi();
 const { showToast } = useToast();
 const dashboardStore = useDashboardStore();
+const sophieStore = useSophieStore();
+const deviceType = useDeviceType();
 
 const emit = defineEmits(["isChatLoading"]);
 
@@ -299,10 +299,27 @@ const submit = async () => {
     inputQuestion.value = "";
     await nextTick();
     adjustHeight();
-    const response = await api.post(`/api/v1/ai-conversation/sophie`, {
-      query: userQuery,
-      sophieSessionId: uuid.value,
-    });
+    let response;
+    if (sophieStore.isSophiePublic) {
+      const publicToken = useCookie("publicToken");
+      response = await api.post(
+        `/api/v1/session-based-journey/ai-conversation/sophie`,
+        {
+          query: userQuery,
+          sophieSessionId: uuid.value,
+        },
+        {
+          headers: {
+            "X-auth-token": publicToken.value,
+          },
+        }
+      );
+    } else {
+      response = await api.post(`/api/v1/ai-conversation/sophie`, {
+        query: userQuery,
+        sophieSessionId: uuid.value,
+      });
+    }
     if (response) {
       if (response.data.data) {
         completeChat.value.push({
