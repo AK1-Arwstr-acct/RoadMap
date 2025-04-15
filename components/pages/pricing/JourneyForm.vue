@@ -96,6 +96,7 @@
         Your school name <span class="text-[#F04438]">*</span>
       </p>
       <input
+        name="user_input_schoolName"
         type="text"
         placeholder="e.g. THPT Nhân Chính"
         v-model="formDetails.schoolName"
@@ -110,6 +111,7 @@
         <span class="text-[#F04438]">*</span>
       </p>
       <input
+        name="user_input_budget"
         type="text"
         placeholder="e.g. 500,000,000VND"
         v-model="formDetails.financialSupport"
@@ -190,6 +192,7 @@
         <span class="text-[#F04438]">*</span>
       </p>
       <input
+        name="user_input_dreamSchol"
         type="text"
         placeholder="e.g. University of Sydney, University of Melbourne"
         v-model="formDetails.dreamSchool"
@@ -252,6 +255,7 @@
         <!-- <span class="text-[#F04438]">*</span> -->
       </p>
       <input
+        name="user_input_contact"
         type="text"
         placeholder="Account information (Phone number/Username)"
         v-model="formDetails.otherPhoneOrEmail"

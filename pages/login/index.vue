@@ -86,7 +86,7 @@
               </div>
             </Transition>
             <input
-              name="phoneNumber"
+              name="user_input_phoneNumber"
               ref="phoneInput"
               inputmode="numeric"
               @input="(event) => validateNumber(event)"

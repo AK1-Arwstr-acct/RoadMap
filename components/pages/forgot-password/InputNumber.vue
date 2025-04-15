@@ -41,10 +41,7 @@
                   {{ selectedOption?.country_code }}
                 </p>
                 <div v-else class="min-w-6 min-h-6">
-                  <IconSpinner
-                    bgColor="white"
-                    stroke="#1570EF"
-                  />
+                  <IconSpinner bgColor="white" stroke="#1570EF" />
                 </div>
               </div>
               <IconChevronDown
@@ -86,7 +83,7 @@
             </div>
           </Transition>
           <input
-            name="phoneNumber"
+            name="user_input_phoneNumber"
             ref="phoneInput"
             inputmode="numeric"
             @input="(event) => validateNumber(event)"
@@ -107,7 +104,7 @@
           class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
         >
           {{ $t("forgotPassword.get_verification_code") }}
-          <IconSpinner class="size-5" v-if="isSubmitting"  />
+          <IconSpinner class="size-5" v-if="isSubmitting" />
         </button>
       </div>
     </div>

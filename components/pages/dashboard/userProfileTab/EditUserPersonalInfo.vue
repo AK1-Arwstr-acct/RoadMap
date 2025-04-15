@@ -16,6 +16,7 @@
           <div class="sm:w-1/2 mb-6 sm:mb-0">
             <label class="block text-[#535862] font-semibold">Name</label>
             <input
+              name="user_input_name"
               type="text"
               v-model="userInitialData.name"
               placeholder="Enter Name"
@@ -48,6 +49,7 @@
               </div> -->
             </div>
             <input
+              name="user_input_number"
               type="text"
               :value="userInitialData.phoneNumber"
               class="w-full px-3.5 py-2.5 text-[#181D27] outline-none rounded-r-lg"
@@ -63,6 +65,7 @@
           >
             <span><IconEmail /></span>
             <input
+              name="user_input_mail"
               type="email"
               v-model="userInitialData.email"
               class="w-full text-[#181D27] outline-none"

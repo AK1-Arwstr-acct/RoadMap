@@ -54,6 +54,7 @@
           </div>
           <div class="relative mt-6">
             <input
+              name="user_input_question"
               placeholder="Message Sophie"
               v-model="inputQuestion"
               class="w-full pl-3.5 pr-12 py-2.5 border-[1.5px] border-gray-200 rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"

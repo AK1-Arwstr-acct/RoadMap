@@ -21,7 +21,7 @@
               $t("signup.name")
             }}</label>
             <input
-              name="Name"
+              name="user_input_name"
               type="text"
               v-model="userInput.name"
               :placeholder="t('signup.enter_your_name')"
@@ -34,7 +34,7 @@
               $t("signup.email")
             }}</label>
             <input
-              name="email"
+              name="user_input_mail"
               type="text"
               v-model="userInput.email"
               placeholder="nguyen@example.com"

@@ -12,7 +12,7 @@
             >Your email<span class="text-[#F04438]">*</span></label
           >
           <input
-            name="userEmail"
+            name="user_input_email"
             type="email"
             v-model="userInput.email"
             @keydown.enter="submit"
@@ -97,7 +97,7 @@
               </div>
             </Transition>
             <input
-              name="phoneNumber"
+              name="user_input_phoneNumber"
               ref="phoneInput"
               inputmode="numeric"
               @input="(event) => validateNumber(event)"
