@@ -34,6 +34,7 @@
         :isNewChat="isNewChat"
         :singleChatDetail="singleChatDetail"
         :isModal="isModal"
+        :isTokenLoaded="isTokenLoaded"
         :isSummarizeOverview="isSummarizeOverview"
         @isChatLoading="(value) => (isChatLoading = value)"
       />
@@ -92,6 +93,7 @@
             :isNewChat="isNewChat"
             :singleChatDetail="singleChatDetail"
             :isModal="isModal"
+            :isTokenLoaded="isTokenLoaded"
             :isSummarizeOverview="isSummarizeOverview"
             @isChatLoading="(value) => (isChatLoading = value)"
           />
@@ -120,6 +122,7 @@ useHead(
 const { api } = useApi();
 const { showToast } = useToast();
 const sophieStore = useSophieStore();
+const route = useRoute();
 
 const emit = defineEmits(["openSophieModal"]);
 const deviceType = useDeviceType();
@@ -135,6 +138,7 @@ const props = defineProps({
   },
 });
 
+const isTokenLoaded = ref<boolean>(false);
 const isChatLoading = ref<boolean>(false);
 const isNewChat = ref<boolean>(false);
 const chatHistoryArray = ref<{ id: number; title: string }[]>([]);
@@ -210,9 +214,7 @@ const getChatHistory = async () => {
 };
 
 onMounted(async () => {
-  if (!sophieStore.isSophiePublic) {
-    getChatHistory();
-  } else {
+  if (sophieStore.isSophiePublic) {
     const publicToken = useCookie("publicToken");
     if (!publicToken.value) {
       const response = await api.get("/api/v1/session-based-journey/session");
@@ -224,11 +226,13 @@ onMounted(async () => {
           secure: true,
         });
         token.value = tokenValue;
-        // await nextTick();
+        await nextTick();
+        if (route.query.query) {
+          isTokenLoaded.value = true;
+        }
       }
-    } else {
-      getChatHistory();
     }
   }
+  getChatHistory();
 });
 </script>

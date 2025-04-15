@@ -150,11 +150,13 @@
                   Please find instructions to upgrade for more access here.
                 </p>
               </div>
-              <button
-                class="border-[1.5px] border-gray-200 bg-white rounded-lg py-2 px-3.5"
-              >
-                Upgrade now
-              </button>
+              <NuxtLinkLocale to="/pricing">
+                <button
+                  class="border-[1.5px] border-gray-200 bg-white rounded-lg py-2 px-3.5"
+                >
+                  Upgrade now
+                </button>
+              </NuxtLinkLocale>
             </div>
           </Transition>
           <div
@@ -212,6 +214,7 @@ const { showToast } = useToast();
 const dashboardStore = useDashboardStore();
 const sophieStore = useSophieStore();
 const deviceType = useDeviceType();
+const route = useRoute();
 
 const emit = defineEmits(["isChatLoading"]);
 
@@ -229,6 +232,10 @@ const props = defineProps({
     default: false,
   },
   isSummarizeOverview: {
+    type: Boolean,
+    default: false,
+  },
+  isTokenLoaded: {
     type: Boolean,
     default: false,
   },
@@ -287,12 +294,14 @@ const scrollDown = () => {
 const submit = async () => {
   try {
     emit("isChatLoading", true);
-    completeChat.value.push({
-      isSender: true,
-      text: !props.isSummarizeOverview
-        ? inputQuestion.value
-        : dashboardStore.overViews?.join("\n") || "",
-    });
+    if (!route.query.query) {
+      completeChat.value.push({
+        isSender: true,
+        text: !props.isSummarizeOverview
+          ? inputQuestion.value
+          : dashboardStore.overViews?.join("\n") || "",
+      });
+    }
     scrollDown();
     isChatLoading.value = true;
     const userQuery = inputQuestion.value;
@@ -348,6 +357,10 @@ const submit = async () => {
   } finally {
     isChatLoading.value = false;
     emit("isChatLoading", false);
+    await nextTick();
+    if (textarea.value) {
+      textarea.value?.focus();
+    }
   }
 };
 
@@ -383,13 +396,34 @@ watch(
   }
 );
 
-onMounted(() => {
+watch(
+  () => props.isTokenLoaded,
+  (newValue) => {
+    if (newValue) {
+      submit();
+    }
+  }
+);
+
+onMounted(async () => {
   uuid.value = uuidv4();
   if (props.isSummarizeOverview) {
     inputQuestion.value = `Please summarize my school list \n  ${dashboardStore.overViews?.join(
       "\n"
     )}`;
     submit();
+  }
+  if (route.query.query) {
+    console.log(route.query.query);
+    completeChat.value.push({
+      isSender: true,
+      text: `${route.query.query}`,
+    });
+    isChatLoading.value = true;
+    const publicToken = useCookie("publicToken");
+    if (publicToken.value) {
+      submit();
+    }
   }
 });
 </script>
