@@ -1,9 +1,9 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
     <div class="max-w-[752px] py-3 px-4 mx-auto md:mt-8 mb-16">
-      <h3 class="text-2xl md:text-3xl font-medium text-[#181D27] my-4 md:my-8">
+      <p class="text-2xl md:text-3xl font-medium text-[#181D27] my-4 md:my-8">
         {{ essayStore.finalEssay?.title }}
-      </h3>
+      </p>
       <div class="md:text-lg text-[#414651] flex flex-col gap-3 rounded-lg">
         <ClientOnly>
           <vue-markdown

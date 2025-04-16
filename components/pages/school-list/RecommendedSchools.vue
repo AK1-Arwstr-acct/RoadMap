@@ -20,9 +20,9 @@
         />
       </div>
     </div>
-    <div v-if="isMobileOrTablet" class="my-6">
-      <PublicUserDataInfo v-if="dashboardStore.isSchoolListPublic" />
-      <UserDataInfo v-else />
+    <div v-if="deviceType === 'mobile' || deviceType === 'tablet'" class="my-6">
+      <component v-if="dashboardStore.isSchoolListPublic" :is="mobile.PublicUserDataInfo" />
+      <component v-else :is="mobile.UserDataInfo" />
     </div>
     <PublicInfo
       v-if="
@@ -118,6 +118,12 @@ const emits = defineEmits<{
 const dashboardStore = useDashboardStore();
 const { api } = useApi();
 const { showToast } = useToast();
+const deviceType = useDeviceType();
+
+const mobile = {
+  PublicUserDataInfo: defineAsyncComponent(() => import('~/components/pages/school-list/PublicUserDataInfo.vue')),
+  UserDataInfo: defineAsyncComponent(() => import('~/components/pages/school-list/UserDataInfo.vue')),
+}
 
 const width = ref<number>(0);
 const schoolProfile = ref<SchoolDetail>();

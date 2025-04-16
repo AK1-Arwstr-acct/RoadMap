@@ -118,7 +118,7 @@ onMounted(async () => {
     const response = await api.get("/api/v1/session-based-journey/session");
     if (response.data) {
       const token = useCookie("publicToken", {
-        maxAge: 604800,
+        maxAge: 10800,
         httpOnly: false,
         secure: true,
       });

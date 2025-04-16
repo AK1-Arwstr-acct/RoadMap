@@ -12,9 +12,9 @@
     </div>
     <div class="">
       <div class="flex justify-between items-center">
-        <h3 class="text-white text-2xl font-semibold capitalize">
+        <p class="text-white text-2xl font-semibold capitalize">
           Pre - Application
-        </h3>
+        </p>
         <p
           class="bg-[#F5F5F5] rounded-2xl text-sm px-3 font-semibold py-1 text-[#414651] text-nowrap"
         >

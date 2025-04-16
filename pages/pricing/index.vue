@@ -68,9 +68,9 @@
         <PricingTable
           @selectPlan="selectPlan"
           :plansList="plansList"
-          class="hidden md:block"
+          v-if="deviceType !== 'mobile'"
         />
-        <div class="md:hidden px-5 py-5 flex flex-col gap-3">
+        <div v-else class="px-5 py-5 flex flex-col gap-3">
           <StarterPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
           <StandardPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
           <AdvancedPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
@@ -142,9 +142,9 @@
                   : 'border-[#2E90FA]',
               ]"
             >
-              <h3 class="text-xl font-semibold">
+              <p class="text-xl font-semibold">
                 Step {{ idx + 1 }} : {{ setp.title }}
-              </h3>
+              </p>
               <p class="text-[#D1E9FF] mt-2">
                 {{ setp.description }}
               </p>
@@ -207,6 +207,7 @@ const localePath = useLocalePath();
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
+const deviceType = useDeviceType();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""

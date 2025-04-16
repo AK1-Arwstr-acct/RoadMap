@@ -1,17 +1,17 @@
 <template>
   <div class="pt-8 md:pt-[42px] border-t-[1.5px] border-gray-200">
-    <h3 class="text-xl md:text-2xl font-semibold text-[#181D27] mb-5">
+    <p class="text-xl md:text-2xl font-semibold text-[#181D27] mb-5">
       Personal info
-    </h3>
+    </p>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-6">
       <div
         class="border-[1.5px] border-gray-200 rounded-2xl bg-[#FFFFFF] flex gap-4 px-5 py-3.5 items-center md:items-start"
       >
         <span><IconHeartHexagon class="size-8 md:size-full" /></span>
         <div>
-          <h4 class="md:text-xl text-[#181D27] font-semibold mb-2">
+          <p class="md:text-xl text-[#181D27] font-semibold mb-2">
             {{ userInfo?.educational_records.cgpa }}
-          </h4>
+          </p>
           <h6 class="text-[#A4A7AE]">GPA</h6>
         </div>
       </div>
@@ -20,9 +20,9 @@
       >
         <span><IconGraduationHat class="size-8 md:size-full" /></span>
         <div>
-          <h4 class="md:text-xl text-[#181D27] font-semibold mb-2">
+          <p class="md:text-xl text-[#181D27] font-semibold mb-2">
             {{ userInfo?.educational_records.next_class_grade.class_name || '' }}
-          </h4>
+          </p>
           <h6 class="text-[#A4A7AE]">Study program</h6>
         </div>
       </div>
@@ -31,9 +31,9 @@
       >
         <span><IconCoins class="size-8 md:size-full" /></span>
         <div>
-          <h4 class="md:text-xl text-[#181D27] font-semibold mb-2">
+          <p class="md:text-xl text-[#181D27] font-semibold mb-2">
             0 - {{ userInfo?.educational_records.annual_max_budget }}
-          </h4>
+          </p>
           <h6 class="text-[#A4A7AE]">Annual total budget</h6>
         </div>
       </div>
@@ -42,9 +42,9 @@
       >
         <span><IconBookmark class="size-8 md:size-full" /></span>
         <div class="flex-1">
-          <h4 class="md:text-xl text-[#181D27] font-semibold mb-2 truncate">
+          <p class="md:text-xl text-[#181D27] font-semibold mb-2 truncate">
             {{ userInfo?.educational_records.super_meta_category.title }}
-          </h4>
+          </p>
           <h6 class="text-[#A4A7AE]">Area of study</h6>
         </div>
       </div>
@@ -53,7 +53,7 @@
       >
         <span><IconGlobeNew class="size-8 md:size-full" /></span>
         <div>
-          <h4
+          <p
             class="md:text-xl text-[#181D27] font-semibold mb-2 flex flex-wrap gap-2"
           >
             <span
@@ -63,7 +63,7 @@
             >
               {{ country }}
             </span>
-          </h4>
+          </p>
           <h6 class="text-[#A4A7AE]">Study destination</h6>
         </div>
       </div>
@@ -73,7 +73,7 @@
       >
         <span><IconBookOpen class="size-8 md:size-full" /></span>
         <div>
-          <h4
+          <p
             class="md:text-xl text-[#181D27] font-semibold mb-2 flex flex-wrap gap-2"
           >
             <span
@@ -84,7 +84,7 @@
             >
               {{ majors.title }}
             </span>
-          </h4>
+          </p>
           <h6 class="text-[#A4A7AE]">Majors</h6>
         </div>
       </div>

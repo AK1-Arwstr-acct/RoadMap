@@ -1,9 +1,12 @@
 <template>
   <main class="h-dvh flex flex-col">
-    <div class="py-5 px-3 border-b border-gray-200 md:hidden">
+    <div
+      v-if="deviceType === 'mobile'"
+      class="py-5 px-3 border-b border-gray-200"
+    >
       <div class="flex justify-between items-center">
         <NuxtLinkLocale :to="'/dashboard'">
-          <div class="cursor-pointer flex items-center gap-2">
+          <div class="cursor-pointer flex items-center gap-1">
             <IconArrowsterLogo class="size-8 min-w-8" />
             <img
               src="/images/logo/logo.svg"
@@ -53,7 +56,10 @@
         v-if="!isAiQuestionStart"
         class="size-full p-4 md:p-8 flex flex-col overflow-y-auto no-scrollbar"
       >
-        <div class="hidden md:flex justify-between items-start">
+        <div
+          v-if="deviceType !== 'mobile'"
+          class="flex justify-between items-start"
+        >
           <NuxtLinkLocale :to="'/dashboard'">
             <div class="cursor-pointer">
               <img
@@ -154,6 +160,7 @@ import MobileSideBar from "~/components/shared/MobileSideBar.vue";
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
+const deviceType = useDeviceType();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""

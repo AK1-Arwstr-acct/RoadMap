@@ -5,7 +5,8 @@
     >
       <NuxtLinkLocale
         :to="'/dashboard'"
-        class="hidden md:flex gap-2 items-center cursor-pointer"
+        v-if="deviceType !== 'mobile'"
+        class="flex gap-2 items-center cursor-pointer"
       >
         <img
           src="/images/logo/logo.svg"
@@ -49,9 +50,9 @@
               class="w-[64px] sm:w-[74px] h-[60px] sm:h-[70px] object-contain"
             />
             <div>
-              <h3 class="text-[#181D27] font-medium text-sm sm:text-base">
+              <h2 class="text-[#181D27] font-medium text-sm sm:text-base">
                 We've also sent this essay to your email.
-              </h3>
+              </h2>
               <p class="text-[#535862] text-xs sm:text-sm mt-1.5">
                 This is far from good though. Want to know how to customise it
                 even more and make it 10x better?
@@ -76,7 +77,7 @@ import useEssayStore from "~/stores/essayStore";
 const essayStore = useEssayStore();
 const { api } = useApi();
 const { showToast } = useToast();
-const localePath = useLocalePath();
+const deviceType = useDeviceType();
 
 const isSubmitting = ref<boolean>(false);
 const isSubmitedBefore = ref<boolean>(false);

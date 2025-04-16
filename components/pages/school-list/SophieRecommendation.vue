@@ -80,8 +80,8 @@
             Sign up to continue using AI recommendations!
           </p>
           <p class="text-[#535862] text-sm text-center mt-2">
-            You've reached the limit for AI recommendations. Sign up now to
-            continue exploring more personalized options!
+            Get personalized school recommendations and AI recommendations. Sign
+            up to continue!
           </p>
         </div>
         <div class="flex gap-3">

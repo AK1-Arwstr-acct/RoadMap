@@ -6,9 +6,9 @@
       class="px-6 pt-6 mb-6 flex-1 flex flex-col gap-6 overflow-y-auto custom-scrollbar"
     >
       <div class="flex justify-between items-start gap-3">
-        <h3 class="text-[#414651] font-semibold text-xl">
+        <p class="text-[#414651] font-semibold text-xl">
           {{ taskDetail?.title }}
-        </h3>
+        </p>
         <div @click="emit('clearDetails')" class="cursor-pointer">
           <IconCross fill="#414651" width="20" height="20" />
         </div>
@@ -70,10 +70,10 @@
         </ClientOnly>
       </div>
     </div>
-    <div class="border-t-[1.5px] border-gray-200 p-3 md:p-6 space-y-4">
+    <div class="border-t-[1.5px] border-gray-200 p-3 md:p-6">
       <button
         @click="handelClick"
-        class="border border-[#1570EF] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D] py-2.5 px-4 flex justify-center items-center gap-2 text-sm font-semibold w-full"
+        class="border border-[#1570EF] mb-4 rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D] py-2.5 px-4 flex justify-center items-center gap-2 text-sm font-semibold w-full"
         :class="[
           taskDetail?.checked
             ? 'bg-[#EFF8FF] text-[#175CD3]'
@@ -85,14 +85,13 @@
         </span>
         <IconTick v-if="!taskDetail?.checked" stroke="#ffffff" />
       </button>
-      <div>
-        <NuxtLinkLocale
-          :to="'/pricing'"
+      <NuxtLinkLocale :to="'/pricing'">
+        <button
           class="border border-gray-300 rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D] py-2.5 px-4 text-sm text-[#414651] font-semibold w-full text-center"
         >
           {{ taskDetail.button_text }}
-        </NuxtLinkLocale>
-      </div>
+        </button>
+      </NuxtLinkLocale>
     </div>
   </div>
 

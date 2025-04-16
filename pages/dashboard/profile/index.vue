@@ -7,9 +7,9 @@
           <PersonelInfo />
           <div v-show="showAchievements">
             <div class="flex justify-between items-center font-semibold mb-5">
-              <h3 class="text-xl md:text-2xl text-[#181D27]">
+              <p class="text-xl md:text-2xl text-[#181D27]">
                 Your achievement
-              </h3>
+              </p>
               <span
                 @click="
                   navigateTo(localePath('/dashboard/profile/achievements'))
@@ -27,7 +27,7 @@
 
           <div v-if="essayStore.userEssayList.length">
             <div class="flex justify-between items-center font-semibold mb-5">
-              <h3 class="text-xl md:text-2xl text-[#181D27]">Your AI Essay</h3>
+              <p class="text-xl md:text-2xl text-[#181D27]">Your AI Essay</p>
               <NuxtLinkLocale :to="'/dashboard/profile/essays'">
                 <span
                   class="text-sm md:text-[18px] text-[#175CD3] cursor-pointer"

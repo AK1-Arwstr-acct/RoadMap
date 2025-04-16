@@ -13,9 +13,9 @@
           <!-- <ArticlesCard :articleDetail="upgradePlan[0]" :isUpgradePlan="true" /> -->
           <div class="pb-5 border-b border-gray-200 flex flex-col gap-5">
             <div class="">
-              <h3 class="text-[#181D27] text-2xl font-semibold">
+              <h2 class="text-[#181D27] text-2xl font-semibold">
                 Trusted by students from Top Universities
-              </h3>
+              </h2>
               <p class="text-[#535862] mt-3">
                 AI tools + Expert guidance = Success
               </p>
@@ -31,28 +31,28 @@
             <div
               class="border border-[#84CAFF] bg-[#EFF8FF] rounded-lg py-4 px-5"
             >
-              <h2 class="text-[#1570EF] font-semibold">AI-Powered Tools</h2>
+              <p class="text-[#1570EF] font-semibold">AI-Powered Tools</p>
               <div class="mt-4 flex flex-col gap-4">
                 <div>
-                  <h3 class="text-[#1849A9] font-semibold">
+                  <p class="text-[#1849A9] font-semibold">
                     Smart School Matching
-                  </h3>
+                  </p>
                   <p class="text-[#1570EF]">
                     Get AI-recommended best-fit schools.
                   </p>
                 </div>
                 <div>
-                  <h3 class="text-[#1849A9] font-semibold">
+                  <p class="text-[#1849A9] font-semibold">
                     AI Essay Generator
-                  </h3>
+                  </p>
                   <p class="text-[#1570EF]">
                     Instantly draft high-quality essays.
                   </p>
                 </div>
                 <div>
-                  <h3 class="text-[#1849A9] font-semibold">
+                  <p class="text-[#1849A9] font-semibold">
                     AI Chat Assistant
-                  </h3>
+                  </p>
                   <p class="text-[#1570EF]">
                     Ask anything and get instant help.
                   </p>
@@ -61,7 +61,7 @@
             </div>
             <!-- Expert Mentorship Section -->
             <div class="p-5 border border-[#FEC84B] bg-[#FFFAEB] rounded-lg">
-              <h2 class="text-[#DC6803] font-semibold">Expert Mentorship</h2>
+              <p class="text-[#DC6803] font-semibold">Expert Mentorship</p>
               <p class="mt-5 text-[#93370D] font-semibold">
                 Besides this AI product, we also offer mentoring services!
               </p>
