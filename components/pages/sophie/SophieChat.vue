@@ -215,6 +215,7 @@ const dashboardStore = useDashboardStore();
 const sophieStore = useSophieStore();
 const deviceType = useDeviceType();
 const route = useRoute();
+const router = useRouter();
 
 const emit = defineEmits(["isChatLoading"]);
 
@@ -419,16 +420,12 @@ onMounted(async () => {
     submit();
   }
   if (route.query.query) {
-    console.log(route.query.query);
     completeChat.value.push({
       isSender: true,
       text: `${route.query.query}`,
     });
     isChatLoading.value = true;
-    const publicToken = useCookie("publicToken");
-    if (publicToken.value) {
-      submit();
-    }
+    inputQuestion.value = `${route.query.query}`;
   }
 });
 </script>
