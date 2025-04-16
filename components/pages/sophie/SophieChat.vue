@@ -343,6 +343,11 @@ const submit = async () => {
       }
     }
     scrollDown();
+    if (route.query.query) {
+      router.replace({
+        query: undefined,
+      });
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.status === 423) {
