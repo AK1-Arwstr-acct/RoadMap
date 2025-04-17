@@ -19,6 +19,92 @@
         "login": "Đăng nhập",
         "signup": "Đăng ký"
     },
+    "dashboard_home_page": {
+        "ai_chat_assistant": {
+            "description": "Hỏi bất cứ điều gì và nhận trợ giúp ngay lập tức.",
+            "title": "Trợ lý Chat AI"
+        },
+        "ai_essay_generator": {
+            "description": "Soạn thảo bài luận chất lượng cao ngay lập tức.",
+            "title": "Công cụ Viết Bài Luận AI"
+        },
+        "ai_powered_tools": "Công cụ được hỗ trợ bởi AI",
+        "article1": {
+            "buttonText": "Đọc thêm về câu chuyện của Jennifer",
+            "details": "Gặp gỡ Quỳnh Anh, người đã giành được học bổng trị giá $176,000 tại Depauw và $167,000 tại Augustana! Từng có ý định từ bỏ giấc mơ du học Mỹ vì lo sợ và quy trình phức tạp, cô ấy đã có sự thay đổi lớn nhờ các mentor của Arrowster. \"Anh Thanh đã chỉ cho em vô số hướng đi khi em cảm thấy lạc lối, anh Toàn hỗ trợ 24/7, và anh Ken (Oxford, Harvard) thì đưa ra hướng dẫn rất rõ ràng. Trước đây em từng sợ các tư vấn viên, nhưng giờ thì em có thể thoải mái hỏi bất cứ điều gì—even gửi bài luận lúc nửa đêm và nhận phản hồi chi tiết vào sáng hôm sau.\""
+        },
+        "article2": {
+            "buttonText": "Đọc thêm về câu chuyện của Tiến",
+            "details": "Gặp gỡ Cao Tiến, người đã giành được học bổng $100,000 tại Franklin & Marshall, $120,000 tại Baylor và $80,000 tại Arizona State. Làm việc cùng mentor Hoài Thanh, anh đã chỉnh sửa bài luận 8-9 lần—kể cả trong kỳ nghỉ—để tạo ra một bài luận chân thật và nổi bật. \"Các tài liệu online bảo 'hãy kể câu chuyện của bạn' nhưng ít ai chỉ rõ CÁCH kể trong 650 từ. Có một mentor hiểu biết đã giúp em nhìn câu chuyện từ nhiều góc độ, dù phải nhận nhiều góp ý 'căng thẳng'.\""
+        },
+        "discord_community": "Cộng đồng Discord",
+        "expert_mentorship": {
+            "description": "Ngoài sản phẩm AI này, chúng tôi còn cung cấp dịch vụ cố vấn!",
+            "title": "Cố Vấn Chuyên Gia"
+        },
+        "facebook_community": "Cộng đồng Facebook",
+        "headline": "Vào trường mơ ước cùng Sophie AI + Hướng dẫn từ chuyên gia",
+        "join_community": "Tham Gia Cộng Đồng",
+        "mentorship_features": [
+            "Hỗ trợ 1-1 về bài luận, học bổng, hoạt động ngoại khóa",
+            "Khoá học & tài liệu độc quyền",
+            "Với các mentor từ Harvard, UPenn, Yonsei và nhiều hơn",
+            "Hoàn toàn miễn phí!"
+        ],
+        "program_1": {
+            "cta_text": "Đọc tại đây",
+            "description": "100 trang bao trùm mọi chủ đề du học: chọn ngành, xây dựng hồ sơ, xin học bổng, viết bài luận và nhiều hơn nữa!",
+            "title": "Cẩm Nang Du Học Độc Quyền từ Arrowster"
+        },
+        "program_2": {
+            "cta_text": "Nội dung độc quyền – Làm việc cùng chúng tôi để truy cập",
+            "description": "Buổi chia sẻ từ mentor Thanh (Harvard MBA) về phương pháp chọn ngành đúng và chuẩn bị cho việc làm sau khi tốt nghiệp.",
+            "title": "Buổi Huấn Luyện 1: Cách Chọn Ngành Phù Hợp Với Nghề Nghiệp Sau Này"
+        },
+        "program_3": {
+            "cta_text": "Nội dung độc quyền – Làm việc cùng chúng tôi để truy cập",
+            "description": "Danh sách học bổng cho học sinh Việt Nam tại tất cả quốc gia (Mỹ, Úc, Canada, Châu Âu, v.v).",
+            "title": "Tổng Hợp Học Bổng (2025-2026)"
+        },
+        "program_and_resources_for_you": "Chương trình và tài nguyên dành cho bạn",
+        "section_title": "Được tin tưởng bởi học sinh từ các trường Đại học hàng đầu",
+        "smart_school_matching": {
+            "description": "Nhận đề xuất trường phù hợp từ AI.",
+            "title": "Chọn Trường Thông Minh"
+        },
+        "stepsList": {
+            "step1": {
+                "description": "Tìm trường phù hợp với bạn bằng đề xuất từ AI.",
+                "navigate_text": "Tìm Trường Phù Hợp Chỉ Trong 60 Giây",
+                "title": "Danh sách Trường"
+            },
+            "step2": {
+                "description": "Hỏi bất cứ lúc nào và nhận hướng dẫn ngay lập tức.",
+                "navigate_text": "Trò chuyện với Sophie AI miễn phí",
+                "title": "Trợ lý Sophie"
+            },
+            "step3": {
+                "description": "Xem thời hạn và theo dõi những việc bạn cần chuẩn bị.",
+                "navigate_text": "Xem Kế Hoạch Của Bạn",
+                "title": "Lộ Trình"
+            },
+            "step4": {
+                "description": "Nhận bản nháp bài luận được AI cá nhân hóa theo câu chuyện của bạn.",
+                "navigate_text": "Tạo Bài Luận Ngay",
+                "title": "Trình Soạn Thảo Bài Luận AI"
+            },
+            "step5": {
+                "description": "Cố vấn 1-1 để xây dựng kế hoạch hồ sơ hoàn hảo.",
+                "navigate_text": "Nói Chuyện Với Mentor",
+                "title": "Cố Vấn Chuyên Gia"
+            }
+        },
+        "student_achievements_title": "Thành tích của học sinh chúng tôi",
+        "subheadline": "Hướng dẫn cá nhân hóa, công cụ chiến lược và cố vấn 1-1 để giúp bạn thành công.",
+        "tagline": "Công cụ AI + Hướng dẫn từ chuyên gia = Thành công",
+        "threads_community": "Cộng đồng Threads",
+        "view_all": "Xem Tất Cả"
+    },
     "discover": {
         "detail": "Chỉ 2 phút nữa là bạn sẽ mở khóa 5 công cụ AI mạnh mẽ—từ việc tìm trường phù hợp đến hỗ trợ viết bài—cộng thêm hơn 100 trang hướng dẫn du học độc quyền.",
         "get_started": "Bắt đầu",
@@ -41,11 +127,11 @@
         "confirm_your_password": "Xác nhận mật khẩu của bạn"
     },
     "homepage": {
-    "title": "Chỉ còn 2 phút nữa là bạn sẽ...",
-    "description": {
-        "part1": "5 công cụ AI mạnh mẽ – từ việc tìm trường phù hợp đến hỗ trợ viết luận, hơn 100 trang tài liệu du học độc quyền, hàng giờ chia sẻ từ các mentor trong đội ngũ của chúng tôi",
-        "part2": "Bạn còn chờ gì nữa?"
-    }
+        "title": "Chỉ còn 2 phút nữa là bạn sẽ...",
+        "description": {
+            "part1": "5 công cụ AI mạnh mẽ – từ việc tìm trường phù hợp đến hỗ trợ viết luận, hơn 100 trang tài liệu du học độc quyền, hàng giờ chia sẻ từ các mentor trong đội ngũ của chúng tôi",
+            "part2": "Bạn còn chờ gì nữa?"
+        }
     },
     "login": {
         "already_have_an_account": "Bạn đã có tài khoản?",
@@ -86,6 +172,63 @@
         "otp_invalid": "Mã OTP không hợp lệ",
         "sent_code": "Chúng tôi đã gửi mã tới",
         "verify": "Xác minh"
+    },
+    "profile_page": {
+        "all_your_achievement": "Tất cả thành tích của bạn",
+        "all_your_ai_essay": "Tất cả bài luận AI của bạn",
+        "annual_total_budget": "Ngân sách hàng năm",
+        "area_of_study": "Lĩnh vực học tập",
+        "complete": "hoàn thành",
+        "continue": "Tiếp tục",
+        "customise_prompt": "Bài này vẫn chưa tốt lắm. Muốn biết cách tùy chỉnh nó hay hơn gấp 10 lần không?",
+        "edit_cover_image": "Chỉnh sửa ảnh bìa.",
+        "edit_profile": "Chỉnh sửa hồ sơ",
+        "edit_profile_page": {
+            "academic_details_info": "Thông tin học thuật",
+            "cancel": "Hủy",
+            "current_password": "Mật khẩu hiện tại",
+            "email": "Email",
+            "email_not_confirmed": "Email của bạn chưa được xác nhận.",
+            "enter_gpa": "Nhập điểm GPA",
+            "enter_name": "Nhập tên",
+            "grade": "Lớp",
+            "name": "Tên",
+            "new_password": "Mật khẩu mới",
+            "phone_number": "Số điện thoại",
+            "save_changes": "Lưu thay đổi",
+            "update_academic_info": "Cập nhật thông tin học thuật của bạn tại đây.",
+            "update_profile_info": "Cập nhật ảnh và thông tin cá nhân tại đây.",
+            "verify_now": "Xác nhận ngay"
+        },
+        "gpa": "GPA",
+        "log_out": "Đăng xuất",
+        "make_my_essay_better": "Làm bài luận của tôi tốt hơn gấp 10 lần",
+        "majors": "Ngành học",
+        "personal_info": "Thông tin cá nhân",
+        "study_destination": "Điểm đến du học",
+        "study_program": "Chương trình học",
+        "upload_file": "Tải tệp lên",
+        "view_all": "Xem tất cả",
+        "your_achievement": "Thành tích của bạn",
+        "your_ai_essay": "Bài luận AI của bạn"
+    },
+    "roadmap_page": {
+        "application": "Hồ sơ đăng ký",
+        "complete": "hoàn thành",
+        "completed": "Đã hoàn thành!",
+        "contact_our_counselors": "Liên hệ với cố vấn của chúng tôi",
+        "countries_app_detail": "Hoàn thiện hồ sơ của bạn bằng cách viết bài luận cá nhân ấn tượng, thu thập thư giới thiệu và bảng điểm, chuẩn bị hồ sơ hỗ trợ tài chính nếu cần và nộp tất cả trước thời hạn.",
+        "continue": "Tiếp tục",
+        "jump_to_application": "Chuyển đến phần Hồ sơ đăng ký",
+        "jump_to_post_application": "Chuyển đến phần Sau đăng ký",
+        "missed_deadline_description": "để xem chúng tôi có thể tạo một kế hoạch mới dành riêng cho bạn như thế nào. Bạn vẫn còn cơ hội!",
+        "missed_deadline_title": "Bỏ lỡ thời hạn? Đừng lo!",
+        "post_application": "Sau đăng ký",
+        "pre_application": "Trước khi đăng ký",
+        "review": "Xem lại",
+        "roadmap": "Lộ trình",
+        "start_here": "Bắt đầu tại đây",
+        "steps": "Các bước"
     },
     "signup": {
         "create_account": "Tạo tài khoản",

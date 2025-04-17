@@ -6,7 +6,7 @@
     <div class="flex justify-center items-center">
       <img
         src="/images/post-application.png"
-        alt="Post - Application"
+        :alt="t('roadmap_page.post_application')"
         class="w-full h-full max-h-[274px] object-contain"
         :class="{ grayscale: !checkCompletedTask }"
         loading="eager"
@@ -18,7 +18,7 @@
           class="text-2xl font-semibold capitalize"
           :class="[checkCompletedTask ? 'text-white' : 'text-[#181D27]']"
         >
-          Post - Application
+        {{ $t('roadmap_page.post_application') }}
         </p>
         <p
           class="rounded-2xl px-3 font-semibold py-1 text-[#414651] text-sm text-nowrap"
@@ -28,7 +28,7 @@
             {{ checkCompletedTask }} /
             {{ appTrackerStore.postApplication?.tasks?.length }}
           </span>
-          <span v-else> Completed! </span>
+          <span v-else> {{ $t('roadmap_page.completed') }} </span>
         </p>
       </div>
       <div
@@ -70,12 +70,12 @@
               checkCompletedTask ===
               appTrackerStore.postApplication?.tasks?.length
             "
-            >Review</span
+            >{{ $t('roadmap_page.review') }}</span
           >
           <span v-else-if="checkCompletedTask > 0" class="text-[#DC6803]"
-            >Continue</span
+            >{{ $t('roadmap_page.continue') }}</span
           >
-          <span v-else>Jump to Post - Application</span>
+          <span v-else>{{ $t('roadmap_page.jump_to_post_application') }}</span>
         </div>
       </NuxtLinkLocale>
     </div>
@@ -86,6 +86,7 @@ import useAppTrackerStore from "~/stores/AppTrackerStore";
 
 const localePath = useLocalePath();
 const appTrackerStore = useAppTrackerStore();
+const { t } = useI18n();
 
 const taskProgress = ref<string>("");
 

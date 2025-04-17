@@ -8,14 +8,14 @@
           <div v-show="showAchievements">
             <div class="flex justify-between items-center font-semibold mb-5">
               <p class="text-xl md:text-2xl text-[#181D27]">
-                Your achievement
+                {{ $t('profile_page.your_achievement') }}
               </p>
               <span
                 @click="
                   navigateTo(localePath('/dashboard/profile/achievements'))
                 "
                 class="text-sm md:text-[18px] text-[#175CD3] cursor-pointer"
-                >View All</span
+                >{{ $t('profile_page.view_all') }}</span
               >
             </div>
             <Achievements
@@ -27,11 +27,11 @@
 
           <div v-if="essayStore.userEssayList.length">
             <div class="flex justify-between items-center font-semibold mb-5">
-              <p class="text-xl md:text-2xl text-[#181D27]">Your AI Essay</p>
+              <p class="text-xl md:text-2xl text-[#181D27]">{{ $t('profile_page.your_ai_essay') }}</p>
               <NuxtLinkLocale :to="'/dashboard/profile/essays'">
                 <span
                   class="text-sm md:text-[18px] text-[#175CD3] cursor-pointer"
-                  >View All</span
+                  >{{ $t('profile_page.view_all') }}</span
                 >
               </NuxtLinkLocale>
             </div>

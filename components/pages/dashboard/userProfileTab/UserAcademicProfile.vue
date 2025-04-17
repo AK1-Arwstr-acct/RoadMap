@@ -2,10 +2,10 @@
   <section>
     <div class="mb-6">
       <h2 class="text-[#181D27] text-sm md:text-lg font-semibold">
-        Academic details info
+        {{ $t("profile_page.edit_profile_page.academic_details_info") }}
       </h2>
       <p class="text-[#535862] text-sm">
-        Update your academic details & information here.
+        {{ $t("profile_page.edit_profile_page.update_academic_info") }}
       </p>
     </div>
     <div
@@ -14,13 +14,14 @@
       <div class="p-6 flex flex-col md:grid md:grid-cols-2 gap-6">
         <div class="">
           <label class="font-medium text-[#414651] text-sm"
-            >GPA<span class="text-[#D92D20] font-medium">*</span></label
+            >{{ $t("profile_page.gpa")
+            }}<span class="text-[#D92D20] font-medium">*</span></label
           >
           <input
             name="ielts"
             type="text"
             v-model="gpa"
-            placeholder="Enter GPA"
+            :placeholder="t('profile_page.edit_profile_page.enter_gpa')"
             class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
             @input="gpaChanged"
             data-hj-allow
@@ -28,7 +29,7 @@
         </div>
         <div class="">
           <BaseSelectRadio
-            label="Study program"
+            :label="t('profile_page.study_program')"
             :required="true"
             :options="dashboardStore.programListOptions"
             v-model="studyPrograms"
@@ -44,7 +45,8 @@
             ]"
           >
             <p class="font-medium text-[#414651] text-sm">
-              Study destination<span class="text-[#D92D20] font-medium">*</span>
+              {{ $t("profile_page.study_destination")
+              }}<span class="text-[#D92D20] font-medium">*</span>
             </p>
             <div class="flex flex-col gap-4">
               <div
@@ -86,7 +88,10 @@
                       stroke="#ffffff"
                     />
                   </div>
-                  <div class="flex items-center gap-2 text-[#414651]" :for="`destination${index}`">
+                  <div
+                    class="flex items-center gap-2 text-[#414651]"
+                    :for="`destination${index}`"
+                  >
                     <component
                       :is="
                         option.label.toLowerCase().includes('kingdom')
@@ -110,7 +115,7 @@
         </div>
         <div class="">
           <BaseSelectRadio
-            label="Annual total budget"
+            :label="t('profile_page.annual_total_budget')"
             :options="dashboardStore.budgetList"
             v-model="annualBudget"
             direction="upward"
@@ -125,7 +130,7 @@
         </div>
         <div class="">
           <BaseSelectRadio
-            label="Area of study"
+            :label="t('profile_page.area_of_study')"
             :required="true"
             :options="dashboardStore.coursePreferenceOptions"
             v-model="areaOfStudy"
@@ -146,7 +151,7 @@
           @click="resetUserData"
           class="py-2.5 px-4 border-[1.5px] border-gray-200 w-fit rounded-lg font-semibold text-sm text-[#414651]"
         >
-          Cancel
+          {{ $t("profile_page.edit_profile_page.cancel") }}
         </button>
         <button
           @click="updateUserData"
@@ -161,7 +166,7 @@
           "
           class="py-2.5 px-4 bg-[#1570EF] disabled:bg-[#84CAFF] w-fit rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
-          Save changes
+          {{ $t("profile_page.edit_profile_page.save_changes") }}
           <IconSpinner
             v-if="isSubmitting"
             width="14"
@@ -188,6 +193,7 @@ const dashboardStore = useDashboardStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
+const { t } = useI18n();
 
 const isSubmitting = ref<boolean>(false);
 const isDetailOpen = ref<boolean>(false);

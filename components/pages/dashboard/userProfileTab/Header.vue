@@ -30,7 +30,7 @@
       >
         <span class="cursor-pointer"><IconCamera /></span>
         <p class="text-[#FFFFFF] cursor-pointer">
-          Edit cover image.<span class="font-bold"> Upload file</span>
+          {{$t('profile_page.edit_cover_image')}}<span class="font-bold"> {{ $t('profile_page.upload_file') }}</span>
         </p>
       </div>
     </div>
@@ -97,7 +97,7 @@
               :to="'/dashboard/profile/edit'"
               class="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#414651] bg-[#FFFFFF] border-[1.5px] rounded-lg border-gray-200"
             >
-              <span><IconPencil /></span><span>Edit profile</span>
+              <span><IconPencil /></span><span>{{ $t('profile_page.edit_profile') }}</span>
             </NuxtLinkLocale>
             <div class="relative">
               <button
@@ -117,7 +117,7 @@
                   class="flex items-center gap-3 w-40 md:w-60 px-4 py-2.5 text-sm text-[#414651] font-medium cursor-pointer"
                 >
                   <IconLogout />
-                  Log out
+                  {{ $t('profile_page.log_out') }}
                 </div>
               </div>
             </div>

@@ -5,7 +5,7 @@
     <div class="flex justify-center items-center">
       <img
         src="/images/pre-application.png"
-        alt="Pre - Application"
+        :alt="t('roadmap_page.pre_application')"
         class="w-full h-full max-h-[274px] object-contain"
         loading="eager"
       />
@@ -13,7 +13,7 @@
     <div class="">
       <div class="flex justify-between items-center">
         <p class="text-white text-2xl font-semibold capitalize">
-          Pre - Application
+          {{ $t('roadmap_page.pre_application') }}
         </p>
         <p
           class="bg-[#F5F5F5] rounded-2xl text-sm px-3 font-semibold py-1 text-[#414651] text-nowrap"
@@ -22,7 +22,7 @@
             {{ checkCompletedTask }} /
             {{ appTrackerStore.preApplication?.tasks?.length }}
           </span>
-          <span v-else> Completed! </span>
+          <span v-else> {{ $t('roadmap_page.completed') }} </span>
         </p>
       </div>
       <div class="text-white mt-5 mb-6">
@@ -49,15 +49,15 @@
         <div
           class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl shadow-[0px_1px_2px_0px_#0A0D120D] px-5 py-3 w-full"
         >
-          <span v-if="checkCompletedTask === 0">Start here</span>
+          <span v-if="checkCompletedTask === 0">{{ $t('roadmap_page.start_here') }}</span>
           <span
             v-else-if="
               checkCompletedTask ===
               appTrackerStore.preApplication?.tasks?.length
             "
-            >Review</span
+            >{{ $t('roadmap_page.review') }}</span
           >
-          <span v-else>Continue</span>
+          <span v-else>{{ $t('roadmap_page.continue') }}</span>
         </div>
       </NuxtLinkLocale>
     </div>
@@ -68,6 +68,7 @@ import useAppTrackerStore from "~/stores/AppTrackerStore";
 
 const localePath = useLocalePath();
 const appTrackerStore = useAppTrackerStore();
+const { t } = useI18n();
 
 const taskProgress = ref<string>("");
 

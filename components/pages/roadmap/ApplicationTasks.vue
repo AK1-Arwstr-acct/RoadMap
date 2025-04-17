@@ -25,7 +25,7 @@
           />
         </div>
         <span class="text-[#414651] font-medium ml-3 mr-6 text-nowrap">
-          {{ checkCompletedTask }} complete
+          {{ checkCompletedTask }} {{ $t('roadmap_page.complete') }}
         </span>
         <span
           class="py-0.5 px-2.5 bg-[#EFF8FF] text-[#175CD3] rounded-full text-sm font-medium text-nowrap"
@@ -35,7 +35,7 @@
               ? countriesTaskLength
               : application?.tasks?.length || "0"
           }}
-          Steps
+          {{ $t('roadmap_page.steps') }}
         </span>
       </div>
     </div>
@@ -52,16 +52,15 @@
           class="transform rotate-[90]"
         />
         <div class="flex-1 text-[#181D27]">
-          <p class="font-semibold mb-1.5">Missed the Deadline? No Worries!</p>
+          <p class="font-semibold mb-1.5">{{ $t('roadmap_page.missed_deadline_title') }}</p>
           <p class="font-medium text-sm">
             <NuxtLinkLocale to="/pricing">
               <span class="text-[#1570EF] cursor-pointer">
-                Contact our counselors
+                {{ $t('roadmap_page.contact_our_counselors') }}&nbsp;
               </span>
             </NuxtLinkLocale>
             <span>
-              to see how we can create a new plan just for you. You’re still in
-              the game!
+              {{ $t('roadmap_page.missed_deadline_description') }}
             </span>
           </p>
         </div>

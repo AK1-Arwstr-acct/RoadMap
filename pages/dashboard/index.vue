@@ -14,10 +14,10 @@
           <div class="pb-5 border-b border-gray-200 flex flex-col gap-5">
             <div class="">
               <h2 class="text-[#181D27] text-2xl font-semibold">
-                Trusted by students from Top Universities
+                {{ $t("dashboard_home_page.section_title") }}
               </h2>
               <p class="text-[#535862] mt-3">
-                AI tools + Expert guidance = Success
+                {{ $t("dashboard_home_page.tagline") }}
               </p>
               <div class="flex justify-center mt-8">
                 <img
@@ -31,63 +31,69 @@
             <div
               class="border border-[#84CAFF] bg-[#EFF8FF] rounded-lg py-4 px-5"
             >
-              <p class="text-[#1570EF] font-semibold">AI-Powered Tools</p>
+              <p class="text-[#1570EF] font-semibold">
+                {{ $t("dashboard_home_page.ai_powered_tools") }}
+              </p>
               <div class="mt-4 flex flex-col gap-4">
                 <div>
                   <p class="text-[#1849A9] font-semibold">
-                    Smart School Matching
+                    {{ $t("dashboard_home_page.smart_school_matching.title") }}
                   </p>
                   <p class="text-[#1570EF]">
-                    Get AI-recommended best-fit schools.
+                    {{
+                      $t(
+                        "dashboard_home_page.smart_school_matching.description"
+                      )
+                    }}
                   </p>
                 </div>
                 <div>
                   <p class="text-[#1849A9] font-semibold">
-                    AI Essay Generator
+                    {{ $t("dashboard_home_page.ai_essay_generator.title") }}
                   </p>
                   <p class="text-[#1570EF]">
-                    Instantly draft high-quality essays.
+                    {{
+                      $t("dashboard_home_page.ai_essay_generator.description")
+                    }}
                   </p>
                 </div>
                 <div>
                   <p class="text-[#1849A9] font-semibold">
-                    AI Chat Assistant
+                    {{ $t("dashboard_home_page.ai_chat_assistant.title") }}
                   </p>
                   <p class="text-[#1570EF]">
-                    Ask anything and get instant help.
+                    {{
+                      $t("dashboard_home_page.ai_chat_assistant.description")
+                    }}
                   </p>
                 </div>
               </div>
             </div>
             <!-- Expert Mentorship Section -->
             <div class="p-5 border border-[#FEC84B] bg-[#FFFAEB] rounded-lg">
-              <p class="text-[#DC6803] font-semibold">Expert Mentorship</p>
+              <p class="text-[#DC6803] font-semibold">
+                {{ $t("dashboard_home_page.expert_mentorship.title") }}
+              </p>
               <p class="mt-5 text-[#93370D] font-semibold">
-                Besides this AI product, we also offer mentoring services!
+                {{ $t("dashboard_home_page.expert_mentorship.description") }}
               </p>
               <ul class="mt-3 text-[#DC6803] flex flex-col gap-3">
-                <li>1-1 support for essays, scholarships, extracurriculars</li>
-                <li>Exclusive training & resources</li>
-                <li>With mentors from Harvard, UPenn, Yonsei, and more</li>
+                <li>{{ $t("dashboard_home_page.mentorship_features[0]") }}</li>
+                <li>{{ $t("dashboard_home_page.mentorship_features[1]") }}</li>
+                <li>{{ $t("dashboard_home_page.mentorship_features[2]") }}</li>
               </ul>
-              <p class="mt-3 text-[#93370D] font-semibold">For free!</p>
+              <p class="mt-3 text-[#93370D] font-semibold">
+                {{ $t("dashboard_home_page.mentorship_features[3]") }}
+              </p>
             </div>
           </div>
           <div class="flex flex-col gap-5">
             <p class="text-xl text-[#181D27] font-semibold">
-              Our students' achievements
+              {{ $t("dashboard_home_page.student_achievements_title") }}
             </p>
             <ArticlesCard :articleDetail="articlesList[0]" />
             <div class="h-px bg-gray-200" />
             <ArticlesCard :articleDetail="articlesList[1]" />
-            <!-- <div class="h-px bg-gray-200" /> -->
-            <!-- <NuxtLinkLocale :to="'/pricing'">
-               <button
-              class="font-semibold text-sm text-white bg-[#1570EF] rounded-lg py-2.5 px-4 shadow-[0px_1px_2px_0px_#0A0D120D]"
-              >
-              Get Your Personalized Plan in 60 Seconds
-            </button>
-          </NuxtLinkLocale> -->
           </div>
         </div>
         <EventsAndSocials class="md:hidden" />
@@ -103,7 +109,7 @@ definePageMeta({
 });
 
 const runtimeConfig = useRuntimeConfig();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""
@@ -167,29 +173,29 @@ useHead(
 
 const appStore = useAppStore();
 
-const upgradePlan = [
-  {
-    image: "/images/dashboard/home/article-img.png",
-    title: "Transform your application with mentors from Harvard, UPenn & more",
-    details:
-      "Strategic training, one-on-one reviews, and exclusive AI tools that deliver results. Our mentees have 100% success rate at top universities worldwide.",
-    buttonText: "View Plan",
-    cta: "",
-  },
-];
+// const upgradePlan = [
+//   {
+//     image: "/images/dashboard/home/article-img.png",
+//     title: "Transform your application with mentors from Harvard, UPenn & more",
+//     details:
+//       "Strategic training, one-on-one reviews, and exclusive AI tools that deliver results. Our mentees have 100% success rate at top universities worldwide.",
+//     buttonText: "View Plan",
+//     cta: "",
+//   },
+// ];
 const articlesList = [
   {
     image: "/images/dashboard/home/article-1.png",
     title: "",
-    details: `Meet Quỳnh Anh, who secured scholarships worth $176,000 at Depauw and $167,000 at Augustana! Once ready to abandon her US dreams due to fears and complex applications, she found transformation with Arrowster mentors. "Thanh showed me countless pathways when lost, Toàn provided 24/7 support, and Ken (Oxford, Harvard) offered straightforward guidance. Previously traumatized by counselors, now I comfortably ask anything—even sending midnight essays with detailed feedback by morning."`,
-    buttonText: "Read more about Jennifer’s story",
+    details: t("dashboard_home_page.article1.details"),
+    buttonText: t("dashboard_home_page.article1.buttonText"),
     cta: "https://www.facebook.com/Arrowster.Official/posts/pfbid0g7PW9e1wm5iA2T6vqEcAZJnzyT1rUStAaA5SiWfB4NZWPJ9HSy8Ffbyh5sBa2niQl",
   },
   {
     image: "/images/dashboard/home/article-2.png",
     title: "",
-    details: `Meet Cao Tiến, who secured scholarships worth $100,000 at Franklin & Marshall, $120,000 at Baylor, and $80,000 at Arizona State. Working with mentor Hoài Thanh, he navigated through 8-9 revisions—even during holidays—to craft an authentic essay that stood out. "Online guides say 'tell your story' but few show HOW within 650 words. Having a knowledgeable mentor helped me see my story from different angles, despite the 'intense' feedback."`,
-    buttonText: "Read more about Tien’s story",
+    details: t("dashboard_home_page.article2.details"),
+    buttonText: t("dashboard_home_page.article2.buttonText"),
     cta: "https://www.facebook.com/share/p/1QVcAcVWQX/",
   },
 ];

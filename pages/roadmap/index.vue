@@ -14,8 +14,8 @@
             <RoadmapSkeleton v-for="a in 3" />
           </div>
           <div v-else>
-            <h1 class="mb-8 text-[#181D27] text-2xl font-semibold md:hidden">
-              Roadmap
+            <h1 class="mb-8 text-[#181D27] text-2xl font-semibold lg:hidden">
+              {{ $t('roadmap_page.roadmap') }}
             </h1>
             <div class="flex flex-col gap-14">
               <PreAppCard />

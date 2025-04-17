@@ -2,10 +2,10 @@
   <div>
     <div>
       <h2 class="text-[#181D27] text-sm md:text-lg font-semibold">
-        Personal Info
+        {{ $t("profile_page.personal_info") }}
       </h2>
       <p class="text-[#535862] text-sm">
-        Update your photo and personal details here.
+        {{ $t("profile_page.edit_profile_page.update_profile_info") }}
       </p>
     </div>
     <div
@@ -14,18 +14,22 @@
       <div class="p-6 flex flex-col gap-6">
         <div class="sm:flex gap-6">
           <div class="sm:w-1/2 mb-6 sm:mb-0">
-            <label class="block text-[#535862] font-semibold">Name</label>
+            <label class="block text-[#535862] font-semibold">{{
+              $t("profile_page.edit_profile_page.name")
+            }}</label>
             <input
               name="user_input_name"
               type="text"
               v-model="userInitialData.name"
-              placeholder="Enter Name"
+              :placeholder="t('profile_page.edit_profile_page.enter_name')"
               class="w-full mt-1.5 px-3.5 py-2.5 border-[1.5px] border-gray-200 text-[#181D27] rounded-lg outline-none"
               data-hj-allow
             />
           </div>
           <div class="sm:w-1/2">
-            <label class="block text-[#535862] font-semibold mb-1">Grade</label>
+            <label class="block text-[#535862] font-semibold mb-1">{{
+              $t("profile_page.edit_profile_page.grade")
+            }}</label>
             <BaseSelectRadio
               :options="classGradeList"
               v-model="userInitialData.grade"
@@ -33,7 +37,9 @@
           </div>
         </div>
         <div>
-          <label class="block text-[#535862] font-semibold">Phone number</label>
+          <label class="block text-[#535862] font-semibold">{{
+            $t("profile_page.edit_profile_page.phone_number")
+          }}</label>
           <div class="flex mt-1.5 border-[1.5px] border-gray-200 rounded-lg">
             <div class="relative w-fit">
               <!-- <select
@@ -59,7 +65,9 @@
           </div>
         </div>
         <div>
-          <label class="block text-[#535862] font-semibold">Email</label>
+          <label class="block text-[#535862] font-semibold">{{
+            $t("profile_page.edit_profile_page.email")
+          }}</label>
           <div
             class="mt-1 px-3.5 py-2.5 flex items-center gap-2 border-[1.5px] border-gray-200 rounded-lg"
           >
@@ -76,18 +84,18 @@
             v-if="!appStore.userData?.isEmailVerified"
             class="text-sm text-[#535862] mt-1"
           >
-            Your email has not been confirmed.
+            {{ $t("profile_page.edit_profile_page.email_not_confirmed") }}
             <span
               @click="verifyEmail"
               class="text-sm text-[#535862] border-b-[1.5px] border-[#535862] cursor-pointer"
-              >Verify it now</span
+              >{{ $t("profile_page.edit_profile_page.verify_now") }}</span
             >
           </p>
         </div>
         <div>
-          <label class="block text-[#535862] font-semibold"
-            >Current password</label
-          >
+          <label class="block text-[#535862] font-semibold">{{
+            $t("profile_page.edit_profile_page.current_password")
+          }}</label>
           <div class="relative">
             <input
               v-model="userInitialData.currentPassword"
@@ -105,7 +113,9 @@
           </div>
         </div>
         <div>
-          <label class="text-[#535862] font-semibold">New password</label>
+          <label class="text-[#535862] font-semibold">{{
+            $t("profile_page.edit_profile_page.new_password")
+          }}</label>
           <div class="relative">
             <input
               v-model="userInitialData.newPassword"
@@ -130,14 +140,14 @@
           @click="resetValues"
           class="px-4 py-2.5 text-[#414651] font-semibold border-[1.5px] border-gray-200 rounded-lg"
         >
-          Cancel
+          {{ $t("profile_page.edit_profile_page.cancel") }}
         </button>
         <button
           @click="submit"
           :disabled="disableSubmit || isSubmitting"
           class="px-4 py-2.5 text-white font-semibold bg-[#1570EF] disabled:bg-[#B2DDFF] border-[1.5px] border-[#B2DDFF] rounded-lg flex items-center gap-2"
         >
-          Save changes
+          {{ $t("profile_page.edit_profile_page.save_changes") }}
           <IconSpinner
             width="14"
             height="14"
@@ -161,6 +171,7 @@ const appStore = useAppStore();
 const dashboardStore = useDashboardStore();
 const { api } = useApi();
 const { showToast } = useToast();
+const { t } = useI18n();
 
 interface UserInitailData {
   name: string;

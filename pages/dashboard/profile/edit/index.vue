@@ -1,7 +1,7 @@
 <template>
   <section class="bg-white md:bg-[#FAFAFA] h-full overflow-y-auto no-scrollbar">
     <div class="max-w-[640px] px-4 mx-auto mt-8 mb-16">
-      <p class="text-[#181D27] text-2xl font-semibold mb-8">Edit profile</p>
+      <p class="text-[#181D27] text-2xl font-semibold mb-8">{{ $t('profile_page.edit_profile') }}</p>
       <div class="flex flex-col gap-8">
         <EditUserPersonalInfo />
         <UserAcademicProfile />

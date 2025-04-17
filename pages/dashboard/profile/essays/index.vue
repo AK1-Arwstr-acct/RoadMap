@@ -2,7 +2,7 @@
   <div class="size-full overflow-y-auto custom-scrollbar">
     <div class="max-w-[752px] px-4 mx-auto mt-8 mb-16">
       <div class="mb-5">
-        <p class="text-xl md:text-2xl font-semibold text-[#181D27]">All Your AI Essay</p>
+        <p class="text-xl md:text-2xl font-semibold text-[#181D27]">{{ $t('profile_page.all_your_ai_essay') }}</p>
       </div>
       <div class="flex flex-col gap-6">
         <EssayCard

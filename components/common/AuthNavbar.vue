@@ -17,9 +17,9 @@
       />
     </div>
     <!-- temprory width to set the view after commenting dropdown -->
-    <div class="w-[150px]"> 
-      <!-- <BaseLanguageDropdown /> -->
-    </div>
+    <!-- <div class="w-[150px]"> 
+    </div> -->
+    <BaseLanguageDropdown />
   </div>
 </template>
 <script setup lang="ts">

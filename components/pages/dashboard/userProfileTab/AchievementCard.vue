@@ -50,7 +50,7 @@
           />
         </div>
         <p v-if="isOngoingBehaviour" class="text-nowrap w-fit text-[#535862]">
-          {{ checkCompletedTask }} complete
+          {{ checkCompletedTask }} {{ $t('profile_page.complete') }}
         </p>
       </div>
       <div v-if="isOngoingBehaviour" class="flex justify-end">
@@ -58,7 +58,7 @@
           @click="handleContinue"
           class="bg-[#1570EF] border border-[#1570EF] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D] py-2 px-3.5 text-white text-sm font-semibold"
         >
-          Continue
+        {{ $t('profile_page.continue') }}
         </button>
       </div>
     </div>

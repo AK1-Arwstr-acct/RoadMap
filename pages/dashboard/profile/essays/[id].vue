@@ -26,8 +26,7 @@
           <p
             class="text-[#181D27] text-sm md:text-base font-medium text-justify"
           >
-            This is far from good though. Want to know how to customise it even
-            more and make it 10x better?
+          {{ $t('profile_page.customise_prompt') }}
           </p>
         </div>
         <div>
@@ -35,7 +34,7 @@
             :to="'/pricing'"
             class="text-[#414651] w-full text-center sm:w-fit text-nowrap font-semibold text-sm py-2 px-3.5 border border-[#D5D7DA] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D]"
           >
-            Make my essay 10x better
+          {{ $t('profile_page.make_my_essay_better') }}
           </NuxtLinkLocale>
         </div>
       </div>

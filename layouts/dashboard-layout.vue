@@ -1,5 +1,5 @@
 <template>
-  <div class="h-dvh w-screen flex relative">
+  <div class="h-dvh flex">
     <component v-if="deviceType === 'desktop' || deviceType === 'tablet'" :is="desktop.DashboardSidebar" />
     <div class="flex-1 overflow-hidden flex flex-col">
       <DashboardNav />

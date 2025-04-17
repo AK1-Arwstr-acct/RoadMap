@@ -4,11 +4,11 @@
     <div>
       <div class="flex justify-between items-center mb-5">
         <p class="text-xl font-semibold text-[#181D27]">
-          Programs and resources for you
+          {{ $t("dashboard_home_page.program_and_resources_for_you") }}
         </p>
         <a href="https://www.facebook.com/Arrowster.Official" target="_blank">
           <p class="font-semibold text-[#175CD3] cursor-pointer text-nowrap">
-            View All
+            {{ $t("dashboard_home_page.view_all") }}
           </p>
         </a>
       </div>
@@ -71,7 +71,9 @@
     </div>
     <!-- social -->
     <div>
-      <p class="text-xl font-semibold text-[#181D27] mb-5">Join Community</p>
+      <p class="text-xl font-semibold text-[#181D27] mb-5">
+        {{ $t("dashboard_home_page.join_community") }}
+      </p>
       <div class="flex gap-6 flex-wrap">
         <a
           href="https://www.facebook.com/groups/8907362185980576"
@@ -79,7 +81,7 @@
           class="flex items-center w-full lg:w-[calc(50%-12px)] gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
         >
           <IconFacebook />
-          Facebook Community
+          {{ $t("dashboard_home_page.facebook_community") }}
         </a>
         <a
           href="https://www.threads.net/@arrowster.official"
@@ -87,7 +89,7 @@
           class="flex items-center w-full lg:w-[calc(50%-12px)] gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
         >
           <IconThreads />
-          Threads Community
+          {{ $t("dashboard_home_page.threads_community") }}
         </a>
         <a
           href="https://discord.gg/xahYuU2H"
@@ -95,21 +97,22 @@
           class="flex items-center w-full lg:w-[calc(50%-12px)] gap-4 text-[#414651] font-semibold text-lg py-[18px] px-5 border-[1.5px] border-gray-200 rounded-[14px] shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]"
         >
           <IconDiscord />
-          Discord Community
+          {{ $t("dashboard_home_page.discord_community") }}
         </a>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+const { t } = useI18n();
+
 const eventList = [
   {
     image: "/images/application-post.png",
-    title: "Arrowster Exclusive Study Abroad Handbook",
-    description:
-      "100 pages covering every topic of study abroad: choosing major, building profile, applying for scholarships, writing essays, and more!",
+    title: t("dashboard_home_page.program_1.title"),
+    description: t("dashboard_home_page.program_1.description"),
     link: {
-      text: "Read here",
+      text: t("dashboard_home_page.program_1.cta_text"),
       value:
         "https://docs.google.com/document/d/1Pl2w7QN0SztPoa-JLdhIUiUBwcmawdaCMJkuYHaNdmQ/edit?usp=sharing",
     },
@@ -117,23 +120,20 @@ const eventList = [
   },
   {
     image: "/images/application.png",
-    title:
-      "Training Session 1: How to Select the Best Major for Jobs after Graduation",
-    description:
-      "Sharing session by our mentor Thanh (Harvard MBA) on a strategic framework to choose the right major and prepare to get a job after graduation.",
+    title: t("dashboard_home_page.program_2.title"),
+    description: t("dashboard_home_page.program_2.description"),
     link: {
-      text: "Exclusive Content – Work with us to access",
+      text: t("dashboard_home_page.program_2.cta_text"),
       value: "/pricing",
     },
     locked: true,
   },
   {
     image: "/images/decision.png",
-    title: "Centralised Scholarship (2025-2026)",
-    description:
-      "List of scholarships for Vietnamese students across all countries (US, Australia, Canada, Europe, etc).",
+    title: t("dashboard_home_page.program_3.title"),
+    description: t("dashboard_home_page.program_3.description"),
     link: {
-      text: "Exclusive Content – Work with us to access",
+      text: t("dashboard_home_page.program_3.cta_text"),
       value: "/pricing",
     },
     locked: true,

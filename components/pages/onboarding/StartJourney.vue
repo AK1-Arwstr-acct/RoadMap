@@ -2,8 +2,9 @@
   <div class="w-full flex justify-center items-center px-5">
     <div class="w-fit space-y-8">
       <div class="flex flex-col items-center justify-center">
-        <img 
-          src="/images/lets-go.png" alt="Lets Go"
+        <img
+          src="/images/lets-go.png"
+          alt="Lets Go"
           class="max-w-[300px] sm:max-w-[450px]"
           loading="eager"
         />
@@ -14,11 +15,10 @@
         </h1>
       </div>
       <div class="px-14">
-        <NuxtLinkLocale
-          :to="'/dashboard'"
-          class="w-full text-white bg-[#1570EF] rounded-lg py-2.5"
-        >
-          {{ $t("onboarding.start_your_journey") }}
+        <NuxtLinkLocale :to="'/dashboard'">
+          <button class="w-full text-white bg-[#1570EF] rounded-lg py-2.5">
+            {{ $t("onboarding.start_your_journey") }}
+          </button>
         </NuxtLinkLocale>
       </div>
     </div>

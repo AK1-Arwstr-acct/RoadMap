@@ -3,7 +3,6 @@
     <section class="flex h-full bg-white">
       <div
         class="w-full flex justify-center overflow-y-auto no-scrollbar"
-        :class="{ '!overflow-hidden fixed': openDetailModal }"
       >
         <div class="w-full max-w-[768px] px-5 py-8 h-fit">
           <!-- application detail -->

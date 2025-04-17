@@ -15,11 +15,10 @@
 
     <div class="">
       <h1 class="text-[#181D27] font-semibold text-3xl">
-        Get into your dream school with Sophie AI + Expert mentorship
+        {{ $t("dashboard_home_page.headline") }}
       </h1>
       <p class="text-[#535862] mt-4">
-        Personalized guidance, strategic tools, and 1-on-1 mentorship to help
-        you succeed.
+        {{ $t("dashboard_home_page.subheadline") }}
       </p>
       <div class="mt-[42px] flex flex-col gap-8">
         <div
@@ -63,6 +62,7 @@
   </div>
 </template>
 <script setup lang="ts">
+const { t } = useI18n();
 
 const isRemainingTask = ref<boolean>(false);
 const isTaskLoading = ref<boolean>(true);
@@ -138,46 +138,46 @@ const isTaskLoading = ref<boolean>(true);
 const stepsList = [
   {
     image: "/images/tell-me-more.png",
-    title: "Schools list",
-    description: "Find your perfect-fit schools with AI recommendations.",
+    title: t("dashboard_home_page.stepsList.step1.title"),
+    description: t("dashboard_home_page.stepsList.step1.description"),
     navigate: {
-      text: "Find Your Best-Fit Schools in 60 Seconds",
+      text: t("dashboard_home_page.stepsList.step1.navigate_text"),
       navigateTo: "/school-list",
     },
   },
   {
     image: "/images/sophie-chat.png",
-    title: "Sophie Assistant",
-    description: "Ask questions anytime and get instant guidance.",
+    title: t("dashboard_home_page.stepsList.step2.title"),
+    description: t("dashboard_home_page.stepsList.step2.description"),
     navigate: {
-      text: "Chat with Sophie AI for Free",
+      text: t("dashboard_home_page.stepsList.step2.navigate_text"),
       navigateTo: "/sophie",
     },
   },
   {
     image: "/images/post-application.png",
-    title: "Roadmap",
-    description: "See deadlines and track what you need to prepare.",
+    title: t("dashboard_home_page.stepsList.step3.title"),
+    description: t("dashboard_home_page.stepsList.step3.description"),
     navigate: {
-      text: "View your Plan",
+      text: t("dashboard_home_page.stepsList.step3.navigate_text"),
       navigateTo: "/roadmap",
     },
   },
   {
     image: "/images/ai-recommendation.png",
-    title: "AI Essay Editor",
-    description: "Get AI-crafted essay drafts tailored to your unique story.",
+    title: t("dashboard_home_page.stepsList.step4.title"),
+    description: t("dashboard_home_page.stepsList.step4.description"),
     navigate: {
-      text: "Generate Your Essay Now",
+      text: t("dashboard_home_page.stepsList.step4.navigate_text"),
       navigateTo: "/ai-essay",
     },
   },
   {
     image: "/images/v-room-short.png",
-    title: "Expert Mentorship",
-    description: "1-on-1 mentorship to craft your perfect application plan.",
+    title: t("dashboard_home_page.stepsList.step5.title"),
+    description: t("dashboard_home_page.stepsList.step5.description"),
     navigate: {
-      text: "Talk to a Mentor",
+      text: t("dashboard_home_page.stepsList.step5.navigate_text"),
       navigateTo: "/pricing",
     },
   },

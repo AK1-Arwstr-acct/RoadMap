@@ -6,7 +6,7 @@
     <div class="flex justify-center items-center">
       <img
         src="/images/countries-application.png"
-        alt="Application"
+        :alt="t('roadmap_page.application')"
         class="w-full h-full max-h-[274px] object-contain"
         :class="{ grayscale: !checkCompletedTask }"
         loading="eager"
@@ -18,7 +18,7 @@
           class="text-2xl font-semibold capitalize"
           :class="[checkCompletedTask ? 'text-white' : 'text-[#181D27]']"
         >
-          Application
+          {{ $t("roadmap_page.application") }}
         </p>
         <p
           class="rounded-2xl px-3 font-semibold py-1 text-[#414651] text-sm text-nowrap"
@@ -28,7 +28,7 @@
             {{ checkCompletedTask }} /
             {{ totalTasks }}
           </span>
-          <span v-else> Completed! </span>
+          <span v-else> {{ $t("roadmap_page.completed") }} </span>
         </p>
       </div>
       <div
@@ -36,10 +36,7 @@
         :class="[checkCompletedTask ? 'text-white' : 'text-[#717680]']"
       >
         <p class="truncate-paragraph">
-          Complete your application package by writing an engaging personal
-          statement, gathering strong recommendations and transcripts, preparing
-          financial aid materials if needed, and submitting everything before
-          deadlines.
+          {{ $t("roadmap_page.countries_app_detail") }}
         </p>
       </div>
       <div
@@ -63,13 +60,15 @@
               : 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]',
           ]"
         >
-          <span class="text-[#039855]" v-if="checkCompletedTask === totalTasks"
-            >Review</span
+          <span
+            class="text-[#039855]"
+            v-if="checkCompletedTask === totalTasks"
+            >{{ $t("roadmap_page.review") }}</span
           >
-          <span v-else-if="checkCompletedTask > 0" class="text-[#039855]"
-            >Continue</span
-          >
-          <span v-else>Jump to Application</span>
+          <span v-else-if="checkCompletedTask > 0" class="text-[#039855]">{{
+            $t("roadmap_page.continue")
+          }}</span>
+          <span v-else>{{ $t("roadmap_page.jump_to_application") }}</span>
         </div>
       </NuxtLinkLocale>
     </div>
@@ -81,6 +80,7 @@ import type { Application } from "~/types/dashboard";
 
 const localePath = useLocalePath();
 const appTrackerStore = useAppTrackerStore();
+const { t } = useI18n();
 
 const taskProgress = ref<string>("");
 const totalTasks = ref<number>(0);
