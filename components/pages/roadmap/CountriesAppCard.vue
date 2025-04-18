@@ -51,26 +51,23 @@
         </div>
         <IconTabSophie class="invert" />
       </div>
-      <NuxtLinkLocale :to="'/roadmap/application'">
-        <div
-          class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl px-5 py-3 w-full"
-          :class="[
-            checkCompletedTask
-              ? 'shadow-[0px_1px_2px_0px_#0A0D120D]'
-              : 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]',
-          ]"
-        >
-          <span
-            class="text-[#039855]"
-            v-if="checkCompletedTask === totalTasks"
-            >{{ $t("roadmap_page.review") }}</span
-          >
-          <span v-else-if="checkCompletedTask > 0" class="text-[#039855]">{{
-            $t("roadmap_page.continue")
-          }}</span>
-          <span v-else>{{ $t("roadmap_page.jump_to_application") }}</span>
-        </div>
-      </NuxtLinkLocale>
+      <div
+        @click="navigation"
+        class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl px-5 py-3 w-full cursor-pointer"
+        :class="[
+          checkCompletedTask
+            ? 'shadow-[0px_1px_2px_0px_#0A0D120D]'
+            : 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]',
+        ]"
+      >
+        <span class="text-[#039855]" v-if="checkCompletedTask === totalTasks">{{
+          $t("roadmap_page.review")
+        }}</span>
+        <span v-else-if="checkCompletedTask > 0" class="text-[#039855]">{{
+          $t("roadmap_page.continue")
+        }}</span>
+        <span v-else>{{ $t("roadmap_page.jump_to_application") }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -78,8 +75,11 @@
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { Application } from "~/types/dashboard";
 
+const emit = defineEmits(["updateStep"]);
+
 const localePath = useLocalePath();
 const appTrackerStore = useAppTrackerStore();
+const route = useRoute();
 const { t } = useI18n();
 
 const taskProgress = ref<string>("");
@@ -96,6 +96,14 @@ const checkCompletedTask = computed(() => {
   totalTasks.value = total;
   return count;
 });
+
+const navigation = () => {
+  if (route.path.includes("/demo")) {
+    emit("updateStep");
+  } else {
+    navigateTo(localePath("/roadmap/application"));
+  }
+};
 </script>
 <style scoped>
 .truncate-paragraph {

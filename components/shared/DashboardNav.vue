@@ -1,7 +1,7 @@
 <template>
   <!-- Desktop View -->
   <div
-    class="bg-white hidden md:flex justify-between px-6 py-4 border-b-[1.5px] border-gray-200"
+    class="bg-white hidden lg:flex justify-between px-6 py-4 border-b-[1.5px] border-gray-200"
   >
     <div class="flex items-center text-xl font-medium text-[#535862]">
       <IconMorning v-if="time >= 5 && time < 12" />
@@ -67,7 +67,7 @@
   </div>
 
   <!-- Mobile View -->
-  <div class="py-5 px-3 border-b border-gray-200 md:hidden">
+  <div class="py-5 px-3 border-b border-gray-200 lg:hidden">
     <div class="flex justify-between items-center">
       <NuxtLinkLocale to="/dashboard" class="no-underline">
         <div
@@ -120,6 +120,7 @@
         :is="MobileSideBar"
         v-if="isMobileSideBarOpen"
         @close="close"
+        @updateTab="updateTab"
       />
     </Transition>
   </div>
@@ -127,6 +128,8 @@
 <script setup lang="ts">
 import useAppStore from "~/stores/AppStore";
 import MobileSideBar from "./MobileSideBar.vue";
+
+const emit = defineEmits(["updateTab"]);
 
 const appStore = useAppStore();
 const { t } = useI18n();
@@ -151,6 +154,10 @@ const getGreeting = computed(() => {
     return t("dashboard.navbar.night");
   }
 });
+
+const updateTab = (value: string) => {
+  emit('updateTab', value)
+}
 </script>
 <style scoped>
 .slideModal-enter-active,

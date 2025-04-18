@@ -79,11 +79,13 @@
 import useDashboardStore from "~/stores/dashboardStore";
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
+import { majors } from "~/utils/demoData";
 
 const { api } = useApi();
 const appStore = useAppStore();
 const { showToast } = useToast();
 const dashboardStore = useDashboardStore();
+const route = useRoute();
 
 interface programOptions {
   value: number;
@@ -179,4 +181,11 @@ watch(
     }
   }
 );
+
+onMounted(() => {
+  if (route.path.includes("/demo")) {
+    majorProgramsList.value = majors;
+    return;
+  }
+});
 </script>

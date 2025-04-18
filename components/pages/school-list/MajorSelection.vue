@@ -66,11 +66,13 @@
 import useDashboardStore from "~/stores/dashboardStore";
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
+import { majors } from "~/utils/demoData";
 
 const { api } = useApi();
 const appStore = useAppStore();
 const { showToast } = useToast();
 const dashboardStore = useDashboardStore();
+const route = useRoute();
 
 interface programOptions {
   value: number;
@@ -108,7 +110,9 @@ const submit = async () => {
     dashboardStore.isSchoolsLoading = true;
     await api.post("/api/v1/student/update-profile-basic-info", {
       cgpa: appStore.userData?.educational_records.cgpa,
-      next_program_title_ids: selectedLPrograms.value.length ? selectedLPrograms.value : -1,
+      next_program_title_ids: selectedLPrograms.value.length
+        ? selectedLPrograms.value
+        : -1,
     });
     appStore.getUserData();
   } catch (error) {
@@ -123,6 +127,10 @@ const submit = async () => {
 };
 
 const getMajors = async () => {
+  if (route.path.includes("/demo")) {
+    majorProgramsList.value = majors;
+    return;
+  }
   if (!appStore.userData) {
     return;
   }

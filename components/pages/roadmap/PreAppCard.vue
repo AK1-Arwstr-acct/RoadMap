@@ -13,7 +13,7 @@
     <div class="">
       <div class="flex justify-between items-center">
         <p class="text-white text-2xl font-semibold capitalize">
-          {{ $t('roadmap_page.pre_application') }}
+          {{ $t("roadmap_page.pre_application") }}
         </p>
         <p
           class="bg-[#F5F5F5] rounded-2xl text-sm px-3 font-semibold py-1 text-[#414651] text-nowrap"
@@ -22,7 +22,7 @@
             {{ checkCompletedTask }} /
             {{ appTrackerStore.preApplication?.tasks?.length }}
           </span>
-          <span v-else> {{ $t('roadmap_page.completed') }} </span>
+          <span v-else> {{ $t("roadmap_page.completed") }} </span>
         </p>
       </div>
       <div class="text-white mt-5 mb-6">
@@ -45,29 +45,32 @@
         </div>
         <IconTabSophie class="invert" />
       </div>
-      <NuxtLinkLocale :to="'/roadmap/pre-application'">
-        <div
-          class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl shadow-[0px_1px_2px_0px_#0A0D120D] px-5 py-3 w-full"
+      <div
+        @click="navigation"
+        class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl shadow-[0px_1px_2px_0px_#0A0D120D] px-5 py-3 w-full cursor-pointer"
+      >
+        <span v-if="checkCompletedTask === 0">{{
+          $t("roadmap_page.start_here")
+        }}</span>
+        <span
+          v-else-if="
+            checkCompletedTask === appTrackerStore.preApplication?.tasks?.length
+          "
+          >{{ $t("roadmap_page.review") }}</span
         >
-          <span v-if="checkCompletedTask === 0">{{ $t('roadmap_page.start_here') }}</span>
-          <span
-            v-else-if="
-              checkCompletedTask ===
-              appTrackerStore.preApplication?.tasks?.length
-            "
-            >{{ $t('roadmap_page.review') }}</span
-          >
-          <span v-else>{{ $t('roadmap_page.continue') }}</span>
-        </div>
-      </NuxtLinkLocale>
+        <span v-else>{{ $t("roadmap_page.continue") }}</span>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 
+const emit = defineEmits(["updateStep"]);
+
 const localePath = useLocalePath();
 const appTrackerStore = useAppTrackerStore();
+const route = useRoute();
 const { t } = useI18n();
 
 const taskProgress = ref<string>("");
@@ -83,6 +86,14 @@ const checkCompletedTask = computed(() => {
   }%`;
   return completedTasks;
 });
+
+const navigation = () => {
+  if (route.path.includes("/demo")) {
+    emit("updateStep");
+  } else {
+    navigateTo(localePath("/roadmap/pre-application"));
+  }
+};
 </script>
 <style scoped>
 .truncate-paragraph {

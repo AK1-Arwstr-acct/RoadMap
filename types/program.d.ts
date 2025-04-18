@@ -2,9 +2,9 @@ interface Program {
     description: string | null;
     fee: number;
     id: number;
-    in_state_fee: number | null;
+    in_state_fee?: number | null;
     school: School;
-    school_ranking: number;
+    school_ranking: number | null;
     title: string;
     program_title: string;
     super_meta_title: string;
@@ -18,16 +18,16 @@ interface School {
     id: number;
     name: string;
     user_name: string;
-    avatar: string;
-    number_of_students: number | null;
-    average_net_price: number;
-    avg_act_composite: number | null;
-    avg_cgpa: number;
-    avg_sat_composite: number | null;
+    avatar: string | null;
+    number_of_students?: number | null;
+    average_net_price?: number;
+    avg_act_composite?: number | null;
+    avg_cgpa?: number | null;
+    avg_sat_composite?: number | null;
     cover_photo: null;
-    have_own_application: null;
-    use_coalition_app: boolean | null;
-    use_common_app: boolean | null;
+    have_own_application?: null;
+    use_coalition_app?: boolean | null;
+    use_common_app?: boolean | null;
     address: Address;
     admission_stats: AdmissionStats;
 }
@@ -38,13 +38,13 @@ export interface ClassGrade {
 }
 
 interface Address {
-    city: string;
+    city?: string;
     country: string;
     country_code: string;
-    lat: string;
-    lng: string;
+    lat: string | null;
+    lng: string | null;
     state: string;
-    phone_number: string | null;
+    phone_number?: string | null;
 }
 
 interface RecommendationSchoolsPagination {

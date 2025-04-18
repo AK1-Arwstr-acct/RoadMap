@@ -40,7 +40,7 @@
             {{ appStore.userData?.name }}
           </p>
         </div>
-        <div class="" @click="emit('close')">
+        <div class="cursor-pointer" @click="emit('close')">
           <IconCross width="24" height="24" fill="#717680" />
         </div>
       </div>
@@ -186,7 +186,21 @@ const tabList: TabList[] = [
 ];
 
 const updateTab = (item: string) => {
-  navigateTo(localePath(item));
+  if (route.path.includes("/demo")) {
+    if (item === "/dashboard") {
+      emit("updateTab", "home");
+    } else if (item === "/roadmap") {
+      emit("updateTab", "Roadmap");
+    } else if (item === "/school-list") {
+      emit("updateTab", "schools_list");
+    } else if (item === "/sophie") {
+      emit("updateTab", "sophie");
+    } else if (item === "/ai-essay") {
+      emit("updateTab", "ai_essay_editor");
+    }
+  } else {
+    navigateTo(localePath(item));
+  }
   emit("close");
 };
 

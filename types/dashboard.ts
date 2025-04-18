@@ -3,6 +3,10 @@ interface TabList {
     icon: Component;
     route: string;
 }
+interface DemoTabList {
+    name: string;
+    icon: Component;
+}
 
 interface Category {
     id: number;
@@ -36,4 +40,13 @@ interface Application {
     tasks: Task[];
 }
 
-export type { TabList, Application, Task }
+export type TabName =
+    | "home"
+    | "sophie"
+    | "Roadmap"
+    | "schools_list"
+    | "setting"
+    | "ai_essay_editor"
+    | "user_profile";
+
+export type { TabList, Application, Task, DemoTabList }

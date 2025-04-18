@@ -179,6 +179,7 @@ const appTrackerStore = useAppTrackerStore();
 const { api } = useApi();
 const localePath = useLocalePath();
 const appStore = useAppStore();
+const route = useRoute();
 
 const props = defineProps({
   taskDetail: {
@@ -196,11 +197,14 @@ const options = {
 
 const handelClick = async () => {
   try {
-    if (!appStore.authenticatedUser) {
+    if (!appStore.authenticatedUser && !(route.path.includes("/demo"))) {
       progressSoftPaywall.value = true;
       return;
     }
     props.taskDetail.checked = !props.taskDetail?.checked;
+    if (route.path.includes("/demo")) {
+      return;
+    }
     await api.post("/api/v1/roadmap/tasks", {
       task_id: props.taskDetail?.id,
       is_complete: props.taskDetail?.checked,
@@ -211,7 +215,7 @@ const handelClick = async () => {
 };
 
 const handelResources = (link: string) => {
-  if (!appStore.authenticatedUser) {
+  if (!appStore.authenticatedUser && !(route.path.includes("/demo"))) {
     resourcesSoftPaywall.value = true;
     return;
   }

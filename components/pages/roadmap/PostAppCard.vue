@@ -18,7 +18,7 @@
           class="text-2xl font-semibold capitalize"
           :class="[checkCompletedTask ? 'text-white' : 'text-[#181D27]']"
         >
-        {{ $t('roadmap_page.post_application') }}
+          {{ $t("roadmap_page.post_application") }}
         </p>
         <p
           class="rounded-2xl px-3 font-semibold py-1 text-[#414651] text-sm text-nowrap"
@@ -28,7 +28,7 @@
             {{ checkCompletedTask }} /
             {{ appTrackerStore.postApplication?.tasks?.length }}
           </span>
-          <span v-else> {{ $t('roadmap_page.completed') }} </span>
+          <span v-else> {{ $t("roadmap_page.completed") }} </span>
         </p>
       </div>
       <div
@@ -54,38 +54,39 @@
         </div>
         <IconTabSophie class="invert" />
       </div>
-      <NuxtLinkLocale :to="'/roadmap/post-application'">
-        <div
-          :to="'/roadmap/post-application'"
-          class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl px-5 py-3 w-full"
-          :class="[
-            checkCompletedTask
-              ? 'shadow-[0px_1px_2px_0px_#0A0D120D]'
-              : 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]',
-          ]"
+      <div
+        @click="navigation"
+        class="bg-white text-[#1570EF] text-center font-semibold border border-gray-300 rounded-xl px-5 py-3 w-full cursor-pointer"
+        :class="[
+          checkCompletedTask
+            ? 'shadow-[0px_1px_2px_0px_#0A0D120D]'
+            : 'shadow-[0px_1px_2px_0px_#0A0D120F,0px_1px_0px_0px_#0A0D121A]',
+        ]"
+      >
+        <span
+          class="text-[#DC6803]"
+          v-if="
+            checkCompletedTask ===
+            appTrackerStore.postApplication?.tasks?.length
+          "
+          >{{ $t("roadmap_page.review") }}</span
         >
-          <span
-            class="text-[#DC6803]"
-            v-if="
-              checkCompletedTask ===
-              appTrackerStore.postApplication?.tasks?.length
-            "
-            >{{ $t('roadmap_page.review') }}</span
-          >
-          <span v-else-if="checkCompletedTask > 0" class="text-[#DC6803]"
-            >{{ $t('roadmap_page.continue') }}</span
-          >
-          <span v-else>{{ $t('roadmap_page.jump_to_post_application') }}</span>
-        </div>
-      </NuxtLinkLocale>
+        <span v-else-if="checkCompletedTask > 0" class="text-[#DC6803]">{{
+          $t("roadmap_page.continue")
+        }}</span>
+        <span v-else>{{ $t("roadmap_page.jump_to_post_application") }}</span>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 
+const emit = defineEmits(["updateStep"]);
+
 const localePath = useLocalePath();
 const appTrackerStore = useAppTrackerStore();
+const route = useRoute();
 const { t } = useI18n();
 
 const taskProgress = ref<string>("");
@@ -101,6 +102,14 @@ const checkCompletedTask = computed(() => {
   }%`;
   return completedTasks;
 });
+
+const navigation = () => {
+  if (route.path.includes("/demo")) {
+    emit("updateStep");
+  } else {
+    navigateTo(localePath("/roadmap/post-application"));
+  }
+};
 </script>
 <style scoped>
 .truncate-paragraph {

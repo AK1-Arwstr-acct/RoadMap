@@ -11,7 +11,7 @@
       <div
         :class="[
           !route.path.includes('/sophie')
-            ? 'px-1 lg:px-2'
+            ? 'px-1 xl:px-2'
             : 'px-2 flex justify-center',
         ]"
       >
@@ -39,7 +39,7 @@
 
               route.path.includes('/sophie')
                 ? 'px-2 justify-between'
-                : 'px-2 justify-between lg:px-3 lg:justify-start lg:gap-3',
+                : 'px-2 justify-between xl:px-3 xl:justify-start xl:gap-3',
             ]"
           >
             <div>
@@ -56,7 +56,7 @@
             </div>
             <span
               v-if="!route.path.includes('/sophie')"
-              class="font-medium text-base text-nowrap hidden lg:block"
+              class="font-medium text-base text-nowrap hidden xl:block"
             >
               {{ tab.name }}
             </span>
