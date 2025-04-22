@@ -13,7 +13,7 @@
         />
       </div>
       <p class="font-semibold text-[#111827] text-sm">
-        Your Details & Information
+        {{ $t("schoolList_page.your_details_and_information") }}
       </p>
     </div>
     <div
@@ -23,13 +23,14 @@
     >
       <div class="mt-6">
         <label class="font-medium text-[#414651] text-sm"
-          >GPA<span class="text-[#D92D20] font-medium">*</span></label
+          >{{ $t("schoolList_page.gpa")
+          }}<span class="text-[#D92D20] font-medium">*</span></label
         >
         <input
           name="ielts"
           type="text"
           v-model="gpa"
-          placeholder="Enter GPA"
+          :placeholder="t('schoolList_page.enter_gpa')"
           class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           @input="gpaChanged"
           data-hj-allow
@@ -37,7 +38,7 @@
       </div>
       <div class="mt-5">
         <BaseSelectRadio
-          label="Study program"
+          :label="t('schoolList_page.study_program')"
           :required="true"
           :options="dashboardStore.programListOptions"
           v-model="studyPrograms"
@@ -54,7 +55,8 @@
             ]"
           >
             <p class="font-medium text-[#414651] text-sm">
-              Study destination<span class="text-[#D92D20] font-medium">*</span>
+              {{ $t("schoolList_page.study_destination")
+              }}<span class="text-[#D92D20] font-medium">*</span>
             </p>
             <div class="flex flex-col gap-4">
               <div
@@ -124,7 +126,7 @@
       </Transition>
       <div class="mt-5">
         <BaseSelectRadio
-          label="Annual total budget"
+          :label="t('schoolList_page.annual_total_budget')"
           :options="dashboardStore.budgetList"
           v-model="annualBudget"
           direction="upward"
@@ -135,7 +137,7 @@
       </div>
       <div class="mt-5">
         <BaseSelectRadio
-          label="Area of study"
+          :label="t('schoolList_page.area_of_study')"
           :required="true"
           :options="dashboardStore.coursePreferenceOptions"
           v-model="areaOfStudy"
@@ -152,14 +154,14 @@
           @click="resetUserData"
           class="p-2.5 border-[1.5px] border-gray-200 w-full rounded-lg font-semibold text-sm text-[#414651]"
         >
-          Reset all
+          {{ $t("schoolList_page.reset_all") }}
         </button>
         <button
           @click="updateUserData"
           :disabled="!isUpdateBtnDisable"
           class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
         >
-          Update
+          {{ $t("schoolList_page.update") }}
           <IconSpinner
             v-if="isSubmitting"
             class="size-3.5"
@@ -185,6 +187,7 @@ const dashboardStore = useDashboardStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
+const { t } = useI18n();
 
 const isSubmitting = ref<boolean>(false);
 const isDetailOpen = ref<boolean>(false);

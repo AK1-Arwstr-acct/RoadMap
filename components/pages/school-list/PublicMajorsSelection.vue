@@ -3,7 +3,7 @@
     class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-[#FFFEFC] flex flex-col gap-6"
     :class="{ 'pointer-events-none': dashboardStore.isSchoolsLoading }"
   >
-    <p class="font-medium text-[#414651]">Majors (Pick up to 3 majors)</p>
+    <p class="font-medium text-[#414651]">{{ $t('schoolList_page.majors_pick_up_to_3_majors') }}</p>
     <div
       v-if="majorProgramsList.length"
       class="mt-[14px] space-y-4 max-h-[280px] overflow-y-auto custom-scrollbar"
@@ -59,11 +59,10 @@
     </div>
     <div v-else class="">
       <p class="text-sm text-[#535862] font-medium">
-        Tell us about yourself to get started
+        {{ $t('schoolList_page.tell_us_about_yourself_to_get_started') }}
       </p>
       <p class="text-sm text-[#717680] mt-2">
-        Fill in your details to explore and select your top majors. This helps
-        us find the best school matches for you!
+        {{ $t('schoolList_page.fill_in_your_details_on_the_right_to_generate_your_personalized_school_matches') }}
       </p>
     </div>
     <button
@@ -71,7 +70,7 @@
       disabled
       class="text-sm font-semibold text-[#D5D7DA] bg-white rounded-lg py-2.5 border border-gray-200 w-full"
     >
-      Select Major
+    {{ $t('schoolList_page.select_major') }}
     </button>
   </div>
 </template>

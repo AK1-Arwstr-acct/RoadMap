@@ -7,7 +7,7 @@
       class="rounded-xl overflow-hidden w-[84px] h-[84px] lg:min-w-[122px] lg:w-[122px] lg:h-[122px] flex justify-center items-center"
     >
       <img
-        :src="program.school.avatar"
+        :src="program.school.avatar || ''"
         :alt="program.school.name"
         class="size-full object-contain"
       />
@@ -66,28 +66,38 @@
           class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6 font-medium mb-2 text-sm 2xl:text-base"
         >
           <div>
-            <span class="text-[#717680] mr-2">SAT:</span>
+            <span class="text-[#717680] mr-2">{{
+              $t("schoolList_page.sat")
+            }}</span>
             <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.sat || "Coming Soon"
+              program.school.admission_stats.average_scores.sat ||
+              `${$t("schoolList_page.coming_soon")}`
             }}</span>
           </div>
           <div>
-            <span class="text-[#717680] mr-2">IELTS:</span>
+            <span class="text-[#717680] mr-2">{{
+              $t("schoolList_page.ielts")
+            }}</span>
             <span class="text-[#1570EF]">{{
               program.school.admission_stats.average_scores.ielts ||
-              "Coming Soon"
+              `${$t("schoolList_page.coming_soon")}`
             }}</span>
           </div>
           <div>
-            <span class="text-[#717680] mr-2">GPA:</span>
+            <span class="text-[#717680] mr-2">{{
+              $t("schoolList_page.gpa")
+            }}</span>
             <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.gpa || "Coming Soon"
+              program.school.admission_stats.average_scores.gpa ||
+              `${$t("schoolList_page.coming_soon")}`
             }}</span>
           </div>
         </div>
         <div class="flex items-center gap-6 text-sm 2xl:text-base">
           <div>
-            <span class="text-[#717680] mr-2">Avg. tuition:</span>
+            <span class="text-[#717680] mr-2">{{
+              $t("schoolList_page.avg_tuition")
+            }}</span>
             <span class="text-gray-900">
               {{
                 `${
@@ -99,9 +109,11 @@
             </span>
           </div>
           <div>
-            <span class="text-[#717680] mr-2">Ranking:</span>
+            <span class="text-[#717680] mr-2">{{
+              $t("schoolList_page.ranking")
+            }}</span>
             <span class="text-gray-900">{{
-              program.school_ranking || "Coming Soon"
+              program.school_ranking || `${$t("schoolList_page.coming_soon")}`
             }}</span>
           </div>
         </div>
@@ -119,11 +131,14 @@
         <div class="flex flex-col items-center">
           <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
           <p class="text-[#181D27] text-lg font-semibold text-center">
-            Sign up to unlock full details!
+            {{ $t("schoolList_page.sign_up_to_unlock_full_details") }}
           </p>
           <p class="text-[#535862] text-sm text-center mt-2">
-            Get personalized school recommendations and AI recommendations. Sign
-            up to continue!
+            {{
+              $t(
+                "schoolList_page.get_personalized_school_recommendations_and_ai_recommendations"
+              )
+            }}
           </p>
         </div>
         <div class="flex gap-3">
@@ -131,13 +146,13 @@
             @click="isPublicPaywall = false"
             class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
           >
-            Cancel
+            {{ $t("schoolList_page.cancel") }}
           </button>
           <NuxtLinkLocale :to="'/signup'" class="w-full">
             <button
               class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
             >
-              Sign up for free
+              {{ $t("schoolList_page.sign_up_for_free") }}
             </button>
           </NuxtLinkLocale>
         </div>
@@ -154,6 +169,7 @@ import IconAustralia from "../../icons/IconAustralia.vue";
 import IconUS from "../../icons/IconUS.vue";
 import IconEurope from "../../icons/IconEurope.vue";
 import useDashboardStore from "~/stores/dashboardStore";
+import { schoolDeatailList } from "~/utils/demoData";
 
 const emit = defineEmits(["openDetail"]);
 
@@ -161,6 +177,7 @@ const { api } = useApi();
 const { showToast } = useToast();
 const localePath = useLocalePath();
 const dashboardStore = useDashboardStore();
+const route = useRoute();
 
 const props = defineProps({
   program: {
@@ -173,6 +190,13 @@ const isPublicPaywall = ref<boolean>(false);
 
 const schoolDetail = async () => {
   try {
+    if (route.path.includes("/demo")) {
+      let school = schoolDeatailList.find(
+        (item) => item.id === props.program.school.id
+      );
+      emit("openDetail", school);
+      return;
+    }
     if (dashboardStore.isSchoolListPublic) {
       isPublicPaywall.value = true;
       return;

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="hidden lg:flex flex-col h-full py-6 justify-between gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
+    class="hidden lg:flex flex-col h-full py-6 justify-between gap-6 min-w-fit transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
     :class="[
       currentTab === 'sophie'
         ? 'w-[64px] px-3'

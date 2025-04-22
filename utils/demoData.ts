@@ -1,5 +1,5 @@
 import type { Application } from "~/types/dashboard";
-import type { Program } from "~/types/program";
+import type { Program, SchoolDetail } from "~/types/program";
 interface programOptions {
     value: number;
     label: string;
@@ -10,6 +10,16 @@ export const majors: programOptions[] = [
     {
         value: 1781,
         label: "Computer Engineering",
+        parent: 8994
+    },
+    {
+        value: 1846,
+        label: "Software Development",
+        parent: 8994
+    },
+    {
+        value: 1867,
+        label: "Cybersecurity",
         parent: 8994
     },
     {
@@ -36,6 +46,31 @@ export const majors: programOptions[] = [
         value: 1815,
         label: "Criminology",
         parent: 8987
+    },
+    {
+        value: 1749,
+        label: "Education",
+        parent: 8986
+    },
+    {
+        value: 1831,
+        label: "Criminal Law",
+        parent: 9012
+    },
+    {
+        value: 1957,
+        label: "Human Rights Law",
+        parent: 9012
+    },
+    {
+        value: 1786,
+        label: "Accounting",
+        parent: 8992
+    },
+    {
+        value: 1974,
+        label: "E-commerce",
+        parent: 8992
     },
 ];
 export const schoolsList: Program[] = [
@@ -515,7 +550,1626 @@ export const schoolsList: Program[] = [
             },
         },
     },
+    {
+        id: 77540,
+        title:
+            "B.Tech. - CSE-Cyber Security & Forensics in association with Microsoft",
+        school_ranking: null,
+        fee: 36600,
+        currency: {
+            title: "CAD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Cybersecurity",
+        super_meta_title: "Engineering and Technology",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9192,
+            name: "Coquitlam College",
+            user_name: "coquitlam_college",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkdQMmxUWFFqczc2WC9makNkUE1pV2c9PSIsInZhbHVlIjoiNEVOYXh3WnhWTElSaEpsb2REblV0OXcwcVlkMzZTWnRGZkoxRnpXL1pCV1krNStObVZkUTVVWDhOOXpuWlIxN295UW9vcmt1eXFleTBOK0IxcUtydEE9PSIsIm1hYyI6IjdlYWIzNDZlOTgxYjlhZTBmMDBkZGQ2MTllNzZkYmI2NmRmOGE4MGY3MDI5NDkyMTE0ZWE2YzdlODliYjM2NmIiLCJ0YWciOiIifQ==?expires=1745306422&signature=52448bebe249fa9f4a2fb80c5d542ef01ec7ce95f308364591105780668eec79",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: null,
+                    ielts: 6,
+                    gpa: 2.8,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "Canada",
+                state: "British Columbia",
+                country_code: "CA",
+            },
+        },
+    },
+    {
+        id: 77542,
+        title: "M.Tech. - Cryptology and Cyber Security",
+        school_ranking: null,
+        fee: 36600,
+        currency: {
+            title: "CAD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Cybersecurity",
+        super_meta_title: "Engineering and Technology",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9192,
+            name: "Coquitlam College",
+            user_name: "coquitlam_college",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImNTNmg2MmdDT0xBeW13MjVxZFNWR1E9PSIsInZhbHVlIjoiamVPakQyRHV0cHZGVHhWZWlmeVZDN1cxdERGV0dIclgrZWpaV203UVl6ejh2NEdub2hiSWoxVWJlWTd4ZHMvRmRrZTk1VzJOVWZWSDVwZXJSaXJBUHc9PSIsIm1hYyI6ImU1YTRjOTY4N2QxYzMzNTU2OGEyMGE2Y2I2NDY1ZWRhMDg1ODVhNWJhNDE0MjQ1ZGEzYmI5NWE5ZDRjZDgyMTYiLCJ0YWciOiIifQ==?expires=1745306422&signature=5dcf0d9144cb1fe2679b16ef94ae9f58801f2f4d99fdc4bdd07d1bd61242d20c",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: null,
+                    ielts: 6,
+                    gpa: 2.8,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "Canada",
+                state: "British Columbia",
+                country_code: "CA",
+            },
+        },
+    },
+    {
+        id: 90869,
+        title: "International and Comparative Education",
+        school_ranking: 8,
+        fee: 63450,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: 63450,
+        description: null,
+        program_title: "Education",
+        super_meta_title: "Education",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 669,
+            name: "Duke University",
+            user_name: "duke_university",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IlRibTBDVkFlYVByYXlrTkVCVnIyWVE9PSIsInZhbHVlIjoiWmllU3BxcmNQL0F3NUY2MVpDTTdWZmFXbEhOYUx1eGpjUzE5ZU9Uc3dBa01HS1dTcDhKdGFBaW1DWWdMZHZnZWp3S2x4Z2FQQ1RXWjBSS2pSazhQSmc9PSIsIm1hYyI6IjJmN2RiNzkzOTZhN2ExY2Y4Y2VkZmI2NTQ5NzAzNGY1NjI5NzVlNTM1NzE5Y2NmNGI5NDVmNmIxOGMxNjFlNTQiLCJ0YWciOiIifQ==?expires=1745310230&signature=e401733d88f2aa02516487fff3a9c7198aae632d942fcf21f8972ad410edfb1d",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1540,
+                    ielts: 7.5,
+                    gpa: 4,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "North Carolina",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 155294,
+        title: "Education, General",
+        school_ranking: 10,
+        fee: 62840,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: 62840,
+        description: null,
+        program_title: "Education",
+        super_meta_title: "Education",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 671,
+            name: "Johns Hopkins University",
+            user_name: "johns_hopkins_university",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImhDWWlYbVJ3RE1jOXZ0Y0YwNlNMeGc9PSIsInZhbHVlIjoia2pNTyt4alpHcWxacWwwZmZXOFM5UmFpOVUrQUNISnhOMFF4dlpJVXJGZ1VYMFYzdlduUzNxZXZCU3dDVk9Fb21xcFU2RnZCSE83dzY0bVdPQk9RcWZOVGFBMnVabHMrdTZXM3hKYkV6WFU9IiwibWFjIjoiOTRmOThmODEzMDU5Y2VmMzY4NTc3YmM0MDJmMGUzYjNiYWI2ZDFkYzBjNzczMWI0NTE1NTFkNTBjZWNmNDRjYSIsInRhZyI6IiJ9?expires=1745310230&signature=382dfae9a8bca892037757803bcfc2c25ae44fcc3bf473274989ff9f1b18dab2",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1510,
+                    ielts: 7.5,
+                    gpa: 3.9,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "Maryland",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 42575,
+        title: "Criminal Justice\/Safety Studies",
+        school_ranking: 1617,
+        fee: 90000,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Criminal Law",
+        super_meta_title: "Law",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 1775,
+            name: "California State University-Long Beach",
+            user_name: "california_state_university_long_beach_2023122257",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkRqNGcybTNaRk5mRHFDM1A1clNkQVE9PSIsInZhbHVlIjoiNncvSW0vS0JoaVpaL0N6eS9CWC8wbS9zdHB5MXd2anhJejJ2d3poVzZmR2pESHA3VHRuS2kwWXdjNE5OYjh2dStTUCs3OHh0Njk1VTNSRjRJcmhuVUZrdk1oV0M3dXJjbFJNVER1OXZ6S009IiwibWFjIjoiZWYxODEyYmY0YmQ5ZGJiZmViMTllYTJhNWY1NDc0MzBlMTNmN2Q4NDkxZGIwMmQ4MjRkNWZkN2QxODg0Yzg4YSIsInRhZyI6IiJ9?expires=1745310511&signature=d1f8ad502704aa6e855d45e05f25ff97ca118ae731c1d027cf98843bf39a4138",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1150,
+                    ielts: 6.5,
+                    gpa: 3.4,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "California",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 42576,
+        title:
+            "Homeland Security, Law Enforcement, Firefighting and Related Protective Services, Other",
+        school_ranking: 1617,
+        fee: 90000,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Criminal Law",
+        super_meta_title: "Law",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 1775,
+            name: "California State University-Long Beach",
+            user_name: "california_state_university_long_beach_2023122257",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IktWbWIweWYwV0JMd3loNm1kWG9zNlE9PSIsInZhbHVlIjoibzRwOG9VSG5kYWhRVitqRUF4ajZuN1VKR0EwbTBHTHVJK0JzZlk2dXRtV1lGeDg0ZEFTOXFhQVF4NEpaTmcwdzVSVGNrZzdRM1lKN0xTT1lpblRFSlNBZlhFUFV4Ri9tUkw0LzhMbE1ZeVE9IiwibWFjIjoiYmM5OTVhMjdkZjc1NjY4NTA3NWIwZDE0YzEyZTU4MjU3Y2ZiZDI4M2MyOGUxYmVhN2M5NjgyMjQwODUxNjdjZiIsInRhZyI6IiJ9?expires=1745310511&signature=86969c106058220ef272e76285521bc207e0eb8270ddf2976be282cae070edb3",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1150,
+                    ielts: 6.5,
+                    gpa: 3.4,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "California",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 487534,
+        title: "BA in International Studies (Justice, Ethics, and Human Rights)",
+        school_ranking: null,
+        fee: 90000,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Human Rights Law",
+        super_meta_title: "Law",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 10874,
+            name: "American University Washington D.C.",
+            user_name: "american-university-washington-d-c",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InM4NHFxVm1aOVhtbDR3dmVHZkcwNlE9PSIsInZhbHVlIjoiQ2JIanNZSVZuQUFCSHBZZ0R6ckpiNjNwZC9PVCtzV1NhZ3dtbURJTGpSU2pmMXBEZlNTc1R0TU53enVZZlAyVzZWMnQ0OWc0WmxyNGk3anlYSStmYk80ODNLTVZYU0orTWpUdUdINDZlR2s9IiwibWFjIjoiMWMzY2YyYWM4NGI0MTE2YTIwM2QzZWM5MjQ5MDY4NTczMjZhMTcyMjFmZWI1OWIzOTRiNTQ0MGVmMzhlMWE0YiIsInRhZyI6IiJ9?expires=1745310570&signature=09e2990ae9306ecdf5a9031b675766b2d10624115de3458747914b1a45e7a386",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1300,
+                    ielts: 7,
+                    gpa: 3.6,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "Washington",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 492223,
+        title: "BA in Anthropology (Disasters, Displacement and Human Rights)",
+        school_ranking: null,
+        fee: 90000,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Human Rights Law",
+        super_meta_title: "Law",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 766,
+            name: "University of Tennessee, Knoxville",
+            user_name: "university_of_tennessee_knoxville",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ik9xMkYxaXhBMEtYMEVzNFRmeDhsTFE9PSIsInZhbHVlIjoiQ3pWcysyVy93SXl5b1ZCMXJHYktpbnpSQmd2ckN5SklDSTgrdXcza2twdTZjV21UUGlQcC9hRWxSQkQxSUl0cC8vWFhuMldMRkpEWVBLV29iWDloWXhtNGdkNngyajZaMHdHRWNYSHBtdEk9IiwibWFjIjoiYTBlOTk3OTI0NTZiMTczMTlmZWZkZTIzZmVjYTI0ODUzYTliMjM5NTQ1NjgxODkzMDUzNjAyOWY5MDA2ZjM2MSIsInRhZyI6IiJ9?expires=1745310570&signature=20b814b957d4509d42223965c9977c039907271ebad1e78c99b5463b901eae68",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1250,
+                    ielts: 6.5,
+                    gpa: 3.8,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "Tennessee",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 486514,
+        title: "BAcc in Accountancy",
+        school_ranking: null,
+        fee: 90000,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Accounting",
+        super_meta_title: "Business and Economics",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 10863,
+            name: "Jessup University, USA",
+            user_name: "jessup-university-usa",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkUvTkp1ZHIwTGNVVk9OYnBIcE9sRkE9PSIsInZhbHVlIjoiTlFPc3lSUFVYZzhEM2pZVUVuejN1MXJ1VVhLcWE5T1N4MldtcU9CZEtGQ1BYMEJ1YVJURUVkTmxvZk5IWUNRNXd6ZGUxVm5YM3pYNzJSY1owK0dKdGc9PSIsIm1hYyI6IjM1ZjE2NDNkMGJjZDljOTVkNDI1ZDk0NDhhOGQ2MWM5MDI1MWMwMmQwYjYwMDRhMDczZjIzY2NiNDBlMTgyNzciLCJ0YWciOiIifQ==?expires=1745314928&signature=59539c5bd9e592318334bb9e5ccca502c50172cdcc368e0d0e3bc9721a2b30e0",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1100,
+                    ielts: 6,
+                    gpa: 3.5,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "California",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 486573,
+        title: "B.S in Accounting",
+        school_ranking: null,
+        fee: 90000,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Accounting",
+        super_meta_title: "Business and Economics",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9471,
+            name: "Nazareth University",
+            user_name: "nazareth-university",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ilh6ZEhMNmtnMTNBZkg4aTdkdVp1N3c9PSIsInZhbHVlIjoickYwdFBnamRrb1F3VXlUOEt2TlhOTHNDMG1FSHNHSUR5Rkw5OVhiRHJsUytmSmlSbWV6UWxZaUpKSEtTMzdyK1N5bThHanFqeDROVDh3ZE5zblZoS1E9PSIsIm1hYyI6IjY0ZGVjMTA3NzBiMWJmOGEyYjJmZmUzNTYwNzZkMTM3NGZjY2I0Y2NjZDg0ZmZkYzdmYzA3MWY4NmM2MTM2ZDkiLCJ0YWciOiIifQ==?expires=1745314928&signature=0199816a889917303e0f15210acc834632562b32516189356a7de16e871c04d7",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1150,
+                    ielts: 6.5,
+                    gpa: 3.5,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "New York",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 155280,
+        title: "E-Commerce\/Electronic Commerce",
+        school_ranking: 10,
+        fee: 62840,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: 62840,
+        description: null,
+        program_title: "E-commerce",
+        super_meta_title: "Business and Economics",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 671,
+            name: "Johns Hopkins University",
+            user_name: "johns_hopkins_university",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IlRwTGQwY1pIU0lZYVQ4cWViQnU5VGc9PSIsInZhbHVlIjoiR2hXaW93QXZwbkx2N09ueHltRDBYdjZTOVo4akoxeU9SSFcwRmlkakE2dkZta0lrUzBoTW53ZGtndkIxcThlajYxMmZzNjFxZUN1YjdaNndUcDhkQWFMSGpjeW1Rb1B2TTZMd3UwMVR1amM9IiwibWFjIjoiOTUyMmNkNjVkMDdiZWEyOTIwOGEwNzc1OWNkMzI1MzkxOTNlMTZmYjZjMmNlMzE5OWRlNTUyM2U1YWQ1NzkyNiIsInRhZyI6IiJ9?expires=1745315585&signature=576724828fceee2bbe208ceab072837ab47318b4a25506cd6af80a5e2be0b89c",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1510,
+                    ielts: 7.5,
+                    gpa: 3.9,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "Maryland",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 352321,
+        title: "E-Commerce\/Electronic Commerce",
+        school_ranking: 176,
+        fee: 48300,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: 48300,
+        description: null,
+        program_title: "E-commerce",
+        super_meta_title: "Business and Economics",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 828,
+            name: "University of La Verne",
+            user_name: "university_of_la_verne",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InR5ZGR4RDQzdjRYWWhsN082a1dSclE9PSIsInZhbHVlIjoiTmxzWWpaR1lPVFprVC9PV2JqdFBZYnh6Q1BlVkk5SXJFK1FEelB3Vk0rWjZkNUtCZ2lqL3JENmhFa3pQMEM3OVdQQkkrT2hqRXFPZ0hsai84aWJOalc1bmp3dGp1ZytYOFlZRFhrTXdldnc9IiwibWFjIjoiNTY3MWIyZjc3NTA2ZGYwZTZiZGZjNDY1MGU1ZDAyNWM0ZWJlZjE2OTliNzNlYTMyOTcxMjU5OWM0M2I4MmViMyIsInRhZyI6IiJ9?expires=1745315585&signature=9338ff728ec0742341cc3382a42b6ee44e7096e8dd872abaa996be28db42843e",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1150,
+                    ielts: 6,
+                    gpa: 3.4,
+                },
+            },
+            address: {
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "California",
+                country_code: "US",
+            },
+        },
+    },
 ];
+export const schoolDeatailList: SchoolDetail[] = [
+    {
+        id: 1,
+        name: "Aberystwyth University",
+        email: "ug-admissions123@aber.ac.uk_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InJuemFNVjZFMVZDdFl0anZhekxUL2c9PSIsInZhbHVlIjoidmFtS3dsRWJ6NkFlYThUbnlJRTJ3UDRvY09uS1pmRzFzNDV5TllLb3k2MUlNdkRPbVl2NVFuaDBOUmpScmJZb28vUVdnQmMyd2tmUi9DOGJxbjRmcHc9PSIsIm1hYyI6IjJiYzE2MTBmZjFkNTI0ZmJlM2RjYWQ1NDc1ZjI5NzkyZGZhNjYyMDVhOGNiMjM2YzI1MzhmNjA4MDM0NzY3NTMiLCJ0YWciOiIifQ==?expires=1745316519&signature=0058b736956ecaa648810dbcd04d81744a6859ae39f1e33e684913a2857919ce",
+        cover_photo: null,
+        user_name: "aberystwyth_university",
+        ranking: 953,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6.5,
+                gpa: 3.2,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 28000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 8000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, Wales",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: "https:\/\/www.nu.edu\/",
+            country: "United Kingdom",
+            state: "Wales",
+            description:
+                "Entry Requirements: GPA 2.5 Completed application form High School Diploma & language certificate CV & letter of motivation Copy of your passport  Language Requirements: English language certificate \u2013 IELTS 5.5 overall \u2013 TOEFL iBT 72 \u2013 TOEFL ITP (paper based) 543 \u2013 Pearson Test of English (Academic) 59 \u2013 Pearson Test of English (General) Level 1 \u2013 Cambridge English Advanced and Proficiency 160 overall \u2013 Cambridge Exam First (FCE) \u2013 TOEIC Listening\/Reading 785, Speaking 160, Writing 150 \u2013 PASSWORD5.5 (no less than 5.0 in each component) \u2013 EF SET (50-minute Test) 51 (only for students applying with a MOI letter) \u2013 Duolingo 100",
+        },
+    },
+    {
+        id: 9519,
+        name: "University of Birmingham - Edgbaston",
+        email: "university-of-birmingham-edgbaston@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InZTSHZzOWhVSGIzRFJMd2w0WC9jRVE9PSIsInZhbHVlIjoieHo4MHR2NURnVkZPVURvUEJlamY2Z3l5US9ZWDd0eEx6bUJNWVpmdjIvTGdtOWNYZlZPY25RcmxMQnB2ejdkcEtQTGJzQTE0cGRVMEQ2QUlLZFY2SkVxdjV6R1p3QzhwZWpiTERkZStoVE09IiwibWFjIjoiYmQ4YzFjNjg2Y2YxYzA3ODQyZTk1NmRhMzFiM2I1NGM1Yzk5OWU2ZTNlNzA0ZTY2OGZkYzA3MThiYTU1MTg1ZSIsInRhZyI6IiJ9?expires=1745316575&signature=b4c4c0ed391f9cf96ee4e1701c7eebb571fc3906eb16bc7c8323bc0c80d30430",
+        cover_photo: null,
+        user_name: "university-of-birmingham-edgbaston",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6.5,
+                gpa: 3.6,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.94,
+            median_salary: 32000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 10000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, West Midlands",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United Kingdom",
+            state: "West Midlands",
+            description:
+                "Entry Requirements: The normal admission requirement for our taught postgraduate programmes is a 2:1 Honours degree or equivalent in a relevant discipline. For a Graduate Diploma you should have a degree or diploma or equivalent qualification in an appropriate field. Graduate Diploma students who achieve Masters level in their modules may be transferred to the Masters level. English Requirements: IELTS 6.0 with no less than 5.5 in any band. TOEFL: 80 overall with no less than 19 in Reading, 19 in Listening, 21 in Speaking and 19 in Writing. Pearson Test of English (PTE) Academic 64 with no less than 59 in all four skills. Cambridge English (exams taken from 2015): Advanced \u2013 minimum overall score of 169, with no less than 162 in any component. LanguageCert ESOL SELT (UKVI) - B2 'Communicator' with no less than 25 in each skill.",
+        },
+    },
+    {
+        id: 191,
+        name: "University of Exeter",
+        email: "ug-ad123@exeter.ac.uk_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InN6aEVTbVNTMlFQZVk0S3E3RWkxS0E9PSIsInZhbHVlIjoiekd5c0haQldKTVU2UCsxMEZsK3NkRnhVWFllejJad3NVQTRaRHc5UERsN1NnbExpMUR5MU9OanlsL2t5ZktWTVdUSTE2clZ4NW1nb1NMQ251UGhFdkE9PSIsIm1hYyI6IjM0NjZiYmE1NDYyMDZlNmIxOWIzZmZmMTQ1YWRjNTdhNDg2MTE3NGM4MGQ4Yzc0OWZhMTU3MWUwODE2YzA4MjUiLCJ0YWciOiIifQ==?expires=1745316676&signature=739cfb37a2596bb6018364658f671aaf2a9f2d62b143ff1d8cea64524d1650e4",
+        cover_photo: null,
+        user_name: "university_of_exeter",
+        ranking: 152,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1350,
+                ielts: 7,
+                gpa: 3.6,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.95,
+            median_salary: 32000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 15000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, Devon",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United Kingdom",
+            state: "Devon",
+            description:
+                "English Language Requirements IELTS 5.0 (with nothing less than 5.0 in subskills and at least one subskill at 5.5) or equivalent.",
+        },
+    },
+    {
+        id: 509,
+        name: "Royal Holloway University of London",
+        email: "studentservices123@royalholloway.ac.uk_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkhrU0paV1NqR0Yvek5IT055VWpUOHc9PSIsInZhbHVlIjoiZWY1YVRCaXh5ak93bVEvNmEzc0x2cVJYNjFJa1lCWEdqeUhYT0Z4N21BSEJiYkgzcElWQUFkb3ZjbzJXUUxWTngrZ2tRcHN1UXN1REhqNGt3cktSYWtqVlFiY2VkTUE2NGw3OTcyVGQzUkU9IiwibWFjIjoiZTRhMjMyODVjMGZjOTQ2YjdhM2E5NWUyOWFiNGMwOTg5ZTg1ZGQ5MjFlODVhZDU5ZmU0NjkwNGYzZTIwYWIxMSIsInRhZyI6IiJ9?expires=1745316692&signature=c9c54a553038288996e7126d04db712759408422d8ed3031f7a39a21d2ca52fe",
+        cover_photo: null,
+        user_name: "royal_holloway_university_of_london",
+        ranking: 301,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1300,
+                ielts: 6.5,
+                gpa: 3.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 35000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 8000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, London",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United Kingdom",
+            state: "London",
+            description: "'ielts': '6.5', 'academic_requirement': ''",
+        },
+    },
+    {
+        id: 10368,
+        name: "University of York",
+        email: "university-of-york@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IlhrSkw5aWx2ZDlsZGpNMUpPR1N2OXc9PSIsInZhbHVlIjoiQ3MybStXRGZjdEJBY1BKZWs4MzRNNkFyR09JdlU0V3U4NXpXd0ZEQ1Z3UCtabkI1bURrbVZ6ek5pSGd3eWlaWTlwWDB0ZWRoWXFaeVRTQ1pHMzR4ZWc9PSIsIm1hYyI6ImY2OGQ0MDBhNjZjY2FhYWFhZTNiN2MxZmYzNmY2NzFhYTdkZjMxZTQzYTNlYTQwMmRjNjgwMDE0YWE0MDAzNGUiLCJ0YWciOiIifQ==?expires=1745316714&signature=70b5e55e1d59ac60b233d4a631ad0b85d7ea5b0e1c5ae6db57debdbaccd2f0d0",
+        cover_photo: null,
+        user_name: "university-of-york",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1400,
+                ielts: 7,
+                gpa: 3.7,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.94,
+            median_salary: 38000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 14000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, Yorkshire",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United Kingdom",
+            state: "Yorkshire",
+            description:
+                "Entry Requirements: Our Undergraduate Summer School has no formal academic requirements. You will be asked to provide details of your current studies. If you are not currently enrolled in an undergraduate (Bachelors) programme, please contact our team to discuss suitability. You must have turned 18 before your programme starts.  English Language Requirements: The programme is suitable for both native speakers of English and students learning English as a second\/foreign language. While there is no formal language requirement, for most modules, a good upper-intermediate level of English is strongly recommended (approximately CEFR B2 or IELTS 5). For the English Language Academic and Intercultural Skills module, an intermediate level of English is recommended (approximately CEFR B1 or IELTS 4.5).",
+        },
+    },
+    {
+        id: 1,
+        name: "Aberystwyth University",
+        email: "ug-admissions123@aber.ac.uk_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkdQTXpid0FJR05hV0RYS2piNk5mSVE9PSIsInZhbHVlIjoiZ2hQMnVMcGlnQ2ZscVVaUFk5bVQvcG1ucVVZODAvVlJ1bzdIbDlxa2NMbXg1c01SUktUdk1BNFNaMDdxbndubDVtd1FiRTE1dms1bnZXS0tPQk9pd0E9PSIsIm1hYyI6IjFlMzFjYmZmM2RhYTQwMzg3YjU4ZDI1ZGUwZTc3OTE0ZDBjMzNiZjkxNjNhMzkwMWQ1ODk5NWYyNmM2MmQzZTkiLCJ0YWciOiIifQ==?expires=1745316732&signature=9bf788eccbe882a7b313e01d337da4956a4cf5c37a172f18a9e62044d13d31e7",
+        cover_photo: null,
+        user_name: "aberystwyth_university",
+        ranking: 953,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6.5,
+                gpa: 3.2,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 28000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 8000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, Wales",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: "https:\/\/www.nu.edu\/",
+            country: "United Kingdom",
+            state: "Wales",
+            description:
+                "Entry Requirements: GPA 2.5 Completed application form High School Diploma & language certificate CV & letter of motivation Copy of your passport  Language Requirements: English language certificate \u2013 IELTS 5.5 overall \u2013 TOEFL iBT 72 \u2013 TOEFL ITP (paper based) 543 \u2013 Pearson Test of English (Academic) 59 \u2013 Pearson Test of English (General) Level 1 \u2013 Cambridge English Advanced and Proficiency 160 overall \u2013 Cambridge Exam First (FCE) \u2013 TOEIC Listening\/Reading 785, Speaking 160, Writing 150 \u2013 PASSWORD5.5 (no less than 5.0 in each component) \u2013 EF SET (50-minute Test) 51 (only for students applying with a MOI letter) \u2013 Duolingo 100",
+        },
+    },
+    {
+        id: 506,
+        name: "University Reading",
+        email: "ifpadmissions123@reading.ac_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IndacGZjS1hVZnpLK2o0a3hBN2tVU3c9PSIsInZhbHVlIjoiQmN6OHB6VzEzelFaR2ZVWEpoaElQWk02MnRPNU1LQWsvTXQxMnpYdWVVNWRKOEM4OVJLY0FoNXZoSEVKaUYyalFTSXoycWZlVEQxYkMrVlZMOVRCZ0E9PSIsIm1hYyI6IjhhMjFmYTkzZTMxNThkZTE2YTEzMTgxM2I5NzVhNDE3MzlmNzBjNGRhOWIxY2UyMTU5YTYyODc5NjAyOTcyYjEiLCJ0YWciOiIifQ==?expires=1745316773&signature=2e10d8cbb1dcedaeb89dfdbe265c8b885bae13e2ec0842b5dce8410109e42094",
+        cover_photo: null,
+        user_name: "university_reading",
+        ranking: 333,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1300,
+                ielts: 6.5,
+                gpa: 3.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 35000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 8000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, Reading",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United Kingdom",
+            state: "Reading",
+            description:
+                "English Requirements: IELTS - 6.0 no skill less than 5.5 You will need to provide: Copies of your English language certificate\/s: IELTS\/TOEFL. (If you need a visa to study in the UK, your IELTS exam must be UKVI). A copy of the identification page of your passport. A copy of your offer letter from your chosen university (if you will not be studying your degree programme at Reading).",
+        },
+    },
+    {
+        id: 505,
+        name: "Durham University",
+        email: "admissions123123@du.uk_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IjlpQzJDV1ZjOUNaUCt4MXVsOVVyZmc9PSIsInZhbHVlIjoiYWF2YWc0bkZYb3E0V1pvQVk3ellVQTVkM0xCV2Y3eXlhSkExMUZjaG5rdTFKSlZ4VXpseGlvZ2k0ZG5xU3lVRk9oMm8yaTltVm1XQUd1Zm1Ucng1OXc9PSIsIm1hYyI6ImE0MGFmODBhYjYzYTllNzg1NGRkOGNhNDA2NDM0MzE1YWNjMGRjNDhkMjk0ZWFiMGYxYzJiZDRkYzAxMjY3ZDYiLCJ0YWciOiIifQ==?expires=1745316776&signature=2a1156a99f95e2449d6d085916d5a204d40d8e4611ec6d0a145321ffec3ba94e",
+        cover_photo: null,
+        user_name: "durham_university_1",
+        ranking: 78,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 7,
+                gpa: 3.7,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.94,
+            median_salary: 30000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 9000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, Durham",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United Kingdom",
+            state: "Durham",
+            description: "'ielts': '6.5', 'academic_requirement': ''",
+        },
+    },
+    {
+        id: 9978,
+        name: "Royal Melbourne Institute of Technology (RMIT) - Training",
+        email: "royal-melbourne-institute-of-technology-rmit-training@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IjJWMTRJR2dsUTN0ZmVmSDJmUmZiRlE9PSIsInZhbHVlIjoiTjltVDZubWF0RGVCbEY2aWdhRW1HVFVOMXpwNUhLWWlKcDlxQXp5aDVHTVJJeEpSTEMvK3lyc1NLdUtSYXN6eTNrOVVNOEQ1dGYrRmVvKzF5L3hlT1pUa01vN1V1MWcyOTJjMFd4ZFRTemZCYStWSUxhYWw5S3Y4OCtqdGNKOEMiLCJtYWMiOiI3MzYzYzA4OTVhZjg2NTZmMjQ0ZWQ4OWZlNjY4NjhkYTJhNzY4YzQzYzU1Y2IzZjMwNGQyNmExNDAzNWE2ZWE1IiwidGFnIjoiIn0=?expires=1745316779&signature=910ba9e9e6d4faf1b9e6945b08afc1c29d28c1dbbdab9740147ed5266580cc1d",
+        cover_photo: null,
+        user_name: "royal-melbourne-institute-of-technology-rmit-training",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6.5,
+                gpa: 3.2,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.9,
+            median_salary: 70000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 15000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Australia, Victoria",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Australia",
+            state: "Victoria",
+            description: null,
+        },
+    },
+    {
+        id: 9953,
+        name: "Murdoch College",
+        email: "murdoch-college@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImhMRi90cXB0UXI4elB1K1R2aWhpUVE9PSIsInZhbHVlIjoiclhuenVOWVkyUHNpV3lIcmR5N1dra29JZVovSVRWZHJoTExkMHA0WU15Tyt3d1FjSDJXLzNlL3VsNnZDSHJtOHEzVUpFRFdrTUgxQW13Zjh5RXRIMnc9PSIsIm1hYyI6IjIzMmE3YTEwNTU2OTBjMTUzNDEyOWRlM2Y1M2ZmMTUzNTk1ZjIyNjhlNWZkZDI4ZGUyODIwYjc0NTVmYWM2MjYiLCJ0YWciOiIifQ==?expires=1745316783&signature=82fa71bf3d0149a33faabbc4e0d38cd60046c5ab4ec6d0c5e1f787deb15080f3",
+        cover_photo: null,
+        user_name: "murdoch-college",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6,
+                gpa: 3,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.75,
+            median_salary: 58000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 10000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Australia, Australian Capital Territory",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Australia",
+            state: "Australian Capital Territory",
+            description: null,
+        },
+    },
+    {
+        id: 9923,
+        name: "University of New England - Armidale",
+        email: "university-of-new-england-armidale@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Im41N2hGVW94a0dOeXJHWHhuMEVlT3c9PSIsInZhbHVlIjoicCttRzRHWFU0c29LZ2hTR2NCTjI3T2g4MHdOV2w3ZWtNM2pYR056aFpWeG5NZG9Hdytzc1pUWi9pQ0EwYzlqbVRFRS9UbzlVUXZadVhjY2hFblo2NFpmYXZveklGYitCeXQ2SkN1WXA0KzQ9IiwibWFjIjoiYzE4N2VlYmE2Y2QzYmU2NjgzYTAzM2IwM2UyYjU0YWUyNmJiOTUyNzEwOGFhNjgxYzExOWY0Mjk5NzkyMThjZCIsInRhZyI6IiJ9?expires=1745316918&signature=c9b53f3b4ef08881c93d93ae11a3e10c7e60e4c3a60de261971890649c488584",
+        cover_photo: null,
+        user_name: "university-of-new-england-armidale",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6.5,
+                gpa: 6,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.85,
+            median_salary: 65000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 12000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Australia, New South Wales",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Australia",
+            state: "New South Wales",
+            description: null,
+        },
+    },
+    {
+        id: 9192,
+        name: "Coquitlam College",
+        email: "Admissions123@coquitlamcollege.ca",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InM5TW1pUVZmK3Yrb3AzSEljbjFaL1E9PSIsInZhbHVlIjoiYUJCNkJxa3dSb0NmWU9FeVJ4dkhNS0JZOE40NTN3RmNzQ3VGMHpnYzMzMGpzb2RkWExadG5iVXJvbjA4NnFJRVlYdFZEamNxaGlKVlM4d1FvT0NjRVE9PSIsIm1hYyI6Ijg1NmNjMmViNDFmZjcwOGZmMDUzZTBhNmM0ZmM2ZGFkZTEyY2E2ZTMzMWY2ZWNiMzhlNmFhOTQ5OWNhYjBiNjAiLCJ0YWciOiIifQ==?expires=1745316921&signature=b32fdbbb3815eb174f33abf5c98b818843ecd94abc129d69d6c16571d572cc75",
+        cover_photo: null,
+        user_name: "coquitlam_college",
+        ranking: 9999,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6,
+                gpa: 2.8,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.7,
+            median_salary: 45000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 5000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Canada, British Columbia",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Canada",
+            state: "British Columbia",
+            description:
+                "Entry Requirements: A high school diploma or school completion certificate. A vocational\/technical\/polytechnic diploma with a 60% or higher average. Mature student status   English Requirements:  ENGL 099: IELTS (Academic): 5.5 Overall (5.5 Reading, 5.5 Writing, 5.5 Speaking, 5.5 Listening) PTE (Academic): 60 Overall (55 Reading, 55 Writing, 55 Speaking, 55 Listening) TOEFL IBT: 75 Overall (17 Reading, 17 Writing, 17 Speaking, 17 Listening) CAEL: 50-59 BC EN 12: 50%-59% Duolingo: 95-104 (95 literacy)   ENGL 100: IELTS (Academic): 6.0 Overall (6.0 Reading, 6.0 Writing, 5.5 Speaking, 5.5 Listening) PTE (Academic): 60 Overall (60 Reading, 60 Writing, 55 Speaking, 55 Listening) TOEFL IBT: 80 Overall (19 Reading, 19 Writing, 19 Speaking, 19 Listening) CAEL: 60-69 BC EN 12: 60%-66% Duolingo: 105 (100 literacy)   ENGL 101: IELTS (Academic): 6.5 Overall (6.0 Reading, 6.0 Writing, 6.0 Speaking, 6.0 Listening) PTE (Academic): 65 Overall (60 Reading, 60 Writing, 60 Speaking, 60 Listening) TOEFL IBT: 86 Overall (20 Reading, 20 Writing, 20 Speaking, 20 Listening) CAEL: 70 BC EN 12: 67% minimum Duolingo: 110 (105 literacy)",
+        },
+    },
+    {
+        id: 9192,
+        name: "Coquitlam College",
+        email: "Admissions123@coquitlamcollege.ca",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IllsaXloODZMSW56dlBSYTZzcmx0alE9PSIsInZhbHVlIjoiNzZPeVFiS0dBbEMzTFd2dUVuV05FMGMzSDhDT1RyRlU5aDJnQ1NQd09IV0VjVVRVTGpKSFAzN1BpN0JtS1BUKzNZMU5kVGlvRXYxelJGYXpESE1kZlE9PSIsIm1hYyI6IjEzZDhlODBlZGQyNWFmYWU4MGFhNzQzZGUwMDkxYzE5YWI4NDA1NTUyN2I1OGYzNDUwNTlmYzI3YzVmYmE4NjMiLCJ0YWciOiIifQ==?expires=1745316924&signature=518ab009fabca4d7be0f43bf6bb8954f32eb933fe62bf769c9beb0abdd9726b8",
+        cover_photo: null,
+        user_name: "coquitlam_college",
+        ranking: 9999,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6,
+                gpa: 2.8,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.7,
+            median_salary: 45000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 5000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Canada, British Columbia",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Canada",
+            state: "British Columbia",
+            description:
+                "Entry Requirements: A high school diploma or school completion certificate. A vocational\/technical\/polytechnic diploma with a 60% or higher average. Mature student status   English Requirements:  ENGL 099: IELTS (Academic): 5.5 Overall (5.5 Reading, 5.5 Writing, 5.5 Speaking, 5.5 Listening) PTE (Academic): 60 Overall (55 Reading, 55 Writing, 55 Speaking, 55 Listening) TOEFL IBT: 75 Overall (17 Reading, 17 Writing, 17 Speaking, 17 Listening) CAEL: 50-59 BC EN 12: 50%-59% Duolingo: 95-104 (95 literacy)   ENGL 100: IELTS (Academic): 6.0 Overall (6.0 Reading, 6.0 Writing, 5.5 Speaking, 5.5 Listening) PTE (Academic): 60 Overall (60 Reading, 60 Writing, 55 Speaking, 55 Listening) TOEFL IBT: 80 Overall (19 Reading, 19 Writing, 19 Speaking, 19 Listening) CAEL: 60-69 BC EN 12: 60%-66% Duolingo: 105 (100 literacy)   ENGL 101: IELTS (Academic): 6.5 Overall (6.0 Reading, 6.0 Writing, 6.0 Speaking, 6.0 Listening) PTE (Academic): 65 Overall (60 Reading, 60 Writing, 60 Speaking, 60 Listening) TOEFL IBT: 86 Overall (20 Reading, 20 Writing, 20 Speaking, 20 Listening) CAEL: 70 BC EN 12: 67% minimum Duolingo: 110 (105 literacy)",
+        },
+    },
+    {
+        id: 669,
+        name: "Duke University",
+        email: " undergrad-admissions@duke.edu_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IjJEZy8wczY5TVVzSEFDQnRkWnRSd2c9PSIsInZhbHVlIjoiSlhGSUg0dTFGc0pyVGhmQSthU1AyNnQ4ZHIrbmVQUDBWaVl6NjNPOU91OEFlWnI3L1NSQ2taRGsvY2xKOFpDclRscGZmSHBUeHVkU0dCQWc2YjVBWmc9PSIsIm1hYyI6IjUwYjFjNTAwMTc0MmQ0MTc3MzNlMzJkNDJhMjQzMjY1N2FhNTg2NDk1ZGNjNzRlN2YyNTE3MGE1ZTAxNjE4OTQiLCJ0YWciOiIifQ==?expires=1745316928&signature=d2debc285373cb5eb1f9cbe89f3c247145dda1ec82b3695c2e150ae17f6d28a4",
+        cover_photo: null,
+        user_name: "duke_university",
+        ranking: 8,
+        admission_stats: {
+            acceptance_rate: 6,
+            average_scores: {
+                sat: 1540,
+                ielts: 7.5,
+                gpa: 4,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 75000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 48000,
+            housing: 9164,
+            meals: 6862,
+            housing_and_meal: 16026,
+        },
+        campus_overview: {
+            location: "United States, North Carolina",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On  & off-campus",
+            extra_curriculum:
+                "All Track Combined Baseball Basketball Diving Fencing Football Golf Lacrosse Soccer Swimming Swimming and Diving Tennis Track and Field: Indoor Track and Field: Outdoor Track and Field: X-Country Wrestling",
+        },
+        about: {
+            website: "https:\/\/duke.edu",
+            country: "United States",
+            state: "North Carolina",
+            description:
+                "Duke admissions is extremely selective with an acceptance rate of 6. Students that get into Duke have an average SAT score between 1470-1570 or an average ACT score of 33-35. The regular admissions application deadline for Duke is January 2. Interested students can apply for early decision and the Duke early decision deadline is November 1.",
+        },
+    },
+    {
+        id: 671,
+        name: "Johns Hopkins University",
+        email: "gotojhu@jhu.edu_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Im1qaDBRMHFRTkRyaDltOWJ1ZWJSSEE9PSIsInZhbHVlIjoicUZCbXkvZXNIaXl3Skh6OFJrSXZjLytoazJ1ZWg5NC8vVWlVV2xzL29kWjVMWHdVN0VrYnFnSkF2SkMwMjBucXlYSmZJeHZhckd6a3MybjFHdGNCbG9SYXJpMXQzTzJjemZGSUVBeE5JQzA9IiwibWFjIjoiZGMxMTJmNjRjNTVjNjllZjBlNGZmZDQwNDlhMTU2ZjVhMDlhMjQ0NThkOTQ0MjhlY2NhZDYxMzZlYzk2MTE4NyIsInRhZyI6IiJ9?expires=1745317007&signature=ed98dc984a4fc32dce94fec9235762a56c5f0cb6277ff6e0d7dda728c96fd6b4",
+        cover_photo: null,
+        user_name: "johns_hopkins_university",
+        ranking: 10,
+        admission_stats: {
+            acceptance_rate: 11,
+            average_scores: {
+                sat: 1510,
+                ielts: 7.5,
+                gpa: 3.9,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 72000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 48000,
+            housing: 9736,
+            meals: 7064,
+            housing_and_meal: 16800,
+        },
+        campus_overview: {
+            location: "United States, Maryland",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On  & off-campus",
+            extra_curriculum:
+                "All Track Combined Baseball Basketball Fencing Football Lacrosse Soccer Swimming Tennis WaterPolo Wrestling",
+        },
+        about: {
+            website: "https:\/\/www.jhu.edu\/",
+            country: "United States",
+            state: "Maryland",
+            description:
+                "Admission requirements:  A Bachelor's Degree with a 3.0 Minimum GPA      English Language Requirements:  IELTS 7.0 recommended   TOEFL 100 Recommended   ITEP Scores accepted (the academic year 2021\u20142022 only) ",
+        },
+    },
+    {
+        id: 1775,
+        name: "California State University-Long Beach",
+        email: "cie-admission@csulb.edu",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InlkYTRzS0xnampTU2xVeVFpQjlMaVE9PSIsInZhbHVlIjoiMEkwZktvSnp3SVl6eWQ2NWNuQ1NuN3ZSSExRY0wzMklQMFl1L1VuV2lvSUdkeEJRRk5rMTg3L2lhaGJHM3BVMkd0ejBiWGxqWTZCTHJOZ053d3A3c2tWVmNDeThwMndQNnNIUEdZVE1WVTg9IiwibWFjIjoiYzJlMmEzZmJhNjI0ZTk3MThjNjU1NDgxYzdhODJiODk4MDBhNjQ3Y2E3NjhjZTdmMGIxOTVmZmU4MzJjNTlmNyIsInRhZyI6IiJ9?expires=1745317009&signature=138c8106fe8e4d84aba24a2b3ed5a396dc49f42670c3d21a8719aba17c6a81b4",
+        cover_photo: null,
+        user_name: "california_state_university_long_beach_2023122257",
+        ranking: 1617,
+        admission_stats: {
+            acceptance_rate: 0,
+            average_scores: {
+                sat: 1150,
+                ielts: 6.5,
+                gpa: 3.4,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.75,
+            median_salary: 55000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 12000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United States, California",
+            type: null,
+            total_students: 40190,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United States",
+            state: "California",
+            description: null,
+        },
+    },
+    {
+        id: 1775,
+        name: "California State University-Long Beach",
+        email: "cie-admission@csulb.edu",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ikd5UnVNdmF2aHc5d0lzZHlVMGNDWnc9PSIsInZhbHVlIjoicURraHdZS0tjVDZUT0FnSTdOVm1sREZNVmY1WnIvTXVtUW02Z0F6WEtCbVNFaXZuVGJNTG1ZODZrbTRDMC8rVTg3WjhxRVZiUGxGVkVCTFVocEFDZDFPek1RdnkzSEdZWnVDeVVjckxwc2s9IiwibWFjIjoiOThhZmY5ZTUyMDA5ZmUyM2UzNDAwNmIwZjc2MzEzMWZiMWE1MTUzM2JjMDI0MDUyYzE5ZDk4MmE3YWY1YzQ4MCIsInRhZyI6IiJ9?expires=1745317011&signature=da27be1f12ca4a47fe8b98ff7d38f43322735165e893fa4181363464db1016c8",
+        cover_photo: null,
+        user_name: "california_state_university_long_beach_2023122257",
+        ranking: 1617,
+        admission_stats: {
+            acceptance_rate: 0,
+            average_scores: {
+                sat: 1150,
+                ielts: 6.5,
+                gpa: 3.4,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.75,
+            median_salary: 55000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 12000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United States, California",
+            type: null,
+            total_students: 40190,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United States",
+            state: "California",
+            description: null,
+        },
+    },
+    {
+        id: 10874,
+        name: "American University Washington D.C.",
+        email: "american-university-washington-d-c@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IitxK3BEMjM0Uk5XYkQyMGZ4MWZ1Z1E9PSIsInZhbHVlIjoicG5qK0ZVYkhLdnhGdTFPRE5nc0NHYkVQQ0VZbW1uMkNpS3Q3VEk2RC9KNXRpQ1ZuL3R6ajZUdkx4QUQ1VVRia280S1RmV3BRNktGYTV0T05CMEdUYTFjWmloeDF2b01IY2M5K3A1bWV4YTQ9IiwibWFjIjoiNjFiZWQwMGI2Y2QxMGY4ZjRjM2RlMjZlZWU2NjZhOThhODRhMDgxNDM4ZTFlZGJhYWY5ZjlkNGRlNDgyYjg3OSIsInRhZyI6IiJ9?expires=1745317014&signature=c64ea3517cae48cdd15f429666111741ce85de3d9afdab0b92da1a078d9b6593",
+        cover_photo: null,
+        user_name: "american-university-washington-d-c",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1300,
+                ielts: 7,
+                gpa: 3.6,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 65000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 32000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United States, Washington",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United States",
+            state: "Washington",
+            description: null,
+        },
+    },
+    {
+        id: 766,
+        name: "University of Tennessee, Knoxville",
+        email: "admissions@utk.edu_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Iml4dFVpbWN6R0xNNXRDVUQwd3hiNlE9PSIsInZhbHVlIjoiK0IwendpYlpXWExwWkcvZ01IYW1TSElTYmsvbDc2VHdOU2JhODhSTlgyby9iaGFiUGMybC9sejRPT3dEOUpzcngzS2Exc1pPQWZKNFAxTis5N3hyS2EyakFKY2dqQUhOc0YyajdtMWFKd3M9IiwibWFjIjoiN2ZmMTlhMTdkNWNkYWNlYzgyZDdiYjJmMjUwMDNkYmI5YzE4MzQwMzliNzNlNTI5MzgwZjg1Nzk2ZDJhYzIzZCIsInRhZyI6IiJ9?expires=1745317101&signature=6e20a007ab96598dbb004adbf14a6b6c5beeb784a69f00946fb2ea2bd5e9c668",
+        cover_photo: null,
+        user_name: "university_of_tennessee_knoxville",
+        ranking: 112,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1250,
+                ielts: 6.5,
+                gpa: 3.8,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.8,
+            median_salary: 70000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 22000,
+            housing: 0,
+            meals: 0,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United States, Tennessee",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On  & off-campus",
+            extra_curriculum:
+                "All Track Combined Baseball Basketball Football Golf Swimming and Diving Tennis",
+        },
+        about: {
+            website: "https:\/\/www.utk.edu\/",
+            country: "United States",
+            state: "Tennessee",
+            description:
+                "Entry Requirement:  Bachelor\u2019s degree from an accredited college or university with a 2.7 out of 4.0 GPA or 3.0 GPA during the senior year of undergraduate study. The student must have a bachelor\u2019s degree from an accredited institution in forestry, wildlife, fisheries, or another natural resource area, or a professional degree in medicine (including veterinary medicine), or law. Applicants must take the general Graduate Record Examination with minimum scores required. Graduate Rating Forms or letters of recommendation from three individuals familiar with the applicant\u2019s academic ability are required.   English Requirements: TOEFL (IBT) : total score of 80 IELTS: 6.5",
+        },
+    },
+    {
+        id: 10863,
+        name: "Jessup University, USA",
+        email: "jessup-university-usa@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ik1MdHNzNXQ4YjhMYlJ0N25kR1Ztcnc9PSIsInZhbHVlIjoiR0dlVk1NaEJNUTZZTk5HaCtDMkF4TlBrQ3Riem93N1NSamd1QnoyWjNtTk5SWDQ5RktTeFBUQjNlajlRZFNJbHdpVjFBM0dpSFFtQ1VOUHVQaVJ1cFE9PSIsIm1hYyI6IjY2YjJjMmU2NTFkMTA1N2VkNWEyMGNmOTA0ZjJhY2E2ODQ5ZThhMjc2NWM1ZjYzYWVlYmQxZmI0Y2UyZTA0N2QiLCJ0YWciOiIifQ==?expires=1745317103&signature=fa08b3aefe48b76fe96404fb59e7b4b546babc61cb1d1e117b4bb1b991642a4e",
+        cover_photo: null,
+        user_name: "jessup-university-usa",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1100,
+                ielts: 6,
+                gpa: 3.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.88,
+            median_salary: 48000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 20000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United States, California",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United States",
+            state: "California",
+            description: null,
+        },
+    },
+    {
+        id: 9471,
+        name: "Nazareth University",
+        email: "nazareth-university@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IlhwdXh2VExaZXBFZThJL0pETUhiYXc9PSIsInZhbHVlIjoiQTJ1ejdmQVdid0NGMVJJaFp5bmpKMldITlphbHVwYzc0aVhudSt4ZlJuUEM2YWl6MktIUkhuWFljdS9UdjFDTXFjaU1VcGQzOXBYY3lWZEtqTjZnc0E9PSIsIm1hYyI6IjA0Nzk5M2JiMTllNjZhNDBjNWRjNmE1NTI1ODRjYTQ0ZDY1ZjliNjliOTY5ZmZjYTRiZjM4OWZiZTVkYzAzNTciLCJ0YWciOiIifQ==?expires=1745317107&signature=92df015e5fbb560067e3d22a2cb14ac5cc8fb35faa9f15be19da05b086743195",
+        cover_photo: null,
+        user_name: "nazareth-university",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1150,
+                ielts: 6.5,
+                gpa: 3.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 55000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 25000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United States, New York",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United States",
+            state: "New York",
+            description: null,
+        },
+    },
+    {
+        id: 671,
+        name: "Johns Hopkins University",
+        email: "gotojhu@jhu.edu_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IlZ5cVNnb2Rscmg4V2ZuOTA5L0txMWc9PSIsInZhbHVlIjoiUlJmZ1E5SmtrRUIvV296QmhZNlZqckxmNnJUS3B1REgvYmJpOWxvbGFjNlpMQUVFR29GQmlhYVhpdDhJSkN4bGU1VFBsRDhOUjdyMGRvSncrSDRiWEFoa1hHc1ZWWkRZdnQyS3BtMG1Nb2s9IiwibWFjIjoiOTk2NGUwYTNiNjQwMmRlYTAyZmE5ZTBkYWZlZDNlNmJkYTNkMjYwNjgyOTMzY2U2ZDdjNDEwODAzMzUxM2E1NSIsInRhZyI6IiJ9?expires=1745317109&signature=45f677ec0b1c9385be6681e67b40391a51b1c669c657a94db6bb887abbf556ba",
+        cover_photo: null,
+        user_name: "johns_hopkins_university",
+        ranking: 10,
+        admission_stats: {
+            acceptance_rate: 11,
+            average_scores: {
+                sat: 1510,
+                ielts: 7.5,
+                gpa: 3.9,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 72000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 48000,
+            housing: 9736,
+            meals: 7064,
+            housing_and_meal: 16800,
+        },
+        campus_overview: {
+            location: "United States, Maryland",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On  & off-campus",
+            extra_curriculum:
+                "All Track Combined Baseball Basketball Fencing Football Lacrosse Soccer Swimming Tennis WaterPolo Wrestling",
+        },
+        about: {
+            website: "https:\/\/www.jhu.edu\/",
+            country: "United States",
+            state: "Maryland",
+            description:
+                "Admission requirements:  A Bachelor's Degree with a 3.0 Minimum GPA      English Language Requirements:  IELTS 7.0 recommended   TOEFL 100 Recommended   ITEP Scores accepted (the academic year 2021\u20142022 only) ",
+        },
+    },
+    {
+        id: 828,
+        name: "University of La Verne",
+        email: "admission@laverne.edu_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IklocWliYmUvMERLb05sbTF5Y2JPZlE9PSIsInZhbHVlIjoiWis1VTlGQTFUb29uN1FWYUo4a3NDRXJzRXFTZmRKWm5HUWJ0NzVpNVlBSUx2a1RDamFvall4QmptaVBRdERPSjA3b1JRVStCV3MxOHA4cERDY0F5Skl0MEFDMDRJVGlJT3hLQW9laXFicWc9IiwibWFjIjoiMDM0NDQzMTFmOTNmZDUwMDQ3MzI3MzIyZDViODM0NGMxZTAxYTFkNzM3MjA1NGU3MTM0N2U3MzQyMmY5YzdhNCIsInRhZyI6IiJ9?expires=1745317113&signature=ba86a379e12c2a3efc94e2628e2d8116bd28eb8cd25fe2f04848340625f5abbc",
+        cover_photo: null,
+        user_name: "university_of_la_verne",
+        ranking: 176,
+        admission_stats: {
+            acceptance_rate: 76,
+            average_scores: {
+                sat: 1150,
+                ielts: 6,
+                gpa: 3.4,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.88,
+            median_salary: 52000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 22000,
+            housing: 8660,
+            meals: 6820,
+            housing_and_meal: 15480,
+        },
+        campus_overview: {
+            location: "United States, California",
+            type: null,
+            total_students: 6201,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On  & off-campus",
+            extra_curriculum:
+                "Baseball Basketball Football Golf Soccer Swimming and Diving Track and Field: Outdoor Track and Field: X-Country Water Polo",
+        },
+        about: {
+            website: "https:\/\/laverne.edu\/",
+            country: "United States",
+            state: "California",
+            description:
+                "La Verne admissions is somewhat selective with an acceptance rate of 72. Students that get into La Verne have an average SAT score between 930-1150 or an average ACT score of 17-24. The regular admissions application deadline for La Verne is rolling.",
+        },
+    },
+]
 export const pagination = {
     path: "http:\/\/bk.arrowster.com\/api\/v2\/session-based-journey\/recommendation\/pre-run-engine",
     current_page: 1,

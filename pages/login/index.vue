@@ -112,9 +112,9 @@
             :placeholder="t('login.enter_your_password')"
             class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
           />
-          <NuxtLinkLocale :to="'/forgot-password'" class="w-full">
+          <NuxtLinkLocale :to="'/forgot-password'" class="w-fit self-end">
             <p
-              class="text-sm text-[#175CD3] font-semibold mt-1.5 text-end cursor-pointer self-end"
+              class="text-sm text-[#175CD3] font-semibold mt-1.5 text-end cursor-pointer"
             >
               {{ $t("forgotPassword.forgot_password") }}
             </p>

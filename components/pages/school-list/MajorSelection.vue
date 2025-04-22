@@ -5,7 +5,7 @@
     :class="{ 'pointer-events-none': dashboardStore.isSchoolsLoading }"
   >
     <p class="font-medium text-[#414651] text-sm">
-      Majors (Pick up to 3 majors)
+      {{ $t('schoolList_page.majors_pick_up_to_3_majors') }}
     </p>
     <div
       class="mt-[14px] space-y-4 max-h-[280px] overflow-y-auto custom-scrollbar"

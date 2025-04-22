@@ -2,17 +2,22 @@
   <div class="pt-4 pb-1 h-fit flex flex-col">
     <div class="md:sticky top-0 pt-4 pb-3 bg-white">
       <h1 class="text-[#181D27] text-2xl font-semibold">
-        Let's find your perfect school match!
+        {{ $t("schoolList_page.find_your_perfect_school_match") }}
       </h1>
       <div
-        v-if="!(dashboardStore.isSchoolListPublic && !dashboardStore.schoolsList.length)"
+        v-if="
+          !(
+            dashboardStore.isSchoolListPublic &&
+            !dashboardStore.schoolsList.length
+          )
+        "
         class="flex flex-col md:flex-row justify-between md:items-center w-full gap-2 md:gap-0"
       >
         <p class="text-[#535862]">
-          {{ dashboardStore.totalSchool || 0 }} schools match your profile!
+          {{ dashboardStore.totalSchool || 0 }} {{ $t("schoolList_page.schools_match_your_profile") }}
         </p>
         <FilterDropdown
-          placeholder="Sort By"
+          :placeholder="t('schoolList_page.sort_by')"
           :options="sortFilters"
           class="self-end hidden md:block"
           :modelValue="dashboardStore.selectedFilter"
@@ -21,7 +26,10 @@
       </div>
     </div>
     <div v-if="deviceType === 'mobile' || deviceType === 'tablet'" class="my-6">
-      <component v-if="dashboardStore.isSchoolListPublic" :is="mobile.PublicUserDataInfo" />
+      <component
+        v-if="dashboardStore.isSchoolListPublic"
+        :is="mobile.PublicUserDataInfo"
+      />
       <component v-else :is="mobile.UserDataInfo" />
     </div>
     <PublicInfo
@@ -119,11 +127,16 @@ const dashboardStore = useDashboardStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const deviceType = useDeviceType();
+const {t} = useI18n();
 
 const mobile = {
-  PublicUserDataInfo: defineAsyncComponent(() => import('~/components/pages/school-list/PublicUserDataInfo.vue')),
-  UserDataInfo: defineAsyncComponent(() => import('~/components/pages/school-list/UserDataInfo.vue')),
-}
+  PublicUserDataInfo: defineAsyncComponent(
+    () => import("~/components/pages/school-list/PublicUserDataInfo.vue")
+  ),
+  UserDataInfo: defineAsyncComponent(
+    () => import("~/components/pages/school-list/UserDataInfo.vue")
+  ),
+};
 
 const width = ref<number>(0);
 const schoolProfile = ref<SchoolDetail>();
@@ -131,22 +144,22 @@ const isDetailModal = ref<boolean>(false);
 const sortFilters = ref<OptionAttributes[]>([
   {
     value: "1",
-    label: "Rank (High to Low)",
+    label: `${t('schoolList_page.rank_high_to_low')}`,
     icon: shallowRef(IconRankDown),
   },
   {
     value: "2",
-    label: "Rank (Low to High)",
+    label: `${t('schoolList_page.rank_low_to_high')}`,
     icon: shallowRef(IconRankUp),
   },
   {
     value: "3",
-    label: "Price (High to Low)",
+    label: `${t('schoolList_page.price_high_to_low')}`,
     icon: shallowRef(IconPriceDown),
   },
   {
     value: "4",
-    label: "Price (Low to High)",
+    label: `${t('schoolList_page.price_low_to_high')}`,
     icon: shallowRef(IconPriceUp),
   },
 ]);

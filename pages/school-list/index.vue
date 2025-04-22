@@ -114,6 +114,7 @@ watch(
 );
 
 onMounted(async () => {
+  await nextTick();
   if (dashboardStore.isSchoolListPublic) {
     const response = await api.get("/api/v1/session-based-journey/session");
     if (response.data) {

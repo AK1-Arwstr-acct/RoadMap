@@ -99,7 +99,7 @@ interface SchoolDetail {
     };
     avatar: string;
     email: string;
-    ranking: string | null;
+    ranking: string | number | null;
     user_name: string;
     cover_photo: string | null;
     admission_stats: AdmissionStats;

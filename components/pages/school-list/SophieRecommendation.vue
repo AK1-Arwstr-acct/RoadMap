@@ -17,9 +17,11 @@
               : (dashboardStore.totalSchool || 0) >= 6
           "
         >
-          Overwhelmed by options?
+          {{ $t("schoolList_page.overwhelmed_by_options") }}
         </span>
-        <span v-else> We've found your best match! </span>
+        <span v-else>
+          {{ $t("schoolList_page.weve_found_your_best_match") }}
+        </span>
       </p>
       <p class="text-sm 2xl:text-base text-[#535862] mt-2">
         <span
@@ -29,12 +31,18 @@
               : (dashboardStore.totalSchool || 0) >= 6
           "
         >
-          Select your major and our AI will match you with the ones that match
-          100%
+          {{
+            $t(
+              "schoolList_page.select_your_major_and_our_ai_will_match_you_with_the_ones_that_match_100"
+            )
+          }}
         </span>
         <span v-else>
-          Based on your chosen major, this is the top school that fits your
-          profile.
+          {{
+            $t(
+              "schoolList_page.based_on_your_chosen_major_this_is_the_top_school_that_fits_your_profile"
+            )
+          }}
         </span>
       </p>
     </div>
@@ -60,7 +68,12 @@
         <IconLock v-if="!isActive" />
         <IconTabSophie v-else width="20" height="20" />
         <span class="text-sm block">
-          {{ !isActive ? "Unlock" : "Get" }} AI recommendation
+          {{
+            !isActive
+              ? `${$t("schoolList_page.unlock")}`
+              : `${$t("schoolList_page.get")}`
+          }}
+          {{ $t("schoolList_page.ai_recommendation") }}
         </span>
         <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
       </div>
@@ -77,11 +90,16 @@
         <div class="flex flex-col items-center">
           <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
           <p class="text-[#181D27] text-lg font-semibold text-center">
-            Sign up to continue using AI recommendations!
+            {{
+              $t("schoolList_page.sign_up_to_continue_using_ai_recommendations")
+            }}
           </p>
           <p class="text-[#535862] text-sm text-center mt-2">
-            Get personalized school recommendations and AI recommendations. Sign
-            up to continue!
+            {{
+              $t(
+                "schoolList_page.get_personalized_school_recommendations_and_ai_recommendations"
+              )
+            }}
           </p>
         </div>
         <div class="flex gap-3">
@@ -89,13 +107,13 @@
             @click="isPublicPaywall = false"
             class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
           >
-            Cancel
+            {{ $t("schoolList_page.cancel") }}
           </button>
           <NuxtLinkLocale :to="'/signup'" class="w-full">
             <button
               class="border border-[#1570EF] bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
             >
-              Sign up for free
+              {{ $t("schoolList_page.sign_up_for_free") }}
             </button>
           </NuxtLinkLocale>
         </div>

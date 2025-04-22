@@ -9,8 +9,11 @@
           loading="eager"
         />
         <p class="text-center text-[#414651] text-xl font-medium mt-5">
-          Fill in your details on the right to generate your personalized school
-          matches!
+          {{
+            $t(
+              "schoolList_page.fill_in_your_details_on_the_right_to_generate_your_personalized_school_matches"
+            )
+          }}
         </p>
       </div>
     </div>
