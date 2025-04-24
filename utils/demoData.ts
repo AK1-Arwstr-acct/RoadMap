@@ -1,11 +1,147 @@
 import type { Application } from "~/types/dashboard";
+import type { CountriesOptionAttributes, OptionAttributes, programOptions } from "~/types/home";
 import type { Program, SchoolDetail } from "~/types/program";
-interface programOptions {
-    value: number;
-    label: string;
-    parent: number;
-}
 
+export const coursePreferenceOptions: OptionAttributes[] = [
+    {
+        value: '9014',
+        label: "Agricultural Sciences"
+    },
+    {
+        value: '8991',
+        label: "Arts and Design"
+    },
+    {
+        value: '8992',
+        label: "Business and Economics"
+    },
+    {
+        value: '8993',
+        label: "Communications and Media"
+    },
+    {
+        value: '8986',
+        label: "Education"
+    },
+    {
+        value: '8994',
+        label: "Engineering and Technology"
+    },
+    {
+        value: '9046',
+        label: "Environmental Studies"
+    },
+    {
+        value: '9015',
+        label: "Humanities"
+    },
+    {
+        value: '9012',
+        label: "Law"
+    },
+    {
+        value: '9016',
+        label: "Mathematics"
+    },
+    {
+        value: '8988',
+        label: "Medical and Health Sciences"
+    },
+    {
+        value: '8995',
+        label: "Natural Sciences"
+    },
+    {
+        value: '8987',
+        label: "Social Sciences"
+    }
+]
+export const locationOptions: CountriesOptionAttributes[] = [
+    {
+        label: "United Kingdom",
+        value: [
+            92
+        ]
+    },
+    {
+        label: "Canada",
+        value: [
+            156
+        ]
+    },
+    {
+        label: "Australia",
+        value: [
+            185
+        ]
+    },
+    {
+        label: "United States",
+        value: [
+            182
+        ]
+    },
+    {
+        label: "Europe",
+        value: [
+            67,
+            68,
+            62,
+            63,
+            88,
+            78,
+            191,
+            80,
+            90
+        ]
+    }
+]
+export const budgetList = [
+    {
+        label: "0   - 10,000",
+        max: 10000,
+        min: 0,
+        value: "0-10000",
+    },
+    {
+        label: "0   - 20,000",
+        max: 20000,
+        min: 0,
+        value: "0-20000",
+    },
+    {
+        label: "0   - 30,000",
+        max: 30000,
+        min: 0,
+        value: "0-30000",
+    },
+    {
+        label: "0   - 60,000",
+        max: 60000,
+        min: 0,
+        value: "0-60000",
+    },
+    {
+        label: "0   - 90,000",
+        max: 90000,
+        min: 0,
+        value: "0-90000",
+    },
+]
+export const programListOptions: OptionAttributes[] = [
+    {
+        value: '1',
+        label: "Bachelor's"
+    },
+    {
+        value: '2',
+        label: "Master's"
+    },
+    {
+        value: '6',
+        label: "Associate"
+    }
+]
 export const majors: programOptions[] = [
     {
         value: 1781,
@@ -109,6 +245,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 92 ,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -152,6 +289,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 92 ,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -195,6 +333,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 92 ,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -238,6 +377,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 92 ,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -281,6 +421,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 92 ,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -324,6 +465,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 92 ,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -368,6 +510,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 92 ,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -411,6 +554,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 92 ,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -455,6 +599,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 185,
                 lat: null,
                 lng: null,
                 country: "Australia",
@@ -499,6 +644,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 185,
                 lat: null,
                 lng: null,
                 country: "Australia",
@@ -542,6 +688,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 185,
                 lat: null,
                 lng: null,
                 country: "Australia",
@@ -586,6 +733,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 156,
                 lat: null,
                 lng: null,
                 country: "Canada",
@@ -629,6 +777,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 156,
                 lat: null,
                 lng: null,
                 country: "Canada",
@@ -672,6 +821,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -715,6 +865,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -758,6 +909,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -802,6 +954,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -845,6 +998,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -888,6 +1042,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -931,6 +1086,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -974,6 +1130,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -1017,6 +1174,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",
@@ -1060,6 +1218,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
+                country_id: 182,
                 lat: null,
                 lng: null,
                 country: "United States",

@@ -54,7 +54,7 @@
             ]"
             @click="chatOrHistory = 'messages'"
           >
-            Messages
+            {{ $t("sophie_page.messages") }}
           </button>
           <button
             class="rounded-md p-2 font-semibold flex-1 transition-all ease-in-out duration-100"
@@ -65,7 +65,7 @@
             ]"
             @click="chatOrHistory = 'history'"
           >
-            History
+          {{ $t("sophie_page.history") }}
           </button>
         </div>
       </div>

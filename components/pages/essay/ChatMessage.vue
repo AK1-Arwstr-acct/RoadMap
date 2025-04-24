@@ -42,14 +42,14 @@
             @click="cancelEdit"
             class="py-2 px-3.5 text-[#414651] text-sm font-semibold border border-[#D5D7DA] bg-white rounded-lg"
           >
-            Cancel
+          {{ $t('ai_essay_page.cancel') }}
           </button>
           <button
             @click="updateAnswer"
             :disabled="isUpdateDisable"
             class="py-2 px-3.5 text-white text-sm font-semibold border border-[#1570EF] bg-[#1570EF] rounded-lg disabled:opacity-60"
           >
-            Update
+          {{ $t('ai_essay_page.update') }}
           </button>
         </div>
       </div>

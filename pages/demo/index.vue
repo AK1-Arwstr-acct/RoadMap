@@ -20,13 +20,8 @@
             }"
           >
             <Transition name="fade">
-              <div v-if="currentTab === 'home'" />
-              <div v-else-if="currentTab === 'sophie'" />
-              <TrackerInformations v-else-if="currentTab === 'Roadmap'" />
+              <TrackerInformations v-if="currentTab === 'Roadmap'" />
               <SchoolsList v-else-if="currentTab === 'schools_list'" />
-              <div v-else-if="currentTab === 'ai_essay_editor'">
-                ai_essay_editor
-              </div>
             </Transition>
           </div>
         </div>
@@ -64,6 +59,10 @@ import {
   applicationList,
   schoolsList,
   pagination,
+  programListOptions,
+  locationOptions,
+  budgetList,
+  coursePreferenceOptions,
 } from "~/utils/demoData";
 
 const appTrackerStore = useAppTrackerStore();
@@ -84,9 +83,12 @@ watch(
 );
 
 onBeforeMount(async () => {
-  dashboardStore.schoolsList = schoolsList;
   dashboardStore.recommendedSchoolsPagination = pagination;
   dashboardStore.totalSchool = schoolsList.length;
+  dashboardStore.programListOptions = programListOptions;
+  dashboardStore.locationOptions = locationOptions;
+  dashboardStore.budgetList = budgetList;
+  dashboardStore.coursePreferenceOptions = coursePreferenceOptions;
   appTrackerStore.preApplication = preApplication;
   appTrackerStore.postApplication = postApplication;
   appTrackerStore.applicationList = applicationList;
@@ -96,6 +98,10 @@ onBeforeUnmount(() => {
   dashboardStore.schoolsList = [];
   dashboardStore.recommendedSchoolsPagination = null;
   dashboardStore.totalSchool = null;
+  dashboardStore.locationOptions = [];
+  dashboardStore.budgetList = [];
+  dashboardStore.coursePreferenceOptions = [];
+  dashboardStore.selectedPublicMajors = [];
   appTrackerStore.preApplication = undefined;
   appTrackerStore.postApplication = undefined;
   appTrackerStore.applicationList = [];

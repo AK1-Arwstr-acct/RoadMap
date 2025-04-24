@@ -13,12 +13,12 @@
             loading="eager"
           />
           <h1 class="text-[#414651] text-sm md:text-xl font-medium mt-6">
-            How can Sophie help you today?
+            {{ $t("sophie_page.how_can_sophie_help_you_today") }}
           </h1>
           <!-- deskop -->
           <div v-if="deviceType !== 'mobile'">
             <textarea
-              placeholder="Message Sophie"
+              :placeholder="t('sophie_page.message_sophie')"
               rows="3"
               v-model="inputQuestion"
               @keydown.enter.exact.prevent="submit"
@@ -55,7 +55,7 @@
           <div class="relative mt-6">
             <input
               name="user_input_question"
-              placeholder="Message Sophie"
+              :placeholder="t('sophie_page.message_sophie')"
               v-model="inputQuestion"
               class="w-full pl-3.5 pr-12 py-2.5 border-[1.5px] border-gray-200 rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"
               data-hj-allow
@@ -109,6 +109,19 @@
             </div>
           </div>
           <div
+            v-if="isEducationLevel && !studyPrograms"
+            class="w-full max-w-[710px] mx-auto"
+          >
+            <div class="flex justify-end">
+              <BaseSelectRadio
+                :options="educationLevelOption"
+                v-model="studyPrograms"
+                @onChange="handelEducationLevel"
+                class="w-[300px]"
+              />
+            </div>
+          </div>
+          <div
             v-if="isChatLoading"
             class="w-full text-[#A4A7AE] font-thin flex items-center gap-3 max-w-[710px] mx-auto"
           >
@@ -144,17 +157,25 @@
             >
               <div class="text-[#414651] text-sm">
                 <p class="font-semibold mb-1.5">
-                  You've reached your daily limit for Sophie interactions.
+                  {{
+                    $t(
+                      "sophie_page..you've_reached_your_daily_limit_for_sophie_interactions"
+                    )
+                  }}
                 </p>
                 <p class="">
-                  Please find instructions to upgrade for more access here.
+                  {{
+                    $t(
+                      "sophie_page.please_find_instructions_to_upgrade_for_more_access_here"
+                    )
+                  }}
                 </p>
               </div>
               <NuxtLinkLocale to="/pricing">
                 <button
                   class="border-[1.5px] border-gray-200 bg-white rounded-lg py-2 px-3.5"
                 >
-                  Upgrade now
+                  {{ $t("sophie_page.upgrade_now") }}
                 </button>
               </NuxtLinkLocale>
             </div>
@@ -168,11 +189,11 @@
             <textarea
               v-if="!readOnly"
               ref="textarea"
-              placeholder="Message Sophie"
+              :placeholder="t('sophie_page.message_sophie')"
               v-model="inputQuestion"
               @keydown.enter.exact.prevent="submit"
               @keydown.enter.ctrl.prevent="addNewLine"
-              :disabled="isChatLoading || isChatFull"
+              :disabled="isChatLoading || isChatFull || isEducationLevel"
               rows="1"
               autofocus
               class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
@@ -192,11 +213,18 @@
     <div v-if="completeChat.length !== 0" class="w-full max-w-[710px] mx-auto">
       <p class="text-[#A4A7AE] text-xs text-center">
         <span v-if="!readOnly">
-          Sophie can make mistakes. Please check important info.
+          {{
+            $t(
+              "sophie_page.sophie_can_make_mistakes_please_check_important_info"
+            )
+          }}
         </span>
         <span v-else>
-          You can review this chat, but replying or continuing the conversation
-          is currently not available.
+          {{
+            $t(
+              "sophie_page.you_can_review_this_chat_but_replying_or_continuing_the_conversation_is_currently_not_available"
+            )
+          }}
         </span>
       </p>
     </div>
@@ -204,7 +232,7 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import type { ChatDetail, SophieChat } from "~/types/home";
+import type { ChatDetail, OptionAttributes, SophieChat } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
 import useDashboardStore from "~/stores/dashboardStore";
 import useSophieStore from "~/stores/sophieStore";
@@ -216,6 +244,7 @@ const sophieStore = useSophieStore();
 const deviceType = useDeviceType();
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 
 const emit = defineEmits(["isChatLoading"]);
 
@@ -250,13 +279,34 @@ const isChatFull = ref<boolean>(false);
 const readOnly = ref<boolean>(false);
 const uuid = ref<string>();
 const textarea = ref<HTMLTextAreaElement | null>(null);
+const isEducationLevel = ref<boolean>(false);
+const studyPrograms = ref<OptionAttributes>();
 
 const preQuestion: string[] = [
-  "Should I take the TOEFL or the IELTS?",
-  "Which country will suit me most for study abroad?",
-  "How can I craft a good Personal Statement?",
-  "What scholarships can I apply for?",
-  "Which major should I choose?",
+  `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
+  `${t("sophie_page.which_country_will_suit_me_most_for_study_abroad")}`,
+  `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
+  `${t("sophie_page.what_scholarships_can_i_apply_for")}`,
+  `${t("sophie_page.which_major_should_i_choose")}`,
+];
+
+const educationLevelOption: OptionAttributes[] = [
+  {
+    value: "1",
+    label: `${t("sophie_page.high_school")}`,
+  },
+  {
+    value: "2",
+    label: `${t('sophie_page.undergraduate')}`,
+  },
+  {
+    value: "3",
+    label: `${t("sophie_page.graduate")}`,
+  },
+  {
+    value: "4",
+    label: `${t("sophie_page.masters")}`,
+  },
 ];
 
 const options = {
@@ -290,6 +340,12 @@ const scrollDown = () => {
         chatContainer.value.scrollHeight - chatContainer.value.clientHeight;
     }
   });
+};
+
+const handelEducationLevel = () => {
+  inputQuestion.value = studyPrograms.value?.label || "";
+  isEducationLevel.value = false;
+  submit();
 };
 
 const submit = async () => {
@@ -336,6 +392,11 @@ const submit = async () => {
           isSender: false,
           text: response.data.data,
         });
+        if (response.data.data === "Cool! What's your current education level?") {
+          isEducationLevel.value = true;
+        }else {
+          isEducationLevel.value = false;
+        }
       } else {
         completeChat.value.push({
           isSender: false,

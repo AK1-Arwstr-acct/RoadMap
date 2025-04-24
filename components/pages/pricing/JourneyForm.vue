@@ -93,12 +93,13 @@
     <!-- school name -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        Your school name <span class="text-[#F04438]">*</span>
+        {{ $t("pricing_page.your_school_name") }}
+        <span class="text-[#F04438]">*</span>
       </p>
       <input
         name="user_input_schoolName"
         type="text"
-        placeholder="e.g. THPT Nhân Chính"
+        :placeholder="t('pricing_page.e_g_thpt_nhan_chinh')"
         v-model="formDetails.schoolName"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
         data-hj-allow
@@ -107,28 +108,35 @@
     <!-- financial support -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        How much financial support can your family provide per year?
+        {{
+          $t(
+            "pricing_page.how_much_financial_support_can_your_family_provide_per_year"
+          )
+        }}
         <span class="text-[#F04438]">*</span>
       </p>
       <input
         name="user_input_budget"
         type="text"
-        placeholder="e.g. 500,000,000VND"
+        :placeholder="`${t('pricing_page.e_g')} 500,000,000VND`"
         v-model="formDetails.financialSupport"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
         data-hj-allow
       />
       <p class="text-sm text-[#535862] mt-1.5">
-        This information will help advisors guide you toward the most suitable
-        country, school, and scholarships in the most accurate and effective
-        way.
+        {{
+          $t(
+            "pricing_page.this_information_will_help_advisors_guide_you_toward_the_most_suitable_country_school_and_scholarships_in_the_most_accurate_and_effective_way"
+          )
+        }}
       </p>
     </div>
 
     <!-- countries -->
     <div>
       <p class="font-medium text-[#414651] text-sm mb-4">
-        I want to study at <span class="text-[#F04438]">*</span>
+        {{ $t("pricing_page.i_want_to_study_at") }}
+        <span class="text-[#F04438]">*</span>
       </p>
       <div class="flex flex-col md:flex-row gap-4 flex-wrap">
         <div
@@ -174,12 +182,12 @@
           class="w-full mt-2"
         >
           <p class="text-[#414651] text-sm font-medium">
-            Can you specify for us?
+            {{ $t("pricing_page.can_you_specify_for_us") }}
           </p>
           <input
             v-model="otherText"
             class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
-            placeholder="e.g. Korean"
+            :placeholder="`${t('pricing_page.e_g')} Korean`"
             data-hj-allow
           />
         </div>
@@ -188,13 +196,15 @@
     <!-- draem school -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        Share some of your dream schools here
+        {{ $t("pricing_page.share_some_of_your_dream_schools_here") }}
         <span class="text-[#F04438]">*</span>
       </p>
       <input
         name="user_input_dreamSchol"
         type="text"
-        placeholder="e.g. University of Sydney, University of Melbourne"
+        :placeholder="
+          t('pricing_page.e_g_university_of_sydney_university_of_melbourne')
+        "
         v-model="formDetails.dreamSchool"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
         data-hj-allow
@@ -203,7 +213,9 @@
     <!-- alternative contact -->
     <div>
       <p class="font-medium text-[#414651] text-sm mb-4">
-        Alternative contact platform (if you don’t use Zalo)
+        {{
+          $t("pricing_page.alternative_contact_platform_if_you_dont_use_zalo")
+        }}
         <!-- <span class="text-[#F04438]">*</span> -->
       </p>
       <div class="flex flex-col md:flex-row gap-4 flex-wrap">
@@ -250,14 +262,19 @@
     <!-- other phoneNumber -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        If you don't have a Vietnamese phone number, please leave your easiest
-        contact information below!
+        {{
+          $t(
+            "pricing_page.if_you_dont_have_a_vietnamese_phone_number_please_leave_your_easiest_contact_information_below"
+          )
+        }}
         <!-- <span class="text-[#F04438]">*</span> -->
       </p>
       <input
         name="user_input_contact"
         type="text"
-        placeholder="Account information (Phone number/Username)"
+        :placeholder="
+          t('pricing_page.account_information_phone_number_username')
+        "
         v-model="formDetails.otherPhoneOrEmail"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
         data-hj-allow
@@ -314,7 +331,7 @@
       @click="submit"
       class="bg-[#1570EF] rounded-lg py-3 px-5 flex items-center justify-center gap-2 text-white disabled:opacity-70"
     >
-      Send to us
+      {{ $t("pricing_page.send_to_us") }}
       <IconArrowRight v-if="!isSubmitting" fill="#ffffff" />
       <IconSpinner v-else stroke="#ffffff" bgColor="transparent" width="20" />
     </button>
@@ -335,6 +352,7 @@ const emits = defineEmits(["updateJourney"]);
 
 const { api } = useApi();
 const { showToast } = useToast();
+const { t } = useI18n();
 
 interface FormDetails {
   phoneNumber: string;

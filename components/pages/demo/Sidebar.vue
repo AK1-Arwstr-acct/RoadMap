@@ -53,7 +53,7 @@
           </div>
           <span
             v-if="currentTab !== 'sophie'"
-            class="font-medium text-base text-nowrap hidden xl:block"
+            class="font-medium text-base text-nowrap hidden xl:block capitalize"
           >
             {{
               tab.name === "ai_essay_editor"
@@ -87,10 +87,10 @@ const props = defineProps({
 });
 
 const tabList: DemoTabList[] = [
-  {
-    name: "home",
-    icon: IconTabHome,
-  },
+  // {
+  //   name: "home",
+  //   icon: IconTabHome,
+  // },
   {
     name: "Roadmap",
     icon: IconTabApplication,
@@ -99,14 +99,14 @@ const tabList: DemoTabList[] = [
     name: "schools_list",
     icon: IconTabSchool,
   },
-  {
-    name: "sophie",
-    icon: IconTabSophie,
-  },
-  {
-    name: "ai_essay_editor",
-    icon: IconTabEssayEditor,
-  },
+  // {
+  //   name: "sophie",
+  //   icon: IconTabSophie,
+  // },
+  // {
+  //   name: "ai_essay_editor",
+  //   icon: IconTabEssayEditor,
+  // },
   // {
   //   name: "setting",
   //   icon: IconTabSetting,

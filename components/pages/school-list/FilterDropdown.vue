@@ -87,8 +87,10 @@
 <script setup lang="ts">
 import type { OptionAttributes } from "~/types/home";
 import useDashboardStore from "~/stores/dashboardStore";
+import { schoolsList } from "~/utils/demoData";
 
 const dashboardStore = useDashboardStore();
+const route = useRoute();
 
 const props = defineProps({
   placeholder: {
@@ -123,11 +125,34 @@ const closeDropdown = () => {
 const clratSortFilter = () => {
   selectedOption.value = null;
   dashboardStore.setSortParam(null);
+  if (route.path.includes("/demo")) {
+    return;
+  }
   emits("update:modelValue", null);
 };
 
 const onChange = () => {
   closeDropdown();
+  if (route.path.includes("/demo")) {
+    if (selectedOption.value?.value === "1") {
+      dashboardStore.schoolsList = dashboardStore.schoolsList.sort(
+        (a, b) => (b.school_ranking ?? 0) - (a.school_ranking ?? 0)
+      );
+    } else if (selectedOption.value?.value === "2") {
+      dashboardStore.schoolsList = dashboardStore.schoolsList.sort(
+        (a, b) => (a.school_ranking ?? 0) - (b.school_ranking ?? 0)
+      );
+    } else if (selectedOption.value?.value === "3") {
+      dashboardStore.schoolsList = dashboardStore.schoolsList.sort(
+        (a, b) => (b.fee ?? 0) - (a.fee ?? 0)
+      );
+    } else if (selectedOption.value?.value === "4") {
+      dashboardStore.schoolsList = dashboardStore.schoolsList.sort(
+        (a, b) => (a.fee ?? 0) - (b.fee ?? 0)
+      );
+    }
+    return;
+  }
   emits("update:modelValue", selectedOption.value);
 };
 

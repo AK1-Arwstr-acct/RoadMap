@@ -152,6 +152,12 @@ interface Plan {
   title: string;
 }
 
+interface programOptions {
+  value: number;
+  label: string;
+  parent: number;
+}
+
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, ChatDetail, EssayData, Plan }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, ChatDetail, EssayData, Plan, programOptions }

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { CountriesOptionAttributes, FilterKey, OptionAttributes } from "~/types/home";
+import type { CountriesOptionAttributes, FilterKey, OptionAttributes, programOptions } from "~/types/home";
 import axios from "axios";
 import type { Program, RecommendationSchoolsPagination } from "~/types/program";
 import useAppStore from "./AppStore";
@@ -29,6 +29,9 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const programTitleParentId = ref<string>('');
     const selectedPublicMajors = ref<number[]>([]);
     const isPublicMajorEnable = ref<boolean>(false);
+    //  demo data
+    const majorsList = ref<programOptions[]>([]);
+    const filterSchoolsList = ref<Program[]>([]);
 
     const setSortParam = (data: FilterKey | null) => {
         sortParam.value = data;
@@ -320,6 +323,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         programTitleParentId,
         isPublicMajorEnable,
         selectedPublicMajors,
+        majorsList,
+        filterSchoolsList,
         setSortParam,
         setBudgetList,
         setCoursePreferenceOptions,

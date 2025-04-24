@@ -9,20 +9,20 @@
             class="min-w-[260px] max-w-[260px] transition-all ease-in-out duration-150"
           >
             <div class="flex flex-col">
-              <p class="text-[#414651] font-medium text-center">Starter Plan</p>
+              <p class="text-[#414651] font-medium text-center">{{ $t('pricing_page.starter_plan') }}</p>
               <p
                 class="text-[#181D27] text-xl font-semibold text-center mt-1.5 uppercase"
               >
-                Free
+              {{ $t('pricing_page.free') }}
               </p>
               <button
                 class="bg-[#EFF8FF] border border-[#EFF8FF] text-sm sm:text-base text-[#175CD3] font-semibold px-[18px] py-2.5 rounded-lg w-full mt-6 shadow-sm"
                 @click="emit('selectPlan', 3)"
               >
-                Current plan
+              {{ $t('pricing_page.current_plan') }}
               </button>
               <p class="text-[#181D27] text-sm text-center mt-4">
-                AI product only, no mentors
+                {{ $t('pricing_page.ai_product_only,_no_mentors') }}
               </p>
             </div>
           </td>
@@ -31,20 +31,20 @@
             class="min-w-[260px] max-w-[260px] transition-all ease-in-out duration-150 bg-white"
           >
             <div class="flex flex-col">
-              <p class="text-[#414651] font-medium text-center">Standard Plan</p>
+              <p class="text-[#414651] font-medium text-center">{{ $t('pricing_page.standard_plan') }}</p>
               <p
                 class="text-[#181D27] text-xl font-semibold text-center mt-1.5 uppercase"
               >
-                Free
+              {{ $t('pricing_page.free') }}
               </p>
               <button
-                class="bg-[#1570EF] text-white text-sm sm:text-base font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
+                class="bg-[#1570EF] text-white text-sm sm:text-base font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm text-nowrap text-center"
                 @click="emit('selectPlan', 1)"
               >
-                Continue with Standard
+              {{ $t('pricing_page.continue_with_standard') }}
               </button>
               <p class="text-[#181D27] text-sm text-center mt-4">
-                1-1 mentor support
+                {{ $t('pricing_page.1_1_mentor_support') }}
               </p>
             </div>
           </td>
@@ -53,7 +53,7 @@
             class="min-w-[260px] max-w-[260px] transition-all ease-in-out duration-150 bg-white rounded-xl"
           >
             <div class="flex flex-col">
-              <p class="text-[#414651] font-medium text-center">Advanced Plan</p>
+              <p class="text-[#414651] font-medium text-center">{{ $t('pricing_page.advanced_plan') }}</p>
               <p
                 class="text-[#181D27] text-xl font-semibold text-center mt-1.5 text-nowrap"
               >
@@ -63,10 +63,10 @@
                 class="bg-[#1570EF] text-white text-sm sm:text-base font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
                 @click="emit('selectPlan', 2)"
               >
-                Apply for Mentorship
+              {{ $t('pricing_page.apply_for_mentorship') }}
               </button>
               <p class="text-[#181D27] text-sm text-center mt-4">
-                1-1 mentor support
+                {{ $t('pricing_page.1_1_mentor_support') }}
               </p>
             </div>
           </td>

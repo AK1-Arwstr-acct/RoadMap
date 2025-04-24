@@ -12,11 +12,11 @@
         class="border-[1.5px] border-gray-200 bg-white py-2.5 w-full overflow-hidden text-nowrap rounded-lg flex justify-center items-center gap-2 text-sm font-semibold text-[#1570EF]"
       >
         <IconChat />
-        Start a new chat with Sophie
+        {{ $t("sophie_page.start_a_new_chat_with_sophie") }}
       </button>
     </div>
     <div class="text-[#414651] text-sm pt-6 overflow-x-hidden">
-      <p class="font-medium px-2 mb-4">Recents</p>
+      <p class="font-medium px-2 mb-4">{{ $t("sophie_page.recents") }}</p>
       <div class="flex flex-col">
         <div
           class="truncate cursor-pointer p-2 rounded-lg"

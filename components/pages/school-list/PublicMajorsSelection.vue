@@ -3,7 +3,9 @@
     class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-[#FFFEFC] flex flex-col gap-6"
     :class="{ 'pointer-events-none': dashboardStore.isSchoolsLoading }"
   >
-    <p class="font-medium text-[#414651]">{{ $t('schoolList_page.majors_pick_up_to_3_majors') }}</p>
+    <p class="font-medium text-[#414651]">
+      {{ $t("schoolList_page.majors_pick_up_to_3_majors") }}
+    </p>
     <div
       v-if="majorProgramsList.length"
       class="mt-[14px] space-y-4 max-h-[280px] overflow-y-auto custom-scrollbar"
@@ -59,10 +61,14 @@
     </div>
     <div v-else class="">
       <p class="text-sm text-[#535862] font-medium">
-        {{ $t('schoolList_page.tell_us_about_yourself_to_get_started') }}
+        {{ $t("schoolList_page.tell_us_about_yourself_to_get_started") }}
       </p>
       <p class="text-sm text-[#717680] mt-2">
-        {{ $t('schoolList_page.fill_in_your_details_on_the_right_to_generate_your_personalized_school_matches') }}
+        {{
+          $t(
+            "schoolList_page.fill_in_your_details_on_the_right_to_generate_your_personalized_school_matches"
+          )
+        }}
       </p>
     </div>
     <button
@@ -70,7 +76,7 @@
       disabled
       class="text-sm font-semibold text-[#D5D7DA] bg-white rounded-lg py-2.5 border border-gray-200 w-full"
     >
-    {{ $t('schoolList_page.select_major') }}
+      {{ $t("schoolList_page.select_major") }}
     </button>
   </div>
 </template>
@@ -78,7 +84,6 @@
 import useDashboardStore from "~/stores/dashboardStore";
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
-import { majors } from "~/utils/demoData";
 
 const { api } = useApi();
 const appStore = useAppStore();
@@ -120,6 +125,21 @@ const toggleSelection = (id: number) => {
 
 const submit = async () => {
   try {
+    if (route.path.includes("/demo")) {
+      if (selectedLPrograms.value.length > 0) {
+        dashboardStore.schoolsList = dashboardStore.filterSchoolsList.filter(
+          (item) => {
+            let program_names: string[] = dashboardStore.majorsList
+              .filter((item) => selectedLPrograms.value.includes(item.value))
+              .map((major) => major.label);
+            return program_names.includes(item.program_title);
+          }
+        );
+      } else {
+        dashboardStore.schoolsList = dashboardStore.filterSchoolsList;
+      }
+      return;
+    }
     dashboardStore.isSchoolsLoading = true;
     if (selectedLPrograms.value.length > 0) {
       await dashboardStore.runEngine();
@@ -181,10 +201,21 @@ watch(
   }
 );
 
-onMounted(() => {
-  if (route.path.includes("/demo")) {
-    majorProgramsList.value = majors;
-    return;
+// for demo page
+watch(
+  () => majorProgramsList.value,
+  () => {
+    selectedLPrograms.value = [];
   }
-});
+);
+
+watch(
+  () => dashboardStore.majorsList,
+  () => {
+    if (route.path.includes("/demo")) {
+      majorProgramsList.value = dashboardStore.majorsList;
+      return;
+    }
+  }
+);
 </script>

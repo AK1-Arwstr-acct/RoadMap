@@ -11,16 +11,15 @@
         <h1
           class="text-2xl md:text-3xl text-center font-medium mt-8 max-w-[750px] w-full"
         >
-          We've sent the AI-generated essay to your email. Please check your
-          inbox.
+          {{ $t('ai_essay_page.weve_sent_the_ai_generated_essay_to_your_email') }}
         </h1>
       </div>
       <div class="flex justify-center">
         <NuxtLinkLocale
           :to="'/pricing'"
-          class="w-full text-white bg-[#1570EF] rounded-lg py-2.5 max-w-[360px] font-semibold"
+          class="w-full text-white bg-[#1570EF] rounded-lg py-2.5 max-w-[360px] font-semibold text-center"
         >
-          Try Arrowster for Free
+        {{ $t('ai_essay_page.try_arrowster_for_free') }}
         </NuxtLinkLocale>
       </div>
     </div>

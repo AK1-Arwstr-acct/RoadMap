@@ -1,15 +1,14 @@
 <template>
-  <div
-    class="w-full flex justify-center items-center pt-24 pb-16"
-  >
+  <div class="w-full flex justify-center items-center pt-24 pb-16">
     <div class="w-full md:w-[390px]">
       <h1 class="font-semibold text-3xl text-[#181D27] mb-8">
-        Could you share a few personal details with us?
+        {{ $t("ai_essay_page.could_you_share_a_few_personal_details_with_us") }}
       </h1>
       <div>
         <div class="remove-shadow-bg-white flex flex-col">
           <label class="font-medium text-[#414651] text-sm"
-            >Your email<span class="text-[#F04438]">*</span></label
+            >{{ $t("ai_essay_page.your_email")
+            }}<span class="text-[#F04438]">*</span></label
           >
           <input
             name="user_input_email"
@@ -21,12 +20,16 @@
             data-hj-allow
           />
           <p class="text-sm text-[#535862] mt-1.5">
-            We will send you your draft essay through email.
+            {{
+              $t(
+                "ai_essay_page.we_will_send_you_your_draft_essay_through_email"
+              )
+            }}
           </p>
         </div>
         <div class="relative remove-shadow-bg-white mt-6">
           <label class="text-sm text-[#344054] font-medium mb-2">
-            Phone number (Optional)
+            {{ $t("ai_essay_page.phone_number_optional") }}
           </label>
           <div
             class="relative border-[1.5px] rounded-lg flex items-center gap-2 p-1"
@@ -111,7 +114,11 @@
             />
           </div>
           <p class="text-sm text-[#535862] mt-1.5">
-            Feel free to leave your contact info if you're interested.
+            {{
+              $t(
+                "ai_essay_page.feel_free_to_leave_your_contact_info_if_youre_interested"
+              )
+            }}
           </p>
         </div>
         <div class="mt-6">
@@ -120,7 +127,7 @@
             :disabled="userInput.email === ''"
             class="bg-[#1570EF] w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
           >
-            Continue
+            {{ $t("ai_essay_page.continue") }}
             <IconSpinner v-if="isSubmitting" />
             <IconArrowRight v-else fill="#ffffff" />
           </button>

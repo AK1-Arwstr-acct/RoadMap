@@ -70,11 +70,13 @@
               />
             </div>
           </NuxtLinkLocale>
-          <NuxtLinkLocale :to="'/dashboard'">
-            <div v-if="!getUserInfo" class="cursor-pointer">
-              <IconCross fill="#717680" class="size-6 md:size-8" />
-            </div>
-          </NuxtLinkLocale>
+          <div
+            @click="router.back()"
+            v-if="!getUserInfo"
+            class="cursor-pointer"
+          >
+            <IconCross fill="#717680" class="size-6 md:size-8" />
+          </div>
         </div>
         <div class="flex-1 md:p-6 flex justify-center items-center">
           <PublicUserInfo v-if="getUserInfo" @submit="startQuestions" />
@@ -88,30 +90,30 @@
               <h1
                 class="text-[#181D27] font-semibold text-xl text-center sm:text-[34px]"
               >
-                Welcome to Your Personal Essay Journey!
+                {{ $t("ai_essay_page.welcome_to_your_personal_essay_journey") }}
               </h1>
               <p class="text-center text-[#535862] md:text-lg mt-4">
-                Take a deep breath - you're in the right place. We're here to
-                help you craft your best essay, whether you're just starting or
-                polishing your final draft. Take your time to think and explore
-                - your unique voice matters.
+                {{ $t("ai_essay_page.essay_intro_message") }}
               </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-5 w-full">
               <button
                 @click="handelNext"
-                class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold w-full sm:max-w-48 flex justify-center"
+                class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold w-full sm:max-w-52 flex justify-center"
               >
-                <span class="flex justify-center items-center gap-2 w-max">
-                  Okay, let's begin
+                <span
+                  class="flex justify-center items-center gap-2 w-max text-nowrap"
+                >
+                  {{ $t("ai_essay_page.okay_lets_begin") }}
                   <IconArrowRight fill="#ffffff" width="20" height="20" />
                 </span>
               </button>
-              <NuxtLinkLocale :to="'/dashboard'">
-                <p class="text-[#535862] font-semibold cursor-pointer">
-                  Go back
-                </p>
-              </NuxtLinkLocale>
+              <p
+                @click="router.back()"
+                class="text-[#535862] font-semibold cursor-pointer"
+              >
+                {{ $t("ai_essay_page.go_back") }}
+              </p>
             </div>
             <!-- upgrade popup -->
             <!-- <div
@@ -119,16 +121,16 @@
             >
               <div>
                 <p class="text-[#414651] font-semibold">
-                  You've reached your daily limit for AI Essay Editor.
+                  {{ $t('ai_essay_page.youve_reached_your_daily_limit_for_ai_essay_editor') }}
                 </p>
                 <p class="text-[#414651] mt-1.5">
-                  Please find instructions to upgrade for more access here.
+                  {{ $t('ai_essay_page.please_find_instructions_to_upgrade_for_more_access_here') }}
                 </p>
               </div>
               <button
                 class="text-[#414651] font-semibold py-2 px-3.5 rounded-lg border border-gray-200 bg-white shadow[0px_1px_2px_0px_#0A0D120D]"
               >
-                Upgrade now
+                {{ $t('ai_essay_page.upgrade_now') }}
               </button>
             </div> -->
           </div>
@@ -161,6 +163,7 @@ import MobileSideBar from "~/components/shared/MobileSideBar.vue";
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
 const deviceType = useDeviceType();
+const router = useRouter();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""

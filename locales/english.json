@@ -1,4 +1,50 @@
 {
+    "ai_essay_page": {
+        "cancel": "Cancel",
+        "continue": "Continue",
+        "could_you_share_a_few_personal_details_with_us": "Could you share a few personal details with us?",
+        "cultural_identity_family_dynamic": "Cultural Identity/Family Dynamic: Exploring how your childhood shaped you",
+        "essay_intro_message": "Take a deep breath - you're in the right place. We're here to help you craft your best essay, whether you're just starting or polishing your final draft. Take your time to think and explore - your unique voice matters.",
+        "e_g_losing_debate_team_leadership_position": "e.g. losing debate team leadership position...",
+        "e_g_2007": "e.g. 2007",
+        "feel_free_to_leave_your_contact_info_if_youre_interested": "Feel free to leave your contact info if you're interested.",
+        "go_back": "Go back",
+        "go_back_and_make_some_changes": "Go back and make some changes",
+        "great_job": "Great job! Thanks for sharing all these details. We'll now craft the perfect essay just for you. Sit back and relax - your essay will be ready shortly!",
+        "great_progress": "Great progress! We're starting to build a picture of your unique voice.",
+        "growth_and_transformation": "Growth and Transformation: Before-and-after snapshots of the soul",
+        "hi_there_can_you_tell_me_about_your_year_of_birth": "Hi there, can you tell me about your year of birth?",
+        "how_has_this_experience_impacted_you": "How has this experience impacted you? Did you learn something, gain confidence, or change your mindset?",
+        "keep_going": "Keep going",
+        "lets_get_to_know_you_a_little_bit": "Let's Get to Know You a Little Bit",
+        "make_my_essay_10x_better": "Make my essay 10x better",
+        "metaphorical_symbolic": "Metaphorical/Symbolic: Using meaningful objects or skills to tell your story",
+        "narrative_driven": "Narrative-Driven: Sharing vivid, immersive stories from your life",
+        "next": "Next",
+        "no_need_to_rush_here_take_your_time_to_think": "No need to rush here, take your time to think",
+        "okay_lets_begin": "Okay, let's begin",
+        "phone_number_optional": "Phone number (Optional)",
+        "please_find_instructions_to_upgrade_for_more_access_here": "Please find instructions to upgrade for more access here.",
+        "questions_specific_to_your_chosen_essay_style": "Questions specific to your chosen essay style!",
+        "reflective_philosophical": "Reflective-Philosophical: Drawing thoughtful lessons from your experiences",
+        "save_to_profile": "Save to Profile",
+        "submit": "Submit",
+        "this_is_far_from_good_though": "This is far from good though. Want to know how to customise it even more and make it 10x better?",
+        "try_arrowster_for_free": "Try Arrowster for Free",
+        "update": "Update",
+        "upgrade_now": "Upgrade now",
+        "welcome_to_your_personal_essay_journey": "Welcome to Your Personal Essay Journey!",
+        "we_will_send_you_your_draft_essay_through_email": "We will send you your draft essay through email.",
+        "weve_also_sent_this_essay_to_your_email": "We've also sent this essay to your email.",
+        "weve_sent_the_ai_generated_essay_to_your_email": "We've sent the AI-generated essay to your email. Please check your inbox.",
+        "what_happened": "What happened? Consider a time when things didn’t go as expected, like failing a test or losing a role.",
+        "what_schools_are_you_planning_to_apply_to": "What school(s) are you planning to apply to? If you don't have one yet, just write N/A for this question <3",
+        "whats_the_core_message_you_want_to_convey": "What's the core message you want to convey?",
+        "whats_the_style_of_your_personal_statement": "What's the style of your personal statement",
+        "whats_your_intended_major": "What's your (intended) major?",
+        "your_email": "Your email",
+        "youve_reached_your_daily_limit_for_ai_essay_editor": "You've reached your daily limit for AI Essay Editor."
+    },
     "dashboard": {
         "sidebar": {
             "menu": {
@@ -173,6 +219,111 @@
         "sent_code": "We've sent a code to",
         "verify": "Verify"
     },
+    "pricing_page": {
+        "1_1_mentor_support": "1-1 mentor support",
+        "500+_students": "500+ students",
+        "account_information_phone_number_username": "Account information (Phone number/Username)",
+        "advanced_plan": "Advanced Plan",
+        "ai_product_only,_no_mentors": "AI product only, no mentors",
+        "alternative_contact_platform_if_you_dont_use_zalo": "Alternative contact platform (if you don’t use Zalo)",
+        "apply_for_mentorship": "Apply for Mentorship",
+        "back_to_home": "Back to home",
+        "can_you_specify_for_us": "Can you specify for us?",
+        "continue_with_standard": "Continue with Standard",
+        "current_plan": "Current plan",
+        "e_g_thpt_nhan_chinh": "e.g. THPT Nhân Chính",
+        "e_g_university_of_sydney_university_of_melbourne": "e.g. University of Sydney, University of Melbourne",
+        "e_g" : "e.g.",
+        "faq": {
+            "faq1": {
+                "question": "What countries can Arrowster support me in applying to?",
+                "answer": "We help students apply to US, Canada, Australia, New Zealand, United Kingdom, and Europe (incl. countries such as France, Netherlands, Germany, etc). In Vietnam, we also help students apply to RMIT and BUV."
+            },
+            "faq2": {
+                "question": "What are partner schools?",
+                "answer": "These are schools we partner with - this means we can help students secure higher admission rates and exclusive scholarships. Since partner universities provide Arrowster with a commission upon successful enrollment, we only require a refundable deposit from students to ensure commitment."
+            },
+            "faq3": {
+                "question": "What schools do you partner with?",
+                "answer": "We partner with top institutions in the world, including all schools in Australia & UK (except Oxford & Cambridge), Top 10 Universities in Canada, Top 50-150 Universities in US, Applied Science Universities in Europe, and more. View our partner school lists here."
+            },
+            "faq4": {
+                "question": "Who are my mentors?",
+                "answer": "You’ll work with mentors who have studied abroad and won scholarships at best universities such as Harvard University, Yonsei University, University of Pennsylvania, etc. We also connect students with experts in their majors to learn about their careers."
+            },
+            "faq5": {
+                "question": "Will I work with you online or offline?",
+                "answer": "For most students, we will work online via messages and online meetings. If needed, you can come meet us at our beautiful office in District 1, Ho Chi Minh City!"
+            }
+        },
+        "free": "Free",
+        "frequently_asked_questions": "Frequently asked questions",
+        "how_much_financial_support_can_your_family_provide_per_year": "How much financial support can your family provide per year?",
+        "i_want_to_study_at": "I want to study at",
+        "if_you_dont_have_a_vietnamese_phone_number_please_leave_your_easiest_contact_information_below": "If you don't have a Vietnamese phone number, please leave your easiest  contact information below!",
+        "join": "Join",
+        "lets_start_your_journey_together!": "Let’s start your journey together!",
+        "plansList": {
+            "titles": {
+                "title_1": "Pre-Application Support",
+                "title_2": "Study Abroad Roadmap (Step-by-Step Guide)",
+                "title_3": "Career & Major Discovery",
+                "title_4": "Exclusive Training Sessions",
+                "title_5": "Application Support",
+                "title_6": "Shortlisting Schools with 1-1 Mentor Review",
+                "title_7": "Extracurricular & Scholarship Mentorship",
+                "title_8": "Direct 1:1 Counselor (private chat; weekly calls)",
+                "title_9": "Exclusive Resources",
+                "title_10": "Drafting Essays with AI",
+                "title_11": "Post-Application Support",
+                "title_12": "Visa & Financial Proof Paperwork",
+                "title_13": "Number of School Applications Supported"
+            },
+            "10_schools_not_limited_to_partner_schools": "10 Schools (Not Limited to Partner Schools)",
+            "3_essays_per_month_no_feedback": "3 essays/month, no feedback",
+            "5_000_000_vnd_refundable_deposit_for_slot_reservation": "*5,000,000 VND refundable deposit for slot reservation",
+            "5_partner_schools_of_arrowster": "5 Partner Schools of Arrowster",
+            "available": "available",
+            "full_access": "Full Access",
+            "limited_access": "Limited Access",
+            "n_a": "N/A",
+            "requires_sat_1500+_limited_slots": "*Requires SAT 1500+, limited slots",
+            "unlimited_1_1_mentor_feedback": "Unlimited, 1-1 mentor feedback"
+        },
+        "send_to_us": "Send to us",
+        "share_some_of_your_dream_schools_here": "Share some of your dream schools here",
+        "standard_plan": "Standard Plan",
+        "starter_plan": "Starter Plan",
+        "step": "Step",
+        "stepsDetail": {
+            "stepsDetail_1": {
+                "title": "Fill out this form",
+                "description": "This helps us understand your profile and goals better."
+            },
+            "stepsDetail_2": {
+                "title": "Meet us for a 15’ chat",
+                "description": "Our mentors will answer your questions and see if you’re a good fit for Arrowster."
+            },
+            "stepsDetail_3": {
+                "title": "Confirm your study abroad plan",
+                "description": "We will confirm your study abroad plan with your parents"
+            },
+            "stepsDetail_4": {
+                "title": "Welcome to Arrowster!",
+                "description": "If selected, you will be onboarded to our exclusive student community and start working with us for your application!"
+            }
+        },
+        "thank_you_for_your_submission!": "Thank you for your submission! We've received your form and will contact  you soon!",
+        "this_information_will_help_advisors_guide_you_toward_the_most_suitable_country_school_and_scholarships_in_the_most_accurate_and_effective_way": "This information will help advisors guide you toward the most suitable country, school, and scholarships in the most accurate and effective  way.",
+        "who_secured_top_university_admissions_with_our_ai_+_expert_mentorship": "who secured top university admissions with our AI + expert mentorship",
+        "your_school_name": "Your school name",
+        "your_study_abroad_success_starts": "Your study abroad success starts",
+        "get_the_perfect_plan_for_you": "here – Get the perfect plan for you",
+        "5_000_000_vnd_refundable_deposit_for_slot_reservation": "5,000,000 VND refundable deposit for slot reservation",
+        "unlock_mentor_help": "Unlock Mentor Help",
+        "requires_sat_1500_limited_slots": "Requires SAT 1500+, limited slots",
+        "apply_for_advanced": "Apply for Advanced"
+    },
     "profile_page": {
         "all_your_achievement": "All your achievement",
         "all_your_ai_essay": "All Your AI Essay",
@@ -273,6 +424,7 @@
         "scholarships_for_this_school": "Scholarships for this school?",
         "schools_match_your_profile": "schools match your profile!",
         "select_major": "Select Major",
+        "select_option": "Select Option",
         "select_your_major_and_our_ai_will_match_you_with_the_ones_that_match_100": "Select your major and our AI will match you with the ones that match 100%",
         "sign_up_for_free": "Sign up for free",
         "sign_up_to_continue_using_ai_recommendations": "Sign up to continue using AI recommendations!",
@@ -301,6 +453,28 @@
         "name": "Name",
         "password": "Password",
         "sign_up_with_google": "Sign up with Google"
+    },
+    "sophie_page": {
+        "graduate": "Graduate",
+        "high_school": "High School",
+        "history": "History",
+        "how_can_i_craft_a_good_personal_statement": "How can I craft a good Personal Statement?",
+        "how_can_sophie_help_you_today": "How can Sophie help you today?",
+        "masters": "Masters",
+        "messages": "Messages",
+        "message_sophie": "Message Sophie",
+        "please_find_instructions_to_upgrade_for_more_access_here": "Please find instructions to upgrade for more access here.",
+        "recents": "Recents",
+        "should_i_take_the_toefl_or_the_ielts": "Should I take the TOEFL or the IELTS?",
+        "sophie_can_make_mistakes_please_check_important_info": "Sophie can make mistakes. Please check important info.",
+        "start_a_new_chat_with_sophie": "Start a new chat with Sophie",
+        "undergraduate": "Undergraduate",
+        "upgrade_now": "Upgrade now",
+        "what_scholarships_can_i_apply_for": "What scholarships can I apply for?",
+        "which_country_will_suit_me_most_for_study_abroad": "Which country will suit me most for study abroad?",
+        "which_major_should_i_choose": "Which major should I choose?",
+        "you_can_review_this_chat_but_replying_or_continuing_the_conversation_is_currently_not_available": "You can review this chat, but replying or continuing the conversation is currently not available.",
+        "you've_reached_your_daily_limit_for_sophie_interactions": "You've reached your daily limit for Sophie interactions."
     },
     "verifyPhone": {
         "enter_10_digits": "Enter 10 digits",

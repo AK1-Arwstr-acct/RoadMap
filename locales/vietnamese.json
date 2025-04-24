@@ -1,4 +1,50 @@
 {
+    "ai_essay_page": {
+        "cancel": "Hủy",
+        "continue": "Tiếp tục",
+        "could_you_share_a_few_personal_details_with_us": "Bạn có thể chia sẻ một vài thông tin cá nhân với chúng tôi không?",
+        "cultural_identity_family_dynamic": "Bản sắc văn hóa/Gia đình: Khám phá tuổi thơ đã định hình bạn như thế nào",
+        "essay_intro_message": "Hít một hơi thật sâu – bạn đang ở đúng nơi rồi. Chúng tôi ở đây để giúp bạn viết bài luận hay nhất, dù bạn mới bắt đầu hay đang chỉnh sửa lần cuối. Hãy dành thời gian suy nghĩ và khám phá – giọng văn độc đáo của bạn rất quan trọng.",
+        "e_g_losing_debate_team_leadership_position": "ví dụ: mất vị trí lãnh đạo đội tranh luận...",
+        "e_g_2007": "ví dụ: 2007",
+        "feel_free_to_leave_your_contact_info_if_youre_interested": "Bạn có thể để lại thông tin liên hệ nếu bạn quan tâm.",
+        "go_back": "Quay lại",
+        "go_back_and_make_some_changes": "Quay lại và chỉnh sửa một chút",
+        "great_job": "Làm tốt lắm! Cảm ơn bạn đã chia sẻ tất cả thông tin này. Chúng tôi sẽ tạo ra bài luận hoàn hảo dành riêng cho bạn. Thư giãn nhé – bài luận sẽ sớm hoàn thành!",
+        "great_progress": "Tiến triển tuyệt vời! Chúng tôi đang dần hình dung được giọng văn độc đáo của bạn.",
+        "growth_and_transformation": "Trưởng thành và Biến đổi: Hành trình thay đổi nội tâm",
+        "hi_there_can_you_tell_me_about_your_year_of_birth": "Chào bạn, bạn có thể cho biết năm sinh của mình không?",
+        "how_has_this_experience_impacted_you": "Trải nghiệm này đã ảnh hưởng đến bạn như thế nào? Bạn có học được điều gì, trở nên tự tin hơn hoặc thay đổi cách nghĩ không?",
+        "keep_going": "Tiếp tục nhé",
+        "lets_get_to_know_you_a_little_bit": "Hãy để chúng tôi hiểu thêm về bạn",
+        "make_my_essay_10x_better": "Cải thiện bài luận gấp 10 lần",
+        "metaphorical_symbolic": "Ẩn dụ/Biểu tượng: Sử dụng những vật/sở thích mang ý nghĩa để kể câu chuyện",
+        "narrative_driven": "Kể chuyện: Chia sẻ những câu chuyện sống động, chân thực từ cuộc sống của bạn",
+        "next": "Tiếp theo",
+        "no_need_to_rush_here_take_your_time_to_think": "Không cần vội đâu, cứ thoải mái suy nghĩ nhé",
+        "okay_lets_begin": "Được rồi, bắt đầu nhé",
+        "phone_number_optional": "Số điện thoại (Không bắt buộc)",
+        "please_find_instructions_to_upgrade_for_more_access_here": "Vui lòng xem hướng dẫn nâng cấp tại đây để có thêm quyền truy cập.",
+        "questions_specific_to_your_chosen_essay_style": "Các câu hỏi phù hợp với phong cách bài luận bạn chọn!",
+        "reflective_philosophical": "Suy ngẫm/Triết lý: Rút ra bài học từ những trải nghiệm",
+        "save_to_profile": "Lưu vào hồ sơ",
+        "submit": "Gửi",
+        "this_is_far_from_good_though": "Bài này chưa hay đâu. Bạn muốn biết cách cải thiện nó tốt hơn gấp 10 lần không?",
+        "try_arrowster_for_free": "Dùng thử Arrowster miễn phí",
+        "update": "Cập nhật",
+        "upgrade_now": "Nâng cấp ngay",
+        "welcome_to_your_personal_essay_journey": "Chào mừng bạn đến với hành trình bài luận cá nhân của mình!",
+        "we_will_send_you_your_draft_essay_through_email": "Chúng tôi sẽ gửi bản nháp bài luận của bạn qua email.",
+        "weve_also_sent_this_essay_to_your_email": "Chúng tôi cũng đã gửi bài luận này đến email của bạn.",
+        "weve_sent_the_ai_generated_essay_to_your_email": "Chúng tôi đã gửi bài luận do AI tạo ra đến email của bạn. Hãy kiểm tra hộp thư nhé.",
+        "what_happened": "Chuyện gì đã xảy ra? Hãy kể về một lần mọi thứ không như mong đợi, như trượt bài kiểm tra hoặc mất một vai trò nào đó.",
+        "what_schools_are_you_planning_to_apply_to": "Bạn dự định nộp đơn vào trường nào? Nếu chưa có, bạn chỉ cần ghi 'Không có' nhé <3",
+        "whats_the_core_message_you_want_to_convey": "Thông điệp chính bạn muốn truyền tải là gì?",
+        "whats_the_style_of_your_personal_statement": "Phong cách của bài luận cá nhân của bạn là gì?",
+        "whats_your_intended_major": "Ngành học (dự định) của bạn là gì?",
+        "your_email": "Email của bạn",
+        "youve_reached_your_daily_limit_for_ai_essay_editor": "Bạn đã đạt giới hạn sử dụng AI Essay Editor trong ngày."
+    },
     "dashboard": {
         "sidebar": {
             "menu": {
@@ -173,6 +219,111 @@
         "sent_code": "Chúng tôi đã gửi mã tới",
         "verify": "Xác minh"
     },
+    "pricing_page": {
+        "1_1_mentor_support": "Hỗ trợ mentor 1-1",
+        "500+_students": "Hơn 500 học sinh",
+        "account_information_phone_number_username": "Thông tin tài khoản (Số điện thoại/Tên người dùng)",
+        "advanced_plan": "Gói nâng cao",
+        "ai_product_only,_no_mentors": "Chỉ sử dụng sản phẩm AI, không có mentor",
+        "alternative_contact_platform_if_you_dont_use_zalo": "Nền tảng liên hệ thay thế (nếu bạn không dùng Zalo)",
+        "apply_for_mentorship": "Đăng ký nhận mentor",
+        "back_to_home": "Quay về trang chủ",
+        "can_you_specify_for_us": "Bạn có thể nói rõ hơn không?",
+        "continue_with_standard": "Chọn gói tiêu chuẩn",
+        "current_plan": "Gói hiện tại",
+        "e_g_thpt_nhan_chinh": "ví dụ: THPT Nhân Chính",
+        "e_g_university_of_sydney_university_of_melbourne": "ví dụ: Đại học Sydney, Đại học Melbourne",
+        "e_g": "ví dụ",
+        "faq": {
+            "faq1": {
+                "question": "Arrowster hỗ trợ tôi nộp hồ sơ du học ở những quốc gia nào?",
+                "answer": "Chúng tôi hỗ trợ học sinh nộp hồ sơ đến Mỹ, Canada, Úc, New Zealand, Vương quốc Anh và các nước châu Âu (bao gồm Pháp, Hà Lan, Đức, v.v.). Tại Việt Nam, chúng tôi cũng hỗ trợ nộp hồ sơ vào RMIT và BUV."
+            },
+            "faq2": {
+                "question": "Trường đối tác là gì?",
+                "answer": "Đây là những trường mà chúng tôi có quan hệ đối tác – điều này có nghĩa là chúng tôi có thể giúp học sinh tăng tỷ lệ trúng tuyển và có học bổng độc quyền. Vì các trường đối tác chi trả hoa hồng cho Arrowster khi học sinh nhập học thành công, chúng tôi chỉ yêu cầu một khoản đặt cọc hoàn lại để đảm bảo sự cam kết từ học sinh."
+            },
+            "faq3": {
+                "question": "Bạn hợp tác với những trường nào?",
+                "answer": "Chúng tôi hợp tác với các trường hàng đầu thế giới, bao gồm tất cả các trường tại Úc & Vương quốc Anh (trừ Oxford & Cambridge), Top 10 đại học tại Canada, Top 50-150 đại học tại Mỹ, các trường Khoa học Ứng dụng tại châu Âu và nhiều hơn nữa. Xem danh sách các trường đối tác tại đây."
+            },
+            "faq4": {
+                "question": "Ai sẽ là mentor của tôi?",
+                "answer": "Bạn sẽ làm việc với các mentor từng du học và giành học bổng tại những đại học hàng đầu như Đại học Harvard, Đại học Yonsei, Đại học Pennsylvania, v.v. Chúng tôi cũng kết nối học sinh với chuyên gia trong ngành để tìm hiểu về nghề nghiệp của họ."
+            },
+            "faq5": {
+                "question": "Tôi sẽ làm việc với bạn online hay offline?",
+                "answer": "Đối với hầu hết học sinh, chúng tôi sẽ làm việc online qua tin nhắn và các cuộc họp trực tuyến. Nếu cần, bạn có thể đến gặp trực tiếp tại văn phòng đẹp của chúng tôi ở Quận 1, TP. Hồ Chí Minh!"
+            }
+        },
+        "free": "Miễn phí",
+        "frequently_asked_questions": "Câu hỏi thường gặp",
+        "how_much_financial_support_can_your_family_provide_per_year": "Gia đình bạn có thể hỗ trợ tài chính bao nhiêu mỗi năm?",
+        "i_want_to_study_at": "Tôi muốn học tại",
+        "if_you_dont_have_a_vietnamese_phone_number_please_leave_your_easiest_contact_information_below": "Nếu bạn không có số điện thoại Việt Nam, vui lòng để lại thông tin liên lạc dễ dàng nhất của bạn bên dưới!",
+        "join": "Tham gia",
+        "lets_start_your_journey_together!": "Hãy bắt đầu hành trình của bạn cùng nhau!",
+        "plansList": {
+            "titles": {
+                "title_1": "Hỗ trợ trước khi nộp hồ sơ",
+                "title_2": "Lộ trình du học (Hướng dẫn từng bước)",
+                "title_3": "Khám phá ngành học & nghề nghiệp",
+                "title_4": "Buổi đào tạo độc quyền",
+                "title_5": "Hỗ trợ làm hồ sơ",
+                "title_6": "Chọn trường cùng mentor 1-1",
+                "title_7": "Hướng dẫn hoạt động ngoại khóa & học bổng",
+                "title_8": "Cố vấn riêng 1-1 (trò chuyện riêng; gọi hằng tuần)",
+                "title_9": "Tài liệu độc quyền",
+                "title_10": "Viết bài luận với AI",
+                "title_11": "Hỗ trợ sau khi nộp hồ sơ",
+                "title_12": "Hồ sơ xin visa & chứng minh tài chính",
+                "title_13": "Số lượng trường được hỗ trợ làm hồ sơ"
+            },
+            "10_schools_not_limited_to_partner_schools": "10 trường (Không giới hạn trường đối tác)",
+            "3_essays_per_month_no_feedback": "3 bài luận/tháng, không phản hồi",
+            "5_000_000_vnd_refundable_deposit_for_slot_reservation": "*Đặt cọc hoàn lại 5.000.000 VND để giữ chỗ",
+            "5_partner_schools_of_arrowster": "5 trường đối tác của Arrowster",
+            "available": "có sẵn",
+            "full_access": "Truy cập đầy đủ",
+            "limited_access": "Truy cập hạn chế",
+            "n_a": "Không áp dụng",
+            "requires_sat_1500+_limited_slots": "*Yêu cầu SAT 1500+, số lượng giới hạn",
+            "unlimited_1_1_mentor_feedback": "Không giới hạn, phản hồi 1-1 từ mentor"
+        },
+        "send_to_us": "Gửi cho chúng tôi",
+        "share_some_of_your_dream_schools_here": "Chia sẻ một vài ngôi trường mơ ước của bạn tại đây",
+        "standard_plan": "Gói tiêu chuẩn",
+        "starter_plan": "Gói khởi đầu",
+        "step": "Bước",
+        "stepsDetail": {
+            "stepsDetail_1": {
+                "title": "Điền vào biểu mẫu này",
+                "description": "Điều này giúp chúng tôi hiểu rõ hơn về hồ sơ và mục tiêu của bạn."
+            },
+            "stepsDetail_2": {
+                "title": "Gặp chúng tôi trong buổi trò chuyện 15’",
+                "description": "Các mentor sẽ giải đáp thắc mắc và đánh giá mức độ phù hợp của bạn với Arrowster."
+            },
+            "stepsDetail_3": {
+                "title": "Xác nhận kế hoạch du học của bạn",
+                "description": "Chúng tôi sẽ xác nhận kế hoạch du học của bạn với phụ huynh"
+            },
+            "stepsDetail_4": {
+                "title": "Chào mừng đến với Arrowster!",
+                "description": "Nếu được chọn, bạn sẽ được tham gia cộng đồng học sinh độc quyền và bắt đầu làm việc với chúng tôi cho hồ sơ du học!"
+            }
+        },
+        "thank_you_for_your_submission!": "Cảm ơn bạn đã gửi thông tin! Chúng tôi đã nhận được biểu mẫu của bạn và sẽ liên hệ sớm!",
+        "this_information_will_help_advisors_guide_you_toward_the_most_suitable_country_school_and_scholarships_in_the_most_accurate_and_effective_way": "Thông tin này sẽ giúp cố vấn định hướng bạn đến quốc gia, trường học và học bổng phù hợp nhất một cách chính xác và hiệu quả.",
+        "who_secured_top_university_admissions_with_our_ai_+_expert_mentorship": "người đã trúng tuyển vào các trường đại học hàng đầu nhờ AI và sự cố vấn từ chuyên gia của chúng tôi",
+        "your_school_name": "Tên trường của bạn",
+        "your_study_abroad_success_starts": "Hành trình du học thành công của bạn bắt đầu",
+        "get_the_perfect_plan_for_you": "tại đây – Nhận kế hoạch hoàn hảo dành riêng cho bạn",
+        "5_000_000_vnd_refundable_deposit_for_slot_reservation": "Đặt cọc 5,000,000 VND, hoàn lại khi đặt chỗ",
+        "unlock_mentor_help": "Mở khóa hỗ trợ từ Mentor",
+        "requires_sat_1500_limited_slots": "Yêu cầu SAT 1500+, số lượng có hạn",
+        "apply_for_advanced": "Đăng ký Gói Nâng Cao"
+    },
     "profile_page": {
         "all_your_achievement": "Tất cả thành tích của bạn",
         "all_your_ai_essay": "Tất cả bài luận AI của bạn",
@@ -273,6 +424,7 @@
         "scholarships_for_this_school": "Trường này có học bổng không?",
         "schools_match_your_profile": "trường phù hợp với hồ sơ của bạn!",
         "select_major": "Chọn ngành học",
+        "select_option": "Chọn tùy chọn",
         "select_your_major_and_our_ai_will_match_you_with_the_ones_that_match_100": "Chọn ngành học và AI sẽ tìm trường phù hợp 100% với bạn",
         "sign_up_for_free": "Đăng ký miễn phí",
         "sign_up_to_continue_using_ai_recommendations": "Đăng ký để tiếp tục sử dụng gợi ý từ AI!",
@@ -301,6 +453,28 @@
         "name": "Tên",
         "password": "Mật khẩu",
         "sign_up_with_google": "Đăng ký bằng Google"
+    },
+    "sophie_page": {
+        "graduate": "Sau đại học",
+        "high_school": "Trung học phổ thông",
+        "history": "Lịch sử",
+        "how_can_i_craft_a_good_personal_statement": "Làm sao để viết một Bài Tự Luận cá nhân tốt?",
+        "how_can_sophie_help_you_today": "Sophie có thể giúp gì cho bạn hôm nay?",
+        "masters": "Thạc sĩ",
+        "messages": "Tin nhắn",
+        "message_sophie": "Nhắn tin cho Sophie",
+        "please_find_instructions_to_upgrade_for_more_access_here": "Vui lòng xem hướng dẫn nâng cấp để có thêm quyền truy cập tại đây.",
+        "recents": "Gần đây",
+        "should_i_take_the_toefl_or_the_ielts": "Tôi nên thi TOEFL hay IELTS?",
+        "sophie_can_make_mistakes_please_check_important_info": "Sophie có thể mắc lỗi. Vui lòng kiểm tra thông tin quan trọng.",
+        "start_a_new_chat_with_sophie": "Trò chuyện mới với Sophie",
+        "undergraduate": "Đại học",
+        "upgrade_now": "Nâng cấp ngay",
+        "what_scholarships_can_i_apply_for": "Tôi có thể xin học bổng nào?",
+        "which_country_will_suit_me_most_for_study_abroad": "Quốc gia nào phù hợp nhất để du học?",
+        "which_major_should_i_choose": "Tôi nên chọn ngành học nào?",
+        "you_can_review_this_chat_but_replying_or_continuing_the_conversation_is_currently_not_available": "Bạn có thể xem lại cuộc trò chuyện này, nhưng hiện tại không thể trả lời hoặc tiếp tục.",
+        "you've_reached_your_daily_limit_for_sophie_interactions": "Bạn đã đạt đến giới hạn tương tác hàng ngày với Sophie."
     },
     "verifyPhone": {
         "enter_10_digits": "Nhập 10 chữ số",

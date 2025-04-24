@@ -27,7 +27,7 @@
     </div>
     <div v-if="deviceType === 'mobile' || deviceType === 'tablet'" class="my-6">
       <component
-        v-if="dashboardStore.isSchoolListPublic"
+        v-if="dashboardStore.isSchoolListPublic || (route.path.includes('/demo'))"
         :is="mobile.PublicUserDataInfo"
       />
       <component v-else :is="mobile.UserDataInfo" />
@@ -128,6 +128,7 @@ const { api } = useApi();
 const { showToast } = useToast();
 const deviceType = useDeviceType();
 const {t} = useI18n();
+const route = useRoute();
 
 const mobile = {
   PublicUserDataInfo: defineAsyncComponent(

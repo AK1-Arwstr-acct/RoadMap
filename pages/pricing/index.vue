@@ -48,20 +48,24 @@
     <section class="w-full mx-auto max-w-[1216px] px-0 mt-8 mb-10">
       <div class="px-5">
         <div class="hidden md:flex justify-end">
-          <NuxtLinkLocale :to="'/dashboard'">
-            <span class="cursor-pointer">
-              <IconCross fill="#A4A7AE" width="24" height="24" />
-            </span>
-          </NuxtLinkLocale>
+          <span @click="router.back()" class="cursor-pointer">
+            <IconCross fill="#A4A7AE" width="24" height="24" />
+          </span>
         </div>
         <h1 class="text-4xl text-[#181D27] font-semibold">
-          Your study abroad success starts <br />here – Get the perfect plan for
-          you
+          {{ $t("pricing_page.your_study_abroad_success_starts") }} <br />
+          {{ $t("pricing_page.get_the_perfect_plan_for_you") }}
         </h1>
         <p class="md:text-lg text-[#535862] mt-5">
-          Join
-          <span class="text-[#1570EF]">500+ students</span> who secured top
-          university admissions with our AI + expert mentorship
+          {{ $t("pricing_page.join") }}
+          <span class="text-[#1570EF]">{{
+            $t("pricing_page.500+_students")
+          }}</span>
+          {{
+            $t(
+              "pricing_page.who_secured_top_university_admissions_with_our_ai_+_expert_mentorship"
+            )
+          }}
         </p>
       </div>
       <div class="pt-8 overflow-x-auto md:px-5">
@@ -76,46 +80,12 @@
           <AdvancedPlanMobile @selectPlan="selectPlan" :plansList="plansList" />
         </div>
       </div>
-      <!-- <div class="flex flex-col md:flex-row gap-8 py-16">
-        <div class="w-full md:w-1/2">
-          <div class="w-full md:w-11/12">
-            <h1 class="text-3xl text-[#181D27] font-semibold">
-              Unlock Exclusive Benefits – Join <br class="hidden lg:block" />Us
-              for Premium Features! 
-            </h1>
-            <p class="text-xl text-[#535862] font-medium mt-5">
-              Access advanced features that streamline your application. Working
-              with us provides all the tools needed for a confident, easy
-              application process!
-            </p>
-          </div>
-        </div>
-        <div class="w-full md:w-1/2 flex flex-col gap-8">
-          <div
-            v-for="(item, index) in benefits"
-            :key="index"
-            class="flex items-start gap-5"
-          >
-            <div class="min-w-[90px] max-w-[90px] h-[90px]">
-              <img
-                :src="item.icon"
-                alt="smart school"
-                class="size-full object-contain"
-              />
-            </div>
-            <div>
-              <p class="font-semibold text-xl">{{ item.title }}</p>
-              <p class="mt-2 text-[#414651]">{{ item.description }}</p>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </section>
     <section class="py-5 md:py-[70px] w-full max-w-[876px] mx-auto px-5">
       <p
         class="text-[#181D27] md:text-center text-2xl md:text-4xl font-semibold"
       >
-        Frequently asked questions
+      {{ $t('pricing_page.frequently_asked_questions') }}
       </p>
       <div
         class="md:border-[1.5px] border-gray-200 rounded-2xl md:px-3 sm:px-6 mt-4 md:mt-14"
@@ -128,7 +98,7 @@
         class="w-full mx-auto max-w-[1216px] px-5 py-12 sm:py-16 md:py-24 mt-8 text-white"
       >
         <h2 class="text-2xl sm:text-3xl xl:text-4xl font-semibold mb-5">
-          Let’s start your journey together!
+          {{ $t('pricing_page.lets_start_your_journey_together!') }}
         </h2>
         <!-- steps -->
         <div class="grid grid-cols-1 lg:grid-cols-8 gap-5 mt-10 sm:mt-16">
@@ -143,7 +113,7 @@
               ]"
             >
               <p class="text-xl font-semibold">
-                Step {{ idx + 1 }} : {{ setp.title }}
+                {{ $t('pricing_page.step') }} {{ idx + 1 }} : {{ setp.title }}
               </p>
               <p class="text-[#D1E9FF] mt-2">
                 {{ setp.description }}
@@ -173,14 +143,13 @@
         class="w-[383px] h-[324px]"
       />
       <p class="font-medium text-lg sm:text-3xl mt-4 text-white">
-        Thank you for your submission! We've received your form and will contact
-        you soon!
+        {{ $t('pricing_page.thank_you_for_your_submission!') }}
       </p>
       <NuxtLinkLocale :to="'/dashboard'" class="w-full">
         <button
           class="bg-white text-sm sm:text-base text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8 max-w-[330px]"
         >
-          Back to home
+        {{ $t('pricing_page.back_to_home') }}
         </button>
       </NuxtLinkLocale>
     </div>
@@ -208,6 +177,8 @@ const localePath = useLocalePath();
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
 const deviceType = useDeviceType();
+const router = useRouter();
+const { t } = useI18n();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""
@@ -246,164 +217,144 @@ const isMobileSideBarOpen = ref<boolean>(false);
 
 const stepsDetail = [
   {
-    title: "Fill out this form",
-    description: "This helps us understand your profile and goals better.",
+    title: `${t("pricing_page.stepsDetail.stepsDetail_1.title")}`,
+    description: `${t("pricing_page.stepsDetail.stepsDetail_1.description")}`,
   },
   {
-    title: "Meet us for a 15’ chat",
-    description:
-      "Our mentors will answer your questions and see if you’re a good fit for Arrowster.",
+    title: `${t("pricing_page.stepsDetail.stepsDetail_2.title")}`,
+    description: `${t("pricing_page.stepsDetail.stepsDetail_2.description")}`,
   },
   {
-    title: "Confirm your study abroad plan",
-    description: "We will confirm your study abroad plan with your parents",
+    title: `${t("pricing_page.stepsDetail.stepsDetail_3.title")}`,
+    description: `${t("pricing_page.stepsDetail.stepsDetail_3.description")}`,
   },
   {
-    title: "Welcome to Arrowster!",
-    description:
-      "If selected, you will be onboarded to our exclusive student community and start working with us for your application!",
-  },
-];
-
-const benefits = [
-  {
-    icon: "/images/school-list.png",
-    title: "Smart school comparison",
-    description:
-      "Compare schools with ease! Simply add all your options and see them side by side, with personalized scores to help you find the perfect match.",
-  },
-  {
-    icon: "/images/decision.png",
-    title: "Instant roadmap check in",
-    description:
-      "No more waiting! Send direct updates to your counsellor anytime you need guidance, just with one click. You’re in control, with real-time communication to keep your journey moving forward!",
-  },
-  {
-    icon: "/images/application.png",
-    title: "AI essay editor",
-    description:
-      "Generate 5+ essays per day and get instant feedback whenever you need it. Send your essays to your counsellor with just one click and keep improving!",
-  },
-  {
-    icon: "/images/ai-recommendation.png",
-    title: "Sophie – Your AI assistant",
-    description:
-      "Get unlimited questions answered with the latest GPT model, tailored just for you. Whether it’s essay feedback or career advice, Sophie is here to help with no limits!",
+    title: `${t("pricing_page.stepsDetail.stepsDetail_4.title")}`,
+    description: `${t("pricing_page.stepsDetail.stepsDetail_4.description")}`,
   },
 ];
 
 const faq = [
   {
-    question: "What countries can Arrowster support me in applying to?",
-    answer:
-      "We help students apply to US, Canada, Australia, New Zealand, United Kingdom, and Europe (incl. countries such as France, Netherlands, Germany, etc). In Vietnam, we also help students apply to RMIT and BUV.",
+    question: `${t("pricing_page.faq.faq1.question")}`,
+    answer: `${t("pricing_page.faq.faq1.answer")}`,
   },
   {
-    question: "What are partner schools?",
-    answer:
-      "These are schools we partner with - this means we can help students secure higher admission rates and exclusive scholarships. Since partner universities provide Arrowster with a commission upon successful enrollment, we only require a refundable deposit from students to ensure commitment.",
+    question: `${t("pricing_page.faq.faq2.question")}`,
+    answer: `${t("pricing_page.faq.faq2.answer")}`,
   },
   {
-    question: "What schools do you partner with?",
-    answer:
-      "We partner with top institutions in the world, including all schools in Australia & UK (except Oxford & Cambridge), Top 10 Universities in Canada, Top 50-150 Universities in US, Applied Science Universities in Europe, and more. View our partner school lists here.",
+    question: `${t("pricing_page.faq.faq3.question")}`,
+    answer: `${t("pricing_page.faq.faq3.answer")}`,
   },
   {
-    question: "Who are my mentors?",
-    answer:
-      "You’ll work with mentors who have studied abroad and won scholarships at best universities such as Harvard University, Yonsei University, University of Pennsylvania, etc. We also connect students with experts in their majors to learn about their careers.",
+    question: `${t("pricing_page.faq.faq4.question")}`,
+    answer: `${t("pricing_page.faq.faq4.answer")}`,
   },
   {
-    question: "Will I work with you online or offline?",
-    answer:
-      "For most students, we will work online via messages and online meetings. If needed, you can come meet us at our beautiful office in District 1, Ho Chi Minh City!",
+    question: `${t("pricing_page.faq.faq5.question")}`,
+    answer: `${t("pricing_page.faq.faq5.answer")}`,
   },
 ];
 
 const plansList: Plan[] = [
   {
-    title: "Pre-Application Support",
+    title: `${t("pricing_page.plansList.titles.title_1")}`,
     starterPlan: "",
     standardPlan: "",
     advancedPlan: "",
   },
   {
-    title: "Study Abroad Roadmap (Step-by-Step Guide)",
+    title: `${t("pricing_page.plansList.titles.title_2")}`,
     starterPlan: "available",
     standardPlan: "available",
     advancedPlan: "available",
   },
   {
-    title: "Career & Major Discovery",
+    title: `${t("pricing_page.plansList.titles.title_3")}`,
     starterPlan: "N/A",
     standardPlan: "available",
     advancedPlan: "available",
   },
   {
-    title: "Exclusive Training Sessions",
+    title: `${t("pricing_page.plansList.titles.title_4")}`,
     starterPlan: "N/A",
     standardPlan: "available",
     advancedPlan: "available",
   },
   {
-    title: "Application Support",
+    title: `${t("pricing_page.plansList.titles.title_5")}`,
     starterPlan: "",
     standardPlan: "",
     advancedPlan: "",
   },
   {
-    title: "Shortlisting Schools with 1-1 Mentor Review",
+    title: `${t("pricing_page.plansList.titles.title_6")}`,
     starterPlan: "N/A",
     standardPlan: "available",
     advancedPlan: "available",
   },
   {
-    title: "Extracurricular & Scholarship Mentorship",
+    title: `${t("pricing_page.plansList.titles.title_7")}`,
     starterPlan: "N/A",
     standardPlan: "available",
     advancedPlan: "available",
   },
   {
-    title: "Direct 1:1 Counselor (private chat; weekly calls)",
+    title: `${t("pricing_page.plansList.titles.title_8")}`,
     starterPlan: "N/A",
     standardPlan: "available",
     advancedPlan: "available",
   },
   {
-    title: "Exclusive Resources",
-    starterPlan: "Limited Access",
-    standardPlan: "Full Access",
-    advancedPlan: "Full Access",
+    title: `${t("pricing_page.plansList.titles.title_9")}`,
+    starterPlan: `${t("pricing_page.plansList.limited_access")}`,
+    standardPlan: `${t("pricing_page.plansList.full_access")}`,
+    advancedPlan: `${t("pricing_page.plansList.full_access")}`,
   },
   {
-    title: "Drafting Essays with AI",
-    starterPlan: "3 essays/month, no feedback",
-    standardPlan: "Unlimited, 1-1 mentor feedback",
-    advancedPlan: "Unlimited, 1-1 mentor feedback",
+    title: `${t("pricing_page.plansList.titles.title_10")}`,
+    starterPlan: `${t(
+      "pricing_page.plansList.3_essays_per_month_no_feedback"
+    )}`,
+    standardPlan: `${t(
+      "pricing_page.plansList.unlimited_1_1_mentor_feedback"
+    )}`,
+    advancedPlan: `${t(
+      "pricing_page.plansList.unlimited_1_1_mentor_feedback"
+    )}`,
   },
   {
-    title: "Post-Application Support",
+    title: `${t("pricing_page.plansList.titles.title_11")}`,
     starterPlan: "",
     standardPlan: "",
     advancedPlan: "",
   },
   {
-    title: "Visa & Financial Proof Paperwork",
+    title: `${t("pricing_page.plansList.titles.title_12")}`,
     starterPlan: "N/A",
     standardPlan: "available",
     advancedPlan: "available",
   },
   {
-    title: "Number of School Applications Supported",
+    title: `${t("pricing_page.plansList.titles.title_13")}`,
     starterPlan: "N/A",
-    standardPlan: "5 Partner Schools of Arrowster",
-    advancedPlan: "10 Schools (Not Limited to Partner Schools)",
+    standardPlan: `${t(
+      "pricing_page.plansList.5_partner_schools_of_arrowster"
+    )}`,
+    advancedPlan: `${t(
+      "pricing_page.plansList.10_schools_not_limited_to_partner_schools"
+    )}`,
   },
   {
     title: "",
     starterPlan: "",
-    standardPlan: "*5,000,000 VND refundable deposit for slot reservation",
-    advancedPlan: "*Requires SAT 1500+, limited slots",
+    standardPlan: `${t(
+      "pricing_page.plansList.5_000_000_vnd_refundable_deposit_for_slot_reservation"
+    )}`,
+    advancedPlan: `${t(
+      "pricing_page.plansList.requires_sat_1500+_limited_slots"
+    )}`,
   },
 ];
 

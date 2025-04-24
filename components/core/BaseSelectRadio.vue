@@ -22,12 +22,12 @@
           class="text-[#979797] text-left"
           :class="{ '!text-[#181D27]': isDropdownOpen }"
         >
-          {{ placeholder }}
+          {{ placeholder === 'Select Option' ? `${$t('schoolList_page.select_option')}` : placeholder }}
         </p>
       </div>
       <div v-else-if="selectedOption?.value && showCheckedLabel" class="flex-1">
         <p class="text-[#717680] text-left text-xs">
-          {{ placeholder }}
+          {{ placeholder === 'Select Option' ? `${$t('schoolList_page.select_option')}` : placeholder }}
         </p>
         <p class="text-[#717680] text-left w-[calc(100%-24px)] truncate">
           {{ selectedOption.label }}

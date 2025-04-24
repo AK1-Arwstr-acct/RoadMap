@@ -38,6 +38,7 @@ export interface ClassGrade {
 }
 
 interface Address {
+    country_id?: number;
     city?: string;
     country: string;
     country_code: string;

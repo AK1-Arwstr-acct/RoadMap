@@ -2,9 +2,9 @@
   <div
     class="border border-gray-200 rounded-2xl shadow-[0px_12px_16px_-4px_#0A0D1214] px-6 pb-8 pt-10 flex flex-col items-center"
   >
-    <p class="text-[#181D27] font-semibold text-3xl">FREE</p>
-    <p class="mt-4 text-xl text-[#181D27] font-medium">Standard Plan</p>
-    <p class="text-[#535862]">1-1 mentor support</p>
+    <p class="text-[#181D27] font-semibold text-3xl uppercase">{{ $t('pricing_page.free') }}</p>
+    <p class="mt-4 text-xl text-[#181D27] font-medium">{{ $t('pricing_page.standard_plan') }}</p>
+    <p class="text-[#535862]">{{ $t('pricing_page.1_1_mentor_support') }}</p>
     <div class="flex flex-col gap-4 w-full mt-8">
       <div
         v-for="(plan, idx) in plansList.filter(
@@ -26,14 +26,14 @@
         </p>
       </div>
       <p class="text-center text-[#535862]">
-        *5,000,000 VND refundable deposit for slot reservation
+        {{ $t('pricing_page.5_000_000_vnd_refundable_deposit_for_slot_reservation') }}
       </p>
     </div>
     <button
       class="bg-[#1570EF] text-white font-semibold px-[18px] py-2.5 border border-[#1570EF] rounded-lg w-full mt-6 shadow-sm"
       @click="emit('selectPlan', 1)"
     >
-      Unlock Mentor Help
+    {{ $t('pricing_page.unlock_mentor_help') }}
     </button>
   </div>
 </template>

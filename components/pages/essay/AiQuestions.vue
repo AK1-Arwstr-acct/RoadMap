@@ -14,7 +14,11 @@
         >
           <IconCross fill="#717680" class="size-6 md:size-8" />
         </div>
-        <div v-else @click="phase = 'keepGoing'" class="cursor-pointer hidden md:block">
+        <div
+          v-else
+          @click="phase = 'keepGoing'"
+          class="cursor-pointer hidden md:block"
+        >
           <IconArrowDownThick
             stroke="#717680"
             class="transform rotate-90 size-6 md:size-8"
@@ -41,8 +45,10 @@
       >
         {{
           phase !== "chooseStyle"
-            ? `Let's Get to Know You a Little Bit`
-            : "Questions specific to your chosen essay style!"
+            ? `${t("ai_essay_page.lets_get_to_know_you_a_little_bit")}`
+            : `${t(
+                "ai_essay_page.questions_specific_to_your_chosen_essay_style"
+              )}`
         }}
       </h1>
     </div>
@@ -59,21 +65,21 @@
       <h1
         class="text-[#181D27] font-semibold text-xl text-center justify-center sm:text-[34px]"
       >
-        Great progress! We're starting to build a picture of your unique voice.
+        {{ $t("ai_essay_page.great_progress") }}
       </h1>
       <div class="flex flex-col items-center justify-center gap-5">
         <button
           @click="phase = 'chooseStyle'"
           class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold flex justify-center items-center gap-2 w-[360px]"
         >
-          Keep going
+          {{ $t("ai_essay_page.keep_going") }}
           <IconArrowRight fill="#ffffff" width="20" height="20" />
         </button>
         <p
           @click="phase = 'questionPhase'"
           class="text-[#535862] font-semibold cursor-pointer"
         >
-          Go back and make some changes
+          {{ $t("ai_essay_page.go_back_and_make_some_changes") }}
         </p>
       </div>
     </div>
@@ -88,25 +94,33 @@
         >
           <div class="size-full h-fit flex flex-col gap-8">
             <ChatMessage
-              question="Hi there, can you tell me about your year of birth?"
+              :question="
+                t(
+                  'ai_essay_page.hi_there_can_you_tell_me_about_your_year_of_birth'
+                )
+              "
               :answer="answersList.birthYear"
               @editAnswer="(value) => (answersList.birthYear = value)"
             />
             <ChatMessage
               v-if="questionStep >= 2"
-              question="What school(s) are you planning to apply to? If you don't have one yet, just write N/A for this question <3"
+              :question="
+                t('ai_essay_page.what_schools_are_you_planning_to_apply_to')
+              "
               :answer="answersList.schoolName"
               @editAnswer="(value) => (answersList.schoolName = value)"
             />
             <ChatMessage
               v-if="questionStep >= 3"
-              question="What's your (intended) major?"
+              :question="t('ai_essay_page.whats_your_intended_major')"
               :answer="answersList.major"
               @editAnswer="(value) => (answersList.major = value)"
             />
             <ChatMessage
               v-if="questionStep >= 4"
-              question="What's the core message you want to convey?"
+              :question="
+                t('ai_essay_page.whats_the_core_message_you_want_to_convey')
+              "
               :answer="answersList.message"
               @editAnswer="(value) => (answersList.message = value)"
             />
@@ -122,7 +136,11 @@
                   />
                 </div>
                 <p class="text-[#414651]">
-                  What's the style of your personal statement
+                  {{
+                    $t(
+                      "ai_essay_page.whats_the_style_of_your_personal_statement"
+                    )
+                  }}
                 </p>
               </div>
               <!-- options -->
@@ -176,7 +194,9 @@
             <textarea
               ref="textarea"
               type="text"
-              :placeholder="questionStep === 1 ? '2.g. 2007' : ''"
+              :placeholder="
+                questionStep === 1 ? `${t('ai_essay_page.e_g_2007')}` : ''
+              "
               class="w-full outline-none resize-none custom-scrollbar my-auto"
               v-model="inputText"
               @input="adjustHeight"
@@ -189,14 +209,16 @@
             <button
               @click="handleNext"
               :disabled="!inputText"
-              class="flex items-center gap-2 text-white text-sm sm:text-base py-2 px-3.5 bg-[#1570EF] rounded-lg disabled:opacity-40"
+              class="flex items-center gap-2 text-white text-sm sm:text-base py-2 px-3.5 bg-[#1570EF] rounded-lg disabled:opacity-40 text-nowrap"
             >
-              Next
+              {{ $t("ai_essay_page.next") }}
               <IconArrowRight fill="#ffffff" />
             </button>
           </div>
           <p class="text-xs sm:text-sm text-[#A4A7AE] text-center py-4">
-            No need to rush here, take your time to think
+            {{
+              $t("ai_essay_page.no_need_to_rush_here_take_your_time_to_think")
+            }}
           </p>
         </div>
       </div>
@@ -208,6 +230,7 @@
 import useEssayStore from "~/stores/essayStore";
 
 const essayStore = useEssayStore();
+const { t } = useI18n();
 
 const emit = defineEmits(["goBack"]);
 
@@ -219,11 +242,11 @@ const phase = ref<"questionPhase" | "keepGoing" | "chooseStyle">(
   "questionPhase"
 );
 const statementList = [
-  "Narrative-Driven: Sharing vivid, immersive stories from your life",
-  "Reflective-Philosophical: Drawing thoughtful lessons from your experiences",
-  "Metaphorical/Symbolic: Using meaningful objects or skills to tell your story",
-  "Growth and Transformation: Before-and-after snapshots of the soul",
-  "Cultural Identity/Family Dynamic: Exploring how your childhood shaped you",
+  `${t("ai_essay_page.narrative_driven")}`,
+  `${t("ai_essay_page.reflective_philosophical")}`,
+  `${t("ai_essay_page.metaphorical_symbolic")}`,
+  `${t("ai_essay_page.growth_and_transformation")}`,
+  `${t("ai_essay_page.cultural_identity_family_dynamic")}`,
 ];
 
 const answersList = ref({

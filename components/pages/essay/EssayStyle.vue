@@ -6,13 +6,13 @@
         :class="{ 'justify-end': questionStep === 1 }"
       >
         <ChatMessage
-          question="What happened? Consider a time when things didn’t go as expected, like failing a test or losing a role."
+          :question="t('ai_essay_page.what_happened')"
           :answer="answersList.answerFist"
           @editAnswer="(value : string) => (answersList.answerFist = value)"
         />
         <ChatMessage
           v-if="questionStep >= 2"
-          question="How has this experience impacted you? Did you learn something, gain confidence, or change your mindset?"
+          :question="t('ai_essay_page.how_has_this_experience_impacted_you')"
           :answer="answersList.answerSecond"
           @editAnswer="(value : string) => (answersList.answerSecond = value)"
         />
@@ -31,7 +31,7 @@
           type="text"
           :placeholder="
             questionStep === 1
-              ? 'e.g. losing debate team leadership position...'
+              ? `${t('ai_essay_page.e_g_losing_debate_team_leadership_position')}`
               : ''
           "
           class="flex-1 outline-none resize-none custom-scrollbar placeholder:font-thin"
@@ -44,7 +44,7 @@
           :disabled="!inputText"
           class="flex items-center gap-2 text-white py-2 px-3.5 bg-[#1570EF] rounded-lg disabled:opacity-40"
         >
-          Next
+        {{ $t('ai_essay_page.next') }}
           <IconArrowRight fill="#ffffff" />
         </button>
       </div>
@@ -54,7 +54,7 @@
           :disabled="isSubmitting"
           class="flex items-center gap-2 text-white text-sm sm:text-base py-2.5 px-4 bg-[#1570EF] rounded-lg font-semibold disabled:opacity-60"
         >
-          Submit
+        {{ $t('ai_essay_page.submit') }}
           <IconArrowRight
             v-if="!isSubmitting"
             fill="#ffffff"
@@ -68,12 +68,10 @@
         v-if="questionStep < 3"
         class="text-xs sm:text-sm text-[#A4A7AE] text-center pt-4"
       >
-        No need to rush here, take your time to think
+        {{ $t("ai_essay_page.no_need_to_rush_here_take_your_time_to_think") }}
       </p>
       <p v-else class="text-xs sm:text-sm text-[#A4A7AE] text-center pt-4">
-        Great job! Thanks for sharing all these details. We'll now craft the
-        perfect essay just for you. Sit back and relax - your essay will be
-        ready shortly!
+        {{ $t("ai_essay_page.great_job") }}
       </p>
     </div>
   </section>
@@ -85,6 +83,7 @@ import useEssayStore from "~/stores/essayStore";
 const essayStore = useEssayStore();
 const { api } = useApi();
 const { showToast } = useToast();
+const { t } = useI18n();
 
 const props = defineProps({
   basicAnswersList: {

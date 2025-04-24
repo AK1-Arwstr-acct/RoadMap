@@ -182,12 +182,15 @@ import IconCanada from "../../icons/IconCanada.vue";
 import IconAustralia from "../../icons/IconAustralia.vue";
 import IconUS from "../../icons/IconUS.vue";
 import IconEurope from "../../icons/IconEurope.vue";
+import { majors, schoolsList } from "~/utils/demoData";
+import type { Program } from "~/types/program";
 
 const dashboardStore = useDashboardStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const { t } = useI18n();
+const route = useRoute();
 
 const isSubmitting = ref<boolean>(false);
 const isDetailOpen = ref<boolean>(false);
@@ -255,6 +258,11 @@ const resetUserData = () => {
   selectedLocationOptions.value = [];
   annualBudget.value = undefined;
   areaOfStudy.value = undefined;
+  if (route.path.includes("/demo")) {
+    dashboardStore.filterSchoolsList = schoolsList;
+    dashboardStore.schoolsList = schoolsList;
+    return;
+  }
   dashboardStore.locationOptions = [];
   dashboardStore.budgetList = [];
   dashboardStore.coursePreferenceOptions = [];
@@ -264,6 +272,32 @@ const resetUserData = () => {
 
 const updateUserData = async () => {
   try {
+    if (route.path.includes("/demo")) {
+      dashboardStore.majorsList = majors.filter(
+        (item) => item.parent === Number(areaOfStudy.value?.value)
+      );
+      const { min, max } = getMinMax();
+      const convertedScore = ((Number(gpa.value) / 10) * 4).toFixed(2);
+
+      const filterData: Program[] = schoolsList.filter((item) => {
+        return (
+          (item.school.admission_stats?.average_scores?.gpa ?? 0) <=
+            Number(convertedScore) &&
+          item.class_grades.some(
+            (grade) => grade.title === studyPrograms.value?.label
+          ) &&
+          selectedLocationOptions.value.includes(
+            item.school.address.country_id ?? -1
+          ) &&
+          item.fee <= max &&
+          areaOfStudy.value?.label.toLowerCase() ===
+            item.super_meta_title.toLowerCase()
+        );
+      });
+      dashboardStore.filterSchoolsList = filterData;
+      dashboardStore.schoolsList = filterData;
+      return;
+    }
     isSubmitting.value = true;
     const token = useCookie("publicUserData", {
       maxAge: 604800,
@@ -296,6 +330,9 @@ const updateUserData = async () => {
 
 const programChanged = async () => {
   try {
+    if (route.path.includes("/demo")) {
+      return;
+    }
     if (!gpa.value || !studyPrograms.value?.value) {
       return;
     }
@@ -338,6 +375,9 @@ const programChanged = async () => {
 
 const getProgramParent = async () => {
   try {
+    if (route.path.includes("/demo")) {
+      return;
+    }
     isAreaOfStudyLoading.value = true;
     const publicToken = useCookie("publicToken");
     const response = await api.post(
@@ -368,6 +408,9 @@ const getProgramParent = async () => {
 
 const getBudgets = async () => {
   try {
+    if (route.path.includes("/demo")) {
+      return;
+    }
     isBudgetLoading.value = true;
     const publicToken = useCookie("publicToken");
     const response = await api.post(
