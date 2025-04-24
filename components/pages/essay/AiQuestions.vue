@@ -161,7 +161,7 @@
                       <input
                         :id="option"
                         type="radio"
-                        name="user_input_statement"
+                        name="user_input"
                         :value="option"
                         v-model="answersList.personalStatement"
                         class="absolute top-3 right-3 appearance-none"

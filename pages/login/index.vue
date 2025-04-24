@@ -86,7 +86,7 @@
               </div>
             </Transition>
             <input
-              name="user_input_phoneNumber"
+              name="user_input"
               ref="phoneInput"
               inputmode="numeric"
               @input="(event) => validateNumber(event)"
@@ -227,6 +227,12 @@ const countryCodes = computed(() => {
   }
 });
 
+const handelHotjar = () => {
+  if (window.hj) {
+    window.hj('event', 'user_input_entered');
+  }
+};
+
 const handleClick = () => {
   const checkToken = useCookie("token");
   if (checkToken.value) {
@@ -269,6 +275,7 @@ const validateNumber = (event: Event) => {
     input.value = value.slice(0, -1);
   }
   userInput.value.phoneNumber = cleanedValue;
+  handelHotjar();
 };
 const submit = async () => {
   try {

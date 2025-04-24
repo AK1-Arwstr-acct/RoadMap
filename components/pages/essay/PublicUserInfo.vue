@@ -11,7 +11,7 @@
             }}<span class="text-[#F04438]">*</span></label
           >
           <input
-            name="user_input_email"
+            name="user_input"
             type="email"
             v-model="userInput.email"
             @keydown.enter="submit"
@@ -100,7 +100,7 @@
               </div>
             </Transition>
             <input
-              name="user_input_phoneNumber"
+              name="user_input_ph"
               ref="phoneInput"
               inputmode="numeric"
               @input="(event) => validateNumber(event)"

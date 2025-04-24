@@ -18,7 +18,7 @@
               $t("profile_page.edit_profile_page.name")
             }}</label>
             <input
-              name="user_input_name"
+              name="user_input"
               type="text"
               v-model="userInitialData.name"
               :placeholder="t('profile_page.edit_profile_page.enter_name')"
@@ -55,7 +55,7 @@
               </div> -->
             </div>
             <input
-              name="user_input_number"
+              name="user_input_n"
               type="text"
               :value="userInitialData.phoneNumber"
               class="w-full px-3.5 py-2.5 text-[#181D27] outline-none rounded-r-lg"
@@ -73,7 +73,7 @@
           >
             <span><IconEmail /></span>
             <input
-              name="user_input_mail"
+              name="user_input_m"
               type="email"
               v-model="userInitialData.email"
               class="w-full text-[#181D27] outline-none"

@@ -13,6 +13,12 @@
 const { locale } = useI18n();
 const { t } = useI18n();
 
+declare global {
+  interface Window {
+    hj?: (event: string, action: string) => void;
+  }
+}
+
 useHead(
   computed(() => ({
     htmlAttrs: {

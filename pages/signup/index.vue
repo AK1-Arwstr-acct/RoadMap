@@ -21,12 +21,13 @@
               $t("signup.name")
             }}</label>
             <input
-              name="user_input_name"
+              name="user_input"
               type="text"
               v-model="userInput.name"
               :placeholder="t('signup.enter_your_name')"
               class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
               data-hj-allow
+              @input="handelHotjar"
             />
           </div>
           <div class="remove-shadow-bg-white">
@@ -34,12 +35,13 @@
               $t("signup.email")
             }}</label>
             <input
-              name="user_input_mail"
+              name="user_input_m"
               type="text"
               v-model="userInput.email"
               placeholder="nguyen@example.com"
               class="mt-1 rounded-lg border-2 border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
               data-hj-allow
+              @input="handelHotjar"
             />
           </div>
           <div class="remove-shadow-bg-white">
@@ -151,6 +153,12 @@ const userInput = ref<UserInput>({
   password: "",
 });
 
+const handelHotjar = () => {
+  if (window.hj) {
+    window.hj('event', 'user_input_entered');
+  }
+};
+ 
 const handleClick = () => {
   const checkToken = useCookie("token");
   if (checkToken.value) {

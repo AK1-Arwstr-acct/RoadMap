@@ -83,7 +83,7 @@
             </div>
           </Transition>
           <input
-            name="user_input_phoneNumber"
+            name="user_input"
             inputmode="numeric"
             @input="(event) => validateNumber(event)"
             autofocus

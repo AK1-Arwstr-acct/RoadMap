@@ -97,7 +97,7 @@
         <span class="text-[#F04438]">*</span>
       </p>
       <input
-        name="user_input_schoolName"
+        name="user_input"
         type="text"
         :placeholder="t('pricing_page.e_g_thpt_nhan_chinh')"
         v-model="formDetails.schoolName"
@@ -270,7 +270,7 @@
         <!-- <span class="text-[#F04438]">*</span> -->
       </p>
       <input
-        name="user_input_contact"
+        name="user_input_cont"
         type="text"
         :placeholder="
           t('pricing_page.account_information_phone_number_username')
