@@ -48,12 +48,14 @@
       </div>
       <div class="mt-5">
         <div
-          class="flex flex-col gap-3"
-          :class="[
-            { 'pointer-events-none': isLocationchange || isGpaChange },
-            { 'animate-pulse': isLocationLoading },
-          ]"
+          class="flex flex-col gap-3 relative isolate"
+          :class="[{ 'animate-pulse': isLocationLoading }]"
         >
+          <!-- temporary layer for displaying wait curser  -->
+          <div
+            v-if="isLocationchange || isGpaChange"
+            class="absolute inset-0 cursor-wait z-10"
+          />
           <p class="font-medium text-[#414651] text-sm">
             {{ $t("schoolList_page.study_destination")
             }}<span class="text-[#D92D20] font-medium">*</span>
@@ -65,6 +67,9 @@
             >
               <label
                 class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
+                :class="{
+                  'pointer-events-none': isLocationchange || isGpaChange,
+                }"
               >
                 <input
                   :id="`destination${index}`"

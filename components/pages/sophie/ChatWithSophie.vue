@@ -14,7 +14,7 @@
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
     <div
-      v-if="deviceType !== 'mobile'"
+      v-if="deviceType === 'desktop'"
       class="w-[300px]"
       :class="{ 'pointer-events-none': isChatLoading }"
     >
@@ -26,7 +26,7 @@
       />
     </div>
     <div
-      v-if="deviceType !== 'mobile'"
+      v-if="deviceType === 'desktop'"
       class="flex-1 pb-4 px-5 w-full"
       :class="[isModal ? 'pt-[68px]' : 'pt-4']"
     >
@@ -40,7 +40,7 @@
       />
     </div>
     <!-- Mobile view -->
-    <div v-if="deviceType === 'mobile'" class="w-full flex flex-col gap-1">
+    <div v-if="deviceType !== 'desktop'" class="w-full flex flex-col gap-1">
       <div class="py-4 px-6 border-b border-gray-200">
         <div
           class="border border-[#F5F5F5] bg-[#FAFAFA] rounded-lg p-1 flex gap-2"

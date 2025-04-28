@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   components: [{ path: "~/components", pathPrefix: false }],
   css: ['~/assets/css/main.css', '~/assets/css/global.css'],
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts'],
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts', '@nuxtjs/sitemap'],
   i18n: {
     locales: [
       { code: 'en', name: 'English', iso: 'en-US', file: 'english.json' },
@@ -15,6 +15,20 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
     langDir: resolve(__dirname, 'locales'),
     lazy: true,
+  },
+  sitemap: {
+    sources: ['https://app.arrowster.com'],
+    autoLastmod: true,
+    exclude: [
+      '/dashboard/profile',
+      '/vi/dashboard/profile',
+      '/dashboard/profile/edit',
+      '/vi/dashboard/profile/edit',
+      '/dashboard/profile/essays',
+      '/vi/dashboard/profile/essays',
+      '/dashboard/profile/achievements',
+      '/vi/dashboard/profile/achievements',
+    ],
   },
   googleFonts: {
     families: {

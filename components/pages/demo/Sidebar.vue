@@ -13,7 +13,7 @@
           activeTab !== 'sophie' ? 'px-1 xl:px-2' : 'px-2 flex justify-center',
         ]"
       >
-        <div @click="handleLogo" class="flex gap-2 items-center cursor-pointer">
+        <div @click="updateTab('schools_list')" class="flex gap-2 items-center cursor-pointer">
           <IconArrowsterLogo class="size-8 min-w-8" />
           <img
             v-if="currentTab !== 'sophie'"
@@ -92,12 +92,12 @@ const tabList: DemoTabList[] = [
   //   icon: IconTabHome,
   // },
   {
-    name: "Roadmap",
-    icon: IconTabApplication,
-  },
-  {
     name: "schools_list",
     icon: IconTabSchool,
+  },
+  {
+    name: "Roadmap",
+    icon: IconTabApplication,
   },
   // {
   //   name: "sophie",
@@ -123,13 +123,13 @@ const updateTab = (item: string) => {
   //   }
 };
 
-const handleLogo = () => {
-  if (activeTab.value === "home") {
-    navigateTo(localePath("/dashboard"));
-  } else {
-    emit("updateTab", "home");
-  }
-};
+// const handleLogo = () => {
+//   if (activeTab.value === "home") {
+//     navigateTo(localePath("/dashboard"));
+//   } else {
+//     emit("updateTab", "home");
+//   }
+// };
 
 watch(
   () => props.currentTab,

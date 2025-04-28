@@ -159,7 +159,7 @@
                 <p class="font-semibold mb-1.5">
                   {{
                     $t(
-                      "sophie_page..you've_reached_your_daily_limit_for_sophie_interactions"
+                      "sophie_page.you_reached_your_daily_limit_for_sophie_interactions"
                     )
                   }}
                 </p>

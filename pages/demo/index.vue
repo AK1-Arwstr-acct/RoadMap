@@ -68,7 +68,7 @@ import {
 const appTrackerStore = useAppTrackerStore();
 const dashboardStore = useDashboardStore();
 
-const currentTab = ref<TabName>("Roadmap");
+const currentTab = ref<TabName>("schools_list");
 const openSophieModal = ref<boolean>(false);
 
 const updateTab = (value: TabName) => {

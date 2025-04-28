@@ -131,7 +131,7 @@
           v-model="annualBudget"
           direction="upward"
           :loading="isBudgetLoading"
-          :disabled="!dashboardStore.budgetList.length || isBudgetLoading"
+          :disabled="!route.path.includes('/demo') && ( !dashboardStore.budgetList.length || isBudgetLoading )"
           @onChange="getProgramParent"
         />
       </div>
@@ -143,8 +143,9 @@
           v-model="areaOfStudy"
           direction="upward"
           :disabled="
-            !dashboardStore.coursePreferenceOptions.length ||
-            isAreaOfStudyLoading
+            !route.path.includes('/demo') &&
+            (!dashboardStore.coursePreferenceOptions.length ||
+              isAreaOfStudyLoading)
           "
           :loading="isAreaOfStudyLoading"
         />
@@ -259,8 +260,6 @@ const resetUserData = () => {
   annualBudget.value = undefined;
   areaOfStudy.value = undefined;
   if (route.path.includes("/demo")) {
-    dashboardStore.filterSchoolsList = schoolsList;
-    dashboardStore.schoolsList = schoolsList;
     return;
   }
   dashboardStore.locationOptions = [];

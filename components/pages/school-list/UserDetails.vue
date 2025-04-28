@@ -1,5 +1,5 @@
 <template>
-  <section class="md:pt-8 pb-6 h-full flex flex-col gap-6">
+  <section class="md:pt-8 pb-6 h-fit flex flex-col gap-6">
     <div v-if="deviceType === 'desktop'" class="my-6">
       <component v-if="dashboardStore.isSchoolListPublic || (route.path.includes('/demo'))" :is="desktop.PublicUserDataInfo" />
       <component v-else :is="desktop.UserDataInfo" />
