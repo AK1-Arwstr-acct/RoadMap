@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <?xml-stylesheet type="text/xsl" href="/sitemap-style.xsl"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+          <url>
+            <loc>https://app.arrowster.com</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/ai-essay</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/dashboard</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/demo</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/forgot-password</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/login</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/onboarding</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/pricing</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/roadmap</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/school-list</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/signup</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/sophie</loc>
+          </url>
+        
+          <url>
+            <loc>https://app.arrowster.com/signup/verify-phone</loc>
+          </url>
+        
+  </urlset>
+  

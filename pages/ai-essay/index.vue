@@ -99,7 +99,7 @@
             <div class="flex flex-col items-center justify-center gap-5 w-full">
               <button
                 @click="handelNext"
-                class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold w-full sm:max-w-52 flex justify-center"
+                class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold w-full sm:max-w-56 flex justify-center"
               >
                 <span
                   class="flex justify-center items-center gap-2 w-max text-nowrap"
