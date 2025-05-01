@@ -13,34 +13,7 @@
     >
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
-    <div
-      v-if="deviceType === 'desktop'"
-      class="w-[300px]"
-      :class="{ 'pointer-events-none': isChatLoading }"
-    >
-      <SophieHistory
-        @newChat="handelNewChat"
-        @chatDetail="chatDetail"
-        :chatHistoryArray="chatHistoryArray"
-        :isModal="isModal"
-      />
-    </div>
-    <div
-      v-if="deviceType === 'desktop'"
-      class="flex-1 pb-4 px-5 w-full"
-      :class="[isModal ? 'pt-[68px]' : 'pt-4']"
-    >
-      <SophieChat
-        :isNewChat="isNewChat"
-        :singleChatDetail="singleChatDetail"
-        :isModal="isModal"
-        :isTokenLoaded="isTokenLoaded"
-        :isSummarizeOverview="isSummarizeOverview"
-        @isChatLoading="(value) => (isChatLoading = value)"
-      />
-    </div>
-    <!-- Mobile view -->
-    <div v-if="deviceType !== 'desktop'" class="w-full flex flex-col gap-1">
+    <div class="w-full flex flex-col gap-1">
       <div class="py-4 px-6 border-b border-gray-200">
         <div
           class="border border-[#F5F5F5] bg-[#FAFAFA] rounded-lg p-1 flex gap-2"
@@ -69,13 +42,13 @@
           </button>
         </div>
       </div>
-      <div class="flex-1 overflow-hidden" :class="{ 'w-screen': !isModal }">
+      <div class="flex-1 overflow-hidden" :class="{ '': !isModal }">
         <div
           v-show="chatOrHistory === 'history'"
           class="h-full"
           :class="{
             'pointer-events-none': isChatLoading,
-            'w-screen': !isModal,
+            '': !isModal,
           }"
         >
           <SophieHistory

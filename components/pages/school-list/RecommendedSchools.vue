@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-4 pb-1 h-fit flex flex-col">
+  <div class="py-1 h-fit flex flex-col">
     <div class="md:sticky top-0 pt-4 pb-3 bg-white">
       <h1 class="text-[#181D27] text-2xl font-semibold">
         {{ $t("schoolList_page.find_your_perfect_school_match") }}

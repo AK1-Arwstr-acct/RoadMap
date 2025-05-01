@@ -6,10 +6,13 @@
     >
       <IconChevronDown
         stroke="#717680"
+        strokeWidth="2"
         class="transform transition-all ease-in-out duration-300"
         :class="{ '-rotate-90': !isOpen }"
+        width="20"
+        height="20"
       />
-      <p class="text-[#111827] text-lg md:text-xl font-semibold flex-1 capitalize">
+      <p class="text-[#111827] font-medium flex-1 capitalize">
         <span v-if="category !== 'country'">
           {{
             category === "extracurricular"
@@ -22,7 +25,7 @@
         </span>
       </p>
       <div
-        class="py-0.5 px-3 rounded-full font-semibold tracking-wider"
+        class="py-0.5 px-3 rounded-full font-semibold tracking-wider text-sm"
         :class="[
           category === 'country'
             ? 'bg-[#F5F5F5] text-[#414651]'
@@ -39,6 +42,8 @@
             filteredTask(category).filter((item) => item.checked == true)
               .length === filteredTask(category).length
           "
+          width="20"
+          height="20"
         />
       </Transition>
     </div>
@@ -55,7 +60,7 @@
       >
         <label
           :for="`task-${task.id}`"
-          class="mt-6 flex items-center gap-3 md:gap-6 size-full rounded-2xl cursor-pointer p-4 transition-all ease-in-out duration-200"
+          class="mt-6 flex items-center gap-4 size-full rounded-2xl cursor-pointer pl-4 pr-5 py-3 transition-all ease-in-out duration-200"
           :class="[
             appTrackerStore.taskActiveStates[task.id]
               ? 'border-2 border-[#2E90FA] bg-[#F5FAFF]'
@@ -69,7 +74,7 @@
             :checked="task.checked"
             class="absolute top-3 right-3 appearance-none"
           />
-          <div class="size-[90px]">
+          <div class="size-[64px]">
             <img
               :src="imageSrc"
               alt="task logo"
@@ -78,7 +83,7 @@
             />
           </div>
           <div class="flex-1 space-y-2">
-            <p
+            <!-- <p
               class="font-medium text-xs md:text-sm py-0.5 px-2.5 rounded-full capitalize w-fit"
               :class="[
                 category === 'country'
@@ -92,17 +97,17 @@
               <span v-else>
                 {{ task.category.title }}
               </span>
-            </p>
-            <p class="md:text-xl text-[#414651] font-semibold">
+            </p> -->
+            <p class="text-[#414651] font-semibold">
               {{ task.title }}
             </p>
-            <div class="flex items-center gap-1.5 text-[#414651] text-xs md:text-sm">
+            <div class="flex items-center gap-1.5 text-[#414651] text-sm">
               <IconClock />
               <span> {{ task.estimated_time }} </span>
             </div>
           </div>
           <div
-            class="size-4 md:size-6 rounded-full border-[1.5px] flex justify-center items-center"
+            class="size-5 rounded-[4px] border-[1.5px] flex justify-center items-center"
             :class="[
               task.checked
                 ? 'bg-[#1570EF] border-[#1570EF]'
@@ -120,9 +125,10 @@
 import type { Application, Task } from "~/types/dashboard";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 
-const emit = defineEmits(["openTaskDetail"]);
+const emit = defineEmits(["openTaskDetail", "hightChanged"]);
 
 const appTrackerStore = useAppTrackerStore();
+const localePath = useLocalePath();
 
 const props = defineProps({
   application: {
@@ -185,6 +191,10 @@ const handelTaskDetail = async (task: Task) => {
       appTrackerStore.taskActiveStates[Number(key)] = false;
     }
   });
+  // temporary code for new-flow
+  navigateTo(localePath("/sophie"));
+  return;
+  //
   emit("openTaskDetail", task);
 };
 
@@ -204,7 +214,13 @@ const calculateHeight = () => {
   }
 };
 
-watch(() => isOpen.value, calculateHeight);
+watch(
+  () => isOpen.value,
+  () => {
+    emit("hightChanged");
+    calculateHeight();
+  }
+);
 
 onMounted(() => {
   calculateHeight();

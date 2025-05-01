@@ -31,7 +31,7 @@ import useDashboardStore from "~/stores/dashboardStore";
 import useAppStore from "~/stores/AppStore";
 
 definePageMeta({
-  layout: "dashboard-layout",
+  layout: "home-layout",
 });
 
 const runtimeConfig = useRuntimeConfig();

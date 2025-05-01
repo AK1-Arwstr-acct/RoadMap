@@ -7,7 +7,7 @@
 </template>
 <script setup lang="ts">
 definePageMeta({
-  layout: "dashboard-layout",
+  layout: "home-layout",
 });
 
 const runtimeConfig = useRuntimeConfig();
