@@ -3,10 +3,10 @@ import type { CountriesOptionAttributes, OptionAttributes, programOptions } from
 import type { Program, SchoolDetail } from "~/types/program";
 
 export const coursePreferenceOptions: OptionAttributes[] = [
-    {
-        value: '9014',
-        label: "Agricultural Sciences"
-    },
+    // {
+    //     value: '9014',
+    //     label: "Agricultural Sciences"
+    // },
     {
         value: '8991',
         label: "Arts and Design"
@@ -15,10 +15,10 @@ export const coursePreferenceOptions: OptionAttributes[] = [
         value: '8992',
         label: "Business and Economics"
     },
-    {
-        value: '8993',
-        label: "Communications and Media"
-    },
+    // {
+    //     value: '8993',
+    //     label: "Communications and Media"
+    // },
     {
         value: '8986',
         label: "Education"
@@ -27,34 +27,34 @@ export const coursePreferenceOptions: OptionAttributes[] = [
         value: '8994',
         label: "Engineering and Technology"
     },
-    {
-        value: '9046',
-        label: "Environmental Studies"
-    },
-    {
-        value: '9015',
-        label: "Humanities"
-    },
-    {
-        value: '9012',
-        label: "Law"
-    },
-    {
-        value: '9016',
-        label: "Mathematics"
-    },
-    {
-        value: '8988',
-        label: "Medical and Health Sciences"
-    },
-    {
-        value: '8995',
-        label: "Natural Sciences"
-    },
-    {
-        value: '8987',
-        label: "Social Sciences"
-    }
+    // {
+    //     value: '9046',
+    //     label: "Environmental Studies"
+    // },
+    // {
+    //     value: '9015',
+    //     label: "Humanities"
+    // },
+    // {
+    //     value: '9012',
+    //     label: "Law"
+    // },
+    // {
+    //     value: '9016',
+    //     label: "Mathematics"
+    // },
+    // {
+    //     value: '8988',
+    //     label: "Medical and Health Sciences"
+    // },
+    // {
+    //     value: '8995',
+    //     label: "Natural Sciences"
+    // },
+    // {
+    //     value: '8987',
+    //     label: "Social Sciences"
+    // }
 ]
 export const locationOptions: CountriesOptionAttributes[] = [
     {
@@ -209,6 +209,8 @@ export const majors: programOptions[] = [
         parent: 8992
     },
 ];
+
+// when adding new svhools .. also add country_id: in address
 export const schoolsList: Program[] = [
     {
         id: 423872,
@@ -245,7 +247,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
-                country_id: 92 ,
+                country_id: 92,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -289,7 +291,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
-                country_id: 92 ,
+                country_id: 92,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -333,7 +335,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
-                country_id: 92 ,
+                country_id: 92,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -377,7 +379,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
-                country_id: 92 ,
+                country_id: 92,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -421,7 +423,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
-                country_id: 92 ,
+                country_id: 92,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -465,7 +467,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
-                country_id: 92 ,
+                country_id: 92,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -510,7 +512,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
-                country_id: 92 ,
+                country_id: 92,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -554,7 +556,7 @@ export const schoolsList: Program[] = [
                 },
             },
             address: {
-                country_id: 92 ,
+                country_id: 92,
                 lat: null,
                 lng: null,
                 country: "United Kingdom",
@@ -1224,6 +1226,668 @@ export const schoolsList: Program[] = [
                 country: "United States",
                 state: "California",
                 country_code: "US",
+            },
+        },
+    },
+    {
+        id: 526686,
+        title: "Fine Arts (General) in Graphic Design",
+        school_ranking: null,
+        fee: 90000,
+        currency: {
+            title: "CAD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Graphic Design",
+        super_meta_title: "Arts and Design",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 2,
+            name: "University of Manitoba",
+            user_name: "university_of_manitoba",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkVKUXRKaDlOZW9Va1N4MGhtUktGWlE9PSIsInZhbHVlIjoiSzBDeWRXemxNdy8yeHRIQVU2dzdlV2hmQzE3Q0hBMFFMeWNoRHlrdS9hNWlEbTAzcGVWMnJTQnk5RWZrb2RPbGxHMFMrT2QxcFFKSVpmbTB3MWJ5Ync9PSIsIm1hYyI6IjQwMDhkMWI4ZjRkMjFlNmU4MGNiYjhjMjhjMWVlNGJkNWI5ZDgyOWFkMWQ2M2NjNWZjYWVkYzhjNTcxNzc3YjUiLCJ0YWciOiIifQ==?expires=1746106077&signature=63af508532115e00fc4c8462e1a421741cebc22fb1ccc330f2dfcc3d583609e8",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1200,
+                    ielts: 6.5,
+                    gpa: 3.5,
+                },
+            },
+            address: {
+                country_id: 156,
+                lat: null,
+                lng: null,
+                country: "Canada",
+                state: "Manitoba",
+                country_code: "CA",
+            },
+        },
+    },
+    {
+        id: 439697,
+        title: "Science in Art and Design ",
+        school_ranking: null,
+        fee: 20938,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Arts and Design",
+        super_meta_title: "Arts and Design",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 3830,
+            name: "Southern Connecticut State University",
+            user_name: "southern_connecticut_state_university",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Imp3VFNrSnZFM1pkMFVuSmJqSUxMQmc9PSIsInZhbHVlIjoiRXJJazhzaHQ0cW5FNHZHN3VmbGhpTVN5SVFENTdrcEpHczI4aWRGaTJUV0czMTlsdnlPV0hINStDQTdzVlg1aVNGTXRKWnJ6cjBPVVA0TEQwbUdBb0dJeEphSDIwT0tRR1dZTTBrc24zbk09IiwibWFjIjoiMDc0MTY0ZDllYzI3ZjFjOTUxYTM1MGI0NmQwNzE5ODNmNDhhNjkxY2FmMDkwNDczNzNjNjJlZTkzMzFjYWRkZCIsInRhZyI6IiJ9?expires=1746107627&signature=82d1adccd635b6d21863a197854e981b63146c82a3b873b52789d3602f48a668",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1100,
+                    ielts: 6,
+                    gpa: 3.4,
+                },
+            },
+            address: {
+                country_id: 182,
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "Connecticut",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 475579,
+        title: "Architectural Science (Honours) - Architecture (ATS4)",
+        school_ranking: null,
+        fee: 29100,
+        currency: {
+            title: "EUR",
+            symbol: "\u20ac",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Architecture",
+        super_meta_title: "Arts and Design",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9663,
+            name: "University College Dublin (UCD)",
+            user_name: "university-college-dublin-ucd",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IlZYYmFEUTFSY0tLUWNaM2V2TmFEb2c9PSIsInZhbHVlIjoiTkJxZ3RrOVZFRjZ6T0EyVDgzVVk2cVBpdmFvZWxCZXBTemJIbDV2Y2RqWGhrSXBJVmo2aVA1UkwvRk1wQVY1S2RYeVZqak1pRDdJS0hhWmtxVGVxTTRkUS94UnhLc2Rlc3FVdWpQdWIwNGM9IiwibWFjIjoiZDc5ZWEzNmZlMTE2MTMxNDE1NzBlODE2YjQxZmZkYjM5ODVkYjhhODIyYTc4OGQ1NjQ2NTM0MWE5MTk4ZDc5NiIsInRhZyI6IiJ9?expires=1746107873&signature=03307c83a5ea7a278a8f8fdda7770e1bbf2f7ff94592cfe80bcd8e165437fe6e",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1300,
+                    ielts: 7,
+                    gpa: 3.7,
+                },
+            },
+            address: {
+                country_id: 68,
+                lat: null,
+                lng: null,
+                country: "Ireland",
+                state: "Dublin",
+                country_code: "IE",
+            },
+        },
+    },
+    {
+        id: 481706,
+        title: "Psychological Science\/Business - Marketing (1013) ()",
+        school_ranking: null,
+        fee: 30000,
+        currency: {
+            title: "AUD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Marketing",
+        super_meta_title: "Business and Economics",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9925,
+            name: "Griffith University - Nathan",
+            user_name: "griffith-university-nathan",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImdxM1BZTTR0SktLaUJYL01BaVZnSmc9PSIsInZhbHVlIjoiREF1dHQ3WFRiK1g2WGFyeVBrMTIwSU1QcDAybEpvTml0emFCcDh5YWMxSHJRTXEvN21WNkJxYzRQd1JOcGNEMkdnZDN0L2Fhd3phSmNUSkZIL1NxVHd6MHVQTS81Mk9kNVVqWFF5Z2cxczQ9IiwibWFjIjoiNzQwYjc0ZjYzMDJhNTk2NWVlYmQxNTJiN2UzOWNiMWU2OGQyYjhmZGYwN2IzODRkNjEzM2FiODZiNjc3MGNkNyIsInRhZyI6IiJ9?expires=1746108772&signature=940bacd6a7bae23ea0fceac41480a0472a3f0e1d804c29b2f8356a65c713f88a",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1200,
+                    ielts: 6.5,
+                    gpa: 6,
+                },
+            },
+            address: {
+                country_id: 185,
+                lat: null,
+                lng: null,
+                country: "Australia",
+                state: "Queensland",
+                country_code: "AU",
+            },
+        },
+    },
+    {
+        id: 488717,
+        title: "BBA in MCI (Business Analytics)",
+        school_ranking: null,
+        fee: 29400,
+        currency: {
+            title: "EUR",
+            symbol: "\u20ac",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Business Analytics",
+        super_meta_title: "Business and Economics",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 10902,
+            name: "Wittenborg University of Applied Sciences (LG)",
+            user_name: "wittenborg-university-of-applied-sciences-lg",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InZUOUdtL0Fqb0loSDZya293MTRwTnc9PSIsInZhbHVlIjoiazFEM0dmQUtiVWFvYU1hT3NZbFdEVjRYclR2MUVvaEVTeS9BdTFNWDJzTDU1VU5oSEY2Nm43cU1MWlJ4eHBSeEk0NHBTMEd5bkgxM2pFMzNHSVM1UTFjc0xjRGdwTU5mNDI3VGJUMTFPd1Q2SDQwZG4vQVdWdGJBbTU5YjgvS0giLCJtYWMiOiJmYjA5N2Y1ZjAxNjMwZTUxMDcwNjU5ZDY5MjljNmNjMjYzODU2ZWQyZjE1MTQzZmM4MGM5ZDM0MTAwMTdkMWM3IiwidGFnIjoiIn0=?expires=1746108772&signature=ae72476f1e7b0dd0ee7d72815fc519c41dc32df40a70e3bd7ca689a943532970",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: null,
+                    ielts: 6.5,
+                    gpa: 3.2,
+                },
+            },
+            address: {
+                country_id: 68,
+                lat: null,
+                lng: null,
+                country: "Netherlands",
+                state: "Gelderland",
+                country_code: "NL",
+            },
+        },
+    },
+    {
+        id: 478869,
+        title: "Honours Commerce - Human Resource Management\/Industrial Relations",
+        school_ranking: null,
+        fee: 30000,
+        currency: {
+            title: "CAD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Human Resource Management",
+        super_meta_title: "Business and Economics",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 227,
+            name: "Lakehead University",
+            user_name: "lakehead_university",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkpvZ09qSEoxMjV5VXY2SGtqS1VzeEE9PSIsInZhbHVlIjoiVEFkakRianBKdTdKSlBRQk9qekluT3BiWHVHcmdGdDJrZWhsOUlPMURTRUZ6VGFMYjVrRXdSWExvOERvRkluenM5Mkk2a2VNR3BXcWY1WGxBR1VPQ1E9PSIsIm1hYyI6IjJlZjQ5YTNmZDMxZWFjMjVlYjNhM2U5MWMzZGU3OGY1OTFlZGNkMjIzMGE1ZjI2MGUyYzcwY2U4ZDVhYzMwN2EiLCJ0YWciOiIifQ==?expires=1746108956&signature=d90b60ee8e929dca9e5940e5ae11a0850a746728e072cb2dc1eb426f13ef526b",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: null,
+                    ielts: 6.5,
+                    gpa: 3.2,
+                },
+            },
+            address: {
+                country_id: 156,
+                lat: null,
+                lng: null,
+                country: "Canada",
+                state: "Ontario",
+                country_code: "CA",
+            },
+        },
+    },
+    {
+        id: 451522,
+        title: "Science in Finance - International Business ",
+        school_ranking: null,
+        fee: 29950,
+        currency: {
+            title: "GBP",
+            symbol: "\u00a3",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "International Business",
+        super_meta_title: "Business and Economics",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 506,
+            name: "University Reading",
+            user_name: "university_reading",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InhiTXdQZEtuS2pvdEJ2b0VEQnUyYnc9PSIsInZhbHVlIjoiRlYxMWt0MHgyL1lmc05rQThKUkxtQjYwUGJ0am1lWS83MlpDZVpJdzZMeVM1a0h1NlJJYW1GVjRyYjdESWM3ZllFaFJlVjlxMlR0OWtpeDkyVEdwM1E9PSIsIm1hYyI6IjMwY2I3YWE2ZjE5MWYzNjllNDgyMDUzZTQ1ZTZkMGE3MWIwMDYxZGI5ODQ5NTg5N2ExNDJhYjAyMzU1YWViYzkiLCJ0YWciOiIifQ==?expires=1746108956&signature=bdea9dfb4896bdfe4b5bbdd08d5d7cff7780ad25303df63d1e48edb823e36e7e",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1300,
+                    ielts: 6.5,
+                    gpa: 3.5,
+                },
+            },
+            address: {
+                country_id: 92,
+                lat: null,
+                lng: null,
+                country: "United Kingdom",
+                state: "Reading",
+                country_code: "UK",
+            },
+        },
+    },
+    {
+        id: 468443,
+        title: "Science - Computer Science",
+        school_ranking: null,
+        fee: 29982,
+        currency: {
+            title: "USD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Computer Science",
+        super_meta_title: "Engineering and Technology",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 5637,
+            name: "Southern Oregon University",
+            user_name: "southern_oregon_university",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkZrQTB0QkpiM2p4T3crN2VnNnhNUVE9PSIsInZhbHVlIjoiR2lBMzZPVWJpQVBZZGt6SVgzNGRvb24ycGhPdlB5a1BzMzkwc3h6cXBYd0U1aHBKVU1ralErVWpHam5zTmJTZkdldS9HWXFsQWZEdXAwd3RaUkx4S3o4L1RQQW9kRGs0U3ROcThhSXJZWkE9IiwibWFjIjoiNjQ5MzI0OWYyZWFhOWQ5ZjJkYjFlMDIyZTI4MDYwMGVlYzBlNGUyNjE4Y2ZmZmJhZmE3ZDRhYzM4YjkzMzYyZCIsInRhZyI6IiJ9?expires=1746109795&signature=ea74da2f36ddf37f8b582f7c87cecd86fbdce42517982c836a6b9f8f0a04d197",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1080,
+                    ielts: 6,
+                    gpa: 3.2,
+                },
+            },
+            address: {
+                country_id: 182,
+                lat: null,
+                lng: null,
+                country: "United States",
+                state: "Oregon",
+                country_code: "US",
+            },
+        },
+    },
+    {
+        id: 482992,
+        title:
+            "Foundation Studies Program (074931M) + Engineering - Environmental and Climate Solutions (Honours) (097232D)",
+        school_ranking: null,
+        fee: 28700,
+        currency: {
+            title: "AUD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Environmental Engineering",
+        super_meta_title: "Engineering and Technology",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9943,
+            name: "Eynesbury College - Coglin Street Campus - Adelaide",
+            user_name: "eynesbury-college-coglin-street-campus-adelaide",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IlNwQ2Zvb3B2c2pCZktRUk9CN1hHM2c9PSIsInZhbHVlIjoidDNiSnVwbDNpZnQzd1FXZFdnK0tkc3p0SkJ5MWJUZlpWKzc0VkRtUzZYOWdZMkZJeHFTTTJTOHlYVGxvcW03WnZJWkFqQUpRV0RBWVljcHB5UGxFczVSWWVpN2Zod0pZVWhzWmdvRkhXQzYzV20wWHRCVVo5RnhIRzhYdTQ5WEEiLCJtYWMiOiI3NmQwYTI1N2JlMDMwNzEzNmMzYzk2NGM5Nzk1MDRkNzhiZDhkNTZiYzliNDlkN2M4MDJmYjg1ZTZkMjdhNmVkIiwidGFnIjoiIn0=?expires=1746111139&signature=546585e4224e093ba8101ece1b10e2ff7235a430f5dfcc1e41ecee9080bea5e7",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: null,
+                    ielts: 6,
+                    gpa: 5.5,
+                },
+            },
+            address: {
+                country_id: 185,
+                lat: null,
+                lng: null,
+                country: "Australia",
+                state: "South Australia",
+                country_code: "AU",
+            },
+        },
+    },
+    {
+        id: 475589,
+        title: "Engineering (Honours) - Engineering (NUS1)",
+        school_ranking: null,
+        fee: 29100,
+        currency: {
+            title: "EUR",
+            symbol: "\u20ac",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Electrical Engineering",
+        super_meta_title: "Engineering and Technology",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9663,
+            name: "University College Dublin (UCD)",
+            user_name: "university-college-dublin-ucd",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ik1YN0xuVEVNa2NyMFlKMDhnUUkrK2c9PSIsInZhbHVlIjoiSzdrL0RnYnFUMWU4eElPR1JxYlRWU2VTUmIzaW1lenAwSnVIWWlSUFY2OVBrM3lueElCYmVLM0R0YlNXZlpCUEI3NUsweTJvNzZvTUtIQnJIQUlxQVc1T3ZHbktiT2JUZGE3bUZKYU9BaUk9IiwibWFjIjoiZTZjNDkyMzkwY2YyY2E5OTE5NTM3N2FjMTc3ZDRkZjJhOTIzOWZlNTY4NjkyYmE3N2JiN2ZmNzlmYTIxNmY2YiIsInRhZyI6IiJ9?expires=1746111310&signature=da4fa76838e343b2c0d83453629617931272cd941ea028e1673ba8b2f045a298",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1300,
+                    ielts: 7,
+                    gpa: 3.7,
+                },
+            },
+            address: {
+                country_id: 68,
+                lat: null,
+                lng: null,
+                country: "Ireland",
+                state: "Dublin",
+                country_code: "IE",
+            },
+        },
+    },
+    {
+        id: 415852,
+        title: "Science in Civil Engineering ",
+        school_ranking: null,
+        fee: 25600,
+        currency: {
+            title: "EUR",
+            symbol: "\u20ac",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Civil Engineering",
+        super_meta_title: "Engineering and Technology",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 10833,
+            name: "Saint Louis University - Madrid",
+            user_name: "saint-louis-university-madrid",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ikp5UmRORjFiajQzZzRReUtBNjU4WXc9PSIsInZhbHVlIjoiRld3L1dGWGZLWk8zWHkwcVZ4WEdYNHVHdGVhWjd0Q0Y1RzJtZW1ENE5iOU1wR3QwVHpGVGx4SGl1TG5RU2luMTk1MjQrcmt1a1FDU1NIZHkyK0NFQnBIYUJqZjVxVHB6Z2ZXS1d6dmhidEE9IiwibWFjIjoiZjlmZmZiZDAyM2JiYmZmMWRiZmJjMzk1MDMwZGRkZWY1NWE3NzMzZmViMjUzNzc0Yzk4ZTA2NzQ3MTRlN2U3OCIsInRhZyI6IiJ9?expires=1746111310&signature=5c6339bd026b72e7297b20207a656efb29a7a10000ff427524c7cbb9c72bc186",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1200,
+                    ielts: 6,
+                    gpa: 3.5,
+                },
+            },
+            address: {
+                country_id: 68,
+                lat: null,
+                lng: null,
+                country: "Spain",
+                state: "Madrid",
+                country_code: "ES",
+            },
+        },
+    },
+    {
+        id: 415839,
+        title: "Arts in Psychology ",
+        school_ranking: null,
+        fee: 25600,
+        currency: {
+            title: "EUR",
+            symbol: "\u20ac",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Educational Psychology",
+        super_meta_title: "Education",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 10833,
+            name: "Saint Louis University - Madrid",
+            user_name: "saint-louis-university-madrid",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Im9TOHhub3VGWHhRMlVJaTQ4UjlGd3c9PSIsInZhbHVlIjoidTg5MUxmNlV0ZC91bEVMallPSm1wMFJpbTNtUysyaHR5WkM1QVkvdTkrSFE2azFpeGVFMFZtV2wvK2oxR3Z1YUpJY1RPQ1h6amFNalhGMFNKZlowYkxWTFgvRUhLelV0cjNIbDMxZ29ETXM9IiwibWFjIjoiNWUxZDllNGRmOGE2ODFmMWQ4MzdjZGNhMWUwZDg3ZTY3ODI4NzA4Zjc5M2NlMDlkODU5MTM2MDY0N2RlMjRjMCIsInRhZyI6IiJ9?expires=1746111668&signature=0d58579a05aa98d5f481a9e066e50a4c27c358cf4e3310b73d61ff2bfc523262",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1200,
+                    ielts: 6,
+                    gpa: 3.5,
+                },
+            },
+            address: {
+                country_id: 68,
+                lat: null,
+                lng: null,
+                country: "Spain",
+                state: "Madrid",
+                country_code: "ES",
+            },
+        },
+    },
+    {
+        id: 475469,
+        title: "Science (Honours) - Psychology (PCS2)",
+        school_ranking: null,
+        fee: 22600,
+        currency: {
+            title: "EUR",
+            symbol: "\u20ac",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Educational Psychology",
+        super_meta_title: "Education",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9663,
+            name: "University College Dublin (UCD)",
+            user_name: "university-college-dublin-ucd",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ik1tTjZsQTlnQm0ySWxlL2hSSjRMREE9PSIsInZhbHVlIjoiaHlvcEhlRFQ0dk1PS3BlRnh5dG9XazNHaEJ4d2tUanNLQ0swZ0lldnJlaHFUS3FJTWtmSWRJR2tvWWJZSnE4MlhVM3kyNHZpci92ZGJpMTBpVHZlSkZkZkpCZnNZYUhGdHV4OVlMalVvQUE9IiwibWFjIjoiMWUwMDM5YTc0YWIxZjZlOWU3ZDQ1OTBkNmU3MTFhZTI4YjU0NDQxMmJhOGEyMmUzOTU1OTk4YTdjNzI4OWQ3NSIsInRhZyI6IiJ9?expires=1746111668&signature=5ff80d527aab3c200c12bee190d523994a4a5c9391c776e368d7be3c0055c903",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: 1300,
+                    ielts: 7,
+                    gpa: 3.7,
+                },
+            },
+            address: {
+                country_id: 68,
+                lat: null,
+                lng: null,
+                country: "Ireland",
+                state: "Dublin",
+                country_code: "IE",
+            },
+        },
+    },
+    {
+        id: 472378,
+        title: "Science (Honours) - Psychology (with Foundation Year)",
+        school_ranking: null,
+        fee: 9750,
+        currency: {
+            title: "GBP",
+            symbol: "\u00a3",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Educational Psychology",
+        super_meta_title: "Education",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9549,
+            name: "University of Chester - Exton Park (Parkgate Road) Campus, Chester",
+            user_name:
+                "university-of-chester-exton-park-parkgate-road-campus-chester",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ijdrdy9iVzZWMXp6Mm84UEt1S3dVMlE9PSIsInZhbHVlIjoiLzlpU1FPaVRicDNraTlYclQzUmNDbE15MnhxSzJ3TExoV09oRUVHYnFQOENOWmc1SDVzbmVnRzFhOFRyalJONUJpYmFJdDJkSXhEQ0ZMR1k1OC9iYlVvZUtmcGNmbC9sQ0U3bUlTbmV3ejdYczRGQjhQL0wveTdUWkpSbVh2TkxaYk1Mb1dTVVlzTFFabk5KWXVqVkZBPT0iLCJtYWMiOiIyNTk0ODNlZWU3MTI2NDUzMmVmZGU3NzNiMTM1YTkzMWYzNmFkMDAwYjNhYWM4MjA1M2RmOTg3OTNmZDJjOWVhIiwidGFnIjoiIn0=?expires=1746111940&signature=b47d7046bb3a718c0d2416497ff976333684d7948e475a91205aec4e8348e11a",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: null,
+                    ielts: 6.5,
+                    gpa: 3.2,
+                },
+            },
+            address: {
+                country_id: 92,
+                lat: null,
+                lng: null,
+                country: "United Kingdom",
+                state: "United Kingdom",
+                country_code: "UK",
+            },
+        },
+    },
+    {
+        id: 399761,
+        title: "Attestation of College Studies - Early Childhood Education",
+        school_ranking: null,
+        fee: 9750,
+        currency: {
+            title: "CAD",
+            symbol: "$",
+        },
+        in_state_fee: null,
+        description: null,
+        program_title: "Early Childhood Education",
+        super_meta_title: "Education",
+        class_grades: [
+            {
+                id: 1,
+                title: "Bachelor's",
+            },
+        ],
+        school: {
+            id: 9836,
+            name: "Herzing College - Montreal East (St-Leonard)",
+            user_name: "herzing-college-montreal-east-st-leonard",
+            avatar:
+                "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InVOTnZhMGJwK3BuQ3RjMXdkQ1h4cFE9PSIsInZhbHVlIjoiZHZHYVpSNWpjMXFVc0cvRmV6MzdCSE1UTnNRM3hOMEl3UUpsaEtTSTZNbTdhOXA3cXh5MHZ5LzBzTUYxNTVEcmR3K04xdlE4aGpYRFV3QlhEeVZvL29DanI3RHpIQWxaNkJtQ3loaFk5SFJhN2ZRZEdIOEM1eVRhQnBxcU9OckMiLCJtYWMiOiI2MmQ4YjdjNWQ2ZTdkMjUzODUwMzExOTU4NjRmMTFmNmYxZjcxMzE2ZmFmODljNWE2MzllODM1NjJhMjIxNzNhIiwidGFnIjoiIn0=?expires=1746111940&signature=e1d17153d4b2c8f43a2c4c6bac86a10f46cc493ad14324e2ff252924ab8bfdfd",
+            cover_photo: null,
+            admission_stats: {
+                acceptance_rate: null,
+                average_scores: {
+                    sat: null,
+                    ielts: 6,
+                    gpa: 2.8,
+                },
+            },
+            address: {
+                country_id: 156,
+                lat: null,
+                lng: null,
+                country: "Canada",
+                state: "Quebec",
+                country_code: "CA",
             },
         },
     },
@@ -2326,6 +2990,724 @@ export const schoolDeatailList: SchoolDetail[] = [
             state: "California",
             description:
                 "La Verne admissions is somewhat selective with an acceptance rate of 72. Students that get into La Verne have an average SAT score between 930-1150 or an average ACT score of 17-24. The regular admissions application deadline for La Verne is rolling.",
+        },
+    },
+    {
+        id: 2,
+        name: "University of Manitoba",
+        email: "admissions123@umanitoba.ca_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IjN4c2hWYlRWNzluS1dFeFprTHphS1E9PSIsInZhbHVlIjoiaCtVUnlHbndCbXpyaXZVVXNFNHdEQkpEUE9SNnpXYTdpWHllY04xTlppUVlqa1pUTytJWWdvNXQ3M0JadEF4Y3IzWEJSNjRnNG9XYVJOSlVoRGl3Z2c9PSIsIm1hYyI6IjUwZWVjMTNjZjI4Yzc1YWM4M2U2Y2I4YjA2NWZiZDlkZmM2OTU5MzhlNDcwMmEwYTY0MWFkMzRkMGI1Yzc2NzciLCJ0YWciOiIifQ==?expires=1746106190&signature=9ee63e93104661b70643abaf9a637851beb611170af197a49db75b176a40db07",
+        cover_photo: null,
+        user_name: "university_of_manitoba",
+        ranking: 372,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1200,
+                ielts: 6.5,
+                gpa: 3.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.85,
+            median_salary: 55000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 8000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Canada, Manitoba",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Canada",
+            state: "Manitoba",
+            description:
+                "Entry requirements Must have a Year 12 Pass A minimum average of 70% over the following, with no less than 60% in each course: English 40S Mathematics 40S Two academic 40S courses Advanced Entry Complete a minimum of twenty-four (24) credit  hours of university degree level course work. Work  completed at the college level may be acceptable (See Section 4: Selection Process, A. Calculation of  the Adjusted Grade Point Average (AGPA)). Achieve an Adjusted Grade Point Average of 2.0 or  higher English Language Requirements: IELTS - 6.5 overall with 6.0 in each of the four modules (listening, reading, speaking, writing) CAEL \u2013 60 TOEFL (TOEFL-iBT) - Overall score of 86, 20 in Reading, Writing, Listening and Speaking CAE C1 Advanced: 180 CAE C2 Proficiency: 180 PTE \u2013 58 IAEP (Intensive Academic English Program) - Minimum score required: Pass Level 5\/AEPUCE (Academic English Program for University and College Entrance) Starting Fall 2024 the Duolingo English Test will be accepted for English Language Proficiency with a minimum overall score of 120 with no less than a score of 105 in each component",
+        },
+    },
+    {
+        id: 3830,
+        name: "Southern Connecticut State University",
+        email: "haakonsena1@southernct.edu",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkhkVHQxcURGRmEwTjhOTlBDeWhVckE9PSIsInZhbHVlIjoiSW9oYUVzTHN3alFrR0RLL0NMODdnUE8xRGVSVjhtd3V0by9qeU9kaThvWVZzMDJZcjJUd3FjN1pJRlQvYlhOdlF1T2hhN1hGM3JqSkJ6UnpWWDBLZXU1UCs1dnV2YWlCQ0lzUWQvZk9DeFE9IiwibWFjIjoiYTBkOTg3Zjc3OTUxZTdhMWI3ZGY5NjUwYWJlZTdlNTQ1OTgxYTNiYjcxNTVkNzUzZjQxNzBhZDg0NDdhODJjMCIsInRhZyI6IiJ9?expires=1746107755&signature=3d5c16796889f433b6a97aac63896d5a45832c0686d128202a71a768c762001f",
+        cover_photo: null,
+        user_name: "southern_connecticut_state_university",
+        ranking: 9999,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1100,
+                ielts: 6,
+                gpa: 3.4,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.8,
+            median_salary: 60000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 18000,
+            housing: 7660,
+            meals: 6416,
+            housing_and_meal: 14076,
+        },
+        campus_overview: {
+            location: "United States, Connecticut",
+            type: null,
+            total_students: 8788,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On  & off-campus",
+            extra_curriculum:
+                "Baseball Basketball Football Soccer Track and Field: Indoor Track and Field: Outdoor Track and Field: X-Country",
+        },
+        about: {
+            website: "https:\/\/www.southernct.edu\/",
+            country: "United States",
+            state: "Connecticut",
+            description:
+                "Entry Requirements  Must have a Bachelor Degree      English Requirements  IELTS - 6.5   Certificate of completion from ELS Academic English Level 112  TOEFL 550 written\/213 computer\/79 or above  SAT - 900 (combined critical reading and math only)  ACT - composite score of 19  Duolingo score of 105  Pearson Language Test with a score of 53 or higher",
+        },
+    },
+    {
+        id: 9663,
+        name: "University College Dublin (UCD)",
+        email: "university-college-dublin-ucd@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IjllbGpWeWJpcXgrV1NGY2VaencxZEE9PSIsInZhbHVlIjoiVTBzeDR4bU9zYitxT2k5U29RK053YWJIMjRwWUxkUElpMkJ3VGFTZlZEeFVwdHl0ZERPTTVWZFFmTHdVMkpjWFRFS2tzZ1BlV0V6cFd2QzNGSVplSVZZeXN4QmdlSTY2ZTAxZGZ0bFlJeEU9IiwibWFjIjoiOTk0NjVlNGY4ZDlhNDM3ZjEyMmE0NmIwNmZlNDE0NDY1MzVkZWIxMzdjNDZlMTdhZjBkMjc1ZDBmYzhhMThjYSIsInRhZyI6IiJ9?expires=1746108440&signature=35da0db2cd5d63157e191bf6905bfa8441383278aea39b7abfc07d0534ef5229",
+        cover_photo: null,
+        user_name: "university-college-dublin-ucd",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1300,
+                ielts: 7,
+                gpa: 3.7,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.9,
+            median_salary: 50000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 10000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Ireland, Dublin",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Ireland",
+            state: "Dublin",
+            description:
+                "Academic Requirements: Age - Be at least 17 years old at the start of the course. IGCSE\/GCSE: 5 passes at A-C, in relevant subjects with a C in Maths (excluding native language) assuming this is the only qualification being offered. Cambridge O Levels: 5 passes at A-C in relevant subjects, with a C in Maths (excluding native language). New grades 9 - 4 in English and Maths. Have good high school grades.   English Language Requirements: IELTS: 5.0 & min of 4.5 in each band on the Academic Version BA Humanities & BA Joint Honours - IELTS 5.5 (or equivalent) overall with min 5.5 in Writing & 5.0 in each other band on the Academic Version. *Students wanting to progress to Law (BCL) or Business and Law (BBL) are required to have IELTS 5.5 & min of 5.0 in each band on the Academic Version. ",
+        },
+    },
+    {
+        id: 9925,
+        name: "Griffith University - Nathan",
+        email: "griffith-university-nathan@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImRBaHVOY0xLZExPcWhWbjVtaWc2QVE9PSIsInZhbHVlIjoiSGc1dnd4ZGZuM2EvSHIwMDN2M1RYQmE4RkVhaERTa0wyb0JaT0F0K2NNU3pPbjZ2Y2NmbUFTZ0owRWM5aWdUZWRUdENHY1FNZjNhdTVnaVo2YXlJcEFkbTIrOFE4OHhiWG01RmFtWHNKT2M9IiwibWFjIjoiNzIzZGE1NWM0ZjU5OThhZWUwNTQ4NzNiMjdjMDNlOWJlMjIyMGIyYWU2MzY2YjJlZGMzZmUzNjMzZTI2ODg5MSIsInRhZyI6IiJ9?expires=1746108880&signature=0f7dd1d91828c75cb7f00484b69b482ba1b98d242fcec0212ff9705edc03e4b2",
+        cover_photo: null,
+        user_name: "griffith-university-nathan",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1200,
+                ielts: 6.5,
+                gpa: 6,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.85,
+            median_salary: 65000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 12000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Australia, Queensland",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Australia",
+            state: "Queensland",
+            description: null,
+        },
+    },
+    {
+        id: 10902,
+        name: "Wittenborg University of Applied Sciences (LG)",
+        email: "wittenborg-university-of-applied-sciences-lg@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkZteGlva3BGSFpWajhTY3JqVEVkdmc9PSIsInZhbHVlIjoiNGtqYU11eVRRLzFzbC8vUE5Md1VPWFVGSTJxczk5LzFSbWJsMHhBQ0xVQjBvbUJzS1hjdS80OVg4ak14eVlKSk5uREY5d29Va21ENXhRWjRCaWRYU3dEN0wvdEZLbWU2aUo5OE0rYUFVcG5jTGtxVS9HZmROV1dwdk5LL2l4OU0iLCJtYWMiOiI3YTZhMjljNzQ5MGU0NThlZDVkYmRiNjkxZDlkMTIwZjc0OWNjN2RkNzhmNDhlY2FjOGE3NmRiMzQxMjBhYjg3IiwidGFnIjoiIn0=?expires=1746108895&signature=9b33c15c2ae8a5b03a11b295b4388d63291336d30080723d76da4f46d4307ddf",
+        cover_photo: null,
+        user_name: "wittenborg-university-of-applied-sciences-lg",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6.5,
+                gpa: 3.2,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.75,
+            median_salary: 45000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 8000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Netherlands, Gelderland",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Netherlands",
+            state: "Gelderland",
+            description: null,
+        },
+    },
+    {
+        id: 227,
+        name: "Lakehead University",
+        email: "docs.admission123@lakeheadu.ca_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkZMMjZudTAveFVSYUhIWHF4TXMvWkE9PSIsInZhbHVlIjoibHBSNTJBYXM3Z0tHL1F1czMzMlhEdnlWbUhyaEpXTU02S2JjOVo2VDFLaUVCVXFOSFc2UjFYU2tpbVhoWkhGZ0tYWlhTRHhJaUZVeEtzdTNpdmJNeFE9PSIsIm1hYyI6ImJkN2ZkNzBlZTM4MTliOTRmODlkZGUzNTAxY2ZiNmExMTYxYzY2NmRlYWNmZTNjOTE2YjczOTU4MTU2Y2E3ZjIiLCJ0YWciOiIifQ==?expires=1746109163&signature=c3f1b68a6bedf5e38fb24ba0f6a98e5193b38606bc29dd72337fb982a0cf74cb",
+        cover_photo: null,
+        user_name: "lakehead_university",
+        ranking: 1291,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6.5,
+                gpa: 3.2,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.9,
+            median_salary: 55000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 6000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Canada, Ontario",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Canada",
+            state: "Ontario",
+            description:
+                "'ielts': '6.5', 'academic_requirement': 'You must have successfully completed an Canadian Bachelor degree (or equivalent overseas qualification) or\/with full-time or equivalent, work experience in a relevant industry setting.Meeting the minimum academic requirements does not guarantee entry. Your application will still need to be assessed and accepted.If you dont meet the entry requirements, there may be other programs you are eligible for that can lead you to your preferred program.'",
+        },
+    },
+    {
+        id: 506,
+        name: "University Reading",
+        email: "ifpadmissions123@reading.ac_masked",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkpXS1F4cEl2ZG45Znk5Z2phQzVVRHc9PSIsInZhbHVlIjoiTmJnR1lQRzNBMm8zQkI0aERWbmJLaGJ4bVQrRXZRS3U4bE1MWlZXOVo2dnFhY2V2WktSM1FidDhyb3NuK1YzeHFhcDAzQXpqTEhueW9vSmExUkMyTnc9PSIsIm1hYyI6ImQ4YzM4MTRlM2Q2ZmYwMDk4OWMyOTZjOTI4MTFlOGY2OWVmY2QwMDdkZDJkNTcxMmI5NmJjOGM1YzUyNTU5ZWEiLCJ0YWciOiIifQ==?expires=1746109179&signature=66d63f22f4d70b7eef2cd96eb16bd3aee3fae5b759b3cce17282837cdca84d03",
+        cover_photo: null,
+        user_name: "university_reading",
+        ranking: 333,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1300,
+                ielts: 6.5,
+                gpa: 3.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 35000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 8000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, Reading",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United Kingdom",
+            state: "Reading",
+            description:
+                "English Requirements: IELTS - 6.0 no skill less than 5.5 You will need to provide: Copies of your English language certificate\/s: IELTS\/TOEFL. (If you need a visa to study in the UK, your IELTS exam must be UKVI). A copy of the identification page of your passport. A copy of your offer letter from your chosen university (if you will not be studying your degree programme at Reading).",
+        },
+    },
+    {
+        id: 5637,
+        name: "Southern Oregon University",
+        email: "admissions@sou.edu",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6InVxTFhlb05JL3lXWDZQWWZSNDRrcXc9PSIsInZhbHVlIjoiZVU3VDR4MnN6dUdaWmE4eDVpMWtyeG9XZjNObmFCQWgwMFdabkdwVFI2WGpNemlEOW9QZXR5MmNVTXplYTI1YVk4aVg1emVOL2ExNmpodmNSRGQ3R1NRejlUYm53VWxqVFQyVEZsZDRLZWM9IiwibWFjIjoiMzYxN2ZkN2Q5MmFhNTdhMmY5NTMyZjQ3ZWNlMGRhYWQ4YmM0YjYxYzE2YTA2ZGUxY2Y1N2M3MGEwOTlhZTQwZiIsInRhZyI6IiJ9?expires=1746109895&signature=ad16e824be04cf4408182ce2b138bddc55b076b2f5774902f00826c0e699b026",
+        cover_photo: null,
+        user_name: "southern_oregon_university",
+        ranking: 9999,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1080,
+                ielts: 6,
+                gpa: 3.2,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.7,
+            median_salary: 48000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 16000,
+            housing: 9913,
+            meals: 6150,
+            housing_and_meal: 16063,
+        },
+        campus_overview: {
+            location: "United States, Oregon",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On  & off-campus",
+            extra_curriculum:
+                "All Track Combined Basketball Football Golf Soccer Track and Field: X-Country Wrestling",
+        },
+        about: {
+            website: "https:\/\/www.sou.edu\/",
+            country: "United States",
+            state: "Oregon",
+            description:
+                "Southern Oregon admissions is somewhat selective with an acceptance rate of 90. Students that get into Southern Oregon have an average SAT score between 980-1230 or an average ACT score of 18-25. The regular admissions application deadline for Southern Oregon is rolling.",
+        },
+    },
+    {
+        id: 9943,
+        name: "Eynesbury College - Coglin Street Campus - Adelaide",
+        email: "eynesbury-college-coglin-street-campus-adelaide@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IkRUVStlYWdhdnFUWkZNWWl5bnJMUFE9PSIsInZhbHVlIjoiTFRqVkRQbm1CZnRUd2VGby91THJHaWNQaUxnSXQ2VVMyN0Q0VEM0azVVYjFBVGQ5aVJjMENuWWQ5bzNsMzYwbldCblJLU1VLd0JUMit1aEdFRmlnL1VrVXpYeEtRUjgwd3h4eGVVVTlxc3FwbEpzRzlnQ3RPai9BdmZCWFhXYW0iLCJtYWMiOiIyYmUyMjQ3Njg0YTBmMjdmZjMxMTUxZWU3ZTlmODBkOTI0NTQ1MjA3ODNhN2VhM2IzMmI4ZDlkZGViZmUzMTcxIiwidGFnIjoiIn0=?expires=1746111222&signature=22ebffb50c5172ba486f4020486fb7010e7912658e41784a651857f93067aa8c",
+        cover_photo: null,
+        user_name: "eynesbury-college-coglin-street-campus-adelaide",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6,
+                gpa: 5.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.75,
+            median_salary: 55000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 8000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Australia, South Australia",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Australia",
+            state: "South Australia",
+            description: null,
+        },
+    },
+    {
+        id: 9663,
+        name: "University College Dublin (UCD)",
+        email: "university-college-dublin-ucd@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImEvQjR4S0FpNjdueHJBV0J2ODc3bnc9PSIsInZhbHVlIjoiaHdDOVNyWUJldlpTRWRkRVUybGE5Uk5JMkdXdUZjZmhHSkp6K3RpNERTdjlwa0FRZFd3OGFMa2lna0dpY29LZ0VYNS94WElySXVvY1pDWmd0a0dFZlgrQkhOWEdKVU44MFMvczJWcVVpblU9IiwibWFjIjoiZGJiNTc2NjRlNDRiZDliNWFhN2EwNmIxOGI3MTVlZjlhOTdlY2YwODQ5N2Q4NDVhNDIwZWIyNzViNDdmNDMzMyIsInRhZyI6IiJ9?expires=1746111381&signature=3ca51c85e5553448fdcf7ca847e9d8692a8831c7d25f231352377ba1a486a5ac",
+        cover_photo: null,
+        user_name: "university-college-dublin-ucd",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1300,
+                ielts: 7,
+                gpa: 3.7,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.9,
+            median_salary: 50000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 10000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Ireland, Dublin",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Ireland",
+            state: "Dublin",
+            description:
+                "Academic Requirements: Age - Be at least 17 years old at the start of the course. IGCSE\/GCSE: 5 passes at A-C, in relevant subjects with a C in Maths (excluding native language) assuming this is the only qualification being offered. Cambridge O Levels: 5 passes at A-C in relevant subjects, with a C in Maths (excluding native language). New grades 9 - 4 in English and Maths. Have good high school grades.   English Language Requirements: IELTS: 5.0 & min of 4.5 in each band on the Academic Version BA Humanities & BA Joint Honours - IELTS 5.5 (or equivalent) overall with min 5.5 in Writing & 5.0 in each other band on the Academic Version. *Students wanting to progress to Law (BCL) or Business and Law (BBL) are required to have IELTS 5.5 & min of 5.0 in each band on the Academic Version. ",
+        },
+    },
+    {
+        id: 10833,
+        name: "Saint Louis University - Madrid",
+        email: "saint-louis-university-madrid@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6IjBRSmtzV2ttcUxrRFlJMUQ0NndkQ3c9PSIsInZhbHVlIjoidHltNWloQ2x0djkyNk1nOWY2K0t1VnhKTkVVcTRybjR2cFpWVmszQVFpbGswdkRPdjlxUWIxbXA1Qm1HYjNtbTR1WS8zRTB3WDNWMTE4M0E0VGllVXZyS3VqZkVPdXhwUE1sZlR6RlhWTW89IiwibWFjIjoiNjBkOWMyNjU3NDJiNDI3MTg2NzgwNTU4NTUwZjUxZWI3NzU3ODAwNjFlYjg4M2Y1ZjAwNzRhZTI2MTU3YzRiZCIsInRhZyI6IiJ9?expires=1746111397&signature=2dd55b0c6477ac986f179896d4324903e2368c5562ef12b2a7ef707120d3bb8c",
+        cover_photo: null,
+        user_name: "saint-louis-university-madrid",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1200,
+                ielts: 6,
+                gpa: 3.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.9,
+            median_salary: 45000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 12000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Spain, Madrid",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Spain",
+            state: "Madrid",
+            description:
+                "Entry Requirements: Overall grade point average of 3.0   Submit Your Documents Submit the following supporting documents. Official transcripts and other academic credentials can be uploaded directly to your application via Common App or your SLU application portal. Documents may also be sent through secure services such as Parchment to admdocs-madrid@slu.edu. Personal Essay: As part of the online application, you will write a 500-word essay on a topic indicated on the online application. Official High School Transcripts or Academic Records: Seniors must submit a current transcript. You must supply your final transcript and proof of graduation if you have finished high school. English Language Requirements: Non-native English speakers who have not studied all four years in a U.S. high school must provide SLU-Madrid evidence of proficiency in academic English. Consult our English language requirements page for more information. Standardized Test Scores: Saint Louis University \u2014 Madrid Campus is SAT\/ACT test-optional for students studying in the U.S. education system. If you feel that your standardized test results do not represent your abilities and potential for future academic success, you may choose not to submit your SAT and\/or ACT scores. You will not be disadvantaged in the admission process if you do not send test scores. Additional Items for Consideration: While not required for admission, you may submit the following items for consideration if you feel they strengthen your application: Letters of recommendation CV\/R\u00e9sum\u00e9 Admission interview   English Language Requirements: IELTS: 6.5 Evidence-based reading and writing of the SAT: 550  English portion of the ACT: 21 GaoKao: Overall score middle of Tier 2 or better and 125\/150 English (100\/120 Jiangsu) Pearson Test of English (PTE): 54 TOEFL ITP Plus for China: 627 Computer-based TOEFL (IBT): 80 Paper-based TOEFL (PBT): 550",
+        },
+    },
+    {
+        id: 10833,
+        name: "Saint Louis University - Madrid",
+        email: "saint-louis-university-madrid@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImZVd3ZOSjd6WWNKeXB5eThwK1hxNFE9PSIsInZhbHVlIjoiSkQ1bWtLd1NsTkM5aGxHUGcyYTF0eDYrb0YvTSt2NnpBeG5YcTZQSU5ZQlhmR0NISzBCdVRTNkhJejhrM0I3d1F6UnB2cDRiZ3Z3Z2JUQ3VNUjdteCtTQnVmWHZmWndlNmtGZzY4dzRmYjA9IiwibWFjIjoiNDgxOWVlNTc3YjFhZDM3Nzc3ZTJiMWE4ZDEwNzE3YjI1MWZjYWJhZjdkOTU2NzlmMGU4YzAxNWE4YjQ2NjU5ZSIsInRhZyI6IiJ9?expires=1746111784&signature=cd1ca7c2a9aeca4a6d5692404ccff86f894b89a23bdb5433850ff571129fe7b6",
+        cover_photo: null,
+        user_name: "saint-louis-university-madrid",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1200,
+                ielts: 6,
+                gpa: 3.5,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.9,
+            median_salary: 45000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 12000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Spain, Madrid",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Spain",
+            state: "Madrid",
+            description:
+                "Entry Requirements: Overall grade point average of 3.0   Submit Your Documents Submit the following supporting documents. Official transcripts and other academic credentials can be uploaded directly to your application via Common App or your SLU application portal. Documents may also be sent through secure services such as Parchment to admdocs-madrid@slu.edu. Personal Essay: As part of the online application, you will write a 500-word essay on a topic indicated on the online application. Official High School Transcripts or Academic Records: Seniors must submit a current transcript. You must supply your final transcript and proof of graduation if you have finished high school. English Language Requirements: Non-native English speakers who have not studied all four years in a U.S. high school must provide SLU-Madrid evidence of proficiency in academic English. Consult our English language requirements page for more information. Standardized Test Scores: Saint Louis University \u2014 Madrid Campus is SAT\/ACT test-optional for students studying in the U.S. education system. If you feel that your standardized test results do not represent your abilities and potential for future academic success, you may choose not to submit your SAT and\/or ACT scores. You will not be disadvantaged in the admission process if you do not send test scores. Additional Items for Consideration: While not required for admission, you may submit the following items for consideration if you feel they strengthen your application: Letters of recommendation CV\/R\u00e9sum\u00e9 Admission interview   English Language Requirements: IELTS: 6.5 Evidence-based reading and writing of the SAT: 550  English portion of the ACT: 21 GaoKao: Overall score middle of Tier 2 or better and 125\/150 English (100\/120 Jiangsu) Pearson Test of English (PTE): 54 TOEFL ITP Plus for China: 627 Computer-based TOEFL (IBT): 80 Paper-based TOEFL (PBT): 550",
+        },
+    },
+    {
+        id: 9663,
+        name: "University College Dublin (UCD)",
+        email: "university-college-dublin-ucd@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImVjbGlmK3JnaFNwWGt5ZnZlc1VYZGc9PSIsInZhbHVlIjoidUpmeER5TnV2UnBOY3JIZW9ockZpM2dVVEZYQzVSMlFDcjBEVWpHd0lnbW9BQzMwK2tFWXovVFl3U1Iyc29tWWFSdCtsbkh5Uk9BV2tCU29EMDd4dzRXRk0rcmZiUzFHUlNNOHB1NHEzZWc9IiwibWFjIjoiNThkNGNiYTExNmNlNjY0MzNjZDk1NjNiMmQ1YTYyNDgwMjc0YjRlODEyYjlhZGRjNmY3ZGJlY2VkMmQ3Nzc3MCIsInRhZyI6IiJ9?expires=1746111802&signature=bf21a634825a7f1c71fbbe847f7364f84f34d66455568643addc8d5b292af3ed",
+        cover_photo: null,
+        user_name: "university-college-dublin-ucd",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: 1300,
+                ielts: 7,
+                gpa: 3.7,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.9,
+            median_salary: 50000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 10000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Ireland, Dublin",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Ireland",
+            state: "Dublin",
+            description:
+                "Academic Requirements: Age - Be at least 17 years old at the start of the course. IGCSE\/GCSE: 5 passes at A-C, in relevant subjects with a C in Maths (excluding native language) assuming this is the only qualification being offered. Cambridge O Levels: 5 passes at A-C in relevant subjects, with a C in Maths (excluding native language). New grades 9 - 4 in English and Maths. Have good high school grades.   English Language Requirements: IELTS: 5.0 & min of 4.5 in each band on the Academic Version BA Humanities & BA Joint Honours - IELTS 5.5 (or equivalent) overall with min 5.5 in Writing & 5.0 in each other band on the Academic Version. *Students wanting to progress to Law (BCL) or Business and Law (BBL) are required to have IELTS 5.5 & min of 5.0 in each band on the Academic Version. ",
+        },
+    },
+    {
+        id: 9549,
+        name: "University of Chester - Exton Park (Parkgate Road) Campus, Chester",
+        email:
+            "university-of-chester-exton-park-parkgate-road-campus-chester@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6Ik5uUHV5anlVb2hMak13Ly9sTCtPRXc9PSIsInZhbHVlIjoiLzZqT3o2ODk5WGhqNExpWHNjdHh5TDBjd2MwaFJ3Znc0KzRFd081M1lyaXVDWVVEaTBsbm9vMnZuc1dKNUpqQjZ2MEJiNDVKWXIvYTJ2ZDVJWDZDblc5Y2QwTmhBSE9LenBZWnQ0WHdJR0tCVlA3RlpSQlVqMGxZd0lKVmR0WkZiU2pLYWRXN0lRM2RBdVVPaHpaOVlBPT0iLCJtYWMiOiI2YmFmYzI1MTcwZjkzZDYyOGVmYjZlNzRjM2Q5MTcxNTBlNDVmZjI1YzQ2ZWI5MGFmZmQyNGFiMDY5OWRiYTMyIiwidGFnIjoiIn0=?expires=1746112053&signature=61a2c99c68970e5907be3e8139a071a5e77356d1eec08cbf312a76820cea4a06",
+        cover_photo: null,
+        user_name: "university-of-chester-exton-park-parkgate-road-campus-chester",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6.5,
+                gpa: 3.2,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.92,
+            median_salary: 28000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 6000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "United Kingdom, United Kingdom",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "United Kingdom",
+            state: "United Kingdom",
+            description: null,
+        },
+    },
+    {
+        id: 9836,
+        name: "Herzing College - Montreal East (St-Leonard)",
+        email: "herzing-college-montreal-east-st-leonard@unknown.com",
+        avatar:
+            "http:\/\/bk.arrowster.com\/temporary-file\/eyJpdiI6ImZDUVdXSUpib0xtRmgvSjlkTk9nQlE9PSIsInZhbHVlIjoibDVFbm5RK0Y5UDNURUJPNGFSblp0UUk1aUpkTXFONTdCeWFpUWZ3dWlWWXN3c2ZWdkdYMWx4dGFHNXdORCtFblJYNTQ1L3ZlaDFudlRBQTlPRHhlTkJ4NWdrZnZHNFBvbm9jUlRhcHRkNjlwdzYwM2hucG5EbTgyVE9paWRhdlgiLCJtYWMiOiI0OTI0NDJhYzBmODI2ZDYxYTdkZmQ0OGQ4OGZlNjk1ZjBmYTU0MmI3Mzg0MTA1YmVjNzJjY2ZlZGE3NDU2ZTgxIiwidGFnIjoiIn0=?expires=1746112068&signature=8a650ef0912506032df3bb248dca8b23b5fa3412ef992d3a2a5f0acc29eaa4c1",
+        cover_photo: null,
+        user_name: "herzing-college-montreal-east-st-leonard",
+        ranking: null,
+        admission_stats: {
+            acceptance_rate: null,
+            average_scores: {
+                sat: null,
+                ielts: 6,
+                gpa: 2.8,
+            },
+        },
+        career_outcomes: {
+            employment_rate: 0.7,
+            median_salary: 38000,
+        },
+        financial_and_aid_cost: {
+            average_financial_aid: 5000,
+            housing: null,
+            meals: null,
+            housing_and_meal: 0,
+        },
+        campus_overview: {
+            location: "Canada, Quebec",
+            type: null,
+            total_students: null,
+        },
+        surroundings: {
+            option_1: "updating",
+            option_2: "updating",
+        },
+        campus_life: {
+            housing: "On ",
+            extra_curriculum: null,
+        },
+        about: {
+            website: null,
+            country: "Canada",
+            state: "Quebec",
+            description: null,
         },
     },
 ]
