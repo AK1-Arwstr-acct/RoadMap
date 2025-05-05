@@ -4,11 +4,11 @@
       <component v-if="dashboardStore.isSchoolListPublic || (route.path.includes('/demo'))" :is="desktop.PublicUserDataInfo" />
       <component v-else :is="desktop.UserDataInfo" />
     </div>
-    <SophieRecommendation :isActive="isActive" />
     <WhyTheseSchool v-if="(dashboardStore.overViews?.length ?? 0) >= 1" />
     <MajorSekeleton v-if="isTokenLoading" />
     <PublicMajorsSelection v-else-if="dashboardStore.isSchoolListPublic || (route.path.includes('/demo'))" />
     <MajorSelection v-else />
+    <SophieRecommendation :isActive="isActive" />
   </section>
 </template>
 <script setup lang="ts">
