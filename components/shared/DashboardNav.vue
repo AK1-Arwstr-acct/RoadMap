@@ -4,7 +4,7 @@
     class="bg-white hidden lg:flex justify-between px-8 py-4 border-b-[1.5px] border-gray-200"
   >
     <NuxtLinkLocale
-      to="/dashboard"
+      to="/"
       class="flex gap-2 items-center cursor-pointer"
     >
       <IconArrowsterLogo class="size-8 min-w-8" />
@@ -29,7 +29,7 @@
           v-if="appStore.authenticatedUser"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
-          <NuxtLinkLocale to="/dashboard/profile">
+          <NuxtLinkLocale to="/profile">
             <img
               v-if="appStore.userData?.avatar"
               :src="appStore.userImagePreview || appStore.userData?.avatar"
@@ -79,7 +79,7 @@
   <!-- Mobile View -->
   <div class="bg-white py-5 px-3 border-b border-gray-200 lg:hidden">
     <div class="flex justify-between items-center">
-      <NuxtLinkLocale to="/dashboard" class="no-underline">
+      <NuxtLinkLocale to="/" class="no-underline">
         <div class="cursor-pointer flex items-center gap-2">
           <IconArrowsterLogo class="size-8 min-w-8" />
           <img
@@ -147,26 +147,11 @@ const emit = defineEmits(["updateTab"]);
 const appStore = useAppStore();
 const { t } = useI18n();
 
-const time = ref<number>(0);
 const isMobileSideBarOpen = ref<boolean>(false);
 
 const close = () => {
   isMobileSideBarOpen.value = false;
 };
-
-const getGreeting = computed(() => {
-  const hours = new Date().getHours();
-  time.value = hours;
-  if (hours >= 5 && hours < 12) {
-    return t("dashboard.navbar.morning");
-  } else if (hours >= 12 && hours < 18) {
-    return t("dashboard.navbar.afternoon");
-  } else if (hours >= 18 && hours < 22) {
-    return t("dashboard.navbar.evening");
-  } else {
-    return t("dashboard.navbar.night");
-  }
-});
 
 const updateTab = (value: string) => {
   emit("updateTab", value);

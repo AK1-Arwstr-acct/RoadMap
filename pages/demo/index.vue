@@ -6,6 +6,7 @@
       <div class="flex-1 w-screen lg:w-full overflow-hidden">
         <div
           class="size-full"
+          ref="schoolsListWrapper"
           :class="{
             'overflow-y-auto custom-scrollbar': currentTab !== 'Roadmap',
           }"
@@ -70,6 +71,7 @@ const dashboardStore = useDashboardStore();
 
 const currentTab = ref<TabName>("schools_list");
 const openSophieModal = ref<boolean>(false);
+const schoolsListWrapper = ref<HTMLElement | null >(null);
 
 const updateTab = (value: TabName) => {
   currentTab.value = value;
@@ -79,6 +81,13 @@ watch(
   () => appTrackerStore.ongoingTrack,
   () => {
     currentTab.value = "Roadmap";
+  }
+);
+
+watch(
+  () => dashboardStore.schoolsList,
+  () => {
+    schoolsListWrapper.value?.scrollTo({ top: 0, behavior: "smooth" });
   }
 );
 

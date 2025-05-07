@@ -1,5 +1,5 @@
 <template>
-  <div class="size-full overflow-y-auto custom-scrollbar">
+  <div ref="schoolsListWrapper" class="size-full overflow-y-auto custom-scrollbar">
     <div class="h-full w-full max-w-[1150px] mx-auto">
       <div class="px-6 w-full h-fit">
         <div class="w-full h-2 rounded-full bg-[#D1E9FF] md:hidden mt-6">
@@ -9,7 +9,7 @@
           />
         </div>
         <div class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14">
-          <div class="flex-1">
+          <div class="flex-1 overflow-hidden">
             <RecommendedSchoolSkeleton
               v-if="dashboardStore.isSchoolsLoading || isTokenLoading"
             />
@@ -76,6 +76,7 @@ const { api } = useApi();
 
 const isActive = ref<boolean>(false);
 const isTokenLoading = ref<boolean>(true);
+const schoolsListWrapper = ref<HTMLElement | null >(null);
 
 const checkPrograms = () => {
   if (appStore.userData) {
@@ -110,6 +111,13 @@ watch(
   async () => {
     getRecommendations();
     checkPrograms();
+  }
+);
+
+watch(
+  () => dashboardStore.schoolsList,
+  () => {
+    schoolsListWrapper.value?.scrollTo({ top: 0, behavior: "smooth" });
   }
 );
 

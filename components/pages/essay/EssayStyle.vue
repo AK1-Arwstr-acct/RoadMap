@@ -2,7 +2,7 @@
   <section class="size-full flex flex-col gap-2">
     <div ref="chatContainer" class="flex-1 flex flex-col gap-2 overflow-hidden">
       <div
-        class="pb-4 overflow-y-auto no-scrollbar h-full flex flex-col gap-8 p-5 sm:px-20 md:px-40 2xl:px-96"
+        class="pb-4 overflow-y-auto no-scrollbar h-full flex flex-col gap-8 p-6"
         :class="{ 'justify-end': questionStep === 1 }"
       >
         <ChatMessage
@@ -18,7 +18,7 @@
         />
       </div>
     </div>
-    <div class="p-5 sm:px-20 md:px-40 2xl:px-96">
+    <div class="p-6">
       <div
         v-if="questionStep < 3"
         class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex items-start gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"

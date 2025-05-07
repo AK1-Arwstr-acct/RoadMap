@@ -15,7 +15,7 @@
             : 'px-2 flex justify-center',
         ]"
       >
-        <NuxtLinkLocale to="/dashboard" class="flex gap-2 items-center cursor-pointer">
+        <NuxtLinkLocale to="/school-list" class="flex gap-2 items-center cursor-pointer">
           <IconArrowsterLogo class="size-8 min-w-8" />
           <img
             v-if="!route.path.includes('/sophie')"
@@ -48,7 +48,7 @@
                 class="size-6"
                 :class="[
                   route.path.includes(tab.route) &&
-                  !route.path.includes('/dashboard/profile')
+                  !route.path.includes('/profile')
                     ? 'text-[#1570EF]'
                     : 'text-[#717680]',
                 ]"

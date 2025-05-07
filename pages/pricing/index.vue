@@ -2,7 +2,7 @@
   <main v-if="stepCount === 1">
     <div class="py-5 px-3 border-b border-gray-200 md:hidden">
       <div class="flex justify-between items-center">
-        <NuxtLinkLocale :to="'/dashboard'">
+        <NuxtLinkLocale :to="'/school-list'">
           <div class="cursor-pointer flex items-center gap-2">
             <IconArrowsterLogo class="size-8 min-w-8" />
             <img
@@ -145,7 +145,7 @@
       <p class="font-medium text-lg sm:text-3xl mt-4 text-white">
         {{ $t('pricing_page.thank_you_for_your_submission!') }}
       </p>
-      <NuxtLinkLocale :to="'/dashboard'" class="w-full">
+      <NuxtLinkLocale :to="'/school-list'" class="w-full">
         <button
           class="bg-white text-sm sm:text-base text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8 max-w-[330px]"
         >

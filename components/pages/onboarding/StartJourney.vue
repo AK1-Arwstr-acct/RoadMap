@@ -15,7 +15,7 @@
         </h1>
       </div>
       <div class="px-14">
-        <NuxtLinkLocale :to="'/dashboard'">
+        <NuxtLinkLocale :to="'/school-list'">
           <button class="w-full text-white bg-[#1570EF] rounded-lg py-2.5">
             {{ $t("onboarding.start_your_journey") }}
           </button>

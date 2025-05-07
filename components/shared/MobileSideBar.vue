@@ -159,11 +159,6 @@ const tabList: TabList[] = [
   //   route: "/dashboard/profile",
   // },
   {
-    name: t("dashboard.sidebar.menu.home"),
-    icon: IconTabHome,
-    route: "/dashboard",
-  },
-  {
     name: t("dashboard.sidebar.menu.roadmap"),
     icon: IconTabApplication,
     route: "/roadmap",
@@ -205,7 +200,7 @@ const updateTab = (item: string) => {
 };
 
 const handleLogo = () => {
-  navigateTo(localePath("/dashboard"));
+  navigateTo(localePath("/school-list"));
   emit("close");
 };
 const talkToUs = () => {
@@ -213,7 +208,7 @@ const talkToUs = () => {
   emit("close");
 };
 const handleProfile = () => {
-  navigateTo(localePath("/dashboard/profile"));
+  navigateTo(localePath("/profile"));
   emit("close");
 };
 </script>

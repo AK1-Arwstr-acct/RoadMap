@@ -125,21 +125,6 @@ const toggleSelection = (id: number) => {
 
 const submit = async () => {
   try {
-    if (route.path.includes("/demo")) {
-      if (selectedLPrograms.value.length > 0) {
-        dashboardStore.schoolsList = dashboardStore.filterSchoolsList.filter(
-          (item) => {
-            let program_names: string[] = dashboardStore.majorsList
-              .filter((item) => selectedLPrograms.value.includes(item.value))
-              .map((major) => major.label);
-            return program_names.includes(item.program_title);
-          }
-        );
-      } else {
-        dashboardStore.schoolsList = dashboardStore.filterSchoolsList;
-      }
-      return;
-    }
     dashboardStore.isSchoolsLoading = true;
     if (selectedLPrograms.value.length > 0) {
       await dashboardStore.runEngine();
@@ -197,24 +182,6 @@ watch(
     } else {
       majorProgramsList.value = [];
       dashboardStore.schoolsList = [];
-    }
-  }
-);
-
-// for demo page
-watch(
-  () => majorProgramsList.value,
-  () => {
-    selectedLPrograms.value = [];
-  }
-);
-
-watch(
-  () => dashboardStore.majorsList,
-  () => {
-    if (route.path.includes("/demo")) {
-      majorProgramsList.value = dashboardStore.majorsList;
-      return;
     }
   }
 );

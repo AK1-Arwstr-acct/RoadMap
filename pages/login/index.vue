@@ -299,7 +299,7 @@ const submit = async () => {
     await appStore.getUserData();
     await appStore.checkAuthenticatedUser();
     if (response.data.data.onboarded) {
-      navigateTo(localePath("/dashboard"));
+      navigateTo(localePath("/school-list"));
     } else {
       navigateTo(localePath("/onboarding"));
     }

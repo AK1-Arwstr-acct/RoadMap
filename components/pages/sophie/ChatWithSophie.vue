@@ -42,7 +42,7 @@
           </button>
         </div>
       </div>
-      <div class="flex-1 overflow-hidden" :class="{ '': !isModal }">
+      <div class="flex-1 overflow-hidden">
         <div
           v-show="chatOrHistory === 'history'"
           class="h-full"
@@ -60,7 +60,7 @@
         </div>
         <div
           v-show="chatOrHistory === 'messages'"
-          class="flex-1 py-4 px-5 w-full h-full"
+          class="flex-1 p-6 w-full h-full"
         >
           <SophieChat
             :isNewChat="isNewChat"

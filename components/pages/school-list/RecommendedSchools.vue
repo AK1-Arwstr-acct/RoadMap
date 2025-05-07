@@ -13,8 +13,13 @@
         "
         class="flex flex-col md:flex-row justify-between md:items-center w-full gap-2 md:gap-0"
       >
-        <p class="text-[#535862]">
-          {{ dashboardStore.totalSchool || 0 }} {{ $t("schoolList_page.schools_match_your_profile") }}
+        <p v-if="route.path.includes('/demo')" class="text-[#535862]">
+          {{ dashboardStore.schoolsList.length || 0 }}
+          {{ $t("schoolList_page.schools_match_your_profile") }}
+        </p>
+        <p v-else class="text-[#535862]">
+          {{ dashboardStore.totalSchool || 0 }}
+          {{ $t("schoolList_page.schools_match_your_profile") }}
         </p>
         <FilterDropdown
           :placeholder="t('schoolList_page.sort_by')"
@@ -27,14 +32,15 @@
     </div>
     <div v-if="deviceType === 'mobile' || deviceType === 'tablet'" class="my-6">
       <component
-        v-if="dashboardStore.isSchoolListPublic || (route.path.includes('/demo'))"
+        v-if="dashboardStore.isSchoolListPublic || route.path.includes('/demo')"
         :is="mobile.PublicUserDataInfo"
       />
       <component v-else :is="mobile.UserDataInfo" />
     </div>
     <PublicInfo
       v-if="
-        dashboardStore.isSchoolListPublic && !dashboardStore.schoolsList.length
+        (dashboardStore.isSchoolListPublic || route.path.includes('/demo')) &&
+        !dashboardStore.schoolsList.length
       "
     />
     <div v-else class="flex-1 flex flex-col gap-6 md:pb-6 mr-px">
@@ -127,7 +133,7 @@ const dashboardStore = useDashboardStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const deviceType = useDeviceType();
-const {t} = useI18n();
+const { t } = useI18n();
 const route = useRoute();
 
 const mobile = {
@@ -145,22 +151,22 @@ const isDetailModal = ref<boolean>(false);
 const sortFilters = ref<OptionAttributes[]>([
   {
     value: "1",
-    label: `${t('schoolList_page.rank_high_to_low')}`,
+    label: `${t("schoolList_page.rank_high_to_low")}`,
     icon: shallowRef(IconRankDown),
   },
   {
     value: "2",
-    label: `${t('schoolList_page.rank_low_to_high')}`,
+    label: `${t("schoolList_page.rank_low_to_high")}`,
     icon: shallowRef(IconRankUp),
   },
   {
     value: "3",
-    label: `${t('schoolList_page.price_high_to_low')}`,
+    label: `${t("schoolList_page.price_high_to_low")}`,
     icon: shallowRef(IconPriceDown),
   },
   {
     value: "4",
-    label: `${t('schoolList_page.price_low_to_high')}`,
+    label: `${t("schoolList_page.price_low_to_high")}`,
     icon: shallowRef(IconPriceUp),
   },
 ]);

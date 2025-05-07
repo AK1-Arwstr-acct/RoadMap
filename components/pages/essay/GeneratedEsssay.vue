@@ -1,9 +1,9 @@
 <template>
-  <div class="h-fit flex flex-col items-center">
+  <div class="h-full flex flex-col items-center">
     <div
-      class="flex w-full justify-between items-center py-5 sm:py-8 px-5 sm:px-28 md:border-b border-[#E9EAEB]"
+      class="flex w-full justify-between items-center py-5 px-5 sm:px-28 md:border-b border-[#E9EAEB]"
     >
-      <NuxtLinkLocale
+      <!-- <NuxtLinkLocale
         :to="'/dashboard'"
         v-if="deviceType !== 'mobile'"
         class="flex gap-2 items-center cursor-pointer"
@@ -11,10 +11,10 @@
         <img
           src="/images/logo/logo.svg"
           alt="Logo"
-          class="w-40 md:w-44 h-6 md:h-7"
+          class="w-40 h-6"
           loading="eager"
         />
-      </NuxtLinkLocale>
+      </NuxtLinkLocale> -->
       <button
         @click="submit"
         :disabled="isSubmitting || isSubmitedBefore"
@@ -27,7 +27,7 @@
     <div
       class="flex-1 w-full flex justify-center overflow-y-auto custom-scrollbar"
     >
-      <div class="px-5 sm:w-[70%] md:w-[50%] h-fit py-[12px] md:py-[42px]">
+      <div class="px-6 h-fit py-[12px] md:py-[42px]">
         <div>
           <h1 class="text-[#181D27] text-3xl font-medium mb-8">
             {{ essayStore.finalEssay?.title }}

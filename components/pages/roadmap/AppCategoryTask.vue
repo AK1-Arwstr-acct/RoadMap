@@ -56,10 +56,9 @@
       <div
         v-for="(task, idx) in filteredTask(category)"
         :key="idx"
-        @click.prevent="handelTaskDetail(task)"
+        @click.stop="handelTaskDetail(task)"
       >
         <label
-          :for="`task-${task.id}`"
           class="mt-6 flex items-center gap-4 size-full rounded-2xl cursor-pointer pl-4 pr-5 py-3 transition-all ease-in-out duration-200"
           :class="[
             appTrackerStore.taskActiveStates[task.id]
@@ -67,13 +66,6 @@
               : 'border-[1.5px] border-gray-200 bg-[#FFFFFF]',
           ]"
         >
-          <input
-            :id="`task-${task.id}`"
-            type="checkbox"
-            name="countries"
-            :checked="task.checked"
-            class="absolute top-3 right-3 appearance-none"
-          />
           <div class="size-[64px]">
             <img
               :src="imageSrc"
@@ -83,21 +75,6 @@
             />
           </div>
           <div class="flex-1 space-y-2">
-            <!-- <p
-              class="font-medium text-xs md:text-sm py-0.5 px-2.5 rounded-full capitalize w-fit"
-              :class="[
-                category === 'country'
-                  ? categoryClass(task.category.title)
-                  : categoryClass(category),
-              ]"
-            >
-              <span v-if="category !== 'country'">
-                {{ category.includes("extracurricular") ? "EC" : category }}
-              </span>
-              <span v-else>
-                {{ task.category.title }}
-              </span>
-            </p> -->
             <p class="text-[#414651] font-semibold">
               {{ task.title }}
             </p>
@@ -107,6 +84,10 @@
             </div>
           </div>
           <div
+            @click.stop="
+              task.checked = !task.checked;
+              handelClick(task);
+            "
             class="size-5 rounded-[4px] border-[1.5px] flex justify-center items-center"
             :class="[
               task.checked
@@ -119,16 +100,59 @@
         </label>
       </div>
     </div>
+    <!-- paywall -->
+
+    <Transition name="fade">
+      <div
+        v-if="progressSoftPaywall"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center"
+      >
+        <div
+          class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
+        >
+          <div class="flex flex-col items-center">
+            <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
+            <p class="text-[#181D27] text-lg font-semibold text-center">
+              Sign up to track your progress!
+            </p>
+            <p class="text-[#535862] text-sm text-center mt-2">
+              Mark tasks as complete and keep track of your journey toward your
+              dream school. Sign up now to save your progress!
+            </p>
+          </div>
+          <div class="flex gap-3">
+            <button
+              @click="progressSoftPaywall = false"
+              class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
+            >
+              Cancel
+            </button>
+            <NuxtLinkLocale
+              :to="'/signup'"
+              class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+            >
+              Sign up for free
+            </NuxtLinkLocale>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </section>
 </template>
 <script setup lang="ts">
 import type { Application, Task } from "~/types/dashboard";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
+import useAppStore from "~/stores/AppStore";
+import useSophieStore from "~/stores/sophieStore";
 
 const emit = defineEmits(["openTaskDetail", "hightChanged"]);
 
 const appTrackerStore = useAppTrackerStore();
 const localePath = useLocalePath();
+const appStore = useAppStore();
+const sophieStore = useSophieStore();
+const route = useRoute();
+const { api } = useApi();
 
 const props = defineProps({
   application: {
@@ -144,6 +168,7 @@ const props = defineProps({
 const isOpen = ref<boolean>(false);
 const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
+const progressSoftPaywall = ref<boolean>(false);
 
 const imageSrc = computed(() => {
   return props.category?.includes("career")
@@ -191,11 +216,15 @@ const handelTaskDetail = async (task: Task) => {
       appTrackerStore.taskActiveStates[Number(key)] = false;
     }
   });
-  // temporary code for new-flow
-  navigateTo(localePath("/sophie"));
-  return;
-  //
-  emit("openTaskDetail", task);
+  sophieStore.roadmapTaskDetail = task;
+  console.log('clicked');
+  if(task.feature_state?.toLowerCase().includes('sophie')){
+    navigateTo(localePath("/sophie"));
+  } else if(task.feature_state?.toLowerCase().includes('essay')) {
+    navigateTo(localePath("/ai-essay"));
+  } else {
+    navigateTo(localePath("/school-list"));
+  } 
 };
 
 const filteredTask = (category: string) => {
@@ -206,6 +235,21 @@ const filteredTask = (category: string) => {
     item.category.title.includes(category)
   );
   return tasks;
+};
+
+const handelClick = async (task: Task) => {
+  try {
+    if (!appStore.authenticatedUser) {
+      progressSoftPaywall.value = true;
+      return;
+    }
+    await api.post("/api/v1/roadmap/tasks", {
+      task_id: task?.id,
+      is_complete: task?.checked,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const calculateHeight = () => {
