@@ -35,7 +35,7 @@
             </div>
           </div>
           <p
-            class="text-[#414651] font-semibold w-fit border-b border-[#414651]/50 leading-4"
+            class="text-[#1570EF] font-semibold w-fit border-b border-[#1570EF]/50 leading-4 cursor-pointer"
           >
             {{ appStore.userData?.name }}
           </p>
