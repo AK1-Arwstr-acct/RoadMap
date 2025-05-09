@@ -26,7 +26,9 @@
         <textarea
           ref="textarea"
           @input="adjustHeight"
-          @keydown.enter.exact.prevent="handleNext"
+          @keydown.enter.exact.prevent="
+            inputText.trim().length >= 2 && handleNext()
+          "
           @keydown.enter.ctrl.prevent="addNewLine"
           type="text"
           :placeholder="
@@ -41,7 +43,7 @@
         />
         <button
           @click="handleNext"
-          :disabled="!inputText"
+          :disabled="inputText.trim().length < 2"
           class="flex items-center gap-2 text-white py-2 px-3.5 bg-[#1570EF] rounded-lg disabled:opacity-40"
         >
         {{ $t('ai_essay_page.next') }}

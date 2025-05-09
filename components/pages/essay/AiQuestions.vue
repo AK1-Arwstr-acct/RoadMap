@@ -200,7 +200,9 @@
               class="w-full outline-none resize-none custom-scrollbar my-auto"
               v-model="inputText"
               @input="adjustHeight"
-              @keydown.enter.exact.prevent="handleNext"
+              @keydown.enter.exact.prevent="
+                inputText.trim().length >= 2 && handleNext()
+              "
               @keydown.enter.ctrl.prevent="addNewLine"
               rows="1"
               autofocus
@@ -208,7 +210,7 @@
             />
             <button
               @click="handleNext"
-              :disabled="!inputText"
+              :disabled="inputText.trim().length < 2"
               class="flex items-center gap-2 text-white text-sm sm:text-base py-2 px-3.5 bg-[#1570EF] rounded-lg disabled:opacity-40 text-nowrap"
             >
               {{ $t("ai_essay_page.next") }}
