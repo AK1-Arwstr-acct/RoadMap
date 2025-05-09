@@ -49,7 +49,7 @@ const hotjarConfig = () => {
           function () {
             (h.hj.q = h.hj.q || []).push(arguments);
           };
-        h._hjSettings = { hjid: 5320387, hjsv: 6 };
+        h._hjSettings = { hjid: runtimeConfig.public.hotjarId, hjsv: 6 };
         a = o.getElementsByTagName("head")[0];
         r = o.createElement("script");
         r.async = 1;
@@ -65,7 +65,7 @@ const hotjarConfig = () => {
           function () {
             (h.hj.q = h.hj.q || []).push(arguments);
           };
-        h._hjSettings = { hjid: 6372129, hjsv: 6 };
+        h._hjSettings = { hjid: runtimeConfig.public.hotjarId, hjsv: 6 };
         a = o.getElementsByTagName("head")[0];
         r = o.createElement("script");
         r.async = 1;
@@ -76,30 +76,8 @@ const hotjarConfig = () => {
   }
 };
 
-function getHotjarSessionId() {
-  const siteId = 6372129;
-  // const hotjarUserCookie = useCookie(`_hjSessionUser_6372129`); // Exact match of the cookie name
-
-  // console.log(hotjarUserCookie.value); // Check if it returns the expected cookie value
-
-  // console.log("check:", `_hjSessionUser_${siteId}`);
-  // // const hotjarId =
-  // //   hotjarCookie && hotjarCookie.split("=")[0] === `_hjSession_${siteId}`
-  // //     ? hotjarCookie.split("=")[1]
-  // //     : null;
-
-  // // console.log("Hotjar Session ID:", hotjarId);
-  const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
-  console.log("Cookies:", cookies);
-  const hotjarCookie = cookies.find((cookie) => cookie.startsWith(`_hjSession_${siteId}`));
-  console.log("hotjarCookie:", hotjarCookie);
-}
-
 onMounted(async () => {
   await appStore.getUserData();
   await hotjarConfig();
-  setTimeout(() => {
-    getHotjarSessionId();
-  }, 3000);
 });
 </script>

@@ -11,14 +11,18 @@ export const useApi = () => {
 
   api.interceptors.request.use(config => {
     const token = useCookie('token');
-    const hotjarId = window.hj ? window.hj.q?.find(([event]) => event === 'hjid')?.[1] : null;
+
+    const runtimeConfig = useRuntimeConfig();
+    const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
+    const hotjarUserCookie = cookies.find((cookie) => cookie.startsWith(`_hjSessionUser_${runtimeConfig.public.hotjarId}=`));
 
     if (token.value) {
       config.headers["Authorization"] = `Bearer ${token.value}`;
     }
 
-    if (hotjarId) {
-      config.headers["hotjarId"] = hotjarId;
+    if (hotjarUserCookie) {
+      const sessionId = hotjarUserCookie.split('=')[1];
+      config.headers["hotjarId"] = sessionId;
     }
 
     return config;
