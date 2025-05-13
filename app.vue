@@ -60,12 +60,6 @@ const hotjarConfig = () => {
         r = o.createElement("script");
         r.async = 1;
         r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-        r.onload = () => {
-          if (appStore.userData && window.hj) {
-            const userId: string = `${appStore.userData.id}`;
-            window.hj("identify", userId);
-          }
-        };
         a.appendChild(r);
       })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
     }
@@ -73,16 +67,20 @@ const hotjarConfig = () => {
 };
 
 watch(
-  () => appStore.authenticatedUser,
+  () => appStore.userData,
   async (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      await hotjarConfig();
+    if (newValue && window.hj) {
+      window.hj("identify", String(appStore.userData?.id), {
+        email: appStore.userData?.email || "",
+        name: appStore.userData?.name || "",
+      });
     }
-  }
+  },
+  { immediate: true, deep: true }
 );
 
 onMounted(async () => {
   await appStore.getUserData();
-  await hotjarConfig();
+  hotjarConfig();
 });
 </script>
