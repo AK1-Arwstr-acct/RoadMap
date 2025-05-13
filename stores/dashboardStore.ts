@@ -12,7 +12,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const isSchoolListPublic = ref<boolean>(!appStore.authenticatedUser);
     const selectedFilter = ref<OptionAttributes | null>(null);
-    const isSchoolsLoading = ref<boolean>(false);
+    const isSchoolsLoading = ref<boolean>(true);
     const enginePosition = ref<"pre" | "post" | "final">("pre");
     const sortParam = ref<FilterKey | null>(null);
     const programListOptions = ref<OptionAttributes[]>([])

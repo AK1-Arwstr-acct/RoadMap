@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed w-[92%] right-0 top-0 z-50 bottom-0 bg-white flex flex-col gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
+    class="fixed w-[92%] right-[2px] top-0 z-50 bottom-0 bg-white flex flex-col gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
   >
     <div class="flex justify-between items-center p-4 border-b border-gray-200">
       <div

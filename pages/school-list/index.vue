@@ -148,6 +148,7 @@ onMounted(async () => {
       await nextTick();
       dashboardStore.setProgramListOptions();
       isTokenLoading.value = false;
+      dashboardStore.isSchoolsLoading = false;
     }
     return;
   }

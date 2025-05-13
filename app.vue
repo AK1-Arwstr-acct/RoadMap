@@ -42,22 +42,12 @@ const appStore = useAppStore();
 const hotjarConfig = () => {
   const runtimeConfig = useRuntimeConfig();
   if (import.meta.client) {
-    if (runtimeConfig.public.appMode == "https://app.arrowster.com") {
-      (function (h, o, t, j, a, r) {
-        h.hj =
-          h.hj ||
-          function () {
-            (h.hj.q = h.hj.q || []).push(arguments);
-          };
-        h._hjSettings = { hjid: runtimeConfig.public.hotjarId, hjsv: 6 };
-        a = o.getElementsByTagName("head")[0];
-        r = o.createElement("script");
-        r.async = 1;
-        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-        a.appendChild(r);
-      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
-    } else if (
-      runtimeConfig.public.appMode == "https://roadmap.arrowster.com"
+    const appMode = runtimeConfig.public.appMode;
+    const hotjarId = runtimeConfig.public.hotjarId;
+
+    if (
+      appMode == "https://app.arrowster.com" ||
+      appMode == "https://roadmap.arrowster.com"
     ) {
       (function (h, o, t, j, a, r) {
         h.hj =
@@ -65,16 +55,31 @@ const hotjarConfig = () => {
           function () {
             (h.hj.q = h.hj.q || []).push(arguments);
           };
-        h._hjSettings = { hjid: runtimeConfig.public.hotjarId, hjsv: 6 };
+        h._hjSettings = { hjid: hotjarId, hjsv: 6 };
         a = o.getElementsByTagName("head")[0];
         r = o.createElement("script");
         r.async = 1;
         r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        r.onload = () => {
+          if (appStore.userData && window.hj) {
+            const userId: string = `${appStore.userData.id}`;
+            window.hj("identify", userId);
+          }
+        };
         a.appendChild(r);
       })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
     }
   }
 };
+
+watch(
+  () => appStore.authenticatedUser,
+  async (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      await hotjarConfig();
+    }
+  }
+);
 
 onMounted(async () => {
   await appStore.getUserData();

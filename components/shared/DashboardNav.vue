@@ -85,7 +85,7 @@
           <img
             src="/images/logo/logo.svg"
             alt="Logo"
-            class="w-full h-5"
+            class="h-5"
             loading="eager"
           />
         </div>
