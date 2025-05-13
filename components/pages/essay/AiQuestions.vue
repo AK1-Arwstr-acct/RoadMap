@@ -3,27 +3,8 @@
     class="size-full overflow-hidden flex flex-col items-center"
     :class="{ 'overflow-y-auto pb-4': phase === 'keepGoing' }"
   >
-    <div
-      class="py-5 md:py-7 px-5 sm:px-20 xl:px-[170px] flex flex-col gap-6 md:gap-10 w-full"
-    >
+    <div class="py-6 px-[24px] flex flex-col gap-6 md:gap-10 w-full">
       <div class="flex items-center gap-6">
-        <div
-          v-if="phase !== 'chooseStyle'"
-          @click="emit('goBack')"
-          class="cursor-pointer hidden md:block"
-        >
-          <IconCross fill="#717680" class="size-6 md:size-8" />
-        </div>
-        <div
-          v-else
-          @click="phase = 'keepGoing'"
-          class="cursor-pointer hidden md:block"
-        >
-          <IconArrowDownThick
-            stroke="#717680"
-            class="transform rotate-90 size-6 md:size-8"
-          />
-        </div>
         <div
           class="flex-1 w-full rounded-full bg-[#F5F5F5] overflow-hidden h-2 md:h-3"
         >
@@ -32,7 +13,7 @@
             :style="{ maxWidth: `${essayStore.essayProgress}%` }"
           />
         </div>
-        <div class="w-5 md:w-7 h-[34px] md:h-[42px] hidden md:block">
+        <div class="w-5 h-[32px] hidden md:block">
           <img
             src="/images/bulb.png"
             class="size-full object-contain"
@@ -55,29 +36,29 @@
     <!-- chat -->
     <div
       v-if="phase === 'keepGoing'"
-      class="w-full max-w-[592px] flex flex-col items-center gap-8 px-5"
+      class="w-full flex flex-col items-center gap-8 px-5"
     >
       <img
         src="/images/countries-application.png"
-        class="w-[300px] md:w-[536px]"
+        class="w-[200px] md:w-[260px]"
         loading="eager"
       />
       <h1
-        class="text-[#181D27] font-semibold text-xl text-center justify-center sm:text-[34px]"
+        class="text-[#181D27] font-semibold text-xl text-center justify-center"
       >
         {{ $t("ai_essay_page.great_progress") }}
       </h1>
       <div class="flex flex-col items-center justify-center gap-5">
         <button
           @click="phase = 'chooseStyle'"
-          class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold flex justify-center items-center gap-2 w-[360px]"
+          class="bg-[#1570EF] rounded-lg py-3 px-5 text-white text-sm font-semibold flex justify-center items-center gap-2 w-[260px]"
         >
           {{ $t("ai_essay_page.keep_going") }}
           <IconArrowRight fill="#ffffff" width="20" height="20" />
         </button>
         <p
           @click="phase = 'questionPhase'"
-          class="text-[#535862] font-semibold cursor-pointer"
+          class="text-[#535862] font-semibold cursor-pointer text-sm"
         >
           {{ $t("ai_essay_page.go_back_and_make_some_changes") }}
         </p>
@@ -90,7 +71,7 @@
       >
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-5 sm:px-20 md:px-40 2xl:px-96"
+          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-6"
         >
           <div class="size-full h-fit flex flex-col gap-8">
             <ChatMessage
@@ -186,7 +167,7 @@
             </div>
           </div>
         </div>
-        <div class="px-5 sm:px-20 md:px-40 2xl:px-96">
+        <div class="px-5">
           <div
             v-if="questionStep < 5 && phase === 'questionPhase'"
             class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex items-start gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
@@ -200,7 +181,9 @@
               class="w-full outline-none resize-none custom-scrollbar my-auto"
               v-model="inputText"
               @input="adjustHeight"
-              @keydown.enter.exact.prevent="handleNext"
+              @keydown.enter.exact.prevent="
+                inputText.trim().length >= 2 && handleNext()
+              "
               @keydown.enter.ctrl.prevent="addNewLine"
               rows="1"
               autofocus
@@ -208,7 +191,7 @@
             />
             <button
               @click="handleNext"
-              :disabled="!inputText"
+              :disabled="inputText.trim().length < 2"
               class="flex items-center gap-2 text-white text-sm sm:text-base py-2 px-3.5 bg-[#1570EF] rounded-lg disabled:opacity-40 text-nowrap"
             >
               {{ $t("ai_essay_page.next") }}

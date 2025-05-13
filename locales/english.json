@@ -65,92 +65,6 @@
         "login": "Log in",
         "signup": "Sign up"
     },
-    "dashboard_home_page": {
-        "ai_chat_assistant": {
-            "description": "Ask anything and get instant help.",
-            "title": "AI Chat Assistant"
-        },
-        "ai_essay_generator": {
-            "description": "Instantly draft high-quality essays.",
-            "title": "AI Essay Generator"
-        },
-        "ai_powered_tools": "AI-Powered Tools",
-        "article1": {
-            "buttonText": "Read more about Jennifer’s story",
-            "details": "Meet Quỳnh Anh, who secured scholarships worth $176,000 at Depauw and $167,000 at Augustana! Once ready to abandon her US dreams due to fears and complex applications, she found transformation with Arrowster mentors. \"Thanh showed me countless pathways when lost, Toàn provided 24/7 support, and Ken (Oxford, Harvard) offered straightforward guidance. Previously traumatized by counselors, now I comfortably ask anything—even sending midnight essays with detailed feedback by morning.\""
-        },
-        "article2": {
-            "buttonText": "Read more about Tien’s story",
-            "details": "Meet Cao Tiến, who secured scholarships worth $100,000 at Franklin & Marshall, $120,000 at Baylor, and $80,000 at Arizona State. Working with mentor Hoài Thanh, he navigated through 8-9 revisions—even during holidays—to craft an authentic essay that stood out. \"Online guides say 'tell your story' but few show HOW within 650 words. Having a knowledgeable mentor helped me see my story from different angles, despite the 'intense' feedback.\""
-        },
-        "discord_community": "Discord Community",
-        "expert_mentorship": {
-            "description": "Besides this AI product, we also offer mentoring services!",
-            "title": "Expert Mentorship"
-        },
-        "facebook_community": "Facebook Community",
-        "headline": "Get into your dream school with Sophie AI + Expert mentorship",
-        "join_community": "Join Community",
-        "mentorship_features": [
-            "1-1 support for essays, scholarships, extracurriculars",
-            "Exclusive training & resources",
-            "With mentors from Harvard, UPenn, Yonsei, and more",
-            "For free!"
-        ],
-        "program_1": {
-            "cta_text": "Read here",
-            "description": "100 pages covering every topic of study abroad: choosing major, building profile, applying for scholarships, writing essays, and more!",
-            "title": "Arrowster Exclusive Study Abroad Handbook"
-        },
-        "program_2": {
-            "cta_text": "Exclusive Content – Work with us to access",
-            "description": "Sharing session by our mentor Thanh (Harvard MBA) on a strategic framework to choose the right major and prepare to get a job after graduation.",
-            "title": "Training Session 1: How to Select the Best Major for Jobs after Graduation"
-        },
-        "program_3": {
-            "cta_text": "Exclusive Content – Work with us to access",
-            "description": "List of scholarships for Vietnamese students across all countries (US, Australia, Canada, Europe, etc).",
-            "title": "Centralised Scholarship (2025-2026)"
-        },
-        "program_and_resources_for_you": "Programs and resources for you",
-        "section_title": "Trusted by students from Top Universities",
-        "smart_school_matching": {
-            "description": "Get AI-recommended best-fit schools.",
-            "title": "Smart School Matching"
-        },
-        "stepsList": {
-            "step1": {
-                "description": "Find your perfect-fit schools with AI recommendations.",
-                "navigate_text": "Find Your Best-Fit Schools in 60 Seconds",
-                "title": "Schools list"
-            },
-            "step2": {
-                "description": "Ask questions anytime and get instant guidance.",
-                "navigate_text": "Chat with Sophie AI for Free",
-                "title": "Sophie Assistant"
-            },
-            "step3": {
-                "description": "See deadlines and track what you need to prepare.",
-                "navigate_text": "View your Plan",
-                "title": "Roadmap"
-            },
-            "step4": {
-                "description": "Get AI-crafted essay drafts tailored to your unique story.",
-                "navigate_text": "Generate Your Essay Now",
-                "title": "AI Essay Editor"
-            },
-            "step5": {
-                "description": "1-on-1 mentorship to craft your perfect application plan.",
-                "navigate_text": "Talk to a Mentor",
-                "title": "Expert Mentorship"
-            }
-        },
-        "student_achievements_title": "Our students' achievements",
-        "subheadline": "Personalized guidance, strategic tools, and 1-on-1 mentorship to help you succeed.",
-        "tagline": "AI tools + Expert guidance = Success",
-        "threads_community": "Threads Community",
-        "view_all": "View All"
-    },
     "discover": {
         "detail": "Just 2 minutes away from unlocking 5 powerful AI tools—from school matching to essay help—plus 100+ pages of exclusive study abroad guides",
         "get_started": "Get Started",
@@ -173,10 +87,10 @@
         "confirm_your_password": "Confirm your password"
     },
     "homepage": {
-        "title": "You're 2 minutes away from...",
+        "title": "Find Your Best-Fit Schools in Seconds",
         "description": {
-            "part1": "5 powerful AI tools - from school matching to essay help, 100+ pages of exclusive study abroad materials, hours of sharing sessions from our team mentors",
-            "part2": "What are you waiting for?"
+            "part1": "Let our AI match you with the right universities based on your profile, preferences, and goals.",
+            "buttonText": "Generate Personalised School List"
         }
     },
     "login": {
@@ -374,12 +288,26 @@
         "jump_to_post_application": "Jump to Post - Application",
         "missed_deadline_description": "to see how we can create a new plan just for you. You’re still in the game!",
         "missed_deadline_title": "Missed the Deadline? No Worries!",
+        "paywall_progress":{
+            "heading":"Sign up to track your progress!",
+            "detail" : "Mark tasks as complete and keep track of your journey toward your dream school. Sign up now to save your progress!",
+            "cancel" : "Cancel",
+            "sign_up_for_free" : "Sign up for free"
+        },
+        "paywall_resources":{
+            "heading":"Sign up to access all resources",
+            "detail" : "Save your progress, track your journey, and unlock all the resources you need to reach your dream school!",
+            "cancel" : "Cancel",
+            "sign_up_for_free" : "Sign up for free"
+        },
         "post_application": "Post - Application",
         "pre_application": "Pre - Application",
         "review": "Review",
         "roadmap": "Roadmap",
         "start_here": "Start here",
-        "steps": "Steps"
+        "steps": "Steps",
+        "your_personalised_application": "Your Personalised Application",
+        "checklist": "Checklist"
     },
     "schoolList_page": {
         "about": "About",
@@ -470,6 +398,10 @@
         "start_a_new_chat_with_sophie": "Start a new chat with Sophie",
         "undergraduate": "Undergraduate",
         "upgrade_now": "Upgrade now",
+        "welcome":{
+            "intro" : "Meet Sophie, your AI guide for study abroad success. Ask Sophie anything - from choosing universities to perfecting your application. Just type your question or pick a suggested prompt to get started.",
+            "welcome": "Welcome"
+        },
         "what_scholarships_can_i_apply_for": "What scholarships can I apply for?",
         "which_country_will_suit_me_most_for_study_abroad": "Which country will suit me most for study abroad?",
         "which_major_should_i_choose": "Which major should I choose?",

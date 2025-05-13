@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
     const allowedPaths = [
         "/onboarding",
-        "/dashboard/profile",
+        "/profile",
     ];
 
     const requiresAuth = allowedPaths.some((path) => to.path.startsWith(path));

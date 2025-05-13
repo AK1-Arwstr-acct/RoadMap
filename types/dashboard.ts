@@ -29,6 +29,11 @@ interface Task {
     resources: Resources[];
     category: Category;
     users: [];
+    feature_state: string;
+    common_questions_prompt: PropmtQuestion[];
+}
+interface PropmtQuestion {
+    text: string;
 }
 interface Application {
     id: number;

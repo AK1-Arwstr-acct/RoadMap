@@ -13,6 +13,8 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const preApplication = ref<Application>();
     const applicationList = ref<Application[]>([]);
     const postApplication = ref<Application>();
+    // layout sidebar
+    const isSidebarOpen = ref<boolean>(false);
 
     const getRoadmapData = async () => {
         try {
@@ -39,6 +41,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
         preApplication,
         postApplication,
         applicationList,
+        isSidebarOpen,
         getRoadmapData
     }
 });

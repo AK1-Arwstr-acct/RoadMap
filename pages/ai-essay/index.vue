@@ -1,6 +1,6 @@
 <template>
-  <main class="h-dvh flex flex-col">
-    <div
+  <main class="size-full flex flex-col">
+    <!-- <div
       v-if="deviceType === 'mobile'"
       class="py-5 px-3 border-b border-gray-200"
     >
@@ -47,7 +47,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
     <div
       v-if="!essayStore.finalEssay && !essayStore.tryFreeArrowster"
       class="flex-1 overflow-hidden"
@@ -56,7 +56,7 @@
         v-if="!isAiQuestionStart"
         class="size-full p-4 md:p-8 flex flex-col overflow-y-auto no-scrollbar"
       >
-        <div
+        <!-- <div
           v-if="deviceType !== 'mobile'"
           class="flex justify-between items-start"
         >
@@ -77,29 +77,29 @@
           >
             <IconCross fill="#717680" class="size-6 md:size-8" />
           </div>
-        </div>
+        </div> -->
         <div class="flex-1 md:p-6 flex justify-center items-center">
           <PublicUserInfo v-if="getUserInfo" @submit="startQuestions" />
           <div v-else class="flex flex-col gap-8 items-center max-w-[668px]">
             <img
               src="/images/pre-application.png"
-              class="w-[300px] md:w-[536px]"
+              class="w-[200px] md:w-[260px]"
               loading="eager"
             />
             <div>
               <h1
-                class="text-[#181D27] font-semibold text-xl text-center sm:text-[34px]"
+                class="text-[#181D27] font-semibold text-xl text-center"
               >
                 {{ $t("ai_essay_page.welcome_to_your_personal_essay_journey") }}
               </h1>
-              <p class="text-center text-[#535862] md:text-lg mt-4">
+              <p class="text-center text-[#535862] mt-4">
                 {{ $t("ai_essay_page.essay_intro_message") }}
               </p>
             </div>
             <div class="flex flex-col items-center justify-center gap-5 w-full">
               <button
                 @click="handelNext"
-                class="bg-[#1570EF] rounded-lg py-3 px-5 text-white font-semibold w-full sm:max-w-56 flex justify-center"
+                class="bg-[#1570EF] rounded-lg py-2 px-3.5 text-white text-sm font-semibold w-full sm:max-w-48 flex justify-center"
               >
                 <span
                   class="flex justify-center items-center gap-2 w-max text-nowrap"
@@ -108,12 +108,6 @@
                   <IconArrowRight fill="#ffffff" width="20" height="20" />
                 </span>
               </button>
-              <p
-                @click="router.back()"
-                class="text-[#535862] font-semibold cursor-pointer"
-              >
-                {{ $t("ai_essay_page.go_back") }}
-              </p>
             </div>
             <!-- upgrade popup -->
             <!-- <div
@@ -159,6 +153,10 @@
 import useEssayStore from "~/stores/essayStore";
 import useAppStore from "~/stores/AppStore";
 import MobileSideBar from "~/components/shared/MobileSideBar.vue";
+
+definePageMeta({
+  layout: "home-layout",
+});
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();

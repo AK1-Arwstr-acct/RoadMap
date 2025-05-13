@@ -169,15 +169,12 @@ import IconAustralia from "../../icons/IconAustralia.vue";
 import IconUS from "../../icons/IconUS.vue";
 import IconEurope from "../../icons/IconEurope.vue";
 import useDashboardStore from "~/stores/dashboardStore";
-import { schoolDeatailList } from "~/utils/demoData";
 
 const emit = defineEmits(["openDetail"]);
 
 const { api } = useApi();
 const { showToast } = useToast();
-const localePath = useLocalePath();
 const dashboardStore = useDashboardStore();
-const route = useRoute();
 
 const props = defineProps({
   program: {
@@ -190,13 +187,6 @@ const isPublicPaywall = ref<boolean>(false);
 
 const schoolDetail = async () => {
   try {
-    if (route.path.includes("/demo")) {
-      let school = schoolDeatailList.find(
-        (item) => item.id === props.program.school.id
-      );
-      emit("openDetail", school);
-      return;
-    }
     if (dashboardStore.isSchoolListPublic) {
       isPublicPaywall.value = true;
       return;

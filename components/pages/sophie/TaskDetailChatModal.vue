@@ -1,0 +1,105 @@
+<template>
+  <div class="border border-gray-200 rounded-md bg-[#FAFAFA] p-4">
+    <p class="text-lg text-[#414651] font-semibold pb-4">
+      {{ sophieStore.roadmapTaskDetail?.title }}
+    </p>
+    <div
+      v-if="sophieStore.roadmapTaskDetail?.description"
+      class="text-[#181D27]"
+    >
+      <ClientOnly>
+        <vue-markdown
+          :source="sophieStore.roadmapTaskDetail?.description"
+          :options="options"
+          class="h-fit flex flex-col gap-4"
+        />
+        <!-- <p>Take this MBTI test to discover your true self!</p>
+                    <ul class="flex flex-col gap-1 list-inside list-disc">
+                      <li class="-indent-6 pl-6 marker:content-['-']">
+                        One of the most important elements of a compelling college
+                        application is authentic self-reflection. The ability to
+                        understand and convey your true identity shapes every
+                        aspect of your application.
+                      </li>
+                      <li class="-indent-6 pl-6 marker:content-['+']">
+                        This test serves as a starting point for deeper
+                        self-exploration. Rather than accepting the results at
+                        face value, use them as a catalyst to examine who you are
+                        and what you aspire to achieve. These insights will not
+                        only strengthen your college applications but also guide
+                        your broader life journey.
+                      </li>
+                    </ul> -->
+      </ClientOnly>
+    </div>
+    <div class="flex flex-col gap-6 mt-4">
+      <div
+        @click="handelResources(resource.link)"
+        v-for="(resource, idx) in sophieStore.roadmapTaskDetail?.resources"
+        :key="idx"
+        class="flex items-center gap-2 font-medium cursor-pointer"
+      >
+        <IconLink class="min-w-5" />
+        <p class="text-[#175CD3]">Resource: {{ resource.text }}</p>
+        <p class="text-sm bg-[#F5F5F5] rounded-full py-0.5 px-2.5">
+          {{ resource.link }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <Transition name="fade">
+    <div
+      v-if="resourcesSoftPaywall"
+      class="fixed z-20 inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center px-5"
+    >
+      <div
+        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
+      >
+        <div class="flex flex-col items-center">
+          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
+          <p class="text-[#181D27] text-lg font-semibold text-center">
+            {{ $t("roadmap_page.paywall_resources.heading") }}
+          </p>
+          <p class="text-[#535862] text-sm text-center mt-2">
+            {{ $t("roadmap_page.paywall_resources.detail") }}
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            @click="resourcesSoftPaywall = false"
+            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
+          >
+          {{ $t("roadmap_page.paywall_resources.cancel") }}
+          </button>
+          <NuxtLinkLocale
+            :to="'/signup'"
+            class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+          >
+          {{ $t("roadmap_page.paywall_resources.sign_up_for_free") }}
+          </NuxtLinkLocale>
+        </div>
+      </div>
+    </div>
+  </Transition>
+</template>
+<script setup lang="ts">
+import useSophieStore from "~/stores/sophieStore";
+import useAppStore from "~/stores/AppStore";
+
+const appStore = useAppStore();
+const sophieStore = useSophieStore();
+
+const resourcesSoftPaywall = ref<boolean>(false);
+
+const options = {
+  html: true,
+};
+
+const handelResources = (link: string) => {
+  if (!appStore.authenticatedUser) {
+    resourcesSoftPaywall.value = true;
+    return;
+  }
+  window.open(link, "_blank");
+};
+</script>

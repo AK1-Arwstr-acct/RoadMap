@@ -1,37 +1,27 @@
 <template>
-  <div class="h-fit flex flex-col items-center">
-    <div
-      class="flex w-full justify-between items-center py-5 sm:py-8 px-5 sm:px-28 md:border-b border-[#E9EAEB]"
-    >
-      <NuxtLinkLocale
-        :to="'/dashboard'"
-        v-if="deviceType !== 'mobile'"
-        class="flex gap-2 items-center cursor-pointer"
-      >
-        <img
-          src="/images/logo/logo.svg"
-          alt="Logo"
-          class="w-40 md:w-44 h-6 md:h-7"
-          loading="eager"
-        />
-      </NuxtLinkLocale>
-      <button
-        @click="submit"
-        :disabled="isSubmitting || isSubmitedBefore"
-        class="py-2.5 px-5 text-xs sm:text-sm font-semibold text-white bg-[#1570EF] rounded-lg flex items-center gap-2 disabled:opacity-60"
-      >
-      {{ $t('ai_essay_page.save_to_profile') }}
-        <IconSpinner v-if="isSubmitting" class="size-3.5" bgColor="#ffffff00" />
-      </button>
-    </div>
+  <div class="h-full flex flex-col items-center">
     <div
       class="flex-1 w-full flex justify-center overflow-y-auto custom-scrollbar"
     >
-      <div class="px-5 sm:w-[70%] md:w-[50%] h-fit py-[12px] md:py-[42px]">
+      <div class="px-6 h-fit py-[12px] md:py-[42px]">
         <div>
-          <h1 class="text-[#181D27] text-3xl font-medium mb-8">
-            {{ essayStore.finalEssay?.title }}
-          </h1>
+          <div class="relative flex justify-between items-start gap-4 mb-8">
+            <h1 class="text-[#181D27] text-3xl font-medium">
+              {{ essayStore.finalEssay?.title }}
+            </h1>
+            <button
+              @click="submit"
+              :disabled="isSubmitting || isSubmitedBefore"
+              class="py-2.5 px-5 text-xs sm:text-sm font-semibold text-white bg-[#1570EF] rounded-lg flex items-center gap-2 disabled:opacity-60"
+            >
+              {{ $t("ai_essay_page.save_to_profile") }}
+              <IconSpinner
+                v-if="isSubmitting"
+                class="size-3.5"
+                bgColor="#ffffff00"
+              />
+            </button>
+          </div>
           <div v-if="essayStore.finalEssay?.essayText" class="text-[#181D27]">
             <ClientOnly>
               <vue-markdown
@@ -43,7 +33,9 @@
           </div>
         </div>
         <div class="h-px bg-[#E9EAEB] my-6 md:my-[42px]" />
-        <div class="flex flex-col md:flex-row justify-between gap-6 items-end md:items-start">
+        <div
+          class="flex flex-col md:flex-row justify-between gap-6 items-end md:items-start"
+        >
           <div class="flex gap-3">
             <img
               src="/images/chatbot.png"
@@ -51,10 +43,12 @@
             />
             <div>
               <h2 class="text-[#181D27] font-medium text-sm sm:text-base">
-                {{ $t('ai_essay_page.weve_also_sent_this_essay_to_your_email') }}
+                {{
+                  $t("ai_essay_page.weve_also_sent_this_essay_to_your_email")
+                }}
               </h2>
               <p class="text-[#535862] text-xs sm:text-sm mt-1.5">
-                {{ $t('ai_essay_page.this_is_far_from_good_though') }}
+                {{ $t("ai_essay_page.this_is_far_from_good_though") }}
               </p>
             </div>
           </div>
@@ -62,7 +56,7 @@
             :to="'/pricing'"
             class="text-[#414651] w-full sm:w-fit text-nowrap font-semibold text-sm py-2 px-3.5 border border-[#D5D7DA] rounded-lg shadow-[0px_1px_2px_0px_#0A0D120D]"
           >
-          {{ $t('ai_essay_page.make_my_essay_10x_better') }}
+            {{ $t("ai_essay_page.make_my_essay_10x_better") }}
           </NuxtLinkLocale>
         </div>
       </div>

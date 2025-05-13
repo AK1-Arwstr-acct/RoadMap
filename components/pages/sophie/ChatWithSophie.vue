@@ -13,35 +13,8 @@
     >
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
-    <div
-      v-if="deviceType === 'desktop'"
-      class="w-[300px]"
-      :class="{ 'pointer-events-none': isChatLoading }"
-    >
-      <SophieHistory
-        @newChat="handelNewChat"
-        @chatDetail="chatDetail"
-        :chatHistoryArray="chatHistoryArray"
-        :isModal="isModal"
-      />
-    </div>
-    <div
-      v-if="deviceType === 'desktop'"
-      class="flex-1 pb-4 px-5 w-full"
-      :class="[isModal ? 'pt-[68px]' : 'pt-4']"
-    >
-      <SophieChat
-        :isNewChat="isNewChat"
-        :singleChatDetail="singleChatDetail"
-        :isModal="isModal"
-        :isTokenLoaded="isTokenLoaded"
-        :isSummarizeOverview="isSummarizeOverview"
-        @isChatLoading="(value) => (isChatLoading = value)"
-      />
-    </div>
-    <!-- Mobile view -->
-    <div v-if="deviceType !== 'desktop'" class="w-full flex flex-col gap-1">
-      <div class="py-4 px-6 border-b border-gray-200">
+    <div class="w-full flex flex-col gap-1">
+      <div class="py-4 px-3 sm:px-6 border-b border-gray-200">
         <div
           class="border border-[#F5F5F5] bg-[#FAFAFA] rounded-lg p-1 flex gap-2"
         >
@@ -65,17 +38,17 @@
             ]"
             @click="chatOrHistory = 'history'"
           >
-          {{ $t("sophie_page.history") }}
+            {{ $t("sophie_page.history") }}
           </button>
         </div>
       </div>
-      <div class="flex-1 overflow-hidden" :class="{ 'w-screen': !isModal }">
+      <div class="flex-1 overflow-hidden">
         <div
           v-show="chatOrHistory === 'history'"
           class="h-full"
           :class="{
             'pointer-events-none': isChatLoading,
-            'w-screen': !isModal,
+            '': !isModal,
           }"
         >
           <SophieHistory
@@ -87,7 +60,7 @@
         </div>
         <div
           v-show="chatOrHistory === 'messages'"
-          class="flex-1 py-4 px-5 w-full h-full"
+          class="flex-1 p-3 sm:p-6 w-full h-full"
         >
           <SophieChat
             :isNewChat="isNewChat"
@@ -198,7 +171,13 @@ const getChatHistory = async () => {
         }
       );
     } else {
-      response = await api.get("/api/v1/ai-conversation/get-sophie-sessions");
+      if (!sophieStore.roadmapTaskDetail) {
+        response = await api.get("/api/v1/ai-conversation/get-sophie-sessions");
+      } else {
+        response = await api.get(
+          `/api/v1/ai-conversation/get-sophie-sessions/chat/${sophieStore.roadmapTaskDetail?.id}?showRoadmap=yes`
+        );
+      }
     }
     if (response) {
       chatHistoryArray.value = response.data.data;
@@ -212,6 +191,14 @@ const getChatHistory = async () => {
     }
   }
 };
+
+watch(
+  () => sophieStore.roadmapTaskDetail,
+  () => {
+    chatOrHistory.value = 'messages';
+    getChatHistory();
+  }
+);
 
 onMounted(async () => {
   if (sophieStore.isSophiePublic) {

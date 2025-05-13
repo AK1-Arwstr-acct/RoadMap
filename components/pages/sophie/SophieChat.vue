@@ -1,87 +1,42 @@
 <template>
   <section class="flex flex-col gap-2 size-full overflow-hidden h-full">
     <div class="flex-1 overflow-y-auto no-scrollbar">
-      <div
-        class="md:size-full w-[calc(100%-8px)] max-w-[710px] mx-auto h-full flex flex-col items-center min-h-fit md:justify-center py-3 overflow-y-auto"
-        v-if="completeChat.length === 0"
-      >
-        <div class="flex-1 flex flex-col items-center justify-center w-full">
-          <img
-            src="/images/sophie-chat.png"
-            alt="sophie"
-            class="w-[100px] md:h-[242px] md:w-[252px]"
-            loading="eager"
-          />
-          <h1 class="text-[#414651] text-sm md:text-xl font-medium mt-6">
-            {{ $t("sophie_page.how_can_sophie_help_you_today") }}
-          </h1>
-          <!-- deskop -->
-          <div v-if="deviceType !== 'mobile'">
-            <textarea
-              :placeholder="t('sophie_page.message_sophie')"
-              rows="3"
-              v-model="inputQuestion"
-              @keydown.enter.exact.prevent="submit"
-              @keydown.enter.ctrl.prevent="addNewLine"
-              class="w-full px-3.5 py-2.5 border-[1.5px] border-gray-200 rounded-xl mt-6 focus:outline-none resize-none placeholder:font-light min-h-fit"
-              data-hj-allow
-            />
-            <div class="flex justify-center flex-wrap mt-3 gap-3">
-              <div
-                v-for="(question, idx) in preQuestion"
-                :key="idx"
-                @click="handelPreQuestion(question)"
-                class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer"
-              >
-                {{ question }}
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- mobile -->
-        <div v-if="deviceType === 'mobile'" class="w-full">
-          <div class="w-full overflow-hidden">
-            <div class="flex overflow-x-auto mt-3 gap-3 w-full">
-              <div
-                v-for="(question, idx) in preQuestion"
-                :key="idx"
-                @click="handelPreQuestion(question)"
-                class="bg-[#E8E8E880] py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap"
-              >
-                {{ question }}
-              </div>
-            </div>
-          </div>
-          <div class="relative mt-6">
-            <input
-              name="user_input"
-              :placeholder="t('sophie_page.message_sophie')"
-              v-model="inputQuestion"
-              class="w-full pl-3.5 pr-12 py-2.5 border-[1.5px] border-gray-200 rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"
-              data-hj-allow
-            />
-            <div
-              @click="submit"
-              v-if="inputQuestion.length > 0"
-              class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1/2 transform -translate-y-1/2 right-2 -rotate-90 p-2.5"
-            >
-              <IconArrowRight />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div v-else class="size-full overflow-hidden flex flex-col gap-4">
+      <div class="size-full overflow-hidden flex flex-col gap-2 sm:gap-4">
         <!-- chat -->
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto no-scrollbar flex flex-col h-full"
+          class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full"
         >
+          <Transition name="fade">
+            <div
+              v-if="welcomeMessage && appStore.authenticatedUser"
+              class="mb-8 bg-[#D1E9FF66]/40 py-3.5 px-4 rounded-lg flex gap-2 items-start"
+            >
+              <div class="flex-1 text-[#181D27]">
+                <p class="font-semibold text-lg mb-1.5 text-[#175CD3]">
+                 {{ $t('sophie_page.welcome.welcome') }} {{ appStore.userData?.name }} 👋
+                </p>
+                <p class="font-medium text-[#181D27]">
+                  {{ $t('sophie_page.welcome.intro') }}
+                </p>
+              </div>
+              <div @click="welcomeMessage = !welcomeMessage" class="cursor-pointer">
+                <IconCross fill="#717680" />
+              </div>
+            </div>
+          </Transition>
+          <Transition name="fade">
+            <component
+              :is="TaskDetailChatModal"
+              v-if="showTaskDetail && completeChat.length === 0 && sophieStore.roadmapTaskDetail"
+            />
+          </Transition>
           <div
             v-for="(chat, index) in completeChat.filter(
               (item) => item.text !== ''
             )"
             :key="index"
-            class="flex items-start gap-3 w-full max-w-[710px] mx-auto"
+            class="flex items-start gap-3"
             :class="{
               'justify-end': chat.isSender,
             }"
@@ -108,10 +63,7 @@
               </div>
             </div>
           </div>
-          <div
-            v-if="isEducationLevel && !studyPrograms"
-            class="w-full max-w-[710px] mx-auto"
-          >
+          <div v-if="isEducationLevel && !studyPrograms">
             <div class="flex justify-end">
               <BaseSelectRadio
                 :options="educationLevelOption"
@@ -123,7 +75,7 @@
           </div>
           <div
             v-if="isChatLoading"
-            class="w-full text-[#A4A7AE] font-thin flex items-center gap-3 max-w-[710px] mx-auto"
+            class="text-[#A4A7AE] font-thin flex items-center gap-3"
           >
             <div class="size-8 min-w-8 rounded-full bg-black overflow-hidden">
               <img
@@ -149,7 +101,7 @@
           </div>
         </div>
         <!-- input -->
-        <div class="flex flex-col gap-4 w-full max-w-[710px] mx-auto">
+        <div class="flex flex-col gap-4">
           <Transition name="fade">
             <div
               v-if="isChatFull"
@@ -181,6 +133,19 @@
             </div>
           </Transition>
           <div
+            v-if="completeChat.length === 0"
+            class="flex overflow-x-auto custom-scrollbar mt-3 gap-3"
+          >
+            <div
+              v-for="(question, idx) in sophieStore.roadmapTaskDetail?.common_questions_prompt"
+              :key="idx"
+              @click="handelPreQuestion(question.text)"
+              class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit"
+            >
+              {{ question.text }}
+            </div>
+          </div>
+          <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
               'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading,
@@ -194,7 +159,7 @@
               @keydown.enter.exact.prevent="submit"
               @keydown.enter.ctrl.prevent="addNewLine"
               :disabled="isChatLoading || isChatFull || isEducationLevel"
-              rows="1"
+              rows="4"
               autofocus
               class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
               data-hj-allow
@@ -210,7 +175,7 @@
         </div>
       </div>
     </div>
-    <div v-if="completeChat.length !== 0" class="w-full max-w-[710px] mx-auto">
+    <div v-if="completeChat.length !== 0">
       <p class="text-[#A4A7AE] text-xs text-center">
         <span v-if="!readOnly">
           {{
@@ -236,12 +201,14 @@ import type { ChatDetail, OptionAttributes, SophieChat } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
 import useDashboardStore from "~/stores/dashboardStore";
 import useSophieStore from "~/stores/sophieStore";
+import useAppStore from "~/stores/AppStore";
+import TaskDetailChatModal from "./TaskDetailChatModal.vue";
 
 const { api } = useApi();
 const { showToast } = useToast();
 const dashboardStore = useDashboardStore();
 const sophieStore = useSophieStore();
-const deviceType = useDeviceType();
+const appStore = useAppStore();
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
@@ -277,18 +244,25 @@ const inputQuestion = ref<string>("");
 const isChatLoading = ref<boolean>(false);
 const isChatFull = ref<boolean>(false);
 const readOnly = ref<boolean>(false);
+const welcomeMessage = ref<boolean>(true);
+const showTaskDetail = ref<boolean>(true);
 const uuid = ref<string>();
 const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 
 const preQuestion: string[] = [
-  `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
-  `${t("sophie_page.which_country_will_suit_me_most_for_study_abroad")}`,
-  `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
-  `${t("sophie_page.what_scholarships_can_i_apply_for")}`,
-  `${t("sophie_page.which_major_should_i_choose")}`,
+  "Which majors suit my personality type?",
+  "Can you explain what INFP means?",
+  "Which study abroad destinations suit my personality?",
 ];
+// const preQuestion: string[] = [
+//   `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
+//   `${t("sophie_page.which_country_will_suit_me_most_for_study_abroad")}`,
+//   `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
+//   `${t("sophie_page.what_scholarships_can_i_apply_for")}`,
+//   `${t("sophie_page.which_major_should_i_choose")}`,
+// ];
 
 const educationLevelOption: OptionAttributes[] = [
   {
@@ -297,7 +271,7 @@ const educationLevelOption: OptionAttributes[] = [
   },
   {
     value: "2",
-    label: `${t('sophie_page.undergraduate')}`,
+    label: `${t("sophie_page.undergraduate")}`,
   },
   {
     value: "3",
@@ -384,6 +358,7 @@ const submit = async () => {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
         query: userQuery,
         sophieSessionId: uuid.value,
+        roadmap_task_id: sophieStore.roadmapTaskDetail?.id
       });
     }
     if (response) {
@@ -392,9 +367,11 @@ const submit = async () => {
           isSender: false,
           text: response.data.data,
         });
-        if (response.data.data === "Cool! What's your current education level?") {
+        if (
+          response.data.data === "Cool! What's your current education level?"
+        ) {
           isEducationLevel.value = true;
-        }else {
+        } else {
           isEducationLevel.value = false;
         }
       } else {
@@ -432,7 +409,7 @@ const submit = async () => {
 };
 
 watch(
-  () => props.isNewChat,
+  () => [props.isNewChat, sophieStore.roadmapTaskDetail],
   () => {
     completeChat.value = [];
     uuid.value = uuidv4();

@@ -9,7 +9,7 @@
     <path
       d="M6 9L12 15L18 9"
       :stroke="stroke"
-      stroke-width="1.5"
+      :stroke-width="strokeWidth"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
@@ -28,6 +28,10 @@ defineProps({
   stroke: {
     type: String,
     default: "#DCDCDC",
+  },
+  strokeWidth: {
+    type: String,
+    default: "1.5",
   },
 });
 </script>

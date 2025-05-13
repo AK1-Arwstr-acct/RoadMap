@@ -9,10 +9,10 @@
         )
       }}
     </p>
-    <div>
+    <div class="mt-5">
       <NuxtLinkLocale
         :to="'/pricing'"
-        class="text-sm font-semibold text-white py-2 px-3.5 bg-[#1570EF] rounded-lg mt-5"
+        class="text-sm font-semibold text-white py-2 px-3.5 bg-[#1570EF] rounded-lg"
       >
         {{ $t("schoolList_page.talk_to_our_team") }}
       </NuxtLinkLocale>

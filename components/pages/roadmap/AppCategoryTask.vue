@@ -6,10 +6,13 @@
     >
       <IconChevronDown
         stroke="#717680"
+        strokeWidth="2"
         class="transform transition-all ease-in-out duration-300"
         :class="{ '-rotate-90': !isOpen }"
+        width="20"
+        height="20"
       />
-      <p class="text-[#111827] text-lg md:text-xl font-semibold flex-1 capitalize">
+      <p class="text-[#111827] font-medium flex-1 capitalize">
         <span v-if="category !== 'country'">
           {{
             category === "extracurricular"
@@ -22,7 +25,7 @@
         </span>
       </p>
       <div
-        class="py-0.5 px-3 rounded-full font-semibold tracking-wider"
+        class="py-0.5 px-3 rounded-full font-semibold tracking-wider text-sm"
         :class="[
           category === 'country'
             ? 'bg-[#F5F5F5] text-[#414651]'
@@ -39,6 +42,8 @@
             filteredTask(category).filter((item) => item.checked == true)
               .length === filteredTask(category).length
           "
+          width="20"
+          height="20"
         />
       </Transition>
     </div>
@@ -51,25 +56,17 @@
       <div
         v-for="(task, idx) in filteredTask(category)"
         :key="idx"
-        @click.prevent="handelTaskDetail(task)"
+        @click.stop="handelTaskDetail(task)"
       >
         <label
-          :for="`task-${task.id}`"
-          class="mt-6 flex items-center gap-3 md:gap-6 size-full rounded-2xl cursor-pointer p-4 transition-all ease-in-out duration-200"
+          class="mt-6 flex items-center gap-4 size-full rounded-2xl cursor-pointer pl-4 pr-5 py-3 transition-all ease-in-out duration-200"
           :class="[
             appTrackerStore.taskActiveStates[task.id]
               ? 'border-2 border-[#2E90FA] bg-[#F5FAFF]'
               : 'border-[1.5px] border-gray-200 bg-[#FFFFFF]',
           ]"
         >
-          <input
-            :id="`task-${task.id}`"
-            type="checkbox"
-            name="countries"
-            :checked="task.checked"
-            class="absolute top-3 right-3 appearance-none"
-          />
-          <div class="size-[90px]">
+          <div class="size-[64px]">
             <img
               :src="imageSrc"
               alt="task logo"
@@ -78,31 +75,20 @@
             />
           </div>
           <div class="flex-1 space-y-2">
-            <p
-              class="font-medium text-xs md:text-sm py-0.5 px-2.5 rounded-full capitalize w-fit"
-              :class="[
-                category === 'country'
-                  ? categoryClass(task.category.title)
-                  : categoryClass(category),
-              ]"
-            >
-              <span v-if="category !== 'country'">
-                {{ category.includes("extracurricular") ? "EC" : category }}
-              </span>
-              <span v-else>
-                {{ task.category.title }}
-              </span>
-            </p>
-            <p class="md:text-xl text-[#414651] font-semibold">
+            <p class="text-[#414651] font-semibold">
               {{ task.title }}
             </p>
-            <div class="flex items-center gap-1.5 text-[#414651] text-xs md:text-sm">
+            <div class="flex items-center gap-1.5 text-[#414651] text-sm">
               <IconClock />
               <span> {{ task.estimated_time }} </span>
             </div>
           </div>
           <div
-            class="size-4 md:size-6 rounded-full border-[1.5px] flex justify-center items-center"
+            @click.stop="
+              task.checked = !task.checked;
+              handelClick(task);
+            "
+            class="size-5 rounded-[4px] border-[1.5px] flex justify-center items-center"
             :class="[
               task.checked
                 ? 'bg-[#1570EF] border-[#1570EF]'
@@ -114,15 +100,58 @@
         </label>
       </div>
     </div>
+    <!-- paywall -->
+
+    <!-- <Transition name="fade">
+      <div
+        v-if="progressSoftPaywall"
+        class="fixed inset-0 z-20 bg-black/50 backdrop-blur-sm flex justify-center items-center"
+      >
+        <div
+          class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
+        >
+          <div class="flex flex-col items-center">
+            <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
+            <p class="text-[#181D27] text-lg font-semibold text-center">
+              {{ $t("roadmap_page.paywall_progress.heading") }}
+            </p>
+            <p class="text-[#535862] text-sm text-center mt-2">
+              {{ $t("roadmap_page.paywall_progress.detail") }}
+            </p>
+          </div>
+          <div class="flex gap-3">
+            <button
+              @click="progressSoftPaywall = false"
+              class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
+            >
+              {{ $t("roadmap_page.paywall_progress.cancel") }}
+            </button>
+            <NuxtLinkLocale
+              :to="'/signup'"
+              class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+            >
+              {{ $t("roadmap_page.paywall_progress.sign_up_for_free") }}
+            </NuxtLinkLocale>
+          </div>
+        </div>
+      </div>
+    </Transition> -->
   </section>
 </template>
 <script setup lang="ts">
 import type { Application, Task } from "~/types/dashboard";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
+import useAppStore from "~/stores/AppStore";
+import useSophieStore from "~/stores/sophieStore";
 
-const emit = defineEmits(["openTaskDetail"]);
+const emit = defineEmits(["openTaskDetail", "hightChanged"]);
 
 const appTrackerStore = useAppTrackerStore();
+const localePath = useLocalePath();
+const appStore = useAppStore();
+const sophieStore = useSophieStore();
+const route = useRoute();
+const { api } = useApi();
 
 const props = defineProps({
   application: {
@@ -138,6 +167,7 @@ const props = defineProps({
 const isOpen = ref<boolean>(false);
 const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
+// const progressSoftPaywall = ref<boolean>(false);
 
 const imageSrc = computed(() => {
   return props.category?.includes("career")
@@ -185,7 +215,14 @@ const handelTaskDetail = async (task: Task) => {
       appTrackerStore.taskActiveStates[Number(key)] = false;
     }
   });
-  emit("openTaskDetail", task);
+  sophieStore.roadmapTaskDetail = task;
+  if (task.feature_state?.toLowerCase().includes("sophie")) {
+    navigateTo(localePath("/sophie"));
+  } else if (task.feature_state?.toLowerCase().includes("essay")) {
+    navigateTo(localePath("/ai-essay"));
+  } else {
+    navigateTo(localePath("/school-list"));
+  }
 };
 
 const filteredTask = (category: string) => {
@@ -198,13 +235,34 @@ const filteredTask = (category: string) => {
   return tasks;
 };
 
+const handelClick = async (task: Task) => {
+  try {
+    if (!appStore.authenticatedUser) {
+      // progressSoftPaywall.value = true;
+      return;
+    }
+    await api.post("/api/v1/roadmap/tasks", {
+      task_id: task?.id,
+      is_complete: task?.checked,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const calculateHeight = () => {
   if (content.value) {
     contentHeight.value = isOpen.value ? content.value.scrollHeight : 0;
   }
 };
 
-watch(() => isOpen.value, calculateHeight);
+watch(
+  () => isOpen.value,
+  () => {
+    emit("hightChanged");
+    calculateHeight();
+  }
+);
 
 onMounted(() => {
   calculateHeight();

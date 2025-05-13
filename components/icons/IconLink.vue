@@ -19,11 +19,11 @@
 defineProps({
   width: {
     type: String,
-    default: '24'
+    default: '20'
   },
   height: {
     type: String,
-    default: '24'
+    default: '20'
   },
   strokeWidth: {
     type: String,

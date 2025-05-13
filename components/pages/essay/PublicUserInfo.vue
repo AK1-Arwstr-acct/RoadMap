@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex justify-center items-center pt-24 pb-16">
     <div class="w-full md:w-[390px]">
-      <h1 class="font-semibold text-3xl text-[#181D27] mb-8">
+      <h1 class="font-semibold text-2xl text-[#181D27] mb-8">
         {{ $t("ai_essay_page.could_you_share_a_few_personal_details_with_us") }}
       </h1>
       <div>

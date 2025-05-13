@@ -6,10 +6,10 @@ export function useDeviceType() {
             return getDeviceType(userAgent)
         }
 
-        // if (process.client) {
-        //     const userAgent = navigator.userAgent
-        //     return getDeviceType(userAgent)
-        // }
+        if (process.client) {
+            const userAgent = navigator.userAgent
+            return getDeviceType(userAgent)
+        }
 
         return 'desktop' // default fallback
     })
