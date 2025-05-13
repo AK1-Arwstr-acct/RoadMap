@@ -153,6 +153,7 @@ const logOut = async () => {
     checkToken.value = null;
   }
   appStore.checkAuthenticatedUser();
+  appStore.userData = undefined;
   await navigateTo(localePath("/login"));
 };
 
