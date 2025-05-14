@@ -12,11 +12,11 @@
 const { locale } = useI18n();
 const { t } = useI18n();
 
-declare global {
-  interface Window {
-    hj?: (event: string, action: string) => void;
-  }
-}
+// declare global {
+//   interface Window {
+//     hj?: (event: string, action: string) => void;
+//   }
+// }
 
 useHead(
   computed(() => ({
@@ -61,6 +61,12 @@ const hotjarConfig = () => {
         r.async = 1;
         r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
         a.appendChild(r);
+        // r.onload = () => {
+        //   if (typeof window.hj === "function") {
+        //     window.hj("debug", true);
+        //     console.log("Hotjar debug mode enabled.");
+        //   }
+        // };
       })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
     }
   }
@@ -69,7 +75,10 @@ const hotjarConfig = () => {
 watch(
   () => appStore.userData,
   async (newValue, oldValue) => {
+    console.log("Assigning Hotjar...");
     if (newValue && window.hj) {
+      const userID = String(appStore.userData?.id);
+      console.log("User ID assigned to Hotjar:", userID);
       window.hj("identify", String(appStore.userData?.id), {
         email: appStore.userData?.email || "",
         name: appStore.userData?.name || "",
