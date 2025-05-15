@@ -61,6 +61,12 @@ const hotjarConfig = () => {
         r.async = 1;
         r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
         a.appendChild(r);
+        r.onload = () => {
+          if (appStore.userData && window.hj) {
+            const userId: string = `${appStore.userData.id}`;
+            window.hj("identify", userId);
+          }
+        };
         // r.onload = () => {
         //   if (typeof window.hj === "function") {
         //     window.hj("debug", true);
@@ -76,13 +82,14 @@ watch(
   () => appStore.userData,
   async (newValue, oldValue) => {
     console.log("Assigning Hotjar...");
-    if (newValue && window.hj) {
-      const userID = String(appStore.userData?.id);
+    if (newValue && newValue.id && window.hj) {
+      const userID = String(newValue.id);
       console.log("User ID assigned to Hotjar:", userID);
-      window.hj("identify", String(appStore.userData?.id), {
-        email: appStore.userData?.email || "",
-        name: appStore.userData?.name || "",
-      });
+      // window.hj("identify", userID, {
+      //   email: newValue.email || "",
+      //   name: newValue.name || "",
+      // });
+      hotjarConfig();
     }
   },
   { immediate: true, deep: true }
