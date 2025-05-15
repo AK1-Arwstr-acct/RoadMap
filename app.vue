@@ -95,7 +95,6 @@ watch(
         email: newValue.email || "",
         name: newValue.name || "",
       });
-      window.hj("event", "user_logged_in");
       window.hj("event", `user_id_${userID}`);
       // hotjarConfig();
     }
