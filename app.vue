@@ -78,29 +78,30 @@ const hotjarConfig = () => {
   }
 };
 
-watch(
-  () => appStore.userData,
-  async (newValue, oldValue) => {
-    console.log("Assigning Hotjar...");
-    if (newValue && newValue.id && window.hj) {
-      const userID = String(newValue.id);
-      console.log("User ID assigned to Hotjar:", userID);
-      console.log("User Attributes", {
-        email: newValue.email || "",
-        name: newValue.name || "",
-      });
-      console.log("Event:", `user_id_${userID}`);
+// watch(
+//   () => appStore.userData,
+//   async (newValue, oldValue) => {
+//     console.log("Assigning Hotjar...");
+//     console.log("New Value", newValue, window);
+//     if (newValue && newValue.id && window.hj) {
+//       const userID = String(newValue.id);
+//       console.log("User ID assigned to Hotjar:", userID);
+//       console.log("User Attributes", {
+//         email: newValue.email || "",
+//         name: newValue.name || "",
+//       });
+//       console.log("Event:", `user_id_${userID}`);
       
-      window.hj("identify", userID, {
-        email: newValue.email || "",
-        name: newValue.name || "",
-      });
-      window.hj("event", `user_id_${userID}`);
-      // hotjarConfig();
-    }
-  },
-  { immediate: true, deep: true }
-);
+//       window.hj("identify", userID, {
+//         email: newValue.email || "",
+//         name: newValue.name || "",
+//       });
+//       window.hj("event", `user_id_${userID}`);
+//       // hotjarConfig();
+//     }
+//   },
+//   { immediate: true, deep: true }
+// );
 
 onMounted(async () => {
   await appStore.getUserData();
