@@ -5,7 +5,7 @@ import type { UserData } from '~/types/home';
 export default defineNuxtPlugin(() => {
   const appStore = useAppStore();
 
-  const identifyUserInHotjar = (userData: UserData) => {
+  const identifyUserInHotjar = (userData: UserData | undefined) => {
     if (userData && userData.id) {
       const userId = String(userData.id);
       console.log("[Hotjar] Assigning user attributes:", {
@@ -17,6 +17,8 @@ export default defineNuxtPlugin(() => {
         email: userData.email || null,
         name: userData.name || null,
       });
+      console.log("[Hotjar] Assigning Event: ", `user_id_${userId}`)
+      window.hj("event", `user_id_${userId}`);
     } else {
       console.warn("[Hotjar] User data is missing or invalid:", userData);
     }
