@@ -61,12 +61,12 @@ const hotjarConfig = () => {
         r.async = 1;
         r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
         a.appendChild(r);
-        r.onload = () => {
-          if (appStore.userData && window.hj) {
-            const userId: string = `${appStore.userData.id}`;
-            window.hj("identify", userId);
-          }
-        };
+        // r.onload = () => {
+        //   if (appStore.userData && window.hj) {
+        //     const userId: string = `${appStore.userData.id}`;
+        //     window.hj("identify", userId);
+        //   }
+        // };
         // r.onload = () => {
         //   if (typeof window.hj === "function") {
         //     window.hj("debug", true);
@@ -85,11 +85,19 @@ watch(
     if (newValue && newValue.id && window.hj) {
       const userID = String(newValue.id);
       console.log("User ID assigned to Hotjar:", userID);
-      // window.hj("identify", userID, {
-      //   email: newValue.email || "",
-      //   name: newValue.name || "",
-      // });
-      hotjarConfig();
+      console.log("User Attributes", {
+        email: newValue.email || "",
+        name: newValue.name || "",
+      });
+      console.log("Event:", `user_id_${userID}`);
+      
+      window.hj("identify", userID, {
+        email: newValue.email || "",
+        name: newValue.name || "",
+      });
+      window.hj("event", "user_logged_in");
+      window.hj("event", `user_id_${userID}`);
+      // hotjarConfig();
     }
   },
   { immediate: true, deep: true }
