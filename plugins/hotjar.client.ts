@@ -25,7 +25,9 @@ export default defineNuxtPlugin(() => {
   };
 
   const waitForHotjar = (callback) => {
-    if (typeof window.hj === 'function') {
+    console.log("window.hj: ", window.hj);
+    console.log("type window.hj: ", typeof window.hj);
+    if (typeof window.hj == 'function') {
       console.log("[Hotjar] Hotjar is ready.");
       callback();
     } else {
@@ -36,7 +38,7 @@ export default defineNuxtPlugin(() => {
           clearInterval(interval);
           callback();
         }
-      }, 500);
+      }, 2000);
     }
   };
 
