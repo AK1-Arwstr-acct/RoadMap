@@ -164,6 +164,7 @@ definePageMeta({
 import axios from "axios";
 import type { Country } from "~/types/auth";
 import useAppStore from "~/stores/AppStore";
+import { identifyUserInHotjar } from "@/utils/hotjar";
 
 const { t } = useI18n();
 const localePath = useLocalePath();
@@ -296,7 +297,8 @@ const submit = async () => {
     });
     token.value = JSON.stringify(response.data.token);
     await nextTick();
-    await appStore.getUserData();
+    const user = await appStore.getUserData();
+    identifyUserInHotjar(user);
     await appStore.checkAuthenticatedUser();
     if (response.data.data.onboarded) {
       navigateTo(localePath("/school-list"));

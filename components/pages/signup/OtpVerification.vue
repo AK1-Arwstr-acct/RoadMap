@@ -54,6 +54,7 @@ import axios from "axios";
 import type { PropType } from "vue";
 import useAppStore from "~/stores/AppStore";
 import type { Country, UserSignupDetail } from "~/types/auth";
+import { identifyUserInHotjar } from "@/utils/hotjar";
 
 const props = defineProps({
   userInput: {
@@ -152,7 +153,8 @@ const onSubmit = async () => {
     const signupInfoCookie = useCookie("signupInfo");
     signupInfoCookie.value = null;
     await nextTick();
-    appStore.getUserData();
+    const user = await appStore.getUserData();
+    identifyUserInHotjar(user);
     appStore.checkAuthenticatedUser();
     navigateTo(localePath("/onboarding"));
     isSubmitting.value = false;
