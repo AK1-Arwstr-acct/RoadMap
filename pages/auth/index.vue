@@ -17,6 +17,7 @@ onBeforeMount(async () => {
   }
   await nextTick();
   appStore.checkAuthenticatedUser();
+  appStore.getUserData();
   const parsedOnboarded = onboarded === 1;
   parsedOnboarded ? navigateTo(localePath("/dashboard")) : navigateTo(localePath("/onboarding"));
 });

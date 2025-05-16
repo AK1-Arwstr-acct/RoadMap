@@ -13,7 +13,7 @@
         <span class="text-[#535862]">,&nbsp;</span>{{ appStore.userData?.name }}
       </p>
     </div>
-    <div v-if="appStore.authenticatedUser" class="flex gap-6 items-center">
+    <div v-if="appStore.authenticatedUser || tokenExists" class="flex gap-6 items-center">
       <NuxtLinkLocale to="/pricing">
         <p
           class="px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
@@ -22,7 +22,7 @@
         </p>
       </NuxtLinkLocale>
       <div
-        v-if="appStore.authenticatedUser"
+        v-if="appStore.authenticatedUser || tokenExists"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
         <NuxtLinkLocale to="/dashboard/profile">
@@ -83,7 +83,7 @@
         </div>
       </NuxtLinkLocale>
       <div
-        v-if="appStore.authenticatedUser"
+        v-if="appStore.authenticatedUser || tokenExists"
         @click="isMobileSideBarOpen = true"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
@@ -136,6 +136,7 @@ const { t } = useI18n();
 
 const time = ref<number>(0);
 const isMobileSideBarOpen = ref<boolean>(false);
+const tokenExists = useCookie("token");
 
 const close = () => {
   isMobileSideBarOpen.value = false;
