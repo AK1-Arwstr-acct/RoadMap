@@ -36,6 +36,7 @@ const useAppStore = defineStore("appStore", () => {
 		} else {
 			userData.value = undefined;
 		}
+		return userData.value;
 	}
 
 	const checkAuthenticatedUser = () => {
