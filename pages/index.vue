@@ -1,5 +1,5 @@
 <template>
-  <div class="h-dvh flex flex-col border border-black overflow-hidden bg-[#f5f5f5] relative">
+  <div class="h-dvh flex flex-col overflow-hidden bg-[#f5f5f5] relative">
     <DashboardNav />
     <div class="flex-1 m-4 rounded-xl flex justify-center items-center px-2 sm:px-5 bg-white">
       <div class="max-w-[574px] w-full flex flex-col items-center justify-center gap-6">

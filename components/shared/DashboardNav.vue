@@ -17,7 +17,7 @@
     </NuxtLinkLocale>
     <div class="flex gap-4">
       <BaseLanguageDropdown />
-      <div v-if="appStore.authenticatedUser" class="flex gap-4 items-center">
+      <div v-if="appStore.authenticatedUser || tokenExists" class="flex gap-4 items-center">
         <NuxtLinkLocale to="/pricing">
           <p
             class="px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
@@ -26,7 +26,7 @@
           </p>
         </NuxtLinkLocale>
         <div
-          v-if="appStore.authenticatedUser"
+          v-if="appStore.authenticatedUser || tokenExists"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
           <NuxtLinkLocale to="/profile">
@@ -60,14 +60,14 @@
       <div v-else class="flex gap-3">
         <NuxtLinkLocale to="/login">
           <button
-            class="border border-gray-200 py-2.5 px-3.5 rounded-lg text-[#414651] text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+            class="border border-gray-200 py-[11.5px] px-3.5 rounded-lg text-[#414651] text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
           >
             {{ t("dashboard.login") }}
           </button>
         </NuxtLinkLocale>
         <NuxtLinkLocale to="/signup">
           <button
-            class="border border-[#1570EF] bg-[#1570EF] p-2.5 px-3.5 rounded-lg text-white text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
+            class="border border-[#1570EF] bg-[#1570EF] py-[11.5px] px-3.5 rounded-lg text-white text-sm font-semibold shadow-[0px_1px_2px_0px_#0A0D120D]"
           >
             {{ t("dashboard.signup") }}
           </button>
@@ -91,7 +91,7 @@
         </div>
       </NuxtLinkLocale>
       <div
-        v-if="appStore.authenticatedUser"
+        v-if="appStore.authenticatedUser || tokenExists"
         @click="isMobileSideBarOpen = true"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
@@ -148,6 +148,7 @@ const appStore = useAppStore();
 const { t } = useI18n();
 
 const isMobileSideBarOpen = ref<boolean>(false);
+const tokenExists = useCookie("token");
 
 const close = () => {
   isMobileSideBarOpen.value = false;

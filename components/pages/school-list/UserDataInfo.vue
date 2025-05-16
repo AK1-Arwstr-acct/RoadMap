@@ -192,6 +192,7 @@
 </template>
 <script setup lang="ts">
 import useDashboardStore from "~/stores/dashboardStore";
+import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { OptionAttributes, UserData } from "~/types/home";
 import useAppStore from "~/stores/AppStore";
 import axios from "axios";
@@ -202,6 +203,7 @@ import IconUS from "../../icons/IconUS.vue";
 import IconEurope from "../../icons/IconEurope.vue";
 
 const dashboardStore = useDashboardStore();
+const appTrackerStore = useAppTrackerStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
@@ -310,6 +312,12 @@ const updateUserData = async () => {
     showToast("Profile updated successfully", {
       type: "success",
     });
+    const countries = appStore.userData?.educational_records.want_to_study_countries.map((item) => item.id)
+    if (countries?.length !== selectedLocationOptions.value.length || 
+      !(countries?.every((item) => selectedLocationOptions.value.includes(item))) ||
+      !(selectedLocationOptions.value.every((item) => countries?.includes(item)))) {
+        await appTrackerStore.getRoadmapData();
+    }
     await appStore.getUserData();
   } catch (error) {
     if (axios.isAxiosError(error)) {

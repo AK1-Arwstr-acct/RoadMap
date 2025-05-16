@@ -4,10 +4,12 @@ import type { LanguageLocale, UserData } from "../types/home";
 const useAppStore = defineStore("appStore", () => {
 	const { api } = useApi();
 	const { $i18n } = useNuxtApp();
+	const tokenExists = useCookie("token");
+
 	const userData = ref<UserData>()
 	const userImagePreview = ref<string>('');
 	const userCoverPhotoPreview = ref<string>('');
-	const authenticatedUser = ref<boolean>(false);
+	const authenticatedUser = ref<boolean>(tokenExists.value ? true : false );
 
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data

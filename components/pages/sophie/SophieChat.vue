@@ -28,7 +28,7 @@
           <Transition name="fade">
             <component
               :is="TaskDetailChatModal"
-              v-if="showTaskDetail && completeChat.length === 0 && sophieStore.roadmapTaskDetail"
+              v-if="showTaskDetail && sophieStore.roadmapTaskDetail"
             />
           </Transition>
           <div
@@ -36,7 +36,7 @@
               (item) => item.text !== ''
             )"
             :key="index"
-            class="flex items-start gap-3"
+            class="flex items-start gap-3 mt-8"
             :class="{
               'justify-end': chat.isSender,
             }"
@@ -53,7 +53,7 @@
               />
             </div>
             <div
-              class="mb-4 md:mb-8 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+              class="mb-4 md:mb-6 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
               :class="{
                 'bg-[#FAFAFA] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
               }"
@@ -356,7 +356,7 @@ const submit = async () => {
       );
     } else {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
-        query: userQuery,
+        query: completeChat.value.length <= 1 ? `${sophieStore.roadmapTaskDetail?.title}, ${userQuery}` : userQuery,
         sophieSessionId: uuid.value,
         roadmap_task_id: sophieStore.roadmapTaskDetail?.id
       });
