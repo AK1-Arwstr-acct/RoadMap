@@ -12,11 +12,11 @@
 const { locale } = useI18n();
 const { t } = useI18n();
 
-declare global {
-  interface Window {
-    hj?: (event: string, action: string) => void;
-  }
-}
+// declare global {
+//   interface Window {
+//     hj?: (event: string, action: string) => void;
+//   }
+// }
 
 useHead(
   computed(() => ({
@@ -61,23 +61,47 @@ const hotjarConfig = () => {
         r.async = 1;
         r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
         a.appendChild(r);
+        // r.onload = () => {
+        //   if (appStore.userData && window.hj) {
+        //     const userId: string = `${appStore.userData.id}`;
+        //     window.hj("identify", userId);
+        //   }
+        // };
+        // r.onload = () => {
+        //   if (typeof window.hj === "function") {
+        //     window.hj("debug", true);
+        //     console.log("Hotjar debug mode enabled.");
+        //   }
+        // };
       })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
     }
   }
 };
 
-watch(
-  () => appStore.userData,
-  async (newValue, oldValue) => {
-    if (newValue && window.hj) {
-      window.hj("identify", String(appStore.userData?.id), {
-        email: appStore.userData?.email || "",
-        name: appStore.userData?.name || "",
-      });
-    }
-  },
-  { immediate: true, deep: true }
-);
+// watch(
+//   () => appStore.userData,
+//   async (newValue, oldValue) => {
+//     console.log("Assigning Hotjar...");
+//     console.log("New Value", newValue, window);
+//     if (newValue && newValue.id && window.hj) {
+//       const userID = String(newValue.id);
+//       console.log("User ID assigned to Hotjar:", userID);
+//       console.log("User Attributes", {
+//         email: newValue.email || "",
+//         name: newValue.name || "",
+//       });
+//       console.log("Event:", `user_id_${userID}`);
+      
+//       window.hj("identify", userID, {
+//         email: newValue.email || "",
+//         name: newValue.name || "",
+//       });
+//       window.hj("event", `user_id_${userID}`);
+//       // hotjarConfig();
+//     }
+//   },
+//   { immediate: true, deep: true }
+// );
 
 onMounted(async () => {
   await appStore.getUserData();
