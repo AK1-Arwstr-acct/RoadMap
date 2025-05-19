@@ -2,7 +2,7 @@
   <div
     class="bg-white rounded-xl transition-all ease-in-out duration-700 overflow-hidden flex flex-col absolute sm:relative z-30 top-2 left-2 sm:top-0 sm:left-0 h-[calc(100%-16px)] sm:h-full"
     :class="[
-      isOpen ? 'w-[calc(100%-16px)] sm:w-[380px] p-5 ' : 'w-0 sm:w-[72px] py-5',
+      isOpen ? 'w-[calc(100%-16px)] sm:w-[336px] p-5 ' : 'w-0 sm:w-[72px] py-5',
     ]"
   >
     <div
@@ -18,11 +18,11 @@
           {{ $t("roadmap_page.checklist") }}
         </p>
       </Transition>
-      <IconSidebar
+      <!-- <IconSidebar
         @click="toggleSidebar"
         class="cursor-pointer min-w-fit"
         :class="[isOpen ? 'text-[#717680]' : 'text-[#1570EF] hidden sm:block']"
-      />
+      /> -->
       <Transition name="fade">
         <div
           v-if="!isOpen"
@@ -79,7 +79,7 @@ const appTrackerStore = useAppTrackerStore();
 const sophieStore = useSophieStore();
 const { t } = useI18n();
 
-const isOpen = ref<boolean>(false);
+const isOpen = ref<boolean>(true);
 const width = ref<number>(0);
 
 const toggleSidebar = () => {

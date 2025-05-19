@@ -16,7 +16,7 @@
           :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"
         >
           <div class="flex-1 overflow-hidden">
-            <RecommendedSchoolSkeleton
+            <RecommendedSchoolLoading
               v-if="dashboardStore.isSchoolsLoading || isTokenLoading"
             />
             <RecommendedSchools
@@ -58,6 +58,11 @@ useHead(
       {
         rel: "preload",
         href: "/images/ai-recommendation.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/countries-application.png",
         as: "image",
       },
       {
