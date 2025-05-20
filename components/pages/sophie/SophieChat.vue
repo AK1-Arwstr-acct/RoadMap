@@ -365,10 +365,11 @@ const submit = async () => {
       );
     } else {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
-        query:
-          completeChat.value.length <= 1
-            ? `${sophieStore.roadmapTaskDetail?.title}, ${userQuery}`
-            : userQuery,
+        query: userQuery,
+        // query:
+        //   completeChat.value.length <= 1
+        //     ? `${sophieStore.roadmapTaskDetail?.title}, ${userQuery}`
+        //     : userQuery,
         sophieSessionId: uuid.value,
         roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
       });
