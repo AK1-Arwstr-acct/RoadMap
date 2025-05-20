@@ -20,7 +20,7 @@
         <!-- ss -->
         <div class="flex flex-col items-center justify-center h-full w-full">
           <div
-            class="w-full md:max-w-[600px] flex flex-col items-center md:items-start"
+            class="w-full md:max-w-[600px] max-h-[200px] sm:max-h-[250px] md:max-h-full flex flex-col items-center md:items-start"
           >
             <img
               src="/images/school-list-snap.png"
@@ -31,7 +31,7 @@
             <img
               src="/images/sophie-chat-snap.png"
               alt="sophie-chat-snap"
-              class="object-cover w-[50%] md:w-[70%] 2xl:max-w-[464px] ml-20 md:ml-0 -mt-8 md:-mt-16 shadow-[-6px_-8px_30.6px_0px_#00000033] md:self-end"
+              class="object-cover w-[50%] md:w-[70%] 2xl:max-w-[464px] ml-20 md:ml-0 -mt-8 sm:-mt-14 md:-mt-16 shadow-[-6px_-8px_30.6px_0px_#00000033] md:self-end"
               loading="eager"
             />
           </div>
@@ -40,15 +40,16 @@
       <div class="md:w-1/2 flex justify-center items-center px-5 md:px-10 py-6">
         <div class="max-w-[442px]">
           <h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
-            <!-- {{ $t("homepage.title") }} -->
-            Your All-in-One Platform for Studying Abroad
+            {{ $t("discover.heading") }}
           </h1>
           <ul class="text-[#717680] list-disc list-inside">
-            <li class="-indent-6 pl-6">AI-powered school matching</li>
-            <li class="-indent-6 pl-6">Essay assistant</li>
+            <li class="-indent-6 pl-6">{{ $t("discover.detail1") }}</li>
+            <li class="-indent-6 pl-6">{{ $t("discover.detail2") }}</li>
             <li class="-indent-6 pl-6">
-              Free mentorship from top university alumni and 100+ hours of
-              learning materials
+              {{ $t("discover.detail3") }}
+            </li>
+            <li class="-indent-6 pl-6">
+              {{ $t("discover.detail4") }}
             </li>
           </ul>
           <div class="mt-[42px] flex flex-col gap-4">

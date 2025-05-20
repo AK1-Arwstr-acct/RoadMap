@@ -19,40 +19,27 @@
           <p v-if="index > 0" class="">{{ faq.answer }}</p>
           <div v-else class="flex flex-col gap-2">
             <p>
-              We support students throughout every stage of the study abroad
-              journey — from planning to paperwork.
+              {{ $t('pricing_page.faq.faq0.answer_1') }}
             </p>
             <ul class="pl-6 flex flex-col gap-2">
               <li>
-                ✨ <span class="font-semibold">Before applying:</span> You’ll
-                receive a clear step-by-step roadmap, explore majors and careers
-                that fit you, and join exclusive skill-building workshops
-                designed just for Arrowster mentees.
+                {{ $t('pricing_page.faq.faq0.answer_2') }}
               </li>
               <li>
-                📄
-                <span class="font-semibold">When it’s time to apply:</span> Our
-                mentors will help you build a personalized school list through
-                tailored reviews, guide you through extracurricular planning and
-                scholarship applications, and connect you with a 1-on-1
-                counselor for private chats and weekly video calls. You’ll also
-                get access to a premium resource library and an AI assistant to
-                help you brainstorm, write, and refine your application essays.
+                {{ $t('pricing_page.faq.faq0.answer_3') }}
               </li>
               <li>
-                ✈️ <span class="font-semibold">After applying:</span> We’ll
-                continue to support you with visa guidance, financial proof
-                paperwork, and help you manage multiple school offers.
+                {{ $t('pricing_page.faq.faq0.answer_4') }}
               </li>
             </ul>
             <p>
-              Learn more about our mentorship program
+              {{ $t('pricing_page.faq.faq0.more') }}
               <NuxtLinkLocale
                 to="https://drive.google.com/file/d/1YcZjI7RgWCQ6TmddSmkbHprdy9PPRU_n/view"
                 target="_blank"
               >  
                 <span  class="text-[#1570EF] font-semibold cursor-pointer">
-                  here
+                  {{ $t('pricing_page.faq.faq0.here') }}
                 </span>
               </NuxtLinkLocale>
             </p>

@@ -305,6 +305,7 @@ const submit = async () => {
       financial_support_amount_unit: "vnd",
       // dream_schools: formDetails.value.dreamSchool,
       contact_platform: [formDetails.value.selectedAlternativeContact?.value],
+      student_concern : formDetails.value.otherQuestions,
       // contact_info: formDetails.value.otherPhoneOrEmail,
       // lead_incoming_platform: formDetails.value.selectedArrowsterInfo,
     });

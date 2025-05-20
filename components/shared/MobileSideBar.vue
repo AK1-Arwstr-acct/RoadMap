@@ -70,7 +70,7 @@
       </div>
       <div class="mt-6">
         <BaseSelectRadio
-          placeholder="Features"
+          placeholder="Trending Features"
           :options="features"
           v-model="featureState"
           :isShadowDark="true"
@@ -100,7 +100,7 @@ const { t } = useI18n();
 const featureState = ref<OptionAttributes | null>(null);
 
 const features: OptionAttributes[] = [
-  { value: "/roadmap", label: "Roadmap", icon: IconTabApplication },
+  // { value: "/roadmap", label: "Roadmap", icon: IconTabApplication },
   { value: "/school-list", label: "School List", icon: IconTabSchool },
   { value: "/ai-essay", label: "AI Essay", icon: IconTabEssayEditor },
   { value: "/sophie", label: "Sophie", icon: IconTabSophie },

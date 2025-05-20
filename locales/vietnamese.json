@@ -66,10 +66,13 @@
         "signup": "Đăng ký"
     },
     "discover": {
-        "detail": "Chỉ 2 phút nữa là bạn sẽ mở khóa 5 công cụ AI mạnh mẽ—từ việc tìm trường phù hợp đến hỗ trợ viết bài—cộng thêm hơn 100 trang hướng dẫn du học độc quyền.",
+        "heading": "Nền tảng du học toàn diện cho bạn",
+        "detail1": "Tư vấn chọn trường bằng nền tảng AI",
+        "detail2": "Hỗ trợ viết luận",
+        "detail3": "Nhận hướng dẫn 1-1 từ cựu sinh viên các trường top đầu ",
         "get_started": "Bắt đầu",
-        "heading": "Khám phá hành trình du học của riêng bạn.",
-        "i_already_have_an_account": "Tôi đã có tài khoản"
+        "i_already_have_an_account": "Tôi đã có tài khoản",
+        "detail4": "Tài liệu học tập dành riêng cho bạn"
     },
     "forgotPassword": {
         "forgot_password": "Quên mật khẩu?",
@@ -134,6 +137,8 @@
         "verify": "Xác minh"
     },
     "pricing_page": {
+        "heading":"Đăng ký mentorship miễn phí",
+        "details":"Cùng hơn 500 bạn học sinh chinh phục các trường đại học hàng đầu với nền tảng AI miễn phí và đội ngũ mentor đến từ Harvard, Oxford, UPenn, Yonsei.",
         "1_1_mentor_support": "Hỗ trợ mentor 1-1",
         "500+_students": "Hơn 500 học sinh",
         "account_information_phone_number_username": "Thông tin tài khoản (Số điện thoại/Tên người dùng)",
@@ -149,6 +154,15 @@
         "e_g_university_of_sydney_university_of_melbourne": "ví dụ: Đại học Sydney, Đại học Melbourne",
         "e_g": "ví dụ",
         "faq": {
+            "faq0": {
+                "question": "Mentor tại Arrowster có thể hỗ trợ bạn như thế nào?",
+                "answer_1": "Các anh chị sẽ đồng hành cùng bạn trong mọi giai đoạn của hành trình du học – từ bước chuẩn bị ban đầu cho đến khi hoàn tất hồ sơ.",
+                "answer_2": "✨ Trước khi nộp hồ sơ: Bạn sẽ nhận được lộ trình từng bước rõ ràng, khám phá ngành học và nghề nghiệp phù hợp với bản thân, và tham gia các buổi workshop rèn kỹ năng dành riêng cho mentee của Arrowster.",
+                "answer_3": "📄 Khi bắt đầu nộp hồ sơ: Mentor sẽ giúp bạn chọn lọc danh sách trường phù hợp thông qua các buổi review cá nhân hóa, hướng dẫn bạn xây dựng hoạt động ngoại khóa, săn học bổng trường, và kết nối bạn với cố vấn 1:1 để trò chuyện riêng và gọi video hàng tuần. Bạn có thể truy cập vào thư viện tài liệu cao cấp và sử dụng trợ lý AI để lên ý tưởng, viết và chỉnh sửa bài luận du học.",
+                "answer_4": "✈️ Sau khi nộp hồ sơ: Các anh chị vẫn tiếp tục hỗ trợ bạn với hướng dẫn làm visa, chuẩn bị giấy tờ chứng minh tài chính, và quản lý hồ sơ khi bạn đậu nhiều trường cùng lúc.",
+                "more": "Tìm hiểu thêm về chương trình cố vấn của chúng tôi",
+                "here": "tại đây"
+            },
             "faq1": {
                 "question": "Arrowster hỗ trợ tôi nộp hồ sơ du học ở những quốc gia nào?",
                 "answer": "Chúng tôi hỗ trợ học sinh nộp hồ sơ đến Mỹ, Canada, Úc, New Zealand, Vương quốc Anh và các nước châu Âu (bao gồm Pháp, Hà Lan, Đức, v.v.). Tại Việt Nam, chúng tôi cũng hỗ trợ nộp hồ sơ vào RMIT và BUV."

@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="!route.path.includes('/sophie')"
     @click="openSophieModal = !openSophieModal"
     class="size-14 absolute bottom-5 right-5 rounded-2xl bg-[#ED77FF] flex justify-center items-center shadow-md cursor-pointer"
   >

@@ -66,10 +66,13 @@
         "signup": "Sign up"
     },
     "discover": {
-        "detail": "Just 2 minutes away from unlocking 5 powerful AI tools—from school matching to essay help—plus 100+ pages of exclusive study abroad guides",
-        "get_started": "Get Started",
-        "heading": "Discover your own study abroad journey.",
-        "i_already_have_an_account": "I already have an account"
+        "heading": "Your All-in-One Platform for Studying Abroad",
+        "detail1": "AI-powered school matching",
+        "detail2": "Essay assistant",
+        "detail3": "Free 1-1 mentorship from top university alumni",
+        "get_started": "Get started",
+        "i_already_have_an_account": "I already have an account",
+        "detail4": "Exclusive training & resources"
     },
     "forgotPassword": {
         "forgot_password": "Forgot password?",
@@ -134,6 +137,8 @@
         "verify": "Verify"
     },
     "pricing_page": {
+        "heading":"Sign up for free mentorship",
+        "details":"Join 500+ students who secured top university admissions with our free AI-powered platform and expert mentorship from alumni of Harvard, Oxford, UPenn, Yonsei, and more",
         "1_1_mentor_support": "1-1 mentor support",
         "500+_students": "500+ students",
         "account_information_phone_number_username": "Account information (Phone number/Username)",
@@ -147,8 +152,17 @@
         "current_plan": "Current plan",
         "e_g_thpt_nhan_chinh": "e.g. THPT Nhân Chính",
         "e_g_university_of_sydney_university_of_melbourne": "e.g. University of Sydney, University of Melbourne",
-        "e_g" : "e.g.",
+        "e_g": "e.g.",
         "faq": {
+            "faq0": {
+                "question": "How can Arrowster's mentors support me?",
+                "answer_1": "We support students throughout every stage of the study abroad journey — from planning to paperwork.  ",
+                "answer_2": "✨ Before applying: You’ll receive a clear step-by-step roadmap, explore majors and careers that fit you, and join exclusive skill-building workshops designed just for Arrowster mentees.",
+                "answer_3": "📄 When it’s time to apply: Our mentors will help you build a personalized school list through tailored reviews, guide you through extracurricular planning and scholarship applications, and connect you with a 1-on-1 counselor for private chats and weekly video calls. You’ll also get access to a premium resource library and an AI assistant to help you brainstorm, write, and refine your application essays.",
+                "answer_4": "✈️ After applying: We’ll continue to support you with visa guidance, financial proof paperwork, and help you manage multiple school offers.",
+                "more": "Learn more about our mentorship program",
+                "here" : "here"
+            },
             "faq1": {
                 "question": "What countries can Arrowster support me in applying to?",
                 "answer": "We help students apply to US, Canada, Australia, New Zealand, United Kingdom, and Europe (incl. countries such as France, Netherlands, Germany, etc). In Vietnam, we also help students apply to RMIT and BUV."
@@ -288,17 +302,17 @@
         "jump_to_post_application": "Jump to Post - Application",
         "missed_deadline_description": "to see how we can create a new plan just for you. You’re still in the game!",
         "missed_deadline_title": "Missed the Deadline? No Worries!",
-        "paywall_progress":{
-            "heading":"Sign up to track your progress!",
-            "detail" : "Mark tasks as complete and keep track of your journey toward your dream school. Sign up now to save your progress!",
-            "cancel" : "Cancel",
-            "sign_up_for_free" : "Sign up for free"
+        "paywall_progress": {
+            "heading": "Sign up to track your progress!",
+            "detail": "Mark tasks as complete and keep track of your journey toward your dream school. Sign up now to save your progress!",
+            "cancel": "Cancel",
+            "sign_up_for_free": "Sign up for free"
         },
-        "paywall_resources":{
-            "heading":"Sign up to access all resources",
-            "detail" : "Save your progress, track your journey, and unlock all the resources you need to reach your dream school!",
-            "cancel" : "Cancel",
-            "sign_up_for_free" : "Sign up for free"
+        "paywall_resources": {
+            "heading": "Sign up to access all resources",
+            "detail": "Save your progress, track your journey, and unlock all the resources you need to reach your dream school!",
+            "cancel": "Cancel",
+            "sign_up_for_free": "Sign up for free"
         },
         "post_application": "Post - Application",
         "pre_application": "Pre - Application",
@@ -398,8 +412,8 @@
         "start_a_new_chat_with_sophie": "Start a new chat with Sophie",
         "undergraduate": "Undergraduate",
         "upgrade_now": "Upgrade now",
-        "welcome":{
-            "intro" : "Meet Sophie, your AI guide for study abroad success. Ask Sophie anything - from choosing universities to perfecting your application. Just type your question or pick a suggested prompt to get started.",
+        "welcome": {
+            "intro": "Meet Sophie, your AI guide for study abroad success. Ask Sophie anything - from choosing universities to perfecting your application. Just type your question or pick a suggested prompt to get started.",
             "welcome": "Welcome"
         },
         "what_scholarships_can_i_apply_for": "What scholarships can I apply for?",

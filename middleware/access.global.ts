@@ -7,7 +7,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
         "/profile",
     ];
 
-    const requiresAuth = allowedPaths.some((path) => to.path.startsWith(path));
+    // Remove locale prefix from path for comparison
+    const pathWithoutLocale = to.path.replace(/^\/[a-z]{2}(?=\/|$)/, "");
+
+    const requiresAuth = allowedPaths.some((path) => pathWithoutLocale.startsWith(path));
 
     if (requiresAuth && !token.value) {
         return navigateTo(localePath("/login"));

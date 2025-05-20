@@ -53,12 +53,10 @@
           </span>
         </div>
         <h1 class="text-4xl text-[#181D27] font-semibold">
-          Sign up for free mentorship
+          {{ $t("pricing_page.heading") }}
         </h1>
         <p class="md:text-lg text-[#535862] mt-5">
-          Join 500+ students who secured top university admissions with our free
-          AI-powered platform and expert mentorship from alumni of Harvard,
-          Oxford, UPenn, Yonsei, and more
+          {{ $t("pricing_page.details") }}
         </p>
       </div>
     </section>
@@ -147,6 +145,31 @@ useHead(
   computed(() => ({
     link: [
       {
+        rel: "preload",
+        href: "/images/pricing/group-photo.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/pricing/mentor1.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/pricing/mentor2.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/pricing/mentor3.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/pricing/mentor4.png",
+        as: "image",
+      },
+      {
         rel: "canonical",
         href: canonicalUrl,
       },
@@ -175,7 +198,7 @@ const isMobileSideBarOpen = ref<boolean>(false);
 
 const faq = [
   {
-    question: `How can Arrowster's mentors support me?`,
+    question: `${t("pricing_page.faq.faq0.question")}`,
     answer: ``,
   },
   {
@@ -254,13 +277,13 @@ const close = () => {
   isMobileSideBarOpen.value = false;
 };
 
-onMounted( async()=>{
-  await api.get('/api/v1/user',{
+onMounted(async () => {
+  await api.get("/api/v1/user", {
     headers: {
-      'X-Client-Route': `${window.location.origin}${route.fullPath}`,
+      "X-Client-Route": `${window.location.origin}${route.fullPath}`,
     },
-  })
-})
+  });
+});
 </script>
 <style scoped>
 .slideModal-enter-active,

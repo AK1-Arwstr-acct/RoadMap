@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white rounded-xl transition-all ease-in-out duration-700 overflow-hidden flex flex-col absolute lg:relative z-20 top-2 left-2 lg:top-0 lg:left-0 h-[calc(100%-16px)] sm:h-full"
+    class="bg-white rounded-xl transition-all ease-in-out duration-700  flex flex-col absolute lg:relative z-20 top-2 left-2 lg:top-0 lg:left-0 h-[calc(100%-16px)] sm:h-full"
     :class="[
       isOpen ? 'w-[calc(100%-16px)] lg:w-[336px] p-5 ' : 'w-0',
     ]"
@@ -21,12 +21,12 @@
       <IconSidebar
         @click="toggleSidebar"
         class="cursor-pointer min-w-fit lg:hidden"
-        :class="[isOpen ? 'text-[#717680]' : 'text-[#1570EF] hidden lg:block']"
+        :class="[isOpen ? 'text-[#717680]' : 'text-[#1570EF] hidden']"
       />
       <Transition name="fade">
         <div
           v-if="!isOpen"
-          class="fixed lg:hidden z-30 top-28 -left-2 bg-white py-5 px-1 rounded-r-full shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
+          class="fixed lg:hidden z-50 top-28 -left-2 bg-white py-5 px-1 rounded-r-full shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
         >
           <div class="px-1.5 rounded-full">
             <IconSidebar
@@ -99,6 +99,15 @@ watch(
     if (width.value > 1024) {
       isOpen.value = true;
     } else {
+      isOpen.value = false;
+    }
+  }
+);
+
+watch(
+  () => sophieStore.roadmapTaskDetail,
+  () => {
+    if (width.value < 1024) {
       isOpen.value = false;
     }
   }
