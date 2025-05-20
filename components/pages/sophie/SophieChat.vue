@@ -9,18 +9,22 @@
         >
           <Transition name="fade">
             <div
-              v-if="welcomeMessage && appStore.authenticatedUser"
+              v-if="welcomeMessage && appStore.authenticatedUser && !readOnly"
               class="mb-8 bg-[#D1E9FF66]/40 py-3.5 px-4 rounded-lg flex gap-2 items-start"
             >
               <div class="flex-1 text-[#181D27]">
                 <p class="font-semibold text-lg mb-1.5 text-[#175CD3]">
-                 {{ $t('sophie_page.welcome.welcome') }} {{ appStore.userData?.name }} 👋
+                  {{ $t("sophie_page.welcome.welcome") }}
+                  {{ appStore.userData?.name }} 👋
                 </p>
                 <p class="font-medium text-[#181D27]">
-                  {{ $t('sophie_page.welcome.intro') }}
+                  {{ $t("sophie_page.welcome.intro") }}
                 </p>
               </div>
-              <div @click="welcomeMessage = !welcomeMessage" class="cursor-pointer">
+              <div
+                @click="welcomeMessage = !welcomeMessage"
+                class="cursor-pointer"
+              >
                 <IconCross fill="#717680" />
               </div>
             </div>
@@ -28,7 +32,7 @@
           <Transition name="fade">
             <component
               :is="TaskDetailChatModal"
-              v-if="showTaskDetail && sophieStore.roadmapTaskDetail"
+              v-if="showTaskDetail && sophieStore.roadmapTaskDetail && !readOnly"
             />
           </Transition>
           <div
@@ -133,11 +137,12 @@
             </div>
           </Transition>
           <div
-            v-if="completeChat.length === 0"
+            v-if="completeChat.length === 0 && !readOnly"
             class="flex overflow-x-auto custom-scrollbar mt-3 gap-3"
           >
             <div
-              v-for="(question, idx) in sophieStore.roadmapTaskDetail?.common_questions_prompt"
+              v-for="(question, idx) in sophieStore.roadmapTaskDetail
+                ?.common_questions_prompt"
               :key="idx"
               @click="handelPreQuestion(question.text)"
               class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit"
@@ -175,7 +180,7 @@
         </div>
       </div>
     </div>
-    <div v-if="completeChat.length !== 0">
+    <div v-if="completeChat.length !== 0 || readOnly">
       <p class="text-[#A4A7AE] text-xs text-center">
         <span v-if="!readOnly">
           {{
@@ -236,6 +241,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isReadOnly: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const chatContainer = ref<HTMLElement | null>(null);
@@ -243,7 +252,7 @@ const completeChat = ref<SophieChat[]>([]);
 const inputQuestion = ref<string>("");
 const isChatLoading = ref<boolean>(false);
 const isChatFull = ref<boolean>(false);
-const readOnly = ref<boolean>(false);
+const readOnly = ref<boolean>(props.isReadOnly);
 const welcomeMessage = ref<boolean>(true);
 const showTaskDetail = ref<boolean>(true);
 const uuid = ref<string>();
@@ -356,9 +365,12 @@ const submit = async () => {
       );
     } else {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
-        query: completeChat.value.length <= 1 ? `${sophieStore.roadmapTaskDetail?.title}, ${userQuery}` : userQuery,
+        query:
+          completeChat.value.length <= 1
+            ? `${sophieStore.roadmapTaskDetail?.title}, ${userQuery}`
+            : userQuery,
         sophieSessionId: uuid.value,
-        roadmap_task_id: sophieStore.roadmapTaskDetail?.id
+        roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
       });
     }
     if (response) {
@@ -446,6 +458,13 @@ watch(
     if (newValue) {
       submit();
     }
+  }
+);
+
+watch(
+  () => props.isReadOnly,
+  () => {
+    readOnly.value = props.isReadOnly;
   }
 );
 

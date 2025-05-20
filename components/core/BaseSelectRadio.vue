@@ -11,8 +11,10 @@
       :class="{
         '!bg-[#f8f8f8] pointer-events-none': disabled,
         'shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]':
-          isDropdownOpen,
-        '!border-[#84CAFF]': isDropdownOpen,
+          isDropdownOpen && !isShadowDark,
+        'shadow-[0px_0px_0px_4px_rgba(225,225,225,0.24)]':
+          isDropdownOpen && isShadowDark,
+        '!border-[#84CAFF]': isDropdownOpen && !isShadowDark,
         '!border-[#EF4646]':
           hasError && !selectedOption?.value && !isDropdownOpen,
       }"
@@ -22,12 +24,20 @@
           class="text-[#979797] text-left"
           :class="{ '!text-[#181D27]': isDropdownOpen }"
         >
-          {{ placeholder === 'Select Option' ? `${$t('schoolList_page.select_option')}` : placeholder }}
+          {{
+            placeholder === "Select Option"
+              ? `${$t("schoolList_page.select_option")}`
+              : placeholder
+          }}
         </p>
       </div>
       <div v-else-if="selectedOption?.value && showCheckedLabel" class="flex-1">
         <p class="text-[#717680] text-left text-xs">
-          {{ placeholder === 'Select Option' ? `${$t('schoolList_page.select_option')}` : placeholder }}
+          {{
+            placeholder === "Select Option"
+              ? `${$t("schoolList_page.select_option")}`
+              : placeholder
+          }}
         </p>
         <p class="text-[#717680] text-left w-[calc(100%-24px)] truncate">
           {{ selectedOption.label }}
@@ -94,9 +104,17 @@
             class="min-w-5 h-5 cursor-pointer"
             :class="{ hidden: mode === 'tick' }"
           />
-          <span class="truncate text-[#181D27] font-medium">{{
-            item.label
-          }}</span>
+          <span
+            class="truncate text-[#181D27] font-medium flex item-center gap-2"
+          >
+            <div v-if="item.icon">
+              <component
+                :is="item.icon"
+                class="size-6 text-[#717680]"
+              />
+            </div>
+            {{ item.label }}</span
+          >
           <span v-if="selectedOption?.value === item.value && mode === 'tick'">
             <IconTick stroke="#1570EF" stroke-width="2" />
           </span>
@@ -143,6 +161,10 @@ const props = defineProps({
     default: false,
   },
   hasError: {
+    type: Boolean,
+    default: false,
+  },
+  isShadowDark: {
     type: Boolean,
     default: false,
   },

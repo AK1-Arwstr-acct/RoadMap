@@ -192,7 +192,8 @@
       <NuxtLinkLocale
       :to="'/pricing'"
         class="text-white text-sm bg-[#1570EF] rounded-lg w-full p-2.5 text-center -order-1 md:order-none">
-        {{ $t("schoolList_page.scholarships_for_this_school") }}
+        <!-- {{ $t("schoolList_page.scholarships_for_this_school") }} -->
+          Get free mentorship for this school
       </NuxtLinkLocale>
     </div>
   </div>

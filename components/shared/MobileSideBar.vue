@@ -68,6 +68,14 @@
       <div class="mt-6">
         <BaseLanguageDropdown :isMobile="true" />
       </div>
+      <div class="mt-6">
+        <BaseSelectRadio
+          placeholder="Features"
+          :options="features"
+          v-model="featureState"
+          :isShadowDark="true"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -80,6 +88,7 @@ import IconTabEssayEditor from "../icons/IconTabEssayEditor.vue";
 import IconProfileTab from "../icons/IconProfileTab.vue";
 import type { TabList } from "~/types/dashboard";
 import useAppStore from "~/stores/AppStore";
+import type { OptionAttributes } from "~/types/home";
 
 const emit = defineEmits(["updateTab", "close"]);
 
@@ -88,52 +97,14 @@ const localePath = useLocalePath();
 const route = useRoute();
 const { t } = useI18n();
 
-const tabList: TabList[] = [
-  // {
-  //   name: "profile",
-  //   icon: IconProfileTab,
-  //   route: "/dashboard/profile",
-  // },
-  {
-    name: t("dashboard.sidebar.menu.roadmap"),
-    icon: IconTabApplication,
-    route: "/roadmap",
-  },
-  {
-    name: t("dashboard.sidebar.menu.schools_list"),
-    icon: IconTabSchool,
-    route: "/school-list",
-  },
-  {
-    name: t("dashboard.sidebar.menu.sophie"),
-    icon: IconTabSophie,
-    route: "/sophie",
-  },
-  {
-    name: t("dashboard.sidebar.menu.ai_essay"),
-    icon: IconTabEssayEditor,
-    route: "/ai-essay",
-  },
-];
+const featureState = ref<OptionAttributes | null>(null);
 
-const updateTab = (item: string) => {
-  if (route.path.includes("/demo")) {
-    if (item === "/dashboard") {
-      emit("updateTab", "home");
-    } else if (item === "/roadmap") {
-      emit("updateTab", "Roadmap");
-    } else if (item === "/school-list") {
-      emit("updateTab", "schools_list");
-    } else if (item === "/sophie") {
-      emit("updateTab", "sophie");
-    } else if (item === "/ai-essay") {
-      emit("updateTab", "ai_essay_editor");
-    }
-  } else {
-    navigateTo(localePath(item));
-  }
-  emit("close");
-};
+const features: OptionAttributes[] = [
+  { value: "/roadmap", label: "Roadmap", icon: IconTabApplication },
+  { value: "/school-list", label: "School List", icon: IconTabSchool },
+  { value: "/ai-essay", label: "AI Essay", icon: IconTabEssayEditor },
+  { value: "/sophie", label: "Sophie", icon: IconTabSophie },
+];
 
 const handleLogo = () => {
   navigateTo(localePath("/school-list"));
@@ -147,4 +118,16 @@ const handleProfile = () => {
   navigateTo(localePath("/profile"));
   emit("close");
 };
+
+watch(
+  () => featureState.value?.value,
+  () => {
+    if (featureState.value?.value === "/roadmap") {
+      navigateTo(localePath("/school-list"));
+    } else {
+      navigateTo(localePath(featureState.value?.value || ""));
+    }
+    emit("close");
+  }
+);
 </script>

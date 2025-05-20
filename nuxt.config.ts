@@ -34,6 +34,7 @@ export default defineNuxtConfig({
       appMode: process.env.NUXT_APP_MODE,
       googleAnalytics: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS,
       hotjarId: process.env.NUXT_PUBLIC_HOTJAR_ID,
+      tiktokPixelId: process.env.NUXT_PUBLIC_PIXEL_ID,
     },
   },
 })

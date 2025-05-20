@@ -1,8 +1,8 @@
 <template>
   <div
-    class="bg-white rounded-xl transition-all ease-in-out duration-700 overflow-hidden flex flex-col absolute sm:relative z-30 top-2 left-2 sm:top-0 sm:left-0 h-[calc(100%-16px)] sm:h-full"
+    class="bg-white rounded-xl transition-all ease-in-out duration-700 overflow-hidden flex flex-col absolute lg:relative z-20 top-2 left-2 lg:top-0 lg:left-0 h-[calc(100%-16px)] sm:h-full"
     :class="[
-      isOpen ? 'w-[calc(100%-16px)] sm:w-[336px] p-5 ' : 'w-0 sm:w-[72px] py-5',
+      isOpen ? 'w-[calc(100%-16px)] lg:w-[336px] p-5 ' : 'w-0',
     ]"
   >
     <div
@@ -18,15 +18,15 @@
           {{ $t("roadmap_page.checklist") }}
         </p>
       </Transition>
-      <!-- <IconSidebar
+      <IconSidebar
         @click="toggleSidebar"
-        class="cursor-pointer min-w-fit"
-        :class="[isOpen ? 'text-[#717680]' : 'text-[#1570EF] hidden sm:block']"
-      /> -->
+        class="cursor-pointer min-w-fit lg:hidden"
+        :class="[isOpen ? 'text-[#717680]' : 'text-[#1570EF] hidden lg:block']"
+      />
       <Transition name="fade">
         <div
           v-if="!isOpen"
-          class="fixed sm:hidden z-30 top-28 -left-2 bg-white py-5 px-1 rounded-r-full shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
+          class="fixed lg:hidden z-30 top-28 -left-2 bg-white py-5 px-1 rounded-r-full shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
         >
           <div class="px-1.5 rounded-full">
             <IconSidebar
@@ -40,7 +40,7 @@
     </div>
     <!-- for open sidebar -->
     <Transition name="sidebar">
-      <div v-if="isOpen" class="flex-1 overflow-y-auto no-scrollbar">
+      <div class="flex-1 overflow-y-auto no-scrollbar">
         <div class="h-px bg-[#E9EAEB] my-6" />
         <ApplicationsList
           :heading="t('roadmap_page.pre_application')"
@@ -59,7 +59,7 @@
       </div>
     </Transition>
     <!-- close sidebar -->
-    <Transition name="fade">
+    <!-- <Transition name="fade">
       <div
         v-if="!isOpen"
         class="flex-1 overflow-y-auto no-scrollbar w-full hidden sm:flex flex-col gap-14 mt-8"
@@ -68,7 +68,7 @@
         <CompleteTaskList :application="appTrackerStore.applicationList" />
         <CompleteTaskList :application="appTrackerStore.postApplication" />
       </div>
-    </Transition>
+    </Transition> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -94,9 +94,11 @@ const windowSize = () => {
 };
 
 watch(
-  () => sophieStore.roadmapTaskDetail,
+  () => width.value,
   () => {
-    if (width.value < 640) {
+    if (width.value > 1024) {
+      isOpen.value = true;
+    } else {
       isOpen.value = false;
     }
   }

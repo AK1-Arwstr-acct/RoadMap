@@ -52,11 +52,23 @@
           }"
         >
           <SophieHistory
+            v-if="!isTaskChat"
             @newChat="handelNewChat"
             @chatDetail="chatDetail"
             :chatHistoryArray="chatHistoryArray"
             :isModal="isModal"
           />
+          <div v-else class="p-3 sm:p-6 size-full">
+            <SophieChat
+              :isNewChat="isNewChat"
+              :singleChatDetail="specificTaskChat"
+              :isModal="isModal"
+              :isTokenLoaded="isTokenLoaded"
+              :isSummarizeOverview="isSummarizeOverview"
+              @isChatLoading="(value) => (isChatLoading = value)"
+              :isReadOnly="true"
+            />
+          </div>
         </div>
         <div
           v-show="chatOrHistory === 'messages'"
@@ -109,12 +121,17 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isTaskChat: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isTokenLoaded = ref<boolean>(false);
 const isChatLoading = ref<boolean>(false);
 const isNewChat = ref<boolean>(false);
 const chatHistoryArray = ref<{ id: number; title: string }[]>([]);
+const specificTaskChat = ref<ChatDetail[]>([]);
 const singleChatDetail = ref<ChatDetail[]>([]);
 const chatOrHistory = ref<"messages" | "history">("messages");
 
@@ -170,17 +187,23 @@ const getChatHistory = async () => {
           },
         }
       );
+      if (response) {
+        chatHistoryArray.value = response.data.data;
+      }
     } else {
       if (!sophieStore.roadmapTaskDetail) {
         response = await api.get("/api/v1/ai-conversation/get-sophie-sessions");
+        if (response) {
+          chatHistoryArray.value = response.data.data;
+        }
       } else {
         response = await api.get(
           `/api/v1/ai-conversation/get-sophie-sessions/chat/${sophieStore.roadmapTaskDetail?.id}?showRoadmap=yes`
         );
+        if (response) {
+          specificTaskChat.value = response.data.data;
+        }
       }
-    }
-    if (response) {
-      chatHistoryArray.value = response.data.data;
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {

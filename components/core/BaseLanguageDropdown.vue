@@ -3,7 +3,7 @@
     <div
       @click="isDropdownOpen = !isDropdownOpen"
       @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
-      class="bg-white rounded-xl border-[1.5px] border-gray-200 py-2.5 px-4 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer"
+      class="bg-white rounded-lg border-[1.5px] border-gray-200 py-2.5 px-4 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer"
       :class="{
         'shadow-[0px_0px_0px_4px_rgba(225,225,225,0.24)]': isDropdownOpen,
         '!w-full' : isMobile

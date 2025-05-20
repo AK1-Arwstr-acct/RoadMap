@@ -230,7 +230,7 @@ const countryOptions = ref<Country[]>([]);
 const otherText = ref<string>("");
 
 const alternativeContact = [
-  { value: "zolo", label: "Zolo" },
+  { value: "zalo", label: "Zalo" },
   { value: "telegram", label: "Telegram" },
   { value: "whatsapp", label: "WhatsApp" },
 ];

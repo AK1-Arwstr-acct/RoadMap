@@ -66,7 +66,7 @@
       class="my-10 md:my-20 px-5 sm:px-10 md:px-28 flex flex-col lg:flex-row gap-6 lg:gap-10"
     >
       <div class="w-full lg:w-1/2 rounded-xl overflow-hidden">
-        <img src="/images/pricing/pricing.jpg" alt="all memmber" class="size-full object-cover">
+        <ImageSlider :slides="slides" :autoSlideInterval="4000" />
       </div>
       <div class="w-full lg:w-1/2 px-4 py-6">
         <JourneyForm
@@ -135,7 +135,9 @@ const localePath = useLocalePath();
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
 const router = useRouter();
+const route = useRoute();
 const { t } = useI18n();
+const { api } = useApi();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""
@@ -198,6 +200,53 @@ const faq = [
   },
 ];
 
+const slides = [
+  {
+    image: "/images/pricing/group-photo.png",
+    overlayText: {
+      name: "",
+      position: "",
+      details: "",
+    },
+  },
+  {
+    image: "/images/pricing/mentor1.png",
+    overlayText: {
+      name: "Hoàng Hoài Thanh",
+      position: "Arrowster mentor",
+      details:
+        "VinUniversity Full Scholarship | Admitted to Harvard Business School MBA Program",
+    },
+  },
+  {
+    image: "/images/pricing/mentor2.png",
+    overlayText: {
+      name: "Kenneth Chong",
+      position: "Arrowster mentor",
+      details:
+        "Bachelor of Law at the University of Oxford | Master of Laws at Harvard University",
+    },
+  },
+  {
+    image: "/images/pricing/mentor3.png",
+    overlayText: {
+      name: "Hayden Vũ",
+      position: "Arrowster mentor",
+      details:
+        "100% Scholarship at Yonsei University | Full-ride Master’s Scholarship at Peking University",
+    },
+  },
+  {
+    image: "/images/pricing/mentor4.png",
+    overlayText: {
+      name: "Thái Nguyễn",
+      position: "Arrowster mentor",
+      details:
+        "Graduated from Amherst College (#2 LAC US), 100% scholarship NUS, NTU, Yale-NUS, Scholarship to NYU",
+    },
+  },
+];
+
 const updateJourney = () => {
   stepCount.value = 2;
 };
@@ -205,9 +254,13 @@ const close = () => {
   isMobileSideBarOpen.value = false;
 };
 
-// onMounted( async()=>{
-//   await api.get('/api/v1/plans/bundle')
-// })
+onMounted( async()=>{
+  await api.get('/api/v1/user',{
+    headers: {
+      'X-Client-Route': `${window.location.origin}${route.fullPath}`,
+    },
+  })
+})
 </script>
 <style scoped>
 .slideModal-enter-active,
