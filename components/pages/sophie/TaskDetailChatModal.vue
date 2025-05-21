@@ -35,7 +35,7 @@
     <div class="flex flex-col gap-6 mt-4">
       <div
         @click="handelResources(resource.link)"
-        v-for="(resource, idx) in sophieStore.roadmapTaskDetail?.resources"
+        v-for="(resource, idx) in sophieStore.roadmapTaskDetail?.resources.filter(item => item.link)"
         :key="idx"
         class="flex items-center gap-2 font-medium cursor-pointer"
       >
