@@ -3,13 +3,13 @@
     <!-- user name -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        Your name
+        {{ $t('pricing_page.your_name') }}
         <span class="text-[#F04438]">*</span>
       </p>
       <input
         name="user_input"
         type="text"
-        placeholder="Your Name"
+        :placeholder="t('pricing_page.your_name')"
         v-model="formDetails.userName"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
         data-hj-allow
@@ -19,14 +19,14 @@
       <!-- phoneNumber -->
       <div class="relative remove-shadow-bg-white w-full">
         <label class="text-sm text-[#344054] font-medium mb-3">
-          Phone number
+          {{ $t('pricing_page.phone_number') }}
           <span class="text-[#F04438]">*</span>
         </label>
         <div
           class="relative border-[1.5px] rounded-lg flex items-center gap-2 mt-0.5 p-[2px]"
           :class="[
             isFocused
-              ? '!border-[#84CAFF] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]'
+              ? 'shadow-[0px_0px_0px_4px_rgba(225,225,225,0.24)]'
               : 'border-gray-200',
           ]"
           tabindex="0"
@@ -109,7 +109,7 @@
       <div class="w-full">
         <BaseSelectRadio
           :options="alternativeContact"
-          label="Contact platform"
+          :label="t('pricing_page.contact_platform')"
           v-model="formDetails.selectedAlternativeContact"
         />
       </div>
@@ -158,12 +158,12 @@
     <!-- otther concernes/ questions -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        Do you have any other concerns or questions?
+        {{ $t('pricing_page.do_you_have_any_other_concerns_or_questions') }}
       </p>
       <textarea
         name="user_input_cont"
         type="text"
-        placeholder="e.g. “I need help figuring out which major/school fits me”, “I need help with my essay”"
+        :placeholder="t('pricing_page.example')"
         v-model="formDetails.otherQuestions"
         rows="2"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg resize-none"
@@ -176,7 +176,7 @@
       @click="submit"
       class="bg-[#1570EF] rounded-lg py-3 px-5 flex items-center justify-center gap-2 text-white disabled:opacity-70"
     >
-      Apply now
+      {{ $t('pricing_page.apply_now') }}
       <IconArrowRight v-if="!isSubmitting" fill="#ffffff" />
       <IconSpinner v-else stroke="#ffffff" bgColor="transparent" width="20" />
     </button>

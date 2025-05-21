@@ -137,8 +137,20 @@
         "verify": "Xác minh"
     },
     "pricing_page": {
-        "heading":"Đăng ký mentorship miễn phí",
-        "details":"Cùng hơn 500 bạn học sinh chinh phục các trường đại học hàng đầu với nền tảng AI miễn phí và đội ngũ mentor đến từ Harvard, Oxford, UPenn, Yonsei.",
+        "apply_now": "Đăng ký ngay",
+        "your_name": "Tên của bạn",
+        "phone_number": "Số điện thoại",
+        "contact_platform": "Nền tảng liên lạc",
+        "do_you_have_any_other_concerns_or_questions": "Bạn còn có thắc mắc hay mối quan tâm nào khác không?",
+        "example": "Ví dụ: “Em đang phân vân không biết ngành hoặc trường nào phù hợp”, “Em chưa biết bắt đầu bài luận từ đâu”",
+        "carousel": {
+            "thanh_description": "Học bổng toàn phần VinUniversity, Trúng tuyển Harvard Business School",
+            "ken_description": "Cử nhân Luật tại University of Oxford, Thạc sĩ Luật tại Harvard Law School",
+            "hayden_description": "Học bổng 100% Yonsei University, Học bổng toàn phần Thạc sĩ tại Đại Học Bắc Kinh",
+            "thai_description": "Tốt nghiệp Amherst College (#2 LAC Mỹ), học bổng toàn phần NUS, NTU, Yale-NUS, trúng tuyển NYU"
+        },
+        "heading": "Đăng ký mentorship miễn phí",
+        "details": "Cùng hơn 500 bạn học sinh chinh phục các trường đại học hàng đầu với nền tảng AI miễn phí và đội ngũ mentor đến từ Harvard, Oxford, UPenn, Yonsei.",
         "1_1_mentor_support": "Hỗ trợ mentor 1-1",
         "500+_students": "Hơn 500 học sinh",
         "account_information_phone_number_username": "Thông tin tài khoản (Số điện thoại/Tên người dùng)",
@@ -353,6 +365,8 @@
         "housing": "Ký túc xá:",
         "housing_and_meals": "Ký túc xá & bữa ăn:",
         "ielts": "IELTS:",
+        "loading_title": "Tìm trường đại học phù hợp nhất với bạn...",
+        "loading_description": "Hãy để AI của Arrowster gợi ý những trường đại học phù hợp dựa trên hồ sơ, sở thích và mục tiêu của bạn.",
         "majors_pick_up_to_3_majors": "Ngành học (Chọn tối đa 3 ngành)",
         "median_salary": "Mức lương trung bình:",
         "overwhelmed_by_options": "Bạn đang choáng ngợp vì quá nhiều lựa chọn?",

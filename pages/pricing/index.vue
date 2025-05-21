@@ -237,8 +237,7 @@ const slides = [
     overlayText: {
       name: "Hoàng Hoài Thanh",
       position: "Arrowster mentor",
-      details:
-        "VinUniversity Full Scholarship | Admitted to Harvard Business School MBA Program",
+      details: t('pricing_page.carousel.thanh_description')
     },
   },
   {
@@ -246,8 +245,7 @@ const slides = [
     overlayText: {
       name: "Kenneth Chong",
       position: "Arrowster mentor",
-      details:
-        "Bachelor of Law at the University of Oxford | Master of Laws at Harvard University",
+      details: t('pricing_page.carousel.ken_description')
     },
   },
   {
@@ -255,8 +253,7 @@ const slides = [
     overlayText: {
       name: "Hayden Vũ",
       position: "Arrowster mentor",
-      details:
-        "100% Scholarship at Yonsei University | Full-ride Master’s Scholarship at Peking University",
+      details: t('pricing_page.carousel.hayden_description')
     },
   },
   {
@@ -264,8 +261,7 @@ const slides = [
     overlayText: {
       name: "Thái Nguyễn",
       position: "Arrowster mentor",
-      details:
-        "Graduated from Amherst College (#2 LAC US), 100% scholarship NUS, NTU, Yale-NUS, Scholarship to NYU",
+      details: t('pricing_page.carousel.thai_description')
     },
   },
 ];

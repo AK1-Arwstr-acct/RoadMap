@@ -137,8 +137,20 @@
         "verify": "Verify"
     },
     "pricing_page": {
-        "heading":"Sign up for free mentorship",
-        "details":"Join 500+ students who secured top university admissions with our free AI-powered platform and expert mentorship from alumni of Harvard, Oxford, UPenn, Yonsei, and more",
+        "apply_now": "Apply now",
+        "your_name": "Your name",
+        "phone_number": "Phone number",
+        "contact_platform": "Contact platform",
+        "do_you_have_any_other_concerns_or_questions": "Do you have any other concerns or questions?",
+        "example": "e.g. “I need help figuring out which major/school fits me”, “I need help with my essay”",
+        "carousel": {
+            "thanh_description": "VinUniversity Full Scholarship, Admitted to Harvard Business School MBA Program",
+            "ken_description": "Bachelor of Law at the University of Oxford, Master of Laws at Harvard University",
+            "hayden_description": "100% Scholarship at Yonsei University, Full-ride Master’s Scholarship at Peking University",
+            "thai_description": "Graduated from Amherst College (#2 LAC US), 100% scholarship NUS, NTU, Yale-NUS, Scholarship to NYU"
+        },
+        "heading": "Sign up for free mentorship",
+        "details": "Join 500+ students who secured top university admissions with our free AI-powered platform and expert mentorship from alumni of Harvard, Oxford, UPenn, Yonsei, and more",
         "1_1_mentor_support": "1-1 mentor support",
         "500+_students": "500+ students",
         "account_information_phone_number_username": "Account information (Phone number/Username)",
@@ -161,7 +173,7 @@
                 "answer_3": "📄 When it’s time to apply: Our mentors will help you build a personalized school list through tailored reviews, guide you through extracurricular planning and scholarship applications, and connect you with a 1-on-1 counselor for private chats and weekly video calls. You’ll also get access to a premium resource library and an AI assistant to help you brainstorm, write, and refine your application essays.",
                 "answer_4": "✈️ After applying: We’ll continue to support you with visa guidance, financial proof paperwork, and help you manage multiple school offers.",
                 "more": "Learn more about our mentorship program",
-                "here" : "here"
+                "here": "here"
             },
             "faq1": {
                 "question": "What countries can Arrowster support me in applying to?",
@@ -353,6 +365,8 @@
         "housing": "Housing:",
         "housing_and_meals": "Housing & Meals:",
         "ielts": "IELTS:",
+        "loading_title": "Finding your best-fit schools...",
+        "loading_description": "Let our AI match you with the right universities based on your profile, preferences, and goals.",
         "majors_pick_up_to_3_majors": "Majors (Pick up to 3 majors)",
         "median_salary": "Median Salary:",
         "overwhelmed_by_options": "Overwhelmed by options?",

@@ -7,11 +7,10 @@
       loading="eager"
     />
     <p class="text-[#181D27] text-xl md:text-2xl font-semibold mt-6">
-      Finding Your Best-Fit Schools...
+      {{ $t('schoolList_page.loading_title') }}
     </p>
     <p class="mt-2 text-[#535862] md:text-lg">
-      Let our AI match you with the right universities based on your profile,
-      preferences, and goals.
+      {{ $t('schoolList_page.loading_description') }}
     </p>
   </div>
 </template>
