@@ -57,6 +57,7 @@
         },
         "navbar": {
             "trending_features": "Trending Features",
+            "school_list": "School List",
             "essay_builder": "Essay Builder",
             "essay_generator": "Essay Generator",
             "resources": "Resources",

@@ -171,7 +171,7 @@ const tokenExists = useCookie("token");
 const featureState = ref<OptionAttributes | null>(null);
 
 const features: OptionAttributes[] = [
-  { value: "/school-list", label: t("dashboard.navbar.trending_features"), icon: IconTabSchool },
+  { value: "/school-list", label: t("dashboard.navbar.school_list"), icon: IconTabSchool },
   { value: "/ai-essay", label: t("dashboard.navbar.essay_generator"), icon: IconEssayGenerater },
   { value: "/resources", label: t("dashboard.navbar.resources"), icon: IconBookOpen },
   { value: "/sophie", label: t("dashboard.navbar.ask_sophie"), icon: IconTabSophie },
