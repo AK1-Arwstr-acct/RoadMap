@@ -56,10 +56,11 @@
             }
         },
         "navbar": {
-            "morning": "Chào buổi sáng",
-            "afternoon": "Chào buổi chiều",
-            "evening": "Chào buổi tối",
-            "night": "Chúc ngủ ngon"
+            "trending_features": "Tính năng nổi bật",
+            "essay_builder": "Viết bài luận",
+            "essay_generator": "Tạo bài luận nhanh",
+            "resources": "Tài liệu",
+            "ask_sophie": "Hỏi Sophie"
         },
         "talk_to_us": "Đăng ký mentorship",
         "login": "Đăng nhập",
@@ -302,6 +303,24 @@
         "view_all": "Xem tất cả",
         "your_achievement": "Thành tích của bạn",
         "your_ai_essay": "Bài luận AI của bạn"
+    },
+    "resources_page": {
+        "program_1": {
+            "cta_text": "Đọc tại đây",
+            "description": "100 trang bao trùm mọi chủ đề du học: chọn ngành, xây dựng hồ sơ, xin học bổng, viết bài luận và nhiều hơn nữa!",
+            "title": "Cẩm Nang Du Học Độc Quyền từ Arrowster"
+        },
+        "program_2": {
+            "cta_text": "Nội dung độc quyền – Làm việc cùng chúng tôi để truy cập",
+            "description": "Buổi chia sẻ từ mentor Thanh (Harvard MBA) về phương pháp chọn ngành đúng và chuẩn bị cho việc làm sau khi tốt nghiệp.",
+            "title": "Buổi Huấn Luyện 1: Cách Chọn Ngành Phù Hợp Với Nghề Nghiệp Sau Này"
+        },
+        "program_3": {
+            "cta_text": "Nội dung độc quyền – Làm việc cùng chúng tôi để truy cập",
+            "description": "Danh sách học bổng cho học sinh Việt Nam tại tất cả quốc gia (Mỹ, Úc, Canada, Châu Âu, v.v).",
+            "title": "Tổng Hợp Học Bổng (2025-2026)"
+        },
+        "program_and_resources_for_you": "Chương trình và tài nguyên dành cho bạn"
     },
     "roadmap_page": {
         "application": "Hồ sơ đăng ký",

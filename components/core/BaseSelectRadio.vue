@@ -45,8 +45,14 @@
       </div>
       <div v-else class="flex-1">
         <p
-          class="text-[#181D27] text-left w-[calc(100%-24px)] truncate font-medium"
+          class="text-[#181D27] text-left w-[calc(100%-24px)] truncate font-medium flex items-center gap-2"
         >
+          <div v-if="selectedOption.icon">
+              <component
+                :is="selectedOption.icon"
+                class="size-6 text-[#717680]"
+              />
+            </div>
           {{ selectedOption.label }}
         </p>
       </div>
@@ -69,7 +75,7 @@
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute left-0 w-full border-[1.5px] border-gray-200 bg-white z-20 max-h-[300px] sm:max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
+      class="absolute left-0 border-[1.5px] border-gray-200 bg-white z-20 max-h-[300px] sm:max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
       :class="[
         direction === 'upward'
           ? label
@@ -78,6 +84,7 @@
           : label
           ? 'top-[82px]'
           : 'top-[52px]',
+        dropdownWidth === '' ? 'w-full' : dropdownWidth
       ]"
     >
       <div
@@ -128,6 +135,10 @@
 import type { OptionAttributes } from "~/types/home";
 
 const props = defineProps({
+  dropdownWidth: {
+    type: String,
+    default: "",
+  },
   placeholder: {
     type: String,
     default: "Select Option",

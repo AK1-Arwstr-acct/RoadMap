@@ -2,10 +2,10 @@
   <div
     class="min-h-svh w-full flex justify-center items-center px-5 pt-24 pb-16"
   >
-    <div class="w-full sm:w-[390px] space-y-8">
+    <div class="w-full sm:w-[360px] flex flex-col gap-8">
       <div class="flex flex-col items-center gap-6">
         <IconArrowsterLogo />
-        <div class="text-center space-y-3">
+        <div class="text-center flex flex-col gap-3">
           <h1 class="font-semibold text-3xl text-[#181D27]">
             {{ $t("signup.create_your_free_account") }}
           </h1>
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div>
-        <div class="space-y-5">
+        <div class="flex flex-col gap-5">
           <div class="remove-shadow-bg-white">
             <label class="font-medium text-[#414651] text-sm">{{
               $t("signup.name")
@@ -65,7 +65,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-6">
+        <div class="mt-6 flex flex-col gap-4">
           <button
             @click="onSubmit"
             :disabled="
@@ -77,19 +77,14 @@
           >
             {{ $t("signup.create_account") }}
           </button>
+          <button
+            @click="handleClick"
+            class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
+          >
+            <IconGoogle />
+            <span>{{ $t("signup.sign_up_with_google") }}</span>
+          </button>
         </div>
-        <div class="my-4 flex items-center gap-2">
-          <div class="flex-1 h-[1px] bg-[#E9EAEB]" />
-          <p class="text-[#717680] text-sm">{{ $t("login.or") }}</p>
-          <div class="flex-1 h-[1px] bg-[#E9EAEB]" />
-        </div>
-        <button
-          @click="handleClick"
-          class="cursor-pointer disabled:opacity-70 w-full text-[#414651] border-2 border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
-        >
-          <IconGoogle />
-          <span>{{ $t("signup.sign_up_with_google") }}</span>
-        </button>
         <p class="mt-8 text-[#535862] text-sm text-center">
           {{ $t("login.already_have_an_account") }}
           <NuxtLinkLocale :to="'/login'">

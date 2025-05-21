@@ -56,10 +56,11 @@
             }
         },
         "navbar": {
-            "morning": "Good Morning",
-            "afternoon": "Good Afternoon",
-            "evening": "Good Evening",
-            "night": "Good Night"
+            "trending_features": "Trending Features",
+            "essay_builder": "Essay Builder",
+            "essay_generator": "Essay Generator",
+            "resources": "Resources",
+            "ask_sophie": "Ask Sophie"
         },
         "talk_to_us": "Free Mentorship",
         "login": "Log in",
@@ -302,6 +303,24 @@
         "view_all": "View All",
         "your_achievement": "Your achievement",
         "your_ai_essay": "Your AI Essay"
+    },
+    "resources_page": {
+        "program_1": {
+            "cta_text": "Read here",
+            "description": "100 pages covering every topic of study abroad: choosing major, building profile, applying for scholarships, writing essays, and more!",
+            "title": "Arrowster Exclusive Study Abroad Handbook"
+        },
+        "program_2": {
+            "cta_text": "Exclusive Content – Work with us to access",
+            "description": "Sharing session by our mentor Thanh (Harvard MBA) on a strategic framework to choose the right major and prepare to get a job after graduation.",
+            "title": "Training Session 1: How to Select the Best Major for Jobs after Graduation"
+        },
+        "program_3": {
+            "cta_text": "Exclusive Content – Work with us to access",
+            "description": "List of scholarships for Vietnamese students across all countries (US, Australia, Canada, Europe, etc).",
+            "title": "Centralised Scholarship (2025-2026)"
+        },
+        "program_and_resources_for_you": "Programs and resources for you"
     },
     "roadmap_page": {
         "application": "Application",

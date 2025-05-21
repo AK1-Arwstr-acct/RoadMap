@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <section class="w-full mx-auto max-w-[1216px] px-0 mt-8">
+    <section class="w-full mx-auto max-w-[1220px] px-0 mt-8">
       <div class="px-5">
         <div class="hidden md:flex justify-end">
           <span @click="router.back()" class="cursor-pointer">
@@ -61,16 +61,18 @@
       </div>
     </section>
     <section
-      class="my-10 md:my-20 px-5 sm:px-10 md:px-28 flex flex-col lg:flex-row gap-6 lg:gap-10"
+      class="my-10 md:my-20 px-5 sm:px-5 xl:px-28"
     >
-      <div class="w-full lg:w-1/2 rounded-xl overflow-hidden">
-        <ImageSlider :slides="slides" :autoSlideInterval="4000" />
-      </div>
-      <div class="w-full lg:w-1/2 px-4 py-6">
-        <JourneyForm
-          @updateJourney="updateJourney"
-          :selectedPlan="selectedPlan"
-        />
+      <div class="w-full max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-10">
+        <div class="w-full lg:w-1/2 rounded-xl overflow-hidden">
+          <ImageSlider :slides="slides" :autoSlideInterval="4000" />
+        </div>
+        <div class="w-full lg:w-1/2 px-4 py-6">
+          <JourneyForm
+            @updateJourney="updateJourney"
+            :selectedPlan="selectedPlan"
+          />
+        </div>
       </div>
     </section>
     <section class="bg-[#FAFAFA] px-5 sm:px-10 py-10 md:px-28 md:py-28">
@@ -237,7 +239,7 @@ const slides = [
     overlayText: {
       name: "Hoàng Hoài Thanh",
       position: "Arrowster mentor",
-      details: t('pricing_page.carousel.thanh_description')
+      details: t("pricing_page.carousel.thanh_description"),
     },
   },
   {
@@ -245,7 +247,7 @@ const slides = [
     overlayText: {
       name: "Kenneth Chong",
       position: "Arrowster mentor",
-      details: t('pricing_page.carousel.ken_description')
+      details: t("pricing_page.carousel.ken_description"),
     },
   },
   {
@@ -253,7 +255,7 @@ const slides = [
     overlayText: {
       name: "Hayden Vũ",
       position: "Arrowster mentor",
-      details: t('pricing_page.carousel.hayden_description')
+      details: t("pricing_page.carousel.hayden_description"),
     },
   },
   {
@@ -261,7 +263,7 @@ const slides = [
     overlayText: {
       name: "Thái Nguyễn",
       position: "Arrowster mentor",
-      details: t('pricing_page.carousel.thai_description')
+      details: t("pricing_page.carousel.thai_description"),
     },
   },
 ];

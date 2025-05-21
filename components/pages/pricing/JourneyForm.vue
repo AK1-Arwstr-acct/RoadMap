@@ -95,7 +95,6 @@
             ref="phoneInput"
             inputmode="numeric"
             @input="(event) => validateNumber(event)"
-            autofocus
             @focus="handleFocus"
             @blur="handleBlur"
             @keydown="preventNonNumeric"

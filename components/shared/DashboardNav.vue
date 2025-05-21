@@ -3,24 +3,27 @@
   <div
     class="bg-white hidden lg:flex justify-between px-8 py-4 border-b-[1.5px] border-gray-200"
   >
-    <NuxtLinkLocale to="/" class="flex gap-2 items-center cursor-pointer">
-      <IconArrowsterLogo class="size-8 min-w-8" />
-      <img
-        class="w-24"
-        src="/images/logo/logo.svg"
-        alt="Logo"
-        loading="eager"
-      />
-    </NuxtLinkLocale>
-    <div class="flex gap-4">
-      <div class="w-[180px]">
+    <div class="flex gap-8 items-center">
+      <NuxtLinkLocale to="/" class="flex gap-2 items-center cursor-pointer">
+        <IconArrowsterLogo class="size-8 min-w-8" />
+        <img
+          class="w-24"
+          src="/images/logo/logo.svg"
+          alt="Logo"
+          loading="eager"
+        />
+      </NuxtLinkLocale>
+      <div class="w-[220px]">
         <BaseSelectRadio
-          placeholder="Trending Features"
+          :placeholder="t('dashboard.navbar.trending_features')"
           :options="features"
           v-model="featureState"
           :isShadowDark="true"
+          dropdownWidth="w-[calc(100%+30px)]"
         />
       </div>
+    </div>
+    <div class="flex gap-4">
       <BaseLanguageDropdown />
       <div
         v-if="appStore.authenticatedUser || tokenExists"
@@ -154,6 +157,8 @@ import IconTabApplication from "~/components/icons/IconTabApplication.vue";
 import IconTabSchool from "~/components/icons/IconTabSchool.vue";
 import IconTabEssayEditor from "~/components/icons/IconTabEssayEditor.vue";
 import IconTabSophie from "~/components/icons/IconTabSophie.vue";
+import IconEssayGenerater from "../icons/IconEssayGenerater.vue";
+import IconBookOpen from "../icons/IconBookOpen.vue";
 
 const emit = defineEmits(["updateTab"]);
 const localePath = useLocalePath();
@@ -166,10 +171,10 @@ const tokenExists = useCookie("token");
 const featureState = ref<OptionAttributes | null>(null);
 
 const features: OptionAttributes[] = [
-  // { value: "/roadmap", label: "Roadmap", icon: IconTabApplication, },
-  { value: "/school-list", label: "School List" , icon: IconTabSchool, },
-  { value: "/ai-essay", label: "AI Essay", icon: IconTabEssayEditor, },
-  { value: "/sophie", label: "Sophie", icon: IconTabSophie, },
+  { value: "/school-list", label: t("dashboard.navbar.trending_features"), icon: IconTabSchool },
+  { value: "/ai-essay", label: t("dashboard.navbar.essay_generator"), icon: IconEssayGenerater },
+  { value: "/resources", label: t("dashboard.navbar.resources"), icon: IconBookOpen },
+  { value: "/sophie", label: t("dashboard.navbar.ask_sophie"), icon: IconTabSophie },
 ];
 
 const close = () => {
@@ -183,11 +188,7 @@ const updateTab = (value: string) => {
 watch(
   () => featureState.value?.value,
   () => {
-    if (featureState.value?.value === '/roadmap') {
-      navigateTo(localePath('/school-list'))
-    } else {
-      navigateTo(localePath(featureState.value?.value || ''))
-    }
+    navigateTo(localePath(featureState.value?.value || ""));
   }
 );
 </script>
