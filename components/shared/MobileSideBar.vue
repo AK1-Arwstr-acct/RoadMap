@@ -74,6 +74,7 @@
           :options="features"
           v-model="featureState"
           :isShadowDark="true"
+          @onChange="onFeatureStateChange"
         />
       </div>
     </div>
@@ -86,11 +87,16 @@ import useAppStore from "~/stores/AppStore";
 import type { OptionAttributes } from "~/types/home";
 import IconEssayGenerater from "../icons/IconEssayGenerater.vue";
 import IconBookOpen from "../icons/IconBookOpen.vue";
+import useAppTrackerStore from "~/stores/AppTrackerStore";
+import useSophieStore from "~/stores/sophieStore";
+import type { Task } from "~/types/dashboard";
 
 const emit = defineEmits(["updateTab", "close"]);
 
 const appStore = useAppStore();
 const localePath = useLocalePath();
+const appTrackerStore = useAppTrackerStore();
+const sophieStore = useSophieStore();
 const route = useRoute();
 const { t } = useI18n();
 
@@ -130,6 +136,29 @@ const talkToUs = () => {
 const handleProfile = () => {
   navigateTo(localePath("/profile"));
   emit("close");
+};
+
+const onFeatureStateChange = () => {
+  Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+    appTrackerStore.taskActiveStates[Number(key)] = false;
+  });
+  const applicationListTasks = (appTrackerStore.applicationList ?? []).flatMap(
+    (item) => item.tasks ?? []
+  );
+  const tasksArray = [
+    ...(appTrackerStore.preApplication?.tasks ?? []),
+    ...applicationListTasks,
+    ...(appTrackerStore.postApplication?.tasks ?? []),
+  ];
+  const matchedTask: Task | undefined = tasksArray.find((item) => {
+    return featureState.value?.value
+      .replace("-", " ")
+      .includes(item.feature_state.replace("_", " "));
+  });
+  if (matchedTask) {
+    appTrackerStore.taskActiveStates[Number(matchedTask?.id)] = true;
+    sophieStore.roadmapTaskDetail = matchedTask;
+  }
 };
 
 watch(

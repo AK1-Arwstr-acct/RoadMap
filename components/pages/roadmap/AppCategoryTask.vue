@@ -57,6 +57,7 @@
         v-for="(task, idx) in filteredTask(category)"
         :key="idx"
         @click.stop="handelTaskDetail(task)"
+        :ref="el => setTaskRef(el, task.id)"
       >
         <label
           class="mt-6 flex items-center gap-4 size-full rounded-2xl cursor-pointer pl-4 pr-5 py-3 transition-all ease-in-out duration-200"
@@ -162,11 +163,16 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  forceOpen: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isOpen = ref<boolean>(false);
 const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
+const taskRefs = ref<Record<number, HTMLElement | null>>({});
 // const progressSoftPaywall = ref<boolean>(false);
 
 const imageSrc = computed(() => {
@@ -186,6 +192,10 @@ const imageSrc = computed(() => {
     ? "/images/visa.png"
     : "/images/application.png";
 });
+
+const setTaskRef = (el: HTMLElement | null, id: number) => {
+  taskRefs.value[id] = el;
+};
 
 const categoryClass = (category: string) => {
   if (category.includes("career") || category.includes("application")) {
@@ -262,6 +272,48 @@ watch(
     emit("hightChanged");
     calculateHeight();
   }
+);
+
+watch(
+  () => props.forceOpen,
+  async (newValue) => {
+    if (newValue) {
+      isOpen.value = true;
+      await nextTick();
+      const activeId = Number(Object.entries(appTrackerStore.taskActiveStates).find(([_, v]) => v)?.[0]);
+      if (
+        activeId &&
+        filteredTask(props.category).some((task) => task.id === activeId)
+      ) {
+        const el = taskRefs.value[activeId];
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+    } else {
+      isOpen.value = false;
+    }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => appTrackerStore.taskActiveStates,
+  async (states) => {
+    const activeId = Number(Object.entries(states).find(([_, v]) => v)?.[0]);
+    if (
+      isOpen.value &&
+      activeId &&
+      filteredTask(props.category).some((task) => task.id === activeId)
+    ) {
+      await nextTick();
+      const el = taskRefs.value[activeId];
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  },
+  { deep: true }
 );
 
 onMounted(() => {

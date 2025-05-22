@@ -20,6 +20,7 @@
           v-model="featureState"
           :isShadowDark="true"
           dropdownWidth="w-[calc(100%+30px)]"
+          @onChange="onFeatureStateChange"
         />
       </div>
     </div>
@@ -151,6 +152,8 @@
 </template>
 <script setup lang="ts">
 import useAppStore from "~/stores/AppStore";
+import useAppTrackerStore from "~/stores/AppTrackerStore";
+import useSophieStore from "~/stores/sophieStore";
 import MobileSideBar from "./MobileSideBar.vue";
 import type { OptionAttributes } from "~/types/home";
 import IconTabApplication from "~/components/icons/IconTabApplication.vue";
@@ -159,11 +162,14 @@ import IconTabEssayEditor from "~/components/icons/IconTabEssayEditor.vue";
 import IconTabSophie from "~/components/icons/IconTabSophie.vue";
 import IconEssayGenerater from "../icons/IconEssayGenerater.vue";
 import IconBookOpen from "../icons/IconBookOpen.vue";
+import type { Task } from "~/types/dashboard";
 
 const emit = defineEmits(["updateTab"]);
 const localePath = useLocalePath();
 
 const appStore = useAppStore();
+const appTrackerStore = useAppTrackerStore();
+const sophieStore = useSophieStore();
 const { t } = useI18n();
 const route = useRoute();
 
@@ -212,6 +218,29 @@ const checkFeatureState = () => {
   });
 };
 
+const onFeatureStateChange = () => {
+  Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+    appTrackerStore.taskActiveStates[Number(key)] = false;
+  });
+  const applicationListTasks = (appTrackerStore.applicationList ?? []).flatMap(
+    (item) => item.tasks ?? []
+  );
+  const tasksArray = [
+    ...(appTrackerStore.preApplication?.tasks ?? []),
+    ...applicationListTasks,
+    ...(appTrackerStore.postApplication?.tasks ?? []),
+  ];
+  const matchedTask: Task | undefined = tasksArray.find((item) => {
+    return featureState.value?.value
+      .replace("-", " ")
+      .includes(item.feature_state.replace("_", " "));
+  });
+  if (matchedTask) {
+    appTrackerStore.taskActiveStates[Number(matchedTask?.id)] = true;
+    sophieStore.roadmapTaskDetail = matchedTask;
+  }
+};
+
 watch(
   () => featureState.value?.value,
   () => {
@@ -226,9 +255,9 @@ watch(
   }
 );
 
-onMounted(()=>{
+onMounted(() => {
   checkFeatureState();
-})
+});
 </script>
 <style scoped>
 .slideModal-enter-active,

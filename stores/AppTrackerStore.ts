@@ -10,6 +10,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
 
     const ongoingTrack = ref<boolean>(false);
     const taskActiveStates = ref<Record<number, boolean>>({});
+    const roadmapData = ref<Application[]>([]);
     const preApplication = ref<Application>();
     const applicationList = ref<Application[]>([]);
     const postApplication = ref<Application>();
@@ -19,10 +20,10 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const getRoadmapData = async () => {
         try {
             const response = await api.get(`${appStore.authenticatedUser ? '/api/v1/roadmap/tasks' : 'api/v1/session-based-journey/roadmap/tasks'}`);
-            const roadmapData = response.data.data;
-            preApplication.value = roadmapData.find((item: Application) => item.title.toLowerCase().includes('pre'));
-            postApplication.value = roadmapData.find((item: Application) => item.title.toLowerCase().includes('post'));
-            applicationList.value = roadmapData.filter((item: Application) => item.country_title !== null)
+            roadmapData.value = response.data.data;
+            preApplication.value = roadmapData.value.find((item: Application) => item.title.toLowerCase().includes('pre'));
+            postApplication.value = roadmapData.value.find((item: Application) => item.title.toLowerCase().includes('post'));
+            applicationList.value = roadmapData.value.filter((item: Application) => item.country_title !== null)
 
 
         } catch (error) {
@@ -42,6 +43,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
         postApplication,
         applicationList,
         isSidebarOpen,
+        roadmapData,
         getRoadmapData
     }
 });

@@ -191,7 +191,7 @@ const getChatHistory = async () => {
         chatHistoryArray.value = response.data.data;
       }
     } else {
-      if (!sophieStore.roadmapTaskDetail) {
+      if (!sophieStore.roadmapTaskDetail || props.isModal) {
         response = await api.get("/api/v1/ai-conversation/get-sophie-sessions");
         if (response) {
           chatHistoryArray.value = response.data.data;
@@ -219,7 +219,9 @@ watch(
   () => sophieStore.roadmapTaskDetail,
   () => {
     chatOrHistory.value = 'messages';
-    getChatHistory();
+    if (sophieStore.roadmapTaskDetail?.feature_state === 'sophie') {
+      getChatHistory();
+    }
   }
 );
 

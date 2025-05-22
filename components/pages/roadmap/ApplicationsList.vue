@@ -15,7 +15,7 @@
       ref="content"
       :style="{ maxHeight: isListOpen ? contentHeight + 'px' : '0px' }"
       class="overflow-hidden transition-all ease-in-out duration-500"
-      :class="{ '!h-fit !min-h-fit': isInnerListOpen }"
+      :class="{ '!h-fit !min-h-fit': isInnerListOpen && isListOpen }"
     >
       <div class="mt-3 flex flex-col gap-6">
         <div v-for="(category, index) in categoryList" :key="index">
@@ -23,12 +23,14 @@
             v-if="Array.isArray(application) && filterByCountry(category)"
             :application="filterByCountry(category)[0]"
             category="country"
+            :forceOpen="isCategoryActive(category || '')"
             @hightChanged="() => (isInnerListOpen = true)"
           />
           <AppCategoryTask
             v-else-if="!Array.isArray(application)"
             :application="application"
             :category="category || ''"
+            :forceOpen="isCategoryActive(category || '')"
             @hightChanged="() => (isInnerListOpen = true)"
           />
         </div>
@@ -38,6 +40,9 @@
 </template>
 <script setup lang="ts">
 import type { Application } from "~/types/dashboard";
+import useAppTrackerStore from "~/stores/AppTrackerStore";
+
+const appTrackerStore = useAppTrackerStore();
 
 const props = defineProps({
   heading: {
@@ -89,6 +94,59 @@ const calculateHeight = () => {
     contentHeight.value = isListOpen.value ? content.value.scrollHeight : 0;
   }
 };
+
+const isCategoryActive = (category: string) => {
+  if (Array.isArray(props.application)) {
+    // For country
+    const app = filterByCountry(category)[0];
+    if (app) {
+      return (app.tasks ?? []).some(
+        (task) => appTrackerStore.taskActiveStates[task.id]
+      );
+    } else {
+      return false;
+    }
+  } else if (props.application?.tasks) {
+    // For normal category
+    return props.application.tasks
+      .filter((item) => item.category.title.includes(category))
+      .some((task) => appTrackerStore.taskActiveStates[task.id]);
+  }
+  return false;
+};
+
+const hasActiveTaskForThisList = () => {
+  if (Array.isArray(props.application)) {
+    // For country
+    return props.application.some(app =>
+      (app.tasks ?? []).some(task => appTrackerStore.taskActiveStates[task.id])
+    );
+  } else if (props.application?.tasks) {
+    // For normal category
+    return props.application.tasks.some(
+      task => appTrackerStore.taskActiveStates[task.id]
+    );
+  }
+  return false;
+};
+
+watch(
+  () => appTrackerStore.taskActiveStates,
+  () => {
+    if (
+      hasActiveTaskForThisList()
+    ) {
+      isListOpen.value = true;
+    } else {
+      isListOpen.value = false;
+      nextTick(() => {
+        calculateHeight();
+      });
+    }
+  },{
+    deep: true
+  }
+);
 
 watch(() => isListOpen.value, calculateHeight);
 

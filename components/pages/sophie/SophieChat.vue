@@ -32,7 +32,7 @@
           <Transition name="fade">
             <component
               :is="TaskDetailChatModal"
-              v-if="showTaskDetail && sophieStore.roadmapTaskDetail && !readOnly"
+              v-if="showTaskDetail && sophieStore.roadmapTaskDetail && !readOnly && !isModal"
             />
           </Transition>
           <div
@@ -137,7 +137,7 @@
             </div>
           </Transition>
           <div
-            v-if="completeChat.length === 0 && !readOnly"
+            v-if="completeChat.length === 0 && !readOnly && !isModal"
             class="flex overflow-x-auto custom-scrollbar mt-3 gap-3"
           >
             <div
@@ -366,12 +366,10 @@ const submit = async () => {
     } else {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
         query: userQuery,
-        // query:
-        //   completeChat.value.length <= 1
-        //     ? `${sophieStore.roadmapTaskDetail?.title}, ${userQuery}`
-        //     : userQuery,
         sophieSessionId: uuid.value,
-        roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
+        ...((!props.isModal) && {
+          roadmap_task_id: sophieStore.roadmapTaskDetail?.id
+        })
       });
     }
     if (response) {
