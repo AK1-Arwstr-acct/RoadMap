@@ -213,7 +213,7 @@ const checkFeatureState = () => {
     if (route.path.includes(item.value)) {
       featureState.value = item;
       return true; //to stop loop
-    }
+    } else featureState.value = null;
     return false;
   });
 };
@@ -244,7 +244,13 @@ const onFeatureStateChange = () => {
 watch(
   () => featureState.value?.value,
   () => {
-    navigateTo(localePath(featureState.value?.value || ""));
+    if (
+      route.path !== featureState.value?.value 
+    ) {
+      navigateTo(localePath(featureState.value?.value || ""));
+    } else {
+      checkFeatureState();
+    }
   }
 );
 
