@@ -80,15 +80,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import IconTabHome from "~/components/icons/IconTabHome.vue";
 import IconTabSophie from "~/components/icons/IconTabSophie.vue";
-import IconTabApplication from "~/components/icons/IconTabApplication.vue";
 import IconTabSchool from "~/components/icons/IconTabSchool.vue";
-import IconTabEssayEditor from "../icons/IconTabEssayEditor.vue";
-import IconProfileTab from "../icons/IconProfileTab.vue";
-import type { TabList } from "~/types/dashboard";
 import useAppStore from "~/stores/AppStore";
 import type { OptionAttributes } from "~/types/home";
+import IconEssayGenerater from "../icons/IconEssayGenerater.vue";
+import IconBookOpen from "../icons/IconBookOpen.vue";
 
 const emit = defineEmits(["updateTab", "close"]);
 
@@ -100,10 +97,26 @@ const { t } = useI18n();
 const featureState = ref<OptionAttributes | null>(null);
 
 const features: OptionAttributes[] = [
-  // { value: "/roadmap", label: "Roadmap", icon: IconTabApplication },
-  { value: "/school-list", label: "School List", icon: IconTabSchool },
-  { value: "/ai-essay", label: "AI Essay", icon: IconTabEssayEditor },
-  { value: "/sophie", label: "Sophie", icon: IconTabSophie },
+  {
+    value: "/school-list",
+    label: t("dashboard.navbar.schools_list"),
+    icon: IconTabSchool,
+  },
+  {
+    value: "/ai-essay",
+    label: t("dashboard.navbar.ai_essay"),
+    icon: IconEssayGenerater,
+  },
+  {
+    value: "/resources",
+    label: t("dashboard.navbar.resources"),
+    icon: IconBookOpen,
+  },
+  {
+    value: "/sophie",
+    label: t("dashboard.navbar.ask_sophie"),
+    icon: IconTabSophie,
+  },
 ];
 
 const handleLogo = () => {

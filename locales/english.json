@@ -57,9 +57,8 @@
         },
         "navbar": {
             "trending_features": "Trending Features",
-            "school_list": "School List",
-            "essay_builder": "Essay Builder",
-            "essay_generator": "Essay Generator",
+            "schools_list": "Schools List",
+            "ai_essay": "AI Essay",
             "resources": "Resources",
             "ask_sophie": "Ask Sophie"
         },

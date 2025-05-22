@@ -78,6 +78,54 @@ definePageMeta({
   layout: "home-layout",
 });
 
+const runtimeConfig = useRuntimeConfig();
+const { locale } = useI18n();
+
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/resources`;
+
+useHead(
+  computed(() => ({
+    link: [
+      {
+        rel: "preload",
+        href: "/images/application-post.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/application.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/decision.png",
+        as: "image",
+      },
+      {
+        rel: "canonical",
+        href: canonicalUrl,
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/resources`,
+        hreflang: "en",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/vi/resources`,
+        hreflang: "vi",
+      },
+      {
+        rel: "alternate",
+        href: `${runtimeConfig.public.appMode}/resources`,
+        hreflang: "x-default",
+      },
+    ],
+  }))
+);
+
 const { t } = useI18n();
 
 const eventList = [

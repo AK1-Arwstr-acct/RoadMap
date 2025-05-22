@@ -57,9 +57,8 @@
         },
         "navbar": {
             "trending_features": "Tính năng nổi bật",
-            "school_list": "Danh sách trường học",
-            "essay_builder": "Viết bài luận",
-            "essay_generator": "Tạo bài luận nhanh",
+            "schools_list": "Danh sách trường",
+            "ai_essay": "Bài luận bằng AI",
             "resources": "Tài liệu",
             "ask_sophie": "Hỏi Sophie"
         },

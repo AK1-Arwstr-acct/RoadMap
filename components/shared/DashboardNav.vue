@@ -165,16 +165,33 @@ const localePath = useLocalePath();
 
 const appStore = useAppStore();
 const { t } = useI18n();
+const route = useRoute();
 
 const isMobileSideBarOpen = ref<boolean>(false);
 const tokenExists = useCookie("token");
 const featureState = ref<OptionAttributes | null>(null);
 
 const features: OptionAttributes[] = [
-  { value: "/school-list", label: t("dashboard.navbar.school_list"), icon: IconTabSchool },
-  { value: "/ai-essay", label: t("dashboard.navbar.essay_generator"), icon: IconEssayGenerater },
-  { value: "/resources", label: t("dashboard.navbar.resources"), icon: IconBookOpen },
-  { value: "/sophie", label: t("dashboard.navbar.ask_sophie"), icon: IconTabSophie },
+  {
+    value: "/school-list",
+    label: t("dashboard.navbar.schools_list"),
+    icon: IconTabSchool,
+  },
+  {
+    value: "/ai-essay",
+    label: t("dashboard.navbar.ai_essay"),
+    icon: IconEssayGenerater,
+  },
+  {
+    value: "/resources",
+    label: t("dashboard.navbar.resources"),
+    icon: IconBookOpen,
+  },
+  {
+    value: "/sophie",
+    label: t("dashboard.navbar.ask_sophie"),
+    icon: IconTabSophie,
+  },
 ];
 
 const close = () => {
@@ -185,12 +202,33 @@ const updateTab = (value: string) => {
   emit("updateTab", value);
 };
 
+const checkFeatureState = () => {
+  features.some((item) => {
+    if (route.path.includes(item.value)) {
+      featureState.value = item;
+      return true; //to stop loop
+    }
+    return false;
+  });
+};
+
 watch(
   () => featureState.value?.value,
   () => {
     navigateTo(localePath(featureState.value?.value || ""));
   }
 );
+
+watch(
+  () => route.path,
+  () => {
+    checkFeatureState();
+  }
+);
+
+onMounted(()=>{
+  checkFeatureState();
+})
 </script>
 <style scoped>
 .slideModal-enter-active,
