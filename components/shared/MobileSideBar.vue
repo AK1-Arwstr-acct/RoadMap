@@ -162,13 +162,8 @@ const onFeatureStateChange = () => {
 };
 
 const checkFeatureState = () => {
-  features.some((item) => {
-    if (route.path.includes(item.value)) {
-      featureState.value = item;
-      return true; //to stop loop
-    } else featureState.value = null;
-    return false;
-  });
+  const matched = features.find((item) => route.path.includes(item.value));
+  featureState.value = matched || null;
 };
 
 let isFirstRun = true;

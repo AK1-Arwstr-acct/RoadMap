@@ -13,7 +13,7 @@
           loading="eager"
         />
       </NuxtLinkLocale>
-      <div class="w-[220px]">
+      <div class="w-[220px] relative z-30">
         <BaseSelectRadio
           :placeholder="t('dashboard.navbar.trending_features')"
           :options="features"
@@ -209,19 +209,15 @@ const updateTab = (value: string) => {
 };
 
 const checkFeatureState = () => {
-  features.some((item) => {
-    if (route.path.includes(item.value)) {
-      featureState.value = item;
-      return true; //to stop loop
-    } else featureState.value = null;
-    return false;
-  });
+  const matched = features.find((item) => route.path.includes(item.value));
+  featureState.value = matched || null;
 };
 
 const onFeatureStateChange = () => {
   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
     appTrackerStore.taskActiveStates[Number(key)] = false;
   });
+  // if (!featureState.value) return;
   const applicationListTasks = (appTrackerStore.applicationList ?? []).flatMap(
     (item) => item.tasks ?? []
   );
@@ -244,9 +240,7 @@ const onFeatureStateChange = () => {
 watch(
   () => featureState.value?.value,
   () => {
-    if (
-      route.path !== featureState.value?.value 
-    ) {
+    if (route.path !== featureState.value?.value) {
       navigateTo(localePath(featureState.value?.value || ""));
     } else {
       checkFeatureState();
@@ -258,7 +252,16 @@ watch(
   () => route.path,
   () => {
     checkFeatureState();
+    onFeatureStateChange();
   }
+);
+
+watch(
+  () => appTrackerStore.roadmapData,
+  () => {
+    onFeatureStateChange();
+  },
+  { deep: true, immediate: true }
 );
 
 onMounted(() => {
