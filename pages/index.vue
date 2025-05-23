@@ -86,22 +86,22 @@ useHead(
     link: [
       {
         rel: "preload",
-        href: "ai-recommendation.png",
+        href: "/images/ai-recommendation.png",
         as: "image",
       },
       {
         rel: "preload",
-        href: "home-side-image.png",
+        href: "/images/home-side-image.png",
         as: "image",
       },
       {
         rel: "preload",
-        href: "school-list-snap.png",
+        href: "/images/school-list-snap.png",
         as: "image",
       },
       {
         rel: "preload",
-        href: "sophie-chat-snap.png",
+        href: "/images/sophie-chat-snap.png",
         as: "image",
       },
       {

@@ -24,7 +24,6 @@
       :coursePreferenceOptions="coursePreferenceOptions"
       @submitParentCategory="submitParentCategory"
     />
-    <StartJourney v-else />
   </div>
 </template>
 <script setup lang="ts">
@@ -93,7 +92,6 @@ const steps = ref<
   | "destination"
   | "budget"
   | "areaOfInterest"
-  | "startJourney"
 >("academic");
 const programListOptions = ref<OptionAttributes[]>();
 const locationOptions = ref<CountriesOptionAttributes[]>([]);
@@ -120,7 +118,6 @@ const submitBudget = async (categories: OptionAttributes[]) => {
   onboardingStore.setOnboardingProgress("100%");
 };
 const submitParentCategory = async () => {
-  steps.value = "startJourney";
   onboardingStore.setOnboardingProgress(null);
 };
 const getStudyPrograms = async () => {

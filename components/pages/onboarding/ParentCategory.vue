@@ -39,6 +39,7 @@ const { t } = useI18n();
 const { api } = useApi();
 const { showToast } = useToast();
 const appStore = useAppStore();
+const localePath = useLocalePath()
 
 const isSubmitting = ref<boolean>(false);
 const selectedCourse = ref<OptionAttributes>();
@@ -51,6 +52,7 @@ const submit = async () => {
       super_meta_category_id: selectedCourse.value?.value,
     });
     await appStore.getUserData();
+    navigateTo(localePath('/school-list'));
     emit("submitParentCategory");
   } catch (error) {
     if (axios.isAxiosError(error)) {

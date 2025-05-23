@@ -161,15 +161,30 @@ const onFeatureStateChange = () => {
   }
 };
 
+const checkFeatureState = () => {
+  features.some((item) => {
+    if (route.path.includes(item.value)) {
+      featureState.value = item;
+      return true; //to stop loop
+    } else featureState.value = null;
+    return false;
+  });
+};
+
+let isFirstRun = true;
 watch(
   () => featureState.value?.value,
   () => {
-    if (featureState.value?.value === "/roadmap") {
-      navigateTo(localePath("/school-list"));
-    } else {
-      navigateTo(localePath(featureState.value?.value || ""));
+    if (isFirstRun) {
+      isFirstRun = false;
+      return;
     }
+    navigateTo(localePath(featureState.value?.value || ""));
     emit("close");
   }
 );
+
+onMounted(() => {
+  checkFeatureState();
+});
 </script>
