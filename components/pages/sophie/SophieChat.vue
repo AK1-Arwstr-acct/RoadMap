@@ -109,9 +109,9 @@
           <Transition name="fade">
             <div
               v-if="isChatFull"
-              class="border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex items-center justify-between gap-3"
+              class="border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
             >
-              <div class="text-[#414651] text-sm">
+              <div class="text-[#414651] text-sm order-1 md:order-none">
                 <p class="font-semibold mb-1.5">
                   {{
                     $t(
@@ -170,9 +170,9 @@
               data-hj-allow
             />
             <button
-              :disabled="isChatLoading || isChatFull"
+              :disabled="isChatLoading || isChatFull || inputQuestion.trim().length < 2"
               @click="submit"
-              class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1.5 transform right-2 -rotate-90 p-2"
+              class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1.5 transform right-2 -rotate-90 p-2 disabled:opacity-40"
             >
               <IconArrowRight />
             </button>

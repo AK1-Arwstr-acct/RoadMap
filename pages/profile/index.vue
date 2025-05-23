@@ -1,21 +1,20 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
     <section class="bg-white">
-      <div v-if="currentStep === 'profile'" class="h-full pt-2">
+      
+      <div class="h-full pt-2">
         <Header />
         <div class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-16 px-5">
           <PersonelInfo />
           <div v-show="showAchievements">
             <div class="flex justify-between items-center font-semibold mb-5">
               <p class="text-xl md:text-2xl text-[#181D27]">
-                {{ $t('profile_page.your_achievement') }}
+                {{ $t("profile_page.your_achievement") }}
               </p>
               <span
-                @click="
-                  navigateTo(localePath('/profile/achievements'))
-                "
+                @click="navigateTo(localePath('/profile/achievements'))"
                 class="text-sm md:text-[18px] text-[#175CD3] cursor-pointer"
-                >{{ $t('profile_page.view_all') }}</span
+                >{{ $t("profile_page.view_all") }}</span
               >
             </div>
             <Achievements
@@ -27,11 +26,13 @@
 
           <div v-if="essayStore.userEssayList.length">
             <div class="flex justify-between items-center font-semibold mb-5">
-              <p class="text-xl md:text-2xl text-[#181D27]">{{ $t('profile_page.your_ai_essay') }}</p>
+              <p class="text-xl md:text-2xl text-[#181D27]">
+                {{ $t("profile_page.your_ai_essay") }}
+              </p>
               <NuxtLinkLocale :to="'/profile/essays'">
                 <span
                   class="text-sm md:text-[18px] text-[#175CD3] cursor-pointer"
-                  >{{ $t('profile_page.view_all') }}</span
+                  >{{ $t("profile_page.view_all") }}</span
                 >
               </NuxtLinkLocale>
             </div>
@@ -94,14 +95,6 @@ const { api } = useApi();
 const essayStore = useEssayStore();
 const localePath = useLocalePath();
 
-type CurrentStep =
-  | "profile"
-  | "edit_profile"
-  | "achievement"
-  | "essay"
-  | "essay_detail";
-
-const currentStep = ref<CurrentStep>("profile");
 const showAchievements = ref<boolean>(false);
 
 const openDetail = (essayDetail: EssayData) => {

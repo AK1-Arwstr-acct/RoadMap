@@ -1,6 +1,17 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
     <div class="max-w-[752px] px-4 mx-auto pt-8 pb-16">
+      <div @click="$router.push(`${ $i18n.locale != 'en' ? `/${$i18n.locale}/profile` : `/profile`}`)" class="text-[#717680] cursor-pointer font-medium flex items-center gap-1.5 mb-3">
+        <IconChevronDown
+          class="transform rotate-90"
+          stroke="#717680"
+          width="20"
+          height="20"
+        />
+        <p>
+          {{ $t('profile_page.profile') }}
+        </p>
+      </div>
       <div>
         <div class="flex justify-between items-center font-semibold mb-5">
           <p class="text-xl md:text-2xl text-[#181D27]">{{ $t('profile_page.all_your_achievement') }}</p>
@@ -17,6 +28,7 @@ definePageMeta({
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
+const router = useRouter();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/profile/achievements`;
 

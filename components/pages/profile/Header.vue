@@ -4,6 +4,18 @@
       class="group h-48 md:h-60 bg-[#E0EAFF] relative flex overflow-hidden md:rounded-xl mx-auto max-w-[1050px]"
       :class="{ 'justify-end': !coverPhotoPreview }"
     >
+      <div
+        @click="router.back()"
+        class="text-[#717680] cursor-pointer font-medium flex items-center gap-1.5 mb-3 py-2.5 px-3 rounded-lg bg-slate-100 absolute left-2 top-2 z-20"
+      >
+        <IconChevronDown
+          class="transform rotate-90"
+          stroke="#717680"
+          width="20"
+          height="20"
+        />
+        <p>Back</p>
+      </div>
       <img
         v-if="coverPhotoPreview"
         :src="coverPhotoPreview"
@@ -30,7 +42,8 @@
       >
         <span class="cursor-pointer"><IconCamera /></span>
         <p class="text-[#FFFFFF] cursor-pointer">
-          {{$t('profile_page.edit_cover_image')}}<span class="font-bold"> {{ $t('profile_page.upload_file') }}</span>
+          {{ $t("profile_page.edit_cover_image")
+          }}<span class="font-bold"> {{ $t("profile_page.upload_file") }}</span>
         </p>
       </div>
     </div>
@@ -97,7 +110,8 @@
               :to="'/profile/edit'"
               class="flex items-center gap-2 px-3.5 py-2 text-sm font-semibold text-[#414651] bg-[#FFFFFF] border-[1.5px] rounded-lg border-gray-200"
             >
-              <span><IconPencil /></span><span>{{ $t('profile_page.edit_profile') }}</span>
+              <span><IconPencil /></span
+              ><span>{{ $t("profile_page.edit_profile") }}</span>
             </NuxtLinkLocale>
             <div class="relative">
               <button
@@ -117,7 +131,7 @@
                   class="flex items-center gap-3 w-40 md:w-60 px-4 py-2.5 text-sm text-[#414651] font-medium cursor-pointer"
                 >
                   <IconLogout />
-                  {{ $t('profile_page.log_out') }}
+                  {{ $t("profile_page.log_out") }}
                 </div>
               </div>
             </div>
@@ -135,6 +149,7 @@ const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const localePath = useLocalePath();
+const router = useRouter();
 
 const isDropdownOpen = ref(false);
 const selectedImage = ref<File | null>(null);
