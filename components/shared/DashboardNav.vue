@@ -14,7 +14,7 @@
         />
       </NuxtLinkLocale>
       <div class="w-[220px] relative z-30">
-        <BaseSelectRadio
+        <FeaturesDropdown
           :placeholder="t('dashboard.navbar.trending_features')"
           :options="features"
           v-model="featureState"

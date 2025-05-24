@@ -69,7 +69,7 @@
         <BaseLanguageDropdown :isMobile="true" />
       </div>
       <div class="mt-6">
-        <BaseSelectRadio
+        <FeaturesDropdown
           placeholder="Trending Features"
           :options="features"
           v-model="featureState"
