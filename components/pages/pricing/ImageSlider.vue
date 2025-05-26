@@ -24,13 +24,13 @@
         <!-- Overlay text -->
         <div v-if="slide.overlayText.name" class="absolute inset-0 flex items-end px-8 py-14">
           <div class="text-white">
-            <p class="text-xl md:text-2xl font-semibold">
+            <p class="text-lg lg:text-2xl font-semibold">
               {{ slide.overlayText.name }}
             </p>
-            <p class="text-lg">
+            <p class="lg:text-lg">
                 {{ slide.overlayText.position }}
             </p>
-            <p class="text-lg mt-[15px]">
+            <p class="text-sm lg:text-lg mt-2 lg:mt-[15px]">
                 {{ slide.overlayText.details }}
             </p>
           </div>

@@ -5,7 +5,7 @@
       :class="{ 'justify-end': !coverPhotoPreview }"
     >
       <div
-        @click="router.back()"
+        @click="router.currentRoute.value.path.includes('profile') ? navigateTo('/school-list') : router.back()"
         class="text-[#717680] cursor-pointer font-medium flex items-center gap-1.5 mb-3 py-2.5 px-3 rounded-lg bg-slate-100 absolute left-2 top-2 z-20"
       >
         <IconChevronDown
@@ -14,7 +14,7 @@
           width="20"
           height="20"
         />
-        <p>Back</p>
+        <p>{{ $t('profile_page.back') }}</p>
       </div>
       <img
         v-if="coverPhotoPreview"

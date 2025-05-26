@@ -4,7 +4,7 @@
   >
     <div class="w-32 sm:w-[172px]">
       <NuxtLinkLocale to="/" aria-label="Go to Starter Page">
-        <IconArrowsterLogoFull class="w-full" :class="{'invert': ishome}" />
+        <IconArrowsterLogoFull class="w-full" :class="{'lg:invert': ishome}" />
       </NuxtLinkLocale>
     </div>
     <div

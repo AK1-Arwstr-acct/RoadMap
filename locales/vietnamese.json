@@ -29,7 +29,7 @@
         "reflective_philosophical": "Suy ngẫm/Triết lý: Rút ra bài học từ những trải nghiệm",
         "save_to_profile": "Lưu vào hồ sơ",
         "submit": "Gửi",
-        "this_is_far_from_good_though": "Bài này chưa hay đâu. Bạn muốn biết cách cải thiện nó tốt hơn gấp 10 lần không?",
+        "this_is_far_from_good_though": "Hãy nhớ rằng – đây chỉ là bản nháp đầu tiên để lấy cảm hứng và AI không thể viết thay bạn. Cần giúp đỡ để viết bài luận của riêng bạn bằng giọng văn của chính mình từ đầu không?",
         "try_arrowster_for_free": "Dùng thử Arrowster miễn phí",
         "update": "Cập nhật",
         "upgrade_now": "Nâng cấp ngay",
@@ -203,6 +203,7 @@
         "i_want_to_study_at": "Tôi muốn học tại",
         "if_you_dont_have_a_vietnamese_phone_number_please_leave_your_easiest_contact_information_below": "Nếu bạn không có số điện thoại Việt Nam, vui lòng để lại thông tin liên lạc dễ dàng nhất của bạn bên dưới!",
         "join": "Tham gia",
+        "keep_your_phone_close": "Hãy chú ý điện thoại, Arrowster sẽ liên hệ với bạn thật sớm nhé!",
         "lets_start_your_journey_together!": "Hãy bắt đầu hành trình của bạn cùng nhau!",
         "plansList": {
             "titles": {
@@ -254,7 +255,7 @@
                 "description": "Nếu được chọn, bạn sẽ được tham gia cộng đồng học sinh độc quyền và bắt đầu làm việc với chúng tôi cho hồ sơ du học!"
             }
         },
-        "thank_you_for_your_submission!": "Cảm ơn bạn đã gửi thông tin! Chúng tôi đã nhận được biểu mẫu của bạn và sẽ liên hệ sớm!",
+        "thank_you_for_your_submission!": "Cảm ơn bạn đã gửi thông tin",
         "this_information_will_help_advisors_guide_you_toward_the_most_suitable_country_school_and_scholarships_in_the_most_accurate_and_effective_way": "Thông tin này sẽ giúp cố vấn định hướng bạn đến quốc gia, trường học và học bổng phù hợp nhất một cách chính xác và hiệu quả.",
         "who_secured_top_university_admissions_with_our_ai_+_expert_mentorship": "người đã trúng tuyển vào các trường đại học hàng đầu nhờ AI và sự cố vấn từ chuyên gia của chúng tôi",
         "your_school_name": "Tên trường của bạn",
@@ -270,6 +271,7 @@
         "all_your_ai_essay": "Tất cả bài luận AI của bạn",
         "annual_total_budget": "Ngân sách hàng năm",
         "area_of_study": "Lĩnh vực học tập",
+        "back": "Quay lại",
         "complete": "hoàn thành",
         "continue": "Tiếp tục",
         "customise_prompt": "Bài này vẫn chưa tốt lắm. Muốn biết cách tùy chỉnh nó hay hơn gấp 10 lần không?",
@@ -389,6 +391,11 @@
         "loading_description": "Hãy để AI của Arrowster gợi ý những trường đại học phù hợp dựa trên hồ sơ, sở thích và mục tiêu của bạn.",
         "majors_pick_up_to_3_majors": "Ngành học (Chọn tối đa 3 ngành)",
         "median_salary": "Mức lương trung bình:",
+        "mentorship": {
+            "need_more_advice": "Bạn cần người đồng hành?",
+            "mentorship_description": "Kết nối miễn phí với mentor đến từ các trường đại học hàng đầu",
+            "free_mentorship": "Đăng ký mentorship"
+        },
         "overwhelmed_by_options": "Bạn đang choáng ngợp vì quá nhiều lựa chọn?",
         "price_high_to_low": "Giá (Cao đến Thấp)",
         "price_low_to_high": "Giá (Thấp đến Cao)",

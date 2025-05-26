@@ -60,10 +60,10 @@
         </p>
       </div>
     </section>
-    <section
-      class="my-10 md:my-20 px-5 sm:px-5 xl:px-28"
-    >
-      <div class="w-full max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-10">
+    <section class="my-10 md:my-20 px-5 sm:px-5 xl:px-28">
+      <div
+        class="w-full max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-6 lg:gap-10"
+      >
         <div class="w-full lg:w-1/2 rounded-xl overflow-hidden">
           <ImageSlider :slides="slides" :autoSlideInterval="4000" />
         </div>
@@ -83,7 +83,7 @@
           {{ $t("pricing_page.frequently_asked_questions") }}
         </p>
         <div
-          class="md:border-[1.5px] border-gray-200 rounded-2xl md:px-3 sm:px-6 mt-4 md:mt-14 bg-white"
+          class="border-[1.5px] border-gray-200 rounded-2xl px-3 sm:px-6 mt-4 md:mt-14 bg-white"
         >
           <PricingFaq :faqList="faq" />
         </div>
@@ -95,7 +95,7 @@
     class="bg-[#1849A9] flex justify-center items-center h-dvh w-screen"
   >
     <div
-      class="max-w-[484px] mx-auto flex flex-col items-center text-center justify-center"
+      class="max-w-[710px] mx-auto flex flex-col items-center text-center justify-center"
     >
       <img
         src="/images/countries-application.png"
@@ -103,6 +103,9 @@
       />
       <p class="font-medium text-lg sm:text-3xl mt-4 text-white">
         {{ $t("pricing_page.thank_you_for_your_submission!") }}
+      </p>
+      <p class="text-2xl text-[#FFFFFF] mt-2">
+        {{ $t("pricing_page.keep_your_phone_close") }}
       </p>
       <NuxtLinkLocale :to="'/school-list'" class="w-full">
         <button
@@ -276,11 +279,14 @@ const close = () => {
 };
 
 onMounted(async () => {
-  await api.get("/api/v1/user", {
-    headers: {
-      "X-Client-Route": `${window.location.origin}${route.fullPath}`,
-    },
-  });
+  const tokenExists = useCookie("token");
+  if(tokenExists.value) {
+    await api.get("/api/v1/user", {
+      headers: {
+        "X-Client-Route": `${window.location.origin}${route.fullPath}`,
+      },
+    });
+  }
 });
 </script>
 <style scoped>

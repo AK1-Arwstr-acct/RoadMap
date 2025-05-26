@@ -203,6 +203,7 @@
         "i_want_to_study_at": "I want to study at",
         "if_you_dont_have_a_vietnamese_phone_number_please_leave_your_easiest_contact_information_below": "If you don't have a Vietnamese phone number, please leave your easiest  contact information below!",
         "join": "Join",
+        "keep_your_phone_close": "Keep your phone close, Arrowster will contact you very soon!",
         "lets_start_your_journey_together!": "Let’s start your journey together!",
         "plansList": {
             "titles": {
@@ -254,7 +255,7 @@
                 "description": "If selected, you will be onboarded to our exclusive student community and start working with us for your application!"
             }
         },
-        "thank_you_for_your_submission!": "Thank you for your submission! We've received your form and will contact  you soon!",
+        "thank_you_for_your_submission!": "Thank you for your submission!",
         "this_information_will_help_advisors_guide_you_toward_the_most_suitable_country_school_and_scholarships_in_the_most_accurate_and_effective_way": "This information will help advisors guide you toward the most suitable country, school, and scholarships in the most accurate and effective  way.",
         "who_secured_top_university_admissions_with_our_ai_+_expert_mentorship": "who secured top university admissions with our AI + expert mentorship",
         "your_school_name": "Your school name",
@@ -270,6 +271,7 @@
         "all_your_ai_essay": "All Your AI Essay",
         "annual_total_budget": "Annual total budget",
         "area_of_study": "Area of study",
+        "back": "Back",
         "complete": "complete",
         "continue": "Continue",
         "customise_prompt": "This is far from good though. Want to know how to customise it even more and make it 10x better?",
@@ -389,6 +391,11 @@
         "loading_description": "Let our AI match you with the right universities based on your profile, preferences, and goals.",
         "majors_pick_up_to_3_majors": "Majors (Pick up to 3 majors)",
         "median_salary": "Median Salary:",
+        "mentorship": {
+            "need_more_advice": "Need more advice? Join our mentorship program",
+            "mentorship_description": "Talk to a real counselor and get honest, helpful answers, totally free.",
+            "free_mentorship": "Free mentorship"
+        },
         "overwhelmed_by_options": "Overwhelmed by options?",
         "price_high_to_low": "Price (High to Low)",
         "price_low_to_high": "Price (Low to High)",

@@ -3,7 +3,7 @@
     <!-- user name -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        {{ $t('pricing_page.your_name') }}
+        {{ $t("pricing_page.your_name") }}
         <span class="text-[#F04438]">*</span>
       </p>
       <input
@@ -19,7 +19,7 @@
       <!-- phoneNumber -->
       <div class="relative remove-shadow-bg-white w-full">
         <label class="text-sm text-[#344054] font-medium mb-3">
-          {{ $t('pricing_page.phone_number') }}
+          {{ $t("pricing_page.phone_number") }}
           <span class="text-[#F04438]">*</span>
         </label>
         <div
@@ -130,7 +130,7 @@
     </div>
     <!-- financial support -->
     <div>
-      <p class="text-[#414651] text-sm font-medium">
+      <p class="text-[#414651] text-sm font-medium mb-1.5">
         {{
           $t(
             "pricing_page.how_much_financial_support_can_your_family_provide_per_year"
@@ -138,13 +138,10 @@
         }}
         <span class="text-[#F04438]">*</span>
       </p>
-      <input
-        name="user_input_budget"
-        type="text"
-        :placeholder="`${t('pricing_page.e_g')} 500,000,000VND`"
+      <BaseSelectRadio
+        :options="budgetOptions"
+        placeholder="Select an amount"
         v-model="formDetails.financialSupport"
-        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
-        data-hj-allow
       />
       <p class="text-sm text-[#535862] mt-1.5">
         {{
@@ -157,7 +154,7 @@
     <!-- otther concernes/ questions -->
     <div>
       <p class="text-[#414651] text-sm font-medium">
-        {{ $t('pricing_page.do_you_have_any_other_concerns_or_questions') }}
+        {{ $t("pricing_page.do_you_have_any_other_concerns_or_questions") }}
       </p>
       <textarea
         name="user_input_cont"
@@ -175,7 +172,7 @@
       @click="submit"
       class="bg-[#1570EF] rounded-lg py-3 px-5 flex items-center justify-center gap-2 text-white disabled:opacity-70"
     >
-      {{ $t('pricing_page.apply_now') }}
+      {{ $t("pricing_page.apply_now") }}
       <IconArrowRight v-if="!isSubmitting" fill="#ffffff" />
       <IconSpinner v-else stroke="#ffffff" bgColor="transparent" width="20" />
     </button>
@@ -205,7 +202,7 @@ interface FormDetails {
   userName: string;
   phoneNumber: string;
   schoolName: string;
-  financialSupport: string;
+  financialSupport: OptionAttributes | null;
   dreamSchool: string;
   otherQuestions: string;
   selectedAlternativeContact: OptionAttributes | null;
@@ -216,7 +213,7 @@ const formDetails = ref<FormDetails>({
   userName: appStore.userData?.name || "",
   phoneNumber: "",
   schoolName: "",
-  financialSupport: "",
+  financialSupport: null,
   dreamSchool: "",
   otherQuestions: "",
   selectedAlternativeContact: null,
@@ -232,6 +229,25 @@ const alternativeContact = [
   { value: "zalo", label: "Zalo" },
   { value: "telegram", label: "Telegram" },
   { value: "whatsapp", label: "WhatsApp" },
+];
+
+const budgetOptions = [
+  {
+    value: "< 300 million VND",
+    label: "< 300 million VND",
+  },
+  {
+    value: "300 - 500 million VND",
+    label: "300 - 500 million VND",
+  },
+  {
+    value: "500 - 800 million VND",
+    label: "500 - 800 million VND",
+  },
+  {
+    value: "> 800 million VND",
+    label: "> 800 million VND",
+  },
 ];
 
 const handleFocus = () => {
@@ -300,11 +316,11 @@ const submit = async () => {
           ? `${selectedOption.value?.phone_code}${formDetails.value.phoneNumber}`
           : null,
       current_school_name: formDetails.value.schoolName,
-      financial_support_amount: formDetails.value.financialSupport,
+      financial_support_amount: formDetails.value.financialSupport?.value,
       financial_support_amount_unit: "vnd",
       // dream_schools: formDetails.value.dreamSchool,
       contact_platform: [formDetails.value.selectedAlternativeContact?.value],
-      student_concern : formDetails.value.otherQuestions,
+      student_concern: formDetails.value.otherQuestions,
       // contact_info: formDetails.value.otherPhoneOrEmail,
       // lead_incoming_platform: formDetails.value.selectedArrowsterInfo,
     });
@@ -313,7 +329,7 @@ const submit = async () => {
       userName: appStore.userData?.name || "",
       phoneNumber: "+84",
       schoolName: "",
-      financialSupport: "",
+      financialSupport: null,
       dreamSchool: "",
       otherQuestions: "",
       selectedAlternativeContact: null,
