@@ -7,18 +7,18 @@
       <div class="md:px-6 w-full h-fit">
         <!-- need_more_advice -->
         <div
-          class="p-4 flex gap-4 items-start rounded-[10px] bg-[#EFF8FF] md:hidden"
+          class="p-4 flex gap-2 sm:gap-4 items-start rounded-[10px] bg-[#EFF8FF] md:hidden"
         >
           <div class="flex-1">
-            <p class="text-lg font-semibold text-[#181D27]">
+            <p class="sm:text-lg font-semibold text-[#181D27]">
               {{ $t('schoolList_page.mentorship.need_more_advice') }}
             </p>
-            <p class="text-[#535862] pt-0.5">
+            <p class="text-[#535862] text-sm sm:text-base pt-0.5">
               {{ $t('schoolList_page.mentorship.mentorship_description') }}
             </p>
             <NuxtLinkLocale to="/Pricing">
               <button
-                class="py-2 px-3 rounded-lg bg-[#1570EF] text-white mt-4 font-semibold"
+                class="py-2 px-3 rounded-lg bg-[#1570EF] text-white mt-4 font-semibold text-sm sm:text-base"
               >
                 {{ $t('schoolList_page.mentorship.free_mentorship') }}
               </button>
@@ -28,7 +28,7 @@
             <img
               src="/images/ai-recommendation.png"
               alt="ai-recommendation"
-              class="w-full object-contain max-w-[106px]"
+              class="w-full object-contain max-w-[90px] sm:max-w-[106px]"
               loading="eager"
             />
           </div>

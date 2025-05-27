@@ -128,6 +128,23 @@
         data-hj-allow
       />
     </div>
+    <!-- draem school -->
+    <div>
+      <p class="text-[#414651] text-sm font-medium">
+        {{ $t("pricing_page.share_some_of_your_dream_schools_here") }}
+        <span class="text-[#F04438]">*</span>
+      </p>
+      <input
+        name="user_input_dreamSchol"
+        type="text"
+        :placeholder="
+          t('pricing_page.e_g_university_of_sydney_university_of_melbourne')
+        "
+        v-model="formDetails.dreamSchool"
+        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
+        data-hj-allow
+      />
+    </div>
     <!-- financial support -->
     <div>
       <p class="text-[#414651] text-sm font-medium mb-1.5">
@@ -161,7 +178,7 @@
         type="text"
         :placeholder="t('pricing_page.example')"
         v-model="formDetails.otherQuestions"
-        rows="2"
+        :rows="textareaRows"
         class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg resize-none"
         data-hj-allow
       />
@@ -224,6 +241,7 @@ const selectedOption = ref<Country | null>(null);
 const search = ref<string>("");
 const countryOptions = ref<Country[]>([]);
 const otherText = ref<string>("");
+const width = ref<number>(0);
 
 const alternativeContact = [
   { value: "zalo", label: "Zalo" },
@@ -249,6 +267,13 @@ const budgetOptions = [
     label: "> 800 million VND",
   },
 ];
+
+const textareaRows = computed(() => {
+  if (width.value < 340) return 5;
+  if (width.value < 370) return 4;
+  if (width.value < 600) return 3;
+  return 2;
+});
 
 const handleFocus = () => {
   isFocused.value = true;
@@ -292,6 +317,7 @@ const isDisable = computed(() => {
     !formDetails.value.userName ||
     !formDetails.value.schoolName ||
     !formDetails.value.phoneNumber ||
+    !formDetails.value.dreamSchool ||
     !formDetails.value.financialSupport
   );
 });
@@ -318,11 +344,9 @@ const submit = async () => {
       current_school_name: formDetails.value.schoolName,
       financial_support_amount: formDetails.value.financialSupport?.value,
       financial_support_amount_unit: "vnd",
-      // dream_schools: formDetails.value.dreamSchool,
+      dream_schools: formDetails.value.dreamSchool,
       contact_platform: [formDetails.value.selectedAlternativeContact?.value],
       student_concern: formDetails.value.otherQuestions,
-      // contact_info: formDetails.value.otherPhoneOrEmail,
-      // lead_incoming_platform: formDetails.value.selectedArrowsterInfo,
     });
     emits("updateJourney");
     formDetails.value = {
@@ -356,7 +380,19 @@ const getCountries = async () => {
   }
 };
 
+const windowSize = () => {
+  if (typeof window !== "undefined") {
+    width.value = window.innerWidth;
+  }
+};
+
 onMounted(() => {
+  windowSize();
+  window.addEventListener("resize", windowSize);
   getCountries();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", windowSize);
 });
 </script>

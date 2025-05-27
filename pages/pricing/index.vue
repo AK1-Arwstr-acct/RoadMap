@@ -67,7 +67,7 @@
         <div class="w-full lg:w-1/2 rounded-xl overflow-hidden">
           <ImageSlider :slides="slides" :autoSlideInterval="4000" />
         </div>
-        <div class="w-full lg:w-1/2 px-4 py-6">
+        <div class="w-full lg:w-1/2 md:px-4 py-6">
           <JourneyForm
             @updateJourney="updateJourney"
             :selectedPlan="selectedPlan"
@@ -92,14 +92,14 @@
   </main>
   <div
     v-else
-    class="bg-[#1849A9] flex justify-center items-center h-dvh w-screen"
+    class="bg-[#1849A9] flex justify-center items-center h-dvh w-full"
   >
     <div
-      class="max-w-[710px] mx-auto flex flex-col items-center text-center justify-center"
+      class=" mx-auto flex flex-col items-center text-center justify-center px-5"
     >
       <img
         src="/images/countries-application.png"
-        class="w-[383px] h-[324px]"
+        class="w-full max-w-[383px] h-[324px]"
       />
       <p class="font-medium text-lg sm:text-3xl mt-4 text-white">
         {{ $t("pricing_page.thank_you_for_your_submission!") }}

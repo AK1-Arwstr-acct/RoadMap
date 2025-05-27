@@ -3,7 +3,7 @@
     <AuthNavbar :ishome="true" />
     <div class="size-full flex flex-col lg:flex-row">
       <div
-        class="lg:w-1/2 min-h-[338px] h-1/2 md:h-full overflow-hidden relative isolate"
+        class="lg:w-1/2 min-h-[338px] h-[50dvh] md:h-full overflow-hidden relative isolate mt-[78px] lg:mt-0"
       >
         <img
           src="/images/ai-recommendation.png"
@@ -21,13 +21,13 @@
         <img
           src="/images/home-frame.png"
           alt="Get Started"
-          class="size-full object-cover relative -z-10 hidden lg:block"
+          class="size-full object-contain relative -z-10 hidden lg:block"
           loading="eager"
         />
         <img
           src="/images/home-mobile-frame.png"
           alt="Get Started"
-          class="size-full object-contain lg:hidden mt-[78px]"
+          class="size-full object-contain object-bottom lg:hidden"
           loading="eager"
         />
       </div>
