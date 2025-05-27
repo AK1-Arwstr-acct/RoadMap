@@ -21,7 +21,7 @@
         <img
           src="/images/home-frame.png"
           alt="Get Started"
-          class="size-full object-contain relative -z-10 hidden lg:block"
+          class="size-full object-cover relative -z-10 hidden lg:block"
           loading="eager"
         />
         <img
