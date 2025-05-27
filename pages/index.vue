@@ -80,6 +80,11 @@ useHead(
     link: [
       {
         rel: "preload",
+        href: "/images/home-mobile-frame.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
         href: "/images/home-frame.png",
         as: "image",
       },
@@ -91,16 +96,6 @@ useHead(
       {
         rel: "preload",
         href: "/images/home-side-image.png",
-        as: "image",
-      },
-      {
-        rel: "preload",
-        href: "/images/school-list-snap.png",
-        as: "image",
-      },
-      {
-        rel: "preload",
-        href: "/images/sophie-chat-snap.png",
         as: "image",
       },
       {
