@@ -4,7 +4,7 @@
     class="size-full overflow-y-auto custom-scrollbar"
   >
     <div class="h-full w-full max-w-[450px] lg:max-w-[1150px] mx-auto">
-      <div class="p-6 w-full h-fit">
+      <div class="md:p-6 w-full h-fit">
         <p class="text-xl font-semibold text-[#181D27] mb-5">
           {{ $t("resources_page.program_and_resources_for_you") }}
         </p>

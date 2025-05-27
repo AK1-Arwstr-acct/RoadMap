@@ -3,7 +3,7 @@
     class="size-full overflow-hidden flex flex-col items-center"
     :class="{ 'overflow-y-auto pb-4': phase === 'keepGoing' }"
   >
-    <div class="py-6 px-[24px] flex flex-col gap-6 md:gap-10 w-full">
+    <div class="md:pt-6 pb-6 px-[24px] flex flex-col gap-6 md:gap-10 w-full">
       <div class="flex items-center gap-6">
         <div
           class="flex-1 w-full rounded-full bg-[#F5F5F5] overflow-hidden h-2 md:h-3"
@@ -71,7 +71,7 @@
       >
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-6"
+          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-2 md:px-6"
         >
           <div class="size-full h-fit flex flex-col gap-8">
             <ChatMessage

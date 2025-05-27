@@ -4,10 +4,10 @@
     class="size-full overflow-y-auto custom-scrollbar"
   >
     <div class="h-full w-full max-w-[1150px] mx-auto">
-      <div class="px-6 w-full h-fit">
+      <div class="md:px-6 w-full h-fit">
         <!-- need_more_advice -->
         <div
-          class="p-4 flex gap-4 items-start rounded-[10px] mt-4 bg-[#EFF8FF] md:hidden"
+          class="p-4 flex gap-4 items-start rounded-[10px] bg-[#EFF8FF] md:hidden"
         >
           <div class="flex-1">
             <p class="text-lg font-semibold text-[#181D27]">

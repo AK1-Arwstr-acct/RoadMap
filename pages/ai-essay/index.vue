@@ -54,7 +54,7 @@
     >
       <div
         v-if="!isAiQuestionStart"
-        class="size-full p-4 md:p-8 flex flex-col overflow-y-auto no-scrollbar"
+        class="size-full md:p-8 flex flex-col overflow-y-auto no-scrollbar"
       >
         <!-- <div
           v-if="deviceType !== 'mobile'"

@@ -14,7 +14,7 @@
       <IconCross fill="#A4A7AE" width="28" height="28" />
     </div>
     <div class="w-full flex flex-col gap-1">
-      <div class="py-4 px-3 sm:px-6 border-b border-gray-200">
+      <div class="md:pt-4 pb-4 px-3 sm:px-6 border-b border-gray-200">
         <div
           class="border border-[#F5F5F5] bg-[#FAFAFA] rounded-lg p-1 flex gap-2"
         >
@@ -58,7 +58,7 @@
             :chatHistoryArray="chatHistoryArray"
             :isModal="isModal"
           />
-          <div v-else class="p-3 sm:p-6 size-full">
+          <div v-else class="md:p-6 size-full">
             <SophieChat
               :isNewChat="isNewChat"
               :singleChatDetail="specificTaskChat"
@@ -72,7 +72,7 @@
         </div>
         <div
           v-show="chatOrHistory === 'messages'"
-          class="flex-1 p-3 sm:p-6 w-full h-full"
+          class="flex-1 md:p-6 w-full h-full"
         >
           <SophieChat
             :isNewChat="isNewChat"
