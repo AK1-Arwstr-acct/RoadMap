@@ -13,7 +13,7 @@
       <IconFilterLines />
       <div v-if="!selectedOption?.value" class="flex-1">
         <p
-          class="text-[#979797] text-left"
+          class="text-[#979797] text-left text-nowrap"
           :class="{ '!text-[#181D27]': isDropdownOpen }"
         >
           {{ placeholder }}

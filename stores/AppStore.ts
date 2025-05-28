@@ -10,6 +10,7 @@ const useAppStore = defineStore("appStore", () => {
 	const userImagePreview = ref<string>('');
 	const userCoverPhotoPreview = ref<string>('');
 	const authenticatedUser = ref<boolean>(tokenExists.value ? true : false );
+	const isFeatureChangeFromTasks = ref<boolean>(false);
 
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data
@@ -53,6 +54,7 @@ const useAppStore = defineStore("appStore", () => {
 		userCoverPhotoPreview,
 		authenticatedUser,
 		userData,
+		isFeatureChangeFromTasks,
 		checkAuthenticatedUser,
 		setUserImagePreview,
 		setUserCoverPhotoPreview,

@@ -57,7 +57,7 @@
         v-for="(task, idx) in filteredTask(category)"
         :key="idx"
         @click.stop="handelTaskDetail(task)"
-        :ref="el => setTaskRef(el, task.id)"
+        :ref="(el) => setTaskRef(el, task.id)"
       >
         <label
           class="mt-6 flex items-center gap-4 size-full rounded-2xl cursor-pointer pl-4 pr-5 py-3 transition-all ease-in-out duration-200"
@@ -225,14 +225,21 @@ const handelTaskDetail = async (task: Task) => {
       appTrackerStore.taskActiveStates[Number(key)] = false;
     }
   });
+
   sophieStore.roadmapTaskDetail = task;
+  let routeName: string = "";
   if (task.feature_state?.toLowerCase().includes("sophie")) {
-    navigateTo(localePath("/sophie"));
+    routeName = "/sophie";
   } else if (task.feature_state?.toLowerCase().includes("essay")) {
-    navigateTo(localePath("/ai-essay"));
+    routeName = "/ai-essay";
   } else {
-    navigateTo(localePath("/school-list"));
+    routeName = "/school-list";
   }
+  if (route.fullPath.includes(routeName)) {
+    return;
+  }
+  appStore.isFeatureChangeFromTasks = true;
+  navigateTo(localePath(routeName));
 };
 
 const filteredTask = (category: string) => {
@@ -280,7 +287,11 @@ watch(
     if (newValue) {
       isOpen.value = true;
       await nextTick();
-      const activeId = Number(Object.entries(appTrackerStore.taskActiveStates).find(([_, v]) => v)?.[0]);
+      const activeId = Number(
+        Object.entries(appTrackerStore.taskActiveStates).find(
+          ([_, v]) => v
+        )?.[0]
+      );
       if (
         activeId &&
         filteredTask(props.category).some((task) => task.id === activeId)

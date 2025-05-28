@@ -217,7 +217,6 @@ const onFeatureStateChange = () => {
   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
     appTrackerStore.taskActiveStates[Number(key)] = false;
   });
-  // if (!featureState.value) return;
   const applicationListTasks = (appTrackerStore.applicationList ?? []).flatMap(
     (item) => item.tasks ?? []
   );
@@ -252,6 +251,10 @@ watch(
   () => route.path,
   () => {
     checkFeatureState();
+    if (appStore.isFeatureChangeFromTasks) {
+      appStore.isFeatureChangeFromTasks = false;
+      return;
+    }
     onFeatureStateChange();
   }
 );

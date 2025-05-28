@@ -100,7 +100,7 @@
     <div
       v-if="isDetailModal"
       @click="isDetailModal = false"
-      class="fixed inset-0 z-20 bg-black/60 backdrop-blur-sm"
+      class="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
     />
   </Transition>
   <Transition name="slideModal">
