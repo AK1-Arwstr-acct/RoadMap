@@ -12,7 +12,7 @@
           class="overflow-hidden transition-all duration-300 ease-in-out text-[#535862]"
           :class="
             isOpen[index]
-              ? 'max-h-[450px] opacity-100 mt-2'
+              ? 'max-h-[1200px] opacity-100 mt-2'
               : 'max-h-0 opacity-0'
           "
         >

@@ -167,7 +167,7 @@
         "e_g_university_of_sydney_university_of_melbourne": "ví dụ: Đại học Sydney, Đại học Melbourne",
         "e_g": "ví dụ",
         "financial_support":{
-            "select_an_amount": "Chọn một số tiền",
+            "select_an_amount": "Chọn khoản chi phí",
             "option1": "< 300 triệu đồng",
             "option2": "300 - 500 triệu đồng",
             "option3": "500 - 800 triệu đồng",
