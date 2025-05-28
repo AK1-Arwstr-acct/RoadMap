@@ -166,6 +166,13 @@
         "e_g_thpt_nhan_chinh": "e.g. THPT Nhân Chính",
         "e_g_university_of_sydney_university_of_melbourne": "e.g. University of Sydney, University of Melbourne",
         "e_g": "e.g.",
+        "financial_support":{
+            "select_an_amount": "Select an amount",
+            "option1": "< 300 million VND",
+            "option2": "300 - 500 million VND",
+            "option3": "500 - 800 million VND",
+            "option4": "> 800 million VND"
+        },
         "faq": {
             "faq0": {
                 "question": "How can Arrowster's mentors support me?",

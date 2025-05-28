@@ -166,6 +166,13 @@
         "e_g_thpt_nhan_chinh": "ví dụ: THPT Nhân Chính",
         "e_g_university_of_sydney_university_of_melbourne": "ví dụ: Đại học Sydney, Đại học Melbourne",
         "e_g": "ví dụ",
+        "financial_support":{
+            "select_an_amount": "Chọn một số tiền",
+            "option1": "< 300 triệu đồng",
+            "option2": "300 - 500 triệu đồng",
+            "option3": "500 - 800 triệu đồng",
+            "option4": "> 800 triệu đồng"
+        },
         "faq": {
             "faq0": {
                 "question": "Mentor tại Arrowster có thể hỗ trợ bạn như thế nào?",

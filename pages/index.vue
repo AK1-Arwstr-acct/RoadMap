@@ -3,7 +3,7 @@
     <AuthNavbar :ishome="true" />
     <div class="size-full flex flex-col lg:flex-row">
       <div
-        class="lg:w-1/2 min-h-[338px] h-[50dvh] md:h-full overflow-hidden relative isolate mt-[78px] lg:mt-0"
+        class="lg:w-1/2 h-[calc(50%-48px)] md:h-full overflow-hidden relative isolate mt-[68px] lg:mt-0"
       >
         <img
           src="/images/ai-recommendation.png"
@@ -31,9 +31,9 @@
           loading="eager"
         />
       </div>
-      <div class="lg:w-1/2 flex justify-center items-center px-5 md:px-10 py-6">
+      <div class="lg:w-1/2 flex justify-center items-center px-5 md:px-10 py-5 md:py-6">
         <div class="max-w-[442px]">
-          <h1 class="mb-4 text-[#181D27] text-2xl md:text-4xl font-medium">
+          <h1 class="mb-2 md:mb-4 text-[#181D27] text-xl md:text-4xl font-medium">
             {{ $t("discover.heading") }}
           </h1>
           <ul class="text-[#717680] list-disc list-inside">
@@ -46,7 +46,7 @@
               {{ $t("discover.detail4") }}
             </li>
           </ul>
-          <div class="mt-[42px] flex flex-col gap-4">
+          <div class="mt-4 md:mt-[42px] flex flex-col gap-4">
             <NuxtLinkLocale to="/signup" class="block">
               <button
                 class="cursor-pointer w-full text-white bg-[#1570EF] border-[1.5px] border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"

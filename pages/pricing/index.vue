@@ -107,9 +107,9 @@
       <p class="text-2xl text-[#FFFFFF] mt-2">
         {{ $t("pricing_page.keep_your_phone_close") }}
       </p>
-      <NuxtLinkLocale :to="'/school-list'" class="w-full">
+      <NuxtLinkLocale :to="'/school-list'" class="mt-8 w-full max-w-[330px]">
         <button
-          class="bg-white text-sm sm:text-base text-[#175CD3] py-2.5 w-full rounded-lg font-semibold mt-8 max-w-[330px]"
+          class="bg-white text-sm sm:text-base text-[#175CD3] py-2.5 w-full rounded-lg font-semibold"
         >
           {{ $t("pricing_page.back_to_home") }}
         </button>

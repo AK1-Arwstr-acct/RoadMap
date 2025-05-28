@@ -157,7 +157,7 @@
       </p>
       <BaseSelectRadio
         :options="budgetOptions"
-        placeholder="Select an amount"
+        :placeholder="t('pricing_page.financial_support.select_an_amount')"
         v-model="formDetails.financialSupport"
       />
       <p class="text-sm text-[#535862] mt-1.5">
@@ -252,19 +252,19 @@ const alternativeContact = [
 const budgetOptions = [
   {
     value: "< 300 million VND",
-    label: "< 300 million VND",
+    label: t('pricing_page.financial_support.option1'),
   },
   {
     value: "300 - 500 million VND",
-    label: "300 - 500 million VND",
+    label: t('pricing_page.financial_support.option2'),
   },
   {
     value: "500 - 800 million VND",
-    label: "500 - 800 million VND",
+    label: t('pricing_page.financial_support.option3'),
   },
   {
     value: "> 800 million VND",
-    label: "> 800 million VND",
+    label: t('pricing_page.financial_support.option4'),
   },
 ];
 
