@@ -4,9 +4,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const protectedPaths = [
         "/onboarding",
         "/profile",
-        "/school-list",
-        "/sophie",
-        "/ai-essay",
+        // "/school-list",
+        // "/sophie",
+        // "/ai-essay",
     ];
     const notAllowedPathsIfLoggedIn = ["/", "/login", "/signup", "/auth", "/forgot-password"];
     // Check if the current path is public and user is logged in

@@ -32,7 +32,12 @@
           <Transition name="fade">
             <component
               :is="TaskDetailChatModal"
-              v-if="showTaskDetail && sophieStore.roadmapTaskDetail && !readOnly && !isModal"
+              v-if="
+                showTaskDetail &&
+                sophieStore.roadmapTaskDetail &&
+                !readOnly &&
+                !isModal
+              "
             />
           </Transition>
           <div
@@ -40,9 +45,10 @@
               (item) => item.text !== ''
             )"
             :key="index"
-            class="flex items-start gap-3 mt-8"
+            class="flex items-start gap-3"
             :class="{
               'justify-end': chat.isSender,
+              'mt-6' : index > 0
             }"
           >
             <div
@@ -356,6 +362,9 @@ const submit = async () => {
         {
           query: userQuery,
           sophieSessionId: uuid.value,
+          ...(!props.isModal && {
+            roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
+          }),
         },
         {
           headers: {
@@ -367,9 +376,9 @@ const submit = async () => {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
         query: userQuery,
         sophieSessionId: uuid.value,
-        ...((!props.isModal) && {
-          roadmap_task_id: sophieStore.roadmapTaskDetail?.id
-        })
+        ...(!props.isModal && {
+          roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
+        }),
       });
     }
     if (response) {
@@ -424,7 +433,6 @@ watch(
   () => {
     completeChat.value = [];
     uuid.value = uuidv4();
-    readOnly.value = false;
   }
 );
 
@@ -446,7 +454,6 @@ watch(
         }
       });
       completeChat.value = transformChat;
-      readOnly.value = true;
     }
   }
 );

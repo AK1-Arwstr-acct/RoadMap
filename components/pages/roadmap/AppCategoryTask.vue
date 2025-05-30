@@ -86,7 +86,7 @@
           </div>
           <div
             @click.stop="
-              task.checked = !task.checked;
+              // task.checked = !task.checked;
               handelClick(task);
             "
             class="size-5 rounded-[4px] border-[1.5px] flex justify-center items-center"
@@ -101,43 +101,42 @@
         </label>
       </div>
     </div>
-    <!-- paywall -->
-
-    <!-- <Transition name="fade">
+  </section>
+  <!-- paywall -->
+  <Transition name="fade">
+    <div
+      v-if="progressSoftPaywall"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center"
+    >
       <div
-        v-if="progressSoftPaywall"
-        class="fixed inset-0 z-20 bg-black/50 backdrop-blur-sm flex justify-center items-center"
+        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
       >
-        <div
-          class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
-        >
-          <div class="flex flex-col items-center">
-            <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
-            <p class="text-[#181D27] text-lg font-semibold text-center">
-              {{ $t("roadmap_page.paywall_progress.heading") }}
-            </p>
-            <p class="text-[#535862] text-sm text-center mt-2">
-              {{ $t("roadmap_page.paywall_progress.detail") }}
-            </p>
-          </div>
-          <div class="flex gap-3">
-            <button
-              @click="progressSoftPaywall = false"
-              class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
-            >
-              {{ $t("roadmap_page.paywall_progress.cancel") }}
-            </button>
-            <NuxtLinkLocale
-              :to="'/signup'"
-              class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
-            >
-              {{ $t("roadmap_page.paywall_progress.sign_up_for_free") }}
-            </NuxtLinkLocale>
-          </div>
+        <div class="flex flex-col items-center">
+          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
+          <p class="text-[#181D27] text-lg font-semibold text-center">
+            {{ $t("roadmap_page.paywall_progress.heading") }}
+          </p>
+          <p class="text-[#535862] text-sm text-center mt-2">
+            {{ $t("roadmap_page.paywall_progress.detail") }}
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            @click="progressSoftPaywall = false"
+            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
+          >
+            {{ $t("roadmap_page.paywall_progress.cancel") }}
+          </button>
+          <NuxtLinkLocale
+            :to="'/signup'"
+            class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
+          >
+            {{ $t("roadmap_page.paywall_progress.sign_up_for_free") }}
+          </NuxtLinkLocale>
         </div>
       </div>
-    </Transition> -->
-  </section>
+    </div>
+  </Transition>
 </template>
 <script setup lang="ts">
 import type { Application, Task } from "~/types/dashboard";
@@ -173,7 +172,7 @@ const isOpen = ref<boolean>(false);
 const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
 const taskRefs = ref<Record<number, HTMLElement | null>>({});
-// const progressSoftPaywall = ref<boolean>(false);
+const progressSoftPaywall = ref<boolean>(false);
 
 const imageSrc = computed(() => {
   return props.category?.includes("career")
@@ -255,9 +254,10 @@ const filteredTask = (category: string) => {
 const handelClick = async (task: Task) => {
   try {
     if (!appStore.authenticatedUser) {
-      // progressSoftPaywall.value = true;
+      progressSoftPaywall.value = true;
       return;
     }
+    task.checked = !task.checked;
     await api.post("/api/v1/roadmap/tasks", {
       task_id: task?.id,
       is_complete: task?.checked,

@@ -13,7 +13,7 @@
           loading="eager"
         />
       </NuxtLinkLocale>
-      <div class="w-[220px] relative z-30">
+      <div class="w-[220px]">
         <FeaturesDropdown
           :placeholder="t('dashboard.navbar.trending_features')"
           :options="features"

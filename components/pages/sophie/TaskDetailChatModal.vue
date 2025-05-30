@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-gray-200 rounded-md bg-[#FAFAFA] p-4">
+  <div class="border border-gray-200 rounded-md bg-[#FAFAFA] p-4 mb-8">
     <p class="text-lg text-[#414651] font-semibold pb-4">
       {{ sophieStore.roadmapTaskDetail?.title }}
     </p>
@@ -37,11 +37,11 @@
         @click="handelResources(resource.link)"
         v-for="(resource, idx) in sophieStore.roadmapTaskDetail?.resources.filter(item => item.link)"
         :key="idx"
-        class="flex items-center gap-2 font-medium cursor-pointer"
+        class="flex items-center gap-2 font-medium cursor-pointer w-fit"
       >
         <IconLink class="min-w-5" />
         <p class="text-[#175CD3]">Resource: {{ resource.text }}</p>
-        <p class="text-sm bg-[#F5F5F5] rounded-full py-0.5 px-2.5">
+        <p v-if="!sophieStore.isSophiePublic" class="text-sm bg-[#F5F5F5] rounded-full py-0.5 px-2.5">
           {{ resource.link }}
         </p>
       </div>
@@ -50,7 +50,7 @@
   <Transition name="fade">
     <div
       v-if="resourcesSoftPaywall"
-      class="fixed z-20 inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center px-5"
+      class="fixed z-30 inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center px-5"
     >
       <div
         class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
