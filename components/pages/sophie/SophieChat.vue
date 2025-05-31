@@ -80,6 +80,7 @@
                 v-model="studyPrograms"
                 @onChange="handelEducationLevel"
                 class="w-[300px]"
+                direction="upward"
               />
             </div>
           </div>
@@ -433,6 +434,9 @@ watch(
   () => {
     completeChat.value = [];
     uuid.value = uuidv4();
+    if (!props.isReadOnly) {
+      readOnly.value = false;
+    }
   }
 );
 
@@ -454,6 +458,9 @@ watch(
         }
       });
       completeChat.value = transformChat;
+      if (!props.isReadOnly) {
+        readOnly.value = true;
+      }
     }
   }
 );
