@@ -37,7 +37,7 @@
                 : 'text-[#717680]',
             ]"
             @click="
-              sophieStore.isSophiePublic
+              sophieStore.isSophiePublic && !isModal
                 ? (resourcesSoftPaywall = true)
                 : (chatOrHistory = 'history')
             "
