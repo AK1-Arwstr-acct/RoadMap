@@ -35,13 +35,20 @@
     <div class="flex flex-col gap-6 mt-4">
       <div
         @click="handelResources(resource.link)"
-        v-for="(resource, idx) in sophieStore.roadmapTaskDetail?.resources.filter(item => item.link)"
+        v-for="(
+          resource, idx
+        ) in sophieStore.roadmapTaskDetail?.resources.filter(
+          (item) => item.link
+        )"
         :key="idx"
         class="flex items-center gap-2 font-medium cursor-pointer w-fit"
       >
         <IconLink class="min-w-5" />
         <p class="text-[#175CD3]">Resource: {{ resource.text }}</p>
-        <p v-if="!sophieStore.isSophiePublic" class="text-sm bg-[#F5F5F5] rounded-full py-0.5 px-2.5">
+        <p
+          v-if="!sophieStore.isSophiePublic"
+          class="text-sm bg-[#F5F5F5] rounded-full py-0.5 px-2.5"
+        >
           {{ resource.link }}
         </p>
       </div>
@@ -53,8 +60,15 @@
       class="fixed z-30 inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center px-5"
     >
       <div
-        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
+        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px] relative"
       >
+        <button
+          @click="resourcesSoftPaywall = false"
+          class="absolute top-3 md:top-[18px] right-3 md:right-[18px]"
+          aria-label="Close"
+        >
+          <IconCross fill="#111827" height="24" width="24" />
+        </button>
         <div class="flex flex-col items-center">
           <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
           <p class="text-[#181D27] text-lg font-semibold text-center">
@@ -65,17 +79,17 @@
           </p>
         </div>
         <div class="flex gap-3">
-          <button
-            @click="resourcesSoftPaywall = false"
-            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
+          <NuxtLinkLocale
+            :to="'/pricing'"
+            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold text-center"
           >
-          {{ $t("roadmap_page.paywall_resources.cancel") }}
-          </button>
+            {{ $t("schoolList_page.mentorship.free_mentorship") }}
+          </NuxtLinkLocale>
           <NuxtLinkLocale
             :to="'/signup'"
             class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
           >
-          {{ $t("roadmap_page.paywall_resources.sign_up_for_free") }}
+            {{ $t("roadmap_page.paywall_resources.sign_up_for_free") }}
           </NuxtLinkLocale>
         </div>
       </div>

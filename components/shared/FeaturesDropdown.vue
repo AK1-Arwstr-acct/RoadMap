@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative z-30">
     <p v-if="label" class="font-medium text-[#414651] text-sm mb-1.5">
       {{ label
       }}<span v-if="required" class="text-[#D92D20] font-medium">*</span>

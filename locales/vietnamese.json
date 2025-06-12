@@ -166,7 +166,7 @@
         "e_g_thpt_nhan_chinh": "ví dụ: THPT Nhân Chính",
         "e_g_university_of_sydney_university_of_melbourne": "ví dụ: Đại học Sydney, Đại học Melbourne",
         "e_g": "ví dụ",
-        "financial_support":{
+        "financial_support": {
             "select_an_amount": "Chọn khoản chi phí",
             "option1": "< 300 triệu đồng",
             "option2": "300 - 500 triệu đồng",
@@ -481,5 +481,14 @@
             "title": "Arrowster - Discover your own study abroad journey",
             "description": "Arrowster is a U.S. based education company offering comprehensive study abroad consulting services powered by advanced technology"
         }
+    },
+    "mentorship_popup": {
+        "title": "Bạn vẫn chưa biết bắt đầu từ đâu? 👋",
+        "line_1": "Hãy để các mentor từ những trường đại học hàng đầu giúp bạn:",
+        "line_2": "Chọn đúng trường học phù hợp",
+        "line_3": "Lập kế hoạch hồ sơ và học bổng",
+        "line_4": "Chúng mình sẽ đồng hành cùng bạn trong suốt hành trình , hoàn toàn miễn phí.",
+        "button_later": "Để sau",
+        "button_confirm": "Đăng ký mentorship"
     }
 }

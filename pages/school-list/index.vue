@@ -11,16 +11,16 @@
         >
           <div class="flex-1">
             <p class="sm:text-lg font-semibold text-[#181D27]">
-              {{ $t('schoolList_page.mentorship.need_more_advice') }}
+              {{ $t("schoolList_page.mentorship.need_more_advice") }}
             </p>
             <p class="text-[#535862] text-sm sm:text-base pt-0.5">
-              {{ $t('schoolList_page.mentorship.mentorship_description') }}
+              {{ $t("schoolList_page.mentorship.mentorship_description") }}
             </p>
             <NuxtLinkLocale to="/Pricing">
               <button
                 class="py-2 px-3 rounded-lg bg-[#1570EF] text-white mt-4 font-semibold text-sm sm:text-base"
               >
-                {{ $t('schoolList_page.mentorship.free_mentorship') }}
+                {{ $t("schoolList_page.mentorship.free_mentorship") }}
               </button>
             </NuxtLinkLocale>
           </div>
@@ -85,6 +85,11 @@ useHead(
       {
         rel: "preload",
         href: "/images/countries-application.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/sophie-chat.png",
         as: "image",
       },
       {

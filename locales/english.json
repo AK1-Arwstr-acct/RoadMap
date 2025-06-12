@@ -166,7 +166,7 @@
         "e_g_thpt_nhan_chinh": "e.g. THPT Nhân Chính",
         "e_g_university_of_sydney_university_of_melbourne": "e.g. University of Sydney, University of Melbourne",
         "e_g": "e.g.",
-        "financial_support":{
+        "financial_support": {
             "select_an_amount": "Select an amount",
             "option1": "< 300 million VND",
             "option2": "300 - 500 million VND",
@@ -481,5 +481,14 @@
             "title": "Arrowster - Discover your own study abroad journey",
             "description": "Arrowster is a U.S. based education company offering comprehensive study abroad consulting services powered by advanced technology"
         }
+    },
+    "mentorship_popup": {
+        "title": "hey, we see you trying to figure this all out by yourself 👋",
+        "line_1": "let our mentors from top universities help you",
+        "line_2": "pick the right schools",
+        "line_3": "plan your applications and scholarships",
+        "line_4": "we'll stick with you through the whole journey, not just one call. all free.",
+        "button_later": "maybe later",
+        "button_confirm": "get mentorship"
     }
 }

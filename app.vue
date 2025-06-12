@@ -5,12 +5,25 @@
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
+      <Transition name="fade">
+        <component
+          v-if="appStore.isMentorshipPopup"
+          :is="MentorshipPopup"
+          @close="appStore.isMentorshipPopup = false"
+        />
+      </Transition>
     </BaseLayoutWrapper>
   </div>
 </template>
 <script setup lang="ts">
+import MentorshipPopup from "~/components/pages/school-list/MentorshipPopup.vue";
+import useAppStore from "~/stores/AppStore";
+import { identifyUserInHotjar } from "@/utils/hotjar";
+import { identifyUserInTiktok, trackPageView } from "@/utils/tiktokPixel";
+
 const { locale } = useI18n();
 const { t } = useI18n();
+const route = useRoute();
 
 useHead(
   computed(() => ({
@@ -28,10 +41,6 @@ useHead(
     link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
   }))
 );
-
-import useAppStore from "~/stores/AppStore";
-import { identifyUserInHotjar } from "@/utils/hotjar";
-import { identifyUserInTiktok, trackPageView } from "@/utils/tiktokPixel";
 
 const appStore = useAppStore();
 
@@ -105,6 +114,43 @@ const tiktokConfig = () => {
   }
 };
 
+let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+const handleMouseMove = () => {
+  if (route.fullPath.includes("/pricing")) {
+    if (timeoutId) clearTimeout(timeoutId);
+    return;
+  }
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    timeoutId = null;
+  }
+
+  if (appStore.isMentorshipPopup === false) {
+    timeoutId = setTimeout(() => {
+      appStore.isMentorshipPopup = true;
+    }, 10000);
+  }
+};
+
+let clickTimestamps: number[] = [];
+const handleClick = () => {
+  if (route.fullPath.includes("/pricing")) {
+    if (timeoutId) clearTimeout(timeoutId);
+    return;
+  }
+  const now = Date.now();
+  clickTimestamps.push(now);
+
+  // Remove clicks older than 2 seconds
+  clickTimestamps = clickTimestamps.filter((ts) => now - ts <= 2000);
+
+  if (clickTimestamps.length >= 5) {
+    appStore.isMentorshipPopup = true;
+    clickTimestamps = [];
+  }
+};
+
 onMounted(async () => {
   const user = await appStore.getUserData();
   hotjarConfig();
@@ -113,5 +159,17 @@ onMounted(async () => {
   identifyUserInHotjar(user);
   identifyUserInTiktok(user);
   trackPageView();
+  window.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("keydown", handleMouseMove);
+  window.addEventListener("click", handleClick);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("mousemove", handleMouseMove);
+  window.removeEventListener("keydown", handleMouseMove);
+  window.removeEventListener("click", handleClick);
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
 });
 </script>

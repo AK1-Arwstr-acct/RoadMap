@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white rounded-xl transition-all ease-in-out duration-700  flex flex-col absolute lg:relative z-10 top-2 left-2 lg:top-0 lg:left-0 h-[calc(100%-16px)] sm:h-full"
+    class="bg-white rounded-xl transition-all ease-in-out duration-700  flex flex-col absolute lg:relative top-2 left-2 lg:top-0 lg:left-0 h-[calc(100%-16px)] sm:h-full"
     :class="[
       isOpen ? 'w-[calc(100%-16px)] lg:w-[336px] p-5 ' : 'w-0',
     ]"
