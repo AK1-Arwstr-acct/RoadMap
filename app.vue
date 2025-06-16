@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import MentorshipPopup from "~/components/pages/school-list/MentorshipPopup.vue";
 import useAppStore from "~/stores/AppStore";
+import useSophieStore from "./stores/sophieStore";
 import { identifyUserInHotjar } from "@/utils/hotjar";
 import { identifyUserInTiktok, trackPageView } from "@/utils/tiktokPixel";
 
@@ -43,6 +44,7 @@ useHead(
 );
 
 const appStore = useAppStore();
+const sophieStore = useSophieStore();
 
 const hotjarConfig = () => {
   const runtimeConfig = useRuntimeConfig();
@@ -115,15 +117,17 @@ const tiktokConfig = () => {
 };
 
 let timeoutId: ReturnType<typeof setTimeout> | null = null;
+const excludedRoutes = ["/pricing", "/login", "/signup"];
 
 const handleMouseMove = () => {
-  if (route.fullPath.includes("/pricing")) {
-    if (timeoutId) clearTimeout(timeoutId);
-    return;
-  }
   if (timeoutId) {
     clearTimeout(timeoutId);
     timeoutId = null;
+  }
+  if (excludedRoutes.some(path => route.fullPath.includes(path)) || sophieStore.openSophieModal) {
+    // if (timeoutId) clearTimeout(timeoutId);
+    
+    return;
   }
 
   if (appStore.isMentorshipPopup === false) {
@@ -135,8 +139,11 @@ const handleMouseMove = () => {
 
 let clickTimestamps: number[] = [];
 const handleClick = () => {
-  if (route.fullPath.includes("/pricing")) {
-    if (timeoutId) clearTimeout(timeoutId);
+  if (excludedRoutes.some(path => route.fullPath.includes(path)) || sophieStore.openSophieModal) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
     return;
   }
   const now = Date.now();

@@ -15,6 +15,20 @@
         data-hj-allow
       />
     </div>
+    <div>
+      <p class="text-[#414651] text-sm font-medium">
+        {{ $t("pricing_page.your_email") }}
+        <span class="text-[#F04438]">*</span>
+      </p>
+      <input
+        name="user_input"
+        type="text"
+        :placeholder="t('pricing_page.your_email')"
+        v-model="formDetails.userEmail"
+        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
+        data-hj-allow
+      />
+    </div>
     <div class="flex flex-col xl:flex-row gap-6">
       <!-- phoneNumber -->
       <div class="relative remove-shadow-bg-white w-full">
@@ -217,6 +231,7 @@ const { t } = useI18n();
 
 interface FormDetails {
   userName: string;
+  userEmail: string;
   phoneNumber: string;
   schoolName: string;
   financialSupport: OptionAttributes | null;
@@ -228,6 +243,7 @@ interface FormDetails {
 const isSubmitting = ref<boolean>(false);
 const formDetails = ref<FormDetails>({
   userName: appStore.userData?.name || "",
+  userEmail: appStore.userData?.email || "",
   phoneNumber: "",
   schoolName: "",
   financialSupport: null,
@@ -252,19 +268,19 @@ const alternativeContact = [
 const budgetOptions = [
   {
     value: "< 300 million VND",
-    label: t('pricing_page.financial_support.option1'),
+    label: t("pricing_page.financial_support.option1"),
   },
   {
     value: "300 - 500 million VND",
-    label: t('pricing_page.financial_support.option2'),
+    label: t("pricing_page.financial_support.option2"),
   },
   {
     value: "500 - 800 million VND",
-    label: t('pricing_page.financial_support.option3'),
+    label: t("pricing_page.financial_support.option3"),
   },
   {
     value: "> 800 million VND",
-    label: t('pricing_page.financial_support.option4'),
+    label: t("pricing_page.financial_support.option4"),
   },
 ];
 
@@ -315,6 +331,7 @@ const validateNumber = (event: Event) => {
 const isDisable = computed(() => {
   return (
     !formDetails.value.userName ||
+    !formDetails.value.userEmail ||
     !formDetails.value.schoolName ||
     !formDetails.value.phoneNumber ||
     !formDetails.value.dreamSchool ||
@@ -337,6 +354,7 @@ const submit = async () => {
     await api.post("/api/v1/plans/bundle", {
       plan_id: props.selectedPlan,
       name: formDetails.value.userName,
+      contact_info: formDetails.value.userEmail,
       parent_phone:
         formDetails.value.phoneNumber.length > 6
           ? `${selectedOption.value?.phone_code}${formDetails.value.phoneNumber}`
@@ -351,6 +369,7 @@ const submit = async () => {
     emits("updateJourney");
     formDetails.value = {
       userName: appStore.userData?.name || "",
+      userEmail: appStore.userData?.email || "",
       phoneNumber: "+84",
       schoolName: "",
       financialSupport: null,

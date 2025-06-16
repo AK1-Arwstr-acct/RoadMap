@@ -6,6 +6,7 @@
     <p class="font-medium text-[#414651]">
       {{ $t("schoolList_page.majors_pick_up_to_3_majors") }}
     </p>
+    <p class="font-medium text-[#414651] text-sm mt-1">{{ $t("schoolList_page.majors_info") }}</p>
     <div
       v-if="majorProgramsList.length"
       class="mt-[14px] space-y-4 max-h-[280px] overflow-y-auto custom-scrollbar"

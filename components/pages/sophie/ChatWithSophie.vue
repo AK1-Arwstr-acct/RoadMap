@@ -2,7 +2,7 @@
   <div
     class="bg-white size-full overflow-hidden flex"
     :class="{
-      'rounded-xl drop-shadow-lg relative max-w-[1302px] max-h-[904px] pt-8':
+      'rounded-xl drop-shadow-lg relative max-w-[1302px] max-h-[904px] pt-12':
         isModal,
     }"
   >
@@ -62,7 +62,7 @@
             :chatHistoryArray="chatHistoryArray"
             :isModal="isModal"
           />
-          <div v-else class="md:p-6 size-full">
+          <div v-else class="md:p-6 size-full" :class="{ 'p-4': isModal }">
             <SophieChat
               :isNewChat="isNewChat"
               :singleChatDetail="specificTaskChat"
@@ -77,6 +77,7 @@
         <div
           v-show="chatOrHistory === 'messages'"
           class="flex-1 md:p-6 w-full h-full"
+          :class="{ 'p-4': isModal }"
         >
           <SophieChat
             :isNewChat="isNewChat"

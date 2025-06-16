@@ -41,6 +41,32 @@
             />
           </Transition>
           <div
+            v-if="!sophieStore.isSophiePublic && completeChat.length == 0"
+            class="mb-2 flex justify-end relative"
+          >
+            <div class="group">
+              <button
+                @click="completeSophie"
+                :disabled="isChatLoading"
+                class="text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
+              >
+                {{ $t("sophie_page.complete_sophie_button.buttonText") }}
+              </button>
+              <div
+                class="opacity-0 group-hover:opacity-100 transition-all ease-in-out duration-200 absolute bg-[#f3f1f1] w-[calc(100%-50px)] md:w-[calc(100%-200px)] max-w-[700px] right-10 md:right-20 bottom-14 rounded-xl px-3 py-2 shadow-[0_8px_13px_0_rgba(16,24,40,0.05),16px_20px_50px_13px_rgba(0,0,0,0.25)]"
+              >
+                <div
+                  class="size-full relative text-[#181D27] text-xs sm:text-sm"
+                >
+                  {{ $t("sophie_page.complete_sophie_button.tooltop_Text") }}
+                  <div
+                    class="size-4 transform rotate-45 bg-[#f3f1f1] absolute right-5 -bottom-3 shadow-black"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
             v-for="(chat, index) in completeChat.filter(
               (item) => item.text !== ''
             )"
@@ -48,7 +74,7 @@
             class="flex items-start gap-3"
             :class="{
               'justify-end': chat.isSender,
-              'mt-6' : index > 0
+              'mt-6': index > 0,
             }"
           >
             <div
@@ -144,7 +170,12 @@
             </div>
           </Transition>
           <div
-            v-if="completeChat.length === 0 && !readOnly && !isModal"
+            v-if="
+              completeChat.length === 0 &&
+              !readOnly &&
+              !isModal &&
+              sophieStore.roadmapTaskDetail !== null
+            "
             class="flex overflow-x-auto custom-scrollbar mt-3 gap-3"
           >
             <div
@@ -157,6 +188,22 @@
               {{ question.text }}
             </div>
           </div>
+          <p
+            v-if="
+              completeChat.length === 0 &&
+              !readOnly &&
+              !isModal &&
+              sophieStore.roadmapTaskDetail == null
+            "
+            @click="
+              handelPreQuestionOfScholarship(
+                'Chance me with highly curated individualized scholarships that are best matched for me ONLY'
+              )
+            "
+            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit"
+          >
+            {{ t("dashboard.pre_question") }}
+          </p>
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
@@ -177,7 +224,9 @@
               data-hj-allow
             />
             <button
-              :disabled="isChatLoading || isChatFull || inputQuestion.trim().length < 2"
+              :disabled="
+                isChatLoading || isChatFull || inputQuestion.trim().length < 2
+              "
               @click="submit"
               class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1.5 transform right-2 -rotate-90 p-2 disabled:opacity-40"
             >
@@ -320,6 +369,64 @@ const addNewLine = async () => {
 const handelPreQuestion = (question: string) => {
   inputQuestion.value = question;
   submit();
+};
+
+const tempText = ref<string>("");
+const handelPreQuestionOfScholarship = (text: string) => {
+  completeChat.value.push({
+    isSender: true,
+    text: text,
+  });
+  const list = [
+    `Gathering your profile details <span class="inline-block animate-bounce text-3xl [animation-delay:0ms]">.</span><span class="inline-block animate-bounce text-3xl [animation-delay:200ms]">.</span><span class="inline-block animate-bounce text-3xl [animation-delay:400ms]">.</span>`,
+    `Crunching numbers in our database <span class="inline-block animate-bounce text-3xl [animation-delay:0ms]">.</span><span class="inline-block animate-bounce text-3xl [animation-delay:200ms]">.</span><span class="inline-block animate-bounce text-3xl [animation-delay:400ms]">.</span>`,
+    `Searching deeply for Vietnamese scholarships that best match your profile <span class="inline-block animate-bounce text-3xl [animation-delay:0ms]">.</span><span class="inline-block animate-bounce text-3xl [animation-delay:200ms]">.</span><span class="inline-block animate-bounce text-3xl [animation-delay:400ms]">.</span>`,
+    `Updating your personalized results <span class="inline-block animate-bounce text-3xl [animation-delay:0ms]">.</span><span class="inline-block animate-bounce text-3xl [animation-delay:200ms]">.</span><span class="inline-block animate-bounce text-3xl [animation-delay:400ms]">.</span>`,
+  ];
+  completeChat.value.push({
+    isSender: false,
+    get text() {
+      return tempText.value;
+    },
+  });
+  let i = 0;
+  const pushNext = () => {
+    if (i < list.length) {
+      tempText.value = list[i];
+      i++;
+      setTimeout(pushNext, 4000);
+    } else {
+      const localePath = useLocalePath();
+      tempText.value = `Please click on the <a href="${localePath(
+        "/pricing"
+      )}" class="text-[#175CD3] font-semibold tracking-wider">link</a> to speak with your own counselor for a free mentorship and to discuss the 3 scholarships that we’ve curated for you!`;
+    }
+  };
+  pushNext();
+};
+
+const completeSophie = async () => {
+  try {
+    isChatLoading.value = true;
+    // let response = await api.get(`/api/v1/ai-conversation/sophie`);
+    // if (response.data) {
+    await new Promise((resolve) => setTimeout(resolve, 3000)); // 2.5 seconds delay
+      completeChat.value.push({
+        isSender: false,
+        text: "Perfect,<br/> Now let Sophie do the work behind the scenes with our counselors and prepare the checklist for you.<br/> Sophie will come back to you once the list is fully prepared. Hang tight!",
+      });
+    // }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.message;
+      showToast(errorMessage, {
+        type: "warning",
+      });
+    }
+  } finally {
+    isChatLoading.value = false;
+  }
+  // api pending
 };
 
 // Function to scroll to the bottom

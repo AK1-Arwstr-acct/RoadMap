@@ -16,6 +16,7 @@
               ? false
               : (dashboardStore.totalSchool || 0) >= 6
           "
+          :class="{ 'animate-pulse text-[#1570EF]' : isActive }"
         >
           {{ $t("schoolList_page.overwhelmed_by_options") }}
         </span>

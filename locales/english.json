@@ -60,11 +60,15 @@
             "schools_list": "Schools List",
             "ai_essay": "AI Essay",
             "resources": "Resources",
-            "ask_sophie": "Ask Sophie"
+            "ask_sophie": "Ask Sophie",
+            "scholarship":"Scholarship"
         },
         "talk_to_us": "Free Mentorship",
         "login": "Log in",
-        "signup": "Sign up"
+        "signup": "Sign up",
+        "get_scholarship": "Get Scholarship",
+        "scholarships_that_suit_me":"Scholarships that suit me",
+        "pre_question":"Chance me with highly curated individualized scholarships that are best matched for me ONLY"
     },
     "discover": {
         "heading": "Your All-in-One Platform for Studying Abroad",
@@ -140,6 +144,7 @@
     "pricing_page": {
         "apply_now": "Apply now",
         "your_name": "Your name",
+        "your_email": "Your Email",
         "phone_number": "Phone number",
         "contact_platform": "Contact platform",
         "do_you_have_any_other_concerns_or_questions": "Do you have any other concerns or questions?",
@@ -397,6 +402,7 @@
         "loading_title": "Finding your best-fit schools...",
         "loading_description": "Let our AI match you with the right universities based on your profile, preferences, and goals.",
         "majors_pick_up_to_3_majors": "Majors (Pick up to 3 majors)",
+        "majors_info": "Your selections help us recommend schools that best fit your goals.",
         "median_salary": "Median Salary:",
         "mentorship": {
             "need_more_advice": "Need more advice? Join our mentorship program",
@@ -445,6 +451,10 @@
         "sign_up_with_google": "Sign up with Google"
     },
     "sophie_page": {
+        "complete_sophie_button" : {
+            "buttonText":"Get Sophie to complete this for you!",
+            "tooltop_Text":"Click here to get Sophie to complete the whole checklist for you. Your own AI-Sophie will assist 24/7 just for YOU! and will automatically prepare this roadmap checklist. Click away to see how this works."
+        },
         "graduate": "Graduate",
         "high_school": "High School",
         "history": "History",
@@ -483,12 +493,12 @@
         }
     },
     "mentorship_popup": {
-        "title": "hey, we see you trying to figure this all out by yourself 👋",
-        "line_1": "let our mentors from top universities help you",
-        "line_2": "pick the right schools",
-        "line_3": "plan your applications and scholarships",
-        "line_4": "we'll stick with you through the whole journey, not just one call. all free.",
-        "button_later": "maybe later",
-        "button_confirm": "get mentorship"
+        "title": "Hey, we see you trying to figure this all out by yourself 👋",
+        "line_1": "Let our mentors from top universities help you",
+        "line_2": "Pick the right schools",
+        "line_3": "Plan your applications and scholarships",
+        "line_4": "We'll stick with you through the whole journey, not just one call. all free.",
+        "button_later": "Maybe later",
+        "button_confirm": "Get mentorship"
     }
 }

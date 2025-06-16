@@ -156,11 +156,10 @@ import useAppTrackerStore from "~/stores/AppTrackerStore";
 import useSophieStore from "~/stores/sophieStore";
 import MobileSideBar from "./MobileSideBar.vue";
 import type { OptionAttributes } from "~/types/home";
-import IconTabApplication from "~/components/icons/IconTabApplication.vue";
 import IconTabSchool from "~/components/icons/IconTabSchool.vue";
-import IconTabEssayEditor from "~/components/icons/IconTabEssayEditor.vue";
 import IconTabSophie from "~/components/icons/IconTabSophie.vue";
 import IconEssayGenerater from "../icons/IconEssayGenerater.vue";
+import IconScholarship from "../icons/IconScholarship.vue";
 import IconBookOpen from "../icons/IconBookOpen.vue";
 import type { Task } from "~/types/dashboard";
 
@@ -198,6 +197,11 @@ const features: OptionAttributes[] = [
     label: t("dashboard.navbar.ask_sophie"),
     icon: IconTabSophie,
   },
+  {
+    value: "/scholarship",
+    label: t("dashboard.navbar.scholarship"),
+    icon: IconScholarship,
+  },
 ];
 
 const close = () => {
@@ -214,6 +218,16 @@ const checkFeatureState = () => {
 };
 
 const onFeatureStateChange = () => {
+  // in case of scholarship option
+  if (featureState.value?.value === "/scholarship") {
+    appStore.isFeatureChangeFromTasks = true;
+    Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+      appTrackerStore.taskActiveStates[Number(key)] = false;
+    });
+    sophieStore.roadmapTaskDetail = null;
+    return;
+  }
+
   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
     appTrackerStore.taskActiveStates[Number(key)] = false;
   });
@@ -240,6 +254,11 @@ watch(
   () => featureState.value?.value,
   () => {
     if (route.path !== featureState.value?.value) {
+      // in case of scholarship option
+      if (featureState.value?.value === "/scholarship") {
+        navigateTo(localePath("/sophie"));
+        return;
+      }
       navigateTo(localePath(featureState.value?.value || ""));
     } else {
       checkFeatureState();

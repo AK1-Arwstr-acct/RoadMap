@@ -7,7 +7,9 @@ const useSophieStore = defineStore("sophieStore", () => {
     const appStore = useAppStore();
 
     const isSophiePublic = ref<boolean>(!appStore.authenticatedUser);
-    const roadmapTaskDetail = ref<Task| null>(null);
+    const roadmapTaskDetail = ref<Task | null>(null);
+    const openSophieModal = ref<boolean>(false);
+
 
     watch(() => appStore.authenticatedUser, () => {
         isSophiePublic.value = !appStore.authenticatedUser;
@@ -15,7 +17,8 @@ const useSophieStore = defineStore("sophieStore", () => {
 
     return {
         isSophiePublic,
-        roadmapTaskDetail
+        roadmapTaskDetail,
+        openSophieModal
     }
 });
 

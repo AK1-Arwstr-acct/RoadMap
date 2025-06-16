@@ -4,11 +4,12 @@
     class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-white"
     :class="{ 'pointer-events-none': dashboardStore.isSchoolsLoading }"
   >
-    <p class="font-medium text-[#414651] text-sm">
-      {{ $t('schoolList_page.majors_pick_up_to_3_majors') }}
+    <p class="font-medium text-[#1570EF]" :class="{ 'animate-pulse' : selectedLPrograms.length === 0 }">
+      {{ $t("schoolList_page.majors_pick_up_to_3_majors") }}
     </p>
+    <p class="font-medium text-[#414651] text-sm mt-1">{{ $t("schoolList_page.majors_info") }}</p>
     <div
-      class="mt-[14px] space-y-4 max-h-[280px] overflow-y-auto custom-scrollbar"
+      class="mt-[14px] flex flex-col gap-4 max-h-[280px] overflow-y-auto custom-scrollbar"
     >
       <div v-for="(option, index) in majorProgramsList" :key="index">
         <label

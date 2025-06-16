@@ -1,9 +1,7 @@
 <template>
   <div
-    class="bg-white rounded-xl transition-all ease-in-out duration-700  flex flex-col absolute lg:relative top-2 left-2 lg:top-0 lg:left-0 h-[calc(100%-16px)] sm:h-full"
-    :class="[
-      isOpen ? 'w-[calc(100%-16px)] lg:w-[336px] p-5 ' : 'w-0',
-    ]"
+    class="bg-white rounded-xl transition-all ease-in-out duration-700 flex flex-col absolute lg:relative top-2 left-2 lg:top-0 lg:left-0 h-[calc(100%-16px)] sm:h-full"
+    :class="[isOpen ? 'w-[calc(100%-16px)] lg:w-[336px] p-5 ' : 'w-0']"
   >
     <div
       class="flex gap-4 relative isolate"
@@ -41,6 +39,14 @@
     <!-- for open sidebar -->
     <Transition name="sidebar">
       <div class="flex-1 overflow-y-auto no-scrollbar">
+        <Transition name="fade">
+          <button
+            @click="clearTaskDetails"
+            class="mt-3 text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm w-full"
+          >
+            {{ t("dashboard.scholarships_that_suit_me") }}
+          </button>
+        </Transition>
         <div class="h-px bg-[#E9EAEB] my-6" />
         <ApplicationsList
           :heading="t('roadmap_page.pre_application')"
@@ -74,10 +80,14 @@
 <script setup lang="ts">
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import useSophieStore from "~/stores/sophieStore";
+import useAppStore from "~/stores/AppStore";
 
 const appTrackerStore = useAppTrackerStore();
 const sophieStore = useSophieStore();
+const appStore = useAppStore();
 const { t } = useI18n();
+const route = useRoute();
+const localePath = useLocalePath();
 
 const isOpen = ref<boolean>(true);
 const width = ref<number>(0);
@@ -85,6 +95,15 @@ const width = ref<number>(0);
 const toggleSidebar = () => {
   isOpen.value = !isOpen.value;
   appTrackerStore.isSidebarOpen = isOpen.value;
+};
+
+const clearTaskDetails = () => {
+  navigateTo(localePath("/sophie"));
+  appStore.isFeatureChangeFromTasks = true;
+  Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+    appTrackerStore.taskActiveStates[Number(key)] = false;
+  });
+  sophieStore.roadmapTaskDetail = null;
 };
 
 const windowSize = () => {

@@ -89,6 +89,7 @@ import IconEssayGenerater from "../icons/IconEssayGenerater.vue";
 import IconBookOpen from "../icons/IconBookOpen.vue";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import useSophieStore from "~/stores/sophieStore";
+import IconScholarship from "../icons/IconScholarship.vue";
 import type { Task } from "~/types/dashboard";
 
 const emit = defineEmits(["updateTab", "close"]);
@@ -123,6 +124,11 @@ const features: OptionAttributes[] = [
     label: t("dashboard.navbar.ask_sophie"),
     icon: IconTabSophie,
   },
+  {
+    value: "/scholarship",
+    label: t("dashboard.navbar.scholarship"),
+    icon: IconScholarship,
+  },
 ];
 
 const handleLogo = () => {
@@ -139,6 +145,16 @@ const handleProfile = () => {
 };
 
 const onFeatureStateChange = () => {
+  // in case of scholarship option
+  if (featureState.value?.value === "/scholarship") {
+    appStore.isFeatureChangeFromTasks = true;
+    Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+      appTrackerStore.taskActiveStates[Number(key)] = false;
+    });
+    sophieStore.roadmapTaskDetail = null;
+    return;
+  }
+
   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
     appTrackerStore.taskActiveStates[Number(key)] = false;
   });
@@ -174,7 +190,12 @@ watch(
       isFirstRun = false;
       return;
     }
-    navigateTo(localePath(featureState.value?.value || ""));
+    // in case of scholarship option
+    if (featureState.value?.value === "/scholarship") {
+      navigateTo(localePath("/sophie"));
+    } else {
+      navigateTo(localePath(featureState.value?.value || ""));
+    }
     emit("close");
   }
 );

@@ -60,11 +60,15 @@
             "schools_list": "Danh sách trường",
             "ai_essay": "Bài luận bằng AI",
             "resources": "Tài liệu",
-            "ask_sophie": "Hỏi Sophie"
+            "ask_sophie": "Hỏi Sophie",
+            "scholarship": "Học bổng"
         },
         "talk_to_us": "Đăng ký mentorship",
         "login": "Đăng nhập",
-        "signup": "Đăng ký"
+        "signup": "Đăng ký",
+        "get_scholarship": "Nhận học bổng",
+        "scholarships_that_suit_me": "Học bổng phù hợp với tôi",
+        "pre_question": "Cho tôi cơ hội với các học bổng được chọn lọc kỹ lưỡng, cá nhân hóa và phù hợp nhất chỉ dành riêng cho tôi."
     },
     "discover": {
         "heading": "Nền tảng du học toàn diện cho bạn",
@@ -140,6 +144,7 @@
     "pricing_page": {
         "apply_now": "Đăng ký ngay",
         "your_name": "Tên của bạn",
+        "your_email": "Email của bạn",
         "phone_number": "Số điện thoại",
         "contact_platform": "Nền tảng liên lạc",
         "do_you_have_any_other_concerns_or_questions": "Bạn còn có thắc mắc hay mối quan tâm nào khác không?",
@@ -397,6 +402,7 @@
         "loading_title": "Tìm trường đại học phù hợp nhất với bạn...",
         "loading_description": "Hãy để AI của Arrowster gợi ý những trường đại học phù hợp dựa trên hồ sơ, sở thích và mục tiêu của bạn.",
         "majors_pick_up_to_3_majors": "Ngành học (Chọn tối đa 3 ngành)",
+        "majors_info": "Lựa chọn của bạn giúp chúng tôi đề xuất các trường phù hợp nhất với mục tiêu của bạn.",
         "median_salary": "Mức lương trung bình:",
         "mentorship": {
             "need_more_advice": "Bạn cần người đồng hành?",
@@ -445,6 +451,10 @@
         "sign_up_with_google": "Đăng ký bằng Google"
     },
     "sophie_page": {
+        "complete_sophie_button": {
+            "buttonText": "Để Sophie hoàn thành điều này cho bạn!",
+            "tooltop_Text": "Nhấn vào đây để Sophie hoàn thành toàn bộ danh sách kiểm tra cho bạn. Trợ lý AI-Sophie riêng của bạn sẽ hỗ trợ 24/7 chỉ dành cho BẠN và sẽ tự động chuẩn bị lộ trình này. Hãy nhấn để xem cách hoạt động!"
+        },
         "graduate": "Sau đại học",
         "high_school": "Trung học phổ thông",
         "history": "Lịch sử",
