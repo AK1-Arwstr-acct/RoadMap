@@ -355,7 +355,7 @@ const submit = async () => {
       plan_id: props.selectedPlan,
       name: formDetails.value.userName,
       contact_info: formDetails.value.userEmail,
-      parent_phone:
+      phone_number:
         formDetails.value.phoneNumber.length > 6
           ? `${selectedOption.value?.phone_code}${formDetails.value.phoneNumber}`
           : null,
