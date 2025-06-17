@@ -408,14 +408,20 @@ const handelPreQuestionOfScholarship = (text: string) => {
 const completeSophie = async () => {
   try {
     isChatLoading.value = true;
-    // let response = await api.get(`/api/v1/ai-conversation/sophie`);
-    // if (response.data) {
-    await new Promise((resolve) => setTimeout(resolve, 3000)); // 2.5 seconds delay
+    let response;
+    if (sophieStore.roadmapTaskDetail && !props.isModal) {
+      response = await api.get(
+        `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail.id}/book-oneToOne-meeting`
+      );
+    } else {
+      response = await api.get(`/api/v1/scholarship/book-oneToOne-meeting`);
+    }
+    if (response?.data.data) {
       completeChat.value.push({
         isSender: false,
         text: "Perfect,<br/> Now let Sophie do the work behind the scenes with our counselors and prepare the checklist for you.<br/> Sophie will come back to you once the list is fully prepared. Hang tight!",
       });
-    // }
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.message;
