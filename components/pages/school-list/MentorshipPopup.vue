@@ -7,7 +7,7 @@
     >
       <!-- Close Button -->
       <button
-        @click="emit('close')"
+        @click="close"
         class="absolute top-3 md:top-[18px] right-3 md:right-[18px]"
         aria-label="Close"
       >
@@ -59,7 +59,7 @@
       <!-- Actions -->
       <div class="flex flex-col sm:flex-row gap-3">
         <button
-          @click="emit('close')"
+          @click="close"
           class="flex-1 py-2 rounded-lg border border-[#E5E5E5] bg-[#E5E5E5] text-[#111827] font-semibold order-1 sm:order-none"
         >
           {{ $t("mentorship_popup.button_later") }}
@@ -75,6 +75,9 @@
   </div>
 </template>
 <script setup lang="ts">
+import useAppStore from "~/stores/AppStore";
+
+const appStore = useAppStore();
 const route = useRoute();
 const localePath = useLocalePath();
 
@@ -83,5 +86,12 @@ const emit = defineEmits(["close"]);
 const getMentorship = () => {
   emit("close");
   navigateTo(localePath("/pricing"));
+};
+
+const close = () => {
+  if (appStore.popupTimer !== 60000) {
+    appStore.popupTimer = 60000;
+  }
+  emit("close");
 };
 </script>

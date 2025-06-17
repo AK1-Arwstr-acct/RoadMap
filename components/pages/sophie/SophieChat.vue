@@ -5,7 +5,7 @@
         <!-- chat -->
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full"
+          class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full relative"
         >
           <Transition name="fade">
             <div
@@ -41,29 +41,35 @@
             />
           </Transition>
           <div
-            v-if="!sophieStore.isSophiePublic && completeChat.length == 0"
-            class="mb-2 flex justify-end relative"
+            v-if="
+              !sophieStore.isSophiePublic &&
+              sophieStore.roadmapTaskDetail &&
+              !props.isModal &&
+              !isCompleteSophieCalledBefore
+            "
+            class="sticky bottom-0 flex justify-end"
           >
-            <div class="group">
+            <div class="">
               <button
                 @click="completeSophie"
                 :disabled="isChatLoading"
-                class="text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
+                class="group relative text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
               >
                 {{ $t("sophie_page.complete_sophie_button.buttonText") }}
-              </button>
-              <div
-                class="opacity-0 group-hover:opacity-100 transition-all ease-in-out duration-200 absolute bg-[#f3f1f1] w-[calc(100%-50px)] md:w-[calc(100%-200px)] max-w-[700px] right-10 md:right-20 bottom-14 rounded-xl px-3 py-2 shadow-[0_8px_13px_0_rgba(16,24,40,0.05),16px_20px_50px_13px_rgba(0,0,0,0.25)]"
-              >
+                <!-- tooltip -->
                 <div
-                  class="size-full relative text-[#181D27] text-xs sm:text-sm"
+                  class="hidden group-hover:block transition-all ease-in-out duration-200 absolute bg-[#f3f1f1] w-[calc(100%+50px)] md:w-[calc(100%+200px)] right-10 md:right-20 bottom-14 rounded-xl px-3 py-2 shadow-[0_8px_13px_0_rgba(16,24,40,0.05),16px_20px_50px_13px_rgba(0,0,0,0.25)]"
                 >
-                  {{ $t("sophie_page.complete_sophie_button.tooltop_Text") }}
                   <div
-                    class="size-4 transform rotate-45 bg-[#f3f1f1] absolute right-5 -bottom-3 shadow-black"
-                  />
+                    class="size-full relative text-[#181D27] text-xs sm:text-sm text-start"
+                  >
+                    {{ $t("sophie_page.complete_sophie_button.tooltop_Text") }}
+                    <div
+                      class="size-4 transform rotate-45 bg-[#f3f1f1] absolute right-5 -bottom-3 shadow-black"
+                    />
+                  </div>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
           <div
@@ -352,6 +358,12 @@ const options = {
   html: true,
 };
 
+const isCompleteSophieCalledBefore = computed(() => {
+  return sophieStore.tasksWithCompletedSophie.find(
+    (item) => item === sophieStore.roadmapTaskDetail?.id
+  );
+});
+
 const adjustHeight = () => {
   const el = textarea.value;
   if (el) {
@@ -408,15 +420,27 @@ const handelPreQuestionOfScholarship = (text: string) => {
 const completeSophie = async () => {
   try {
     isChatLoading.value = true;
-    let response;
-    if (sophieStore.roadmapTaskDetail && !props.isModal) {
-      response = await api.get(
-        `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail.id}/book-oneToOne-meeting`
-      );
-    } else {
-      response = await api.get(`/api/v1/scholarship/book-oneToOne-meeting`);
-    }
+    let sophieCompletedList = useCookie("sophieCompletedList");
+    let response = await api.get(
+      `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
+    );
     if (response?.data.data) {
+      if (sophieStore.roadmapTaskDetail) {
+        sophieStore.tasksWithCompletedSophie.push(
+          sophieStore.roadmapTaskDetail.id
+        );
+      }
+      if (!sophieCompletedList.value) {
+        sophieCompletedList = useCookie("sophieCompletedList", {
+          maxAge: 604800,
+          httpOnly: false,
+          secure: true,
+        });
+      }
+      // await nextTick();
+      sophieCompletedList.value = JSON.stringify(
+        sophieStore.tasksWithCompletedSophie
+      );
       completeChat.value.push({
         isSender: false,
         text: "Perfect,<br/> Now let Sophie do the work behind the scenes with our counselors and prepare the checklist for you.<br/> Sophie will come back to you once the list is fully prepared. Hang tight!",
@@ -432,7 +456,6 @@ const completeSophie = async () => {
   } finally {
     isChatLoading.value = false;
   }
-  // api pending
 };
 
 // Function to scroll to the bottom
@@ -609,6 +632,13 @@ onMounted(async () => {
     });
     isChatLoading.value = true;
     inputQuestion.value = `${route.query.query}`;
+  }
+  const sophieCompletedList = useCookie("sophieCompletedList");
+  sophieStore.tasksWithCompletedSophie =
+    (sophieCompletedList.value as any) || [];
+  const token = useCookie("token");
+  if (!token.value) {
+    sophieCompletedList.value = null;
   }
 });
 </script>

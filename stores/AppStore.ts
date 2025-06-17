@@ -11,7 +11,10 @@ const useAppStore = defineStore("appStore", () => {
 	const userCoverPhotoPreview = ref<string>('');
 	const authenticatedUser = ref<boolean>(tokenExists.value ? true : false );
 	const isFeatureChangeFromTasks = ref<boolean>(false);
+	
+	// for Mentorship popup
 	const isMentorshipPopup = ref<boolean>(false);
+	const popupTimer = ref<number>(15000);
 
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data
@@ -57,6 +60,7 @@ const useAppStore = defineStore("appStore", () => {
 		userData,
 		isFeatureChangeFromTasks,
 		isMentorshipPopup,
+		popupTimer,
 		checkAuthenticatedUser,
 		setUserImagePreview,
 		setUserCoverPhotoPreview,

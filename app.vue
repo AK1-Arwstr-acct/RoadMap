@@ -133,7 +133,7 @@ const handleMouseMove = () => {
   if (appStore.isMentorshipPopup === false) {
     timeoutId = setTimeout(() => {
       appStore.isMentorshipPopup = true;
-    }, 10000);
+    }, appStore.popupTimer);
   }
 };
 
