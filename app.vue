@@ -125,8 +125,6 @@ const handleMouseMove = () => {
     timeoutId = null;
   }
   if (excludedRoutes.some(path => route.fullPath.includes(path)) || sophieStore.openSophieModal) {
-    // if (timeoutId) clearTimeout(timeoutId);
-    
     return;
   }
 
@@ -139,7 +137,10 @@ const handleMouseMove = () => {
 
 let clickTimestamps: number[] = [];
 const handleClick = () => {
-  if (excludedRoutes.some(path => route.fullPath.includes(path)) || sophieStore.openSophieModal) {
+  if (
+    excludedRoutes.some((path) => route.fullPath.includes(path)) ||
+    sophieStore.openSophieModal
+  ) {
     if (timeoutId) {
       clearTimeout(timeoutId);
       timeoutId = null;
@@ -158,6 +159,17 @@ const handleClick = () => {
   }
 };
 
+watch(
+  ()=>appStore.isMentorshipPopup,
+  ()=>{
+    if (appStore.isMentorshipPopup === false) {
+      timeoutId = setTimeout(() => {
+      appStore.isMentorshipPopup = true;
+      }, appStore.popupTimer);
+    }
+  }
+)
+
 onMounted(async () => {
   const user = await appStore.getUserData();
   hotjarConfig();
@@ -169,6 +181,9 @@ onMounted(async () => {
   window.addEventListener("mousemove", handleMouseMove);
   window.addEventListener("keydown", handleMouseMove);
   window.addEventListener("click", handleClick);
+  timeoutId = setTimeout(() => {
+    appStore.isMentorshipPopup = true;
+  }, appStore.popupTimer);
 });
 
 onUnmounted(() => {
