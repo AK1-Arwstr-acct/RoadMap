@@ -401,7 +401,7 @@ const submit = async () => {
       dream_schools: formDetails.value.dreamSchool,
       contact_platform: [formDetails.value.selectedAlternativeContact?.value],
       student_concern: formDetails.value.otherQuestions,
-      referral_source: formDetails.value.referralSource,
+      referral_source: formDetails.value.referralSource?.value,
     });
     emits("updateJourney");
     formDetails.value = {
