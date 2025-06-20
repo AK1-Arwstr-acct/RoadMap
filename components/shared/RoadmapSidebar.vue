@@ -39,14 +39,14 @@
     <!-- for open sidebar -->
     <Transition name="sidebar">
       <div class="flex-1 overflow-y-auto no-scrollbar">
-        <Transition name="fade">
+        <!-- <Transition name="fade">
           <button
             @click="clearTaskDetails"
             class="mt-3 text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm w-full"
           >
             {{ t("dashboard.scholarships_that_suit_me") }}
           </button>
-        </Transition>
+        </Transition> -->
         <div class="h-px bg-[#E9EAEB] my-6" />
         <ApplicationsList
           :heading="t('roadmap_page.pre_application')"

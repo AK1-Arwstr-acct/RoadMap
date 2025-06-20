@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   components: [{ path: "~/components", pathPrefix: false }],
   css: ['~/assets/css/main.css', '~/assets/css/global.css'],
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts' , '@zadigetvoltaire/nuxt-gtm'],
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts'],
   i18n: {
     locales: [
       { code: 'en', name: 'English', iso: 'en-US', file: 'english.json' },
@@ -35,7 +35,8 @@ export default defineNuxtConfig({
     public: {
       baseURL: process.env.NUXT_APP_API_BASE_URL,
       appMode: process.env.NUXT_APP_MODE,
-      googleAnalytics: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS,
+      GA_ID: process.env.NUXT_PUBLIC_GOOGLE_ANALYTICS,
+      GTM_ID: process.env.NUXT_PUBLIC_GTM_ID,
       hotjarId: process.env.NUXT_PUBLIC_HOTJAR_ID,
       tiktokPixelId: process.env.NUXT_PUBLIC_PIXEL_ID,
     },

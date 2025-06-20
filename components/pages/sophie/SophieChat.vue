@@ -40,7 +40,7 @@
               "
             />
           </Transition>
-          <div
+          <!-- <div
             v-if="
               !sophieStore.isSophiePublic &&
               sophieStore.roadmapTaskDetail &&
@@ -56,7 +56,7 @@
                 class="group relative text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
               >
                 {{ $t("sophie_page.complete_sophie_button.buttonText") }}
-                <!-- tooltip -->
+                
                 <div
                   class="hidden group-hover:block transition-all ease-in-out duration-200 absolute bg-[#f3f1f1] w-[calc(100%+50px)] md:w-[calc(100%+200px)] right-10 md:right-20 bottom-14 rounded-xl px-3 py-2 shadow-[0_8px_13px_0_rgba(16,24,40,0.05),16px_20px_50px_13px_rgba(0,0,0,0.25)]"
                 >
@@ -71,7 +71,7 @@
                 </div>
               </button>
             </div>
-          </div>
+          </div> -->
           <div
             v-for="(chat, index) in completeChat.filter(
               (item) => item.text !== ''

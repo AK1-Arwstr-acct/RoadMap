@@ -390,7 +390,7 @@ const submit = async () => {
       plan_id: props.selectedPlan,
       name: formDetails.value.userName,
       contact_info: formDetails.value.userEmail,
-      birthYear: formDetails.value.birthYear,
+      birth_year: formDetails.value.birthYear,
       phone_number:
         formDetails.value.phoneNumber.length > 6
           ? `${selectedOption.value?.phone_code}${formDetails.value.phoneNumber}`
@@ -401,7 +401,7 @@ const submit = async () => {
       dream_schools: formDetails.value.dreamSchool,
       contact_platform: [formDetails.value.selectedAlternativeContact?.value],
       student_concern: formDetails.value.otherQuestions,
-      referralSource: formDetails.value.referralSource,
+      referral_source: formDetails.value.referralSource,
     });
     emits("updateJourney");
     formDetails.value = {

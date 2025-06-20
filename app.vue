@@ -178,20 +178,20 @@ onMounted(async () => {
   identifyUserInHotjar(user);
   identifyUserInTiktok(user);
   trackPageView();
-  window.addEventListener("mousemove", handleMouseMove);
-  window.addEventListener("keydown", handleMouseMove);
-  window.addEventListener("click", handleClick);
-  timeoutId = setTimeout(() => {
-    appStore.isMentorshipPopup = true;
-  }, appStore.popupTimer);
+  // window.addEventListener("mousemove", handleMouseMove);
+  // window.addEventListener("keydown", handleMouseMove);
+  // window.addEventListener("click", handleClick);
+  // timeoutId = setTimeout(() => {
+  //   appStore.isMentorshipPopup = true;
+  // }, appStore.popupTimer);
 });
 
-onUnmounted(() => {
-  window.removeEventListener("mousemove", handleMouseMove);
-  window.removeEventListener("keydown", handleMouseMove);
-  window.removeEventListener("click", handleClick);
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-});
+// onUnmounted(() => {
+//   window.removeEventListener("mousemove", handleMouseMove);
+//   window.removeEventListener("keydown", handleMouseMove);
+//   window.removeEventListener("click", handleClick);
+//   if (timeoutId) {
+//     clearTimeout(timeoutId);
+//   }
+// });
 </script>
