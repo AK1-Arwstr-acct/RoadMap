@@ -124,11 +124,11 @@ const features: OptionAttributes[] = [
     label: t("dashboard.navbar.ask_sophie"),
     icon: IconTabSophie,
   },
-  // {
-  //   value: "/scholarship",
-  //   label: t("dashboard.navbar.scholarship"),
-  //   icon: IconScholarship,
-  // },
+  {
+    value: "/scholarship",
+    label: t("dashboard.navbar.scholarship"),
+    icon: IconScholarship,
+  },
 ];
 
 const handleLogo = () => {
