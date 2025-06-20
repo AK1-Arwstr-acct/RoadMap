@@ -147,7 +147,6 @@
         "your_email": "Your Email",
         "phone_number": "Phone number",
         "contact_platform": "Contact platform",
-        "do_you_have_any_other_concerns_or_questions": "Do you have any other concerns or questions?",
         "example": "e.g. “I need help figuring out which major/school fits me”, “I need help with my essay”",
         "carousel": {
             "thanh_description": "VinUniversity Full Scholarship, Admitted to Harvard Business School MBA Program",
@@ -156,6 +155,7 @@
             "thai_description": "Graduated from Amherst College (#2 LAC US), 100% scholarship NUS, NTU, Yale-NUS, Scholarship to NYU"
         },
         "heading": "Sign up for free mentorship",
+        "how_did_you_hear_about_us": "How did you hear about us",
         "details": "Join 500+ students who secured top university admissions with our free AI-powered platform and expert mentorship from alumni of Harvard, Oxford, UPenn, Yonsei, and more",
         "1_1_mentor_support": "1-1 mentor support",
         "500+_students": "500+ students",
@@ -171,6 +171,13 @@
         "e_g_thpt_nhan_chinh": "e.g. THPT Nhân Chính",
         "e_g_university_of_sydney_university_of_melbourne": "e.g. University of Sydney, University of Melbourne",
         "e_g": "e.g.",
+        "referralSource": {
+            "select_an_option": "Select an option",
+            "option1": "TikTok",
+            "option2": "Friends",
+            "option3": "Threads",
+            "option4": "Other"
+        },
         "financial_support": {
             "select_an_amount": "Select an amount",
             "option1": "< 300 million VND",
@@ -276,7 +283,8 @@
         "5_000_000_vnd_refundable_deposit_for_slot_reservation": "5,000,000 VND refundable deposit for slot reservation",
         "unlock_mentor_help": "Unlock Mentor Help",
         "requires_sat_1500_limited_slots": "Requires SAT 1500+, limited slots",
-        "apply_for_advanced": "Apply for Advanced"
+        "apply_for_advanced": "Apply for Advanced",
+        "year_of_birth": "Year of Birth"
     },
     "profile_page": {
         "all_your_achievement": "All your achievement",

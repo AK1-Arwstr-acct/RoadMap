@@ -29,6 +29,20 @@
         data-hj-allow
       />
     </div>
+    <div>
+      <p class="text-[#414651] text-sm font-medium">
+        {{ $t("pricing_page.year_of_birth") }}
+        <span class="text-[#F04438]">*</span>
+      </p>
+      <input
+        name="user_input"
+        type="text"
+        :placeholder="t('pricing_page.year_of_birth')"
+        v-model="formDetails.birthYear"
+        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg"
+        data-hj-allow
+      />
+    </div>
     <div class="flex flex-col xl:flex-row gap-6">
       <!-- phoneNumber -->
       <div class="relative remove-shadow-bg-white w-full">
@@ -182,19 +196,16 @@
         }}
       </p>
     </div>
-    <!-- otther concernes/ questions -->
+    <!-- how do you hear -->
     <div>
-      <p class="text-[#414651] text-sm font-medium">
-        {{ $t("pricing_page.do_you_have_any_other_concerns_or_questions") }}
+      <p class="text-[#414651] text-sm font-medium mb-1.5">
+        {{ $t("pricing_page.how_did_you_hear_about_us") }}
       </p>
-      <textarea
-        name="user_input_cont"
-        type="text"
-        :placeholder="t('pricing_page.example')"
-        v-model="formDetails.otherQuestions"
-        :rows="textareaRows"
-        class="w-full px-4 py-3 text-[#181D27] outline-none mt-1.5 border-[1.5px] border-gray-200 rounded-lg resize-none"
-        data-hj-allow
+      <BaseSelectRadio
+        :options="platformOptions"
+        placeholder="Select an Option"
+        v-model="formDetails.referralSource"
+        direction="upward"
       />
     </div>
     <!-- button -->
@@ -232,24 +243,28 @@ const { t } = useI18n();
 interface FormDetails {
   userName: string;
   userEmail: string;
+  birthYear: string;
   phoneNumber: string;
   schoolName: string;
   financialSupport: OptionAttributes | null;
   dreamSchool: string;
   otherQuestions: string;
   selectedAlternativeContact: OptionAttributes | null;
+  referralSource: OptionAttributes | null;
 }
 
 const isSubmitting = ref<boolean>(false);
 const formDetails = ref<FormDetails>({
   userName: appStore.userData?.name || "",
   userEmail: appStore.userData?.email || "",
+  birthYear: appStore.userData?.dob || "",
   phoneNumber: "",
   schoolName: "",
   financialSupport: null,
   dreamSchool: "",
   otherQuestions: "",
   selectedAlternativeContact: null,
+  referralSource: null,
 });
 const isFocused = ref<boolean>(false);
 const isDropdownOpen = ref<boolean>(false);
@@ -281,6 +296,25 @@ const budgetOptions = [
   {
     value: "> 800 million VND",
     label: t("pricing_page.financial_support.option4"),
+  },
+];
+
+const platformOptions = [
+  {
+    value: "TikTok",
+    label: t("pricing_page.referralSource.option1"),
+  },
+  {
+    value: "Friends",
+    label: t("pricing_page.referralSource.option2"),
+  },
+  {
+    value: "Threads",
+    label: t("pricing_page.referralSource.option3"),
+  },
+  {
+    value: "Other",
+    label: t("pricing_page.referralSource.option4"),
   },
 ];
 
@@ -332,6 +366,7 @@ const isDisable = computed(() => {
   return (
     !formDetails.value.userName ||
     !formDetails.value.userEmail ||
+    !formDetails.value.birthYear ||
     !formDetails.value.schoolName ||
     !formDetails.value.phoneNumber ||
     !formDetails.value.dreamSchool ||
@@ -355,6 +390,7 @@ const submit = async () => {
       plan_id: props.selectedPlan,
       name: formDetails.value.userName,
       contact_info: formDetails.value.userEmail,
+      birthYear: formDetails.value.birthYear,
       phone_number:
         formDetails.value.phoneNumber.length > 6
           ? `${selectedOption.value?.phone_code}${formDetails.value.phoneNumber}`
@@ -365,17 +401,20 @@ const submit = async () => {
       dream_schools: formDetails.value.dreamSchool,
       contact_platform: [formDetails.value.selectedAlternativeContact?.value],
       student_concern: formDetails.value.otherQuestions,
+      referralSource: formDetails.value.referralSource,
     });
     emits("updateJourney");
     formDetails.value = {
       userName: appStore.userData?.name || "",
       userEmail: appStore.userData?.email || "",
+      birthYear: appStore.userData?.dob || "",
       phoneNumber: "+84",
       schoolName: "",
       financialSupport: null,
       dreamSchool: "",
       otherQuestions: "",
       selectedAlternativeContact: null,
+      referralSource: null,
     };
   } catch (error) {
     if (axios.isAxiosError(error)) {

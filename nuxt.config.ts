@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   components: [{ path: "~/components", pathPrefix: false }],
   css: ['~/assets/css/main.css', '~/assets/css/global.css'],
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts'],
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts' , '@zadigetvoltaire/nuxt-gtm'],
   i18n: {
     locales: [
       { code: 'en', name: 'English', iso: 'en-US', file: 'english.json' },
@@ -27,6 +27,9 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+  gtm: {
+    id: process.env.NUXT_PUBLIC_GTM_ID!
   },
   runtimeConfig: {
     public: {

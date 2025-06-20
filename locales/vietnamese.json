@@ -147,7 +147,6 @@
         "your_email": "Email của bạn",
         "phone_number": "Số điện thoại",
         "contact_platform": "Nền tảng liên lạc",
-        "do_you_have_any_other_concerns_or_questions": "Bạn còn có thắc mắc hay mối quan tâm nào khác không?",
         "example": "Ví dụ: “Em đang phân vân không biết ngành hoặc trường nào phù hợp”, “Em chưa biết bắt đầu bài luận từ đâu”",
         "carousel": {
             "thanh_description": "Học bổng toàn phần VinUniversity, Trúng tuyển Harvard Business School",
@@ -156,6 +155,7 @@
             "thai_description": "Tốt nghiệp Amherst College (#2 LAC Mỹ), học bổng toàn phần NUS, NTU, Yale-NUS, trúng tuyển NYU"
         },
         "heading": "Đăng ký mentorship miễn phí",
+        "how_did_you_hear_about_us": "Bạn biết đến chúng tôi bằng cách nào?",
         "details": "Cùng hơn 500 bạn học sinh chinh phục các trường đại học hàng đầu với nền tảng AI miễn phí và đội ngũ mentor đến từ Harvard, Oxford, UPenn, Yonsei.",
         "1_1_mentor_support": "Hỗ trợ mentor 1-1",
         "500+_students": "Hơn 500 học sinh",
@@ -171,6 +171,13 @@
         "e_g_thpt_nhan_chinh": "ví dụ: THPT Nhân Chính",
         "e_g_university_of_sydney_university_of_melbourne": "ví dụ: Đại học Sydney, Đại học Melbourne",
         "e_g": "ví dụ",
+        "referralSource": {
+            "select_an_option": "Chọn một tùy chọn",
+            "option1": "TikTok",
+            "option2": "Bạn bè",
+            "option3": "Threads",
+            "option4": "Khác"
+        },
         "financial_support": {
             "select_an_amount": "Chọn khoản chi phí",
             "option1": "< 300 triệu đồng",
@@ -276,7 +283,8 @@
         "5_000_000_vnd_refundable_deposit_for_slot_reservation": "Đặt cọc 5,000,000 VND, hoàn lại khi đặt chỗ",
         "unlock_mentor_help": "Mở khóa hỗ trợ từ Mentor",
         "requires_sat_1500_limited_slots": "Yêu cầu SAT 1500+, số lượng có hạn",
-        "apply_for_advanced": "Đăng ký Gói Nâng Cao"
+        "apply_for_advanced": "Đăng ký Gói Nâng Cao",
+        "year_of_birth": "Năm sinh"
     },
     "profile_page": {
         "all_your_achievement": "Tất cả thành tích của bạn",
