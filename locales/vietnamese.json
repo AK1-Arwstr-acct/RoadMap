@@ -400,7 +400,7 @@
         "fill_in_your_details_on_the_right_to_generate_your_personalized_school_matches": "Điền thông tin của bạn ở bên phải để tạo danh sách trường phù hợp nhất!",
         "fill_in_your_details_to_explore_and_select_your_top_majors": "Điền thông tin để khám phá và chọn ngành học hàng đầu. Điều này giúp chúng tôi tìm trường phù hợp nhất cho bạn!",
         "financial_aid_and_costs": "Hỗ trợ tài chính & chi phí",
-        "find_your_perfect_school_match": "Hãy tìm trường phù hợp nhất với bạn!",
+        "find_your_perfect_school_match": "Trường của tôi",
         "get": "Nhận",
         "get_personalized_school_recommendations_and_ai_recommendations": "Nhận đề xuất trường học cá nhân hóa và gợi ý từ AI. Đăng ký để tiếp tục!",
         "gpa": "GPA:",
@@ -420,6 +420,10 @@
         "overwhelmed_by_options": "Bạn đang choáng ngợp vì quá nhiều lựa chọn?",
         "price_high_to_low": "Giá (Cao đến Thấp)",
         "price_low_to_high": "Giá (Thấp đến Cao)",
+        "publicInfo": {
+            "fill_information_message": "Điền đầy đủ thông tin của bạn bằng cách sử dụng các bộ lọc bên trên để nhận các đề xuất trường đại học phù hợp với nhu cầu của bạn",
+            "start_search_button": "Bắt đầu tìm kiếm trường đại học của bạn"
+        },
         "ranking": "Xếp hạng:",
         "rank_high_to_low": "Xếp hạng (Cao đến Thấp)",
         "rank_low_to_high": "Xếp hạng (Thấp đến Cao)",

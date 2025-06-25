@@ -1,6 +1,6 @@
 <template>
   <section class="bg-white md:bg-[#FAFAFA] h-full overflow-y-auto no-scrollbar">
-    <div class="max-w-[640px] px-4 mx-auto mt-8 mb-16">
+    <div class="max-w-[640px] px-4 mx-auto lg:mt-8 mb-5 lg:mb-8">
       <div @click="$router.push(`${ $i18n.locale != 'en' ? `/${$i18n.locale}/profile` : `/profile`}`)" class="text-[#717680] cursor-pointer font-medium flex items-center gap-1.5 mb-3">
         <IconChevronDown
           class="transform rotate-90"
@@ -24,7 +24,7 @@
 import useDashboardStore from "~/stores/dashboardStore";
 
 definePageMeta({
-  layout: "nav-layout",
+  layout: "dashboard-layout",
 });
 
 const runtimeConfig = useRuntimeConfig();

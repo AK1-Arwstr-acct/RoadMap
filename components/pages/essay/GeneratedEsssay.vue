@@ -12,7 +12,7 @@
             <button
               @click="submit"
               :disabled="isSubmitting || isSubmitedBefore"
-              class="py-2.5 px-5 text-xs sm:text-sm font-semibold text-white bg-[#1570EF] rounded-lg flex items-center gap-2 disabled:opacity-60"
+              class="py-2.5 px-5 text-xs sm:text-sm text-nowrap font-semibold text-white bg-[#1570EF] rounded-lg flex items-center gap-2 disabled:opacity-60"
             >
               {{ $t("ai_essay_page.save_to_profile") }}
               <IconSpinner

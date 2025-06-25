@@ -1,176 +1,194 @@
 <template>
-  <div
-    class="border-[1.5px] border-gray-200 px-5 py-4 bg-white rounded-2xl transition-all ease-in-out duration-200"
-  >
-    <div
-      class="flex items-center gap-3 cursor-pointer"
-      @click="isDetailOpen = !isDetailOpen"
-    >
-      <div>
-        <IconChevronDown
-          stroke="#717680"
-          :class="{ 'transform -rotate-90': !isDetailOpen }"
-        />
-      </div>
-      <p class="font-semibold text-[#111827] text-sm">
-        {{ $t("schoolList_page.your_details_and_information") }}
-      </p>
-    </div>
-    <div
-      ref="content"
-      :style="{ maxHeight: isDetailOpen ? contentHeight + 'px' : '0px' }"
-      class="remove-shadow-bg-white overflow-hidden transition-all ease-in-out duration-500 min-h-0"
-    >
-      <div class="mt-6">
-        <label class="font-medium text-[#414651] text-sm"
-          >{{ $t("schoolList_page.gpa")
-          }}<span class="text-[#D92D20] font-medium">*</span></label
+  <div class="remove-shadow-bg-white flex gap-2.5 items-center lg:flex-wrap overflow-x-auto overflow-y-hidden lg:overflow-y-visible lg:overflow-x-visible no-scrollbar">
+    <GpaDropdown
+      v-model="gpa"
+      @onChange="gpaChanged"
+      :openDropdown="openDropdown"
+      dropdownName="gpa"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <BaseSelectRadioNew
+      :label="t('schoolList_page.study_program')"
+      :required="true"
+      :options="dashboardStore.programListOptions"
+      v-model="studyPrograms"
+      @onChange="programChanged"
+      :disabled="isGpaChange || !gpa"
+      :openDropdown="openDropdown"
+      dropdownName="program"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <!-- <Transition name="fade">
+      <div class="mt-5" v-if="dashboardStore.locationOptions.length">
+        <div
+          class="flex flex-col gap-3"
+          :class="[
+            { 'pointer-events-none': isLocationchange || isGpaChange },
+            { 'animate-pulse': isLocationLoading },
+          ]"
         >
-        <input
-          name="ielts"
-          type="text"
-          v-model="gpa"
-          :placeholder="t('schoolList_page.enter_gpa')"
-          class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
-          @input="gpaChanged"
-          data-hj-allow
-        />
-      </div>
-      <div class="mt-5">
-        <BaseSelectRadio
-          :label="t('schoolList_page.study_program')"
-          :required="true"
-          :options="dashboardStore.programListOptions"
-          v-model="studyPrograms"
-          @onChange="programChanged"
-        />
-      </div>
-      <Transition name="fade">
-        <div class="mt-5" v-if="dashboardStore.locationOptions.length">
-          <div
-            class="flex flex-col gap-3"
-            :class="[
-              { 'pointer-events-none': isLocationchange || isGpaChange },
-              { 'animate-pulse': isLocationLoading },
-            ]"
-          >
-            <p class="font-medium text-[#414651] text-sm">
-              {{ $t("schoolList_page.study_destination")
-              }}<span class="text-[#D92D20] font-medium">*</span>
-            </p>
-            <div class="flex flex-col gap-4">
-              <div
-                v-for="(option, index) in dashboardStore.locationOptions"
-                :key="index"
+          <p class="font-medium text-[#414651] text-sm">
+            {{ $t("schoolList_page.study_destination")
+            }}<span class="text-[#D92D20] font-medium">*</span>
+          </p>
+          <div class="flex flex-col gap-4">
+            <div
+              v-for="(option, index) in dashboardStore.locationOptions"
+              :key="index"
+            >
+              <label
+                class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
               >
-                <label
-                  class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
+                <input
+                  :id="`destination${index}`"
+                  type="checkbox"
+                  name="countries"
+                  :value="option.value"
+                  :checked="
+                    option.value.some((id: number) =>
+                      selectedLocationOptions.includes(id)
+                    )
+                  "
+                  class="hidden peer"
+                  @change="toggleSelection(option.value)"
+                />
+                <div
+                  class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
+                  :class="[
+                    option?.value.some((id: number) =>
+                      selectedLocationOptions.includes(id)
+                    )
+                      ? 'border-[#1570EF] bg-[#1570EF]'
+                      : 'border-gray-200',
+                  ]"
                 >
-                  <input
-                    :id="`destination${index}`"
-                    type="checkbox"
-                    name="countries"
-                    :value="option.value"
-                    :checked="
-                        option.value.some((id: number) =>
-                          selectedLocationOptions.includes(id)
-                        )
-                      "
-                    class="hidden peer"
-                    @change="toggleSelection(option.value)"
+                  <IconTick
+                    v-if="
+                      option?.value.some((id: number) =>
+                        selectedLocationOptions.includes(id)
+                      )
+                    "
+                    stroke="#ffffff"
                   />
-                  <div
-                    class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
-                    :class="[
-                        option?.value.some((id: number) =>
-                          selectedLocationOptions.includes(id)
-                        )
-                          ? 'border-[#1570EF] bg-[#1570EF]'
-                          : 'border-gray-200',
-                      ]"
-                  >
-                    <IconTick
-                      v-if="
-                          option?.value.some((id: number) =>
-                            selectedLocationOptions.includes(id)
-                          )
-                        "
-                      stroke="#ffffff"
-                    />
-                  </div>
-                  <div
-                    class="flex items-center gap-2 text-[#414651]"
-                    :for="`destination${index}`"
-                  >
-                    <component
-                      :is="
-                        option.label.toLowerCase().includes('kingdom')
-                          ? IconUK
-                          : option.label.toLowerCase().includes('canada')
-                          ? IconCanada
-                          : option.label.toLowerCase().includes('australia')
-                          ? IconAustralia
-                          : option.label.toLowerCase().includes('states')
-                          ? IconUS
-                          : IconEurope
-                      "
-                      class="w-6 h-6"
-                    />
-                    {{ option.label }}
-                  </div>
-                </label>
-              </div>
+                </div>
+                <div
+                  class="flex items-center gap-2 text-[#414651]"
+                  :for="`destination${index}`"
+                >
+                  <component
+                    :is="
+                      option.label.toLowerCase().includes('kingdom')
+                        ? IconUK
+                        : option.label.toLowerCase().includes('canada')
+                        ? IconCanada
+                        : option.label.toLowerCase().includes('australia')
+                        ? IconAustralia
+                        : option.label.toLowerCase().includes('states')
+                        ? IconUS
+                        : IconEurope
+                    "
+                    class="w-6 h-6"
+                  />
+                  {{ option.label }}
+                </div>
+              </label>
             </div>
           </div>
         </div>
-      </Transition>
-      <div class="mt-5">
-        <BaseSelectRadio
-          :label="t('schoolList_page.annual_total_budget')"
-          :options="dashboardStore.budgetList"
-          v-model="annualBudget"
-          direction="upward"
-          :loading="isBudgetLoading"
-          :disabled="!route.path.includes('/demo') && ( !dashboardStore.budgetList.length || isBudgetLoading )"
-          @onChange="getProgramParent"
-        />
       </div>
-      <div class="mt-5">
-        <BaseSelectRadio
-          :label="t('schoolList_page.area_of_study')"
-          :required="true"
-          :options="dashboardStore.coursePreferenceOptions"
-          v-model="areaOfStudy"
-          direction="upward"
-          :disabled="
-            !route.path.includes('/demo') &&
-            (!dashboardStore.coursePreferenceOptions.length ||
-              isAreaOfStudyLoading)
-          "
-          :loading="isAreaOfStudyLoading"
-        />
-      </div>
-      <div class="mt-6 flex gap-3 border-b-8 border-transparent">
-        <button
-          @click="resetUserData"
-          class="p-2.5 border-[1.5px] border-gray-200 w-full rounded-lg font-semibold text-sm text-[#414651]"
-        >
-          {{ $t("schoolList_page.reset_all") }}
-        </button>
-        <button
-          @click="updateUserData"
-          :disabled="!isUpdateBtnDisable"
-          class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
-        >
-          {{ $t("schoolList_page.update") }}
-          <IconSpinner
-            v-if="isSubmitting"
-            class="size-3.5"
-            bgColor="#ffffff00"
-          />
-        </button>
-      </div>
-    </div>
+    </Transition> -->
+    <DestinationsDropdown
+      label="Destination"
+      :required="true"
+      :loading="isLocationLoading"
+      v-model="selectedLocationOptions"
+      @onChange="destinationUpdates"
+      :disabled="isLocationchange || isGpaChange || !dashboardStore.locationOptions.length"
+      :openDropdown="openDropdown"
+      dropdownName="destination"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <!-- <div class="mt-5">
+      <BaseSelectRadio
+        :label="t('schoolList_page.annual_total_budget')"
+        :options="dashboardStore.budgetList"
+        v-model="annualBudget"
+        direction="upward"
+        :loading="isBudgetLoading"
+        :disabled="
+          !route.path.includes('/demo') &&
+          (!dashboardStore.budgetList.length || isBudgetLoading)
+        "
+        @onChange="getProgramParent"
+      />
+    </div> -->
+    <BaseSelectRadioNew
+      :label="t('schoolList_page.annual_total_budget')"
+      :options="dashboardStore.budgetList"
+      v-model="annualBudget"
+      :loading="isBudgetLoading"
+      :disabled="
+          !route.path.includes('/demo') &&
+          (!dashboardStore.budgetList.length || isBudgetLoading)
+        "
+      @onChange="getProgramParent"
+      :openDropdown="openDropdown"
+      dropdownName="budget"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <!-- <div class="mt-5">
+      <BaseSelectRadio
+        :label="t('schoolList_page.area_of_study')"
+        :required="true"
+        :options="dashboardStore.coursePreferenceOptions"
+        v-model="areaOfStudy"
+        direction="upward"
+        :disabled="
+          !route.path.includes('/demo') &&
+          (!dashboardStore.coursePreferenceOptions.length ||
+            isAreaOfStudyLoading)
+        "
+        :loading="isAreaOfStudyLoading"
+      />
+    </div> -->
+    <BaseSelectRadioNew
+      :label="t('schoolList_page.area_of_study')"
+      :required="true"
+      :options="dashboardStore.coursePreferenceOptions"
+      v-model="areaOfStudy"
+      :disabled="
+          !route.path.includes('/demo') &&
+          (!dashboardStore.coursePreferenceOptions.length ||
+            isAreaOfStudyLoading)
+        "
+      :loading="isAreaOfStudyLoading"
+      @onChange="updateUserData"
+      :openDropdown="openDropdown"
+      dropdownName="areaOfStudy"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <PublicMajorsSelection
+      :openDropdown="openDropdown"
+      dropdownName="majors"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <SophieRecommendation />
+    <!-- <div class="mt-6 flex gap-3 border-b-8 border-transparent">
+      <button
+        @click="resetUserData"
+        class="p-2.5 border-[1.5px] border-gray-200 w-full rounded-lg font-semibold text-sm text-[#414651]"
+      >
+        {{ $t("schoolList_page.reset_all") }}
+      </button>
+      <button
+        @click="updateUserData"
+        :disabled="!isUpdateBtnDisable"
+        class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
+      >
+        {{ $t("schoolList_page.update") }}
+        <IconSpinner v-if="isSubmitting" class="size-3.5" bgColor="#ffffff00" />
+      </button>
+    </div> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -182,6 +200,7 @@ import IconCanada from "../../icons/IconCanada.vue";
 import IconAustralia from "../../icons/IconAustralia.vue";
 import IconUS from "../../icons/IconUS.vue";
 import IconEurope from "../../icons/IconEurope.vue";
+import type { Dropdowns } from "~/types/dashboard";
 
 const dashboardStore = useDashboardStore();
 const { api } = useApi();
@@ -204,6 +223,9 @@ const isGpaChange = ref<boolean>(false);
 const isLocationchange = ref<boolean>(false);
 const isLocationLoading = ref<boolean>(false);
 
+// for dropdowns open
+const openDropdown = ref<Dropdowns>("");
+
 const isUpdateBtnDisable = computed(() => {
   return !!(
     gpa.value &&
@@ -214,21 +236,28 @@ const isUpdateBtnDisable = computed(() => {
   );
 });
 
-const toggleSelection = async (ids: number[]) => {
-  const allSelected = ids.every((id) =>
-    selectedLocationOptions.value.includes(id)
-  );
-  if (allSelected) {
-    selectedLocationOptions.value = selectedLocationOptions.value.filter(
-      (id) => !ids.includes(id)
-    );
-  } else {
-    selectedLocationOptions.value = [
-      ...new Set([...selectedLocationOptions.value, ...ids]),
-    ];
-  }
+// const toggleSelection = async (ids: number[]) => {
+//   const allSelected = ids.every((id) =>
+//     selectedLocationOptions.value.includes(id)
+//   );
+//   if (allSelected) {
+//     selectedLocationOptions.value = selectedLocationOptions.value.filter(
+//       (id) => !ids.includes(id)
+//     );
+//   } else {
+//     selectedLocationOptions.value = [
+//       ...new Set([...selectedLocationOptions.value, ...ids]),
+//     ];
+//   }
+//   isLocationchange.value = true;
+//   await getBudgets();
+//   isLocationchange.value = false;
+// };
+
+const destinationUpdates = async () => {
   isLocationchange.value = true;
   await getBudgets();
+  // await getProgramParent();
   isLocationchange.value = false;
 };
 

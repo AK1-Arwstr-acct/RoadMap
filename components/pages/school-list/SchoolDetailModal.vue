@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#FDFDFD] md:rounded-t-xl fixed left-0 md:left-auto bottom-0 md:right-5 w-screen md:w-[60%] 2xl:w-1/2 h-dvh md:h-[calc(100dvh-20px)] z-40 pb-6 overflow-y-auto custom-scrollbar">
+    class="bg-[#FDFDFD] md:rounded-t-xl fixed z-50 left-0 md:left-auto bottom-0 md:right-5 w-screen md:w-[60%] 2xl:w-1/2 h-dvh md:h-[calc(100dvh-20px)] pb-6 overflow-y-auto custom-scrollbar">
     <!-- mobile corss -->
     <div @click="emit('close')" class="cursor-pointer md:hidden absolute z-10 right-2 top-2 bg-white p-1.5 rounded-lg shadow-lg">
       <IconCross fill="#181D27" width="24" height="24" />

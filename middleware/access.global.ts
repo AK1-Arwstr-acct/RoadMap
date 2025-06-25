@@ -8,7 +8,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
         // "/sophie",
         // "/ai-essay",
     ];
-    const notAllowedPathsIfLoggedIn = ["/", "/login", "/signup", "/auth", "/forgot-password"];
+    // const notAllowedPathsIfLoggedIn = ["/", "/login", "/signup", "/auth", "/forgot-password"];
+    const notAllowedPathsIfLoggedIn = ["/login", "/signup", "/auth", "/forgot-password"];
     // Check if the current path is public and user is logged in
     if (notAllowedPathsIfLoggedIn.includes(to.path) && token.value) {
         // If user is logged in, redirect to school list (handle different languages)

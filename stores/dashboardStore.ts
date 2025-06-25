@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type { CountriesOptionAttributes, FilterKey, OptionAttributes, programOptions } from "~/types/home";
 import axios from "axios";
-import type { Program, RecommendationSchoolsPagination } from "~/types/program";
+import type { checklistProgram, checklistResponse, Program, RecommendationSchoolsPagination } from "~/types/program";
 import useAppStore from "./AppStore";
 
 const useDashboardStore = defineStore("dashboardStore", () => {
@@ -20,6 +20,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const coursePreferenceOptions = ref<OptionAttributes[]>([]);
     const budgetList = ref<OptionAttributes[]>([]);
     const totalSchool = ref<number | null>(null);
+    const userSelectedSchoolsList = ref<checklistProgram[]>([]); //for checklist
+    const userSelectedSchoolsListPublic = ref<Program[]>([]); //for checklist
     const schoolsList = ref<Program[]>([]);
     const recommendedSchoolsPagination =
         ref<RecommendationSchoolsPagination | null>(null);
@@ -32,6 +34,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     //  demo data
     const majorsList = ref<programOptions[]>([]);
     const filterSchoolsList = ref<Program[]>([]);
+    // school modal state
+    const isSchoolDetailModal = ref<boolean>(false);
 
     const setSortParam = (data: FilterKey | null) => {
         sortParam.value = data;
@@ -300,9 +304,51 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         publicUserData.value = null;
     }
 
+    const getChecklistProgram = async () => {
+        try {
+            if (!appStore.authenticatedUser) {
+                return;
+            }
+            const response = await api.get("/api/v1/bookmark/program");
+            if (response.data.data) {
+                response.data.data.map((item: checklistResponse) => {
+                    let program = {
+                        ...item.program,
+                        school: {
+                            ...item.school
+                        }
+                    }
+                    let finalProgram = {
+                        id: item.id,
+                        note: item.note,
+                        order_no: item.order_no,
+                        status: item.status,
+                        program: {...program}
+                    }
+                    userSelectedSchoolsList.value.push(finalProgram);
+                })
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const errorMessage = errorList(error);
+                showToast(errorMessage, {
+                    type: "error",
+                });
+            }
+        }
+    };
+
     watch(() => appStore.authenticatedUser, () => {
         isSchoolListPublic.value = !appStore.authenticatedUser;
         removePublicUserData();
+    })
+
+    watch(() => appStore.userData, () => {
+        if (appStore.userData?.educational_records.next_program_titles.length) {
+            enginePosition.value = 'post'
+        } else {
+            enginePosition.value = 'pre'
+        }
     })
 
     return {
@@ -325,6 +371,10 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         selectedPublicMajors,
         majorsList,
         filterSchoolsList,
+        userSelectedSchoolsList,
+        userSelectedSchoolsListPublic,
+        isSchoolDetailModal,
+        getChecklistProgram,
         setSortParam,
         setBudgetList,
         setCoursePreferenceOptions,

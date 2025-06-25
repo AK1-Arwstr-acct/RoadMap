@@ -18,7 +18,8 @@ onBeforeMount(async () => {
   await nextTick();
   appStore.checkAuthenticatedUser();
   appStore.getUserData();
+  appStore.getAuthUserData();
   const parsedOnboarded = onboarded === 1;
-  parsedOnboarded ? navigateTo(localePath("/school-list")) : navigateTo(localePath("/onboarding"));
+  parsedOnboarded ? navigateTo(localePath("/")) : navigateTo(localePath("/onboarding"));
 });
 </script>

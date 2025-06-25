@@ -1,99 +1,104 @@
 <template>
   <div
     @click="schoolDetail"
-    class="border-[1.5px] border-gray-200 rounded-2xl p-6 flex flex-col lg:flex-row gap-6 cursor-pointer"
+    class="border-[1.5px] border-gray-200 rounded-2xl p-4 flex flex-col lg:flex-row gap-4 cursor-pointer"
   >
-    <div
-      class="rounded-xl overflow-hidden w-[84px] h-[84px] lg:min-w-[122px] lg:w-[122px] lg:h-[122px] flex justify-center items-center"
-    >
-      <img
-        :src="program.school.avatar || ''"
-        :alt="program.school.name"
-        class="size-full object-contain"
-      />
-    </div>
-    <div class="flex-1 overflow-x-auto custom-scrollbar">
-      <div class="min-w-fit">
-        <div
-          class="flex flex-col lg:flex-row gap-2 lg:gap-10 justify-between items-start mb-2"
-        >
+    <div class="flex-1 flex gap-4">
+      <div
+        class="rounded-xl overflow-hidden w-[84px] h-[84px] lg:min-w-[122px] lg:w-[122px] lg:h-[122px] flex justify-center items-center"
+      >
+        <img
+          :src="program.school.avatar || ''"
+          :alt="program.school.name"
+          class="size-full object-contain"
+        />
+      </div>
+      <div class="flex-1">
+        <div class="min-w-fit">
+          <div
+            class="flex flex-wrap flex-col lg:flex-row gap-2 lg:gap-x-5 justify-between items-start"
+          >
+            <div
+              class="flex items-center gap-1.5 py-1 pl-1 pr-2.5 bg-[#F5F5F5] rounded-xl mb-2"
+            >
+              <div class="size-4 overflow-hidden">
+                <component
+                  class="size-full"
+                  :is="
+                    program.school.address.country
+                      .toLowerCase()
+                      .includes('kingdom')
+                      ? IconUK
+                      : program.school.address.country
+                          .toLowerCase()
+                          .includes('canada')
+                      ? IconCanada
+                      : program.school.address.country
+                          .toLowerCase()
+                          .includes('australia')
+                      ? IconAustralia
+                      : program.school.address.country
+                          .toLowerCase()
+                          .includes('states')
+                      ? IconUS
+                      : IconEurope
+                  "
+                />
+              </div>
+              <p class="text-[#414651] text-sm font-medium text-nowrap">
+                {{ program.school.address.state }}
+                {{
+                  program.school.address.country_code &&
+                  `, ${program.school.address.country_code}`
+                }}
+              </p>
+            </div>
+            <!-- add to list button -->
+            <div class="hidden lg:block">
+              <AddToLIst :program="program" />
+            </div>
+          </div>
           <p
             class="font-medium text-[#181D27] min-w-40 max-w-96 text-wrap order-1 lg:order-none"
           >
             {{ program.school.name }}
             {{ program.title }}
           </p>
+          <p class="text-[#535862] mb-2.5 text-sm 2xl:text-base">
+            {{ program.program_title }}
+          </p>
           <div
-            class="flex items-center gap-1.5 py-1 pl-1 pr-2.5 bg-[#F5F5F5] rounded-xl"
+            class="hidden lg:flex flex-wrap lg:flex-row lg:items-center gap-x-4 lg:gap-x-6 gap-y-3 font-medium mb-2 text-sm 2xl:text-base text-nowrap"
           >
-            <div class="size-4 overflow-hidden">
-              <component
-                class="size-full"
-                :is="
-                  program.school.address.country
-                    .toLowerCase()
-                    .includes('kingdom')
-                    ? IconUK
-                    : program.school.address.country
-                        .toLowerCase()
-                        .includes('canada')
-                    ? IconCanada
-                    : program.school.address.country
-                        .toLowerCase()
-                        .includes('australia')
-                    ? IconAustralia
-                    : program.school.address.country
-                        .toLowerCase()
-                        .includes('states')
-                    ? IconUS
-                    : IconEurope
-                "
-              />
+            <div>
+              <span class="text-[#717680] mr-2">{{
+                $t("schoolList_page.sat")
+              }}</span>
+              <span class="text-[#1570EF]">{{
+                program.school.admission_stats.average_scores.sat ||
+                `${$t("schoolList_page.coming_soon")}`
+              }}</span>
             </div>
-            <p class="text-[#414651] text-sm font-medium text-nowrap">
-              {{ program.school.address.state }}
-              {{
-                program.school.address.country_code &&
-                `, ${program.school.address.country_code}`
-              }}
-            </p>
+            <div>
+              <span class="text-[#717680] mr-2">{{
+                $t("schoolList_page.ielts")
+              }}</span>
+              <span class="text-[#1570EF]">{{
+                program.school.admission_stats.average_scores.ielts ||
+                `${$t("schoolList_page.coming_soon")}`
+              }}</span>
+            </div>
+            <div>
+              <span class="text-[#717680] mr-2">{{
+                $t("schoolList_page.gpa")
+              }}</span>
+              <span class="text-[#1570EF]">{{
+                program.school.admission_stats.average_scores.gpa ||
+                `${$t("schoolList_page.coming_soon")}`
+              }}</span>
+            </div>
           </div>
-        </div>
-        <p class="text-[#535862] mb-2.5 text-sm 2xl:text-base">
-          {{ program.program_title }}
-        </p>
-        <div
-          class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6 font-medium mb-2 text-sm 2xl:text-base"
-        >
-          <div>
-            <span class="text-[#717680] mr-2">{{
-              $t("schoolList_page.sat")
-            }}</span>
-            <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.sat ||
-              `${$t("schoolList_page.coming_soon")}`
-            }}</span>
-          </div>
-          <div>
-            <span class="text-[#717680] mr-2">{{
-              $t("schoolList_page.ielts")
-            }}</span>
-            <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.ielts ||
-              `${$t("schoolList_page.coming_soon")}`
-            }}</span>
-          </div>
-          <div>
-            <span class="text-[#717680] mr-2">{{
-              $t("schoolList_page.gpa")
-            }}</span>
-            <span class="text-[#1570EF]">{{
-              program.school.admission_stats.average_scores.gpa ||
-              `${$t("schoolList_page.coming_soon")}`
-            }}</span>
-          </div>
-        </div>
-        <div class="flex items-center gap-6 text-sm 2xl:text-base">
+          <!-- <div class="flex items-center gap-6 text-sm 2xl:text-base">
           <div>
             <span class="text-[#717680] mr-2">{{
               $t("schoolList_page.avg_tuition")
@@ -116,8 +121,40 @@
               program.school_ranking || `${$t("schoolList_page.coming_soon")}`
             }}</span>
           </div>
+        </div> -->
         </div>
       </div>
+    </div>
+    <!-- mobile components -->
+    <div
+      class="flex lg:hidden flex-wrap lg:items-center gap-4 lg:gap-6 font-medium mb-2 text-sm 2xl:text-base"
+    >
+      <div class="flex-1 flex justify-center items-center">
+        <span class="text-[#717680] mr-2">{{ $t("schoolList_page.sat") }}</span>
+        <span class="text-[#1570EF] text-nowrap">{{
+          program.school.admission_stats.average_scores.sat ||
+          `${$t("schoolList_page.coming_soon")}`
+        }}</span>
+      </div>
+      <div class="flex-1 flex justify-center items-center">
+        <span class="text-[#717680] mr-2">{{
+          $t("schoolList_page.ielts")
+        }}</span>
+        <span class="text-[#1570EF] text-nowrap">{{
+          program.school.admission_stats.average_scores.ielts ||
+          `${$t("schoolList_page.coming_soon")}`
+        }}</span>
+      </div>
+      <div class="flex-1 flex justify-center items-center">
+        <span class="text-[#717680] mr-2">{{ $t("schoolList_page.gpa") }}</span>
+        <span class="text-[#1570EF] text-nowrap">{{
+          program.school.admission_stats.average_scores.gpa ||
+          `${$t("schoolList_page.coming_soon")}`
+        }}</span>
+      </div>
+    </div>
+    <div class="lg:hidden">
+      <AddToLIst :program="program" />
     </div>
   </div>
   <Transition name="fade">
@@ -184,6 +221,12 @@ const props = defineProps({
 });
 
 const isPublicPaywall = ref<boolean>(false);
+
+const isInCheckList = computed(() => {
+  return dashboardStore.userSelectedSchoolsList.some(
+    (item) => item.id === props.program.id
+  );
+});
 
 const schoolDetail = async () => {
   try {

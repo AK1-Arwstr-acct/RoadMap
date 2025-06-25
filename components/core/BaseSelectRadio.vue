@@ -5,7 +5,7 @@
       }}<span v-if="required" class="text-[#D92D20] font-medium">*</span>
     </p>
     <div
-      @click="isDropdownOpen = !isDropdownOpen"
+      @click.stop="isDropdownOpen = !isDropdownOpen"
       @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
       class="bg-white h-12 border-[1.5px] border-gray-200 rounded-lg py-2 pl-[14px] w-full transition-colors duration-150 ease-in-out flex justify-between items-center cursor-pointer relative"
       :class="{

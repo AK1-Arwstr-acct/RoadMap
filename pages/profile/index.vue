@@ -1,10 +1,9 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
     <section class="bg-white">
-      
       <div class="h-full pt-2">
         <Header />
-        <div class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-16 px-5">
+        <div class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-5 lg:pb-8 px-5">
           <PersonelInfo />
           <div v-show="showAchievements">
             <div class="flex justify-between items-center font-semibold mb-5">
@@ -55,7 +54,7 @@ import useEssayStore from "~/stores/essayStore";
 import type { EssayData } from "~/types/home";
 
 definePageMeta({
-  layout: "nav-layout",
+  layout: "dashboard-layout",
 });
 
 const runtimeConfig = useRuntimeConfig();

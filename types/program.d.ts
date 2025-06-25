@@ -32,6 +32,22 @@ interface School {
     admission_stats: AdmissionStats;
 }
 
+interface checklistProgram {
+    id: number,
+    order_no: null | number,
+    status: null | string,
+    note: string,
+    program: Program
+}
+interface checklistResponse {
+    id: number,
+    order_no: null | number,
+    status: null | string,
+    note: string,
+    program: Program,
+    school: School;
+}
+
 export interface ClassGrade {
     id: number;
     title: string;
@@ -110,4 +126,4 @@ interface SchoolDetail {
     financial_and_aid_cost: FinancialAidCost;
     surroundings: Surroundings;
 }
-export { Program, RecommendationSchoolsPagination, SchoolDetail };
+export { Program, RecommendationSchoolsPagination, SchoolDetail, checklistProgram, checklistResponse  };

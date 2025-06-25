@@ -1,7 +1,7 @@
 <template>
   <div
     @click="sophieStore.openSophieModal = !sophieStore.openSophieModal"
-    class="size-14 absolute bottom-5 right-5 rounded-2xl bg-[#ED77FF] flex justify-center items-center shadow-md cursor-pointer"
+    class="size-14 absolute bottom-20 lg:bottom-5 right-5 rounded-2xl bg-[#ED77FF] flex justify-center items-center shadow-md cursor-pointer"
   >
     <IconTabSophie class="text-white" width="32" height="32" />
   </div>

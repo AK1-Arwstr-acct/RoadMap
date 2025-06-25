@@ -1,13 +1,13 @@
 <template>
   <section class="flex flex-col gap-2 size-full overflow-hidden h-full">
     <div class="flex-1 overflow-y-auto no-scrollbar">
-      <div class="size-full overflow-hidden flex flex-col gap-2 sm:gap-4">
+      <div class="size-full overflow-hidden flex flex-col gap-2 sm:gap-2">
         <!-- chat -->
         <div
           ref="chatContainer"
           class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full relative"
         >
-          <Transition name="fade">
+          <!-- <Transition name="fade">
             <div
               v-if="welcomeMessage && appStore.authenticatedUser && !readOnly"
               class="mb-8 bg-[#D1E9FF66]/40 py-3.5 px-4 rounded-lg flex gap-2 items-start"
@@ -28,7 +28,7 @@
                 <IconCross fill="#717680" />
               </div>
             </div>
-          </Transition>
+          </Transition> -->
           <Transition name="fade">
             <component
               :is="TaskDetailChatModal"
@@ -40,14 +40,14 @@
               "
             />
           </Transition>
-          <!-- <div
+          <div
             v-if="
               !sophieStore.isSophiePublic &&
               sophieStore.roadmapTaskDetail &&
               !props.isModal &&
               !isCompleteSophieCalledBefore
             "
-            class="sticky bottom-0 flex justify-end"
+            class="sticky bottom-0 flex justify-end mb-2"
           >
             <div class="">
               <button
@@ -56,7 +56,7 @@
                 class="group relative text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
               >
                 {{ $t("sophie_page.complete_sophie_button.buttonText") }}
-                
+                <!-- tooltip -->
                 <div
                   class="hidden group-hover:block transition-all ease-in-out duration-200 absolute bg-[#f3f1f1] w-[calc(100%+50px)] md:w-[calc(100%+200px)] right-10 md:right-20 bottom-14 rounded-xl px-3 py-2 shadow-[0_8px_13px_0_rgba(16,24,40,0.05),16px_20px_50px_13px_rgba(0,0,0,0.25)]"
                 >
@@ -71,7 +71,7 @@
                 </div>
               </button>
             </div>
-          </div> -->
+          </div>
           <div
             v-for="(chat, index) in completeChat.filter(
               (item) => item.text !== ''
@@ -97,7 +97,7 @@
             <div
               class="mb-4 md:mb-6 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
               :class="{
-                'bg-[#FAFAFA] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
+                'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
               }"
             >
               <div>
@@ -189,17 +189,19 @@
                 ?.common_questions_prompt"
               :key="idx"
               @click="handelPreQuestion(question.text)"
-              class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit"
+              class="bg-[#F5F5F5] py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
             >
+              <IconStar v-if="question.text.includes('sophie')" />
               {{ question.text }}
             </div>
           </div>
-          <p
+          <!-- <p
             v-if="
               completeChat.length === 0 &&
               !readOnly &&
               !isModal &&
-              sophieStore.roadmapTaskDetail == null
+              sophieStore.roadmapTaskDetail == null &&
+              !isOverviewSidebar
             "
             @click="
               handelPreQuestionOfScholarship(
@@ -209,7 +211,7 @@
             class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit"
           >
             {{ t("dashboard.pre_question") }}
-          </p>
+          </p> -->
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
@@ -304,6 +306,10 @@ const props = defineProps({
     default: false,
   },
   isReadOnly: {
+    type: Boolean,
+    default: false,
+  },
+  isOverviewSidebar: {
     type: Boolean,
     default: false,
   },
@@ -617,9 +623,33 @@ watch(
   }
 );
 
+// for overViews in final api call
+watch(
+  () => dashboardStore.overViews,
+  () => {
+    if (
+      props.isOverviewSidebar &&
+      (dashboardStore.overViews ?? []).length > 0
+    ) {
+      inputQuestion.value = `Please summarize my school list \n  ${(
+        dashboardStore.overViews ?? []
+      ).join("\n")}`;
+      submit();
+    }
+  }
+);
+
 onMounted(async () => {
   uuid.value = uuidv4();
-  if (props.isSummarizeOverview) {
+  if (sophieStore.preQuestionSelected) {
+    inputQuestion.value = sophieStore.preQuestionSelected;
+    submit();
+    sophieStore.preQuestionSelected = "";
+  }
+  if (
+    props.isSummarizeOverview ||
+    (props.isOverviewSidebar && (dashboardStore.overViews ?? []).length > 0)
+  ) {
     inputQuestion.value = `Please summarize my school list \n  ${dashboardStore.overViews?.join(
       "\n"
     )}`;

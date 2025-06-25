@@ -1,9 +1,15 @@
 <template>
   <div class="py-1 h-fit flex flex-col">
-    <div class="md:sticky top-0 pt-4 pb-3 bg-white">
-      <h1 class="text-[#181D27] text-2xl font-semibold">
+    <div class="bg-white">
+      <h1
+        class="text-[#181D27] text-2xl md:text-[32px] font-semibold lg:mb-8"
+      >
         {{ $t("schoolList_page.find_your_perfect_school_match") }}
       </h1>
+      <div class="my-6">
+        <PublicUserDataInfo v-if="dashboardStore.isSchoolListPublic" />
+        <UserDataInfo v-else />
+      </div>
       <div
         v-if="
           !(
@@ -11,34 +17,39 @@
             !dashboardStore.schoolsList.length
           )
         "
-        class="flex flex-col md:flex-row justify-between md:items-center w-full gap-2 md:gap-0"
+        class="flex flex-col md:flex-row justify-between md:items-center w-full gap-2 md:gap-0 mb-6 lg:mb-8"
       >
-        <p v-if="route.path.includes('/demo')" class="text-[#535862]">
-          {{ dashboardStore.schoolsList.length || 0 }}
-          {{ $t("schoolList_page.schools_match_your_profile") }}
-        </p>
-        <p v-else class="text-[#535862]">
-          {{ dashboardStore.totalSchool || 0 }}
-          {{ $t("schoolList_page.schools_match_your_profile") }}
+        <p class="text-[#535862]">
+          <span
+            v-if="dashboardStore.isSchoolsLoading"
+            class="text-[#111827] font-semibold"
+          >
+            Finding your best-fit schools...
+          </span>
+          <span v-else>
+            {{ dashboardStore.schoolsList.length || 0 }}
+            {{ $t("schoolList_page.schools_match_your_profile") }}
+          </span>
         </p>
         <FilterDropdown
           :placeholder="t('schoolList_page.sort_by')"
           :options="sortFilters"
           class="self-end hidden md:block"
+          :class="{
+            'pointer-events-none':
+              dashboardStore.isSchoolsLoading || isTokenLoading,
+          }"
           :modelValue="dashboardStore.selectedFilter"
           @update:modelValue="(value: OptionAttributes | null) => selectFilter(value)"
         />
       </div>
     </div>
-    <div v-if="deviceType === 'mobile' || deviceType === 'tablet'" class="my-6">
-      <component
-        v-if="dashboardStore.isSchoolListPublic || route.path.includes('/demo')"
-        :is="mobile.PublicUserDataInfo"
-      />
-      <component v-else :is="mobile.UserDataInfo" />
-    </div>
+    <RecommendedSchoolSkeleton
+      v-if="dashboardStore.isSchoolsLoading || isTokenLoading"
+    />
+    <!-- <RecommendedSchoolSkeleton v-if="true" /> -->
     <PublicInfo
-      v-if="
+      v-else-if="
         dashboardStore.isSchoolListPublic && !dashboardStore.schoolsList.length
       "
     />
@@ -63,12 +74,10 @@
         </div>
       </div>
       <div v-else class="flex flex-col gap-6">
-        <SchoolCard
-          v-for="(school, idx) in dashboardStore.schoolsList"
-          :key="idx"
-          :program="school"
-          @openDetail="openDetail"
-        />
+        <div v-for="(school, idx) in dashboardStore.schoolsList" :key="idx">
+          <SchoolCard :program="school" @openDetail="openDetail" />
+          <OverwhelmedCard v-if="idx === 4" class="mt-6" />
+        </div>
       </div>
       <div
         v-if="(dashboardStore.recommendedSchoolsPagination?.last_page ?? 0) > 1"
@@ -98,16 +107,16 @@
   </div>
   <Transition name="fade">
     <div
-      v-if="isDetailModal"
-      @click="isDetailModal = false"
-      class="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
+      v-if="dashboardStore.isSchoolDetailModal"
+      @click="dashboardStore.isSchoolDetailModal = false"
+      class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
     />
   </Transition>
   <Transition name="slideModal">
     <component
       :is="SchoolDetailModal"
-      v-if="isDetailModal"
-      :isDetailModal="isDetailModal"
+      v-if="dashboardStore.isSchoolDetailModal"
+      :isDetailModal="dashboardStore.isSchoolDetailModal"
       @close="close"
       :schoolData="schoolProfile"
     />
@@ -128,6 +137,13 @@ const emits = defineEmits<{
   (e: "getRecommendations", pageNo: number): void;
 }>();
 
+defineProps({
+  isTokenLoading: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const dashboardStore = useDashboardStore();
 const { api } = useApi();
 const { showToast } = useToast();
@@ -146,7 +162,6 @@ const mobile = {
 
 const width = ref<number>(0);
 const schoolProfile = ref<SchoolDetail>();
-const isDetailModal = ref<boolean>(false);
 const sortFilters = ref<OptionAttributes[]>([
   {
     value: "1",
@@ -203,7 +218,7 @@ const selectFilter = async (filter: OptionAttributes | null) => {
 const openDetail = async (item: SchoolDetail) => {
   try {
     schoolProfile.value = item;
-    isDetailModal.value = true;
+    dashboardStore.isSchoolDetailModal = true;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -214,7 +229,7 @@ const openDetail = async (item: SchoolDetail) => {
   }
 };
 const close = () => {
-  isDetailModal.value = false;
+  dashboardStore.isSchoolDetailModal = false;
 };
 
 const getRecommendations = async (pageNo: number = 1) => {

@@ -1,75 +1,89 @@
 <template>
-  <div class="h-svh flex justify-center items-center relative">
-    <AuthNavbar :ishome="true" />
-    <div class="size-full flex flex-col lg:flex-row">
-      <div
-        class="lg:w-1/2 h-[calc(50%-48px)] md:h-full overflow-hidden relative isolate mt-[68px] lg:mt-0"
-      >
-        <img
-          src="/images/ai-recommendation.png"
-          alt="ai-recommendation"
-          class="hidden lg:block w-full object-contain max-w-[200px] absolute -right-20 -top-10 -rotate-45"
-          loading="eager"
-        />
-        <img
-          src="/images/home-side-image.png"
-          alt="Get Started"
-          class="hidden lg:block w-[200px] object-contain max-w-[200px] absolute left-0 bottom-0"
-          loading="eager"
-        />
-        <!-- ss -->
-        <img
-          src="/images/home-frame.png"
-          alt="Get Started"
-          class="size-full object-cover relative -z-10 hidden lg:block"
-          loading="eager"
-        />
-        <img
-          src="/images/home-mobile-frame.png"
-          alt="Get Started"
-          class="size-full object-contain object-bottom lg:hidden"
-          loading="eager"
-        />
-      </div>
-      <div class="lg:w-1/2 flex justify-center items-center px-5 md:px-10 py-5 md:py-6">
-        <div class="max-w-[442px]">
-          <h1 class="mb-2 md:mb-4 text-[#181D27] text-xl md:text-4xl font-medium">
-            {{ $t("discover.heading") }}
-          </h1>
-          <ul class="text-[#717680] list-disc list-inside">
-            <li class="-indent-6 pl-6">{{ $t("discover.detail1") }}</li>
-            <li class="-indent-6 pl-6">{{ $t("discover.detail2") }}</li>
-            <li class="-indent-6 pl-6">
-              {{ $t("discover.detail3") }}
-            </li>
-            <li class="-indent-6 pl-6">
-              {{ $t("discover.detail4") }}
-            </li>
-          </ul>
-          <div class="mt-4 md:mt-[42px] flex flex-col gap-4">
-            <NuxtLinkLocale to="/signup" class="block">
-              <button
-                class="cursor-pointer w-full text-white bg-[#1570EF] border-[1.5px] border-gray-200 rounded-lg font-semibold py-2.5 flex gap-2 justify-center items-center"
+  <div
+    class="h-full flex justify-center items-center pt-6 md:pt-8 px-6 overflow-hidden"
+  >
+    <div class="overflow-y-auto no-scrollbar pb-6 size-full">
+      <div class="w-full mx-auto h-fit max-w-[900px]">
+        <div
+          class="flex flex-col items-center justify-center md:mt-24 overflow-hidden"
+        >
+          <img
+            src="/images/sophie-chat.png"
+            alt="sophie"
+            class="h-[180px] w-[190px]"
+            loading="eager"
+            preload
+          />
+          <span
+            class="text-[#414651] text-xl md:text-[32px] font-semibold mt-4"
+          >
+            Hi I’m Sophie, your personal AI assistant 👋
+          </span>
+          <div
+            class="w-full flex md:flex-wrap md:justify-center mt-6 md:mt-20 gap-3 overflow-x-auto no-scrollbar"
+          >
+            <div v-for="(question, idx) in preQuestion" :key="idx">
+              <div
+                @click="handelPreQuestion(question)"
+                class="border-[1.5px] border-[#0000001A] py-1.5 md:py-3 px-3 md:px-[18px] rounded-full text-[#414651] text-sm font-semibold cursor-pointer text-nowrap"
               >
-                {{ $t("discover.get_started") }}
-              </button>
-            </NuxtLinkLocale>
-            <NuxtLinkLocale to="/login" class="block">
-              <button
-                class="cursor-pointer w-full text-[#414651] border-[1.5px] border-gray-200 rounded-lg font-semibold py-2.5 px-2 flex gap-2 justify-center items-center"
-              >
-                {{ $t("discover.i_already_have_an_account") }}
-              </button>
-            </NuxtLinkLocale>
+                {{ question.question }}
+              </div>
+            </div>
           </div>
+          <div class="relative w-full mt-6">
+            <textarea
+              placeholder="Ask me anything!"
+              rows="4"
+              v-model="inputQuestion"
+              @keydown.enter="handleKeydown"
+              class="w-full px-3.5 py-2.5 bg-[#F5F5F5] border-[1.5px] border-[#F5F5F5] rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"
+            />
+            <button
+              :disabled="inputQuestion.trim().length < 2"
+              @click="handelSubmit"
+              class="cursor-pointer size-10 min-w-10 flex justify-center items-center rounded-lg bg-[#D1D5DB] absolute bottom-5 transform right-4 -rotate-90 p-2 disabled:opacity-40"
+            >
+              <IconArrowRight width="20" height="20" fill="#9CA3AF" />
+            </button>
+          </div>
+        </div>
+        <div class="mt-12">
+          <HomeDashboard />
+        </div>
+        <div class="md:hidden mt-4">
+          <GetMentorshipBlock />
         </div>
       </div>
     </div>
   </div>
+  <Transition name="fade">
+    <div
+      v-if="sophieStore.openSophieModal"
+      class="fixed bg-black/50 inset-0 z-50 isolate backdrop-blur py-10 lg:py-[60px] px-4 lg:px-[68px] flex justify-center items-center"
+    >
+      <ChatWithSophie
+        :isModal="true"
+        @openSophieModal="sophieStore.openSophieModal = false"
+      />
+    </div>
+  </Transition>
 </template>
 <script setup lang="ts">
+import useSophieStore from "~/stores/sophieStore";
+import useAppStore from "~/stores/AppStore";
+import useAppTrackerStore from "~/stores/AppTrackerStore";
+
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
+const sophieStore = useSophieStore();
+const localePath = useLocalePath();
+const appStore = useAppStore();
+const appTrackerStore = useAppTrackerStore();
+
+definePageMeta({
+  layout: "dashboard-layout",
+});
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""
@@ -80,22 +94,7 @@ useHead(
     link: [
       {
         rel: "preload",
-        href: "/images/home-mobile-frame.png",
-        as: "image",
-      },
-      {
-        rel: "preload",
-        href: "/images/home-frame.png",
-        as: "image",
-      },
-      {
-        rel: "preload",
-        href: "/images/ai-recommendation.png",
-        as: "image",
-      },
-      {
-        rel: "preload",
-        href: "/images/home-side-image.png",
+        href: "/images/sophie-chat.png",
         as: "image",
       },
       {
@@ -120,4 +119,44 @@ useHead(
     ],
   }))
 );
+
+const inputQuestion = ref<string>("");
+
+const preQuestion: { number: number; question: string }[] = [
+  { number: 1, question: "Finding schools that match me" },
+  { number: 2, question: "How can I choose the right major" },
+  { number: 3, question: "Scholarships I’m eligible for" },
+  { number: 4, question: "Help me to write an essay draft" },
+  { number: 5, question: "What can I do for extracurricular activities?" },
+];
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    handelSubmit();
+  }
+};
+
+const handelSubmit = () => {
+  sophieStore.preQuestionSelected = inputQuestion.value;
+  sophieStore.openSophieModal = true;
+  inputQuestion.value = "";
+};
+
+const handelPreQuestion = (question: { number: number; question: string }) => {
+  if (question.number === 1) {
+    navigateTo(localePath("/school-list"));
+  } else if (question.number === 2) {
+    appTrackerStore.taskFromHomeQuestion = 4;
+    navigateTo(localePath("/sophie"));
+  } else if (question.number === 3) {
+    sophieStore.preQuestionSelected = question.question;
+    sophieStore.openSophieModal = true;
+  } else if (question.number === 4) {
+    navigateTo(localePath("/ai-essay"));
+  } else if (question.number === 5) {
+    appTrackerStore.taskFromHomeQuestion = 8;
+    navigateTo(localePath("/sophie"));
+  }
+};
 </script>

@@ -3,7 +3,7 @@
     <img
       src="/images/countries-application.png"
       alt="countries-application"
-      class="max-w-[200px] md:max-w-[352px]"
+      class="max-w-[200px] md:max-w-[255px]"
       loading="eager"
     />
     <p class="text-[#181D27] text-xl md:text-2xl font-semibold mt-6">

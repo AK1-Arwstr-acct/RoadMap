@@ -38,7 +38,7 @@
             ]"
             @click="
               sophieStore.isSophiePublic && !isModal
-                ? (resourcesSoftPaywall = true)
+                ? (appStore.resourcesSoftPaywall = true)
                 : (chatOrHistory = 'history')
             "
           >
@@ -62,7 +62,7 @@
             :chatHistoryArray="chatHistoryArray"
             :isModal="isModal"
           />
-          <div v-else class="md:p-6 size-full" :class="{ 'p-4': isModal }">
+          <div v-else class="md:p-6 size-full p-4">
             <SophieChat
               :isNewChat="isNewChat"
               :singleChatDetail="specificTaskChat"
@@ -76,8 +76,7 @@
         </div>
         <div
           v-show="chatOrHistory === 'messages'"
-          class="flex-1 md:p-6 w-full h-full"
-          :class="{ 'p-4': isModal }"
+          class="flex-1 md:p-6 w-full h-full p-4"
         >
           <SophieChat
             :isNewChat="isNewChat"
@@ -91,52 +90,12 @@
       </div>
     </div>
   </div>
-  <Transition name="fade">
-    <div
-      v-if="resourcesSoftPaywall"
-      class="fixed z-30 inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center px-5"
-    >
-      <div
-        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px] relative"
-      >
-        <button
-          @click="resourcesSoftPaywall = false"
-          class="absolute top-3 md:top-[18px] right-3 md:right-[18px]"
-          aria-label="Close"
-        >
-          <IconCross fill="#111827" height="24" width="24" />
-        </button>
-        <div class="flex flex-col items-center">
-          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
-          <p class="text-[#181D27] text-lg font-semibold text-center">
-            {{ $t("roadmap_page.paywall_resources.heading") }}
-          </p>
-          <p class="text-[#535862] text-sm text-center mt-2">
-            {{ $t("roadmap_page.paywall_resources.detail") }}
-          </p>
-        </div>
-        <div class="flex gap-3">
-          <NuxtLinkLocale
-            :to="'/pricing'"
-            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold text-center"
-          >
-            {{ $t("schoolList_page.mentorship.free_mentorship") }}
-          </NuxtLinkLocale>
-          <NuxtLinkLocale
-            :to="'/signup'"
-            class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
-          >
-            {{ $t("roadmap_page.paywall_resources.sign_up_for_free") }}
-          </NuxtLinkLocale>
-        </div>
-      </div>
-    </div>
-  </Transition>
 </template>
 <script setup lang="ts">
 import axios from "axios";
 import type { ChatDetail } from "~/types/home";
 import useSophieStore from "~/stores/sophieStore";
+import useAppStore from "~/stores/AppStore";
 
 useHead(
   computed(() => ({
@@ -153,12 +112,11 @@ useHead(
 const { api } = useApi();
 const { showToast } = useToast();
 const sophieStore = useSophieStore();
+const appStore = useAppStore();
 const route = useRoute();
 
 const emit = defineEmits(["openSophieModal"]);
 const deviceType = useDeviceType();
-
-const resourcesSoftPaywall = ref<boolean>(false);
 
 const props = defineProps({
   isModal: {
@@ -275,23 +233,7 @@ watch(
 
 onMounted(async () => {
   if (sophieStore.isSophiePublic) {
-    const publicToken = useCookie("publicToken");
-    if (!publicToken.value) {
-      const response = await api.get("/api/v1/session-based-journey/session");
-      if (response.data) {
-        const tokenValue = JSON.stringify(response.data.data.token);
-        const token = useCookie("publicToken", {
-          maxAge: 10800,
-          httpOnly: false,
-          secure: true,
-        });
-        token.value = tokenValue;
-        await nextTick();
-        if (route.query.query) {
-          isTokenLoaded.value = true;
-        }
-      }
-    }
+    isTokenLoaded.value = (await sophieStore.checkPublicToken()) ?? false;
   }
   getChatHistory();
 });

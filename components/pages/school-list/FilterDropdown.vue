@@ -3,49 +3,19 @@
     <div
       @click="isDropdownOpen = !isDropdownOpen"
       @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
-      class="bg-white h-12 border-[1.5px] border-gray-200 rounded-lg py-2 px-[14px] w-full transition-colors duration-150 ease-in-out flex justify-between gap-4 items-center cursor-pointer relative"
+      class="size-10 min-w-10 rounded-lg border border-[#00000033] flex justify-center items-center cursor-pointer mr-0.5"
       :class="{
         'shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]':
           isDropdownOpen,
         '!border-[#84CAFF]': isDropdownOpen,
       }"
     >
-      <IconFilterLines />
-      <div v-if="!selectedOption?.value" class="flex-1">
-        <p
-          class="text-[#979797] text-left text-nowrap"
-          :class="{ '!text-[#181D27]': isDropdownOpen }"
-        >
-          {{ placeholder }}
-        </p>
-      </div>
-      <div v-else class="flex-1">
-        <p class="text-[#181D27] text-left font-medium">
-          {{ selectedOption.label }}
-        </p>
-      </div>
-      <div
-        v-if="selectedOption && !isDropdownOpen"
-        @click="clratSortFilter"
-        class="cursor-pointer"
-      >
-        <IconCross fill="#1570EF" />
-      </div>
-      <span
-        v-else
-        :class="[
-          isDropdownOpen
-            ? 'transition-transform duration-200 ease-in-out transform rotate-180'
-            : 'transition-transform duration-200 ease-in-out',
-        ]"
-      >
-        <IconChevronDown height="18" width="18" stroke="#A4A7AE" />
-      </span>
+      <IconDubleArrowBlack />
     </div>
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute right-0 top-[52px] w-[150%] md:w-[320px] border-[1.5px] border-gray-200 bg-white z-20 max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
+      class="absolute right-0 top-[46px] w-[150%] md:w-[320px] border-[1.5px] border-gray-200 bg-white z-20 max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
     >
       <div
         v-for="(item, index) in options"

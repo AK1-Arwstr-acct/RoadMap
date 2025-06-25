@@ -94,79 +94,6 @@
       </NuxtLinkLocale>
     </div>
   </div>
-
-  <!-- paywall -->
-
-  <Transition name="fade">
-    <div
-      v-if="progressSoftPaywall"
-      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center"
-    >
-      <div
-        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
-      >
-        <div class="flex flex-col items-center">
-          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
-          <p class="text-[#181D27] text-lg font-semibold text-center">
-            Sign up to track your progress!
-          </p>
-          <p class="text-[#535862] text-sm text-center mt-2">
-            Mark tasks as complete and keep track of your journey toward your
-            dream school. Sign up now to save your progress!
-          </p>
-        </div>
-        <div class="flex gap-3">
-          <button
-            @click="progressSoftPaywall = false"
-            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
-          >
-            Cancel
-          </button>
-          <NuxtLinkLocale
-            :to="'/signup'"
-            class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
-          >
-            Sign up for free
-          </NuxtLinkLocale>
-        </div>
-      </div>
-    </div>
-  </Transition>
-  <Transition name="fade">
-    <div
-      v-if="resourcesSoftPaywall"
-      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center px-5"
-    >
-      <div
-        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px]"
-      >
-        <div class="flex flex-col items-center">
-          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
-          <p class="text-[#181D27] text-lg font-semibold text-center">
-            Sign up to access all resources
-          </p>
-          <p class="text-[#535862] text-sm text-center mt-2">
-            Save your progress, track your journey, and unlock all the resources
-            you need to reach your dream school!
-          </p>
-        </div>
-        <div class="flex gap-3">
-          <button
-            @click="resourcesSoftPaywall = false"
-            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold"
-          >
-            Cancel
-          </button>
-          <NuxtLinkLocale
-            :to="'/signup'"
-            class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
-          >
-            Sign up for free
-          </NuxtLinkLocale>
-        </div>
-      </div>
-    </div>
-  </Transition>
 </template>
 <script setup lang="ts">
 import type { Task } from "~/types/dashboard";
@@ -182,9 +109,6 @@ const props = defineProps({
     default: () => {},
   },
 });
-
-const progressSoftPaywall = ref<boolean>(false);
-const resourcesSoftPaywall = ref<boolean>(false);
 
 const options = {
   html: true,

@@ -1,5 +1,5 @@
 <template>
-  <div
+  <!-- <div
     class="py-5 px-4 bg-[#EEF4FF] border-[1.5px] border-[#E0EAFF] rounded-lg space-y-5"
   >
     <div class="w-full h-2 rounded-full bg-[#D1E9FF] hidden md:block">
@@ -79,7 +79,16 @@
         <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
       </div>
     </button>
-  </div>
+  </div> -->
+  <button
+    :disabled="!isActive || dashboardStore.isSchoolsLoading"
+    @click="finalEngine"
+    class="border text-[#9333EA] border-[#9333EA] disabled:opacity-50 text-sm font-semibold py-1.5 px-3 flex justify-center items-center gap-1.5 text-nowrap"
+    :class="[isOverwhelmed ? 'rounded-lg w-full' : 'rounded-full']"
+  >
+    <IconSearchAi />
+    AI Match Me
+  </button>
   <Transition name="fade">
     <div
       v-if="isPublicPaywall"
@@ -124,14 +133,16 @@
 </template>
 <script setup lang="ts">
 import useDashboardStore from "~/stores/dashboardStore";
+import useAppStore from "~/stores/AppStore";
 
 defineProps({
-  isActive: {
+  isOverwhelmed: {
     type: Boolean,
     default: false,
   },
 });
 
+const appStore = useAppStore();
 const localePath = useLocalePath();
 const dashboardStore = useDashboardStore();
 
@@ -148,4 +159,37 @@ const finalEngine = async () => {
   isSubmitting.value = false;
   dashboardStore.isFinalEnginCall = true;
 };
+
+const isActive = ref<boolean>(false);
+
+const checkPrograms = () => {
+  if (appStore.userData) {
+    if (appStore.userData.educational_records.next_program_titles.length > 0) {
+      isActive.value = true;
+    } else {
+      isActive.value = false;
+    }
+  }
+};
+
+watch(
+  () => appStore.userData,
+  async () => {
+    checkPrograms();
+  }
+);
+watch(
+  () => dashboardStore.selectedPublicMajors,
+  async (newValue) => {
+    if (newValue.length > 0) {
+      isActive.value = true;
+    } else {
+      isActive.value = false;
+    }
+  }
+);
+
+onMounted(() => {
+  checkPrograms();
+});
 </script>

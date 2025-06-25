@@ -1,6 +1,6 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
-    <div class="max-w-[752px] px-4 mx-auto pt-8 pb-16">
+    <div class="max-w-[752px] px-4 mx-auto lg:pt-8 pb-5 lg:pb-8">
       <div @click="$router.push(`${ $i18n.locale != 'en' ? `/${$i18n.locale}/profile` : `/profile`}`)" class="text-[#717680] cursor-pointer font-medium flex items-center gap-1.5 mb-3">
         <IconChevronDown
           class="transform rotate-90"
@@ -23,7 +23,7 @@
 </template>
 <script setup lang="ts">
 definePageMeta({
-  layout: "nav-layout",
+  layout: "dashboard-layout",
 });
 
 const runtimeConfig = useRuntimeConfig();

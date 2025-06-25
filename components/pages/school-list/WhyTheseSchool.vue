@@ -1,12 +1,15 @@
 <template>
-  <div class="bg-[#EEF4FF] border-[1.5px] border-[#E0EAFF] rounded-lg py-5">
-    <div class="flex items-center justify-between gap-3 px-4">
-      <p class="text-[#181D27] text-sm font-semibold">{{ $t('schoolList_page.why_these_schools') }}</p>
+  <div class="border border-[#0000001A] rounded-2xl">
+    <div class="flex items-center justify-between gap-3 px-6 py-4 border-b border-[#0000001A]">
+      <div class="font-semibold">
+        <p class="text-[#2563EB] text-xs">AI SMART fILTER</p>
+        <p class="text-[#181D27] text-sm">{{ $t('schoolList_page.why_these_schools') }}</p>
+      </div>
       <div @click="openSophieModal = true" class="cursor-pointer">
         <IconDoubleArrows />
       </div>
     </div>
-    <div class="mt-4 relative suggestion-container">
+    <div class="mt-2 relative suggestion-container">
       <div>
         <vue-markdown ref="typingText" :source="typedText" :options="options" />
       </div>

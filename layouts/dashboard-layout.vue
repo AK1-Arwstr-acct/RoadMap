@@ -1,21 +1,24 @@
 <template>
   <div class="h-dvh flex relative">
-    <component v-if="deviceType === 'desktop' || deviceType === 'tablet'" :is="desktop.DashboardSidebar" />
+    <component :is="desktop.DashboardSidebar" />
     <div class="flex-1 overflow-hidden flex flex-col">
-      <DashboardNav />
-      <div class="flex-1 w-screen md:w-full overflow-hidden">
+      <div class="lg:hidden">
+        <DashboardNav />
+      </div>
+      <div class="flex-1 w-screen lg:w-full overflow-hidden pb-[70px] lg:pb-0">
         <slot />
       </div>
     </div>
     <!-- Sophie Modal -->
-    <SophieModal />
+    <!-- <SophieModal /> -->
   </div>
 </template>
 <script setup lang="ts">
-
 const deviceType = useDeviceType();
 
 const desktop = {
-  DashboardSidebar: defineAsyncComponent(() => import('~/components/shared/DashboardSidebar.vue')),
-}
+  DashboardSidebar: defineAsyncComponent(
+    () => import("~/components/shared/DashboardSidebar.vue")
+  ),
+};
 </script>

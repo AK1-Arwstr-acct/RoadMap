@@ -1,194 +1,244 @@
 <template>
   <div
-    class="border-[1.5px] border-gray-200 px-5 py-4 bg-white rounded-2xl transition-all ease-in-out duration-200"
+    class="remove-shadow-bg-white flex gap-2.5 items-center lg:flex-wrap overflow-x-auto overflow-y-hidden lg:overflow-y-visible lg:overflow-x-visible no-scrollbar"
   >
-    <div
-      class="flex items-center gap-3 cursor-pointer"
-      @click="isDetailOpen = !isDetailOpen"
-    >
+    <GpaDropdown
+      v-model="gpa"
+      @onChange="gpaChanged"
+      :openDropdown="openDropdown"
+      dropdownName="gpa"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <BaseSelectRadioNew
+      :label="t('schoolList_page.study_program')"
+      :required="true"
+      :options="dashboardStore.programListOptions"
+      v-model="studyPrograms"
+      @onChange="programChanged"
+      :disabled="isGpaChange"
+      :openDropdown="openDropdown"
+      dropdownName="program"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <DestinationsDropdown
+      label="Destination"
+      :required="true"
+      :loading="isLocationLoading"
+      v-model="selectedLocationOptions"
+      @onChange="destinationUpdates"
+      :disabled="isLocationchange || isGpaChange"
+      :openDropdown="openDropdown"
+      dropdownName="destination"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <BaseSelectRadioNew
+      :label="t('schoolList_page.annual_total_budget')"
+      :options="dashboardStore.budgetList"
+      v-model="annualBudget"
+      :loading="isBudgetLoading"
+      :disabled="
+        !dashboardStore.locationOptions.length ||
+        isLocationchange ||
+        isLocationLoading ||
+        isGpaChange
+      "
+      @onChange="getProgramParent"
+      :openDropdown="openDropdown"
+      dropdownName="budget"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <BaseSelectRadioNew
+      :label="t('schoolList_page.area_of_study')"
+      :required="true"
+      :options="dashboardStore.coursePreferenceOptions"
+      v-model="areaOfStudy"
+      :disabled="
+        !dashboardStore.locationOptions.length ||
+        isLocationchange ||
+        isLocationLoading ||
+        isGpaChange
+      "
+      :loading="isAreaOfStudyLoading"
+      @onChange="updateUserData"
+      :openDropdown="openDropdown"
+      dropdownName="areaOfStudy"
+      @open="(value: string) => (openDropdown = value as Dropdowns)"
+    />
+    <div class="relative">
       <div>
-        <IconChevronDown
-          stroke="#717680"
-          :class="{ 'transform -rotate-90': !isDetailOpen }"
+        <MajorSelection
+          :openDropdown="openDropdown"
+          dropdownName="majors"
+          @open="(value: string) => (openDropdown = value as Dropdowns)"
         />
       </div>
-      <p class="font-semibold text-[#111827] text-sm">
-        {{ $t("schoolList_page.your_details_and_information") }}
-      </p>
-    </div>
-    <div
-      ref="content"
-      :style="{ maxHeight: isDetailOpen ? contentHeight + 'px' : '0px' }"
-      class="remove-shadow-bg-white overflow-hidden transition-all ease-in-out duration-500 min-h-0"
-    >
-      <div class="mt-6">
-        <label class="font-medium text-[#414651] text-sm"
-          >{{ $t("schoolList_page.gpa")
-          }}<span class="text-[#D92D20] font-medium">*</span></label
-        >
-        <input
-          name="ielts"
-          type="text"
-          v-model="gpa"
-          :placeholder="t('schoolList_page.enter_gpa')"
-          class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
-          @input="gpaChanged"
-          data-hj-allow
-        />
-      </div>
-      <div class="mt-5">
-        <BaseSelectRadio
-          :label="t('schoolList_page.study_program')"
-          :required="true"
-          :options="dashboardStore.programListOptions"
-          v-model="studyPrograms"
-          @onChange="programChanged"
-          :disabled="isGpaChange"
-        />
-      </div>
-      <div class="mt-5">
+      <div v-if="appStore.firstTimeUser" ref="focusDiv" class="absolute inset-0 z-30 bg-white rounded-md flex justify-center items-center">
         <div
-          class="flex flex-col gap-3 relative isolate"
-          :class="[{ 'animate-pulse': isLocationLoading }]"
+          class="border-[1.5px] border-[#0000001A] rounded-full py-1 px-2 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center"
         >
-          <!-- temporary layer for displaying wait curser  -->
-          <div
-            v-if="isLocationchange || isGpaChange"
-            class="absolute inset-0 cursor-wait z-10"
-          />
-          <p class="font-medium text-[#414651] text-sm">
-            {{ $t("schoolList_page.study_destination")
-            }}<span class="text-[#D92D20] font-medium">*</span>
-          </p>
-          <div class="flex flex-col gap-4">
+          <div class="flex-1">
+            <p class="text-[#111827] text-left text-sm">Majors</p>
+          </div>
+          <span class="transition-transform duration-200 ease-in-out">
+            <IconChevronDown height="18" width="18" stroke="#4B5563" />
+          </span>
+        </div>
+      </div>
+      <Transition name="fade">
+        <div
+          v-if="appStore.firstTimeUser"
+          :style="{
+            position: 'fixed',
+            top: modalPosition.top + 'px',
+            left: modalPosition.left + 'px',
+            transform: 'translate(-50%, 0)',
+            zIndex: 9999,
+          }"
+          class="bg-white p-4 rounded-lg w-[270px] shadow-lg"
+        >
+          <div class="flex flex-col gap-2.5 items-end relative">
             <div
-              v-for="(option, index) in dashboardStore.locationOptions"
-              :key="index"
-            >
-              <label
-                class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
-                :class="{
-                  'pointer-events-none': isLocationchange || isGpaChange,
-                }"
-              >
-                <input
-                  :id="`destination${index}`"
-                  type="checkbox"
-                  name="countries"
-                  :value="option.value"
-                  :checked="
-                    option.value.some((id: number) =>
-                      selectedLocationOptions.includes(id)
-                    )
-                  "
-                  class="hidden peer"
-                  @change="toggleSelection(option.value)"
-                />
-                <div
-                  class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
-                  :class="[
-                    option?.value.some((id: number) =>
-                      selectedLocationOptions.includes(id)
-                    )
-                      ? 'border-[#1570EF] bg-[#1570EF]'
-                      : 'border-gray-200',
-                  ]"
-                >
-                  <IconTick
-                    v-if="
-                      option?.value.some((id: number) =>
-                        selectedLocationOptions.includes(id)
-                      )
-                    "
-                    stroke="#ffffff"
-                  />
-                </div>
-                <div
-                  class="flex items-center gap-2 text-[#414651]"
-                  :for="`destination${index}`"
-                >
-                  <component
-                    :is="
-                      option.label.toLowerCase().includes('kingdom')
-                        ? IconUK
-                        : option.label.toLowerCase().includes('canada')
-                        ? IconCanada
-                        : option.label.toLowerCase().includes('australia')
-                        ? IconAustralia
-                        : option.label.toLowerCase().includes('states')
-                        ? IconUS
-                        : IconEurope
-                    "
-                    class="w-6 h-6"
-                  />
-                  {{ option.label }}
-                </div>
-              </label>
+              class="absolute -top-6 left-1/2 -translate-x-1/2 size-4 transform rotate-45 bg-white"
+            />
+            <div>
+              <p class="text-[#111827] font-semibold mb-0.5">
+                First, select up to 3 majors
+              </p>
+              <p class="text-[#4B5563] text-sm">
+                The more you select, the better we can match you with the right
+                colleges
+              </p>
             </div>
+            <button
+              @click="appStore.firstTimeUser = false"
+              class="rounded-lg px-6 py-1.5 bg-[#2563EB] text-white font-semibold text-sm"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      </Transition>
+    </div>
+    <SophieRecommendation />
+    <!-- <div class="mt-6">
+      <label class="font-medium text-[#414651] text-sm"
+        >{{ $t("schoolList_page.gpa")
+        }}<span class="text-[#D92D20] font-medium">*</span></label
+      >
+      <input
+        name="ielts"
+        type="text"
+        v-model="gpa"
+        :placeholder="t('schoolList_page.enter_gpa')"
+        class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
+        @input="gpaChanged"
+        data-hj-allow
+      />
+    </div> -->
+    <!-- <div>
+      <div
+        class="flex flex-col gap-3 relative isolate"
+      >
+         temporary layer for displaying wait curser  
+        <div
+          v-if="isLocationchange || isGpaChange"
+          class="absolute inset-0 cursor-wait z-10"
+        />
+        <div class="flex flex-col gap-4">
+          <div
+            v-for="(option, index) in dashboardStore.locationOptions"
+            :key="index"
+          >
+            <label
+              class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
+              :class="{
+                'pointer-events-none': isLocationchange || isGpaChange,
+              }"
+            >
+              <input
+                :id="`destination${index}`"
+                type="checkbox"
+                name="countries"
+                :value="option.value"
+                :checked="
+                option.value.some((id: number) =>
+                  selectedLocationOptions.includes(id)
+                )
+              "
+                class="hidden peer"
+                @change="toggleSelection(option.value)"
+              />
+              <div
+                class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
+                :class="[
+                option?.value.some((id: number) =>
+                  selectedLocationOptions.includes(id)
+                )
+                  ? 'border-[#1570EF] bg-[#1570EF]'
+                  : 'border-gray-200',
+              ]"
+              >
+                <IconTick
+                  v-if="
+                  option?.value.some((id: number) =>
+                    selectedLocationOptions.includes(id)
+                  )
+                "
+                  stroke="#ffffff"
+                />
+              </div>
+              <div
+                class="flex items-center gap-2 text-[#414651]"
+                :for="`destination${index}`"
+              >
+                <component
+                  :is="
+                    option.label.toLowerCase().includes('kingdom')
+                      ? IconUK
+                      : option.label.toLowerCase().includes('canada')
+                      ? IconCanada
+                      : option.label.toLowerCase().includes('australia')
+                      ? IconAustralia
+                      : option.label.toLowerCase().includes('states')
+                      ? IconUS
+                      : IconEurope
+                  "
+                  class="w-6 h-6"
+                />
+                {{ option.label }}
+              </div>
+            </label>
           </div>
         </div>
       </div>
-      <div class="mt-5">
-        <BaseSelectRadio
-          :label="t('schoolList_page.annual_total_budget')"
-          :options="dashboardStore.budgetList"
-          v-model="annualBudget"
-          direction="upward"
-          :loading="isBudgetLoading"
-          :disabled="
-            !dashboardStore.locationOptions.length ||
-            isLocationchange ||
-            isLocationLoading ||
-            isGpaChange
-          "
-          @onChange="getProgramParent"
-        />
-      </div>
-      <div class="mt-5">
-        <BaseSelectRadio
-          :label="t('schoolList_page.area_of_study')"
-          :required="true"
-          :options="dashboardStore.coursePreferenceOptions"
-          v-model="areaOfStudy"
-          direction="upward"
-          :disabled="
-            !dashboardStore.locationOptions.length ||
-            isLocationchange ||
-            isLocationLoading ||
-            isGpaChange
-          "
-          :loading="isAreaOfStudyLoading"
-        />
-      </div>
-      <div class="mt-6 flex gap-3 border-b-8 border-transparent">
-        <button
-          @click="resetUserData"
-          class="p-2.5 border-[1.5px] border-gray-200 w-full rounded-lg font-semibold text-sm text-[#414651]"
-        >
-          {{ $t("schoolList_page.reset_all") }}
-        </button>
-        <button
-          @click="updateUserData"
-          :disabled="
-            !isUpdateBtnDisable ||
-            disabledBtn ||
-            isBudgetLoading ||
-            isAreaOfStudyLoading ||
-            isGpaChange ||
-            isSubmitting
-          "
-          class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
-        >
-          {{ $t("schoolList_page.update") }}
-          <IconSpinner
-            v-if="isSubmitting"
-            class="size-3.5"
-            bgColor="#ffffff00"
-          />
-        </button>
-      </div>
-    </div>
+    </div> -->
+    <!-- <div class="mt-6 flex gap-3 border-b-8 border-transparent">
+      <button
+        @click="resetUserData"
+        class="p-2.5 border-[1.5px] border-gray-200 w-full rounded-lg font-semibold text-sm text-[#414651]"
+      >
+        {{ $t("schoolList_page.reset_all") }}
+      </button>
+      <button
+        @click="updateUserData"
+        :disabled="
+          !isUpdateBtnDisable ||
+          disabledBtn ||
+          isBudgetLoading ||
+          isAreaOfStudyLoading ||
+          isGpaChange ||
+          isSubmitting
+        "
+        class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
+      >
+        {{ $t("schoolList_page.update") }}
+        <IconSpinner v-if="isSubmitting" class="size-3.5" bgColor="#ffffff00" />
+      </button>
+    </div> -->
   </div>
+  <Transition name="fade">
+    <div v-if="appStore.firstTimeUser" class="fixed z-20 inset-0 bg-black/60" />
+  </Transition>
 </template>
 <script setup lang="ts">
 import useDashboardStore from "~/stores/dashboardStore";
@@ -196,11 +246,7 @@ import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { OptionAttributes, UserData } from "~/types/home";
 import useAppStore from "~/stores/AppStore";
 import axios from "axios";
-import IconUK from "../../icons/IconUK.vue";
-import IconCanada from "../../icons/IconCanada.vue";
-import IconAustralia from "../../icons/IconAustralia.vue";
-import IconUS from "../../icons/IconUS.vue";
-import IconEurope from "../../icons/IconEurope.vue";
+import type { Dropdowns } from "~/types/dashboard";
 
 const dashboardStore = useDashboardStore();
 const appTrackerStore = useAppTrackerStore();
@@ -223,6 +269,14 @@ const isAreaOfStudyLoading = ref<boolean>(false);
 const isGpaChange = ref<boolean>(false);
 const isLocationchange = ref<boolean>(false);
 const isLocationLoading = ref<boolean>(false);
+
+// for dropdowns open
+const openDropdown = ref<Dropdowns>("");
+
+// first time user modal
+const focusDiv = ref<HTMLElement | null>(null);
+const modalPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 });
+let resizeObserver: ResizeObserver | null = null;
 
 const isUpdateBtnDisable = computed(() => {
   return !!(
@@ -254,19 +308,18 @@ const disabledBtn = computed(() => {
   );
 });
 
-const toggleSelection = async (ids: number[]) => {
-  const allSelected = ids.every((id) =>
-    selectedLocationOptions.value.includes(id)
-  );
-  if (allSelected) {
-    selectedLocationOptions.value = selectedLocationOptions.value.filter(
-      (id) => !ids.includes(id)
-    );
-  } else {
-    selectedLocationOptions.value = [
-      ...new Set([...selectedLocationOptions.value, ...ids]),
-    ];
+const updateModalPosition = () => {
+  if (focusDiv.value) {
+    const rect = focusDiv.value.getBoundingClientRect();
+
+    modalPosition.value = {
+      top: rect.bottom + 20, // 20px below
+      left: rect.left + rect.width / 2, // center horizontally
+    };
   }
+};
+
+const destinationUpdates = async () => {
   isLocationchange.value = true;
   await getBudgets();
   await getProgramParent();
@@ -312,11 +365,18 @@ const updateUserData = async () => {
     showToast("Profile updated successfully", {
       type: "success",
     });
-    const countries = appStore.userData?.educational_records.want_to_study_countries.map((item) => item.id)
-    if (countries?.length !== selectedLocationOptions.value.length || 
-      !(countries?.every((item) => selectedLocationOptions.value.includes(item))) ||
-      !(selectedLocationOptions.value.every((item) => countries?.includes(item)))) {
-        await appTrackerStore.getRoadmapData();
+    const countries =
+      appStore.userData?.educational_records.want_to_study_countries.map(
+        (item) => item.id
+      );
+    if (
+      countries?.length !== selectedLocationOptions.value.length ||
+      !countries?.every((item) =>
+        selectedLocationOptions.value.includes(item)
+      ) ||
+      !selectedLocationOptions.value.every((item) => countries?.includes(item))
+    ) {
+      await appTrackerStore.getRoadmapData();
     }
     await appStore.getUserData();
   } catch (error) {
@@ -499,6 +559,17 @@ const gpaChanged = async () => {
 };
 
 watch(
+  () => appStore.firstTimeUser,
+  (val) => {
+    if (val) {
+      nextTick(() => {
+        updateModalPosition();
+      });
+    }
+  }
+);
+
+watch(
   () => [appStore.userData],
   () => {
     if (appStore.userData) {
@@ -566,5 +637,23 @@ onMounted(() => {
     areaOfStudy.value = undefined;
     annualBudget.value = undefined;
   }
+  if (focusDiv.value) {
+    resizeObserver = new ResizeObserver(() => {
+      updateModalPosition();
+    });
+    resizeObserver.observe(focusDiv.value);
+  }
+  if (appStore.firstTimeUser) {
+    updateModalPosition();
+  }
+  window.addEventListener("resize", updateModalPosition);
+});
+
+onUnmounted(() => {
+  if (resizeObserver && focusDiv.value) {
+    resizeObserver.unobserve(focusDiv.value);
+    resizeObserver.disconnect();
+  }
+  window.removeEventListener("resize", updateModalPosition);
 });
 </script>

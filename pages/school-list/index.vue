@@ -1,68 +1,50 @@
 <template>
-  <div
-    ref="schoolsListWrapper"
-    class="size-full overflow-y-auto custom-scrollbar"
-  >
-    <div class="h-full w-full max-w-[1150px] mx-auto">
-      <div class="md:px-6 w-full h-fit">
-        <!-- need_more_advice -->
-        <div
-          class="p-4 flex gap-2 sm:gap-4 items-start rounded-[10px] bg-[#EFF8FF] md:hidden"
-        >
-          <div class="flex-1">
-            <p class="sm:text-lg font-semibold text-[#181D27]">
-              {{ $t("schoolList_page.mentorship.need_more_advice") }}
-            </p>
-            <p class="text-[#535862] text-sm sm:text-base pt-0.5">
-              {{ $t("schoolList_page.mentorship.mentorship_description") }}
-            </p>
-            <NuxtLinkLocale to="/Pricing">
-              <button
-                class="py-2 px-3 rounded-lg bg-[#1570EF] text-white mt-4 font-semibold text-sm sm:text-base"
-              >
-                {{ $t("schoolList_page.mentorship.free_mentorship") }}
-              </button>
-            </NuxtLinkLocale>
-          </div>
-          <div class="">
-            <img
-              src="/images/ai-recommendation.png"
-              alt="ai-recommendation"
-              class="w-full object-contain max-w-[90px] sm:max-w-[106px]"
-              loading="eager"
-            />
-          </div>
-        </div>
-        <div
-          class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14"
-          :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"
-        >
-          <div class="flex-1 overflow-hidden">
-            <RecommendedSchoolLoading
-              v-if="dashboardStore.isSchoolsLoading || isTokenLoading"
-            />
-            <RecommendedSchools
-              v-else
-              @getRecommendations="getRecommendations"
-            />
-          </div>
+  <div class="size-full flex flex-col lg:flex-row">
+    <div
+      ref="schoolsListWrapper"
+      class="flex-1 h-full overflow-y-auto custom-scrollbar pb-5 lg:pb-0"
+    >
+      <div class="h-fitt w-full max-w-[1150px] mx-auto">
+        <div class="px-4 mt-4 lg:mt-10 md:px-6 w-full h-fit">
           <div
-            class="w-full"
-            :class="[
-              appTrackerStore.isSidebarOpen ? 'lg:w-[312px]' : 'md:w-[312px]',
-            ]"
+            class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14"
+            :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"
           >
-            <UserDetails :isTokenLoading="isTokenLoading" />
+            <div class="flex-1 overflow-hidden">
+              <RecommendedSchools
+                :isTokenLoading="isTokenLoading"
+                @getRecommendations="getRecommendations"
+              />
+            </div>
+            <div
+              v-if="
+                (dashboardStore.overViews?.length ?? 0) >= 1 && width <= 1024
+              "
+            >
+              <WhyTheseSchool />
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- review side bar -->
+    <Transition name="overview">
+      <component
+        v-if="
+          (dashboardStore.overViews ?? []).length > 0 &&
+          dashboardStore.overViews !== null &&
+          width > 1024
+        "
+        :is="OverviewSidebar"
+      />
+    </Transition>
   </div>
 </template>
 <script setup lang="ts">
 import useDashboardStore from "~/stores/dashboardStore";
 import useAppStore from "~/stores/AppStore";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
+import OverviewSidebar from "~/components/pages/school-list/OverviewSidebar.vue";
 
 definePageMeta({
   layout: "home-layout",
@@ -89,7 +71,7 @@ useHead(
       },
       {
         rel: "preload",
-        href: "/images/sophie-chat.png",
+        href: "/images/lets-go.png",
         as: "image",
       },
       {
@@ -122,6 +104,7 @@ const { api } = useApi();
 const isActive = ref<boolean>(false);
 const isTokenLoading = ref<boolean>(true);
 const schoolsListWrapper = ref<HTMLElement | null>(null);
+const width = ref<number>(0);
 
 const checkPrograms = () => {
   if (appStore.userData) {
@@ -151,6 +134,12 @@ const getRecommendations = async (pageNo: number = 1) => {
   }
 };
 
+const windowSize = () => {
+  if (typeof window !== "undefined") {
+    width.value = window.innerWidth;
+  }
+};
+
 watch(
   () => appStore.userData,
   async () => {
@@ -167,6 +156,8 @@ watch(
 );
 
 onMounted(async () => {
+  windowSize();
+  window.addEventListener("resize", windowSize);
   await nextTick();
   if (dashboardStore.isSchoolListPublic) {
     const response = await api.get("/api/v1/session-based-journey/session");
@@ -200,4 +191,24 @@ onMounted(async () => {
     dashboardStore.setCoursePreferenceOptions();
   }
 });
+
+onUnmounted(async () => {
+  window.removeEventListener("resize", windowSize);
+});
 </script>
+<style scoped>
+.overview-enter-active,
+.overview-leave-active {
+  transition: width 500ms ease-in-out;
+}
+
+.overview-enter-from,
+.overview-leave-to {
+  width: 0;
+}
+
+.overview-enter-to,
+.overview-leave-from {
+  width: 424px;
+}
+</style>
