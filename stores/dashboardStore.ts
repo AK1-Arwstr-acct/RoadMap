@@ -309,6 +309,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
             if (!appStore.authenticatedUser) {
                 return;
             }
+            userSelectedSchoolsList.value = [];
             const response = await api.get("/api/v1/bookmark/program");
             if (response.data.data) {
                 response.data.data.map((item: checklistResponse) => {

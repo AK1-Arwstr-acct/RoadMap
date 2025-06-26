@@ -81,7 +81,7 @@
             class="min-w-5 h-5 cursor-pointer hidden"
           />
           <span
-            class="truncate text-[#181D27] font-medium flex item-center gap-2"
+            class="truncate text-[#181D27] font-medium flex item-center gap-2 capitalize"
           >
             <div v-if="item.icon">
               <component :is="item.icon" class="size-6 text-[#717680]" />

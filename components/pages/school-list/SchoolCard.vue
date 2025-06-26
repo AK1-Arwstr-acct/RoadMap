@@ -55,7 +55,7 @@
             </div>
             <!-- add to list button -->
             <div class="hidden lg:block">
-              <AddToLIst :program="program" />
+              <AddToLIst :program="program" :checkListData="checkListData" />
             </div>
           </div>
           <p
@@ -154,7 +154,7 @@
       </div>
     </div>
     <div class="lg:hidden">
-      <AddToLIst :program="program" />
+      <AddToLIst :program="program" :checkListData="checkListData" />
     </div>
   </div>
   <Transition name="fade">
@@ -199,7 +199,7 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import type { Program } from "~/types/program";
+import type { checklistResponse, Program } from "~/types/program";
 import IconUK from "../../icons/IconUK.vue";
 import IconCanada from "../../icons/IconCanada.vue";
 import IconAustralia from "../../icons/IconAustralia.vue";
@@ -217,6 +217,10 @@ const props = defineProps({
   program: {
     type: Object as PropType<Program>,
     default: () => {},
+  },
+  checkListData : {
+    type: Object as PropType<checklistResponse | null>,
+    default: null
   },
 });
 

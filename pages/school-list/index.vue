@@ -10,7 +10,9 @@
             class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14"
             :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"
           >
-            <div class="flex-1 overflow-hidden">
+            <div
+              class="flex-1 overflow-hidden"
+            >
               <RecommendedSchools
                 :isTokenLoading="isTokenLoading"
                 @getRecommendations="getRecommendations"
@@ -29,14 +31,15 @@
     </div>
     <!-- review side bar -->
     <Transition name="overview">
-      <component
+      <div
         v-if="
           (dashboardStore.overViews ?? []).length > 0 &&
           dashboardStore.overViews !== null &&
           width > 1024
         "
-        :is="OverviewSidebar"
-      />
+      >
+        <component :is="OverviewSidebar" />
+      </div>
     </Transition>
   </div>
 </template>

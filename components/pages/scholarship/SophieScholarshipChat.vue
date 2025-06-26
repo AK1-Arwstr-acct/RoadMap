@@ -1,11 +1,13 @@
 <template>
   <section class="flex flex-col gap-2 size-full overflow-hidden h-full">
     <div class="flex-1 overflow-y-auto no-scrollbar">
-      <div class="size-full overflow-hidden flex flex-col gap-2 sm:gap-2">
+      <div
+        class="size-full overflow-hidden flex flex-col gap-2 sm:gap-2 relative"
+      >
         <!-- chat -->
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full relative"
+          class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col gap-6 h-full relative"
         >
           <div
             v-for="(chat, index) in completeChat.filter(
@@ -15,11 +17,17 @@
             class="flex items-start gap-3"
             :class="{
               'justify-end': chat.isSender,
-              'mt-6': index > 0,
+              // 'mt-6': index > 0,
             }"
           >
             <div
-              v-if="!chat.isSender"
+              v-if="
+                !chat.isSender &&
+                (index > 0
+                  ? completeChat.filter((item) => item.text !== '')[index - 1]
+                      .isSender
+                  : true)
+              "
               class="size-8 min-w-8 rounded-full bg-black overflow-hidden"
             >
               <img
@@ -29,8 +37,9 @@
                 loading="eager"
               />
             </div>
+            <div v-else class="w-8" />
             <div
-              class="mb-4 md:mb-6 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+              class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
               :class="{
                 'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
               }"
@@ -40,6 +49,41 @@
               </div>
             </div>
           </div>
+          <TransitionGroup
+            name="fade"
+            tag="div"
+            v-if="showLoading"
+            class="ml-[32px] border-l border-[#D1D5DB] px-5 text-[#4B5563] flex flex-col gap-9"
+          >
+            <template v-for="(step, idx) in loadingSteps.slice(0, loadingStep)">
+              <div v-if="idx === 0" :key="`${idx}-div`">
+                <p class="relative -mt-2">
+                  {{ step.title }}
+                  <span
+                    class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
+                  />
+                </p>
+                <div
+                  class="text-xs flex flex-col gap-2 mt-3"
+                  v-if="step.details"
+                >
+                  <p v-for="(detail, dIdx) in step.details" :key="dIdx">
+                    {{ detail }}
+                  </p>
+                </div>
+              </div>
+              <p
+                v-else
+                :key="`${idx}-p`"
+                class="relative -mb-2"
+              >
+                {{ step.title }}
+                <span
+                  class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
+                />
+              </p>
+            </template>
+          </TransitionGroup>
           <div
             v-if="isChatLoading"
             class="text-[#A4A7AE] font-thin flex items-center gap-3"
@@ -66,6 +110,33 @@
               </div>
             </span>
           </div>
+          <!-- paywall for PUblic user -->
+          <Transition name="fade">
+            <div v-if="publicPaywall" class="absolute inset-0 flex flex-col">
+              <!-- shadow bg -->
+              <div
+                class="flex-1 bg-gradient-to-b from-transparent via-white/60 to-white"
+              />
+              <div class="bg-white w-full p-4">
+                <p class="text-[#111827] font-semibold text-[32px]">
+                  Unlock Your
+                  <span class="text-[#2563EB]"> Study Abroad Journey </span>
+                </p>
+                <p class="text-[#4B5563] mt-3">
+                  Sign up with Arrowster to unlock all AI-powered study abroad
+                  tools and receive 1-on-1 guidance from mentors who are alumni
+                  of Harvard, Oxford, Yonsei, and other prestigious
+                  universities.
+                </p>
+                <NuxtLinkLocale
+                  to="/signup"
+                  class="mt-8 block text-white font-semibold py-[13px] px-4 rounded-lg bg-[#2563EB] w-fit"
+                >
+                  Sign up for free
+                </NuxtLinkLocale>
+              </div>
+            </div>
+          </Transition>
         </div>
         <!-- input -->
         <div class="flex flex-col gap-4">
@@ -111,7 +182,7 @@
               v-model="inputQuestion"
               @keydown.enter.exact.prevent="submit"
               @keydown.enter.ctrl.prevent="addNewLine"
-              :disabled="isChatLoading || isChatFull || isEducationLevel"
+              :disabled="isChatLoading || isChatFull"
               rows="4"
               autofocus
               class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
@@ -141,13 +212,11 @@
 import axios from "axios";
 import type { SophieChat } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
-import useDashboardStore from "~/stores/dashboardStore";
 import useSophieStore from "~/stores/sophieStore";
 import useAppStore from "~/stores/AppStore";
 
 const { api } = useApi();
 const { showToast } = useToast();
-const dashboardStore = useDashboardStore();
 const sophieStore = useSophieStore();
 const appStore = useAppStore();
 const route = useRoute();
@@ -161,7 +230,23 @@ const isChatLoading = ref<boolean>(false);
 const isChatFull = ref<boolean>(false);
 const uuid = ref<string>();
 const textarea = ref<HTMLTextAreaElement | null>(null);
-const isEducationLevel = ref<boolean>(false);
+const showLoading = ref<boolean>(false);
+const publicPaywall = ref<boolean>(false);
+
+const loadingStep = ref(0);
+const loadingSteps = [
+  {
+    title: "Gathering information on your profile",
+    details: [
+      "Searching bachelor’s program in the United States and United Kingdom",
+      "Searching schools has Music and Film Production major",
+      "Searching schools by scholarship",
+    ],
+  },
+  { title: "Wrapping up analysis" },
+  { title: "Combining recommendation" },
+  { title: "Finished" },
+];
 
 const options = {
   html: true,
@@ -197,8 +282,17 @@ const submit = async () => {
       isSender: true,
       text: inputQuestion.value,
     });
+    if (completeChat.value.length <= 2) {
+      completeChat.value.push({
+        isSender: false,
+        text: "Got it! Hang tight, I am looking into our database...",
+      });
+      showLoading.value = true;
+    }
     scrollDown();
-    isChatLoading.value = true;
+    if (!showLoading.value) {
+      isChatLoading.value = true;
+    }
     const userQuery = inputQuestion.value;
     inputQuestion.value = "";
     await nextTick();
@@ -231,18 +325,15 @@ const submit = async () => {
       });
     }
     if (response) {
+      if (showLoading.value) {
+        await new Promise((resolve) => setTimeout(resolve, 2200));
+        showLoading.value = false;
+      }
       if (response.data.data) {
         completeChat.value.push({
           isSender: false,
           text: response.data.data,
         });
-        if (
-          response.data.data === "Cool! What's your current education level?"
-        ) {
-          isEducationLevel.value = true;
-        } else {
-          isEducationLevel.value = false;
-        }
       } else {
         completeChat.value.push({
           isSender: false,
@@ -251,12 +342,19 @@ const submit = async () => {
       }
     }
     scrollDown();
+    if (!appStore.authenticatedUser) {
+      publicPaywall.value = true;
+    }
     if (route.query.query) {
       router.replace({
         query: undefined,
       });
     }
   } catch (error) {
+    if (showLoading.value) {
+      await new Promise((resolve) => setTimeout(resolve, 2200));
+      showLoading.value = false;
+    }
     if (axios.isAxiosError(error)) {
       if (error.status === 423) {
         isChatFull.value = true;
@@ -275,6 +373,33 @@ const submit = async () => {
     }
   }
 };
+
+function stepAnimation() {
+  if (loadingStep.value < loadingSteps.length) {
+    let timer = 400;
+    if (loadingStep.value === 1) {
+      timer = 500;
+    } else if (loadingStep.value === 2) {
+      timer = 600;
+    } else if (loadingStep.value === 3) {
+      timer = 700;
+    }
+    setTimeout(() => {
+      loadingStep.value++;
+      stepAnimation();
+    }, timer); // Adjust delay as needed
+  }
+}
+
+watch(
+  () => showLoading.value,
+  (val) => {
+    if (val) {
+      loadingStep.value = 0;
+      stepAnimation();
+    }
+  }
+);
 
 onMounted(async () => {
   uuid.value = uuidv4();

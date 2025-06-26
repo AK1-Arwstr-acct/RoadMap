@@ -81,7 +81,12 @@
                     <IconDragingDots />
                   </div>
                   <div class="flex-1">
-                    <SchoolCard :program="school.program" @openDetail="openDetail" />
+                    <SchoolCard
+                      :sequenceId="school.id"
+                      :checkListData="checklistSchoolData(school)"
+                      :program="school.program"
+                      @openDetail="openDetail"
+                    />
                   </div>
                 </div>
               </VueDraggable>
@@ -145,7 +150,7 @@
 import axios from "axios";
 import useDashboardStore from "~/stores/dashboardStore";
 import SchoolDetailModal from "~/components/pages/school-list/SchoolDetailModal.vue";
-import type { SchoolDetail } from "~/types/program";
+import type { checklistProgram, SchoolDetail } from "~/types/program";
 import { VueDraggable } from "vue-draggable-plus";
 import useAppStore from "~/stores/AppStore";
 
@@ -222,5 +227,10 @@ const onStartReorder = () => {
   if (!appStore.authenticatedUser) {
     appStore.featureSoftPaywall = true;
   }
+};
+
+const checklistSchoolData = (school: checklistProgram) => {
+  const { program, ...rest } = school;
+  return rest;
 };
 </script>

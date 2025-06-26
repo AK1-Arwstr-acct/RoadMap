@@ -25,7 +25,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Program } from "~/types/program";
+import type { checklistResponse, Program } from "~/types/program";
 import useDashboardStore from "~/stores/dashboardStore";
 import useAppStore from "~/stores/AppStore";
 import type { OptionAttributes } from "~/types/home";
@@ -35,11 +35,16 @@ const dashboardStore = useDashboardStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
+const route = useRoute();
 
 const props = defineProps({
   program: {
     type: Object as PropType<Program>,
     default: () => {},
+  },
+  checkListData: {
+    type: Object as PropType<checklistResponse | null>,
+    default: null,
   },
 });
 
@@ -52,7 +57,7 @@ const applicationStatusOptions = ref<OptionAttributes[]>([
   },
   {
     value: "considering",
-    label: "Considering",
+    label: "considering",
   },
   {
     value: "started_application",
@@ -70,14 +75,31 @@ const applicationStatusOptions = ref<OptionAttributes[]>([
     value: "waitlisted",
     label: "Waitlisted",
   },
-  {
-    value: "denied",
-    label: "Denied",
-  },
+  // {
+  //   value: "denied",
+  //   label: "Denied",
+  // },
 ]);
 
-const selectedStatus = ref<OptionAttributes>(applicationStatusOptions.value[0]);
 const width = ref<number>(0);
+
+const setInitialStatus = computed(() => {
+  if (route.path.includes("school-list")) {
+    return (
+      applicationStatusOptions.value.find((item) =>
+        item.label.includes(props.program.bookmark?.status ?? "")
+      ) ?? applicationStatusOptions.value[0]
+    );
+  } else {
+    return (
+      applicationStatusOptions.value.find((item) =>
+        item.label.includes(props.checkListData?.status ?? "")
+      ) ?? applicationStatusOptions.value[0]
+    );
+  }
+});
+
+const selectedStatus = ref<OptionAttributes>(setInitialStatus.value);
 
 const isInCheckList = computed(() => {
   if (appStore.authenticatedUser) {
@@ -104,8 +126,7 @@ const addToList = async () => {
       status: "",
       note: "",
     });
-    isAddingSchol.value = false;
-    dashboardStore.getChecklistProgram();
+    await dashboardStore.getChecklistProgram();
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -113,35 +134,46 @@ const addToList = async () => {
         type: "error",
       });
     }
+  } finally {
+    isAddingSchol.value = false;
   }
 };
 
-// const updateStatus = async () => {
-//   try {
-//     isAddingSchol.value = true;
-//     const response = await api.put(`/api/v1/bookmark/program/${1}`, {
-//       program_id: props.program.id,
-//       class_grade_id: 1, // will change after BE update
-//       status: selectedStatus.value.label,
-//       note: "",
-//     });
-//     isAddingSchol.value = false;
-//   } catch (error) {
-//     if (axios.isAxiosError(error)) {
-//       const errorMessage = errorList(error);
-//       showToast(errorMessage, {
-//         type: "error",
-//       });
-//     }
-//   }
-// }
+const updateStatus = async () => {
+  try {
+    isAddingSchol.value = true;
+    await api.put(
+      `/api/v1/bookmark/program/${
+        route.path.includes("school-list")
+          ? props.program.bookmark?.id
+          : props.checkListData?.id
+      }`,
+      {
+        program_id: props.program.id,
+        class_grade_id: 1, // will update after BE change
+        status: selectedStatus.value.label,
+        note: "",
+        // order_no: 1
+      }
+    );
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isAddingSchol.value = false;
+  }
+};
 
-// watch(
-//   () => selectedStatus.value.value,
-//   () => {
-//     updateStatus();
-//   },
-// );
+watch(
+  () => selectedStatus.value.value,
+  () => {
+    updateStatus();
+  }
+);
 
 const windowSize = () => {
   if (typeof window !== "undefined") {

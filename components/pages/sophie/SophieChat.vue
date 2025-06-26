@@ -36,7 +36,8 @@
                 showTaskDetail &&
                 sophieStore.roadmapTaskDetail &&
                 !readOnly &&
-                !isModal
+                !isModal && 
+                !isOverviewSidebar
               "
             />
           </Transition>
@@ -45,7 +46,8 @@
               !sophieStore.isSophiePublic &&
               sophieStore.roadmapTaskDetail &&
               !props.isModal &&
-              !isCompleteSophieCalledBefore
+              !isCompleteSophieCalledBefore &&
+              !isOverviewSidebar
             "
             class="sticky bottom-0 flex justify-end mb-2"
           >
@@ -195,23 +197,6 @@
               {{ question.text }}
             </div>
           </div>
-          <!-- <p
-            v-if="
-              completeChat.length === 0 &&
-              !readOnly &&
-              !isModal &&
-              sophieStore.roadmapTaskDetail == null &&
-              !isOverviewSidebar
-            "
-            @click="
-              handelPreQuestionOfScholarship(
-                'Chance me with highly curated individualized scholarships that are best matched for me ONLY'
-              )
-            "
-            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit"
-          >
-            {{ t("dashboard.pre_question") }}
-          </p> -->
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
