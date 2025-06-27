@@ -10,7 +10,7 @@
     >
       <div v-if="!selectedOption?.value" class="flex-1">
         <p
-          class="text-[#979797] text-left"
+          class="text-[#979797] text-left capitalize"
           :class="{ '!text-[#181D27]': isDropdownOpen }"
         >
           {{
@@ -21,20 +21,20 @@
         </p>
       </div>
       <div v-else-if="selectedOption?.value && showCheckedLabel" class="flex-1">
-        <p class="text-[#717680] text-left text-xs">
+        <p class="text-[#717680] text-left text-xs capitalize">
           {{
             placeholder === "Select Option"
               ? `${$t("schoolList_page.select_option")}`
               : placeholder
           }}
         </p>
-        <p class="text-[#717680] text-left w-[calc(100%-24px)] truncate">
+        <p class="text-[#717680] text-left w-[calc(100%-24px)] truncate capitalize">
           {{ selectedOption.label }}
         </p>
       </div>
       <div
         v-else
-        class="flex-1 text-[#181D27] text-left w-full truncate font-medium"
+        class="flex-1 text-[#181D27] text-left w-full truncate font-medium capitalize"
       >
         {{ selectedOption.label }}
       </div>

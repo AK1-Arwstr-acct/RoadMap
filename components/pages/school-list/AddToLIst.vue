@@ -19,7 +19,7 @@
       :options="applicationStatusOptions"
       v-model="selectedStatus"
       dropdownWidth="lg:w-[calc(100%+100px)]"
-      :direction="width > 1024 ? 'downward' : 'upward'"
+      :direction="dropdownDirection"
       :loading="isAddingSchol"
     />
   </div>
@@ -99,6 +99,17 @@ const setInitialStatus = computed(() => {
   }
 });
 
+const dropdownDirection = computed(() => {
+  if (width.value > 1024) {
+    const index = dashboardStore.schoolsList.findIndex(
+      (item) => item.id === props.program.id
+    );
+    const listLength = dashboardStore.schoolsList.length;
+    return listLength > 3 && index === listLength - 1 ? "upward" : "downward";
+  }
+  return "upward";
+});
+
 const selectedStatus = ref<OptionAttributes>(setInitialStatus.value);
 
 const isInCheckList = computed(() => {
@@ -138,6 +149,9 @@ const addToList = async () => {
         program.hasBookMark = true;
       }
     }
+    showToast("Added to Checklist", {
+      type: "success",
+    });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -167,6 +181,9 @@ const updateStatus = async () => {
         // order_no: 1
       }
     );
+    showToast("Status Updated", {
+      type: "success",
+    });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);

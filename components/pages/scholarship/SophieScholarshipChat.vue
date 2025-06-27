@@ -17,7 +17,6 @@
             class="flex items-start gap-3"
             :class="{
               'justify-end': chat.isSender,
-              // 'mt-6': index > 0,
             }"
           >
             <div
@@ -173,7 +172,7 @@
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
-              'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading,
+              'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading || publicPaywall,
             }"
           >
             <textarea
@@ -343,7 +342,10 @@ const submit = async () => {
     }
     scrollDown();
     if (!appStore.authenticatedUser) {
-      publicPaywall.value = true;
+      setTimeout(() => {
+        publicPaywall.value = true;
+        textarea.value?.blur();
+      }, 2000);
     }
     if (route.query.query) {
       router.replace({

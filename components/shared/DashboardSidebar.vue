@@ -73,6 +73,15 @@
     </div>
     <div class="overflow-hidden">
       <Transition name="fade">
+        <button
+          @click="clearTaskDetails"
+          v-if="isOpen"
+          class="mb-3 overflow-hidden text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm w-full"
+        >
+          {{ t("dashboard.scholarships_that_suit_me") }}
+        </button>
+      </Transition>
+      <Transition name="fade">
         <component v-if="isOpen" :is="GetMentorshipBlock" />
       </Transition>
       <div v-if="isOpen" class="w-full mt-4 border-t border-[#E9EAEB]">
@@ -103,7 +112,9 @@
             <div class="text-[#111827] truncate">
               {{ appStore.userData?.name }}
             </div>
-            <div class="text-[#4B5563] text-sm truncate">{{ appStore.authUserData?.currentPlan.plan_title }}</div>
+            <div class="text-[#4B5563] text-sm truncate">
+              {{ appStore.authUserData?.currentPlan.plan_title }}
+            </div>
           </div>
           <div>
             <IconChevronDown
@@ -180,6 +191,8 @@
 </template>
 <script setup lang="ts">
 import IconTabHome from "~/components/icons/IconTabHome.vue";
+import useAppTrackerStore from "~/stores/AppTrackerStore";
+import useSophieStore from "~/stores/sophieStore";
 import IconTabApplication from "~/components/icons/IconTabApplication.vue";
 import type { TabList } from "~/types/dashboard";
 import IconBookOpen from "../icons/IconBookOpen.vue";
@@ -192,6 +205,8 @@ const route = useRoute();
 const { t } = useI18n();
 const appStore = useAppStore();
 const localePath = useLocalePath();
+const appTrackerStore = useAppTrackerStore();
+const sophieStore = useSophieStore();
 
 const tokenExists = useCookie("token");
 
@@ -201,7 +216,7 @@ const tabList = ref<TabList[]>([
     name: t("dashboard.sidebar.menu.home"),
     icon: shallowRef(IconTabHome),
     route: "/",
-    activeList: ['/']
+    activeList: ["/"],
   },
   // {
   //   name: "Your checklist",
@@ -213,13 +228,13 @@ const tabList = ref<TabList[]>([
     name: "Your checklist",
     icon: shallowRef(IconTabApplication),
     route: "/checklist",
-    activeList: ['/checklist']
+    activeList: ["/checklist"],
   },
   {
     name: "Resources",
     icon: shallowRef(IconBookOpen),
     route: "/resources",
-    activeList: ['/resources']
+    activeList: ["/resources"],
   },
 ]);
 
@@ -227,5 +242,14 @@ const handleProfile = () => {
   if (appStore.authenticatedUser || tokenExists) {
     navigateTo(localePath("/profile"));
   }
+};
+
+const clearTaskDetails = () => {
+  sophieStore.scholarshipSophieModal = true;
+  if (appStore.authUserData) {
+    sophieStore.openSophieModal = true;
+  }
+  appStore.isFeatureChangeFromTasks = true;
+  sophieStore.roadmapTaskDetail = null;
 };
 </script>

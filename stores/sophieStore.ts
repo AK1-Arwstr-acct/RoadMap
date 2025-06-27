@@ -16,6 +16,9 @@ const useSophieStore = defineStore("sophieStore", () => {
     // for Pre question 
     const preQuestionSelected = ref<string>('');
 
+    //  for scholarship button
+    const scholarshipSophieModal = ref<boolean>(false);
+
     const checkPublicToken = async () => {
         const publicToken = useCookie("publicToken");
         if (!publicToken.value) {
@@ -46,6 +49,7 @@ const useSophieStore = defineStore("sophieStore", () => {
         tasksWithCompletedSophie,
         roadmapTaskDetail,
         openSophieModal,
+        scholarshipSophieModal,
         checkPublicToken
     }
 });

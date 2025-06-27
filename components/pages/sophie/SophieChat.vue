@@ -215,10 +215,26 @@
               {{ question.text }}
             </div>
           </div>
+          <p
+            v-if="
+              completeChat.length === 0 &&
+              !readOnly &&
+              sophieStore.scholarshipSophieModal &&
+              sophieStore.roadmapTaskDetail == null
+            "
+            @click="
+              handelPreQuestionOfScholarship(
+                'Chance me with highly curated individualized scholarships that are best matched for me ONLY'
+              )
+            "
+            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit"
+          >
+            {{ t("dashboard.pre_question") }}
+          </p>
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
-              'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading,
+              'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading || scholarshipResponse,
             }"
           >
             <textarea
@@ -331,6 +347,8 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 
+const scholarshipResponse = ref<boolean>(false);
+
 // const preQuestion: string[] = [
 //   "Which majors suit my personality type?",
 //   "Can you explain what INFP means?",
@@ -392,6 +410,7 @@ const handelPreQuestion = (question: string) => {
 
 const tempText = ref<string>("");
 const handelPreQuestionOfScholarship = (text: string) => {
+  scholarshipResponse.value = true;
   completeChat.value.push({
     isSender: true,
     text: text,
@@ -415,6 +434,7 @@ const handelPreQuestionOfScholarship = (text: string) => {
       i++;
       setTimeout(pushNext, 4000);
     } else {
+      scholarshipResponse.value = false;
       const localePath = useLocalePath();
       tempText.value = `Please click on the <a href="${localePath(
         "/pricing"
@@ -422,6 +442,7 @@ const handelPreQuestionOfScholarship = (text: string) => {
     }
   };
   pushNext();
+  sophieStore.scholarshipSophieModal = false;
 };
 
 const completeSophie = async () => {
