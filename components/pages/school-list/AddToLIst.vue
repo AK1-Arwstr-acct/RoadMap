@@ -102,6 +102,9 @@ const setInitialStatus = computed(() => {
 const selectedStatus = ref<OptionAttributes>(setInitialStatus.value);
 
 const isInCheckList = computed(() => {
+  if (route.path.includes("/school-list")) {
+    return props.program.hasBookMark;
+  }
   if (appStore.authenticatedUser) {
     return dashboardStore.userSelectedSchoolsList.some(
       (item) => item.program.id === props.program.id
@@ -126,7 +129,15 @@ const addToList = async () => {
       status: "",
       note: "",
     });
-    await dashboardStore.getChecklistProgram();
+    if (response.data.data) {
+      const program = dashboardStore.schoolsList.find(
+        (item) => item.id === response.data.data.program_id
+      );
+      if (program && program.bookmark) {
+        program.bookmark.id = response.data.data.id;
+        program.hasBookMark = true;
+      }
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -150,7 +161,7 @@ const updateStatus = async () => {
       }`,
       {
         program_id: props.program.id,
-        class_grade_id: 1, // will update after BE change
+        class_grade_id: props.program.class_grades[0].id,
         status: selectedStatus.value.label,
         note: "",
         // order_no: 1

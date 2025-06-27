@@ -33,8 +33,9 @@
                 position: 'fixed',
                 top: modalPosition.top + 'px',
                 left: modalPosition.left + 'px',
+                zIndex: 9999999
             }"
-            class="border-[1.5px] border-gray-200 bg-white z-20 max-h-[264px] w-[240px] sm:max-h-[264px] overflow-y-auto pb-1.5 rounded-xl shadow-sm"
+            class="border-[1.5px] border-gray-200 bg-white z-50 max-h-[264px] w-[240px] sm:max-h-[264px] overflow-y-auto pb-1.5 rounded-xl shadow-sm"
             >
             <p v-if="label" class="font-semibold text-[#4B5563] text-[10px] py-2 px-4">
                 {{ label

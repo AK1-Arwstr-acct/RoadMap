@@ -62,8 +62,4 @@ const desktop = {
     () => import("~/components/shared/DashboardSidebar.vue")
   ),
 };
-
-onMounted(async () => {
-  await dashboardStore.getChecklistProgram();
-});
 </script>

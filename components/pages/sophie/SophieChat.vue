@@ -36,7 +36,7 @@
                 showTaskDetail &&
                 sophieStore.roadmapTaskDetail &&
                 !readOnly &&
-                !isModal && 
+                !isModal &&
                 !isOverviewSidebar
               "
             />
@@ -97,7 +97,7 @@
               />
             </div>
             <div
-              class="mb-4 md:mb-6 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+              class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
               :class="{
                 'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
               }"
@@ -177,6 +177,24 @@
               </NuxtLinkLocale>
             </div>
           </Transition>
+          <!-- pre question for overview sidebar -->
+          <div
+            v-if="(isSummarizeOverview || isOverviewSidebar) && completeChat.length === 2"
+            class="flex flex-col gap-1 items-end"
+            :class="{'pointer-events-none' :isChatFull}"
+          >
+            <p class="text-[#4B5563] text-xs font-semibold pb-1">
+              SUGGESTED FOLLOW UP
+            </p>
+            <div
+              v-for="(question, idx) in OverviewPreQuestion"
+              :key="idx"
+              @click="handelPreQuestion(question)"
+              class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
+            >
+              {{ question }}
+            </div>
+          </div>
           <div
             v-if="
               completeChat.length === 0 &&
@@ -313,18 +331,16 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 
-const preQuestion: string[] = [
-  "Which majors suit my personality type?",
-  "Can you explain what INFP means?",
-  "Which study abroad destinations suit my personality?",
-];
 // const preQuestion: string[] = [
-//   `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
-//   `${t("sophie_page.which_country_will_suit_me_most_for_study_abroad")}`,
-//   `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
-//   `${t("sophie_page.what_scholarships_can_i_apply_for")}`,
-//   `${t("sophie_page.which_major_should_i_choose")}`,
+//   "Which majors suit my personality type?",
+//   "Can you explain what INFP means?",
+//   "Which study abroad destinations suit my personality?",
 // ];
+const OverviewPreQuestion: string[] = [
+  "Compare these schools",
+  "Show me job prospects for these schools",
+  "Describe campus life",
+];
 
 const educationLevelOption: OptionAttributes[] = [
   {

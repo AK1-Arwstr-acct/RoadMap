@@ -233,4 +233,8 @@ const checklistSchoolData = (school: checklistProgram) => {
   const { program, ...rest } = school;
   return rest;
 };
+
+onMounted(async () => {
+  await dashboardStore.getChecklistProgram();
+});
 </script>

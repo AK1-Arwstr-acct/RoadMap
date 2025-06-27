@@ -27,7 +27,7 @@
             Finding your best-fit schools...
           </span>
           <span v-else>
-            {{ dashboardStore.schoolsList.length || 0 }}
+            {{ dashboardStore.totalSchool || 0 }}
             {{ $t("schoolList_page.schools_match_your_profile") }}
           </span>
         </p>
@@ -55,7 +55,7 @@
     />
     <div v-else class="flex-1 flex flex-col gap-6 md:pb-6 mr-px">
       <div
-        v-if="(dashboardStore.overViews || []).length > 0"
+        v-if="(dashboardStore.overViews || []).length > 0 || dashboardStore.enginePosition === 'final'"
         class="flex flex-col gap-4"
         v-for="(program, idx) in groupedSchoolsList"
       >

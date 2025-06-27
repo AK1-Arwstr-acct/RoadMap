@@ -67,14 +67,14 @@
   /* Default styles for unordered lists */
   .suggestion-container ul {
     margin: 4px 0; /* Default margins */
-    padding: 0 40px; /* Default padding for nested list items */
+    padding: 0 20px; /* Default padding for nested list items */
     list-style-type: disc; /* Default bullet style */
   }
   
   /* Default styles for ordered lists */
   .suggestion-container ol {
     margin: 1em 0; /* Default margins */
-    padding: 0 40px; /* Default padding for nested list items */
+    padding: 0 20px; /* Default padding for nested list items */
     list-style-type: decimal; /* Default numbering style */
   }
   

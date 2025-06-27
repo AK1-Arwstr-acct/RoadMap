@@ -163,9 +163,9 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const preRunEngine = async (page: number = 1) => {
         try {
+            overViews.value = [];
             isSchoolsLoading.value = true;
             let response;
-
             if (isSchoolListPublic.value) {
                 const publicToken = useCookie('publicToken');
                 response = await api.post(
@@ -217,6 +217,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const runEngine = async (page: number = 1) => {
         try {
+            overViews.value = [];
             isSchoolsLoading.value = true;
             let response;
             if (isSchoolListPublic.value) {
@@ -266,6 +267,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const runFinalEngine = async (page: number = 1, sort?: { [key: string]: string }) => {
         try {
+            overViews.value = [];
             isSchoolsLoading.value = true;
             const response = await api.get(
                 `/api/v1/school/recommendation/final-engine`, {
