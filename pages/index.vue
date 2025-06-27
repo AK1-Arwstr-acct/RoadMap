@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full flex justify-center items-center pt-6 md:pt-8 px-6 overflow-hidden"
+    class="h-full flex justify-center items-center pt-4 md:pt-8 px-4 md:px-6 overflow-hidden"
   >
     <div class="overflow-y-auto no-scrollbar pb-6 size-full">
       <div class="w-full mx-auto h-fit max-w-[900px]">
@@ -10,12 +10,12 @@
           <img
             src="/images/sophie-chat.png"
             alt="sophie"
-            class="h-[180px] w-[190px]"
+            class="h-[117px] md:h-[180px] w-[124px] md:w-[190px]"
             loading="eager"
             preload
           />
           <span
-            class="text-[#414651] text-xl md:text-[32px] font-semibold mt-4"
+            class="text-[#414651] text-xl md:text-[32px] font-semibold mt-4 text-center"
           >
             Hi I’m Sophie, your personal AI assistant 👋
           </span>

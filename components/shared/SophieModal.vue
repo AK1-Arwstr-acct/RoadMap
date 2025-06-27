@@ -12,7 +12,7 @@
     >
       <ChatWithSophie
         :isModal="true"
-        @openSophieModal="sophieStore.openSophieModal = false"
+        @openSophieModal="close"
       />
     </div>
   </Transition>
@@ -20,4 +20,9 @@
 <script setup lang="ts">
 import useSophieStore from "~/stores/sophieStore";
 const sophieStore = useSophieStore();
+
+const close = () => {
+  sophieStore.openSophieModal = false
+  sophieStore.scholarshipSophieModal = false;
+}
 </script>

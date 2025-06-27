@@ -228,7 +228,7 @@ const tabList = ref<TabList[]>([
     name: "Your checklist",
     icon: shallowRef(IconTabApplication),
     route: "/checklist",
-    activeList: ["/checklist"],
+    activeList: ["/checklist", "/sophie", "/school-list", "/ai-essay"],
   },
   {
     name: "Resources",
@@ -250,6 +250,5 @@ const clearTaskDetails = () => {
     sophieStore.openSophieModal = true;
   }
   appStore.isFeatureChangeFromTasks = true;
-  sophieStore.roadmapTaskDetail = null;
 };
 </script>

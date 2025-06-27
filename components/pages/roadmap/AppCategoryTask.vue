@@ -185,6 +185,8 @@ const categoryClass = (category: string) => {
 const handelTaskDetail = async (task: Task) => {
   if (appStore.authenticatedUser && task.feature_state === "scholarship") {
     sophieStore.openSophieModal = true;
+    sophieStore.scholarshipSophieModal = true;
+    appStore.isFeatureChangeFromTasks = true;
     return;
   }
   const taskId = task.id;
@@ -201,11 +203,11 @@ const handelTaskDetail = async (task: Task) => {
     routeName = "/sophie";
   } else if (task.feature_state?.toLowerCase().includes("essay")) {
     routeName = "/ai-essay";
-  } else if (task.feature_state?.toLowerCase().includes("school")){
+  } else if (task.feature_state?.toLowerCase().includes("school")) {
     routeName = "/school-list";
-  } else if (task.feature_state?.toLowerCase().includes("checklist")){
+  } else if (task.feature_state?.toLowerCase().includes("checklist")) {
     routeName = "/checklist";
-  } else if (task.feature_state?.toLowerCase().includes("scholarship")){
+  } else if (task.feature_state?.toLowerCase().includes("scholarship")) {
     routeName = "/scholarship";
   }
   if (route.fullPath.includes(routeName)) {

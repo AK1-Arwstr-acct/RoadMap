@@ -5,13 +5,13 @@
         <img
           src="/public/images/lets-go.png"
           alt="sophie Icon"
-          class="w-[255px]"
+          class="w-[167px] md:w-[255px]"
           loading="eager"
         />
-        <p class="text-center text-[#181D27] text-xl font-semibold mt-4">
+        <p class="text-center text-[#181D27] md:text-xl font-semibold mt-4">
           {{ $t("schoolList_page.publicInfo.start_search_button") }}
         </p>
-        <p class="text-center text-[#414651] mt-5">
+        <p class="text-center text-sm md:text-base text-[#414651] mt-5">
           {{ $t("schoolList_page.publicInfo.fill_information_message") }}
         </p>
       </div>

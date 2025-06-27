@@ -219,8 +219,7 @@
             v-if="
               completeChat.length === 0 &&
               !readOnly &&
-              sophieStore.scholarshipSophieModal &&
-              sophieStore.roadmapTaskDetail == null
+              sophieStore.scholarshipSophieModal
             "
             @click="
               handelPreQuestionOfScholarship(

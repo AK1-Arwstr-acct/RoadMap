@@ -1,7 +1,7 @@
 <template>
-  <div class="size-full px-5 flex flex-col overflow-hidden">
+  <div class="size-full px-4 flex flex-col overflow-hidden">
     <!-- tabs -->
-    <div class="mt-10 flex gap-1 w-full max-w-[800px] mx-auto">
+    <div class="mt-2 md:mt-10 flex gap-1 w-full max-w-[800px] mx-auto">
       <div
         @click="activeTab = 'checklist'"
         class="px-3 pb-1.5 flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200 text-nowrap"
@@ -21,19 +21,21 @@
       <!-- @click="activeTab = 'comparison'" -->
       <div
         @click="navigateTo(localePath('/pricing'))"
-        class="px-3 pb-1.5 flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200 text-nowrap"
+        class="px-3 pb-1.5 flex flex-wrap gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200"
         :class="[
           activeTab === 'comparison'
             ? 'text-[#2563EB] border-b border-[#2563EB]'
             : 'text-[#111827]',
         ]"
       >
+      <div class="text-nowrap flex items-center gap-1.5  order-1">
         <IconComparison
           :class="[
             activeTab === 'comparison' ? 'text-[#2563EB]' : 'text-[#4B5563]',
           ]"
         />
-        My College List
+        College Comparison
+      </div>
         <p class="px-2 rounded-full bg-[#E5E5E5] text-[#4B5563] font-semibold">
           Coming soon
         </p>
@@ -47,10 +49,10 @@
             class="h-fit w-full flex flex-col gap-10"
           >
             <div class="">
-              <h1 class="text-[32px] font-semibold text-[#181D27]">
+              <h1 class="text-2xl md:text-[32px] font-semibold text-[#181D27]">
                 My College List
               </h1>
-              <p class="text-[#535862] mt-2">
+              <p class="text-[#535862] mt-2 text-sm md:text-base">
                 Keep track of all the schools you're interested in. Compare
                 programs, deadlines, and requirements in one place.
               </p>
