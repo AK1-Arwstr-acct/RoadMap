@@ -42,39 +42,6 @@
             />
           </Transition>
           <div
-            v-if="
-              !sophieStore.isSophiePublic &&
-              sophieStore.roadmapTaskDetail &&
-              !props.isModal &&
-              !isCompleteSophieCalledBefore &&
-              !isOverviewSidebar
-            "
-            class="sticky bottom-0 flex justify-end mb-2"
-          >
-            <div class="">
-              <button
-                @click="completeSophie"
-                :disabled="isChatLoading"
-                class="group relative text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
-              >
-                {{ $t("sophie_page.complete_sophie_button.buttonText") }}
-                <!-- tooltip -->
-                <div
-                  class="hidden group-hover:block transition-all ease-in-out duration-200 absolute bg-[#f3f1f1] w-[calc(100%+50px)] md:w-[calc(100%+200px)] right-10 md:right-20 bottom-14 rounded-xl px-3 py-2 shadow-[0_8px_13px_0_rgba(16,24,40,0.05),16px_20px_50px_13px_rgba(0,0,0,0.25)]"
-                >
-                  <div
-                    class="size-full relative text-[#181D27] text-xs sm:text-sm text-start"
-                  >
-                    {{ $t("sophie_page.complete_sophie_button.tooltop_Text") }}
-                    <div
-                      class="size-4 transform rotate-45 bg-[#f3f1f1] absolute right-5 -bottom-3 shadow-black"
-                    />
-                  </div>
-                </div>
-              </button>
-            </div>
-          </div>
-          <div
             v-for="(chat, index) in completeChat.filter(
               (item) => item.text !== ''
             )"
@@ -179,9 +146,12 @@
           </Transition>
           <!-- pre question for overview sidebar -->
           <div
-            v-if="(isSummarizeOverview || isOverviewSidebar) && completeChat.length === 2"
+            v-if="
+              (isSummarizeOverview || isOverviewSidebar) &&
+              completeChat.length === 2
+            "
             class="flex flex-col gap-1 items-end"
-            :class="{'pointer-events-none' :isChatFull}"
+            :class="{ 'pointer-events-none': isChatFull }"
           >
             <p class="text-[#4B5563] text-xs font-semibold pb-1">
               SUGGESTED FOLLOW UP
@@ -233,7 +203,8 @@
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
-              'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading || scholarshipResponse,
+              'bg-[#FAFAFA] pointer-events-none':
+                isChatFull || isChatLoading || scholarshipResponse,
             }"
           >
             <textarea
@@ -442,47 +413,6 @@ const handelPreQuestionOfScholarship = (text: string) => {
   };
   pushNext();
   sophieStore.scholarshipSophieModal = false;
-};
-
-const completeSophie = async () => {
-  try {
-    isChatLoading.value = true;
-    let sophieCompletedList = useCookie("sophieCompletedList");
-    let response = await api.get(
-      `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
-    );
-    if (response?.data.data) {
-      if (sophieStore.roadmapTaskDetail) {
-        sophieStore.tasksWithCompletedSophie.push(
-          sophieStore.roadmapTaskDetail.id
-        );
-      }
-      if (!sophieCompletedList.value) {
-        sophieCompletedList = useCookie("sophieCompletedList", {
-          maxAge: 604800,
-          httpOnly: false,
-          secure: true,
-        });
-      }
-      // await nextTick();
-      sophieCompletedList.value = JSON.stringify(
-        sophieStore.tasksWithCompletedSophie
-      );
-      completeChat.value.push({
-        isSender: false,
-        text: "Perfect,<br/> Now let Sophie do the work behind the scenes with our counselors and prepare the checklist for you.<br/> Sophie will come back to you once the list is fully prepared. Hang tight!",
-      });
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorMessage = error.message;
-      showToast(errorMessage, {
-        type: "warning",
-      });
-    }
-  } finally {
-    isChatLoading.value = false;
-  }
 };
 
 // Function to scroll to the bottom

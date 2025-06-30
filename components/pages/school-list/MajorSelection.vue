@@ -11,12 +11,12 @@
       }"
     >
       <div v-if="selectedLPrograms.length === 0" class="flex-1">
-        <p class="text-[#111827] text-left">
-          Majors
-        </p>
+        <p class="text-[#111827] text-left">Majors</p>
       </div>
       <div v-else>
-        <p class="text-[#2563EB] text-left truncate font-medium flex items-center gap-2 w-fit">
+        <p
+          class="text-[#2563EB] text-left truncate font-medium flex items-center gap-2 w-fit"
+        >
           Majors
         </p>
       </div>
@@ -24,8 +24,13 @@
         class="transition-transform duration-200 ease-in-out"
         :class="{ 'transform rotate-180': isDropdownOpen }"
       >
-        <IconChevronDown v-if="majorProgramsList.length" height="18" width="18" :stroke="selectedLPrograms.length > 0 ? '#60A5FA' : '#4B5563'" />
-          <IconSpinner v-else stroke="#A4A7AE" bgColor="#ffffff" width="18" />
+        <IconChevronDown
+          v-if="majorProgramsList.length"
+          height="18"
+          width="18"
+          :stroke="selectedLPrograms.length > 0 ? '#60A5FA' : '#4B5563'"
+        />
+        <IconSpinner v-else stroke="#A4A7AE" bgColor="#ffffff" width="18" />
       </span>
     </div>
 
@@ -49,7 +54,8 @@
             :for="`program${index}`"
             class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
             :class="{
-              '!cursor-default': isProgramDisable && !selectedLPrograms.includes(option.value),
+              '!cursor-default':
+                isProgramDisable && !selectedLPrograms.includes(option.value),
             }"
           >
             <input
@@ -60,7 +66,9 @@
               :checked="selectedLPrograms.includes(option.value)"
               class="hidden peer"
               @change="toggleSelection(option.value)"
-              :disabled="isProgramDisable && !selectedLPrograms.includes(option.value)"
+              :disabled="
+                isProgramDisable && !selectedLPrograms.includes(option.value)
+              "
               data-hj-allow
             />
             <div
@@ -73,12 +81,16 @@
                     },
               ]"
             >
-              <IconTick v-if="selectedLPrograms.includes(option.value)" stroke="#ffffff" />
+              <IconTick
+                v-if="selectedLPrograms.includes(option.value)"
+                stroke="#ffffff"
+              />
             </div>
             <div
               class="flex items-center gap-2 text-[#414651] transition-all ease-in-out duration-200 text-sm"
               :class="{
-                '!text-[#A4A7AE]': !selectedLPrograms.includes(option.value) && isProgramDisable,
+                '!text-[#A4A7AE]':
+                  !selectedLPrograms.includes(option.value) && isProgramDisable,
               }"
             >
               {{ option.label }}
@@ -139,7 +151,9 @@ const focusDiv = ref<HTMLElement | null>(null);
 const modalPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 });
 let resizeObserver: ResizeObserver | null = null;
 
-const isDropdownOpen = computed(() => props.openDropdown === props.dropdownName);
+const isDropdownOpen = computed(
+  () => props.openDropdown === props.dropdownName
+);
 
 const updateModalPosition = () => {
   if (focusDiv.value) {
@@ -210,9 +224,6 @@ const submit = async () => {
 };
 
 const getMajors = async () => {
-  if (!appStore.userData) {
-    return;
-  }
   try {
     const response = await api.get("/api/v1/school/recommended/program-titles");
     if (response) {
@@ -225,10 +236,6 @@ const getMajors = async () => {
         }
       );
     }
-    selectedLPrograms.value =
-      appStore.userData.educational_records.next_program_titles.map(
-        (item) => item.id
-      );
   } catch (error) {
     selectedLPrograms.value = [];
     if (axios.isAxiosError(error)) {
@@ -243,7 +250,15 @@ const getMajors = async () => {
 watch(
   () => appStore.userData,
   async () => {
-    getMajors();
+    if (appStore.userData) {
+      selectedLPrograms.value =
+        appStore.userData?.educational_records.next_program_titles.map(
+          (item) => item.id
+        );
+    }
+    if (!appStore.userData?.educational_records.next_program_titles.length) {
+      getMajors();
+    }
   }
 );
 

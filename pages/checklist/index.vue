@@ -28,14 +28,16 @@
             : 'text-[#111827]',
         ]"
       >
-      <div class="text-nowrap flex items-center gap-1.5  order-1">
-        <IconComparison
-          :class="[
-            activeTab === 'comparison' ? 'text-[#2563EB]' : 'text-[#4B5563]',
-          ]"
-        />
-        College Comparison
-      </div>
+        <div
+          class="text-nowrap flex items-center gap-1.5 order-1 md:order-none"
+        >
+          <IconComparison
+            :class="[
+              activeTab === 'comparison' ? 'text-[#2563EB]' : 'text-[#4B5563]',
+            ]"
+          />
+          College Comparison
+        </div>
         <p class="px-2 rounded-full bg-[#E5E5E5] text-[#4B5563] font-semibold">
           Coming soon
         </p>
@@ -44,89 +46,7 @@
     <div class="flex-1 w-full overflow-y-auto custom-scrollbar mt-8">
       <div class="w-full max-w-[800px] mx-auto mb-8">
         <Transition name="fade">
-          <div
-            v-if="activeTab == 'checklist'"
-            class="h-fit w-full flex flex-col gap-10"
-          >
-            <div class="">
-              <h1 class="text-2xl md:text-[32px] font-semibold text-[#181D27]">
-                My College List
-              </h1>
-              <p class="text-[#535862] mt-2 text-sm md:text-base">
-                Keep track of all the schools you're interested in. Compare
-                programs, deadlines, and requirements in one place.
-              </p>
-            </div>
-            <div v-if="appStore.authenticatedUser" class="flex-1">
-              <VueDraggable
-                ref="el"
-                @start="onStartReorder"
-                v-model="dashboardStore.userSelectedSchoolsList"
-                v-if="dashboardStore.userSelectedSchoolsList.length > 0"
-                class="flex flex-col gap-6"
-              >
-                <div
-                  v-for="(
-                    school, idx
-                  ) in dashboardStore.userSelectedSchoolsList"
-                  :key="school.id"
-                  class="flex items-center gap-2"
-                >
-                  <div
-                    :class="
-                      isDraggingIdx === idx ? 'cursor-grabbing' : 'cursor-grab'
-                    "
-                    @mousedown="isDraggingIdx = idx"
-                    @mouseup="isDraggingIdx = null"
-                    @mouseleave="isDraggingIdx = null"
-                  >
-                    <IconDragingDots />
-                  </div>
-                  <div class="flex-1">
-                    <SchoolCard
-                      :sequenceId="school.id"
-                      :checkListData="checklistSchoolData(school)"
-                      :program="school.program"
-                      @openDetail="openDetail"
-                    />
-                  </div>
-                </div>
-              </VueDraggable>
-              <EmptyChecklist v-else />
-            </div>
-            <div v-else class="flex-1">
-              <VueDraggable
-                ref="el"
-                @start="onStartReorder"
-                v-model="dashboardStore.userSelectedSchoolsListPublic"
-                v-if="dashboardStore.userSelectedSchoolsListPublic.length > 0"
-                class="flex flex-col gap-6"
-              >
-                <div
-                  v-for="(
-                    school, idx
-                  ) in dashboardStore.userSelectedSchoolsListPublic"
-                  :key="school.id"
-                  class="flex items-center gap-2"
-                >
-                  <div
-                    :class="
-                      isDraggingIdx === idx ? 'cursor-grabbing' : 'cursor-grab'
-                    "
-                    @mousedown="isDraggingIdx = idx"
-                    @mouseup="isDraggingIdx = null"
-                    @mouseleave="isDraggingIdx = null"
-                  >
-                    <IconDragingDots />
-                  </div>
-                  <div class="flex-1">
-                    <SchoolCard :program="school" @openDetail="openDetail" />
-                  </div>
-                </div>
-              </VueDraggable>
-              <EmptyChecklist v-else />
-            </div>
-          </div>
+          <Checklist v-if="activeTab == 'checklist'" @openDetail="openDetail" />
         </Transition>
       </div>
     </div>
@@ -153,14 +73,11 @@ import axios from "axios";
 import useDashboardStore from "~/stores/dashboardStore";
 import SchoolDetailModal from "~/components/pages/school-list/SchoolDetailModal.vue";
 import type { checklistProgram, SchoolDetail } from "~/types/program";
-import { VueDraggable } from "vue-draggable-plus";
 import useAppStore from "~/stores/AppStore";
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
 const dashboardStore = useDashboardStore();
-const appStore = useAppStore();
-const { showToast } = useToast();
 const localePath = useLocalePath();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
@@ -204,36 +121,14 @@ definePageMeta({
 const activeTab = ref<"checklist" | "comparison">("checklist");
 const schoolProfile = ref<SchoolDetail>();
 const isDetailModal = ref<boolean>(false);
-const isDraggingIdx = ref<number | null>(null);
-const el = ref<HTMLElement | null>(null);
 
 const close = () => {
   isDetailModal.value = false;
 };
 
 const openDetail = async (item: SchoolDetail) => {
-  try {
-    schoolProfile.value = item;
-    isDetailModal.value = true;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorMessage = errorList(error);
-      showToast(errorMessage, {
-        type: "error",
-      });
-    }
-  }
-};
-
-const onStartReorder = () => {
-  if (!appStore.authenticatedUser) {
-    appStore.featureSoftPaywall = true;
-  }
-};
-
-const checklistSchoolData = (school: checklistProgram) => {
-  const { program, ...rest } = school;
-  return rest;
+  schoolProfile.value = item;
+  isDetailModal.value = true;
 };
 
 onMounted(async () => {

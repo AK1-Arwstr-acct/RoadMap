@@ -159,4 +159,11 @@ const handelPreQuestion = (question: { number: number; question: string }) => {
     navigateTo(localePath("/sophie"));
   }
 };
+
+onMounted(async () => {
+  const tokenExists = useCookie("token");
+  if (tokenExists.value) {
+    await appStore.getAuthUserData();
+  }
+});
 </script>

@@ -53,6 +53,12 @@ interface checklistResponse {
     program?: Program,
     school?: School;
 }
+interface ChecklistPagination {
+    currentPage : number,
+    first_page : number,
+    last_page : number,
+    total : number,
+}
 
 export interface ClassGrade {
     id: number;
@@ -132,4 +138,4 @@ interface SchoolDetail {
     financial_and_aid_cost: FinancialAidCost;
     surroundings: Surroundings;
 }
-export { Program, RecommendationSchoolsPagination, SchoolDetail, checklistProgram, checklistResponse };
+export { Program, RecommendationSchoolsPagination, SchoolDetail, checklistProgram, checklistResponse, ChecklistPagination };

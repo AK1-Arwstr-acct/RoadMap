@@ -1,5 +1,7 @@
 <template>
-  <div class="remove-shadow-bg-white flex gap-2.5 items-center lg:flex-wrap overflow-x-auto overflow-y-hidden lg:overflow-y-visible lg:overflow-x-visible no-scrollbar">
+  <div
+    class="remove-shadow-bg-white flex gap-2.5 items-center lg:flex-wrap overflow-x-auto overflow-y-hidden lg:overflow-y-visible lg:overflow-x-visible no-scrollbar"
+  >
     <GpaDropdown
       v-model="gpa"
       @onChange="gpaChanged"
@@ -18,119 +20,30 @@
       dropdownName="program"
       @open="(value: string) => (openDropdown = value as Dropdowns)"
     />
-    <!-- <Transition name="fade">
-      <div class="mt-5" v-if="dashboardStore.locationOptions.length">
-        <div
-          class="flex flex-col gap-3"
-          :class="[
-            { 'pointer-events-none': isLocationchange || isGpaChange },
-            { 'animate-pulse': isLocationLoading },
-          ]"
-        >
-          <p class="font-medium text-[#414651] text-sm">
-            {{ $t("schoolList_page.study_destination")
-            }}<span class="text-[#D92D20] font-medium">*</span>
-          </p>
-          <div class="flex flex-col gap-4">
-            <div
-              v-for="(option, index) in dashboardStore.locationOptions"
-              :key="index"
-            >
-              <label
-                class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
-              >
-                <input
-                  :id="`destination${index}`"
-                  type="checkbox"
-                  name="countries"
-                  :value="option.value"
-                  :checked="
-                    option.value.some((id: number) =>
-                      selectedLocationOptions.includes(id)
-                    )
-                  "
-                  class="hidden peer"
-                  @change="toggleSelection(option.value)"
-                />
-                <div
-                  class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
-                  :class="[
-                    option?.value.some((id: number) =>
-                      selectedLocationOptions.includes(id)
-                    )
-                      ? 'border-[#1570EF] bg-[#1570EF]'
-                      : 'border-gray-200',
-                  ]"
-                >
-                  <IconTick
-                    v-if="
-                      option?.value.some((id: number) =>
-                        selectedLocationOptions.includes(id)
-                      )
-                    "
-                    stroke="#ffffff"
-                  />
-                </div>
-                <div
-                  class="flex items-center gap-2 text-[#414651]"
-                  :for="`destination${index}`"
-                >
-                  <component
-                    :is="
-                      option.label.toLowerCase().includes('kingdom')
-                        ? IconUK
-                        : option.label.toLowerCase().includes('canada')
-                        ? IconCanada
-                        : option.label.toLowerCase().includes('australia')
-                        ? IconAustralia
-                        : option.label.toLowerCase().includes('states')
-                        ? IconUS
-                        : IconEurope
-                    "
-                    class="w-6 h-6"
-                  />
-                  {{ option.label }}
-                </div>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Transition> -->
     <DestinationsDropdown
       label="Destination"
       :required="true"
       :loading="isLocationLoading"
       v-model="selectedLocationOptions"
       @onChange="destinationUpdates"
-      :disabled="isLocationchange || isGpaChange || !dashboardStore.locationOptions.length"
+      :disabled="
+        isLocationchange ||
+        isGpaChange ||
+        !dashboardStore.locationOptions.length
+      "
       :openDropdown="openDropdown"
       dropdownName="destination"
       @open="(value: string) => (openDropdown = value as Dropdowns)"
     />
-    <!-- <div class="mt-5">
-      <BaseSelectRadio
-        :label="t('schoolList_page.annual_total_budget')"
-        :options="dashboardStore.budgetList"
-        v-model="annualBudget"
-        direction="upward"
-        :loading="isBudgetLoading"
-        :disabled="
-          !route.path.includes('/demo') &&
-          (!dashboardStore.budgetList.length || isBudgetLoading)
-        "
-        @onChange="getProgramParent"
-      />
-    </div> -->
     <BaseSelectRadioNew
       :label="t('schoolList_page.annual_total_budget')"
       :options="dashboardStore.budgetList"
       v-model="annualBudget"
       :loading="isBudgetLoading"
       :disabled="
-          !route.path.includes('/demo') &&
-          (!dashboardStore.budgetList.length || isBudgetLoading)
-        "
+        !route.path.includes('/demo') &&
+        (!dashboardStore.budgetList.length || isBudgetLoading)
+      "
       @onChange="getProgramParent"
       :openDropdown="openDropdown"
       dropdownName="budget"
@@ -157,12 +70,11 @@
       :options="dashboardStore.coursePreferenceOptions"
       v-model="areaOfStudy"
       :disabled="
-          !route.path.includes('/demo') &&
-          (!dashboardStore.coursePreferenceOptions.length ||
-            isAreaOfStudyLoading)
-        "
+        !route.path.includes('/demo') &&
+        (!dashboardStore.coursePreferenceOptions.length || isAreaOfStudyLoading)
+      "
       :loading="isAreaOfStudyLoading"
-      @onChange="updateUserData"
+      @onChange="updateSchools"
       :openDropdown="openDropdown"
       dropdownName="areaOfStudy"
       @open="(value: string) => (openDropdown = value as Dropdowns)"
@@ -236,6 +148,50 @@ const isUpdateBtnDisable = computed(() => {
   );
 });
 
+const updateUserData = async () => {
+  try {
+    isSubmitting.value = true;
+    const token = useCookie("publicUserData", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
+    const { min, max } = getMinMax();
+    const payload = {
+      cgpa: gpa.value,
+      class_grade_ids: studyPrograms.value?.value,
+      min_budget: min,
+      max_budget: max,
+      country_ids: selectedLocationOptions.value,
+      program_title_parent_id: areaOfStudy.value?.value,
+    };
+    token.value = JSON.stringify(payload);
+    dashboardStore.programTitleParentId = areaOfStudy.value?.value || "";
+    await dashboardStore.preRunEngine();
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+
+const updateSchools = () => {
+  if (
+    gpa.value &&
+    studyPrograms.value?.value &&
+    selectedLocationOptions.value.length > 0 &&
+    annualBudget.value?.value &&
+    areaOfStudy.value?.value
+  ) {
+    updateUserData();
+  }
+};
+
 // const toggleSelection = async (ids: number[]) => {
 //   const allSelected = ids.every((id) =>
 //     selectedLocationOptions.value.includes(id)
@@ -257,6 +213,7 @@ const isUpdateBtnDisable = computed(() => {
 const destinationUpdates = async () => {
   isLocationchange.value = true;
   await getBudgets();
+  updateSchools();
   // await getProgramParent();
   isLocationchange.value = false;
 };
@@ -289,38 +246,6 @@ const resetUserData = () => {
   dashboardStore.coursePreferenceOptions = [];
   dashboardStore.selectedPublicMajors = [];
   dashboardStore.isPublicMajorEnable = false;
-};
-
-const updateUserData = async () => {
-  try {
-    isSubmitting.value = true;
-    const token = useCookie("publicUserData", {
-      maxAge: 604800,
-      httpOnly: false,
-      secure: true,
-    });
-    const { min, max } = getMinMax();
-    const payload = {
-      cgpa: gpa.value,
-      class_grade_ids: studyPrograms.value?.value,
-      min_budget: min,
-      max_budget: max,
-      country_ids: selectedLocationOptions.value,
-      program_title_parent_id: areaOfStudy.value?.value,
-    };
-    token.value = JSON.stringify(payload);
-    dashboardStore.programTitleParentId = areaOfStudy.value?.value || "";
-    await dashboardStore.preRunEngine();
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorMessage = errorList(error);
-      showToast(errorMessage, {
-        type: "error",
-      });
-    }
-  } finally {
-    isSubmitting.value = false;
-  }
 };
 
 const programChanged = async () => {
@@ -362,6 +287,7 @@ const programChanged = async () => {
       calculateHeight();
       isLocationLoading.value = false;
     }
+    updateSchools();
   } catch (error) {}
 };
 
@@ -390,6 +316,7 @@ const getProgramParent = async () => {
       }
     );
     isAreaOfStudyLoading.value = false;
+    updateSchools();
   } catch (error) {
     console.error(error);
   }
@@ -447,13 +374,9 @@ let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const gpaChanged = async () => {
   isGpaChange.value = true;
-  if (debounceTimeout) {
-    clearTimeout(debounceTimeout);
-  }
-  debounceTimeout = setTimeout(async () => {
-    await programChanged();
-    isGpaChange.value = false;
-  }, 1000);
+  await programChanged();
+  isGpaChange.value = false;
+  updateSchools();
 };
 
 const calculateHeight = () => {

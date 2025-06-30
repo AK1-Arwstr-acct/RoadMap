@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type { CountriesOptionAttributes, FilterKey, OptionAttributes, programOptions } from "~/types/home";
 import axios from "axios";
-import type { checklistProgram, checklistResponse, Program, RecommendationSchoolsPagination } from "~/types/program";
+import type { ChecklistPagination, checklistProgram, checklistResponse, Program, RecommendationSchoolsPagination } from "~/types/program";
 import useAppStore from "./AppStore";
 
 const useDashboardStore = defineStore("dashboardStore", () => {
@@ -21,10 +21,12 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const budgetList = ref<OptionAttributes[]>([]);
     const totalSchool = ref<number | null>(null);
     const userSelectedSchoolsList = ref<checklistProgram[]>([]); //for checklist
-    const userSelectedSchoolsListPublic = ref<Program[]>([]); //for checklist
+    const userSelectedSchoolsListPublic = ref<Program[]>([]); //for public checklist
     const schoolsList = ref<Program[]>([]);
     const recommendedSchoolsPagination =
         ref<RecommendationSchoolsPagination | null>(null);
+    const checklistPagination =
+        ref<ChecklistPagination | null>(null);
     const overViews = ref<string[] | null>([]);
     const isFinalEnginCall = ref<boolean>(false);
     // for public user
@@ -306,13 +308,14 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         publicUserData.value = null;
     }
 
-    const getChecklistProgram = async () => {
+    const getChecklistProgram = async (pageNo: number = 1) => {
         try {
             if (!appStore.authenticatedUser) {
                 return;
             }
+            isSchoolsLoading.value = true;
             userSelectedSchoolsList.value = [];
-            const response = await api.get("/api/v1/bookmark/program");
+            const response = await api.get(`/api/v1/bookmark/program?page=${pageNo}`)
             if (response.data.data) {
                 response.data.data.map((item: checklistResponse) => {
                     let program = {
@@ -326,10 +329,11 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                         note: item.note,
                         order_no: item.order_no,
                         status: item.status,
-                        program: {...program}
+                        program: program,
                     }
                     userSelectedSchoolsList.value.push(finalProgram);
                 })
+                checklistPagination.value = response.data.pagination;
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -338,6 +342,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
                     type: "error",
                 });
             }
+        } finally {
+            isSchoolsLoading.value = false;
         }
     };
 
@@ -367,6 +373,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         totalSchool,
         enginePosition,
         recommendedSchoolsPagination,
+        checklistPagination,
         sortParam,
         isFinalEnginCall,
         programTitleParentId,

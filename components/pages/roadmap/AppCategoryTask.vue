@@ -183,12 +183,12 @@ const categoryClass = (category: string) => {
 };
 
 const handelTaskDetail = async (task: Task) => {
-  if (appStore.authenticatedUser && task.feature_state === "scholarship") {
-    sophieStore.openSophieModal = true;
-    sophieStore.scholarshipSophieModal = true;
-    appStore.isFeatureChangeFromTasks = true;
-    return;
-  }
+  // if (appStore.authenticatedUser && task.feature_state === "scholarship") {
+  //   sophieStore.openSophieModal = true;
+  //   sophieStore.scholarshipSophieModal = true;
+  //   appStore.isFeatureChangeFromTasks = true;
+  //   return;
+  // }
   const taskId = task.id;
   appTrackerStore.taskActiveStates[taskId] = true;
   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {

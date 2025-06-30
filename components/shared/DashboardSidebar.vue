@@ -245,10 +245,11 @@ const handleProfile = () => {
 };
 
 const clearTaskDetails = () => {
-  sophieStore.scholarshipSophieModal = true;
-  if (appStore.authUserData) {
-    sophieStore.openSophieModal = true;
-  }
-  appStore.isFeatureChangeFromTasks = true;
+  // sophieStore.scholarshipSophieModal = true;
+  // if (appStore.authUserData) {
+  //   sophieStore.openSophieModal = true;
+  // }
+  // appStore.isFeatureChangeFromTasks = true;
+  navigateTo(localePath('/scholarship'));
 };
 </script>

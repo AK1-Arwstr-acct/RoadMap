@@ -72,7 +72,11 @@
           @open="(value: string) => (openDropdown = value as Dropdowns)"
         />
       </div>
-      <div v-if="appStore.firstTimeUser" ref="focusDiv" class="absolute inset-0 z-30 bg-white rounded-md flex justify-center items-center">
+      <div
+        v-if="appStore.firstTimeUser"
+        ref="focusDiv"
+        class="absolute inset-0 z-30 bg-white rounded-md flex justify-center items-center"
+      >
         <div
           class="border-[1.5px] border-[#0000001A] rounded-full py-1 px-2 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center"
         >
@@ -120,121 +124,6 @@
       </Transition>
     </div>
     <SophieRecommendation />
-    <!-- <div class="mt-6">
-      <label class="font-medium text-[#414651] text-sm"
-        >{{ $t("schoolList_page.gpa")
-        }}<span class="text-[#D92D20] font-medium">*</span></label
-      >
-      <input
-        name="ielts"
-        type="text"
-        v-model="gpa"
-        :placeholder="t('schoolList_page.enter_gpa')"
-        class="mt-1 rounded-lg border-2 shadow-sm border-gray-200 py-2.5 px-[14px] w-full outline-none appearance-none text-gray-900"
-        @input="gpaChanged"
-        data-hj-allow
-      />
-    </div> -->
-    <!-- <div>
-      <div
-        class="flex flex-col gap-3 relative isolate"
-      >
-         temporary layer for displaying wait curser  
-        <div
-          v-if="isLocationchange || isGpaChange"
-          class="absolute inset-0 cursor-wait z-10"
-        />
-        <div class="flex flex-col gap-4">
-          <div
-            v-for="(option, index) in dashboardStore.locationOptions"
-            :key="index"
-          >
-            <label
-              class="flex items-center gap-3 size-full font-medium rounded-xl cursor-pointer relative transition-all ease-in-out duration-200"
-              :class="{
-                'pointer-events-none': isLocationchange || isGpaChange,
-              }"
-            >
-              <input
-                :id="`destination${index}`"
-                type="checkbox"
-                name="countries"
-                :value="option.value"
-                :checked="
-                option.value.some((id: number) =>
-                  selectedLocationOptions.includes(id)
-                )
-              "
-                class="hidden peer"
-                @change="toggleSelection(option.value)"
-              />
-              <div
-                class="size-5 flex justify-center items-center border-2 rounded-md transition-all"
-                :class="[
-                option?.value.some((id: number) =>
-                  selectedLocationOptions.includes(id)
-                )
-                  ? 'border-[#1570EF] bg-[#1570EF]'
-                  : 'border-gray-200',
-              ]"
-              >
-                <IconTick
-                  v-if="
-                  option?.value.some((id: number) =>
-                    selectedLocationOptions.includes(id)
-                  )
-                "
-                  stroke="#ffffff"
-                />
-              </div>
-              <div
-                class="flex items-center gap-2 text-[#414651]"
-                :for="`destination${index}`"
-              >
-                <component
-                  :is="
-                    option.label.toLowerCase().includes('kingdom')
-                      ? IconUK
-                      : option.label.toLowerCase().includes('canada')
-                      ? IconCanada
-                      : option.label.toLowerCase().includes('australia')
-                      ? IconAustralia
-                      : option.label.toLowerCase().includes('states')
-                      ? IconUS
-                      : IconEurope
-                  "
-                  class="w-6 h-6"
-                />
-                {{ option.label }}
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="mt-6 flex gap-3 border-b-8 border-transparent">
-      <button
-        @click="resetUserData"
-        class="p-2.5 border-[1.5px] border-gray-200 w-full rounded-lg font-semibold text-sm text-[#414651]"
-      >
-        {{ $t("schoolList_page.reset_all") }}
-      </button>
-      <button
-        @click="updateUserData"
-        :disabled="
-          !isUpdateBtnDisable ||
-          disabledBtn ||
-          isBudgetLoading ||
-          isAreaOfStudyLoading ||
-          isGpaChange ||
-          isSubmitting
-        "
-        class="p-2.5 bg-[#1570EF] disabled:bg-[#84CAFF] w-full rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2"
-      >
-        {{ $t("schoolList_page.update") }}
-        <IconSpinner v-if="isSubmitting" class="size-3.5" bgColor="#ffffff00" />
-      </button>
-    </div> -->
   </div>
   <Transition name="fade">
     <div v-if="appStore.firstTimeUser" class="fixed z-20 inset-0 bg-black/60" />
@@ -278,77 +167,36 @@ const focusDiv = ref<HTMLElement | null>(null);
 const modalPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 });
 let resizeObserver: ResizeObserver | null = null;
 
-const isUpdateBtnDisable = computed(() => {
-  return !!(
-    gpa.value &&
-    studyPrograms.value?.value &&
-    selectedLocationOptions.value.length > 0 &&
-    annualBudget.value?.value &&
-    areaOfStudy.value?.value
-  );
-});
+// const isUpdateBtnDisable = computed(() => {
+//   return !!(
+//     gpa.value &&
+//     studyPrograms.value?.value &&
+//     selectedLocationOptions.value.length > 0 &&
+//     annualBudget.value?.value &&
+//     areaOfStudy.value?.value
+//   );
+// });
 
-const disabledBtn = computed(() => {
-  let countryCheck =
-    appStore.userData?.educational_records.want_to_study_countries
-      .map((item) => item.id)
-      .every((id) => selectedLocationOptions.value.includes(id));
+// const disabledBtn = computed(() => {
+//   let countryCheck =
+//     appStore.userData?.educational_records.want_to_study_countries
+//       .map((item) => item.id)
+//       .every((id) => selectedLocationOptions.value.includes(id));
 
-  return (
-    Number(gpa.value) === appStore.userData?.educational_records.cgpa &&
-    Number(studyPrograms.value?.value) ===
-      appStore.userData?.educational_records.next_class_grade.id &&
-    Number(annualBudget.value?.value.split("-")[1]) ===
-      appStore.userData?.educational_records.annual_max_budget &&
-    Number(areaOfStudy.value?.value) ===
-      appStore.userData?.educational_records.super_meta_category.id &&
-    appStore.userData?.educational_records.want_to_study_countries.length ===
-      selectedLocationOptions.value.length &&
-    countryCheck
-  );
-});
+//   return (
+//     Number(gpa.value) === appStore.userData?.educational_records.cgpa &&
+//     Number(studyPrograms.value?.value) ===
+//       appStore.userData?.educational_records.next_class_grade.id &&
+//     Number(annualBudget.value?.value.split("-")[1]) ===
+//       appStore.userData?.educational_records.annual_max_budget &&
+//     Number(areaOfStudy.value?.value) ===
+//       appStore.userData?.educational_records.super_meta_category.id &&
+//     appStore.userData?.educational_records.want_to_study_countries.length ===
+//       selectedLocationOptions.value.length &&
+//     countryCheck
+//   );
+// });
 
-const updateModalPosition = () => {
-  if (focusDiv.value) {
-    const rect = focusDiv.value.getBoundingClientRect();
-
-    modalPosition.value = {
-      top: rect.bottom + 20, // 20px below
-      left: rect.left + rect.width / 2, // center horizontally
-    };
-  }
-};
-
-const destinationUpdates = async () => {
-  isLocationchange.value = true;
-  await getBudgets();
-  await getProgramParent();
-  isLocationchange.value = false;
-};
-
-const getMinMax = () => {
-  if (annualBudget.value) {
-    const matches = annualBudget.value.value.match(/\d+,\d+|\d+/g);
-    if (matches) {
-      const budgetSelected = {
-        min: parseInt(matches[0].replace(/,/g, ""), 10),
-        max: parseInt(matches[1].replace(/,/g, ""), 10),
-      };
-      return budgetSelected;
-    }
-  }
-  return {
-    min: 0,
-    max: 0,
-  };
-};
-
-const resetUserData = () => {
-  if (appStore.userData) {
-    setInitialValues(appStore.userData);
-    gpaChanged();
-  }
-};
 const updateUserData = async () => {
   try {
     const { min, max } = getMinMax();
@@ -390,6 +238,48 @@ const updateUserData = async () => {
     isSubmitting.value = false;
   }
 };
+
+const updateModalPosition = () => {
+  if (focusDiv.value) {
+    const rect = focusDiv.value.getBoundingClientRect();
+
+    modalPosition.value = {
+      top: rect.bottom + 20, // 20px below
+      left: rect.left + rect.width / 2, // center horizontally
+    };
+  }
+};
+
+const destinationUpdates = async () => {
+  isLocationchange.value = true;
+  await getBudgets();
+  await getProgramParent();
+  isLocationchange.value = false;
+};
+
+const getMinMax = () => {
+  if (annualBudget.value) {
+    const matches = annualBudget.value.value.match(/\d+,\d+|\d+/g);
+    if (matches) {
+      const budgetSelected = {
+        min: parseInt(matches[0].replace(/,/g, ""), 10),
+        max: parseInt(matches[1].replace(/,/g, ""), 10),
+      };
+      return budgetSelected;
+    }
+  }
+  return {
+    min: 0,
+    max: 0,
+  };
+};
+
+// const resetUserData = () => {
+//   if (appStore.userData) {
+//     setInitialValues(appStore.userData);
+//     gpaChanged();
+//   }
+// };
 
 const setInitialValues = (newValue: UserData) => {
   gpa.value = `${newValue?.educational_records.cgpa}` || "";
@@ -493,6 +383,7 @@ const getProgramParent = async () => {
       }
     );
     isAreaOfStudyLoading.value = false;
+    await updateUserData();
   } catch (error) {
     console.error(error);
   }
@@ -543,19 +434,12 @@ const getBudgets = async () => {
   }
 };
 
-let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
-
 const gpaChanged = async () => {
   isGpaChange.value = true;
-  if (debounceTimeout) {
-    clearTimeout(debounceTimeout);
-  }
-  debounceTimeout = setTimeout(async () => {
-    await programChanged();
-    await getBudgets();
-    await getProgramParent();
-    isGpaChange.value = false;
-  }, 1000);
+  await programChanged();
+  await getBudgets();
+  await getProgramParent();
+  isGpaChange.value = false;
 };
 
 watch(
@@ -570,7 +454,7 @@ watch(
 );
 
 watch(
-  () => [appStore.userData],
+  () => appStore.userData,
   () => {
     if (appStore.userData) {
       setInitialValues(appStore.userData);
