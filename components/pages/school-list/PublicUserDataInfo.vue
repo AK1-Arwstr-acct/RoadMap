@@ -107,11 +107,6 @@
 import useDashboardStore from "~/stores/dashboardStore";
 import type { OptionAttributes, UserData } from "~/types/home";
 import axios from "axios";
-import IconUK from "../../icons/IconUK.vue";
-import IconCanada from "../../icons/IconCanada.vue";
-import IconAustralia from "../../icons/IconAustralia.vue";
-import IconUS from "../../icons/IconUS.vue";
-import IconEurope from "../../icons/IconEurope.vue";
 import type { Dropdowns } from "~/types/dashboard";
 
 const dashboardStore = useDashboardStore();
@@ -122,7 +117,7 @@ const route = useRoute();
 
 const isSubmitting = ref<boolean>(false);
 const isDetailOpen = ref<boolean>(false);
-const gpa = ref<string>("");
+const gpa = ref<string>("9");
 const annualBudget = ref<OptionAttributes>();
 const studyPrograms = ref<OptionAttributes>();
 const areaOfStudy = ref<OptionAttributes>();
@@ -138,16 +133,6 @@ const isLocationLoading = ref<boolean>(false);
 // for dropdowns open
 const openDropdown = ref<Dropdowns>("");
 
-const isUpdateBtnDisable = computed(() => {
-  return !!(
-    gpa.value &&
-    studyPrograms.value?.value &&
-    selectedLocationOptions.value.length > 0 &&
-    annualBudget.value?.value &&
-    areaOfStudy.value?.value
-  );
-});
-
 const updateUserData = async () => {
   try {
     isSubmitting.value = true;
@@ -157,8 +142,9 @@ const updateUserData = async () => {
       secure: true,
     });
     const { min, max } = getMinMax();
+    const cgpaOutOf4 = gpa.value ? ((Number(gpa.value) / 10) * 4).toFixed(2) : "";
     const payload = {
-      cgpa: gpa.value,
+      cgpa: cgpaOutOf4,
       class_grade_ids: studyPrograms.value?.value,
       min_budget: min,
       max_budget: max,
@@ -192,24 +178,6 @@ const updateSchools = () => {
   }
 };
 
-// const toggleSelection = async (ids: number[]) => {
-//   const allSelected = ids.every((id) =>
-//     selectedLocationOptions.value.includes(id)
-//   );
-//   if (allSelected) {
-//     selectedLocationOptions.value = selectedLocationOptions.value.filter(
-//       (id) => !ids.includes(id)
-//     );
-//   } else {
-//     selectedLocationOptions.value = [
-//       ...new Set([...selectedLocationOptions.value, ...ids]),
-//     ];
-//   }
-//   isLocationchange.value = true;
-//   await getBudgets();
-//   isLocationchange.value = false;
-// };
-
 const destinationUpdates = async () => {
   isLocationchange.value = true;
   await getBudgets();
@@ -235,18 +203,18 @@ const getMinMax = () => {
   };
 };
 
-const resetUserData = () => {
-  gpa.value = "";
-  studyPrograms.value = undefined;
-  selectedLocationOptions.value = [];
-  annualBudget.value = undefined;
-  areaOfStudy.value = undefined;
-  dashboardStore.locationOptions = [];
-  dashboardStore.budgetList = [];
-  dashboardStore.coursePreferenceOptions = [];
-  dashboardStore.selectedPublicMajors = [];
-  dashboardStore.isPublicMajorEnable = false;
-};
+// const resetUserData = () => {
+//   gpa.value = "";
+//   studyPrograms.value = undefined;
+//   selectedLocationOptions.value = [];
+//   annualBudget.value = undefined;
+//   areaOfStudy.value = undefined;
+//   dashboardStore.locationOptions = [];
+//   dashboardStore.budgetList = [];
+//   dashboardStore.coursePreferenceOptions = [];
+//   dashboardStore.selectedPublicMajors = [];
+//   dashboardStore.isPublicMajorEnable = false;
+// };
 
 const programChanged = async () => {
   try {
@@ -369,8 +337,6 @@ const getBudgets = async () => {
     }
   }
 };
-
-let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const gpaChanged = async () => {
   isGpaChange.value = true;

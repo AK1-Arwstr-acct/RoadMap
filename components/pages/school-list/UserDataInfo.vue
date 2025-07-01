@@ -14,7 +14,7 @@
       :required="true"
       :options="dashboardStore.programListOptions"
       v-model="studyPrograms"
-      @onChange="programChanged"
+      @onChange="onProgramChanged"
       :disabled="isGpaChange"
       :openDropdown="openDropdown"
       dropdownName="program"
@@ -42,7 +42,7 @@
         isLocationLoading ||
         isGpaChange
       "
-      @onChange="getProgramParent"
+      @onChange="onBudgetDropdownChange"
       :openDropdown="openDropdown"
       dropdownName="budget"
       @open="(value: string) => (openDropdown = value as Dropdowns)"
@@ -197,12 +197,17 @@ let resizeObserver: ResizeObserver | null = null;
 //   );
 // });
 
+const convertedCgpa = computed(()=>{
+  return gpa.value ? ((Number(gpa.value) / 10) * 4).toFixed(2) : "";
+})
+
 const updateUserData = async () => {
   try {
     const { min, max } = getMinMax();
     isSubmitting.value = true;
+    const cgpaOutOf4 = convertedCgpa.value;
     const payload = {
-      cgpa: gpa.value,
+      cgpa: cgpaOutOf4,
       annual_min_budget: min,
       annual_max_budget: max,
       destination_country_ids: selectedLocationOptions.value,
@@ -251,6 +256,8 @@ const updateModalPosition = () => {
 };
 
 const destinationUpdates = async () => {
+  dashboardStore.isSchoolsLoading = true;
+  await updateUserData();
   isLocationchange.value = true;
   await getBudgets();
   await getProgramParent();
@@ -282,7 +289,7 @@ const getMinMax = () => {
 // };
 
 const setInitialValues = (newValue: UserData) => {
-  gpa.value = `${newValue?.educational_records.cgpa}` || "";
+  gpa.value = `${((parseFloat(String(newValue?.educational_records.cgpa)) / 4) * 10).toFixed(0) }` || "";
   studyPrograms.value = dashboardStore.programListOptions.find(
     (item) =>
       Number(item.value) == newValue?.educational_records.next_class_grade.id
@@ -302,6 +309,12 @@ const setInitialValues = (newValue: UserData) => {
   );
 };
 
+const onProgramChanged = async () => {
+  dashboardStore.isSchoolsLoading = true;
+  await updateUserData();
+  programChanged();
+}
+
 const programChanged = async () => {
   try {
     if (!gpa.value || !studyPrograms.value?.value) {
@@ -311,7 +324,7 @@ const programChanged = async () => {
     const response = await api.post(
       "/api/v1/anonymous-recommendation/get-location-country",
       {
-        cgpa: gpa.value,
+        cgpa: convertedCgpa.value,
         class_grade_ids: [studyPrograms.value?.value],
         uniqueId: appStore.userData?.uuid,
       }
@@ -352,6 +365,12 @@ const programChanged = async () => {
   } catch (error) {}
 };
 
+const onBudgetDropdownChange = async () => {
+  dashboardStore.isSchoolsLoading = true;
+  await updateUserData();
+  getProgramParent();
+}
+
 const getProgramParent = async () => {
   try {
     if (
@@ -366,7 +385,7 @@ const getProgramParent = async () => {
     const response = await api.post(
       "/api/v1/anonymous-recommendation/find-program-parent",
       {
-        cgpa: gpa.value,
+        cgpa: convertedCgpa.value,
         class_grade_ids: [studyPrograms.value?.value],
         country_ids: selectedLocationOptions.value || [],
         max_budget: (annualBudget.value as { max?: number }).max,
@@ -383,7 +402,7 @@ const getProgramParent = async () => {
       }
     );
     isAreaOfStudyLoading.value = false;
-    await updateUserData();
+    // await updateUserData();
   } catch (error) {
     console.error(error);
   }
@@ -395,36 +414,42 @@ const getBudgets = async () => {
     const response = await api.post(
       "/api/v1/anonymous-recommendation/budget-range",
       {
-        cgpa: gpa.value,
+        cgpa: convertedCgpa.value,
         class_grade_ids: [studyPrograms.value?.value],
         country_ids: selectedLocationOptions.value || [],
         uniqueId: appStore.userData?.uuid,
       }
     );
-    dashboardStore.budgetList = response.data.data.map(
-      (item: [string | number, string | number]) => {
-        const min =
-          typeof item[0] === "string"
-            ? Number(item[0].replace(/\+/g, ""))
-            : item[0];
-        const max =
-          typeof item[1] === "string"
-            ? Number(item[1].replace(/\+/g, ""))
-            : item[1];
-        return {
-          value: `${item[0]}-${!!item[1] ? item[1] : ""}`,
-          label: `${budgetWithComma(item[0])}  ${
-            !!item[1] ? " - " + budgetWithComma(item[1]) : ""
-          }`,
-          min: min,
-          max: max,
-        };
-      }
-    );
+    if (response.data.data.length) {
+      dashboardStore.budgetList = response.data.data.map(
+        (item: [string | number, string | number]) => {
+          const min =
+            typeof item[0] === "string"
+              ? Number(item[0].replace(/\+/g, ""))
+              : item[0];
+          const max =
+            typeof item[1] === "string"
+              ? Number(item[1].replace(/\+/g, ""))
+              : item[1];
+          return {
+            value: `${item[0]}-${!!item[1] ? item[1] : ""}`,
+            label: `${budgetWithComma(item[0])}  ${
+              !!item[1] ? " - " + budgetWithComma(item[1]) : ""
+            }`,
+            min: min,
+            max: max,
+          };
+        }
+      );
+    } else {
+      dashboardStore.budgetList = [];
+      dashboardStore.coursePreferenceOptions = []
+    }
     isBudgetLoading.value = false;
   } catch (error) {
     isBudgetLoading.value = false;
     dashboardStore.budgetList = [];
+    dashboardStore.coursePreferenceOptions = []
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
       showToast(errorMessage, {
@@ -435,6 +460,8 @@ const getBudgets = async () => {
 };
 
 const gpaChanged = async () => {
+  dashboardStore.isSchoolsLoading = true;
+  await updateUserData();
   isGpaChange.value = true;
   await programChanged();
   await getBudgets();

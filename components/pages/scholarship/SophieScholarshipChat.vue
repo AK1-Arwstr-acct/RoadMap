@@ -169,6 +169,19 @@
               </NuxtLinkLocale>
             </div>
           </Transition>
+          <p
+            v-if="
+              completeChat.length === 0 && appStore.authenticatedUser
+            "
+            @click="
+              handelPreQuestionOfScholarship(
+                'Chance me with highly curated individualized scholarships that are best matched for me ONLY'
+              )
+            "
+            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer w-fit"
+          >
+            {{ t("dashboard.pre_question") }}
+          </p>
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
@@ -275,6 +288,11 @@ const scrollDown = () => {
   });
 };
 
+const handelPreQuestionOfScholarship = (question: string) => {
+  inputQuestion.value = question;
+  submit();
+}
+
 const submit = async () => {
   try {
     completeChat.value.push({
@@ -341,12 +359,10 @@ const submit = async () => {
       }
     }
     scrollDown();
-    if (!appStore.authenticatedUser) {
-      setTimeout(() => {
-        publicPaywall.value = true;
-        textarea.value?.blur();
-      }, 2000);
-    }
+    setTimeout(() => {
+      publicPaywall.value = true;
+      textarea.value?.blur();
+    }, 2000);
     if (route.query.query) {
       router.replace({
         query: undefined,
@@ -405,10 +421,12 @@ watch(
 
 onMounted(async () => {
   uuid.value = uuidv4();
-  const sophieInfo = `<p class="text-[#181D27] text-2xl font-semibold">Nice to meet you!</p> <div class="mt-2 text-[#181D27]"> <p>Let’s find scholarships that are the perfect match for you 🎓</p> <p>Just fill in a few quick details below so I can recommend the best options:</p> <ul class="flex flex-col list-disc"> <li>Study program (e.g., Bachelor’s, Master’s)</li> <li>Preferred study destination</li> <li>Your GPA</li> <li>Field of study (e.g., Engineering, Business, Arts)</li> </ul> </div>`;
-  completeChat.value.push({
-    isSender: false,
-    text: sophieInfo,
-  });
+  if (!appStore.authenticatedUser) {
+    const sophieInfo = `<p class="text-[#181D27] text-2xl font-semibold">Nice to meet you!</p> <div class="mt-2 text-[#181D27]"> <p>Let’s find scholarships that are the perfect match for you 🎓</p> <p>Just fill in a few quick details below so I can recommend the best options:</p> <ul class="flex flex-col list-disc"> <li>Study program (e.g., Bachelor’s, Master’s)</li> <li>Preferred study destination</li> <li>Your GPA</li> <li>Field of study (e.g., Engineering, Business, Arts)</li> </ul> </div>`;
+    completeChat.value.push({
+      isSender: false,
+      text: sophieInfo,
+    });
+  }
 });
 </script>

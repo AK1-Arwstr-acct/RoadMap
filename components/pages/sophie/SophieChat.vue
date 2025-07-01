@@ -181,8 +181,8 @@
               @click="handelPreQuestion(question.text)"
               class="bg-[#F5F5F5] py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
             >
-              <IconStar v-if="question.text.includes('sophie')" />
-              {{ question.text }}
+              <IconStar v-if="question.text.includes('[star]')" />
+              {{ question.text.replace('[star]', '') }}
             </div>
           </div>
           <p
@@ -373,9 +373,17 @@ const addNewLine = async () => {
   adjustHeight();
 };
 
-const handelPreQuestion = (question: string) => {
-  inputQuestion.value = question;
-  submit();
+const handelPreQuestion = async (question: string) => {
+  if (question.includes('[star]')) {
+    inputQuestion.value = question.replace('[star]', '')
+    submit();
+    await api.get(
+      `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
+    );
+  } else {
+    inputQuestion.value = question;
+    submit();
+  }
 };
 
 const tempText = ref<string>("");

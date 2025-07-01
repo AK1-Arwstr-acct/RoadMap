@@ -1,9 +1,12 @@
 <template>
     <div ref="focusDiv" class="relative w-fit">
-        <div @click.stop="openDropdownHandler" @touchstart.prevent="openDropdownHandler"
+        <div 
+            @click.stop="openDropdownHandler" 
+            @touchstart.stop="onTouchStart"
+            @touchmove="onTouchMove"
+            @touchend.prevent="onTouchEnd"
             class="border-[1.5px] border-[#0000001A] rounded-full py-1.5 px-2.5 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer relative"
             :class="{
-                'opacity-70 pointer-events-none': disabled,
                 '!border-[#93C5FD] bg-[#EFF6FF]': selectedOption,
             }">
             <div v-if="!selectedOption?.value" class="flex-1 text-nowrap">
@@ -136,12 +139,36 @@ const isDropdownOpen = computed(
   () => props.openDropdown === props.dropdownName
 );
 
+const touchStartX = ref(0);
+const touchMoved = ref(false);
+
+const onTouchStart = (e: TouchEvent) => {
+  touchMoved.value = false;
+  touchStartX.value = e.touches[0].clientX;
+
+};
+
+const onTouchMove = (e: TouchEvent) => {
+  const dx = Math.abs(e.touches[0].clientX - touchStartX.value);
+  // If moved more than 2px in x direction, consider it a scroll
+  if (dx > 2) {
+    touchMoved.value = true;
+  }
+};
+
+const onTouchEnd = (e: TouchEvent) => {
+  if (!touchMoved.value) {
+    openDropdownHandler();
+  }
+};
+
+
 const updateModalPosition = () => {
   if (focusDiv.value) {
     const rect = focusDiv.value.getBoundingClientRect();
 
     modalPosition.value = {
-      top: rect.bottom + 5, // 20px below
+      top: rect.bottom + 5, // 5px below
       left: rect.left // center horizontally
     };
   }

@@ -3,7 +3,9 @@
     <!-- Dropdown Button -->
     <div
       @click.stop="openDropdownHandler"
-      @touchstart.prevent="openDropdownHandler"
+      @touchstart.stop="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend.prevent="onTouchEnd"
       class="border-[1.5px] border-[#0000001A] rounded-full py-1.5 px-2.5 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer relative"
       :class="{
         'opacity-70 pointer-events-none': !majorProgramsList.length,
@@ -24,13 +26,18 @@
         class="transition-transform duration-200 ease-in-out"
         :class="{ 'transform rotate-180': isDropdownOpen }"
       >
+        <IconSpinner
+          v-if="isMajorsLoading"
+          stroke="#A4A7AE"
+          bgColor="#ffffff"
+          width="18"
+        />
         <IconChevronDown
-          v-if="majorProgramsList.length"
+          v-else
           height="18"
           width="18"
           :stroke="selectedLPrograms.length > 0 ? '#60A5FA' : '#4B5563'"
         />
-        <IconSpinner v-else stroke="#A4A7AE" bgColor="#ffffff" width="18" />
       </span>
     </div>
 
@@ -146,6 +153,7 @@ const emits = defineEmits<{
 
 const majorProgramsList = ref<programOptions[]>([]);
 const selectedLPrograms = ref<number[]>([]);
+const isMajorsLoading = ref<boolean>(false);
 
 const focusDiv = ref<HTMLElement | null>(null);
 const modalPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 });
@@ -154,6 +162,29 @@ let resizeObserver: ResizeObserver | null = null;
 const isDropdownOpen = computed(
   () => props.openDropdown === props.dropdownName
 );
+
+const touchStartX = ref(0);
+const touchMoved = ref(false);
+
+const onTouchStart = (e: TouchEvent) => {
+  touchMoved.value = false;
+  touchStartX.value = e.touches[0].clientX;
+
+};
+
+const onTouchMove = (e: TouchEvent) => {
+  const dx = Math.abs(e.touches[0].clientX - touchStartX.value);
+  // If moved more than 2px in x direction, consider it a scroll
+  if (dx > 2) {
+    touchMoved.value = true;
+  }
+};
+
+const onTouchEnd = (e: TouchEvent) => {
+  if (!touchMoved.value) {
+    openDropdownHandler();
+  }
+};
 
 const updateModalPosition = () => {
   if (focusDiv.value) {
@@ -225,6 +256,7 @@ const submit = async () => {
 
 const getMajors = async () => {
   try {
+    isMajorsLoading.value = true;
     const response = await api.get("/api/v1/school/recommended/program-titles");
     if (response) {
       majorProgramsList.value = response.data.data.map(
@@ -244,6 +276,8 @@ const getMajors = async () => {
         type: "error",
       });
     }
+  } finally {
+    isMajorsLoading.value = false;
   }
 };
 

@@ -35,7 +35,6 @@
               </div>
               <div class="flex-1">
                 <SchoolCard
-                  :sequenceId="school.id"
                   :checkListData="checklistSchoolData(school)"
                   :program="school.program"
                   @openDetail="openDetail"
@@ -59,7 +58,7 @@
     <div v-else class="flex-1">
       <VueDraggable
         ref="el"
-        @start="onStartReorder"
+        @start="onStartReorderPyblic"
         v-model="dashboardStore.userSelectedSchoolsListPublic"
         v-if="dashboardStore.userSelectedSchoolsListPublic.length > 0"
         class="flex flex-col gap-6"
@@ -105,9 +104,10 @@ const openDetail = async (item: SchoolDetail) => {
 };
 
 const onStartReorder = () => {
-  if (!appStore.authenticatedUser) {
+  console.log(dashboardStore.userSelectedSchoolsList);
+};
+const onStartReorderPyblic = () => {
     appStore.featureSoftPaywall = true;
-  }
 };
 
 const checklistSchoolData = (school: checklistProgram) => {
