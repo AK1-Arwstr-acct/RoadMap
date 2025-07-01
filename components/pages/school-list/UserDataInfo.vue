@@ -73,7 +73,7 @@
         />
       </div>
       <div
-        v-if="appStore.firstTimeUser"
+        v-if="appStore.firstTimeUser && width > 1024"
         ref="focusDiv"
         class="absolute inset-0 z-30 bg-white rounded-md flex justify-center items-center"
       >
@@ -90,7 +90,7 @@
       </div>
       <Transition name="fade">
         <div
-          v-if="appStore.firstTimeUser"
+          v-if="appStore.firstTimeUser && width > 1024"
           :style="{
             position: 'fixed',
             top: modalPosition.top + 'px',
@@ -158,6 +158,7 @@ const isAreaOfStudyLoading = ref<boolean>(false);
 const isGpaChange = ref<boolean>(false);
 const isLocationchange = ref<boolean>(false);
 const isLocationLoading = ref<boolean>(false);
+const width = ref<number>(0);
 
 // for dropdowns open
 const openDropdown = ref<Dropdowns>("");
@@ -534,6 +535,12 @@ watch(
   }
 );
 
+const windowSize = () => {
+  if (typeof window !== "undefined") {
+    width.value = window.innerWidth;
+  }
+};
+
 const calculateHeight = () => {
   if (content.value) {
     contentHeight.value = isDetailOpen.value ? content.value.scrollHeight : 0;
@@ -558,6 +565,7 @@ onMounted(() => {
     updateModalPosition();
   }
   window.addEventListener("resize", updateModalPosition);
+  window.addEventListener("resize", windowSize);
 });
 
 onUnmounted(() => {
@@ -566,5 +574,6 @@ onUnmounted(() => {
     resizeObserver.disconnect();
   }
   window.removeEventListener("resize", updateModalPosition);
+  window.removeEventListener("resize", windowSize);
 });
 </script>

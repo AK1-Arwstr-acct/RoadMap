@@ -71,11 +71,7 @@
                   </p>
                 </div>
               </div>
-              <p
-                v-else
-                :key="`${idx}-p`"
-                class="relative -mb-2"
-              >
+              <p v-else :key="`${idx}-p`" class="relative -mb-2">
                 {{ step.title }}
                 <span
                   class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
@@ -170,9 +166,7 @@
             </div>
           </Transition>
           <p
-            v-if="
-              completeChat.length === 0 && appStore.authenticatedUser
-            "
+            v-if="completeChat.length === 0 && appStore.authenticatedUser"
             @click="
               handelPreQuestionOfScholarship(
                 'Chance me with highly curated individualized scholarships that are best matched for me ONLY'
@@ -185,7 +179,8 @@
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
-              'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading || publicPaywall,
+              'bg-[#FAFAFA] pointer-events-none':
+                isChatFull || isChatLoading || publicPaywall,
             }"
           >
             <textarea
@@ -245,6 +240,10 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const showLoading = ref<boolean>(false);
 const publicPaywall = ref<boolean>(false);
 
+// for step animation
+const isStart = ref<boolean>(false);
+const animationTimer = ref<number>(400);
+
 const loadingStep = ref(0);
 const loadingSteps = [
   {
@@ -291,7 +290,7 @@ const scrollDown = () => {
 const handelPreQuestionOfScholarship = (question: string) => {
   inputQuestion.value = question;
   submit();
-}
+};
 
 const submit = async () => {
   try {
@@ -342,6 +341,11 @@ const submit = async () => {
       });
     }
     if (response) {
+      if (completeChat.value.length <= 3) {
+        isStart.value = true;
+        stepAnimation();
+        await new Promise((resolve) => setTimeout(resolve, 800));
+      }
       if (showLoading.value) {
         await new Promise((resolve) => setTimeout(resolve, 2200));
         showLoading.value = false;
@@ -392,22 +396,23 @@ const submit = async () => {
   }
 };
 
-function stepAnimation() {
+const stepAnimation = () => {
   if (loadingStep.value < loadingSteps.length) {
-    let timer = 400;
     if (loadingStep.value === 1) {
-      timer = 500;
+      animationTimer.value = 500;
     } else if (loadingStep.value === 2) {
-      timer = 600;
+      animationTimer.value = 600;
     } else if (loadingStep.value === 3) {
-      timer = 700;
+      animationTimer.value = 700;
     }
-    setTimeout(() => {
-      loadingStep.value++;
-      stepAnimation();
-    }, timer); // Adjust delay as needed
+    if (loadingStep.value === 0 || isStart.value) {
+      setTimeout(() => {
+        loadingStep.value++;
+        stepAnimation();
+      }, animationTimer.value); // Adjust delay as needed
+    }
   }
-}
+};
 
 watch(
   () => showLoading.value,
