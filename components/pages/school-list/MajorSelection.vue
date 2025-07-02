@@ -119,7 +119,6 @@ import axios from "axios";
 import useAppStore from "~/stores/AppStore";
 import IconChevronDown from "~/components/icons/IconChevronDown.vue";
 import IconTick from "~/components/icons/IconTick.vue";
-import MajorSekeleton from "~/components/pages/school-list/MajorSekeleton.vue";
 import type { Dropdowns } from "~/types/dashboard";
 
 const { api } = useApi();
@@ -169,7 +168,6 @@ const touchMoved = ref(false);
 const onTouchStart = (e: TouchEvent) => {
   touchMoved.value = false;
   touchStartX.value = e.touches[0].clientX;
-
 };
 
 const onTouchMove = (e: TouchEvent) => {
@@ -233,6 +231,16 @@ const toggleSelection = (id: number) => {
   submit();
 };
 
+const getRecommendations = async () => {
+  if (appStore.userData) {
+    if (appStore.userData.educational_records.next_program_titles.length > 0) {
+      await dashboardStore.runEngine();
+    } else {
+      await dashboardStore.preRunEngine();
+    }
+  }
+}
+
 const submit = async () => {
   try {
     dashboardStore.isSchoolsLoading = true;
@@ -242,7 +250,8 @@ const submit = async () => {
         ? selectedLPrograms.value
         : -1,
     });
-    appStore.getUserData();
+    await appStore.getUserData();
+    getRecommendations();
   } catch (error) {
     dashboardStore.isSchoolsLoading = false;
     if (axios.isAxiosError(error)) {
@@ -281,15 +290,19 @@ const getMajors = async () => {
   }
 };
 
+const preSelection = () => {
+  if (appStore.userData) {
+    selectedLPrograms.value =
+      appStore.userData?.educational_records.next_program_titles.map(
+        (item) => item.id
+      );
+  }
+};
+
 watch(
   () => appStore.userData,
   async () => {
-    if (appStore.userData) {
-      selectedLPrograms.value =
-        appStore.userData?.educational_records.next_program_titles.map(
-          (item) => item.id
-        );
-    }
+    preSelection();
     if (!appStore.userData?.educational_records.next_program_titles.length) {
       getMajors();
     }
@@ -308,6 +321,7 @@ watch(
 );
 
 onMounted(() => {
+  preSelection();
   getMajors();
   if (focusDiv.value) {
     resizeObserver = new ResizeObserver(() => {

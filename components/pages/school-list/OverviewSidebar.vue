@@ -4,7 +4,7 @@
   >
     <div class="pt-8 pb-4 px-6 flex justify-between items-center border-b border-[#00000033]">
       <div class="font-semibold">
-        <p class="text-[#2563EB] text-xs">AI SMART fILTER</p>
+        <p class="text-[#2563EB] text-xs">AI SMART FILTER</p>
         <p class="text-[#111827] text-xl">Why these schools?</p>
       </div>
       <div class="flex items-center gap-3">

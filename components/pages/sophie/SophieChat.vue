@@ -156,13 +156,15 @@
             <p class="text-[#4B5563] text-xs font-semibold pb-1">
               SUGGESTED FOLLOW UP
             </p>
-            <div
-              v-for="(question, idx) in OverviewPreQuestion"
-              :key="idx"
-              @click="handelPreQuestion(question)"
-              class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
-            >
-              {{ question }}
+            <div class="flex gap-1 items-end" :class="{ 'flex-col': !isModal }">
+              <div
+                v-for="(question, idx) in OverviewPreQuestion"
+                :key="idx"
+                @click="handelPreQuestion(question)"
+                class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
+              >
+                {{ question }}
+              </div>
             </div>
           </div>
           <div

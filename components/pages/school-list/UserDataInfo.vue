@@ -126,7 +126,10 @@
     <SophieRecommendation />
   </div>
   <Transition name="fade">
-    <div v-if="appStore.firstTimeUser" class="fixed z-20 inset-0 bg-black/60" />
+    <div
+      v-if="appStore.firstTimeUser && width > 1024"
+      class="fixed z-20 inset-0 bg-black/60"
+    />
   </Transition>
 </template>
 <script setup lang="ts">
@@ -198,9 +201,9 @@ let resizeObserver: ResizeObserver | null = null;
 //   );
 // });
 
-const convertedCgpa = computed(()=>{
+const convertedCgpa = computed(() => {
   return gpa.value ? ((Number(gpa.value) / 10) * 4).toFixed(2) : "";
-})
+});
 
 const updateUserData = async () => {
   try {
@@ -290,7 +293,11 @@ const getMinMax = () => {
 // };
 
 const setInitialValues = (newValue: UserData) => {
-  gpa.value = `${((parseFloat(String(newValue?.educational_records.cgpa)) / 4) * 10).toFixed(0) }` || "";
+  gpa.value =
+    `${(
+      (parseFloat(String(newValue?.educational_records.cgpa)) / 4) *
+      10
+    ).toFixed(0)}` || "";
   studyPrograms.value = dashboardStore.programListOptions.find(
     (item) =>
       Number(item.value) == newValue?.educational_records.next_class_grade.id
@@ -314,7 +321,7 @@ const onProgramChanged = async () => {
   dashboardStore.isSchoolsLoading = true;
   await updateUserData();
   programChanged();
-}
+};
 
 const programChanged = async () => {
   try {
@@ -322,14 +329,7 @@ const programChanged = async () => {
       return;
     }
     isLocationLoading.value = true;
-    const response = await api.post(
-      "/api/v1/anonymous-recommendation/get-location-country",
-      {
-        cgpa: convertedCgpa.value,
-        class_grade_ids: [studyPrograms.value?.value],
-        uniqueId: appStore.userData?.uuid,
-      }
-    );
+    const response = await api.get(`/api/v1/school/recommended/countries`);
     if (response.data.data) {
       dashboardStore.locationOptions = response.data.data?.map(
         (item: { country_ids: number[]; title: string }) => {
@@ -370,7 +370,7 @@ const onBudgetDropdownChange = async () => {
   dashboardStore.isSchoolsLoading = true;
   await updateUserData();
   getProgramParent();
-}
+};
 
 const getProgramParent = async () => {
   try {
@@ -383,27 +383,22 @@ const getProgramParent = async () => {
       return;
     }
     isAreaOfStudyLoading.value = true;
-    const response = await api.post(
-      "/api/v1/anonymous-recommendation/find-program-parent",
-      {
-        cgpa: convertedCgpa.value,
-        class_grade_ids: [studyPrograms.value?.value],
-        country_ids: selectedLocationOptions.value || [],
-        max_budget: (annualBudget.value as { max?: number }).max,
-        min_budget: null,
-        uniqueId: appStore.userData?.uuid,
-      }
+    const response = await api.get(
+      "/api/v1/school/recommended/get-super-meta-categories"
     );
-    dashboardStore.coursePreferenceOptions = response.data.data.map(
-      (item: { id: number; title: string }) => {
-        return {
-          value: item?.id,
-          label: item?.title,
-        };
-      }
-    );
+    if (response.data.data) {
+      dashboardStore.coursePreferenceOptions = response.data.data.map(
+        (item: { id: number; title: string }) => {
+          return {
+            value: item?.id,
+            label: item?.title,
+          };
+        }
+      );
+    }
     isAreaOfStudyLoading.value = false;
     // await updateUserData();
+    getRecommendations();
   } catch (error) {
     console.error(error);
   }
@@ -412,15 +407,7 @@ const getProgramParent = async () => {
 const getBudgets = async () => {
   try {
     isBudgetLoading.value = true;
-    const response = await api.post(
-      "/api/v1/anonymous-recommendation/budget-range",
-      {
-        cgpa: convertedCgpa.value,
-        class_grade_ids: [studyPrograms.value?.value],
-        country_ids: selectedLocationOptions.value || [],
-        uniqueId: appStore.userData?.uuid,
-      }
-    );
+    const response = await api.get(`/api/v1/school/recommended/budget-range`);
     if (response.data.data.length) {
       dashboardStore.budgetList = response.data.data.map(
         (item: [string | number, string | number]) => {
@@ -444,13 +431,13 @@ const getBudgets = async () => {
       );
     } else {
       dashboardStore.budgetList = [];
-      dashboardStore.coursePreferenceOptions = []
+      dashboardStore.coursePreferenceOptions = [];
     }
     isBudgetLoading.value = false;
   } catch (error) {
     isBudgetLoading.value = false;
     dashboardStore.budgetList = [];
-    dashboardStore.coursePreferenceOptions = []
+    dashboardStore.coursePreferenceOptions = [];
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
       showToast(errorMessage, {
@@ -468,6 +455,16 @@ const gpaChanged = async () => {
   await getBudgets();
   await getProgramParent();
   isGpaChange.value = false;
+};
+
+const getRecommendations = async () => {
+  if (appStore.userData) {
+    if (appStore.userData.educational_records.next_program_titles.length > 0) {
+      await dashboardStore.runEngine();
+    } else {
+      await dashboardStore.preRunEngine();
+    }
+  }
 };
 
 watch(

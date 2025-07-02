@@ -78,7 +78,7 @@
           v-if="isOpen"
           class="mb-3 overflow-hidden text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm w-full"
         >
-          {{ t("dashboard.scholarships_that_suit_me") }}
+          {{ t("dashboard.best_fit_scholarships") }}
         </button>
       </Transition>
       <Transition name="fade">

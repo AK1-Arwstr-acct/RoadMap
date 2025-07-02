@@ -7,7 +7,8 @@
         <!-- chat -->
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col gap-6 h-full relative"
+          class="flex-1 no-scrollbar flex flex-col gap-6 h-full relative"
+          :class="[publicPaywall ? 'overflow-hidden' : 'overflow-y-auto']"
         >
           <div
             v-for="(chat, index) in completeChat.filter(
@@ -169,12 +170,12 @@
             v-if="completeChat.length === 0 && appStore.authenticatedUser"
             @click="
               handelPreQuestionOfScholarship(
-                'Chance me with highly curated individualized scholarships that are best matched for me ONLY'
+                'Chance me with best fit scholarships'
               )
             "
             class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer w-fit"
           >
-            {{ t("dashboard.pre_question") }}
+            Chance me with best fit scholarships
           </p>
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
@@ -321,6 +322,7 @@ const submit = async () => {
         {
           query: userQuery,
           sophieSessionId: uuid.value,
+          roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
           //   ...(!props.isModal && {
           //     roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
           //   }),
@@ -335,6 +337,7 @@ const submit = async () => {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
         query: userQuery,
         sophieSessionId: uuid.value,
+        roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         // ...(!props.isModal && {
         //   roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         // }),
@@ -362,7 +365,7 @@ const submit = async () => {
         });
       }
     }
-    scrollDown();
+    // scrollDown();
     setTimeout(() => {
       publicPaywall.value = true;
       textarea.value?.blur();
