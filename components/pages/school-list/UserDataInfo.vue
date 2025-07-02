@@ -320,7 +320,9 @@ const setInitialValues = (newValue: UserData) => {
 const onProgramChanged = async () => {
   dashboardStore.isSchoolsLoading = true;
   await updateUserData();
-  programChanged();
+   programChanged();
+   getBudgets();
+   getProgramParent();
 };
 
 const programChanged = async () => {
@@ -342,24 +344,6 @@ const programChanged = async () => {
       if (!dashboardStore.locationOptions.length) {
         areaOfStudy.value = undefined;
         annualBudget.value = undefined;
-      }
-      const currentCountryIds = dashboardStore.locationOptions
-        .map((option) => option.value)
-        .flat();
-      const preSelection = selectedLocationOptions.value;
-      selectedLocationOptions.value = selectedLocationOptions.value.filter(
-        (id) => currentCountryIds.includes(id)
-      );
-      if (
-        !(
-          preSelection.length === selectedLocationOptions.value.length &&
-          preSelection.every((id) => selectedLocationOptions.value.includes(id))
-        )
-      ) {
-        isLocationchange.value = true;
-        await getBudgets();
-        await getProgramParent();
-        isLocationchange.value = false;
       }
       isLocationLoading.value = false;
     }

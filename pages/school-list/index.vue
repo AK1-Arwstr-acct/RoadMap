@@ -107,6 +107,9 @@ const isTokenLoading = ref<boolean>(true);
 const schoolsListWrapper = ref<HTMLElement | null>(null);
 const width = ref<number>(0);
 
+// to track the first load
+const firstRun = ref<boolean>(true);
+
 const checkPrograms = () => {
   if (appStore.userData) {
     if (appStore.userData.educational_records.next_program_titles.length > 0) {
@@ -132,6 +135,7 @@ const getRecommendations = async (pageNo: number = 1) => {
     } else {
       await dashboardStore.preRunEngine(pageNo);
     }
+    firstRun.value = false;
   }
 };
 
@@ -141,14 +145,11 @@ const windowSize = () => {
   }
 };
 
-const firstRun = ref<boolean>(true);
-
 watch(
   () => appStore.userData,
   async () => {
     if (firstRun.value) {
       getRecommendations();
-      firstRun.value = false;
     }
     checkPrograms();
   }
