@@ -70,14 +70,14 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import SchoolDetailModal from "~/components/pages/school-list/SchoolDetailModal.vue";
 import type { checklistProgram, SchoolDetail } from "~/types/program";
 import useAppStore from "~/stores/AppStore";
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 const localePath = useLocalePath();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
@@ -132,6 +132,6 @@ const openDetail = async (item: SchoolDetail) => {
 };
 
 onMounted(async () => {
-  await dashboardStore.getChecklistProgram();
+  await schoolListStore.getChecklistProgram();
 });
 </script>

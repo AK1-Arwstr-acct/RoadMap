@@ -94,13 +94,13 @@ const props = defineProps({
         default: "",
     },
     openDropdown: {
-    type: String as PropType<Dropdowns>,
-    default: "",
-  },
-  dropdownName: {
-    type: String as PropType<Dropdowns>,
-    default: "",
-  },
+        type: String as PropType<Dropdowns>,
+        default: "",
+    },
+    dropdownName: {
+        type: String as PropType<Dropdowns>,
+        default: "",
+    },
     disabled: {
         type: Boolean,
         default: false,

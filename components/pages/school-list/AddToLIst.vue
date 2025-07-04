@@ -26,12 +26,12 @@
 </template>
 <script setup lang="ts">
 import type { checklistResponse, Program } from "~/types/program";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import useAppStore from "~/stores/AppStore";
 import type { OptionAttributes } from "~/types/home";
 import axios from "axios";
 
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
@@ -101,10 +101,10 @@ const setInitialStatus = computed(() => {
 
 const dropdownDirection = computed(() => {
   if (width.value > 1024) {
-    const index = dashboardStore.schoolsList.findIndex(
+    const index = schoolListStore.schoolsList.findIndex(
       (item) => item.id === props.program.id
     );
-    const listLength = dashboardStore.schoolsList.length;
+    const listLength = schoolListStore.schoolsList.length;
     return listLength > 3 && index === listLength - 1 ? "upward" : "downward";
   }
   return "upward";
@@ -117,11 +117,11 @@ const isInCheckList = computed(() => {
     return props.program.hasBookMark;
   }
   if (appStore.authenticatedUser) {
-    return dashboardStore.userSelectedSchoolsList.some(
+    return schoolListStore.userSelectedSchoolsList.some(
       (item) => item.program.id === props.program.id
     );
   } else {
-    return dashboardStore.userSelectedSchoolsListPublic.some(
+    return schoolListStore.userSelectedSchoolsListPublic.some(
       (item) => item.id === props.program.id
     );
   }
@@ -130,7 +130,7 @@ const isInCheckList = computed(() => {
 const addToList = async () => {
   try {
     if (!appStore.authenticatedUser) {
-      dashboardStore.userSelectedSchoolsListPublic.push(props.program);
+      schoolListStore.userSelectedSchoolsListPublic.push(props.program);
       return;
     }
     isAddingSchol.value = true;
@@ -141,7 +141,7 @@ const addToList = async () => {
       note: "",
     });
     if (response.data.data) {
-      const program = dashboardStore.schoolsList.find(
+      const program = schoolListStore.schoolsList.find(
         (item) => item.id === response.data.data.program_id
       );
       if (program && program.bookmark) {

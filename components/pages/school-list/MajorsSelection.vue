@@ -9,7 +9,7 @@
       class="border-[1.5px] border-[#0000001A] rounded-full py-1.5 px-2.5 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer relative"
       :class="{
         'opacity-70 pointer-events-none':
-          !majorProgramsList.length || dashboardStore.isSchoolsLoading,
+          !majorProgramsList.length || schoolListStore.isSchoolsLoading,
         '!border-[#93C5FD] bg-[#EFF6FF]': selectedLPrograms.length > 0,
       }"
     >
@@ -108,7 +108,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
 import IconChevronDown from "~/components/icons/IconChevronDown.vue";
@@ -118,7 +118,7 @@ import IconSpinner from "~/components/icons/IconSpinner.vue";
 const { api } = useApi();
 const appStore = useAppStore();
 const { showToast } = useToast();
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 
 interface programOptions {
   value: number;
@@ -214,21 +214,21 @@ const toggleSelection = (id: number) => {
   } else {
     selectedLPrograms.value.push(id);
   }
-  dashboardStore.selectedPublicMajors = selectedLPrograms.value;
+  schoolListStore.selectedPublicMajors = selectedLPrograms.value;
   closeDropdown();
   submit();
 };
 
 const submit = async () => {
   try {
-    dashboardStore.isSchoolsLoading = true;
+    schoolListStore.isSchoolsLoading = true;
     if (selectedLPrograms.value.length > 0) {
-      await dashboardStore.runEngine();
+      await schoolListStore.runEngine();
     } else {
-      await dashboardStore.preRunEngine();
+      await schoolListStore.preRunEngine();
     }
   } catch (error) {
-    dashboardStore.isSchoolsLoading = false;
+    schoolListStore.isSchoolsLoading = false;
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
       showToast(errorMessage, {
@@ -273,13 +273,15 @@ const getMajors = async () => {
 };
 
 watch(
-  () => dashboardStore.isPublicMajorEnable,
+  () => schoolListStore.isPublicMajorEnable,
   (newValue) => {
+    schoolListStore.selectedPublicMajors = [];
+    selectedLPrograms.value = [];
     if (newValue) {
       getMajors();
     } else {
       majorProgramsList.value = [];
-      dashboardStore.schoolsList = [];
+      // schoolListStore.schoolsList = [];
     }
   }
 );

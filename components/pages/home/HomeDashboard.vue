@@ -99,10 +99,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import useAppStore from "~/stores/AppStore";
 
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 const appStore = useAppStore();
 const localePath = useLocalePath();
 

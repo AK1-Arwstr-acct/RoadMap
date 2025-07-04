@@ -259,14 +259,14 @@
 import axios from "axios";
 import type { ChatDetail, OptionAttributes, SophieChat } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import useSophieStore from "~/stores/sophieStore";
 import useAppStore from "~/stores/AppStore";
 import TaskDetailChatModal from "./TaskDetailChatModal.vue";
 
 const { api } = useApi();
 const { showToast } = useToast();
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 const sophieStore = useSophieStore();
 const appStore = useAppStore();
 const route = useRoute();
@@ -449,7 +449,7 @@ const submit = async () => {
         isSender: true,
         text: !props.isSummarizeOverview
           ? inputQuestion.value
-          : dashboardStore.overViews?.join("\n") || "",
+          : schoolListStore.overViews?.join("\n") || "",
       });
     }
     scrollDown();
@@ -586,14 +586,14 @@ watch(
 
 // for overViews in final api call
 watch(
-  () => dashboardStore.overViews,
+  () => schoolListStore.overViews,
   () => {
     if (
       props.isOverviewSidebar &&
-      (dashboardStore.overViews ?? []).length > 0
+      (schoolListStore.overViews ?? []).length > 0
     ) {
       inputQuestion.value = `Please summarize my school list \n  ${(
-        dashboardStore.overViews ?? []
+        schoolListStore.overViews ?? []
       ).join("\n")}`;
       submit();
     }
@@ -609,9 +609,9 @@ onMounted(async () => {
   }
   if (
     props.isSummarizeOverview ||
-    (props.isOverviewSidebar && (dashboardStore.overViews ?? []).length > 0)
+    (props.isOverviewSidebar && (schoolListStore.overViews ?? []).length > 0)
   ) {
-    inputQuestion.value = `Please summarize my school list \n  ${dashboardStore.overViews?.join(
+    inputQuestion.value = `Please summarize my school list \n  ${schoolListStore.overViews?.join(
       "\n"
     )}`;
     submit();

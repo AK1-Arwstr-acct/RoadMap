@@ -18,7 +18,7 @@
             </div>
             <div
               v-if="
-                (dashboardStore.overViews?.length ?? 0) >= 1 && width <= 1024
+                (schoolListStore.overViews?.length ?? 0) >= 1 && width <= 1024
               "
             >
               <WhyTheseSchool />
@@ -31,8 +31,8 @@
     <Transition name="overview">
       <div
         v-if="
-          (dashboardStore.overViews ?? []).length > 0 &&
-          dashboardStore.overViews !== null &&
+          (schoolListStore.overViews ?? []).length > 0 &&
+          schoolListStore.overViews !== null &&
           width > 1024
         "
       >
@@ -42,7 +42,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import useAppStore from "~/stores/AppStore";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import OverviewSidebar from "~/components/pages/school-list/OverviewSidebar.vue";
@@ -54,6 +54,7 @@ definePageMeta({
 const appTrackerStore = useAppTrackerStore();
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
+
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""
 }/school-list`;
@@ -99,8 +100,8 @@ useHead(
 );
 
 const appStore = useAppStore();
-const dashboardStore = useDashboardStore();
 const { api } = useApi();
+const schoolListStore = useSchoolListStore();
 
 const isActive = ref<boolean>(false);
 const isTokenLoading = ref<boolean>(true);
@@ -121,19 +122,19 @@ const checkPrograms = () => {
 };
 
 const getRecommendations = async (pageNo: number = 1) => {
-  if (dashboardStore.isSchoolListPublic) {
-    if (dashboardStore.selectedPublicMajors.length > 0) {
-      await dashboardStore.runEngine(pageNo);
+  if (schoolListStore.isSchoolListPublic) {
+    if (schoolListStore.selectedPublicMajors.length > 0) {
+      await schoolListStore.runEngine(pageNo);
     } else {
-      await dashboardStore.preRunEngine(pageNo);
+      await schoolListStore.preRunEngine(pageNo);
     }
     return;
   }
   if (appStore.userData) {
     if (appStore.userData.educational_records.next_program_titles.length > 0) {
-      await dashboardStore.runEngine(pageNo);
+      await schoolListStore.runEngine(pageNo);
     } else {
-      await dashboardStore.preRunEngine(pageNo);
+      await schoolListStore.preRunEngine(pageNo);
     }
     firstRun.value = false;
   }
@@ -149,14 +150,14 @@ watch(
   () => appStore.userData,
   async () => {
     if (firstRun.value) {
-      getRecommendations();
+      // getRecommendations();
     }
     checkPrograms();
   }
 );
 
 watch(
-  () => dashboardStore.schoolsList,
+  () => schoolListStore.schoolsList,
   () => {
     schoolsListWrapper.value?.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -166,41 +167,54 @@ onMounted(async () => {
   windowSize();
   window.addEventListener("resize", windowSize);
   await nextTick();
-  if (dashboardStore.isSchoolListPublic) {
-    const response = await api.get("/api/v1/session-based-journey/session");
-    if (response.data) {
-      const token = useCookie("publicToken", {
-        maxAge: 10800,
-        httpOnly: false,
-        secure: true,
-      });
-      token.value = JSON.stringify(response.data.data.token);
-      await nextTick();
-      dashboardStore.setProgramListOptions();
-      isTokenLoading.value = false;
-      dashboardStore.isSchoolsLoading = false;
-    }
+  const token = useCookie("token")
+  let response;
+  if (token.value) {
+    response = await api.get("/api/v1/session-based-journey/session", {
+      headers: {
+        "Authorization": `Bearer ${token.value}`,
+      },
+    });
+  } else {
+    response = await api.get("/api/v1/session-based-journey/session");
+  }
+  if (response.data) {
+    const publicToken = useCookie("publicToken", {
+      maxAge: 10800,
+      httpOnly: false,
+      secure: true,
+    });
+    publicToken.value = JSON.stringify(response.data.data.token);
+    await nextTick();
+  }
+  if (schoolListStore.isSchoolListPublic) {
+    schoolListStore.setProgramListOptions();
+    isTokenLoading.value = false;
+    schoolListStore.isSchoolsLoading = false;
     return;
   }
   isTokenLoading.value = false;
-  getRecommendations();
-  if (
-    !(
-      dashboardStore.programListOptions.length &&
-      dashboardStore.locationOptions.length &&
-      dashboardStore.budgetList.length &&
-      dashboardStore.coursePreferenceOptions.length
-    )
-  ) {
-    dashboardStore.setProgramListOptions();
-    dashboardStore.setLocationOptions();
-    dashboardStore.setBudgetList();
-    dashboardStore.setCoursePreferenceOptions();
-  }
+  schoolListStore.setProgramListOptions();
+  // getRecommendations();
+  // if (
+  //   !(
+  //     schoolListStore.programListOptions.length &&
+  //     schoolListStore.locationOptions.length &&
+  //     schoolListStore.budgetList.length &&
+  //     schoolListStore.coursePreferenceOptions.length
+  //   )
+  // ) {
+  //   schoolListStore.setProgramListOptions();
+  //   schoolListStore.setLocationOptions();
+  //   schoolListStore.setBudgetList();
+  //   schoolListStore.setCoursePreferenceOptions();
+  // }
 });
 
 onUnmounted(async () => {
   window.removeEventListener("resize", windowSize);
+  const token = useCookie("publicToken");
+  token.value = null;
 });
 </script>
 <style scoped>

@@ -205,13 +205,13 @@ import IconCanada from "../../icons/IconCanada.vue";
 import IconAustralia from "../../icons/IconAustralia.vue";
 import IconUS from "../../icons/IconUS.vue";
 import IconEurope from "../../icons/IconEurope.vue";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 
 const emit = defineEmits(["openDetail"]);
 
 const { api } = useApi();
 const { showToast } = useToast();
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 
 const props = defineProps({
   program: {
@@ -227,14 +227,14 @@ const props = defineProps({
 const isPublicPaywall = ref<boolean>(false);
 
 const isInCheckList = computed(() => {
-  return dashboardStore.userSelectedSchoolsList.some(
+  return schoolListStore.userSelectedSchoolsList.some(
     (item) => item.id === props.program.id
   );
 });
 
 const schoolDetail = async () => {
   try {
-    if (dashboardStore.isSchoolListPublic) {
+    if (schoolListStore.isSchoolListPublic) {
       isPublicPaywall.value = true;
       return;
     }

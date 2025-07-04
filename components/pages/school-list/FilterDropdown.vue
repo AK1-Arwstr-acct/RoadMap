@@ -56,10 +56,10 @@
 
 <script setup lang="ts">
 import type { OptionAttributes } from "~/types/home";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import { schoolsList } from "~/utils/demoData";
 
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 const route = useRoute();
 
 const props = defineProps({
@@ -94,7 +94,7 @@ const closeDropdown = () => {
 
 const clratSortFilter = () => {
   selectedOption.value = null;
-  dashboardStore.setSortParam(null);
+  schoolListStore.setSortParam(null);
   emits("update:modelValue", null);
 };
 

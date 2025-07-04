@@ -10,18 +10,18 @@
       </p>
     </div>
     <div v-if="appStore.authenticatedUser" class="flex-1">
-      <EmptyChecklist v-if="dashboardStore.userSelectedSchoolsList.length === 0 && !dashboardStore.isSchoolsLoading" />
+      <EmptyChecklist v-if="schoolListStore.userSelectedSchoolsList.length === 0 && !schoolListStore.isSchoolsLoading" />
       <div v-else>
-        <RecommendedSchoolSkeleton v-if="dashboardStore.isSchoolsLoading" />
+        <RecommendedSchoolSkeleton v-if="schoolListStore.isSchoolsLoading" />
         <div v-else>
           <VueDraggable
             ref="el"
             @start="onStartReorder"
-            v-model="dashboardStore.userSelectedSchoolsList"
+            v-model="schoolListStore.userSelectedSchoolsList"
             class="flex flex-col gap-6"
           >
             <div
-              v-for="(school, idx) in dashboardStore.userSelectedSchoolsList"
+              v-for="(school, idx) in schoolListStore.userSelectedSchoolsList"
               :key="school.id"
               class="flex items-center gap-2"
             >
@@ -43,12 +43,12 @@
             </div>
           </VueDraggable>
           <div
-            v-if="(dashboardStore.checklistPagination?.last_page ?? 0) > 1"
+            v-if="(schoolListStore.checklistPagination?.last_page ?? 0) > 1"
             class="flex justify-center mt-6"
           >
             <BasePagination
-              :currentPage="dashboardStore.checklistPagination?.currentPage"
-              :lastPage="dashboardStore.checklistPagination?.last_page"
+              :currentPage="schoolListStore.checklistPagination?.currentPage"
+              :lastPage="schoolListStore.checklistPagination?.last_page"
               @paginate="(pageNum) => getChecklist(pageNum)"
             />
           </div>
@@ -59,12 +59,12 @@
       <VueDraggable
         ref="el"
         @start="onStartReorderPyblic"
-        v-model="dashboardStore.userSelectedSchoolsListPublic"
-        v-if="dashboardStore.userSelectedSchoolsListPublic.length > 0"
+        v-model="schoolListStore.userSelectedSchoolsListPublic"
+        v-if="schoolListStore.userSelectedSchoolsListPublic.length > 0"
         class="flex flex-col gap-6"
       >
         <div
-          v-for="(school, idx) in dashboardStore.userSelectedSchoolsListPublic"
+          v-for="(school, idx) in schoolListStore.userSelectedSchoolsListPublic"
           :key="school.id"
           class="flex items-center gap-2"
         >
@@ -86,12 +86,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import useAppStore from "~/stores/AppStore";
 import type { checklistProgram, SchoolDetail } from "~/types/program";
 import { VueDraggable } from "vue-draggable-plus";
 
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 const appStore = useAppStore();
 
 const emit = defineEmits(["openDetail"]);
@@ -104,7 +104,7 @@ const openDetail = async (item: SchoolDetail) => {
 };
 
 const onStartReorder = () => {
-  console.log(dashboardStore.userSelectedSchoolsList);
+  console.log(schoolListStore.userSelectedSchoolsList);
 };
 const onStartReorderPyblic = () => {
     appStore.featureSoftPaywall = true;
@@ -116,6 +116,6 @@ const checklistSchoolData = (school: checklistProgram) => {
 };
 
 const getChecklist = (pageNo: number = 1) => {
-  dashboardStore.getChecklistProgram(pageNo);
+  schoolListStore.getChecklistProgram(pageNo);
 };
 </script>

@@ -19,16 +19,16 @@
           <div
             class="w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold text-sm"
             :class="[
-              dashboardStore.enginePosition === 'post' ||
-              dashboardStore.userSelectedSchoolsListPublic.length > 0
+              schoolListStore.enginePosition === 'post' ||
+              schoolListStore.userSelectedSchoolsListPublic.length > 0
                 ? 'bg-[#16A34A]'
                 : 'bg-[#2563EB]',
             ]"
           >
             <div
               v-if="
-                dashboardStore.enginePosition === 'post' ||
-                dashboardStore.userSelectedSchoolsListPublic.length > 0
+                schoolListStore.enginePosition === 'post' ||
+                schoolListStore.userSelectedSchoolsListPublic.length > 0
               "
             >
               <IconTick stroke="#ffffff" height="16" width="16" />
@@ -57,23 +57,23 @@
         class="flex items-center justify-between gap-4 cursor-pointer"
         :class="{
           'opacity-40 pointer-events-none':
-            dashboardStore.userSelectedSchoolsListPublic.length <= 0 &&
-            dashboardStore.enginePosition === 'pre',
+            schoolListStore.userSelectedSchoolsListPublic.length <= 0 &&
+            schoolListStore.enginePosition === 'pre',
         }"
       >
         <div class="flex flex-col items-center relative">
           <div
             class="w-8 h-8 rounded-full text-white flex items-center justify-center font-semibold text-sm"
             :class="[
-              dashboardStore.userSelectedSchoolsListPublic.length <= 0 &&
-              dashboardStore.enginePosition === 'pre'
+              schoolListStore.userSelectedSchoolsListPublic.length <= 0 &&
+              schoolListStore.enginePosition === 'pre'
                 ? 'bg-[#0A0A0A]'
-                : dashboardStore.userSelectedSchoolsListPublic.length > 0
+                : schoolListStore.userSelectedSchoolsListPublic.length > 0
                 ? 'bg-[#16A34A]'
                 : 'bg-[#2563EB]',
             ]"
           >
-            <div v-if="dashboardStore.userSelectedSchoolsListPublic.length > 0">
+            <div v-if="schoolListStore.userSelectedSchoolsListPublic.length > 0">
               <IconTick stroke="#ffffff" height="16" width="16" />
             </div>
             <p v-else>2</p>
@@ -81,7 +81,7 @@
           <div
             class="w-px rounded-full absolute flex-1 bg-[#0000001A]"
             :class="[
-              dashboardStore.userSelectedSchoolsListPublic.length > 0
+              schoolListStore.userSelectedSchoolsListPublic.length > 0
                 ? 'h-16 -bottom-[68px]'
                 : 'h-10 -bottom-11',
             ]"
@@ -103,7 +103,7 @@
       <li
         class="flex items-center justify-between gap-4"
         :class="{
-          'opacity-40': dashboardStore.userSelectedSchoolsListPublic.length == 0,
+          'opacity-40': schoolListStore.userSelectedSchoolsListPublic.length == 0,
         }"
       >
         <div class="flex flex-col items-center">
@@ -121,7 +121,7 @@
             Get personalized support for your applications
           </p>
           <NuxtLinkLocale
-            v-if="dashboardStore.userSelectedSchoolsListPublic.length > 0"
+            v-if="schoolListStore.userSelectedSchoolsListPublic.length > 0"
             to="/pricing"
             class="text-sm font-semibold py-1.5 px-[18px] rounded-lg bg-[#2563EB] text-white mt-3 block w-fit"
           >
@@ -139,8 +139,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 
 const localePath = useLocalePath();
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 </script>

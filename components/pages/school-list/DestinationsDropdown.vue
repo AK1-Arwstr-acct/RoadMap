@@ -7,7 +7,7 @@
       @touchend.prevent="onTouchEnd"
       class="border-[1.5px] border-[#0000001A] rounded-full py-1.5 px-2.5 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer relative"
       :class="{
-        '!bg-[#f8f8f8] pointer-events-none': disabled || !dashboardStore.locationOptions.length,
+        '!bg-[#f8f8f8] pointer-events-none': disabled || !schoolListStore.locationOptions.length,
         '!border-[#93C5FD] bg-[#EFF6FF]': selectedLocationOptions.length > 0,
       }"
     >
@@ -52,7 +52,7 @@
       </p>
       <div class="flex flex-col gap-6 pb-2 px-4">
         <div
-          v-for="(option, index) in dashboardStore.locationOptions"
+          v-for="(option, index) in schoolListStore.locationOptions"
           :key="index"
         >
           <!-- :class="{
@@ -121,7 +121,7 @@
 
 <script setup lang="ts">
 import type { OptionAttributes } from "~/types/home";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import IconUK from "~/components/icons/IconUK.vue";
 import IconUS from "~/components/icons/IconUS.vue";
 import IconAustralia from "~/components/icons/IconAustralia.vue";
@@ -129,7 +129,7 @@ import IconEurope from "~/components/icons/IconEurope.vue";
 import IconCanada from "~/components/icons/IconCanada.vue";
 import type { Dropdowns } from "~/types/dashboard";
 
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 
 const props = defineProps({
   modelValue: {

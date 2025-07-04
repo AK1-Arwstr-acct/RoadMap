@@ -11,7 +11,7 @@
         <div @click="openSophieModal = true" class="cursor-pointer">
           <IconDoubleArrows />
         </div>
-        <div @click="dashboardStore.overViews = null" class="cursor-pointer">
+        <div @click="schoolListStore.overViews = null" class="cursor-pointer">
           <IconCross fill="#111827" width="24" height="24" />
         </div>
       </div>
@@ -34,9 +34,9 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import useDashboardStore from '~/stores/dashboardStore';
+import useSchoolListStore from "~/stores/SchoolListStore";
 
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 
 const openSophieModal = ref<boolean>(false);
 </script>
