@@ -44,6 +44,28 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
     // public token for api calls
     // const publicToken = useCookie("publicToken");
 
+    const setPublicToken = async () => {
+        const token = useCookie("token")
+        let response;
+        if (token.value) {
+            response = await api.get("/api/v1/session-based-journey/session", {
+                headers: {
+                    "Authorization": `Bearer ${token.value}`,
+                },
+            });
+        } else {
+            response = await api.get("/api/v1/session-based-journey/session");
+        }
+        if (response.data) {
+            const publicToken = useCookie("publicToken", {
+                maxAge: 10800,
+                httpOnly: false,
+                secure: true,
+            });
+            publicToken.value = JSON.stringify(response.data.data.token);
+        }
+    }
+
     const setSortParam = (data: FilterKey | null) => {
         sortParam.value = data;
     }
@@ -393,6 +415,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
         userSelectedSchoolsListPublic,
         isSchoolDetailModal,
         allChipsFilled,
+        setPublicToken,
         getChecklistProgram,
         setSortParam,
         setBudgetList,

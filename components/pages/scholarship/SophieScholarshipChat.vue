@@ -125,10 +125,14 @@
                   universities.
                 </p>
                 <NuxtLinkLocale
-                  to="/signup"
+                  :to="appStore.authenticatedUser ? '/pricing' : '/signup'"
                   class="mt-8 block text-white font-semibold py-[13px] px-4 rounded-lg bg-[#2563EB] w-fit"
                 >
-                  Sign up for free
+                  {{
+                    appStore.authenticatedUser
+                      ? "Get Mentorship"
+                      : "Sign up for free"
+                  }}
                 </NuxtLinkLocale>
               </div>
             </div>
@@ -173,8 +177,9 @@
                 'Chance me with best fit scholarships'
               )
             "
-            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer w-fit"
+            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer w-fit flex items-center gap-2"
           >
+            <IconStar />
             Chance me with best fit scholarships
           </p>
           <div
@@ -222,6 +227,7 @@ import type { SophieChat } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
 import useSophieStore from "~/stores/sophieStore";
 import useAppStore from "~/stores/AppStore";
+import IconStar from "~/components/icons/IconStar.vue";
 
 const { api } = useApi();
 const { showToast } = useToast();
@@ -288,9 +294,25 @@ const scrollDown = () => {
   });
 };
 
-const handelPreQuestionOfScholarship = (question: string) => {
-  inputQuestion.value = question;
-  submit();
+const handelPreQuestionOfScholarship = async (question: string) => {
+  try {
+    inputQuestion.value = question;
+    await submit();
+    await api.get(
+      `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
+    );
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.status === 423) {
+        isChatFull.value = true;
+        return;
+      }
+      const errorMessage = error.message;
+      showToast(errorMessage, {
+        type: "warning",
+      });
+    }
+  }
 };
 
 const submit = async () => {
@@ -337,7 +359,7 @@ const submit = async () => {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
         query: userQuery,
         sophieSessionId: uuid.value,
-        roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
+        // roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         // ...(!props.isModal && {
         //   roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         // }),
@@ -365,6 +387,9 @@ const submit = async () => {
         });
       }
     }
+    // await api.get(
+    //     `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
+    //   );
     // scrollDown();
     setTimeout(() => {
       publicPaywall.value = true;

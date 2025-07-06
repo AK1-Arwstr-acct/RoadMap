@@ -167,26 +167,31 @@ onMounted(async () => {
   windowSize();
   window.addEventListener("resize", windowSize);
   await nextTick();
-  const token = useCookie("token")
-  let response;
-  if (token.value) {
-    response = await api.get("/api/v1/session-based-journey/session", {
-      headers: {
-        "Authorization": `Bearer ${token.value}`,
-      },
-    });
-  } else {
-    response = await api.get("/api/v1/session-based-journey/session");
-  }
-  if (response.data) {
-    const publicToken = useCookie("publicToken", {
-      maxAge: 10800,
-      httpOnly: false,
-      secure: true,
-    });
-    publicToken.value = JSON.stringify(response.data.data.token);
+  const publicToken = useCookie("publicToken");
+  if (!publicToken.value) {
+    await schoolListStore.setPublicToken();
     await nextTick();
   }
+  // const token = useCookie("token")
+  // let response;
+  // if (token.value) {
+  //   response = await api.get("/api/v1/session-based-journey/session", {
+  //     headers: {
+  //       "Authorization": `Bearer ${token.value}`,
+  //     },
+  //   });
+  // } else {
+  //   response = await api.get("/api/v1/session-based-journey/session");
+  // }
+  // if (response.data) {
+  //   const publicToken = useCookie("publicToken", {
+  //     maxAge: 10800,
+  //     httpOnly: false,
+  //     secure: true,
+  //   });
+  //   publicToken.value = JSON.stringify(response.data.data.token);
+  //   await nextTick();
+  // }
   if (schoolListStore.isSchoolListPublic) {
     schoolListStore.setProgramListOptions();
     isTokenLoading.value = false;
@@ -195,26 +200,10 @@ onMounted(async () => {
   }
   isTokenLoading.value = false;
   schoolListStore.setProgramListOptions();
-  // getRecommendations();
-  // if (
-  //   !(
-  //     schoolListStore.programListOptions.length &&
-  //     schoolListStore.locationOptions.length &&
-  //     schoolListStore.budgetList.length &&
-  //     schoolListStore.coursePreferenceOptions.length
-  //   )
-  // ) {
-  //   schoolListStore.setProgramListOptions();
-  //   schoolListStore.setLocationOptions();
-  //   schoolListStore.setBudgetList();
-  //   schoolListStore.setCoursePreferenceOptions();
-  // }
 });
 
 onUnmounted(async () => {
   window.removeEventListener("resize", windowSize);
-  const token = useCookie("publicToken");
-  token.value = null;
 });
 </script>
 <style scoped>

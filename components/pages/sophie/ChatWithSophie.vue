@@ -225,7 +225,10 @@ watch(
   () => sophieStore.roadmapTaskDetail,
   () => {
     chatOrHistory.value = "messages";
-    if (sophieStore.roadmapTaskDetail?.feature_state === "sophie") {
+    if (
+      sophieStore.roadmapTaskDetail?.feature_state === "sophie" &&
+      !sophieStore.isSophiePublic
+    ) {
       getChatHistory();
     }
   }
@@ -234,7 +237,8 @@ watch(
 onMounted(async () => {
   if (sophieStore.isSophiePublic) {
     isTokenLoaded.value = (await sophieStore.checkPublicToken()) ?? false;
+  } else {
+    getChatHistory();
   }
-  getChatHistory();
 });
 </script>
