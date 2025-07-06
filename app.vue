@@ -19,12 +19,14 @@
 import MentorshipPopup from "~/components/pages/school-list/MentorshipPopup.vue";
 import useAppStore from "~/stores/AppStore";
 import useSophieStore from "./stores/sophieStore";
+import useDashboardStore from "./stores/dashboardStore";
 import { identifyUserInHotjar } from "@/utils/hotjar";
 import { identifyUserInTiktok, trackPageView } from "@/utils/tiktokPixel";
 
 const { locale } = useI18n();
 const { t } = useI18n();
 const route = useRoute();
+const dashboardStore = useDashboardStore();
 
 useHead(
   computed(() => ({
@@ -124,7 +126,7 @@ const handleMouseMove = () => {
     clearTimeout(timeoutId);
     timeoutId = null;
   }
-  if (excludedRoutes.some(path => route.fullPath.includes(path)) || sophieStore.openSophieModal) {
+  if (excludedRoutes.some(path => route.fullPath.includes(path)) || sophieStore.openSophieModal || dashboardStore.isSchoolDetailModal) {
     return;
   }
 
@@ -160,18 +162,22 @@ const handleClick = () => {
 };
 
 watch(
-  ()=>appStore.isMentorshipPopup,
-  ()=>{
+  () => appStore.isMentorshipPopup,
+  () => {
     if (appStore.isMentorshipPopup === false) {
       timeoutId = setTimeout(() => {
-      appStore.isMentorshipPopup = true;
+        appStore.isMentorshipPopup = true;
       }, appStore.popupTimer);
     }
   }
-)
+);
 
 onMounted(async () => {
   const user = await appStore.getUserData();
+  const tokenExists = useCookie("token");
+  if (tokenExists.value) {
+    await appStore.getAuthUserData();
+  }
   hotjarConfig();
   tiktokConfig();
   await nextTick();
@@ -186,12 +192,12 @@ onMounted(async () => {
   // }, appStore.popupTimer);
 });
 
-// onUnmounted(() => {
-//   window.removeEventListener("mousemove", handleMouseMove);
-//   window.removeEventListener("keydown", handleMouseMove);
-//   window.removeEventListener("click", handleClick);
-//   if (timeoutId) {
-//     clearTimeout(timeoutId);
-//   }
-// });
+onUnmounted(() => {
+  // window.removeEventListener("mousemove", handleMouseMove);
+  // window.removeEventListener("keydown", handleMouseMove);
+  // window.removeEventListener("click", handleClick);
+  // if (timeoutId) {
+  //   clearTimeout(timeoutId);
+  // }
+});
 </script>

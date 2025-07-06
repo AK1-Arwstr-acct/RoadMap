@@ -55,13 +55,13 @@
           class="border-4 border-white bg-white rounded-[200px] shadow-lg relative"
         >
           <div
-            class="relative rounded-[200px] w-24 h-24 min-w-24 md:min-w-[160px] md:w-[160px] md:h-[160px] overflow-hidden group"
+            class="relative rounded-[200px] w-24 h-24 min-w-24 md:min-w-[160px] md:w-[160px] md:h-[160px] overflow-hidden group flex justify-center items-center"
           >
             <img
               v-if="imagePreview"
               :src="imagePreview || ''"
               alt="Profile Picture"
-              class="object-cover"
+              class="object-cover size-full"
               loading="eager"
               preload
             />

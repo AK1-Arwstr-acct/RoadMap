@@ -8,6 +8,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const { showToast } = useToast();
     const appStore = useAppStore();
 
+    const isRoadmapSidebarOPen = ref<boolean>(true);
     const ongoingTrack = ref<boolean>(false);
     const taskActiveStates = ref<Record<number, boolean>>({});
     const roadmapData = ref<Application[]>([]);
@@ -16,6 +17,9 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const postApplication = ref<Application>();
     // layout sidebar
     const isSidebarOpen = ref<boolean>(false);
+
+    // for home preQuestion
+    const taskFromHomeQuestion = ref<number | null>(null)
 
     const getRoadmapData = async () => {
         try {
@@ -37,6 +41,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     };
 
     return {
+        isRoadmapSidebarOPen,
         ongoingTrack,
         taskActiveStates,
         preApplication,
@@ -44,6 +49,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
         applicationList,
         isSidebarOpen,
         roadmapData,
+        taskFromHomeQuestion,
         getRoadmapData
     }
 });

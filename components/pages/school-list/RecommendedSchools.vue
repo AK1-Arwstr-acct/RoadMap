@@ -1,50 +1,54 @@
 <template>
   <div class="py-1 h-fit flex flex-col">
-    <div class="md:sticky top-0 pt-4 pb-3 bg-white">
-      <h1 class="text-[#181D27] text-2xl font-semibold">
+    <div class="bg-white">
+      <h1 class="text-[#181D27] text-2xl md:text-[32px] font-semibold lg:mb-8">
         {{ $t("schoolList_page.find_your_perfect_school_match") }}
       </h1>
+      <div class="my-6">
+        <SchoolListChips />
+      </div>
       <div
         v-if="
-          !(
-            dashboardStore.isSchoolListPublic &&
-            !dashboardStore.schoolsList.length
-          )
+          schoolListStore.allChipsFilled && schoolListStore.schoolsList.length
         "
-        class="flex flex-col md:flex-row justify-between md:items-center w-full gap-2 md:gap-0"
+        class="flex flex-col md:flex-row justify-between md:items-center w-full gap-2 md:gap-0 mb-6 lg:mb-8"
       >
-        <p v-if="route.path.includes('/demo')" class="text-[#535862]">
-          {{ dashboardStore.schoolsList.length || 0 }}
-          {{ $t("schoolList_page.schools_match_your_profile") }}
-        </p>
-        <p v-else class="text-[#535862]">
-          {{ dashboardStore.totalSchool || 0 }}
-          {{ $t("schoolList_page.schools_match_your_profile") }}
+        <p class="text-[#535862]">
+          <span
+            v-if="schoolListStore.isSchoolsLoading"
+            class="text-[#111827] font-semibold"
+          >
+            Finding your best-fit schools...
+          </span>
+          <span v-else>
+            {{ schoolListStore.totalSchool || 0 }}
+            {{ $t("schoolList_page.schools_match_your_profile") }}
+          </span>
         </p>
         <FilterDropdown
           :placeholder="t('schoolList_page.sort_by')"
           :options="sortFilters"
           class="self-end hidden md:block"
-          :modelValue="dashboardStore.selectedFilter"
+          :class="{
+            'pointer-events-none':
+              schoolListStore.isSchoolsLoading || isTokenLoading,
+          }"
+          :modelValue="schoolListStore.selectedFilter"
           @update:modelValue="(value: OptionAttributes | null) => selectFilter(value)"
         />
       </div>
     </div>
-    <div v-if="deviceType === 'mobile' || deviceType === 'tablet'" class="my-6">
-      <component
-        v-if="dashboardStore.isSchoolListPublic || route.path.includes('/demo')"
-        :is="mobile.PublicUserDataInfo"
-      />
-      <component v-else :is="mobile.UserDataInfo" />
-    </div>
-    <PublicInfo
-      v-if="
-        dashboardStore.isSchoolListPublic && !dashboardStore.schoolsList.length
-      "
+    <RecommendedSchoolSkeleton
+      v-if="schoolListStore.isSchoolsLoading || isTokenLoading"
     />
+    <!-- <RecommendedSchoolSkeleton v-if="true" /> -->
+    <PublicInfo v-else-if="!schoolListStore.allChipsFilled" />
     <div v-else class="flex-1 flex flex-col gap-6 md:pb-6 mr-px">
       <div
-        v-if="(dashboardStore.overViews || []).length > 0"
+        v-if="
+          (schoolListStore.overViews || []).length > 0 ||
+          schoolListStore.enginePosition === 'final'
+        "
         class="flex flex-col gap-4"
         v-for="(program, idx) in groupedSchoolsList"
       >
@@ -53,7 +57,7 @@
         </p>
         <div class="flex flex-col gap-6">
           <SchoolCard
-            v-for="(school, idx) in dashboardStore.schoolsList.filter(
+            v-for="(school, idx) in schoolListStore.schoolsList.filter(
               (item) => item.program_title === program
             )"
             :key="idx"
@@ -63,31 +67,31 @@
         </div>
       </div>
       <div v-else class="flex flex-col gap-6">
-        <SchoolCard
-          v-for="(school, idx) in dashboardStore.schoolsList"
-          :key="idx"
-          :program="school"
-          @openDetail="openDetail"
-        />
+        <div v-for="(school, idx) in schoolListStore.schoolsList" :key="idx">
+          <SchoolCard :program="school" @openDetail="openDetail" />
+          <OverwhelmedCard v-if="idx === 4" class="mt-6" />
+        </div>
       </div>
       <div
-        v-if="(dashboardStore.recommendedSchoolsPagination?.last_page ?? 0) > 1"
+        v-if="
+          (schoolListStore.recommendedSchoolsPagination?.last_page ?? 0) > 1
+        "
         class="flex justify-center"
       >
         <BasePagination
           :currentPage="
-            dashboardStore.recommendedSchoolsPagination?.current_page
+            schoolListStore.recommendedSchoolsPagination?.current_page
           "
-          :lastPage="dashboardStore.recommendedSchoolsPagination?.last_page"
+          :lastPage="schoolListStore.recommendedSchoolsPagination?.last_page"
           @paginate="(pageNum) => getRecommendations(pageNum)"
         />
       </div>
       <Transition name="fade">
         <div
           v-if="
-            (dashboardStore.totalSchool || 0) < 6 &&
-            dashboardStore.totalSchool !== null &&
-            dashboardStore.enginePosition !== 'final'
+            (schoolListStore.totalSchool || 0) < 6 &&
+            schoolListStore.totalSchool !== null &&
+            schoolListStore.enginePosition !== 'final'
           "
           class="flex justify-center"
         >
@@ -98,16 +102,16 @@
   </div>
   <Transition name="fade">
     <div
-      v-if="isDetailModal"
-      @click="isDetailModal = false"
-      class="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
+      v-if="schoolListStore.isSchoolDetailModal"
+      @click="schoolListStore.isSchoolDetailModal = false"
+      class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
     />
   </Transition>
   <Transition name="slideModal">
     <component
       :is="SchoolDetailModal"
-      v-if="isDetailModal"
-      :isDetailModal="isDetailModal"
+      v-if="schoolListStore.isSchoolDetailModal"
+      :isDetailModal="schoolListStore.isSchoolDetailModal"
       @close="close"
       :schoolData="schoolProfile"
     />
@@ -119,7 +123,7 @@ import IconRankDown from "~/components/icons/IconRankDown.vue";
 import IconRankUp from "~/components/icons/IconRankUp.vue";
 import IconPriceDown from "~/components/icons/IconPriceDown.vue";
 import IconPriceUp from "~/components/icons/IconPriceUp.vue";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import type { OptionAttributes } from "~/types/home";
 import type { Program, SchoolDetail } from "~/types/program";
 import axios from "axios";
@@ -128,25 +132,28 @@ const emits = defineEmits<{
   (e: "getRecommendations", pageNo: number): void;
 }>();
 
-const dashboardStore = useDashboardStore();
+defineProps({
+  isTokenLoading: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const schoolListStore = useSchoolListStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const deviceType = useDeviceType();
 const { t } = useI18n();
 const route = useRoute();
 
-const mobile = {
-  PublicUserDataInfo: defineAsyncComponent(
-    () => import("~/components/pages/school-list/PublicUserDataInfo.vue")
-  ),
-  UserDataInfo: defineAsyncComponent(
-    () => import("~/components/pages/school-list/UserDataInfo.vue")
-  ),
-};
+// const mobile = {
+//   SchoolListChips: defineAsyncComponent(
+//     () => import("~/components/pages/school-list/SchoolListChips.vue")
+//   ),
+// };
 
 const width = ref<number>(0);
 const schoolProfile = ref<SchoolDetail>();
-const isDetailModal = ref<boolean>(false);
 const sortFilters = ref<OptionAttributes[]>([
   {
     value: "1",
@@ -172,7 +179,7 @@ const sortFilters = ref<OptionAttributes[]>([
 
 const groupedSchoolsList = computed(() => {
   const uniqueProgramTitles = Array.from(
-    new Set(dashboardStore.schoolsList.map((school) => school.program_title))
+    new Set(schoolListStore.schoolsList.map((school) => school.program_title))
   );
   return uniqueProgramTitles;
 });
@@ -182,28 +189,28 @@ const isMobileOrTablet = computed(() => {
 });
 
 const selectFilter = async (filter: OptionAttributes | null) => {
-  dashboardStore.selectedFilter = filter;
+  schoolListStore.selectedFilter = filter;
   if (filter !== null) {
     const filterKey = {
       [`sort_by_${
         filter?.value === "1" || filter?.value === "2" ? "ranking" : "price"
       }`]: filter?.value === "1" || filter?.value === "3" ? "DESC" : "ASC",
     };
-    dashboardStore.setSortParam(filterKey);
+    schoolListStore.setSortParam(filterKey);
   }
-  if (dashboardStore.enginePosition === "pre") {
-    dashboardStore.preRunEngine();
-  } else if (dashboardStore.enginePosition === "post") {
-    dashboardStore.runEngine();
+  if (schoolListStore.enginePosition === "pre") {
+    schoolListStore.preRunEngine();
+  } else if (schoolListStore.enginePosition === "post") {
+    schoolListStore.runEngine();
   } else {
-    dashboardStore.runFinalEngine();
+    schoolListStore.runFinalEngine();
   }
 };
 
 const openDetail = async (item: SchoolDetail) => {
   try {
     schoolProfile.value = item;
-    isDetailModal.value = true;
+    schoolListStore.isSchoolDetailModal = true;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -214,7 +221,7 @@ const openDetail = async (item: SchoolDetail) => {
   }
 };
 const close = () => {
-  isDetailModal.value = false;
+  schoolListStore.isSchoolDetailModal = false;
 };
 
 const getRecommendations = async (pageNo: number = 1) => {

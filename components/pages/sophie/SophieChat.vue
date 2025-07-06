@@ -1,13 +1,13 @@
 <template>
   <section class="flex flex-col gap-2 size-full overflow-hidden h-full">
     <div class="flex-1 overflow-y-auto no-scrollbar">
-      <div class="size-full overflow-hidden flex flex-col gap-2 sm:gap-4">
+      <div class="size-full overflow-hidden flex flex-col gap-2 sm:gap-2">
         <!-- chat -->
         <div
           ref="chatContainer"
           class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full relative"
         >
-          <Transition name="fade">
+          <!-- <Transition name="fade">
             <div
               v-if="welcomeMessage && appStore.authenticatedUser && !readOnly"
               class="mb-8 bg-[#D1E9FF66]/40 py-3.5 px-4 rounded-lg flex gap-2 items-start"
@@ -28,7 +28,7 @@
                 <IconCross fill="#717680" />
               </div>
             </div>
-          </Transition>
+          </Transition> -->
           <Transition name="fade">
             <component
               :is="TaskDetailChatModal"
@@ -36,42 +36,11 @@
                 showTaskDetail &&
                 sophieStore.roadmapTaskDetail &&
                 !readOnly &&
-                !isModal
+                !isModal &&
+                !isOverviewSidebar
               "
             />
           </Transition>
-          <!-- <div
-            v-if="
-              !sophieStore.isSophiePublic &&
-              sophieStore.roadmapTaskDetail &&
-              !props.isModal &&
-              !isCompleteSophieCalledBefore
-            "
-            class="sticky bottom-0 flex justify-end"
-          >
-            <div class="">
-              <button
-                @click="completeSophie"
-                :disabled="isChatLoading"
-                class="group relative text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm"
-              >
-                {{ $t("sophie_page.complete_sophie_button.buttonText") }}
-                
-                <div
-                  class="hidden group-hover:block transition-all ease-in-out duration-200 absolute bg-[#f3f1f1] w-[calc(100%+50px)] md:w-[calc(100%+200px)] right-10 md:right-20 bottom-14 rounded-xl px-3 py-2 shadow-[0_8px_13px_0_rgba(16,24,40,0.05),16px_20px_50px_13px_rgba(0,0,0,0.25)]"
-                >
-                  <div
-                    class="size-full relative text-[#181D27] text-xs sm:text-sm text-start"
-                  >
-                    {{ $t("sophie_page.complete_sophie_button.tooltop_Text") }}
-                    <div
-                      class="size-4 transform rotate-45 bg-[#f3f1f1] absolute right-5 -bottom-3 shadow-black"
-                    />
-                  </div>
-                </div>
-              </button>
-            </div>
-          </div> -->
           <div
             v-for="(chat, index) in completeChat.filter(
               (item) => item.text !== ''
@@ -95,9 +64,9 @@
               />
             </div>
             <div
-              class="mb-4 md:mb-6 w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+              class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
               :class="{
-                'bg-[#FAFAFA] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
+                'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
               }"
             >
               <div>
@@ -175,6 +144,29 @@
               </NuxtLinkLocale>
             </div>
           </Transition>
+          <!-- pre question for overview sidebar -->
+          <div
+            v-if="
+              (isSummarizeOverview || isOverviewSidebar) &&
+              completeChat.length === 2
+            "
+            class="flex flex-col gap-1 items-end"
+            :class="{ 'pointer-events-none': isChatFull }"
+          >
+            <p class="text-[#4B5563] text-xs font-semibold pb-1">
+              SUGGESTED FOLLOW UP
+            </p>
+            <div class="flex gap-1 items-end" :class="{ 'flex-col': !isModal }">
+              <div
+                v-for="(question, idx) in OverviewPreQuestion"
+                :key="idx"
+                @click="handelPreQuestion(question)"
+                class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
+              >
+                {{ question }}
+              </div>
+            </div>
+          </div>
           <div
             v-if="
               completeChat.length === 0 &&
@@ -189,17 +181,17 @@
                 ?.common_questions_prompt"
               :key="idx"
               @click="handelPreQuestion(question.text)"
-              class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit"
+              class="bg-[#F5F5F5] py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
             >
-              {{ question.text }}
+              <IconStar v-if="question.text.includes('[star]')" />
+              {{ question.text.replace('[star]', '') }}
             </div>
           </div>
           <p
             v-if="
               completeChat.length === 0 &&
               !readOnly &&
-              !isModal &&
-              sophieStore.roadmapTaskDetail == null
+              sophieStore.scholarshipSophieModal
             "
             @click="
               handelPreQuestionOfScholarship(
@@ -213,7 +205,8 @@
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
-              'bg-[#FAFAFA] pointer-events-none': isChatFull || isChatLoading,
+              'bg-[#FAFAFA] pointer-events-none':
+                isChatFull || isChatLoading || scholarshipResponse,
             }"
           >
             <textarea
@@ -266,14 +259,14 @@
 import axios from "axios";
 import type { ChatDetail, OptionAttributes, SophieChat } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import useSophieStore from "~/stores/sophieStore";
 import useAppStore from "~/stores/AppStore";
 import TaskDetailChatModal from "./TaskDetailChatModal.vue";
 
 const { api } = useApi();
 const { showToast } = useToast();
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 const sophieStore = useSophieStore();
 const appStore = useAppStore();
 const route = useRoute();
@@ -307,6 +300,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isOverviewSidebar: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const chatContainer = ref<HTMLElement | null>(null);
@@ -322,18 +319,18 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 
-const preQuestion: string[] = [
-  "Which majors suit my personality type?",
-  "Can you explain what INFP means?",
-  "Which study abroad destinations suit my personality?",
-];
+const scholarshipResponse = ref<boolean>(false);
+
 // const preQuestion: string[] = [
-//   `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
-//   `${t("sophie_page.which_country_will_suit_me_most_for_study_abroad")}`,
-//   `${t("sophie_page.should_i_take_the_toefl_or_the_ielts")}`,
-//   `${t("sophie_page.what_scholarships_can_i_apply_for")}`,
-//   `${t("sophie_page.which_major_should_i_choose")}`,
+//   "Which majors suit my personality type?",
+//   "Can you explain what INFP means?",
+//   "Which study abroad destinations suit my personality?",
 // ];
+const OverviewPreQuestion: string[] = [
+  "Compare these schools",
+  "Show me job prospects for these schools",
+  "Describe campus life",
+];
 
 const educationLevelOption: OptionAttributes[] = [
   {
@@ -378,13 +375,22 @@ const addNewLine = async () => {
   adjustHeight();
 };
 
-const handelPreQuestion = (question: string) => {
-  inputQuestion.value = question;
-  submit();
+const handelPreQuestion = async (question: string) => {
+  if (question.includes('[star]')) {
+    inputQuestion.value = question.replace('[star]', '')
+    submit();
+    await api.get(
+      `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
+    );
+  } else {
+    inputQuestion.value = question;
+    submit();
+  }
 };
 
 const tempText = ref<string>("");
 const handelPreQuestionOfScholarship = (text: string) => {
+  scholarshipResponse.value = true;
   completeChat.value.push({
     isSender: true,
     text: text,
@@ -408,6 +414,7 @@ const handelPreQuestionOfScholarship = (text: string) => {
       i++;
       setTimeout(pushNext, 4000);
     } else {
+      scholarshipResponse.value = false;
       const localePath = useLocalePath();
       tempText.value = `Please click on the <a href="${localePath(
         "/pricing"
@@ -415,47 +422,7 @@ const handelPreQuestionOfScholarship = (text: string) => {
     }
   };
   pushNext();
-};
-
-const completeSophie = async () => {
-  try {
-    isChatLoading.value = true;
-    let sophieCompletedList = useCookie("sophieCompletedList");
-    let response = await api.get(
-      `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
-    );
-    if (response?.data.data) {
-      if (sophieStore.roadmapTaskDetail) {
-        sophieStore.tasksWithCompletedSophie.push(
-          sophieStore.roadmapTaskDetail.id
-        );
-      }
-      if (!sophieCompletedList.value) {
-        sophieCompletedList = useCookie("sophieCompletedList", {
-          maxAge: 604800,
-          httpOnly: false,
-          secure: true,
-        });
-      }
-      // await nextTick();
-      sophieCompletedList.value = JSON.stringify(
-        sophieStore.tasksWithCompletedSophie
-      );
-      completeChat.value.push({
-        isSender: false,
-        text: "Perfect,<br/> Now let Sophie do the work behind the scenes with our counselors and prepare the checklist for you.<br/> Sophie will come back to you once the list is fully prepared. Hang tight!",
-      });
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorMessage = error.message;
-      showToast(errorMessage, {
-        type: "warning",
-      });
-    }
-  } finally {
-    isChatLoading.value = false;
-  }
+  sophieStore.scholarshipSophieModal = false;
 };
 
 // Function to scroll to the bottom
@@ -482,7 +449,7 @@ const submit = async () => {
         isSender: true,
         text: !props.isSummarizeOverview
           ? inputQuestion.value
-          : dashboardStore.overViews?.join("\n") || "",
+          : schoolListStore.overViews?.join("\n") || "",
       });
     }
     scrollDown();
@@ -617,10 +584,34 @@ watch(
   }
 );
 
+// for overViews in final api call
+watch(
+  () => schoolListStore.overViews,
+  () => {
+    if (
+      props.isOverviewSidebar &&
+      (schoolListStore.overViews ?? []).length > 0
+    ) {
+      inputQuestion.value = `Please summarize my school list \n  ${(
+        schoolListStore.overViews ?? []
+      ).join("\n")}`;
+      submit();
+    }
+  }
+);
+
 onMounted(async () => {
   uuid.value = uuidv4();
-  if (props.isSummarizeOverview) {
-    inputQuestion.value = `Please summarize my school list \n  ${dashboardStore.overViews?.join(
+  if (sophieStore.preQuestionSelected) {
+    inputQuestion.value = sophieStore.preQuestionSelected;
+    submit();
+    sophieStore.preQuestionSelected = "";
+  }
+  if (
+    props.isSummarizeOverview ||
+    (props.isOverviewSidebar && (schoolListStore.overViews ?? []).length > 0)
+  ) {
+    inputQuestion.value = `Please summarize my school list \n  ${schoolListStore.overViews?.join(
       "\n"
     )}`;
     submit();

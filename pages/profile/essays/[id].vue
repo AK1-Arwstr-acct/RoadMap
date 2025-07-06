@@ -1,6 +1,6 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
-    <div class="max-w-[752px] py-3 px-4 mx-auto md:mt-8 mb-16">
+    <div class="max-w-[752px] py-3 px-4 mx-auto lg:mt-8 pb-5 lg:pb-8">
       <p class="text-2xl md:text-3xl font-medium text-[#181D27] my-4 md:my-8">
         {{ essayStore.finalEssay?.title }}
       </p>
@@ -45,7 +45,7 @@
 import useEssayStore from "~/stores/essayStore";
 
 definePageMeta({
-  layout: "nav-layout",
+  layout: "dashboard-layout",
 });
 
 const route = useRoute();

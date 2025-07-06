@@ -78,7 +78,7 @@
             <IconCross fill="#717680" class="size-6 md:size-8" />
           </div>
         </div> -->
-        <div class="flex-1 md:p-6 flex justify-center items-center">
+        <div class="flex-1 md:p-6 flex justify-center items-center px-5">
           <PublicUserInfo v-if="getUserInfo" @submit="startQuestions" />
           <div v-else class="flex flex-col gap-8 items-center max-w-[668px]">
             <img
@@ -87,9 +87,7 @@
               loading="eager"
             />
             <div>
-              <h1
-                class="text-[#181D27] font-semibold text-xl text-center"
-              >
+              <h1 class="text-[#181D27] font-semibold text-xl text-center">
                 {{ $t("ai_essay_page.welcome_to_your_personal_essay_journey") }}
               </h1>
               <p class="text-center text-[#535862] mt-4">

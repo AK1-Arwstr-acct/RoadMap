@@ -67,7 +67,7 @@
         "login": "Log in",
         "signup": "Sign up",
         "get_scholarship": "Get Scholarship",
-        "scholarships_that_suit_me":"Scholarships that suit me",
+        "best_fit_scholarships":"Best Fit Scholarships",
         "pre_question":"Chance me with highly curated individualized scholarships that are best matched for me ONLY"
     },
     "discover": {
@@ -400,7 +400,7 @@
         "fill_in_your_details_on_the_right_to_generate_your_personalized_school_matches": "Fill in your details on the right to generate your personalized school matches!",
         "fill_in_your_details_to_explore_and_select_your_top_majors": "Fill in your details to explore and select your top majors. This helps us find the best school matches for you!",
         "financial_aid_and_costs": "Financial Aid & Costs",
-        "find_your_perfect_school_match": "Let's find your perfect school match!",
+        "find_your_perfect_school_match": "Find your college",
         "get": "Get",
         "get_personalized_school_recommendations_and_ai_recommendations": "Get personalized school recommendations and AI recommendations. Sign up to continue!",
         "gpa": "GPA:",
@@ -420,6 +420,10 @@
         "overwhelmed_by_options": "Overwhelmed by options?",
         "price_high_to_low": "Price (High to Low)",
         "price_low_to_high": "Price (Low to High)",
+        "publicInfo": {
+            "fill_information_message": "Fill in all your information using the filter chips above to get personalized college recommendations that match your needs",
+            "start_search_button": "Start Your College Search"
+        },
         "ranking": "Ranking:",
         "rank_high_to_low": "Rank (High to Low)",
         "rank_low_to_high": "Rank (Low to High)",

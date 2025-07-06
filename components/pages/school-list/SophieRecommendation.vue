@@ -1,5 +1,5 @@
 <template>
-  <div
+  <!-- <div
     class="py-5 px-4 bg-[#EEF4FF] border-[1.5px] border-[#E0EAFF] rounded-lg space-y-5"
   >
     <div class="w-full h-2 rounded-full bg-[#D1E9FF] hidden md:block">
@@ -12,9 +12,9 @@
       <p class="text-sm 2xl:text-lg font-semibold text-[#181D27]">
         <span
           v-if="
-            dashboardStore.enginePosition === 'final'
+            schoolListStore.enginePosition === 'final'
               ? false
-              : (dashboardStore.totalSchool || 0) >= 6
+              : (schoolListStore.totalSchool || 0) >= 6
           "
           :class="{ 'animate-pulse text-[#1570EF]' : isActive }"
         >
@@ -27,9 +27,9 @@
       <p class="text-sm 2xl:text-base text-[#535862] mt-2">
         <span
           v-if="
-            dashboardStore.enginePosition === 'final'
+            schoolListStore.enginePosition === 'final'
               ? false
-              : (dashboardStore.totalSchool || 0) >= 6
+              : (schoolListStore.totalSchool || 0) >= 6
           "
         >
           {{
@@ -57,11 +57,11 @@
     </div>
     <button
       v-if="
-        dashboardStore.enginePosition === 'final'
+        schoolListStore.enginePosition === 'final'
           ? false
-          : (dashboardStore.totalSchool || 0) >= 6
+          : (schoolListStore.totalSchool || 0) >= 6
       "
-      :disabled="!isActive || dashboardStore.isFinalEnginCall"
+      :disabled="!isActive || schoolListStore.isFinalEnginCall"
       class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-3 justify-center !disabled:cursor-pointer"
       @click="finalEngine"
     >
@@ -79,7 +79,16 @@
         <IconSpinner v-if="isSubmitting" class="size-4" bgColor="#ffffff00" />
       </div>
     </button>
-  </div>
+  </div> -->
+  <button
+    :disabled="!isActive || schoolListStore.isSchoolsLoading"
+    @click="finalEngine"
+    class="border text-[#9333EA] border-[#9333EA] disabled:opacity-50 text-sm font-semibold py-1.5 px-3 flex justify-center items-center gap-1.5 text-nowrap"
+    :class="[isOverwhelmed ? 'rounded-lg w-full' : 'rounded-full']"
+  >
+    <IconSearchAi />
+    AI Match Me
+  </button>
   <Transition name="fade">
     <div
       v-if="isPublicPaywall"
@@ -123,29 +132,62 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
+import useAppStore from "~/stores/AppStore";
 
 defineProps({
-  isActive: {
+  isOverwhelmed: {
     type: Boolean,
     default: false,
   },
 });
 
+const appStore = useAppStore();
 const localePath = useLocalePath();
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 
 const isPublicPaywall = ref<boolean>(false);
 const isSubmitting = ref<boolean>(false);
 
 const finalEngine = async () => {
-  if (dashboardStore.isSchoolListPublic) {
+  if (schoolListStore.isSchoolListPublic) {
     isPublicPaywall.value = true;
     return;
   }
   isSubmitting.value = true;
-  await dashboardStore.runFinalEngine();
+  await schoolListStore.runFinalEngine();
   isSubmitting.value = false;
-  dashboardStore.isFinalEnginCall = true;
+  schoolListStore.isFinalEnginCall = true;
 };
+
+const isActive = ref<boolean>(false);
+
+const checkPrograms = () => {
+  if (schoolListStore.selectedPublicMajors.length > 0) {
+    isActive.value = true;
+  } else {
+    isActive.value = false;
+  }
+};
+
+watch(
+  () => appStore.userData,
+  async () => {
+    checkPrograms();
+  }
+);
+watch(
+  () => schoolListStore.selectedPublicMajors,
+  async (newValue) => {
+    if (newValue.length > 0) {
+      isActive.value = true;
+    } else {
+      isActive.value = false;
+    }
+  }
+);
+
+onMounted(() => {
+  checkPrograms();
+});
 </script>

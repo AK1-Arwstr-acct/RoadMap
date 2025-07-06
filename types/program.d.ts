@@ -2,6 +2,12 @@ interface Program {
     description: string | null;
     fee: number;
     id: number;
+    bookmark?: {
+        id: Number | null,
+        status: string | null,
+        note: string | null,
+    }
+    hasBookMark?: Boolean;
     in_state_fee?: number | null;
     school: School;
     school_ranking: number | null;
@@ -30,6 +36,28 @@ interface School {
     use_common_app?: boolean | null;
     address: Address;
     admission_stats: AdmissionStats;
+}
+
+interface checklistProgram {
+    id: number,
+    order_no: null | number,
+    status: null | string,
+    note: string,
+    program: Program
+}
+interface checklistResponse {
+    id: number,
+    order_no: null | number,
+    status: null | string,
+    note: string,
+    program?: Program,
+    school?: School;
+}
+interface ChecklistPagination {
+    currentPage : number,
+    first_page : number,
+    last_page : number,
+    total : number,
 }
 
 export interface ClassGrade {
@@ -110,4 +138,4 @@ interface SchoolDetail {
     financial_and_aid_cost: FinancialAidCost;
     surroundings: Surroundings;
 }
-export { Program, RecommendationSchoolsPagination, SchoolDetail };
+export { Program, RecommendationSchoolsPagination, SchoolDetail, checklistProgram, checklistResponse, ChecklistPagination };

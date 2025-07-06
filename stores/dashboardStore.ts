@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type { CountriesOptionAttributes, FilterKey, OptionAttributes, programOptions } from "~/types/home";
 import axios from "axios";
-import type { Program, RecommendationSchoolsPagination } from "~/types/program";
+import type { ChecklistPagination, checklistProgram, checklistResponse, Program, RecommendationSchoolsPagination } from "~/types/program";
 import useAppStore from "./AppStore";
 
 const useDashboardStore = defineStore("dashboardStore", () => {
@@ -20,9 +20,13 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     const coursePreferenceOptions = ref<OptionAttributes[]>([]);
     const budgetList = ref<OptionAttributes[]>([]);
     const totalSchool = ref<number | null>(null);
+    const userSelectedSchoolsList = ref<checklistProgram[]>([]); //for checklist
+    const userSelectedSchoolsListPublic = ref<Program[]>([]); //for public checklist
     const schoolsList = ref<Program[]>([]);
     const recommendedSchoolsPagination =
         ref<RecommendationSchoolsPagination | null>(null);
+    const checklistPagination =
+        ref<ChecklistPagination | null>(null);
     const overViews = ref<string[] | null>([]);
     const isFinalEnginCall = ref<boolean>(false);
     // for public user
@@ -32,6 +36,8 @@ const useDashboardStore = defineStore("dashboardStore", () => {
     //  demo data
     const majorsList = ref<programOptions[]>([]);
     const filterSchoolsList = ref<Program[]>([]);
+    // school modal state
+    const isSchoolDetailModal = ref<boolean>(false);
 
     const setSortParam = (data: FilterKey | null) => {
         sortParam.value = data;
@@ -159,9 +165,9 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const preRunEngine = async (page: number = 1) => {
         try {
+            overViews.value = [];
             isSchoolsLoading.value = true;
             let response;
-
             if (isSchoolListPublic.value) {
                 const publicToken = useCookie('publicToken');
                 response = await api.post(
@@ -213,6 +219,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const runEngine = async (page: number = 1) => {
         try {
+            overViews.value = [];
             isSchoolsLoading.value = true;
             let response;
             if (isSchoolListPublic.value) {
@@ -262,6 +269,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
 
     const runFinalEngine = async (page: number = 1, sort?: { [key: string]: string }) => {
         try {
+            overViews.value = [];
             isSchoolsLoading.value = true;
             const response = await api.get(
                 `/api/v1/school/recommendation/final-engine`, {
@@ -300,9 +308,56 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         publicUserData.value = null;
     }
 
+    const getChecklistProgram = async (pageNo: number = 1) => {
+        try {
+            if (!appStore.authenticatedUser) {
+                return;
+            }
+            isSchoolsLoading.value = true;
+            userSelectedSchoolsList.value = [];
+            const response = await api.get(`/api/v1/bookmark/program?page=${pageNo}`)
+            if (response.data.data) {
+                response.data.data.map((item: checklistResponse) => {
+                    let program = {
+                        ...item.program,
+                        school: {
+                            ...item.school
+                        }
+                    }
+                    let finalProgram = {
+                        id: item.id,
+                        note: item.note,
+                        order_no: item.order_no,
+                        status: item.status,
+                        program: program,
+                    }
+                    userSelectedSchoolsList.value.push(finalProgram);
+                })
+                checklistPagination.value = response.data.pagination;
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const errorMessage = errorList(error);
+                showToast(errorMessage, {
+                    type: "error",
+                });
+            }
+        } finally {
+            isSchoolsLoading.value = false;
+        }
+    };
+
     watch(() => appStore.authenticatedUser, () => {
         isSchoolListPublic.value = !appStore.authenticatedUser;
         removePublicUserData();
+    })
+
+    watch(() => appStore.userData, () => {
+        if (appStore.userData?.educational_records.next_program_titles.length) {
+            enginePosition.value = 'post'
+        } else {
+            enginePosition.value = 'pre'
+        }
     })
 
     return {
@@ -318,6 +373,7 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         totalSchool,
         enginePosition,
         recommendedSchoolsPagination,
+        checklistPagination,
         sortParam,
         isFinalEnginCall,
         programTitleParentId,
@@ -325,6 +381,10 @@ const useDashboardStore = defineStore("dashboardStore", () => {
         selectedPublicMajors,
         majorsList,
         filterSchoolsList,
+        userSelectedSchoolsList,
+        userSelectedSchoolsListPublic,
+        isSchoolDetailModal,
+        getChecklistProgram,
         setSortParam,
         setBudgetList,
         setCoursePreferenceOptions,

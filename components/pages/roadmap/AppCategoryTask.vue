@@ -102,54 +102,13 @@
       </div>
     </div>
   </section>
-  <!-- paywall -->
-  <Transition name="fade">
-    <div
-      v-if="progressSoftPaywall"
-      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center"
-    >
-      <div
-        class="bg-white p-6 flex flex-col gap-8 rounded-xl w-full max-w-[400px] relative"
-      >
-        <button
-          @click="progressSoftPaywall = false"
-          class="absolute top-3 md:top-[18px] right-3 md:right-[18px]"
-          aria-label="Close"
-        >
-          <IconCross fill="#111827" height="24" width="24" />
-        </button>
-        <div class="flex flex-col items-center">
-          <IconTabSophie width="48" height="48" class="text-[#ED77FF] mb-5" />
-          <p class="text-[#181D27] text-lg font-semibold text-center">
-            {{ $t("roadmap_page.paywall_progress.heading") }}
-          </p>
-          <p class="text-[#535862] text-sm text-center mt-2">
-            {{ $t("roadmap_page.paywall_progress.detail") }}
-          </p>
-        </div>
-        <div class="flex gap-3">
-          <NuxtLinkLocale
-            :to="'/pricing'"
-            class="border border-gray-200 py-2.5 w-full rounded-lg text-[#414651] font-semibold text-center"
-          >
-            {{ $t("schoolList_page.mentorship.free_mentorship") }}
-          </NuxtLinkLocale>
-          <NuxtLinkLocale
-            :to="'/signup'"
-            class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
-          >
-            {{ $t("roadmap_page.paywall_progress.sign_up_for_free") }}
-          </NuxtLinkLocale>
-        </div>
-      </div>
-    </div>
-  </Transition>
 </template>
 <script setup lang="ts">
 import type { Application, Task } from "~/types/dashboard";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import useAppStore from "~/stores/AppStore";
 import useSophieStore from "~/stores/sophieStore";
+import PaywallModal from "~/components/shared/PaywallModal.vue";
 
 const emit = defineEmits(["openTaskDetail", "hightChanged"]);
 
@@ -159,6 +118,7 @@ const appStore = useAppStore();
 const sophieStore = useSophieStore();
 const route = useRoute();
 const { api } = useApi();
+const { t } = useI18n();
 
 const props = defineProps({
   application: {
@@ -179,7 +139,6 @@ const isOpen = ref<boolean>(false);
 const content = ref<HTMLElement | null>(null);
 const contentHeight = ref(0);
 const taskRefs = ref<Record<number, HTMLElement | null>>({});
-const progressSoftPaywall = ref<boolean>(false);
 
 const imageSrc = computed(() => {
   return props.category?.includes("career")
@@ -224,6 +183,12 @@ const categoryClass = (category: string) => {
 };
 
 const handelTaskDetail = async (task: Task) => {
+  // if (appStore.authenticatedUser && task.feature_state === "scholarship") {
+  //   sophieStore.openSophieModal = true;
+  //   sophieStore.scholarshipSophieModal = true;
+  //   appStore.isFeatureChangeFromTasks = true;
+  //   return;
+  // }
   const taskId = task.id;
   appTrackerStore.taskActiveStates[taskId] = true;
   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
@@ -238,8 +203,12 @@ const handelTaskDetail = async (task: Task) => {
     routeName = "/sophie";
   } else if (task.feature_state?.toLowerCase().includes("essay")) {
     routeName = "/ai-essay";
-  } else {
+  } else if (task.feature_state?.toLowerCase().includes("school")) {
     routeName = "/school-list";
+  } else if (task.feature_state?.toLowerCase().includes("checklist")) {
+    routeName = "/checklist";
+  } else if (task.feature_state?.toLowerCase().includes("scholarship")) {
+    routeName = "/scholarship";
   }
   if (route.fullPath.includes(routeName)) {
     return;
@@ -261,7 +230,7 @@ const filteredTask = (category: string) => {
 const handelClick = async (task: Task) => {
   try {
     if (!appStore.authenticatedUser) {
-      progressSoftPaywall.value = true;
+      appStore.progressSoftPaywall = true;
       return;
     }
     task.checked = !task.checked;

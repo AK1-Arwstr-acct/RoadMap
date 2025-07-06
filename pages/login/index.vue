@@ -300,8 +300,9 @@ const submit = async () => {
     const user = await appStore.getUserData();
     identifyUserInHotjar(user);
     await appStore.checkAuthenticatedUser();
+    await appStore.getAuthUserData();
     if (response.data.data.onboarded) {
-      navigateTo(localePath("/school-list"));
+      navigateTo(localePath("/"));
     } else {
       navigateTo(localePath("/onboarding"));
     }

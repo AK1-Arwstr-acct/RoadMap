@@ -1,20 +1,29 @@
 import { defineStore } from "pinia";
-import type { LanguageLocale, UserData } from "../types/home";
+import type { AuthUserData, LanguageLocale, UserData } from "../types/home";
 
 const useAppStore = defineStore("appStore", () => {
 	const { api } = useApi();
 	const { $i18n } = useNuxtApp();
 	const tokenExists = useCookie("token");
 
+	const authUserData = ref<AuthUserData>()
 	const userData = ref<UserData>()
 	const userImagePreview = ref<string>('');
 	const userCoverPhotoPreview = ref<string>('');
-	const authenticatedUser = ref<boolean>(tokenExists.value ? true : false );
+	const authenticatedUser = ref<boolean>(tokenExists.value ? true : false);
 	const isFeatureChangeFromTasks = ref<boolean>(false);
-	
+
+	// modal for first time user
+	const firstTimeUser = ref<boolean>(false);
+
 	// for Mentorship popup
 	const isMentorshipPopup = ref<boolean>(false);
 	const popupTimer = ref<number>(15000);
+
+	// modals
+	const progressSoftPaywall = ref<boolean>(false);
+	const resourcesSoftPaywall = ref<boolean>(false);
+	const featureSoftPaywall = ref<boolean>(false);
 
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data
@@ -33,6 +42,16 @@ const useAppStore = defineStore("appStore", () => {
 		}
 	};
 
+	const getAuthUserData = async () => {
+		const tokenExists = useCookie("token");
+		if (tokenExists.value) {
+			const response = await api.get("/api/v1/user")
+			authUserData.value = response.data.data
+		} else {
+			authUserData.value = undefined;
+		}
+	}
+
 	const getUserData = async () => {
 		const tokenExists = useCookie("token");
 		if (tokenExists.value) {
@@ -49,7 +68,15 @@ const useAppStore = defineStore("appStore", () => {
 		tokenExists.value ? authenticatedUser.value = true : authenticatedUser.value = false;
 	}
 
-	onMounted(()=>{
+	watch(() => authUserData.value, () => {
+		if (authUserData.value) {
+			firstTimeUser.value = !authUserData.value.isSchoolListVisited
+		} else {
+			firstTimeUser.value = false
+		}
+	})
+
+	onMounted(() => {
 		checkAuthenticatedUser();
 	})
 
@@ -57,13 +84,19 @@ const useAppStore = defineStore("appStore", () => {
 		userImagePreview,
 		userCoverPhotoPreview,
 		authenticatedUser,
+		authUserData,
 		userData,
 		isFeatureChangeFromTasks,
 		isMentorshipPopup,
 		popupTimer,
+		progressSoftPaywall,
+		resourcesSoftPaywall,
+		featureSoftPaywall,
+		firstTimeUser,
 		checkAuthenticatedUser,
 		setUserImagePreview,
 		setUserCoverPhotoPreview,
+		getAuthUserData,
 		getUserData,
 		setLocale
 	}

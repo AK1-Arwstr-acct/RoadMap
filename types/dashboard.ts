@@ -2,6 +2,7 @@ interface TabList {
     name: string;
     icon: Component;
     route: string;
+    activeList: string[];
 }
 interface DemoTabList {
     name: string;
@@ -54,4 +55,12 @@ export type TabName =
     | "ai_essay_editor"
     | "user_profile";
 
+export type Dropdowns =
+    | "gpa"
+    | "program"
+    | "destination"
+    | "budget"
+    | "areaOfStudy"
+    | "majors"
+    | "";
 export type { TabList, Application, Task, DemoTabList }

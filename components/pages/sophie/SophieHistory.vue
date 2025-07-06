@@ -9,7 +9,7 @@
     >
       <button
         @click="handleNewChat"
-        class="border-[1.5px] border-gray-200 bg-white py-2.5 w-full overflow-hidden text-nowrap rounded-lg flex justify-center items-center gap-2 text-sm font-semibold text-[#1570EF]"
+        class="border-[1.5px] border-gray-200 bg-white py-2.5 px-4 overflow-hidden text-nowrap rounded-lg flex justify-center items-center gap-2 text-sm font-semibold text-[#1570EF]"
       >
         <IconChat />
         {{ $t("sophie_page.start_a_new_chat_with_sophie") }}

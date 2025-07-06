@@ -1,68 +1,51 @@
 <template>
-  <div
-    ref="schoolsListWrapper"
-    class="size-full overflow-y-auto custom-scrollbar"
-  >
-    <div class="h-full w-full max-w-[1150px] mx-auto">
-      <div class="md:px-6 w-full h-fit">
-        <!-- need_more_advice -->
-        <div
-          class="p-4 flex gap-2 sm:gap-4 items-start rounded-[10px] bg-[#EFF8FF] md:hidden"
-        >
-          <div class="flex-1">
-            <p class="sm:text-lg font-semibold text-[#181D27]">
-              {{ $t("schoolList_page.mentorship.need_more_advice") }}
-            </p>
-            <p class="text-[#535862] text-sm sm:text-base pt-0.5">
-              {{ $t("schoolList_page.mentorship.mentorship_description") }}
-            </p>
-            <NuxtLinkLocale to="/Pricing">
-              <button
-                class="py-2 px-3 rounded-lg bg-[#1570EF] text-white mt-4 font-semibold text-sm sm:text-base"
-              >
-                {{ $t("schoolList_page.mentorship.free_mentorship") }}
-              </button>
-            </NuxtLinkLocale>
-          </div>
-          <div class="">
-            <img
-              src="/images/ai-recommendation.png"
-              alt="ai-recommendation"
-              class="w-full object-contain max-w-[90px] sm:max-w-[106px]"
-              loading="eager"
-            />
-          </div>
-        </div>
-        <div
-          class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14"
-          :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"
-        >
-          <div class="flex-1 overflow-hidden">
-            <RecommendedSchoolLoading
-              v-if="dashboardStore.isSchoolsLoading || isTokenLoading"
-            />
-            <RecommendedSchools
-              v-else
-              @getRecommendations="getRecommendations"
-            />
-          </div>
+  <div class="size-full flex flex-col lg:flex-row">
+    <div
+      ref="schoolsListWrapper"
+      class="flex-1 h-full overflow-y-auto custom-scrollbar pb-5 lg:pb-0"
+    >
+      <div class="h-fitt w-full max-w-[1150px] mx-auto">
+        <div class="px-4 mt-4 lg:mt-10 md:px-6 w-full h-fit">
           <div
-            class="w-full"
-            :class="[
-              appTrackerStore.isSidebarOpen ? 'lg:w-[312px]' : 'md:w-[312px]',
-            ]"
+            class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14"
+            :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"
           >
-            <UserDetails :isTokenLoading="isTokenLoading" />
+            <div class="flex-1 overflow-hidden">
+              <RecommendedSchools
+                :isTokenLoading="isTokenLoading"
+                @getRecommendations="getRecommendations"
+              />
+            </div>
+            <div
+              v-if="
+                (schoolListStore.overViews?.length ?? 0) >= 1 && width <= 1024
+              "
+            >
+              <WhyTheseSchool />
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- review side bar -->
+    <Transition name="overview">
+      <div
+        v-if="
+          (schoolListStore.overViews ?? []).length > 0 &&
+          schoolListStore.overViews !== null &&
+          width > 1024
+        "
+      >
+        <component :is="OverviewSidebar" />
+      </div>
+    </Transition>
   </div>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import useAppStore from "~/stores/AppStore";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
+import OverviewSidebar from "~/components/pages/school-list/OverviewSidebar.vue";
 
 definePageMeta({
   layout: "home-layout",
@@ -71,6 +54,7 @@ definePageMeta({
 const appTrackerStore = useAppTrackerStore();
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
+
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""
 }/school-list`;
@@ -89,7 +73,7 @@ useHead(
       },
       {
         rel: "preload",
-        href: "/images/sophie-chat.png",
+        href: "/images/lets-go.png",
         as: "image",
       },
       {
@@ -116,12 +100,16 @@ useHead(
 );
 
 const appStore = useAppStore();
-const dashboardStore = useDashboardStore();
 const { api } = useApi();
+const schoolListStore = useSchoolListStore();
 
 const isActive = ref<boolean>(false);
 const isTokenLoading = ref<boolean>(true);
 const schoolsListWrapper = ref<HTMLElement | null>(null);
+const width = ref<number>(0);
+
+// to track the first load
+const firstRun = ref<boolean>(true);
 
 const checkPrograms = () => {
   if (appStore.userData) {
@@ -134,70 +122,103 @@ const checkPrograms = () => {
 };
 
 const getRecommendations = async (pageNo: number = 1) => {
-  if (dashboardStore.isSchoolListPublic) {
-    if (dashboardStore.selectedPublicMajors.length > 0) {
-      await dashboardStore.runEngine(pageNo);
+  if (schoolListStore.isSchoolListPublic) {
+    if (schoolListStore.selectedPublicMajors.length > 0) {
+      await schoolListStore.runEngine(pageNo);
     } else {
-      await dashboardStore.preRunEngine(pageNo);
+      await schoolListStore.preRunEngine(pageNo);
     }
     return;
   }
   if (appStore.userData) {
     if (appStore.userData.educational_records.next_program_titles.length > 0) {
-      await dashboardStore.runEngine(pageNo);
+      await schoolListStore.runEngine(pageNo);
     } else {
-      await dashboardStore.preRunEngine(pageNo);
+      await schoolListStore.preRunEngine(pageNo);
     }
+    firstRun.value = false;
+  }
+};
+
+const windowSize = () => {
+  if (typeof window !== "undefined") {
+    width.value = window.innerWidth;
   }
 };
 
 watch(
   () => appStore.userData,
   async () => {
-    getRecommendations();
+    if (firstRun.value) {
+      // getRecommendations();
+    }
     checkPrograms();
   }
 );
 
 watch(
-  () => dashboardStore.schoolsList,
+  () => schoolListStore.schoolsList,
   () => {
     schoolsListWrapper.value?.scrollTo({ top: 0, behavior: "smooth" });
   }
 );
 
 onMounted(async () => {
+  windowSize();
+  window.addEventListener("resize", windowSize);
   await nextTick();
-  if (dashboardStore.isSchoolListPublic) {
-    const response = await api.get("/api/v1/session-based-journey/session");
-    if (response.data) {
-      const token = useCookie("publicToken", {
-        maxAge: 10800,
-        httpOnly: false,
-        secure: true,
-      });
-      token.value = JSON.stringify(response.data.data.token);
-      await nextTick();
-      dashboardStore.setProgramListOptions();
-      isTokenLoading.value = false;
-      dashboardStore.isSchoolsLoading = false;
-    }
+  const publicToken = useCookie("publicToken");
+  if (!publicToken.value) {
+    await schoolListStore.setPublicToken();
+    await nextTick();
+  }
+  // const token = useCookie("token")
+  // let response;
+  // if (token.value) {
+  //   response = await api.get("/api/v1/session-based-journey/session", {
+  //     headers: {
+  //       "Authorization": `Bearer ${token.value}`,
+  //     },
+  //   });
+  // } else {
+  //   response = await api.get("/api/v1/session-based-journey/session");
+  // }
+  // if (response.data) {
+  //   const publicToken = useCookie("publicToken", {
+  //     maxAge: 10800,
+  //     httpOnly: false,
+  //     secure: true,
+  //   });
+  //   publicToken.value = JSON.stringify(response.data.data.token);
+  //   await nextTick();
+  // }
+  if (schoolListStore.isSchoolListPublic) {
+    schoolListStore.setProgramListOptions();
+    isTokenLoading.value = false;
+    schoolListStore.isSchoolsLoading = false;
     return;
   }
   isTokenLoading.value = false;
-  getRecommendations();
-  if (
-    !(
-      dashboardStore.programListOptions.length &&
-      dashboardStore.locationOptions.length &&
-      dashboardStore.budgetList.length &&
-      dashboardStore.coursePreferenceOptions.length
-    )
-  ) {
-    dashboardStore.setProgramListOptions();
-    dashboardStore.setLocationOptions();
-    dashboardStore.setBudgetList();
-    dashboardStore.setCoursePreferenceOptions();
-  }
+  schoolListStore.setProgramListOptions();
+});
+
+onUnmounted(async () => {
+  window.removeEventListener("resize", windowSize);
 });
 </script>
+<style scoped>
+.overview-enter-active,
+.overview-leave-active {
+  transition: width 500ms ease-in-out;
+}
+
+.overview-enter-from,
+.overview-leave-to {
+  width: 0;
+}
+
+.overview-enter-to,
+.overview-leave-from {
+  width: 424px;
+}
+</style>

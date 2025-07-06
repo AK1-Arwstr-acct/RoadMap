@@ -1,7 +1,7 @@
 <template>
   <!-- Desktop View -->
   <div
-    class="bg-white hidden lg:flex justify-between px-8 py-4 border-b-[1.5px] border-gray-200"
+    class="hidden lg:flex justify-between px-8 py-4 border-b-[1.5px] border-gray-200 bg-white"
   >
     <div class="flex gap-8 items-center">
       <NuxtLinkLocale to="/" class="flex gap-2 items-center cursor-pointer">
@@ -20,8 +20,8 @@
           v-model="featureState"
           :isShadowDark="true"
           dropdownWidth="w-[calc(100%+30px)]"
-          @onChange="onFeatureStateChange"
         />
+        <!-- @onChange="onFeatureStateChange" -->
       </div>
     </div>
     <div class="flex gap-4">
@@ -89,7 +89,7 @@
   </div>
 
   <!-- Mobile View -->
-  <div class="bg-white py-5 px-3 border-b border-gray-200 lg:hidden">
+  <div class="bg-white py-5 px-3 lg:hidden">
     <div class="flex justify-between items-center">
       <NuxtLinkLocale to="/" class="no-underline">
         <div class="cursor-pointer flex items-center gap-2">
@@ -102,9 +102,9 @@
           />
         </div>
       </NuxtLinkLocale>
-      <div
+      <NuxtLinkLocale
         v-if="appStore.authenticatedUser || tokenExists"
-        @click="isMobileSideBarOpen = true"
+        to="/profile"
         class="cursor-pointer rounded-full overflow-hidden size-10"
       >
         <img
@@ -119,21 +119,16 @@
         >
           <span>{{ appStore.userData?.name.charAt(0) }}</span>
         </div>
-      </div>
-      <div
+      </NuxtLinkLocale>
+      <NuxtLinkLocale
         v-else
-        @click="isMobileSideBarOpen = true"
-        class="cursor-pointer rounded-full overflow-hidden size-10"
+        to="/login"
+        class="flex items-center justify-center cursor-pointer size-10 min-w-10 rounded-full border border-[#00000033] bg-[F5F5F5]"
       >
-        <img
-          src="/images/chat-bot.png"
-          alt="user-icon"
-          class="size-full"
-          loading="eager"
-        />
-      </div>
+        <IconUser />
+      </NuxtLinkLocale>
     </div>
-    <Transition name="fade">
+    <!-- <Transition name="fade">
       <div
         v-if="isMobileSideBarOpen"
         @click="isMobileSideBarOpen = false"
@@ -147,7 +142,7 @@
         @close="close"
         @updateTab="updateTab"
       />
-    </Transition>
+    </Transition> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -217,38 +212,38 @@ const checkFeatureState = () => {
   featureState.value = matched || null;
 };
 
-const onFeatureStateChange = () => {
-  // in case of scholarship option
-  if (featureState.value?.value === "/scholarship") {
-    appStore.isFeatureChangeFromTasks = true;
-    Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
-      appTrackerStore.taskActiveStates[Number(key)] = false;
-    });
-    sophieStore.roadmapTaskDetail = null;
-    return;
-  }
+// const onFeatureStateChange = () => {
+//   // in case of scholarship option
+//   if (featureState.value?.value === "/scholarship") {
+//     appStore.isFeatureChangeFromTasks = true;
+//     Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+//       appTrackerStore.taskActiveStates[Number(key)] = false;
+//     });
+//     sophieStore.roadmapTaskDetail = null;
+//     return;
+//   }
 
-  Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
-    appTrackerStore.taskActiveStates[Number(key)] = false;
-  });
-  const applicationListTasks = (appTrackerStore.applicationList ?? []).flatMap(
-    (item) => item.tasks ?? []
-  );
-  const tasksArray = [
-    ...(appTrackerStore.preApplication?.tasks ?? []),
-    ...applicationListTasks,
-    ...(appTrackerStore.postApplication?.tasks ?? []),
-  ];
-  const matchedTask: Task | undefined = tasksArray.find((item) => {
-    return featureState.value?.value
-      .replace("-", " ")
-      .includes(item.feature_state.replace("_", " "));
-  });
-  if (matchedTask) {
-    appTrackerStore.taskActiveStates[Number(matchedTask?.id)] = true;
-    sophieStore.roadmapTaskDetail = matchedTask;
-  }
-};
+//   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+//     appTrackerStore.taskActiveStates[Number(key)] = false;
+//   });
+//   const applicationListTasks = (appTrackerStore.applicationList ?? []).flatMap(
+//     (item) => item.tasks ?? []
+//   );
+//   const tasksArray = [
+//     ...(appTrackerStore.preApplication?.tasks ?? []),
+//     ...applicationListTasks,
+//     ...(appTrackerStore.postApplication?.tasks ?? []),
+//   ];
+//   const matchedTask: Task | undefined = tasksArray.find((item) => {
+//     return featureState.value?.value
+//       .replace("-", " ")
+//       .includes(item.feature_state.replace("_", " "));
+//   });
+//   if (matchedTask) {
+//     appTrackerStore.taskActiveStates[Number(matchedTask?.id)] = true;
+//     sophieStore.roadmapTaskDetail = matchedTask;
+//   }
+// };
 
 watch(
   () => featureState.value?.value,
@@ -270,21 +265,21 @@ watch(
   () => route.path,
   () => {
     checkFeatureState();
-    if (appStore.isFeatureChangeFromTasks) {
-      appStore.isFeatureChangeFromTasks = false;
-      return;
-    }
-    onFeatureStateChange();
+    // if (appStore.isFeatureChangeFromTasks) {
+    //   appStore.isFeatureChangeFromTasks = false;
+    //   return;
+    // }
+    // onFeatureStateChange();
   }
 );
 
-watch(
-  () => appTrackerStore.roadmapData,
-  () => {
-    onFeatureStateChange();
-  },
-  { deep: true, immediate: true }
-);
+// watch(
+//   () => appTrackerStore.roadmapData,
+//   () => {
+//     onFeatureStateChange();
+//   },
+//   { deep: true, immediate: true }
+// );
 
 onMounted(() => {
   checkFeatureState();

@@ -14,7 +14,6 @@ export const useApi = () => {
     if (token.value) {
       config.headers["Authorization"] = `Bearer ${token.value}`;
     }
-
     return config;
   }, error => {
     return Promise.reject(error);

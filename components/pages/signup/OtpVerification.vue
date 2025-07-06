@@ -156,6 +156,7 @@ const onSubmit = async () => {
     const user = await appStore.getUserData();
     identifyUserInHotjar(user);
     appStore.checkAuthenticatedUser();
+    appStore.getAuthUserData();
     navigateTo(localePath("/onboarding"));
     isSubmitting.value = false;
   } catch (error) {

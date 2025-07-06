@@ -71,7 +71,7 @@
       >
         <div
           ref="chatContainer"
-          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-2 md:px-6"
+          class="flex-1 overflow-y-auto no-scrollbar pb-4 px-4 md:px-6"
         >
           <div class="size-full h-fit flex flex-col gap-8">
             <ChatMessage
