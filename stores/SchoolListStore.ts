@@ -10,6 +10,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
     const { api } = useApi();
     const appStore = useAppStore();
 
+    const isAllowwedOnUserDadaChange = ref<boolean>(true);
     const isSchoolListPublic = ref<boolean>(!appStore.authenticatedUser);
     const selectedFilter = ref<OptionAttributes | null>(null);
     const isSchoolsLoading = ref<boolean>(true);
@@ -391,6 +392,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
     // })
 
     return {
+        isAllowwedOnUserDadaChange,
         isSchoolListPublic,
         selectedFilter,
         isSchoolsLoading,

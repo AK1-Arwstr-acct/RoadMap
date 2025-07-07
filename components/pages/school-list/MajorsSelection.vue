@@ -273,6 +273,14 @@ const getMajors = async () => {
         }
       );
     }
+    if (appStore.userData?.educational_records.next_program_titles.length) {
+      const selectedMajors =
+        appStore.userData?.educational_records.next_program_titles.map(
+          (item) => item.id
+        );
+      schoolListStore.selectedPublicMajors = selectedMajors;
+      selectedLPrograms.value = selectedMajors;
+    }
     loadingMajors.value = false;
   } catch (error) {
     selectedLPrograms.value = [];

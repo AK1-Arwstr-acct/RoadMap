@@ -422,14 +422,14 @@ const updateAuthUserData = async () => {
       max_budget: max,
       country_ids: selectedLocationOptions.value,
       program_title_parent_id: areaOfStudy.value?.value,
-      // next_program_title_ids: schoolListStore.selectedPublicMajors.length
-      //   ? schoolListStore.selectedPublicMajors
-      //   : -1,
+      next_program_title_ids: -1,
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
     showToast("Profile updated successfully", {
       type: "success",
     });
+    schoolListStore.isAllowwedOnUserDadaChange = false;
+    appStore.getUserData();
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -499,8 +499,10 @@ const calculateHeight = () => {
 watch(
   () => [schoolListStore.programListOptions, appStore.userData],
   () => {
-    if (appStore.userData) {
+    if (appStore.userData && schoolListStore.isAllowwedOnUserDadaChange) {
       setInitialValues(appStore.userData);
+    } else {
+      schoolListStore.isAllowwedOnUserDadaChange = true;
     }
   }
 );
