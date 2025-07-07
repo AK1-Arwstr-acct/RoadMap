@@ -135,6 +135,7 @@ const selectedOption = ref<OptionAttributes | null>(props.modelValue);
 const focusDiv = ref<HTMLElement | null>(null);
 const modalPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 });
 let resizeObserver: ResizeObserver | null = null;
+const width = ref<number>(0);
 
 const isDropdownOpen = computed(
   () => props.openDropdown === props.dropdownName
@@ -167,10 +168,19 @@ const onTouchEnd = (e: TouchEvent) => {
 const updateModalPosition = () => {
   if (focusDiv.value) {
     const rect = focusDiv.value.getBoundingClientRect();
+     const dropdownWidth = 240; // Your dropdown width in px (see w-[240px])
+    const viewportWidth = window.innerWidth;
+
+    let left = rect.left;
+    // Calculate if dropdown overflow right edge
+    const overflowRight = rect.left + dropdownWidth > viewportWidth;
+    if (overflowRight && width.value > 1024) {
+      left = Math.max(0, viewportWidth - dropdownWidth - 24); // 24px margin from right
+    }
 
     modalPosition.value = {
       top: rect.bottom + 5, // 5px below
-      left: rect.left // center horizontally
+      left: left
     };
   }
 };
@@ -197,6 +207,12 @@ const onChange = () => {
     emits("onChange");
 };
 
+const windowSize = () => {
+  if (typeof window !== "undefined") {
+    width.value = window.innerWidth;
+  }
+};
+
 watch(
     () => props.modelValue,
     (newValue) => {
@@ -216,6 +232,7 @@ watch(
 );
 
 onMounted(() => {
+  windowSize();
   if (focusDiv.value) {
     resizeObserver = new ResizeObserver(() => {
       updateModalPosition();
@@ -224,6 +241,7 @@ onMounted(() => {
   }
   window.addEventListener("resize", updateModalPosition);
   window.addEventListener("scroll", updateModalPosition, true);
+  window.addEventListener("resize", windowSize);
 });
 
 onUnmounted(() => {
@@ -233,5 +251,6 @@ onUnmounted(() => {
   }
   window.removeEventListener("resize", updateModalPosition);
   window.removeEventListener("scroll", updateModalPosition, true);
+  window.removeEventListener("resize", windowSize);
 });
 </script>

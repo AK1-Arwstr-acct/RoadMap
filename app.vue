@@ -1,18 +1,16 @@
 <template>
   <div>
     <NuxtRouteAnnouncer />
-    <BaseLayoutWrapper>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-      <Transition name="fade">
-        <component
-          v-if="appStore.isMentorshipPopup"
-          :is="MentorshipPopup"
-          @close="appStore.isMentorshipPopup = false"
-        />
-      </Transition>
-    </BaseLayoutWrapper>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    <Transition name="fade">
+      <component
+        v-if="appStore.isMentorshipPopup"
+        :is="MentorshipPopup"
+        @close="appStore.isMentorshipPopup = false"
+      />
+    </Transition>
   </div>
 </template>
 <script setup lang="ts">
@@ -79,19 +77,35 @@ const tiktokConfig = () => {
     const tiktokPixelId = runtimeConfig.public.tiktokPixelId;
 
     if (appMode === "https://app.arrowster.com") {
-      !function (w, d, t) {
+      !(function (w, d, t) {
         w.TiktokAnalyticsObject = t;
-        var ttq = w[t] = w[t] || [];
-        ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie"];
+        var ttq = (w[t] = w[t] || []);
+        ttq.methods = [
+          "page",
+          "track",
+          "identify",
+          "instances",
+          "debug",
+          "on",
+          "off",
+          "once",
+          "ready",
+          "alias",
+          "group",
+          "enableCookie",
+          "disableCookie",
+        ];
         ttq.setAndDefer = function (t, e) {
           t[e] = function () {
-            t.push([e].concat(Array.prototype.slice.call(arguments)))
-          }
+            t.push([e].concat(Array.prototype.slice.call(arguments)));
+          };
         };
-        for (var i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
+        for (var i = 0; i < ttq.methods.length; i++)
+          ttq.setAndDefer(ttq, ttq.methods[i]);
         ttq.instance = function (t) {
           var e = ttq._i[t] || [];
-          for (var n = 0; n < ttq.methods.length; n++) ttq.setAndDefer(e, ttq.methods[n]);
+          for (var n = 0; n < ttq.methods.length; n++)
+            ttq.setAndDefer(e, ttq.methods[n]);
           return e;
         };
         ttq.load = function (e, n) {
@@ -100,7 +114,7 @@ const tiktokConfig = () => {
           ttq._i[e] = [];
           ttq._i[e]._u = i;
           ttq._t = ttq._t || {};
-          ttq._t[e] = +new Date;
+          ttq._t[e] = +new Date();
           ttq._o = ttq._o || {};
           ttq._o[e] = n || {};
           var o = document.createElement("script");
@@ -113,7 +127,7 @@ const tiktokConfig = () => {
 
         ttq.load(tiktokPixelId);
         ttq.page();
-      }(window, document, 'ttq');
+      })(window, document, "ttq");
     }
   }
 };
@@ -126,7 +140,11 @@ const handleMouseMove = () => {
     clearTimeout(timeoutId);
     timeoutId = null;
   }
-  if (excludedRoutes.some(path => route.fullPath.includes(path)) || sophieStore.openSophieModal || dashboardStore.isSchoolDetailModal) {
+  if (
+    excludedRoutes.some((path) => route.fullPath.includes(path)) ||
+    sophieStore.openSophieModal ||
+    dashboardStore.isSchoolDetailModal
+  ) {
     return;
   }
 

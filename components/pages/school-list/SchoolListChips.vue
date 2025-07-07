@@ -59,7 +59,7 @@
         isGpaChange
       "
       :loading="isAreaOfStudyLoading"
-      @onChange="updateUserData"
+      @onChange="onParentProgramChanged"
       :openDropdown="openDropdown"
       dropdownName="areaOfStudy"
       @open="(value: string) => (openDropdown = value as Dropdowns)"
@@ -67,9 +67,11 @@
     <div class="relative">
       <div>
         <MajorsSelection
+          :payload="payload"
           :openDropdown="openDropdown"
           dropdownName="majors"
           @open="(value: string) => (openDropdown = value as Dropdowns)"
+          @update="updateAuthMajors"
         />
       </div>
       <div
@@ -169,6 +171,7 @@ const isGpaChange = ref<boolean>(false);
 const isLocationchange = ref<boolean>(false);
 const isLocationLoading = ref<boolean>(false);
 const width = ref<number>(0);
+const payload = ref();
 
 // for dropdowns open
 const openDropdown = ref<Dropdowns>("");
@@ -229,11 +232,7 @@ const updateModalPosition = () => {
 };
 
 const setInitialValues = async (newValue: UserData) => {
-  gpa.value =
-    `${(
-      (parseFloat(String(newValue?.educational_records.cgpa)) / 4) *
-      10
-    ).toFixed(0)}` || "";
+  gpa.value = `${newValue?.educational_records.cgpa}`;
   await gpaChanged();
 
   studyPrograms.value = schoolListStore.programListOptions.find(
@@ -389,6 +388,64 @@ const getProgramParent = async () => {
     updateSchools();
   } catch (error) {
     console.error(error);
+  }
+};
+
+const updateAuthMajors = async () => {
+  try {
+    const payload = {
+      cgpa: gpa.value,
+      next_program_title_ids: schoolListStore.selectedPublicMajors.length
+        ? schoolListStore.selectedPublicMajors
+        : -1,
+    };
+    await api.post("/api/v1/student/update-profile-basic-info", payload);
+    showToast("Profile updated successfully", {
+      type: "success",
+    });
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
+};
+const updateAuthUserData = async () => {
+  try {
+    const { min, max } = getMinMax();
+    const payload = {
+      cgpa: gpa.value,
+      next_educational_class_grade_id: studyPrograms.value?.value,
+      min_budget: min,
+      max_budget: max,
+      country_ids: selectedLocationOptions.value,
+      program_title_parent_id: areaOfStudy.value?.value,
+      // next_program_title_ids: schoolListStore.selectedPublicMajors.length
+      //   ? schoolListStore.selectedPublicMajors
+      //   : -1,
+    };
+    await api.post("/api/v1/student/update-profile-basic-info", payload);
+    showToast("Profile updated successfully", {
+      type: "success",
+    });
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
+};
+
+const onParentProgramChanged = async () => {
+  if (schoolListStore.isSchoolListPublic) {
+    updateUserData();
+  } else {
+    await updateAuthUserData();
+    updateUserData();
   }
 };
 

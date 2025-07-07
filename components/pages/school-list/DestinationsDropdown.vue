@@ -7,11 +7,15 @@
       @touchend.prevent="onTouchEnd"
       class="border-[1.5px] border-[#0000001A] rounded-full py-1.5 px-2.5 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer relative"
       :class="{
-        'opacity-70 pointer-events-none': disabled || !schoolListStore.locationOptions.length,
+        'opacity-70 pointer-events-none':
+          disabled || !schoolListStore.locationOptions.length,
         '!border-[#93C5FD] bg-[#EFF6FF]': selectedLocationOptions.length > 0,
       }"
     >
-      <div v-if="selectedLocationOptions.length <= 0" class="flex-1 text-nowrap">
+      <div
+        v-if="selectedLocationOptions.length <= 0"
+        class="flex-1 text-nowrap"
+      >
         <p class="text-[#111827] text-left">Study destination</p>
       </div>
       <div v-else class="text-nowrap">
@@ -171,6 +175,7 @@ const selectedLocationOptions = ref<number[]>(props.modelValue);
 const focusDiv = ref<HTMLElement | null>(null);
 const modalPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 });
 let resizeObserver: ResizeObserver | null = null;
+const width = ref<number>(0);
 
 const emits = defineEmits<{
   (e: "update:modelValue", selectedOptions: number[]): void;
@@ -190,7 +195,6 @@ const touchMoved = ref(false);
 const onTouchStart = (e: TouchEvent) => {
   touchMoved.value = false;
   touchStartX.value = e.touches[0].clientX;
-
 };
 
 const onTouchMove = (e: TouchEvent) => {
@@ -210,10 +214,19 @@ const onTouchEnd = (e: TouchEvent) => {
 const updateModalPosition = () => {
   if (focusDiv.value) {
     const rect = focusDiv.value.getBoundingClientRect();
+    const dropdownWidth = 240; // Your dropdown width in px (see w-[240px])
+    const viewportWidth = window.innerWidth;
+
+    let left = rect.left;
+    // Calculate if dropdown overflow right edge
+    const overflowRight = rect.left + dropdownWidth > viewportWidth;
+    if (overflowRight && width.value > 1024) {
+      left = Math.max(0, viewportWidth - dropdownWidth - 24); // 24px margin from right
+    }
 
     modalPosition.value = {
-      top: rect.bottom + 5, // 20px below
-      left: rect.left, // center horizontally
+      top: rect.bottom + 5, // 5px below
+      left: left,
     };
   }
 };
@@ -261,6 +274,12 @@ const toggleSelection = async (ids: number[]) => {
   //   isLocationchange.value = false;
 };
 
+const windowSize = () => {
+  if (typeof window !== "undefined") {
+    width.value = window.innerWidth;
+  }
+};
+
 watch(
   () => props.modelValue,
   (newValue) => {
@@ -280,6 +299,7 @@ watch(
 );
 
 onMounted(() => {
+  windowSize();
   if (focusDiv.value) {
     resizeObserver = new ResizeObserver(() => {
       updateModalPosition();
@@ -288,6 +308,7 @@ onMounted(() => {
   }
   window.addEventListener("resize", updateModalPosition);
   window.addEventListener("scroll", updateModalPosition, true);
+  window.addEventListener("resize", windowSize);
 });
 
 onUnmounted(() => {
@@ -297,5 +318,6 @@ onUnmounted(() => {
   }
   window.removeEventListener("resize", updateModalPosition);
   window.removeEventListener("scroll", updateModalPosition, true);
+  window.removeEventListener("resize", windowSize);
 });
 </script>
