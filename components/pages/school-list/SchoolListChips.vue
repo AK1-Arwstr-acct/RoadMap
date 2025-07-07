@@ -201,7 +201,7 @@ const updateUserData = async () => {
         min_budget: min,
         max_budget: max,
         country_ids: selectedLocationOptions.value,
-        program_title_parent_id: areaOfStudy.value?.value,
+        super_meta_category_id: areaOfStudy.value?.value,
       };
       token.value = JSON.stringify(payload);
     }
@@ -421,7 +421,7 @@ const updateAuthUserData = async () => {
       min_budget: min,
       max_budget: max,
       country_ids: selectedLocationOptions.value,
-      program_title_parent_id: areaOfStudy.value?.value,
+      super_meta_category_id: areaOfStudy.value?.value,
       next_program_title_ids: -1,
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
