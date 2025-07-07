@@ -111,6 +111,28 @@
               </div>
             </span>
           </div>
+          <div
+            v-if="
+              (isSummarizeOverview || isOverviewSidebar) &&
+              completeChat.length === 2
+            "
+            class="flex flex-col gap-1 items-end"
+            :class="{ 'pointer-events-none': isChatFull }"
+          >
+            <p class="text-[#4B5563] text-xs font-semibold pb-1">
+              SUGGESTED FOLLOW UP
+            </p>
+            <div class="flex gap-1 items-end" :class="{ 'flex-col': !isModal }">
+              <div
+                v-for="(question, idx) in OverviewPreQuestion"
+                :key="idx"
+                @click="handelPreQuestion(question)"
+                class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
+              >
+                {{ question }}
+              </div>
+            </div>
+          </div>
         </div>
         <!-- input -->
         <div class="flex flex-col gap-4">
@@ -147,44 +169,27 @@
           <!-- pre question for overview sidebar -->
           <div
             v-if="
-              (isSummarizeOverview || isOverviewSidebar) &&
-              completeChat.length === 2
-            "
-            class="flex flex-col gap-1 items-end"
-            :class="{ 'pointer-events-none': isChatFull }"
-          >
-            <p class="text-[#4B5563] text-xs font-semibold pb-1">
-              SUGGESTED FOLLOW UP
-            </p>
-            <div class="flex gap-1 items-end" :class="{ 'flex-col': !isModal }">
-              <div
-                v-for="(question, idx) in OverviewPreQuestion"
-                :key="idx"
-                @click="handelPreQuestion(question)"
-                class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
-              >
-                {{ question }}
-              </div>
-            </div>
-          </div>
-          <div
-            v-if="
               completeChat.length === 0 &&
               !readOnly &&
               !isModal &&
               sophieStore.roadmapTaskDetail !== null
             "
-            class="flex overflow-x-auto custom-scrollbar mt-3 gap-3"
+            class="mt-3 flex flex-col"
           >
-            <div
-              v-for="(question, idx) in sophieStore.roadmapTaskDetail
-                ?.common_questions_prompt"
-              :key="idx"
-              @click="handelPreQuestion(question.text)"
-              class="bg-[#F5F5F5] py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
-            >
-              <IconStar v-if="question.text.includes('[star]')" />
-              {{ question.text.replace('[star]', '') }}
+            <p class="text-[#4B5563] text-xs font-semibold pb-1">
+              SUGGESTED FOLLOW UP
+            </p>
+            <div class="flex gap-3 overflow-x-auto custom-scrollbar">
+              <div
+                v-for="(question, idx) in sophieStore.roadmapTaskDetail
+                  ?.common_questions_prompt"
+                :key="idx"
+                @click="handelPreQuestion(question.text)"
+                class="py-2 px-4 rounded-full border border-[#0000001A] text-sm text-[#111827] font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
+              >
+                <IconStar v-if="question.text.includes('[star]')" />
+                {{ question.text.replace("[star]", "") }}
+              </div>
             </div>
           </div>
           <p
@@ -376,12 +381,14 @@ const addNewLine = async () => {
 };
 
 const handelPreQuestion = async (question: string) => {
-  if (question.includes('[star]')) {
-    inputQuestion.value = question.replace('[star]', '')
+  if (question.includes("[star]")) {
+    inputQuestion.value = question.replace("[star]", "");
     submit();
-    await api.get(
-      `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
-    );
+    if (!sophieStore.isSophiePublic) {
+      await api.get(
+        `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
+      );
+    }
   } else {
     inputQuestion.value = question;
     submit();
@@ -561,9 +568,9 @@ watch(
         }
       });
       completeChat.value = transformChat;
-      if (!props.isReadOnly) {
-        readOnly.value = true;
-      }
+      // if (!props.isReadOnly) {
+      //   readOnly.value = true;
+      // }
     }
   }
 );

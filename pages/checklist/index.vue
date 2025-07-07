@@ -21,7 +21,7 @@
       <!-- @click="activeTab = 'comparison'" -->
       <div
         @click="navigateTo(localePath('/pricing'))"
-        class="px-3 pb-1.5 flex flex-wrap gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200"
+        class="px-3 pb-1.5 flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200"
         :class="[
           activeTab === 'comparison'
             ? 'text-[#2563EB] border-b border-[#2563EB]'
@@ -29,7 +29,7 @@
         ]"
       >
         <div
-          class="text-nowrap flex items-center gap-1.5 order-1 md:order-none"
+          class="text-nowrap flex items-center gap-1.5"
         >
           <IconComparison
             :class="[
@@ -38,7 +38,7 @@
           />
           College Comparison
         </div>
-        <p class="px-2 rounded-full bg-[#E5E5E5] text-[#4B5563] font-semibold">
+        <p class="px-2 rounded-full bg-[#E5E5E5] text-[#4B5563] font-semibold text-nowrap">
           Coming soon
         </p>
       </div>

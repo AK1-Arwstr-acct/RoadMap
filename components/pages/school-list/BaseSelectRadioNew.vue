@@ -7,7 +7,7 @@
             @touchend.prevent="onTouchEnd"
             class="border-[1.5px] border-[#0000001A] rounded-full py-1.5 px-2.5 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer relative"
             :class="{
-              '!bg-[#f8f8f8] pointer-events-none': disabled || !options.length,
+              'opacity-70 pointer-events-none': disabled || !options.length,
                 '!border-[#93C5FD] bg-[#EFF6FF]': selectedOption,
             }">
             <div v-if="!selectedOption?.value" class="flex-1 text-nowrap">
@@ -41,7 +41,7 @@
             }"
             class="border-[1.5px] border-gray-200 bg-white z-50 max-h-[264px] w-[240px] sm:max-h-[264px] overflow-y-auto pb-1.5 rounded-xl shadow-sm"
             >
-            <p v-if="label" class="font-semibold text-[#4B5563] text-[10px] py-2 px-4">
+            <p v-if="label" class="font-semibold text-[#4B5563] text-[10px] py-2 px-4 uppercase">
                 {{ label
                 }}
             </p>

@@ -3,7 +3,7 @@
     class="border-r bg-white transition-all ease-in-out duration-700 flex flex-col absolute z-10 lg:z-0 lg:relative top-0 left-0 h-[calc(100%-16px)] sm:h-full"
     :class="[
       appTrackerStore.isRoadmapSidebarOPen
-        ? 'w-full lg:w-[336px] pb-8 lg:pt-8 px-5 '
+        ? 'w-full lg:w-[336px] pb-8 lg:pt-6 px-5 '
         : 'w-0',
     ]"
   >

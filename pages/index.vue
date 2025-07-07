@@ -15,7 +15,7 @@
             preload
           />
           <span
-            class="text-[#414651] text-xl md:text-[32px] font-semibold mt-4 text-center"
+            class="text-[#414651] text-xl md:text-[32px] font-medium md:font-semibold mt-4 text-center"
           >
             Hi I’m Sophie, your personal AI assistant 👋
           </span>

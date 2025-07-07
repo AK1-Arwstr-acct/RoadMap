@@ -359,7 +359,7 @@ const submit = async () => {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
         query: userQuery,
         sophieSessionId: uuid.value,
-        // roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
+        roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         // ...(!props.isModal && {
         //   roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         // }),
@@ -387,10 +387,6 @@ const submit = async () => {
         });
       }
     }
-    // await api.get(
-    //     `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
-    //   );
-    // scrollDown();
     setTimeout(() => {
       publicPaywall.value = true;
       textarea.value?.blur();

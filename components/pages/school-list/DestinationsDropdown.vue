@@ -7,7 +7,7 @@
       @touchend.prevent="onTouchEnd"
       class="border-[1.5px] border-[#0000001A] rounded-full py-1.5 px-2.5 w-fit transition-colors duration-150 ease-in-out flex justify-between gap-2 items-center cursor-pointer relative"
       :class="{
-        '!bg-[#f8f8f8] pointer-events-none': disabled || !schoolListStore.locationOptions.length,
+        'opacity-70 pointer-events-none': disabled || !schoolListStore.locationOptions.length,
         '!border-[#93C5FD] bg-[#EFF6FF]': selectedLocationOptions.length > 0,
       }"
     >

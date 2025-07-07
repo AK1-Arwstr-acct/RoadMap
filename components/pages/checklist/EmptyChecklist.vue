@@ -13,5 +13,11 @@
       You haven't saved any colleges yet. Use our search and filters to discover
       schools that fit you best.
     </p>
+    <NuxtLinkLocale
+      to="/school-list"
+      class="mt-4 px-[18px] py-1.5 rounded-lg bg-[#2563EB] text-white font-semibold text-sm"
+    >
+      Find your college
+    </NuxtLinkLocale>
   </div>
 </template>

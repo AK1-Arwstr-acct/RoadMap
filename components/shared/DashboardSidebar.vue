@@ -1,10 +1,10 @@
 <template>
   <div
-    class="group hidden lg:flex flex-col h-full py-8 justify-between gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
-    :class="[!isOpen ? 'w-[68px] px-3' : 'w-[264px] px-4']"
+    class="group hidden lg:flex flex-col h-full pt-6 pb-5 justify-between gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
+    :class="[!isOpen ? 'w-[72px] px-2' : 'w-[264px] px-2']"
   >
     <div class="flex flex-col gap-6">
-      <div :class="[isOpen ? 'px-1' : 'px-2 flex justify-center']">
+      <div :class="[isOpen ? 'px-4' : 'px-2 flex justify-center']">
         <div class="flex gap-2 items-center cursor-pointer justify-between">
           <Transition name="fade">
             <IconArrowsterLogo
@@ -43,13 +43,15 @@
           :key="idx"
         >
           <div
-            class="py-2 flex items-center rounded-lg cursor-pointer overflow-hidden px-2"
+            class="p-4 flex items-center rounded-lg cursor-pointer overflow-hidden"
             :class="[
-              isOpen ? 'px-3 justify-start gap-4' : 'justify-between',
-              (tab.route === '/'
-                ? route.path === '/'
-                : tab.activeList.some(item => route.path.startsWith(item)))
-                ? 'text-[#1570EF] bg-[#EFF8FF]'
+              isOpen ? 'justify-start gap-4' : 'justify-between',
+              (
+                tab.route === '/'
+                  ? route.path === '/'
+                  : tab.activeList.some((item) => route.path.startsWith(item))
+              )
+                ? 'text-[#1570EF] bg-[#EFF6FF]'
                 : 'text-[#414651]',
             ]"
           >
@@ -57,9 +59,11 @@
               :is="tab.icon"
               class="size-6 min-w-6"
               :class="[
-                (tab.route === '/'
-                  ? route.path === '/'
-                  : tab.activeList.some(item => route.path.startsWith(item)))
+                (
+                  tab.route === '/'
+                    ? route.path === '/'
+                    : tab.activeList.some((item) => route.path.startsWith(item))
+                )
                   ? 'text-[#1570EF]'
                   : 'text-[#717680]',
               ]"
@@ -140,8 +144,26 @@
           </NuxtLinkLocale>
         </div>
       </div>
-      <div v-else>
+      <div v-else class="flex justify-center">
         <div
+          v-if="appStore.authenticatedUser || tokenExists"
+          class="cursor-pointer rounded-full overflow-hidden size-10"
+        >
+          <img
+            v-if="appStore.userData?.avatar"
+            :src="appStore.userImagePreview || appStore.userData?.avatar"
+            alt="user-icon"
+            class="size-full"
+          />
+          <div
+            v-else
+            class="flex items-center justify-center size-10 min-w-10 rounded-full border border-[#00000033] bg-[#22C55E] text-white font-semibold text-lg"
+          >
+            {{ appStore.userData?.name.charAt(0) }}
+          </div>
+        </div>
+        <div
+          v-else
           @click="handleProfile"
           class="flex items-center justify-center cursor-pointer size-10 min-w-10 rounded-full border border-[#00000033] bg-[F5F5F5]"
         >
@@ -163,9 +185,11 @@
         <div
           class="py-2 flex flex-col gap-0.5 items-center justify-center rounded-lg cursor-pointer overflow-hidden px-2 w-full"
           :class="[
-            (tab.route === '/'
-              ? route.path === '/'
-              : tab.activeList.some(item => route.path.startsWith(item)))
+            (
+              tab.route === '/'
+                ? route.path === '/'
+                : tab.activeList.some((item) => route.path.startsWith(item))
+            )
               ? 'text-[#1570EF] bg-[#EFF8FF]'
               : 'text-[#414651]',
           ]"
@@ -174,9 +198,11 @@
             :is="tab.icon"
             class="size-6 min-w-6"
             :class="[
-              (tab.route === '/'
-                ? route.path === '/'
-                : tab.activeList.some(item => route.path.startsWith(item)))
+              (
+                tab.route === '/'
+                  ? route.path === '/'
+                  : tab.activeList.some((item) => route.path.startsWith(item))
+              )
                 ? 'text-[#1570EF]'
                 : 'text-[#717680]',
             ]"
@@ -191,13 +217,12 @@
 </template>
 <script setup lang="ts">
 import IconTabHome from "~/components/icons/IconTabHome.vue";
-import useAppTrackerStore from "~/stores/AppTrackerStore";
-import useSophieStore from "~/stores/sophieStore";
 import IconTabApplication from "~/components/icons/IconTabApplication.vue";
 import type { TabList } from "~/types/dashboard";
 import IconBookOpen from "../icons/IconBookOpen.vue";
 import useAppStore from "~/stores/AppStore";
 import GetMentorshipBlock from "../pages/home/GetMentorshipBlock.vue";
+import useSchoolListStore from "~/stores/SchoolListStore";
 
 const emit = defineEmits(["updateTab"]);
 
@@ -205,8 +230,7 @@ const route = useRoute();
 const { t } = useI18n();
 const appStore = useAppStore();
 const localePath = useLocalePath();
-const appTrackerStore = useAppTrackerStore();
-const sophieStore = useSophieStore();
+const schoolListStore = useSchoolListStore();
 
 const tokenExists = useCookie("token");
 
@@ -250,6 +274,15 @@ const clearTaskDetails = () => {
   //   sophieStore.openSophieModal = true;
   // }
   // appStore.isFeatureChangeFromTasks = true;
-  navigateTo(localePath('/scholarship'));
+  navigateTo(localePath("/scholarship"));
 };
+
+watch(
+  () => schoolListStore.overViews,
+  (newValue) => {
+    if (newValue?.length) {
+      isOpen.value = false;
+    }
+  }
+);
 </script>

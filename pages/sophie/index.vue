@@ -1,7 +1,8 @@
 <template>
   <div class="size-full overflow-y-auto custom-scrollbar">
     <div class="h-full w-full">
-      <ChatWithSophie :isTaskChat="!!sophieStore.roadmapTaskDetail" />
+      <!-- <ChatWithSophie :isTaskChat="!!sophieStore.roadmapTaskDetail" /> -->
+      <ChatWithSophie :isTaskChat="true" />
     </div>
   </div>
 </template>
