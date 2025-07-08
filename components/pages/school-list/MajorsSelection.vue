@@ -240,6 +240,8 @@ const submit = async () => {
     } else {
       await schoolListStore.preRunEngine();
     }
+    schoolListStore.isAllowwedOnUserDadaChange = false;
+    appStore.getUserData();
   } catch (error) {
     schoolListStore.isSchoolsLoading = false;
     if (axios.isAxiosError(error)) {

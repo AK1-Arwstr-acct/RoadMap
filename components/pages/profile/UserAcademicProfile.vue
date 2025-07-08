@@ -283,7 +283,7 @@ const getMinMax = () => {
 const resetUserData = () => {
   if (appStore.userData) {
     setInitialValues(appStore.userData);
-    gpaChanged();
+    onGpaChange();
   }
 };
 const updateUserData = async () => {
@@ -317,11 +317,10 @@ const updateUserData = async () => {
 };
 
 const setInitialValues = (newValue: UserData) => {
-  gpa.value =
-    `${(
-      (parseFloat(String(newValue?.educational_records.cgpa)) / 4) *
-      10
-    ).toFixed(0)}` || "";
+  const cgpa = parseFloat(String(newValue?.educational_records.cgpa));
+  const value = (cgpa / 4) * 10;
+  const decimal = value - Math.floor(value);
+  gpa.value = decimal > 0 ? value.toFixed(1) : value.toFixed(0);
   annualBudget.value =
     dashboardStore.budgetList?.find((item) =>
       item.value.includes(`${newValue?.educational_records.annual_max_budget}`)
@@ -474,6 +473,19 @@ const getBudgets = async () => {
   }
 };
 
+const onGpaChange = async () => {
+  isGpaChange.value = true;
+  if (debounceTimeout) {
+    clearTimeout(debounceTimeout);
+  }
+  debounceTimeout = setTimeout(async () => {
+    await programChanged();
+    await getBudgets();
+    await getProgramParent();
+    isGpaChange.value = false;
+  }, 1000);
+};
+
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const gpaChanged = async () => {
@@ -490,16 +502,7 @@ const gpaChanged = async () => {
     input.value = cleanedValue.slice(0, -1);
     gpa.value = input.value;
   }
-  isGpaChange.value = true;
-  if (debounceTimeout) {
-    clearTimeout(debounceTimeout);
-  }
-  debounceTimeout = setTimeout(async () => {
-    await programChanged();
-    await getBudgets();
-    await getProgramParent();
-    isGpaChange.value = false;
-  }, 1000);
+  onGpaChange();
 };
 
 watch(

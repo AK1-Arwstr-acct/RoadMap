@@ -232,11 +232,10 @@ const updateModalPosition = () => {
 };
 
 const setInitialValues = async (newValue: UserData) => {
-  gpa.value =
-    `${(
-      (parseFloat(String(newValue?.educational_records.cgpa)) / 4) *
-      10
-    ).toFixed(0)}` || "";
+  const cgpa = parseFloat(String(newValue?.educational_records.cgpa));
+  const value = (cgpa / 4) * 10;
+  const decimal = value - Math.floor(value);
+  gpa.value = decimal > 0 ? value.toFixed(1) : value.toFixed(0);
   await gpaChanged();
 
   studyPrograms.value = schoolListStore.programListOptions.find(
@@ -269,7 +268,7 @@ const setInitialValues = async (newValue: UserData) => {
     );
     // updateSchools();
     schoolListStore.programTitleParentId = areaOfStudy.value?.value || "";
-    // schoolListStore.isPublicMajorEnable = false;
+    schoolListStore.isPublicMajorEnable = true;
     if (appStore.userData?.educational_records.next_program_titles.length) {
       const selectedMajors =
         appStore.userData?.educational_records.next_program_titles.map(

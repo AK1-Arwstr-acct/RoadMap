@@ -1,7 +1,7 @@
 <template>
   <div class="pt-8 md:pt-[42px] border-t-[1.5px] border-gray-200">
     <p class="text-xl md:text-2xl font-semibold text-[#181D27] mb-5">
-      {{ $t('profile_page.personal_info') }}
+      {{ $t("profile_page.personal_info") }}
     </p>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-6">
       <div
@@ -10,9 +10,16 @@
         <span><IconHeartHexagon class="size-8 md:size-full" /></span>
         <div>
           <p class="md:text-xl text-[#181D27] font-semibold mb-2">
-            {{ userInfo?.educational_records.cgpa }}
+            {{
+              (() => {
+              const cgpa = parseFloat(String(userInfo?.educational_records.cgpa));
+              const value = (cgpa / 4) * 10;
+              const decimal = value - Math.floor(value);
+              return decimal > 0 ? value.toFixed(1) : value.toFixed(0);
+              })()
+            }}
           </p>
-          <h6 class="text-[#A4A7AE]">{{ $t('profile_page.gpa') }}</h6>
+          <h6 class="text-[#A4A7AE]">{{ $t("profile_page.gpa") }}</h6>
         </div>
       </div>
       <div
@@ -21,9 +28,11 @@
         <span><IconGraduationHat class="size-8 md:size-full" /></span>
         <div>
           <p class="md:text-xl text-[#181D27] font-semibold mb-2">
-            {{ userInfo?.educational_records.next_class_grade.class_name || '' }}
+            {{
+              userInfo?.educational_records.next_class_grade.class_name || ""
+            }}
           </p>
-          <h6 class="text-[#A4A7AE]">{{ $t('profile_page.study_program') }}</h6>
+          <h6 class="text-[#A4A7AE]">{{ $t("profile_page.study_program") }}</h6>
         </div>
       </div>
       <div
@@ -32,9 +41,11 @@
         <span><IconCoins class="size-8 md:size-full" /></span>
         <div>
           <p class="md:text-xl text-[#181D27] font-semibold mb-2">
-            0 - {{ userInfo?.educational_records.annual_max_budget }}
+            $ 0 - $ {{ userInfo?.educational_records.annual_max_budget }}
           </p>
-          <h6 class="text-[#A4A7AE]">{{ $t('profile_page.annual_total_budget') }}</h6>
+          <h6 class="text-[#A4A7AE]">
+            {{ $t("profile_page.annual_total_budget") }}
+          </h6>
         </div>
       </div>
       <div
@@ -45,7 +56,7 @@
           <p class="md:text-xl text-[#181D27] font-semibold mb-2 truncate">
             {{ userInfo?.educational_records.super_meta_category.title }}
           </p>
-          <h6 class="text-[#A4A7AE]">{{ $t('profile_page.area_of_study') }}</h6>
+          <h6 class="text-[#A4A7AE]">{{ $t("profile_page.area_of_study") }}</h6>
         </div>
       </div>
       <div
@@ -64,7 +75,9 @@
               {{ country }}
             </span>
           </p>
-          <h6 class="text-[#A4A7AE]">{{ $t('profile_page.study_destination') }}</h6>
+          <h6 class="text-[#A4A7AE]">
+            {{ $t("profile_page.study_destination") }}
+          </h6>
         </div>
       </div>
       <div
@@ -85,7 +98,7 @@
               {{ majors.title }}
             </span>
           </p>
-          <h6 class="text-[#A4A7AE]">{{ $t('profile_page.majors') }}</h6>
+          <h6 class="text-[#A4A7AE]">{{ $t("profile_page.majors") }}</h6>
         </div>
       </div>
     </div>
