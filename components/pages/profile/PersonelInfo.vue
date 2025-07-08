@@ -10,14 +10,7 @@
         <span><IconHeartHexagon class="size-8 md:size-full" /></span>
         <div>
           <p class="md:text-xl text-[#181D27] font-semibold mb-2">
-            {{
-              (() => {
-              const cgpa = parseFloat(String(userInfo?.educational_records.cgpa));
-              const value = (cgpa / 4) * 10;
-              const decimal = value - Math.floor(value);
-              return decimal > 0 ? value.toFixed(1) : value.toFixed(0);
-              })()
-            }}
+            {{ convertedTo10Gpa }}
           </p>
           <h6 class="text-[#A4A7AE]">{{ $t("profile_page.gpa") }}</h6>
         </div>
@@ -41,7 +34,7 @@
         <span><IconCoins class="size-8 md:size-full" /></span>
         <div>
           <p class="md:text-xl text-[#181D27] font-semibold mb-2">
-            $ 0 - $ {{ userInfo?.educational_records.annual_max_budget }}
+            $0 - ${{ userInfo?.educational_records.annual_max_budget }}
           </p>
           <h6 class="text-[#A4A7AE]">
             {{ $t("profile_page.annual_total_budget") }}
@@ -122,6 +115,13 @@ const countries = computed(() => {
       }
     );
   return [...new Set(currentCountryIds)];
+});
+
+const convertedTo10Gpa = computed(() => {
+  const cgpa = parseFloat(String(userInfo.value?.educational_records.cgpa));
+  const value = (cgpa / 4) * 10;
+  const decimal = value - Math.floor(value);
+  return decimal > 0 ? value.toFixed(1) : value.toFixed(0);
 });
 
 watch(

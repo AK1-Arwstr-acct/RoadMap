@@ -162,7 +162,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
                                 : item[1];
                         return {
                             value: `${item[0]}-${!!item[1] ? item[1] : ""}`,
-                            label: `$ ${budgetWithComma(item[0])}  ${!!item[1] ? " - $ " + budgetWithComma(item[1]) : ""
+                            label: `$${budgetWithComma(item[0])}  ${!!item[1] ? " - $" + budgetWithComma(item[1]) : ""
                                 }`,
                             min: min,
                             max: max,
