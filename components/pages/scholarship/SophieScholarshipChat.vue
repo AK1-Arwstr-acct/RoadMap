@@ -28,7 +28,7 @@
                       .isSender
                   : true)
               "
-              class="size-8 min-w-8 rounded-full bg-black overflow-hidden"
+              class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
             >
               <img
                 src="/images/chat-bot.png"
@@ -80,31 +80,22 @@
               </p>
             </template>
           </TransitionGroup>
+          <!-- chat lodding state -->
           <div
             v-if="isChatLoading"
-            class="text-[#A4A7AE] font-thin flex items-center gap-3"
+            class="text-[#A4A7AE] font-thin flex items-center gap-3 py-1"
           >
-            <div class="size-8 min-w-8 rounded-full bg-black overflow-hidden">
+            <div
+              class="size-8 min-w-8 rounded-full border border-[#00000033] avatar-rotate"
+            >
               <img
                 src="/images/chat-bot.png"
                 alt="chat bot"
-                class="object-cover object-center size-full"
+                class="object-cover object-center size-full rounded-full"
                 loading="eager"
               />
             </div>
-            <span class="flex justify-center items-center">
-              <div class="flex space-x-2">
-                <div
-                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:0s] ease-in-out"
-                ></div>
-                <div
-                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:200ms] ease-in-out"
-                ></div>
-                <div
-                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:400ms] ease-in-out"
-                ></div>
-              </div>
-            </span>
+            <span class="text-[#111827] animate-pulse"> Working on it... </span>
           </div>
           <!-- paywall for PUblic user -->
           <Transition name="fade">
@@ -459,3 +450,27 @@ onMounted(async () => {
   }
 });
 </script>
+<style scoped>
+.avatar-rotate {
+  position: relative;
+}
+.avatar-rotate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  scale: 1.05;
+  border-radius: 9999px;
+  border-top: 2px solid #a855f7; /* purple, adjust as needed */
+  border-right: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-left: 2px solid transparent;
+  pointer-events: none;
+  box-sizing: border-box;
+  animation: spin 1.2s linear infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+</style>

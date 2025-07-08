@@ -19,13 +19,40 @@
           >
             Hi I’m Sophie, your personal AI assistant 👋
           </span>
+          <!-- mobile layput -->
+          <div class="w-full overflow-x-auto no-scrollbar md:hidden">
+            <div class="flex mt-6 gap-3">
+              <div
+                v-for="(question, idx) in preQuestion.slice(0, 3)"
+                :key="idx"
+              >
+                <div
+                  @click="handelPreQuestion(question)"
+                  class="border-[1.5px] border-[#0000001A] py-1.5 px-3 rounded-full text-[#414651] text-sm font-semibold cursor-pointer text-nowrap"
+                >
+                  {{ question.question }}
+                </div>
+              </div>
+            </div>
+            <div class="flex mt-2 gap-3">
+              <div v-for="(question, idx) in preQuestion.slice(3)" :key="idx">
+                <div
+                  @click="handelPreQuestion(question)"
+                  class="border-[1.5px] border-[#0000001A] py-1.5 px-3 rounded-full text-[#414651] text-sm font-semibold cursor-pointer text-nowrap"
+                >
+                  {{ question.question }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- desktop layout -->
           <div
-            class="w-full flex md:flex-wrap md:justify-center mt-6 md:mt-20 gap-3 overflow-x-auto no-scrollbar"
+            class="w-full hidden md:flex flex-wrap justify-center mt-20 gap-3 overflow-x-auto no-scrollbar"
           >
             <div v-for="(question, idx) in preQuestion" :key="idx">
               <div
                 @click="handelPreQuestion(question)"
-                class="border-[1.5px] border-[#0000001A] py-1.5 md:py-3 px-3 md:px-[18px] rounded-full text-[#414651] text-sm font-semibold cursor-pointer text-nowrap"
+                class="border-[1.5px] border-[#0000001A] py-2 px-4 rounded-full text-[#414651] text-sm font-semibold cursor-pointer text-nowrap"
               >
                 {{ question.question }}
               </div>

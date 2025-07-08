@@ -41,10 +41,12 @@
           (item) => item.link
         )"
         :key="idx"
-        class="flex items-center gap-2 font-medium cursor-pointer w-fit"
+        class="flex flex-col gap-2 font-medium cursor-pointer w-fit"
       >
+      <div class="flex items-center gap-2">
         <IconLink class="min-w-5" />
         <p class="text-[#175CD3]">Resource: {{ resource.text }}</p>
+      </div>
         <p
           v-if="!sophieStore.isSophiePublic"
           class="text-sm bg-[#F5F5F5] rounded-full py-0.5 px-2.5"

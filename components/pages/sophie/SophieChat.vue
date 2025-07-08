@@ -54,7 +54,7 @@
           >
             <div
               v-if="!chat.isSender"
-              class="size-8 min-w-8 rounded-full bg-black overflow-hidden"
+              class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
             >
               <img
                 src="/images/chat-bot.png"
@@ -85,38 +85,30 @@
               />
             </div>
           </div>
+          <!-- chat lodding state -->
           <div
             v-if="isChatLoading"
-            class="text-[#A4A7AE] font-thin flex items-center gap-3"
+            class="text-[#A4A7AE] font-thin flex items-center gap-3 py-1"
           >
-            <div class="size-8 min-w-8 rounded-full bg-black overflow-hidden">
+            <div
+              class="size-8 min-w-8 rounded-full border border-[#00000033] avatar-rotate"
+            >
               <img
                 src="/images/chat-bot.png"
                 alt="chat bot"
-                class="object-cover object-center size-full"
+                class="object-cover object-center size-full rounded-full"
                 loading="eager"
               />
             </div>
-            <span class="flex justify-center items-center">
-              <div class="flex space-x-2">
-                <div
-                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:0s] ease-in-out"
-                ></div>
-                <div
-                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:200ms] ease-in-out"
-                ></div>
-                <div
-                  class="size-3 bg-[#A4A7AE] rounded-full animate-pulse [animation-delay:400ms] ease-in-out"
-                ></div>
-              </div>
-            </span>
+            <span class="text-[#111827] animate-pulse"> Working on it... </span>
           </div>
+          <!-- pre question for overview sidebar -->
           <div
             v-if="
               (isSummarizeOverview || isOverviewSidebar) &&
               completeChat.length === 2
             "
-            class="flex flex-col gap-1 items-end"
+            class="flex flex-col gap-1 items-end mt-3"
             :class="{ 'pointer-events-none': isChatFull }"
           >
             <p class="text-[#4B5563] text-xs font-semibold pb-1">
@@ -166,7 +158,7 @@
               </NuxtLinkLocale>
             </div>
           </Transition>
-          <!-- pre question for overview sidebar -->
+          <!-- pre question for task chat -->
           <div
             v-if="
               completeChat.length === 0 &&
@@ -174,12 +166,12 @@
               !isModal &&
               sophieStore.roadmapTaskDetail !== null
             "
-            class="mt-3 flex flex-col"
+            class="mt-3 flex flex-col items-end"
           >
             <p class="text-[#4B5563] text-xs font-semibold pb-1">
               SUGGESTED FOLLOW UP
             </p>
-            <div class="flex gap-3 overflow-x-auto custom-scrollbar">
+            <div class="flex gap-3 justify-end flex-wrap custom-scrollbar">
               <div
                 v-for="(question, idx) in sophieStore.roadmapTaskDetail
                   ?.common_questions_prompt"
@@ -640,3 +632,27 @@ onMounted(async () => {
   }
 });
 </script>
+<style scoped>
+.avatar-rotate {
+  position: relative;
+}
+.avatar-rotate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  scale: 1.05;
+  border-radius: 9999px;
+  border-top: 2px solid #a855f7; /* purple, adjust as needed */
+  border-right: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-left: 2px solid transparent;
+  pointer-events: none;
+  box-sizing: border-box;
+  animation: spin 1.2s linear infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+</style>

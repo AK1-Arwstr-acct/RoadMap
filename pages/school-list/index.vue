@@ -108,9 +108,6 @@ const isTokenLoading = ref<boolean>(true);
 const schoolsListWrapper = ref<HTMLElement | null>(null);
 const width = ref<number>(0);
 
-// to track the first load
-const firstRun = ref<boolean>(true);
-
 const checkPrograms = () => {
   if (appStore.userData) {
     if (appStore.userData.educational_records.next_program_titles.length > 0) {
@@ -122,21 +119,10 @@ const checkPrograms = () => {
 };
 
 const getRecommendations = async (pageNo: number = 1) => {
-  if (schoolListStore.isSchoolListPublic) {
-    if (schoolListStore.selectedPublicMajors.length > 0) {
-      await schoolListStore.runEngine(pageNo);
-    } else {
-      await schoolListStore.preRunEngine(pageNo);
-    }
-    return;
-  }
-  if (appStore.userData) {
-    if (appStore.userData.educational_records.next_program_titles.length > 0) {
-      await schoolListStore.runEngine(pageNo);
-    } else {
-      await schoolListStore.preRunEngine(pageNo);
-    }
-    firstRun.value = false;
+  if (schoolListStore.selectedPublicMajors.length > 0) {
+    await schoolListStore.runEngine(pageNo);
+  } else {
+    await schoolListStore.preRunEngine(pageNo);
   }
 };
 
@@ -149,9 +135,6 @@ const windowSize = () => {
 watch(
   () => appStore.userData,
   async () => {
-    if (firstRun.value) {
-      // getRecommendations();
-    }
     checkPrograms();
   }
 );

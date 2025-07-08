@@ -4,11 +4,9 @@
     <div class="mt-2 md:mt-10 flex gap-1 w-full max-w-[800px] mx-auto">
       <div
         @click="activeTab = 'checklist'"
-        class="px-3 pb-1.5 flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200 text-nowrap"
+        class="px-1 pb-1.5 relative flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200 text-nowrap"
         :class="[
-          activeTab === 'checklist'
-            ? 'text-[#2563EB] border-b border-[#2563EB]'
-            : 'text-[#111827]',
+          activeTab === 'checklist' ? 'text-[#2563EB]' : 'text-[#111827]',
         ]"
       >
         <IconSchool
@@ -17,28 +15,34 @@
           ]"
         />
         My College List
+        <div
+          v-if="activeTab === 'checklist'"
+          class="absolute h-[3px] w-full left-0 -bottom-1 bg-[#2563EB] rounded-tl-[4px] rounded-tr-[4px]"
+        />
       </div>
       <!-- @click="activeTab = 'comparison'" -->
       <div
         @click="navigateTo(localePath('/pricing'))"
         class="px-3 pb-1.5 flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200"
         :class="[
-          activeTab === 'comparison'
-            ? 'text-[#2563EB] border-b border-[#2563EB]'
-            : 'text-[#111827]',
+          activeTab === 'comparison' ? 'text-[#2563EB]' : 'text-[#111827]',
         ]"
       >
-        <div
-          class="text-nowrap flex items-center gap-1.5"
-        >
+        <div class="text-nowrap flex items-center gap-1.5">
           <IconComparison
             :class="[
               activeTab === 'comparison' ? 'text-[#2563EB]' : 'text-[#4B5563]',
             ]"
           />
           College Comparison
+          <div
+            v-if="activeTab === 'comparison'"
+            class="absolute h-[3px] w-full left-0 -bottom-1 bg-[#2563EB] rounded-tl-[4px] rounded-tr-[4px]"
+          />
         </div>
-        <p class="px-2 rounded-full bg-[#E5E5E5] text-[#4B5563] font-semibold text-nowrap">
+        <p
+          class="px-2 rounded-full bg-[#E5E5E5] text-[#4B5563] font-semibold text-nowrap"
+        >
           Coming soon
         </p>
       </div>

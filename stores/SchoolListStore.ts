@@ -162,7 +162,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
                                 : item[1];
                         return {
                             value: `${item[0]}-${!!item[1] ? item[1] : ""}`,
-                            label: `${budgetWithComma(item[0])}  ${!!item[1] ? " - " + budgetWithComma(item[1]) : ""
+                            label: `${budgetWithComma(item[0])}  ${!!item[1] ? " - $ " + budgetWithComma(item[1]) : ""
                                 }`,
                             min: min,
                             max: max,
@@ -265,6 +265,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
             const publicToken = useCookie('publicToken');
             let response = await api.post(`/api/v2/session-based-journey/recommendation/run-engine`,
                 {
+                    // program_title_parent_id: programTitleParentId.value,
                     program_title_ids: selectedPublicMajors.value,
                     ...(sortParam.value)
                 },

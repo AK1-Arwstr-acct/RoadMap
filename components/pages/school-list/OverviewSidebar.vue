@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="flex-1 px-5 pt-3 overflow-hidden">
+    <div class="flex-1 px-5 overflow-hidden">
         <SophieChat :isOverviewSidebar="true" />
     </div>
   </div>

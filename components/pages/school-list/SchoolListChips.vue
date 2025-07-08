@@ -189,7 +189,7 @@ const updateUserData = async () => {
   try {
     isSubmitting.value = true;
     if (schoolListStore.isSchoolListPublic) {
-      const token = useCookie("publicUserData", {
+      const publicUserData = useCookie("publicUserData", {
         maxAge: 604800,
         httpOnly: false,
         secure: true,
@@ -197,13 +197,13 @@ const updateUserData = async () => {
       const { min, max } = getMinMax();
       const payload = {
         cgpa: convertedCgpa.value,
-        class_grade_ids: studyPrograms.value?.value,
-        min_budget: min,
-        max_budget: max,
-        country_ids: selectedLocationOptions.value,
+        next_educational_class_grade_id: studyPrograms.value?.value,
+        annual_min_budget: min,
+        annual_max_budget: max,
+        destination_country_ids: selectedLocationOptions.value,
         super_meta_category_id: areaOfStudy.value?.value,
       };
-      token.value = JSON.stringify(payload);
+      publicUserData.value = JSON.stringify(payload);
     }
     schoolListStore.programTitleParentId = areaOfStudy.value?.value || "";
     schoolListStore.isPublicMajorEnable = false;
@@ -263,7 +263,19 @@ const setInitialValues = async (newValue: UserData) => {
         Number(item.value) ==
         newValue?.educational_records.super_meta_category.id
     );
-    updateSchools();
+    // updateSchools();
+    schoolListStore.programTitleParentId = areaOfStudy.value?.value || "";
+    // schoolListStore.isPublicMajorEnable = false;
+    if (appStore.userData?.educational_records.next_program_titles.length) {
+      const selectedMajors =
+        appStore.userData?.educational_records.next_program_titles.map(
+          (item) => item.id
+        );
+      schoolListStore.selectedPublicMajors = selectedMajors;
+      await schoolListStore.runEngine();
+    } else {
+      await schoolListStore.preRunEngine();
+    }
   }
 };
 
@@ -339,6 +351,13 @@ const destinationUpdates = async () => {
 const getBudgets = async () => {
   try {
     isBudgetLoading.value = true;
+
+    annualBudget.value = undefined;
+    areaOfStudy.value = undefined;
+    schoolListStore.budgetList = [];
+    schoolListStore.coursePreferenceOptions = [];
+    schoolListStore.isPublicMajorEnable = false;
+
     const response = await schoolListStore.setBudgetList({
       country_ids: selectedLocationOptions.value || [],
     });
@@ -371,6 +390,11 @@ const getBudgets = async () => {
 const getProgramParent = async () => {
   try {
     isAreaOfStudyLoading.value = true;
+
+    areaOfStudy.value = undefined;
+    schoolListStore.coursePreferenceOptions = [];
+    schoolListStore.isPublicMajorEnable = false;
+
     const response = await schoolListStore.setCoursePreferenceOptions({
       min_budget: null,
       max_budget: (annualBudget.value as { max?: number }).max,
@@ -418,9 +442,9 @@ const updateAuthUserData = async () => {
     const payload = {
       cgpa: gpa.value,
       next_educational_class_grade_id: studyPrograms.value?.value,
-      min_budget: min,
-      max_budget: max,
-      country_ids: selectedLocationOptions.value,
+      annual_min_budget: min,
+      annual_max_budget: max,
+      destination_country_ids: selectedLocationOptions.value,
       super_meta_category_id: areaOfStudy.value?.value,
       next_program_title_ids: -1,
     };
