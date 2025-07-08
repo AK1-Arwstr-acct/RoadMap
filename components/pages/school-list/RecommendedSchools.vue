@@ -42,7 +42,7 @@
       v-if="schoolListStore.isSchoolsLoading || isTokenLoading"
     />
     <!-- <RecommendedSchoolSkeleton v-if="true" /> -->
-    <PublicInfo v-else-if="!schoolListStore.allChipsFilled" />
+    <PublicInfo v-else-if="!schoolListStore.allChipsFilled || (schoolListStore.allChipsFilled && !schoolListStore.schoolsList.length)" />
     <div v-else class="flex-1 flex flex-col gap-6 md:pb-6 mr-px">
       <div
         v-if="

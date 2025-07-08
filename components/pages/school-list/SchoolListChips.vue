@@ -232,7 +232,11 @@ const updateModalPosition = () => {
 };
 
 const setInitialValues = async (newValue: UserData) => {
-  gpa.value = `${newValue?.educational_records.cgpa}`;
+  gpa.value =
+    `${(
+      (parseFloat(String(newValue?.educational_records.cgpa)) / 4) *
+      10
+    ).toFixed(0)}` || "";
   await gpaChanged();
 
   studyPrograms.value = schoolListStore.programListOptions.find(
@@ -418,7 +422,7 @@ const getProgramParent = async () => {
 const updateAuthMajors = async () => {
   try {
     const payload = {
-      cgpa: gpa.value,
+      cgpa: convertedCgpa.value,
       next_program_title_ids: schoolListStore.selectedPublicMajors.length
         ? schoolListStore.selectedPublicMajors
         : -1,
@@ -440,7 +444,7 @@ const updateAuthUserData = async () => {
   try {
     const { min, max } = getMinMax();
     const payload = {
-      cgpa: gpa.value,
+      cgpa: convertedCgpa.value,
       next_educational_class_grade_id: studyPrograms.value?.value,
       annual_min_budget: min,
       annual_max_budget: max,

@@ -265,7 +265,6 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
             const publicToken = useCookie('publicToken');
             let response = await api.post(`/api/v2/session-based-journey/recommendation/run-engine`,
                 {
-                    // program_title_parent_id: programTitleParentId.value,
                     program_title_ids: selectedPublicMajors.value,
                     ...(sortParam.value)
                 },

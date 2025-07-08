@@ -183,7 +183,7 @@ import useDashboardStore from "~/stores/dashboardStore";
 import type { OptionAttributes, UserData } from "~/types/home";
 import useAppStore from "~/stores/AppStore";
 import axios from "axios";
-import IconUK from "~/components/icons/IconUK.vue"
+import IconUK from "~/components/icons/IconUK.vue";
 import IconCanada from "~/components/icons/IconCanada.vue";
 import IconAustralia from "~/components/icons/IconAustralia.vue";
 import IconUS from "~/components/icons/IconUS.vue";
@@ -240,6 +240,10 @@ const disabledBtn = computed(() => {
   );
 });
 
+const convertedCgpa = computed(() => {
+  return gpa.value ? ((Number(gpa.value) / 10) * 4).toFixed(2) : "";
+});
+
 const toggleSelection = async (ids: number[]) => {
   const allSelected = ids.every((id) =>
     selectedLocationOptions.value.includes(id)
@@ -287,7 +291,7 @@ const updateUserData = async () => {
     const { min, max } = getMinMax();
     isSubmitting.value = true;
     const payload = {
-      cgpa: gpa.value,
+      cgpa: convertedCgpa.value,
       annual_min_budget: min,
       annual_max_budget: max,
       destination_country_ids: selectedLocationOptions.value,
@@ -313,7 +317,11 @@ const updateUserData = async () => {
 };
 
 const setInitialValues = (newValue: UserData) => {
-  gpa.value = `${newValue?.educational_records.cgpa}` || "";
+  gpa.value =
+    `${(
+      (parseFloat(String(newValue?.educational_records.cgpa)) / 4) *
+      10
+    ).toFixed(0)}` || "";
   annualBudget.value =
     dashboardStore.budgetList?.find((item) =>
       item.value.includes(`${newValue?.educational_records.annual_max_budget}`)
@@ -342,7 +350,7 @@ const programChanged = async () => {
     const response = await api.post(
       "/api/v1/anonymous-recommendation/get-location-country",
       {
-        cgpa: gpa.value,
+        cgpa: convertedCgpa.value,
         class_grade_ids: [studyPrograms.value?.value],
         uniqueId: appStore.userData?.uuid,
       }
@@ -399,7 +407,7 @@ const getProgramParent = async () => {
     const response = await api.post(
       "/api/v1/anonymous-recommendation/find-program-parent",
       {
-        cgpa: gpa.value,
+        cgpa: convertedCgpa.value,
         class_grade_ids: [studyPrograms.value?.value],
         country_ids: selectedLocationOptions.value || [],
         max_budget: (annualBudget.value as { max?: number }).max,
@@ -427,7 +435,7 @@ const getBudgets = async () => {
     const response = await api.post(
       "/api/v1/anonymous-recommendation/budget-range",
       {
-        cgpa: gpa.value,
+        cgpa: convertedCgpa.value,
         class_grade_ids: [studyPrograms.value?.value],
         country_ids: selectedLocationOptions.value || [],
         uniqueId: appStore.userData?.uuid,
@@ -469,6 +477,19 @@ const getBudgets = async () => {
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const gpaChanged = async () => {
+  const input = (event as InputEvent).target as HTMLInputElement;
+  const value = input.value;
+
+  const regex = /^(?:[0-9](?:\.\d{0,2})?|10?)$/;
+  const cleanedValue = value.replace(/[^0-9.]/g, "");
+
+  if (regex.test(cleanedValue)) {
+    input.value = cleanedValue;
+    gpa.value = cleanedValue;
+  } else {
+    input.value = cleanedValue.slice(0, -1);
+    gpa.value = input.value;
+  }
   isGpaChange.value = true;
   if (debounceTimeout) {
     clearTimeout(debounceTimeout);

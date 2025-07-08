@@ -47,8 +47,7 @@
         v-model="inputValue"
         type="text"
         step="0.1"
-        min="0"
-        max="10"
+        @input="validateNumber"
         placeholder="Enter GPA"
         class="w-full bg-[#F5F5F5] rounded-md px-3 py-2 outline-none"
         @keyup.enter="onDone"
@@ -110,13 +109,28 @@ const isDropdownOpen = computed(
   () => props.openDropdown === props.dropdownName
 );
 
+const validateNumber = (event: Event) => {
+  const input = (event as InputEvent).target as HTMLInputElement;
+  const value = input.value;
+
+  const regex = /^(?:[0-9](?:\.\d{0,2})?|10?)$/;
+  const cleanedValue = value.replace(/[^0-9.]/g, "");
+
+  if (regex.test(cleanedValue)) {
+    input.value = cleanedValue;
+    inputValue.value = cleanedValue;
+  } else {
+    input.value = cleanedValue.slice(0, -1);
+    inputValue.value = input.value;
+  }
+};
+
 const touchStartX = ref(0);
 const touchMoved = ref(false);
 
 const onTouchStart = (e: TouchEvent) => {
   touchMoved.value = false;
   touchStartX.value = e.touches[0].clientX;
-
 };
 
 const onTouchMove = (e: TouchEvent) => {
@@ -139,7 +153,7 @@ const updateModalPosition = () => {
 
     modalPosition.value = {
       top: rect.bottom + 5, // 20px below
-      left: rect.left
+      left: rect.left,
     };
   }
 };

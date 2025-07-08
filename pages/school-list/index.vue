@@ -10,7 +10,7 @@
             class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14"
             :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"
           >
-            <div class="flex-1 overflow-hidden">
+            <div class="flex-1 overflow-hidden w-full max-w-[800px] mx-auto">
               <RecommendedSchools
                 :isTokenLoading="isTokenLoading"
                 @getRecommendations="getRecommendations"
