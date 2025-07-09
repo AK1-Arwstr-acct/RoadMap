@@ -1,101 +1,110 @@
 <template>
-  <section class="flex flex-col gap-2 size-full overflow-hidden h-full">
-    <div class="flex-1 overflow-y-auto no-scrollbar">
-      <div
-        class="size-full overflow-hidden flex flex-col gap-2 sm:gap-2 relative"
-      >
+  <section class="flex flex-col gap-2 h-full">
+    <div class="flex-1 overflow-hidden">
+      <div class="size-full flex flex-col gap-2 sm:gap-2 relative">
         <!-- chat -->
-        <div
-          ref="chatContainer"
-          class="flex-1 no-scrollbar flex flex-col gap-6 h-full relative"
-          :class="[publicPaywall ? 'overflow-hidden' : 'overflow-y-auto']"
-        >
+        <div class="flex-1 relative overflow-hidden">
           <div
-            v-for="(chat, index) in completeChat.filter(
-              (item) => item.text !== ''
-            )"
-            :key="index"
-            class="flex items-start gap-3"
-            :class="{
-              'justify-end': chat.isSender,
-            }"
+            ref="chatContainer"
+            @scroll="updateHasChatScroll"
+            class="size-full no-scrollbar flex flex-col gap-6 h-full relative"
+            :class="[publicPaywall ? 'overflow-hidden' : 'overflow-y-auto']"
           >
             <div
-              v-if="
-                !chat.isSender &&
-                (index > 0
-                  ? completeChat.filter((item) => item.text !== '')[index - 1]
-                      .isSender
-                  : true)
-              "
-              class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
-            >
-              <img
-                src="/images/chat-bot.png"
-                alt="chat bot"
-                class="object-cover object-center size-full"
-                loading="eager"
-              />
-            </div>
-            <div v-else class="w-8" />
-            <div
-              class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+              v-for="(chat, index) in completeChat.filter(
+                (item) => item.text !== ''
+              )"
+              :key="index"
+              class="flex items-start gap-3"
               :class="{
-                'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
+                'justify-end': chat.isSender,
               }"
             >
-              <div>
-                <vue-markdown :source="chat.text" :options="options" />
+              <div
+                v-if="
+                  !chat.isSender &&
+                  (index > 0
+                    ? completeChat.filter((item) => item.text !== '')[index - 1]
+                        .isSender
+                    : true)
+                "
+                class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
+              >
+                <img
+                  src="/images/chat-bot.png"
+                  alt="chat bot"
+                  class="object-cover object-center size-full"
+                  loading="eager"
+                />
               </div>
-            </div>
-          </div>
-          <TransitionGroup
-            name="fade"
-            tag="div"
-            v-if="showLoading"
-            class="ml-[32px] border-l border-[#D1D5DB] px-5 text-[#4B5563] flex flex-col gap-9"
-          >
-            <template v-for="(step, idx) in loadingSteps.slice(0, loadingStep)">
-              <div v-if="idx === 0" :key="`${idx}-div`">
-                <p class="relative -mt-2">
-                  {{ step.title }}
-                  <span
-                    class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
-                  />
-                </p>
+              <div v-else class="w-8" />
+              <div
+                class="w-fit max-w-[90%] text-wrap text-[#414651]"
+                :class="{
+                  'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
+                }"
+              >
+                <div class="suggestion-container">
+                  <vue-markdown :source="chat.text" :options="options" />
+                </div>
                 <div
-                  class="text-xs flex flex-col gap-2 mt-3"
-                  v-if="step.details"
+                  v-if="sophieStore.isSophiePublic ? index === 2 : index === 1"
                 >
-                  <p v-for="(detail, dIdx) in step.details" :key="dIdx">
-                    {{ detail }}
-                  </p>
+                  <!-- (button) show my thining -->
+                  <div
+                    v-if="showLoading"
+                    @click="showMyThinking = !showMyThinking"
+                    class="flex items-center gap-3 cursor-pointer text-[#4B5563] mt-6"
+                  >
+                    Show my thinking
+                    <IconChevronDown
+                      stroke="#4B5563"
+                      width="16"
+                      height="16"
+                      :class="[
+                        'transform transition-all ease-in-out duration-200',
+                        { 'rotate-180': showMyThinking },
+                      ]"
+                    />
+                  </div>
+                  <TransitionGroup
+                    name="fade"
+                    tag="div"
+                    v-if="showLoading && showMyThinking"
+                    class="border-l border-[#D1D5DB] px-5 text-[#4B5563] flex flex-col gap-9 mt-6"
+                  >
+                    <template
+                      v-for="(step, idx) in loadingSteps.slice(0, loadingStep)"
+                    >
+                      <div v-if="idx === 0" :key="`${idx}-div`" class="">
+                        <p class="relative -mt-2">
+                          {{ step.title }}
+                          <span
+                            class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
+                          />
+                        </p>
+                        <div
+                          class="text-xs flex flex-col gap-2 mt-3"
+                          v-if="step.details"
+                        >
+                          <p v-for="(detail, dIdx) in step.details" :key="dIdx">
+                            {{ detail }}
+                          </p>
+                        </div>
+                      </div>
+                      <p v-else :key="`${idx}-p`" class="relative -mb-2">
+                        {{ step.title }}
+                        <span
+                          class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
+                        />
+                      </p>
+                    </template>
+                  </TransitionGroup>
                 </div>
               </div>
-              <p v-else :key="`${idx}-p`" class="relative -mb-2">
-                {{ step.title }}
-                <span
-                  class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
-                />
-              </p>
-            </template>
-          </TransitionGroup>
-          <!-- chat lodding state -->
-          <div
-            v-if="isChatLoading"
-            class="text-[#A4A7AE] font-thin flex items-center gap-3 py-1"
-          >
-            <div
-              class="size-8 min-w-8 rounded-full border border-[#00000033] avatar-rotate"
-            >
-              <img
-                src="/images/chat-bot.png"
-                alt="chat bot"
-                class="object-cover object-center size-full rounded-full"
-                loading="eager"
-              />
             </div>
-            <span class="text-[#111827] animate-pulse"> Working on it... </span>
+            <!-- chat lodding state -->
+            <SophieMassageSkeleton v-if="isChatLoading" />
           </div>
           <!-- paywall for PUblic user -->
           <Transition name="fade">
@@ -128,6 +137,19 @@
               </div>
             </div>
           </Transition>
+          <!-- scroll to bttom button -->
+          <div
+            v-if="hasChatScroll && !publicPaywall && typingInterval === null"
+            @click="scrollDown"
+            class="bg-[#E5E7EB] size-10 cursor-pointer absolute bottom-2 left-1/2 transform -translate-x-1/2 rounded-lg flex items-center justify-center shadow-lg"
+          >
+            <IconArrowRight
+              fill="#111827"
+              width="24"
+              height="24"
+              class="transform rotate-90"
+            />
+          </div>
         </div>
         <!-- input -->
         <div class="flex flex-col gap-4">
@@ -161,23 +183,38 @@
               </NuxtLinkLocale>
             </div>
           </Transition>
-          <p
+          <!-- follow up question -->
+          <div
             v-if="completeChat.length === 0 && appStore.authenticatedUser"
-            @click="
-              handelPreQuestionOfScholarship(
-                'Chance me with best fit scholarships'
-              )
-            "
-            class="border-[1.5px] border-gray-200 py-2 px-3.5 rounded-lg text-[#414651] text-sm font-semibold cursor-pointer w-fit flex items-center gap-2"
+            class="flex flex-col gap-1 items-end mt-3"
+            :class="{ 'pointer-events-none': isChatFull }"
           >
-            <IconStar />
-            Chance me with best fit scholarships
-          </p>
+            <p class="text-[#4B5563] text-xs font-semibold pb-1">
+              SUGGESTED FOLLOW UP
+            </p>
+            <div class="flex gap-1 items-end">
+              <p
+                @click="
+                  handelPreQuestionOfScholarship(
+                    'Chance me with best fit scholarships'
+                  )
+                "
+                class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer flex items-center gap-2"
+              >
+                <IconStar />
+                Chance me with best fit scholarships
+              </p>
+            </div>
+          </div>
+          <!-- textarea -->
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
               'bg-[#FAFAFA] pointer-events-none':
-                isChatFull || isChatLoading || publicPaywall,
+                isChatFull ||
+                isChatLoading ||
+                publicPaywall ||
+                typingInterval !== null,
             }"
           >
             <textarea
@@ -236,19 +273,66 @@ const isChatFull = ref<boolean>(false);
 const uuid = ref<string>();
 const textarea = ref<HTMLTextAreaElement | null>(null);
 const showLoading = ref<boolean>(false);
+const showMyThinking = ref<boolean>(true);
 const publicPaywall = ref<boolean>(false);
+const hasChatScroll = ref(false);
 
 // for step animation
 const isStart = ref<boolean>(false);
 const animationTimer = ref<number>(400);
+
+// typing animation
+const typingInterval = ref<number | null>(null);
+const typingIndex = ref(0);
+const typingFullText = ref("");
 
 const loadingStep = ref(0);
 const loadingSteps = [
   {
     title: "Gathering information on your profile",
     details: [
-      "Searching bachelor’s program in the United States and United Kingdom",
-      "Searching schools has Music and Film Production major",
+      `Searching ${
+        appStore.userData
+          ? appStore.userData.educational_records.next_class_grade.class_name
+          : "bachelor’s"
+      } program in the ${
+        appStore.userData
+          ? (() => {
+              const countries =
+                appStore.userData.educational_records.want_to_study_countries.map(
+                  (item) => item.title
+                );
+              if (countries.length > 2) {
+                return (
+                  countries.slice(0, -2).join(", ") +
+                  ", " +
+                  countries.slice(-2).join(" and ")
+                );
+              } else {
+                return countries.join(" and ");
+              }
+            })()
+          : "United States and United Kingdom"
+      }`,
+      `Searching schools has ${
+        appStore.userData
+          ? (() => {
+              const countries =
+                appStore.userData.educational_records.next_program_titles.map(
+                  (item) => item.title
+                );
+              if (countries.length > 2) {
+                return (
+                  countries.slice(0, -2).join(", ") +
+                  ", " +
+                  countries.slice(-2).join(" and ")
+                );
+              } else {
+                return countries.join(" and ");
+              }
+            })()
+          : "Music and Film Production"
+      } major`,
       "Searching schools by scholarship",
     ],
   },
@@ -275,12 +359,29 @@ const addNewLine = async () => {
   adjustHeight();
 };
 
+const updateHasChatScroll = () => {
+  nextTick(() => {
+    const el = chatContainer.value;
+    if (el) {
+      const isOverflow = el.scrollHeight > el.clientHeight;
+      const isAtBottom =
+        Math.abs(el.scrollTop + el.clientHeight - el.scrollHeight) < 2;
+      hasChatScroll.value = isOverflow && !isAtBottom;
+    } else {
+      hasChatScroll.value = false;
+    }
+  });
+};
+
 // Function to scroll to the bottom
 const scrollDown = () => {
   nextTick(() => {
     if (chatContainer.value) {
-      chatContainer.value.scrollTop =
-        chatContainer.value.scrollHeight - chatContainer.value.clientHeight;
+      chatContainer.value.scrollTo({
+        top:
+          chatContainer.value.scrollHeight - chatContainer.value.clientHeight,
+        behavior: "smooth",
+      });
     }
   });
 };
@@ -364,13 +465,17 @@ const submit = async () => {
       }
       if (showLoading.value) {
         await new Promise((resolve) => setTimeout(resolve, 2200));
-        showLoading.value = false;
+        // showLoading.value = false;
       }
       if (response.data.data) {
+        showMyThinking.value = false;
         completeChat.value.push({
           isSender: false,
-          text: response.data.data,
+          text: "",
         });
+        typingFullText.value = response.data.data;
+        typingIndex.value = 0;
+        startTypingAnimation();
       } else {
         completeChat.value.push({
           isSender: false,
@@ -378,10 +483,6 @@ const submit = async () => {
         });
       }
     }
-    setTimeout(() => {
-      publicPaywall.value = true;
-      textarea.value?.blur();
-    }, 2000);
     if (route.query.query) {
       router.replace({
         query: undefined,
@@ -429,6 +530,26 @@ const stepAnimation = () => {
   }
 };
 
+const startTypingAnimation = () => {
+  if (typingInterval.value) clearInterval(typingInterval.value);
+  typingInterval.value = window.setInterval(() => {
+    const lastBotMsg = completeChat.value.findLast((c) => !c.isSender);
+    if (!lastBotMsg) return;
+    if (typingIndex.value < typingFullText.value.length) {
+      lastBotMsg.text += typingFullText.value[typingIndex.value];
+      typingIndex.value++;
+      scrollDown();
+    } else {
+      clearInterval(typingInterval.value!);
+      typingInterval.value = null;
+      setTimeout(() => {
+        publicPaywall.value = true;
+        textarea.value?.blur();
+      }, 2000);
+    }
+  }, 5); // Adjust speed as needed
+};
+
 watch(
   () => showLoading.value,
   (val) => {
@@ -439,7 +560,11 @@ watch(
   }
 );
 
+watch(() => completeChat.value, updateHasChatScroll, { deep: true });
+watch(() => showLoading.value, updateHasChatScroll);
+
 onMounted(async () => {
+  updateHasChatScroll();
   uuid.value = uuidv4();
   if (!appStore.authenticatedUser) {
     const sophieInfo = `<p class="text-[#181D27] text-2xl font-semibold">Nice to meet you!</p> <div class="mt-2 text-[#181D27]"> <p>Let’s find scholarships that are the perfect match for you 🎓</p> <p>Just fill in a few quick details below so I can recommend the best options:</p> <ul class="flex flex-col list-disc"> <li>Study program (e.g., Bachelor’s, Master’s)</li> <li>Preferred study destination</li> <li>Your GPA</li> <li>Field of study (e.g., Engineering, Business, Arts)</li> </ul> </div>`;
@@ -450,27 +575,3 @@ onMounted(async () => {
   }
 });
 </script>
-<style scoped>
-.avatar-rotate {
-  position: relative;
-}
-.avatar-rotate::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  scale: 1.05;
-  border-radius: 9999px;
-  border-top: 2px solid #a855f7; /* purple, adjust as needed */
-  border-right: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-  border-left: 2px solid transparent;
-  pointer-events: none;
-  box-sizing: border-box;
-  animation: spin 1.2s linear infinite;
-}
-@keyframes spin {
-  100% {
-    transform: rotate(-360deg);
-  }
-}
-</style>

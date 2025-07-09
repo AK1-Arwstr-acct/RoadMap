@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-8">
     <!-- question -->
     <div class="flex items-center gap-3">
-      <div class="size-6 min-w-6 sm:size-8 sm:min-w-8 rounded-full bg-black overflow-hidden">
+      <div class="size-6 min-w-6 sm:size-8 sm:min-w-8 rounded-full border border-[#00000033] overflow-hidden">
         <img
           src="/images/chat-bot.png"
           alt="chat bot"

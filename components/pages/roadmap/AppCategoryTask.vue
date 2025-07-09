@@ -110,7 +110,7 @@ import useAppStore from "~/stores/AppStore";
 import useSophieStore from "~/stores/sophieStore";
 import PaywallModal from "~/components/shared/PaywallModal.vue";
 
-const emit = defineEmits(["openTaskDetail", "hightChanged"]);
+const emit = defineEmits(["openTaskDetail", "hightChanged", "scrollDown"]);
 
 const appTrackerStore = useAppTrackerStore();
 const localePath = useLocalePath();
@@ -254,6 +254,9 @@ watch(
   () => {
     emit("hightChanged");
     calculateHeight();
+    if (isOpen.value && props.category === "visa") {
+      emit("scrollDown");
+    }
   }
 );
 

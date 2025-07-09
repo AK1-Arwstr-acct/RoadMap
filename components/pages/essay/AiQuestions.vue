@@ -108,7 +108,7 @@
             <!--  -->
             <div v-if="questionStep === 5">
               <div class="flex items-center gap-3 mb-3">
-                <div class="size-8 rounded-full bg-black overflow-hidden">
+                <div class="size-8 min-w-8 rounded-full border border-[#00000033] overflow-hidden">
                   <img
                     src="/images/chat-bot.png"
                     alt="chat bot"

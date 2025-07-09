@@ -10,13 +10,19 @@
       </p>
     </div>
     <div v-if="appStore.authenticatedUser" class="flex-1">
-      <EmptyChecklist v-if="schoolListStore.userSelectedSchoolsList.length === 0 && !schoolListStore.isSchoolsLoading" />
+      <EmptyChecklist
+        v-if="
+          schoolListStore.userSelectedSchoolsList.length === 0 &&
+          !schoolListStore.isSchoolsLoading
+        "
+      />
       <div v-else>
         <RecommendedSchoolSkeleton v-if="schoolListStore.isSchoolsLoading" />
         <div v-else>
+          <!-- @start="onStartReorder" -->
           <VueDraggable
             ref="el"
-            @start="onStartReorder"
+            @change="onStartReorder"
             v-model="schoolListStore.userSelectedSchoolsList"
             class="flex flex-col gap-6"
           >
@@ -26,7 +32,9 @@
               class="flex items-center gap-2"
             >
               <div
-                :class="isDraggingIdx === idx ? 'cursor-grabbing' : 'cursor-grab'"
+                :class="
+                  isDraggingIdx === idx ? 'cursor-grabbing' : 'cursor-grab'
+                "
                 @mousedown="isDraggingIdx = idx"
                 @mouseup="isDraggingIdx = null"
                 @mouseleave="isDraggingIdx = null"
@@ -90,11 +98,14 @@ import useSchoolListStore from "~/stores/SchoolListStore";
 import useAppStore from "~/stores/AppStore";
 import type { checklistProgram, SchoolDetail } from "~/types/program";
 import { VueDraggable } from "vue-draggable-plus";
+import axios from "axios";
 
 const schoolListStore = useSchoolListStore();
 const appStore = useAppStore();
 
 const emit = defineEmits(["openDetail"]);
+const { api } = useApi();
+const { showToast } = useToast();
 
 const isDraggingIdx = ref<number | null>(null);
 const el = ref<HTMLElement | null>(null);
@@ -103,11 +114,31 @@ const openDetail = async (item: SchoolDetail) => {
   emit("openDetail", item);
 };
 
-const onStartReorder = () => {
-  console.log(schoolListStore.userSelectedSchoolsList);
+let reorderTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const onStartReorder = (evt: any) => {
+  if (reorderTimeout) clearTimeout(reorderTimeout);
+  reorderTimeout = setTimeout(async () => {
+    try {
+      const movedItem = schoolListStore.userSelectedSchoolsList[evt.newIndex];
+
+      await api.post("/api/v1/bookmark/program/reorder", {
+        id: movedItem.id,
+        order_no: evt.newIndex,
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = errorList(error);
+        showToast(errorMessage, {
+          type: "error",
+        });
+      }
+    }
+  }, 400); // 400ms debounce
 };
+
 const onStartReorderPyblic = () => {
-    appStore.featureSoftPaywall = true;
+  appStore.featureSoftPaywall = true;
 };
 
 const checklistSchoolData = (school: checklistProgram) => {

@@ -1,9 +1,9 @@
 <template>
   <div
-    class="border-r bg-white transition-all ease-in-out duration-700 flex flex-col absolute z-10 lg:z-0 lg:relative top-0 left-0 h-[calc(100%-16px)] sm:h-full"
+    class="border-r bg-white transition-all ease-in-out duration-700 flex flex-col absolute z-20 lg:z-0 lg:relative top-0 left-0 h-[calc(100%-16px)] sm:h-full"
     :class="[
       appTrackerStore.isRoadmapSidebarOPen
-        ? 'w-full lg:w-[336px] pb-8 lg:pt-6 px-5 '
+        ? 'w-full lg:w-[336px] md:pb-4 lg:pt-6 px-5 '
         : 'w-0',
     ]"
   >
@@ -46,7 +46,7 @@
     </div>
     <!-- for open sidebar -->
     <Transition name="sidebar">
-      <div class="flex-1 overflow-y-auto no-scrollbar">
+      <div ref="appListContainer" class="flex-1 overflow-y-auto no-scrollbar">
         <div class="h-px bg-[#E9EAEB] my-6" />
         <ApplicationsList
           :heading="t('roadmap_page.pre_application')"
@@ -61,6 +61,7 @@
         <ApplicationsList
           :heading="t('roadmap_page.post_application')"
           :application="appTrackerStore.postApplication"
+          @scrollDown="scrollDown"
         />
       </div>
     </Transition>
@@ -92,6 +93,16 @@ const localePath = useLocalePath();
 
 // const isOpen = ref<boolean>(appTrackerStore.isRoadmapSidebarOPen);
 const width = ref<number>(0);
+const appListContainer = ref<HTMLElement | null>(null);
+
+function scrollDown() {
+  if (appListContainer.value) {
+    appListContainer.value.scrollTo({
+      top: appListContainer.value.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+}
 
 const toggleSidebar = () => {
   appTrackerStore.isRoadmapSidebarOPen = !appTrackerStore.isRoadmapSidebarOPen;

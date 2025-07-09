@@ -15,12 +15,12 @@
             preload
           />
           <span
-            class="text-[#414651] text-xl md:text-[32px] font-medium md:font-semibold mt-4 text-center"
+            class="text-[#414651] text-xl md:text-[32px] font-semibold mt-4 text-center mb-[102px] md:mb-0"
           >
             Hi I’m Sophie, your personal AI assistant 👋
           </span>
           <!-- mobile layput -->
-          <div class="w-full overflow-x-auto no-scrollbar md:hidden">
+          <div class="w-full overflow-x-auto absolute no-scrollbar md:hidden px-4">
             <div class="flex mt-6 gap-3">
               <div
                 v-for="(question, idx) in preQuestion.slice(0, 3)"

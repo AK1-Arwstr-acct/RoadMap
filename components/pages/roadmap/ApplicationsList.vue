@@ -32,6 +32,7 @@
             :category="category || ''"
             :forceOpen="isCategoryActive(category || '')"
             @hightChanged="() => (isInnerListOpen = true)"
+            @scrollDown="scrollDown"
           />
         </div>
       </div>
@@ -43,6 +44,8 @@ import type { Application } from "~/types/dashboard";
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 
 const appTrackerStore = useAppTrackerStore();
+
+const emit = defineEmits(["scrollDown"]);
 
 const props = defineProps({
   heading: {
@@ -72,6 +75,12 @@ const categoryList = computed(() => {
   }
   return [];
 });
+
+const scrollDown = async () => {
+  setTimeout(() => {
+    emit("scrollDown");
+  }, 450);
+};
 
 const handelDropdown = () => {
   isInnerListOpen.value = false;

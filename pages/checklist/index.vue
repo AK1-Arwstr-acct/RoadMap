@@ -1,7 +1,7 @@
 <template>
   <div class="size-full px-4 flex flex-col overflow-hidden">
     <!-- tabs -->
-    <div class="mt-2 md:mt-10 flex gap-1 w-full max-w-[800px] mx-auto">
+    <div class="mt-2 md:mt-10 flex gap-1 w-full max-w-[800px] mx-auto pb-2 overflow-x-auto no-scrollbar">
       <div
         @click="activeTab = 'checklist'"
         class="px-1 pb-1.5 relative flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200 text-nowrap"

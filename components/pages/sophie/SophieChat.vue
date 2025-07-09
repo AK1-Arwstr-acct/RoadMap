@@ -6,6 +6,13 @@
         <div
           ref="chatContainer"
           class="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full relative"
+          :class="{
+            'justify-between':
+              completeChat.length === 0 &&
+              !readOnly &&
+              !isModal &&
+              sophieStore.roadmapTaskDetail !== null,
+          }"
         >
           <!-- <Transition name="fade">
             <div
@@ -86,22 +93,7 @@
             </div>
           </div>
           <!-- chat lodding state -->
-          <div
-            v-if="isChatLoading"
-            class="text-[#A4A7AE] font-thin flex items-center gap-3 py-1"
-          >
-            <div
-              class="size-8 min-w-8 rounded-full border border-[#00000033] avatar-rotate"
-            >
-              <img
-                src="/images/chat-bot.png"
-                alt="chat bot"
-                class="object-cover object-center size-full rounded-full"
-                loading="eager"
-              />
-            </div>
-            <span class="text-[#111827] animate-pulse"> Working on it... </span>
-          </div>
+          <SophieMassageSkeleton v-if="isChatLoading" />
           <!-- pre question for overview sidebar -->
           <div
             v-if="
@@ -122,6 +114,32 @@
                 class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
               >
                 {{ question }}
+              </div>
+            </div>
+          </div>
+          <!-- pre question for task chat -->
+          <div
+            v-if="
+              completeChat.length === 0 &&
+              !readOnly &&
+              !isModal &&
+              sophieStore.roadmapTaskDetail !== null
+            "
+            class="mt-3 flex flex-col items-end"
+          >
+            <p class="text-[#4B5563] text-xs font-semibold pb-1">
+              SUGGESTED FOLLOW UP
+            </p>
+            <div class="flex gap-3 justify-end flex-wrap custom-scrollbar">
+              <div
+                v-for="(question, idx) in sophieStore.roadmapTaskDetail
+                  ?.common_questions_prompt"
+                :key="idx"
+                @click="handelPreQuestion(question.text)"
+                class="py-2 px-4 rounded-full border border-[#0000001A] text-sm text-[#111827] font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
+              >
+                <IconStar v-if="question.text.includes('[star]')" />
+                {{ question.text.replace("[star]", "") }}
               </div>
             </div>
           </div>
@@ -158,32 +176,6 @@
               </NuxtLinkLocale>
             </div>
           </Transition>
-          <!-- pre question for task chat -->
-          <div
-            v-if="
-              completeChat.length === 0 &&
-              !readOnly &&
-              !isModal &&
-              sophieStore.roadmapTaskDetail !== null
-            "
-            class="mt-3 flex flex-col items-end"
-          >
-            <p class="text-[#4B5563] text-xs font-semibold pb-1">
-              SUGGESTED FOLLOW UP
-            </p>
-            <div class="flex gap-3 justify-end flex-wrap custom-scrollbar">
-              <div
-                v-for="(question, idx) in sophieStore.roadmapTaskDetail
-                  ?.common_questions_prompt"
-                :key="idx"
-                @click="handelPreQuestion(question.text)"
-                class="py-2 px-4 rounded-full border border-[#0000001A] text-sm text-[#111827] font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
-              >
-                <IconStar v-if="question.text.includes('[star]')" />
-                {{ question.text.replace("[star]", "") }}
-              </div>
-            </div>
-          </div>
           <p
             v-if="
               completeChat.length === 0 &&
@@ -632,27 +624,3 @@ onMounted(async () => {
   }
 });
 </script>
-<style scoped>
-.avatar-rotate {
-  position: relative;
-}
-.avatar-rotate::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  scale: 1.05;
-  border-radius: 9999px;
-  border-top: 2px solid #a855f7; /* purple, adjust as needed */
-  border-right: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-  border-left: 2px solid transparent;
-  pointer-events: none;
-  box-sizing: border-box;
-  animation: spin 1.2s linear infinite;
-}
-@keyframes spin {
-  100% {
-    transform: rotate(-360deg);
-  }
-}
-</style>
