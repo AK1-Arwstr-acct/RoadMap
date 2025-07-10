@@ -45,6 +45,15 @@
         "your_email": "Email của bạn",
         "youve_reached_your_daily_limit_for_ai_essay_editor": "Bạn đã đạt giới hạn sử dụng AI Essay Editor trong ngày."
     },
+    "checklist_page": {
+        "college_comparison": "So sánh trường",
+        "coming_soon": "Sắp ra mắt",
+        "find_your_college": "Bắt đầu tìm trường",
+        "checklist_detail": "Quản lý danh sách trường, so sánh chương trình, hạn nộp, yêu cầu bạn đang quan tâm tại đây.",
+        "my_college_list": "Trường của tôi",
+        "no_saved_colleges_yet": "Chưa có trường nào",
+        "no_school_detail": "Bạn chưa lưu trường nào. Sử dụng công cụ tìm kiếm để khám phá trường dành riêng cho bạn."
+    },
     "dashboard": {
         "sidebar": {
             "menu": {
@@ -52,7 +61,9 @@
                 "roadmap": "Lộ trình",
                 "schools_list": "Danh sách trường",
                 "sophie": "Sophie",
-                "ai_essay": "Trình chỉnh sửa luận AI"
+                "ai_essay": "Trình chỉnh sửa luận AI",
+                "your_checklist":"Checklist",
+                "resources":"Tài liệu"
             }
         },
         "navbar": {
@@ -66,6 +77,7 @@
         "talk_to_us": "Đăng ký mentorship",
         "login": "Đăng nhập",
         "signup": "Đăng ký",
+        "sign_up_for_free": "Đăng ký miễn phí",
         "get_scholarship": "Nhận học bổng",
         "best_fit_scholarships": "Học bổng phù hợp nhất",
         "pre_question": "Cho tôi cơ hội với các học bổng được chọn lọc kỹ lưỡng, cá nhân hóa và phù hợp nhất chỉ dành riêng cho tôi."
@@ -99,7 +111,31 @@
         "description": {
             "part1": "Hãy để AI của chúng tôi kết nối bạn với các trường đại học phù hợp dựa trên hồ sơ, sở thích và mục tiêu của bạn.",
             "buttonText": "Tạo danh sách trường học cá nhân hóa."
-        }
+        },
+        "application_process": "Quá trình nộp hồ sơ",
+        "ask_me_anything!": "Hỏi mình bất cứ điều gì nhé!",
+        "coming_soon": "Sắp ra mắt",
+        "essay_outline_review_with_mentor": "Review essay outline cùng mentor",
+        "finalize_extracurricular_activity": "Chốt hoạt động ngoại khoá",
+        "finalize_with_our_counselor": "Hoàn thiện danh sách cùng mentor",
+        "find_schools_that_fit_you": "Chọn trường học phù hợp với bạn",
+        "find_your_fit_with_our_smart_search_engine": "Khám phá lựa chọn với công cụ tìm kiếm thông minh",
+        "finding_schools_that_match_me": "Tìm trường học phù hợp với mình",
+        "finishing_set-up": "HOÀN TẤT THÔNG TIN",
+        "get_mentorship": "Đăng ký mentorship",
+        "get_personalized_support_for_your_applications": "Nhận hướng dẫn miễn phí và bắt đầu nộp hồ sơ",
+        "help_me_to_write_an_essay_draft": "Giúp mình viết một bản thảo cho bài luận",
+        "hi_i’m_sophie_your_personal_ai_assistant": "Xin chào! Mình là Sophie, trợ lý AI cá nhân của bạn 👋",
+        "how_can_i_choose_the_right_major": "Làm sao chọn được ngành học đúng với mình",
+        "make_college_list": "Tạo danh sách trường",
+        "need_more_advice?": "Cần thêm lời khuyên?",
+        "save_and_organize_your_top_choices": "Lưu và sắp xế lựa chọn trường",
+        "scholarships_i’m_eligible_for": "Học bổng nào mình có thể nộp",
+        "search_colleges": "Tìm kiếm trường học",
+        "send_essay_draft":"Gửi bản nháp essay",
+        "talk_to_a_real_counselor_and_get_honest_helpful_answers_totally_free": "Kết nối miễn phí với mentor đến từ các trường đại học hàng đầu",
+        "what_can_i_do_for_extracurricular_activities?": "Hoạt động ngoại khoá mình nên tham gia",
+        "your_calendar": "LỊCH CÁ NHÂN"
     },
     "login": {
         "already_have_an_account": "Bạn đã có tài khoản?",
@@ -380,9 +416,21 @@
     "schoolList_page": {
         "about": "Giới thiệu",
         "acceptance_rate": "Tỷ lệ chấp nhận:",
+        "add_to_list_dropdown": {
+            "add_to_list": "Thêm vào danh sách",
+            "select_status": "Thay đổi ",
+            "considering": "Đang cân nhắc",
+            "started_application": "Đang nộp",
+            "applied": "Đã nộp",
+            "accepted": "Được nhận",
+            "waitlisted": "Danh sách chờ",
+            "denied": "Từ chối"
+        },
         "average_scores": "Điểm trung bình",
         "admission_stats": "Thống kê tuyển sinh",
         "ai_recommendation": "Gợi ý từ AI",
+        "ai_match_me": "AI đề xuất",
+        "ai_smart_filter": "BỘ LỌC THÔNG MINH AI",
         "annual_total_budget": "Ngân sách hàng năm",
         "area_of_study": "Lĩnh vực học",
         "avg_financial_aid": "Hỗ trợ tài chính trung bình:",
@@ -393,6 +441,7 @@
         "cancel": "Hủy",
         "career_outcomes": "Cơ hội nghề nghiệp",
         "coming_soon": "Sắp ra mắt",
+        "done": "Hoàn thành",
         "education_program": "Chương trình học",
         "employment_rate": "Tỷ lệ việc làm:",
         "enter_gpa": "Nhập GPA",
@@ -409,6 +458,7 @@
         "ielts": "IELTS:",
         "loading_title": "Tìm trường đại học phù hợp nhất với bạn...",
         "loading_description": "Hãy để AI của Arrowster gợi ý những trường đại học phù hợp dựa trên hồ sơ, sở thích và mục tiêu của bạn.",
+        "majors": "Ngành học",
         "majors_pick_up_to_3_majors": "Ngành học (Chọn tối đa 3 ngành)",
         "majors_info": "Lựa chọn của bạn giúp chúng tôi đề xuất các trường phù hợp nhất với mục tiêu của bạn.",
         "median_salary": "Mức lương trung bình:",

@@ -22,7 +22,7 @@
   inset: 0;
   aspect-ratio: 1;
   border-radius: 50%;
-  border: 2px solid #514b82;
+  border: 2px solid #9333EA;
   animation: l20-1 0.8s infinite linear alternate, l20-2 1.6s infinite linear;
 }
 @keyframes l20-1{

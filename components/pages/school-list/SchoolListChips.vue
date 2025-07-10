@@ -21,7 +21,7 @@
       @open="(value: string) => (openDropdown = value as Dropdowns)"
     />
     <DestinationsDropdown
-      label="Destination"
+      :label="t('schoolList_page.destination')"
       :required="true"
       :loading="isLocationLoading"
       v-model="selectedLocationOptions"

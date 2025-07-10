@@ -139,7 +139,7 @@
           </Transition>
           <!-- scroll to bttom button -->
           <div
-            v-if="hasChatScroll && !publicPaywall && typingInterval === null"
+            v-if="hasChatScroll && !publicPaywall"
             @click="scrollDown"
             class="bg-[#E5E7EB] size-10 cursor-pointer absolute bottom-2 left-1/2 transform -translate-x-1/2 rounded-lg flex items-center justify-center shadow-lg"
           >
@@ -538,7 +538,6 @@ const startTypingAnimation = () => {
     if (typingIndex.value < typingFullText.value.length) {
       lastBotMsg.text += typingFullText.value[typingIndex.value];
       typingIndex.value++;
-      scrollDown();
     } else {
       clearInterval(typingInterval.value!);
       typingInterval.value = null;
@@ -547,7 +546,7 @@ const startTypingAnimation = () => {
         textarea.value?.blur();
       }, 2000);
     }
-  }, 5); // Adjust speed as needed
+  }, 0); // Adjust speed as needed
 };
 
 watch(
@@ -572,6 +571,11 @@ onMounted(async () => {
       isSender: false,
       text: sophieInfo,
     });
+  }
+  if (sophieStore.preQuestionSelected) {
+    inputQuestion.value = sophieStore.preQuestionSelected;
+    submit();
+    sophieStore.preQuestionSelected = "";
   }
 });
 </script>

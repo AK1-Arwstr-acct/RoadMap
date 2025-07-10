@@ -13,10 +13,15 @@
         />
       </div>
       <div class="w-full flex flex-col">
-        <p class="text-[#111827] font-semibold">Overwhelmed by options?</p>
+        <p class="text-[#111827] font-semibold">
+          {{ $t("schoolList_page.overwhelmed_by_options") }}
+        </p>
         <p class="text-[#535862] text-sm mt-0.5">
-          Select your major and our AI will match you with the ones that match
-          100%
+          {{
+            $t(
+              "schoolList_page.select_your_major_and_our_ai_will_match_you_with_the_ones_that_match_100"
+            )
+          }}
         </p>
         <div class="hidden lg:block max-w-[142px] mt-3">
           <SophieRecommendation :isOverwhelmed="true" />

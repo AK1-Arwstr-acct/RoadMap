@@ -4,10 +4,10 @@
   >
     <div class="px-2">
       <p class="text-xs font-semibold text-[#2563EB] uppercase tracking-wide">
-        Finishing set-up
+        {{ $t("homepage.finishing_set-up") }}
       </p>
       <p class="text-xl font-semibold text-[#111827] mb-4">
-        Find schools that fit you
+        {{ $t("homepage.find_schools_that_fit_you") }}
       </p>
     </div>
     <ol class="flex flex-col gap-7">
@@ -40,9 +40,11 @@
           />
         </div>
         <div class="flex-1">
-          <p class="text-[#111827] text-sm md:text-base">Search colleges</p>
+          <p class="text-[#111827] text-sm md:text-base">
+            {{ $t("homepage.search_colleges") }}
+          </p>
           <p class="text-xs md:text-sm text-[#4B5563]">
-            Find your fit with our smart search engine
+            {{ $t("homepage.find_your_fit_with_our_smart_search_engine") }}
           </p>
         </div>
         <IconChevronDown
@@ -88,9 +90,11 @@
           />
         </div>
         <div class="flex-1">
-          <p class="text-[#111827] text-sm md:text-base">Make College List</p>
+          <p class="text-[#111827] text-sm md:text-base">
+            {{ $t("homepage.make_college_list") }}
+          </p>
           <p class="text-xs md:text-sm text-[#4B5563]">
-            Save and organize your top choices
+            {{ $t("homepage.save_and_organize_your_top_choices") }}
           </p>
         </div>
         <IconChevronDown
@@ -115,17 +119,17 @@
         </div>
         <div class="flex-1">
           <p class="text-[#111827] text-sm md:text-base">
-            Finalize with Our Counselor
+            {{ $t("homepage.finalize_with_our_counselor") }}
           </p>
           <p class="text-xs md:text-sm text-[#4B5563]">
-            Get personalized support for your applications
+            {{ $t("homepage.get_personalized_support_for_your_applications") }}
           </p>
           <NuxtLinkLocale
             v-if="appStore.authUserData?.isAnyCollegeAdded"
             to="/pricing"
             class="text-sm font-semibold py-1.5 px-[18px] rounded-lg bg-[#2563EB] text-white mt-3 block w-fit"
           >
-            Get mentorship
+            {{ $t("homepage.get_mentorship") }}
           </NuxtLinkLocale>
         </div>
         <IconChevronDown

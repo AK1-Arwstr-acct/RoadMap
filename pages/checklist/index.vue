@@ -1,7 +1,9 @@
 <template>
   <div class="size-full px-4 flex flex-col overflow-hidden">
     <!-- tabs -->
-    <div class="mt-2 md:mt-10 flex gap-1 w-full max-w-[800px] mx-auto pb-2 overflow-x-auto no-scrollbar">
+    <div
+      class="mt-2 md:mt-10 flex gap-1 w-full max-w-[800px] mx-auto pb-2 overflow-x-auto no-scrollbar"
+    >
       <div
         @click="activeTab = 'checklist'"
         class="px-1 pb-1.5 relative flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200 text-nowrap"
@@ -14,7 +16,7 @@
             activeTab === 'checklist' ? 'text-[#2563EB]' : 'text-[#4B5563]',
           ]"
         />
-        My College List
+        {{ $t("checklist_page.my_college_list") }}
         <div
           v-if="activeTab === 'checklist'"
           class="absolute h-[3px] w-full left-0 -bottom-1 bg-[#2563EB] rounded-tl-[4px] rounded-tr-[4px]"
@@ -34,7 +36,7 @@
               activeTab === 'comparison' ? 'text-[#2563EB]' : 'text-[#4B5563]',
             ]"
           />
-          College Comparison
+          {{ $t("checklist_page.college_comparison") }}
           <div
             v-if="activeTab === 'comparison'"
             class="absolute h-[3px] w-full left-0 -bottom-1 bg-[#2563EB] rounded-tl-[4px] rounded-tr-[4px]"
@@ -43,7 +45,7 @@
         <p
           class="px-2 rounded-full bg-[#E5E5E5] text-[#4B5563] font-semibold text-nowrap"
         >
-          Coming soon
+          {{ $t("checklist_page.coming_soon") }}
         </p>
       </div>
     </div>

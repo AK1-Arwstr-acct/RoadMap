@@ -2,11 +2,10 @@
   <div class="h-fit w-full flex flex-col gap-10">
     <div class="">
       <h1 class="text-2xl md:text-[32px] font-semibold text-[#181D27]">
-        My College List
+        {{ $t("checklist_page.my_college_list") }}
       </h1>
       <p class="text-[#535862] mt-2 text-sm md:text-base">
-        Keep track of all the schools you're interested in. Compare programs,
-        deadlines, and requirements in one place.
+        {{ $t("checklist_page.checklist_detail") }}
       </p>
     </div>
     <div v-if="appStore.authenticatedUser" class="flex-1">
@@ -20,12 +19,15 @@
         <RecommendedSchoolSkeleton v-if="schoolListStore.isSchoolsLoading" />
         <div v-else>
           <!-- @start="onStartReorder" -->
+          <!-- @change="onStartReorder" -->
           <VueDraggable
             ref="el"
-            @change="onStartReorder"
+            @end="onEndReorder"
             v-model="schoolListStore.userSelectedSchoolsList"
             class="flex flex-col gap-6"
-          >
+            ghostClass="parent"
+            >
+            <!-- dragClass="dragClass" -->
             <div
               v-for="(school, idx) in schoolListStore.userSelectedSchoolsList"
               :key="school.id"
@@ -57,7 +59,7 @@
             <BasePagination
               :currentPage="schoolListStore.checklistPagination?.currentPage"
               :lastPage="schoolListStore.checklistPagination?.last_page"
-              @paginate="(pageNum) => getChecklist(pageNum)"
+              @paginate="(pageNum: number) => getChecklist(pageNum)"
             />
           </div>
         </div>
@@ -114,27 +116,24 @@ const openDetail = async (item: SchoolDetail) => {
   emit("openDetail", item);
 };
 
-let reorderTimeout: ReturnType<typeof setTimeout> | null = null;
-
-const onStartReorder = (evt: any) => {
-  if (reorderTimeout) clearTimeout(reorderTimeout);
-  reorderTimeout = setTimeout(async () => {
-    try {
+const onEndReorder = async (evt: any) => {
+  try {
+    if (evt.newIndex !== evt.oldIndex) {
       const movedItem = schoolListStore.userSelectedSchoolsList[evt.newIndex];
 
       await api.post("/api/v1/bookmark/program/reorder", {
         id: movedItem.id,
-        order_no: evt.newIndex,
+        order_no: evt.newIndex + 1,
       });
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorMessage = errorList(error);
-        showToast(errorMessage, {
-          type: "error",
-        });
-      }
     }
-  }, 400); // 400ms debounce
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
 };
 
 const onStartReorderPyblic = () => {
@@ -149,4 +148,15 @@ const checklistSchoolData = (school: checklistProgram) => {
 const getChecklist = (pageNo: number = 1) => {
   schoolListStore.getChecklistProgram(pageNo);
 };
+
+
 </script>
+<style>
+.parent {
+  opacity: 0 !important;
+}
+
+/* .dragClass {
+  opacity: 1 !important;
+} */
+</style>

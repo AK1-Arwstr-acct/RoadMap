@@ -18,7 +18,7 @@
             v-if="schoolListStore.isSchoolsLoading"
             class="text-[#111827] font-semibold"
           >
-            Finding your best-fit schools...
+            {{ $t('schoolList_page.loading_title') }}
           </span>
           <span v-else>
             {{ schoolListStore.totalSchool || 0 }}

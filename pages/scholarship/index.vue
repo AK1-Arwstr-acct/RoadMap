@@ -2,7 +2,7 @@
   <div class="bg-white size-full overflow-hidden flex">
     <div class="w-full flex flex-col gap-1">
       <div class="flex-1 overflow-hidden">
-        <div class="flex-1 md:x-6 pb-2 pt-6 w-full h-full px-4">
+        <div class="flex-1 md:x-6 pb-2 md:pt-6 w-full h-full px-4">
           <SophieScholarshipChat />
         </div>
       </div>

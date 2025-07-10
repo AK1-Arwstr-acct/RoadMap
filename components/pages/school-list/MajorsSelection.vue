@@ -14,13 +14,15 @@
       }"
     >
       <div v-if="selectedLPrograms.length === 0" class="flex-1">
-        <p class="text-[#111827] text-left">Majors</p>
+        <p class="text-[#111827] text-left">
+          {{ $t("schoolList_page.majors") }}
+        </p>
       </div>
       <div v-else>
         <p
           class="text-[#2563EB] text-left truncate font-medium flex items-center gap-2 w-fit"
         >
-          Majors
+          {{ $t("schoolList_page.majors") }}
         </p>
       </div>
       <span

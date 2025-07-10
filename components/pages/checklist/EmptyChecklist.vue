@@ -7,17 +7,16 @@
       loading="eager"
     />
     <p class="text-[#181D27] md:text-xl font-semibold mt-6">
-      No Saved Colleges Yet
+      {{ $t("checklist_page.no_saved_colleges_yet") }}
     </p>
     <p class="mt-2 text-[#535862] text-sm md:text-base max-w-[640px]">
-      You haven't saved any colleges yet. Use our search and filters to discover
-      schools that fit you best.
+      {{ $t("checklist_page.no_school_detail") }}
     </p>
     <NuxtLinkLocale
       to="/school-list"
       class="mt-4 px-[18px] py-1.5 rounded-lg bg-[#2563EB] text-white font-semibold text-sm"
     >
-      Find your college
+      {{ $t("checklist_page.find_your_college") }}
     </NuxtLinkLocale>
   </div>
 </template>

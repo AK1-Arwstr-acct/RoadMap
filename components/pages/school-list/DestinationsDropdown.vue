@@ -16,13 +16,13 @@
         v-if="selectedLocationOptions.length <= 0"
         class="flex-1 text-nowrap"
       >
-        <p class="text-[#111827] text-left">Study destination</p>
+        <p class="text-[#111827] text-left">{{ $t('schoolList_page.study_destination') }}</p>
       </div>
       <div v-else class="text-nowrap">
         <p
           class="text-[#2563EB] text-left truncate font-medium flex items-center gap-2 w-fit"
         >
-          Study destination
+          {{ $t('schoolList_page.study_destination') }}
         </p>
       </div>
       <span
@@ -52,7 +52,7 @@
         v-if="label"
         class="font-semibold text-[#4B5563] text-[10px] py-2 px-4 uppercase"
       >
-        Study destination
+        {{ $t('schoolList_page.study_destination') }}
       </p>
       <div class="flex flex-col gap-6 pb-2 px-4">
         <div

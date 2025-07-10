@@ -45,6 +45,15 @@
         "your_email": "Your email",
         "youve_reached_your_daily_limit_for_ai_essay_editor": "You've reached your daily limit for AI Essay Editor."
     },
+    "checklist_page": {
+        "college_comparison": "College Comparison",
+        "coming_soon": "Coming soon",
+        "find_your_college": "Find your college",
+        "checklist_detail": "Keep track of all the schools you're interested in. Compare programs, deadlines, and requirements in one place.",
+        "my_college_list": "My College List",
+        "no_saved_colleges_yet": "No Saved Colleges Yet",
+        "no_school_detail": "You haven't saved any colleges yet. Use our search and filters to discover schools that fit you best."
+    },
     "dashboard": {
         "sidebar": {
             "menu": {
@@ -52,7 +61,9 @@
                 "roadmap": "Roadmap",
                 "schools_list": "Schools List",
                 "sophie": "Sophie",
-                "ai_essay": "AI Essay Editor"
+                "ai_essay": "AI Essay Editor",
+                "your_checklist":"Your checklist",
+                "resources":"Resources"
             }
         },
         "navbar": {
@@ -61,14 +72,15 @@
             "ai_essay": "AI Essay",
             "resources": "Resources",
             "ask_sophie": "Ask Sophie",
-            "scholarship":"Scholarship"
+            "scholarship": "Scholarship"
         },
         "talk_to_us": "Free Mentorship",
         "login": "Log in",
         "signup": "Sign up",
+        "sign_up_for_free": "Sign up for free",
         "get_scholarship": "Get Scholarship",
-        "best_fit_scholarships":"Best Fit Scholarships",
-        "pre_question":"Chance me with highly curated individualized scholarships that are best matched for me ONLY"
+        "best_fit_scholarships": "Best Fit Scholarships",
+        "pre_question": "Chance me with highly curated individualized scholarships that are best matched for me ONLY"
     },
     "discover": {
         "heading": "Your All-in-One Platform for Studying Abroad",
@@ -99,7 +111,31 @@
         "description": {
             "part1": "Let our AI match you with the right universities based on your profile, preferences, and goals.",
             "buttonText": "Generate Personalised School List"
-        }
+        },
+        "application_process": "Application process",
+        "ask_me_anything!": "Ask me anything!",
+        "coming_soon": "Coming soon",
+        "essay_outline_review_with_mentor": "Essay outline review with mentor",
+        "finalize_extracurricular_activity": "Finalize extracurricular activity",
+        "finalize_with_our_counselor": "Finalize with Our Counselor",
+        "find_schools_that_fit_you": "Find schools that fit you",
+        "find_your_fit_with_our_smart_search_engine": "Find your fit with our smart search engine",
+        "finding_schools_that_match_me": "Finding schools that match me",
+        "finishing_set-up": "Finishing set-up",
+        "get_mentorship": "Get mentorship",
+        "get_personalized_support_for_your_applications": "Get personalized support for your applications",
+        "help_me_to_write_an_essay_draft": "Help me to write an essay draft",
+        "hi_i’m_sophie_your_personal_ai_assistant": "Hi I’m Sophie, your personal AI assistant 👋",
+        "how_can_i_choose_the_right_major": "How can I choose the right major",
+        "make_college_list": "Make College List",
+        "need_more_advice?": "Need more advice?",
+        "save_and_organize_your_top_choices": "Save and organize your top choices",
+        "scholarships_i’m_eligible_for": "Scholarships I’m eligible for",
+        "search_colleges": "Search colleges",
+        "send_essay_draft": "Send Essay draft",
+        "talk_to_a_real_counselor_and_get_honest_helpful_answers_totally_free": "Talk to a real counselor and get honest, helpful answers, totally free.",
+        "what_can_i_do_for_extracurricular_activities?": "What can I do for extracurricular activities?",
+        "your_calendar": "Your calendar"
     },
     "login": {
         "already_have_an_account": "Already have an account?",
@@ -380,9 +416,21 @@
     "schoolList_page": {
         "about": "About",
         "acceptance_rate": "Acceptance Rate",
+        "add_to_list_dropdown": {
+            "add_to_list": "Add to List",
+            "select_status": "Select status",
+            "considering": "considering",
+            "started_application": "Started Application",
+            "applied": "Applied",
+            "accepted": "Accepted",
+            "waitlisted": "Waitlisted",
+            "denied": "Denied"
+        },
         "average_scores": "Average Scores",
         "admission_stats": "Admission Stats",
         "ai_recommendation": "AI recommendation",
+        "ai_match_me": "AI Match Me",
+        "ai_smart_filter": "AI SMART FILTER",
         "annual_total_budget": "Annual total budget",
         "area_of_study": "Area of study",
         "avg_financial_aid": "Avg. Financial Aid:",
@@ -393,6 +441,7 @@
         "cancel": "Cancel",
         "career_outcomes": "Career Outcomes",
         "coming_soon": "Coming Soon",
+        "done": "Done",
         "education_program": "Education Program",
         "employment_rate": "Employment Rate:",
         "enter_gpa": "Enter GPA",
@@ -409,6 +458,7 @@
         "ielts": "IELTS:",
         "loading_title": "Finding your best-fit schools...",
         "loading_description": "Let our AI match you with the right universities based on your profile, preferences, and goals.",
+        "majors": "Majors",
         "majors_pick_up_to_3_majors": "Majors (Pick up to 3 majors)",
         "majors_info": "Your selections help us recommend schools that best fit your goals.",
         "median_salary": "Median Salary:",
@@ -463,9 +513,9 @@
         "sign_up_with_google": "Sign up with Google"
     },
     "sophie_page": {
-        "complete_sophie_button" : {
-            "buttonText":"Get Sophie to complete this for you!",
-            "tooltop_Text":"Click here to get Sophie to complete the whole checklist for you. Your own AI-Sophie will assist 24/7 just for YOU! and will automatically prepare this roadmap checklist. Click away to see how this works."
+        "complete_sophie_button": {
+            "buttonText": "Get Sophie to complete this for you!",
+            "tooltop_Text": "Click here to get Sophie to complete the whole checklist for you. Your own AI-Sophie will assist 24/7 just for YOU! and will automatically prepare this roadmap checklist. Click away to see how this works."
         },
         "graduate": "Graduate",
         "high_school": "High School",

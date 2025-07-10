@@ -87,7 +87,7 @@
     :class="[isOverwhelmed ? 'rounded-lg w-full' : 'rounded-full']"
   >
     <IconSearchAi />
-    AI Match Me
+    {{ $t('schoolList_page.ai_match_me') }}
   </button>
   <Transition name="fade">
     <div

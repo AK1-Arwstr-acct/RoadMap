@@ -18,7 +18,7 @@
         >
           GPA {{ gpaValue }}
         </p>
-        <p class="text-[#111827] text-left" v-else>Enter GPA</p>
+        <p class="text-[#111827] text-left" v-else>{{ $t('schoolList_page.enter_gpa') }}</p>
       </div>
       <span
         class="transition-transform duration-200 ease-in-out"
@@ -48,7 +48,7 @@
         type="text"
         step="0.1"
         @input="validateNumber"
-        placeholder="Enter GPA"
+        :placeholder="t('schoolList_page.enter_gpa')"
         class="w-full bg-[#F5F5F5] rounded-md px-3 py-2 outline-none"
         @keyup.enter="onDone"
       />
@@ -56,7 +56,7 @@
         class="bg-[#2563EB] text-white px-6 py-1.5 rounded-md font-medium w-fit"
         @click="onDone"
       >
-        Done
+        {{ $t('schoolList_page.done') }}
       </button>
     </div>
   </div>
@@ -66,6 +66,8 @@
 import { ref, watch } from "vue";
 import IconChevronDown from "~/components/icons/IconChevronDown.vue";
 import type { Dropdowns } from "~/types/dashboard";
+
+const { t } = useI18n();
 
 const props = defineProps({
   modelValue: {

@@ -1,11 +1,11 @@
 <template>
   <div
-    class="h-full flex justify-center items-center pt-4 md:pt-8 px-4 md:px-6 overflow-hidden"
+    class="h-full flex justify-center items-center pt-4 md:pt-8 md:px-6 overflow-hidden"
   >
     <div class="overflow-y-auto no-scrollbar pb-6 size-full">
       <div class="w-full mx-auto h-fit max-w-[900px]">
         <div
-          class="flex flex-col items-center justify-center md:mt-24 overflow-hidden"
+          class="flex flex-col items-center justify-center md:mt-24 overflow-hidden relative"
         >
           <img
             src="/images/sophie-chat.png"
@@ -15,13 +15,13 @@
             preload
           />
           <span
-            class="text-[#414651] text-xl md:text-[32px] font-semibold mt-4 text-center mb-[102px] md:mb-0"
+            class="text-[#414651] text-xl md:text-[32px] font-semibold mt-4 text-center px-4 md:px-0"
           >
-            Hi I’m Sophie, your personal AI assistant 👋
+            {{ $t("homepage.hi_i’m_sophie_your_personal_ai_assistant") }}
           </span>
           <!-- mobile layput -->
-          <div class="w-full overflow-x-auto absolute no-scrollbar md:hidden px-4">
-            <div class="flex mt-6 gap-3">
+          <div class="w-full overflow-x-auto no-scrollbar md:hidden">
+            <div class="flex mt-6 gap-3 px-4 w-fit">
               <div
                 v-for="(question, idx) in preQuestion.slice(0, 3)"
                 :key="idx"
@@ -34,7 +34,7 @@
                 </div>
               </div>
             </div>
-            <div class="flex mt-2 gap-3">
+            <div class="flex mt-2 gap-3 px-4 w-fit">
               <div v-for="(question, idx) in preQuestion.slice(3)" :key="idx">
                 <div
                   @click="handelPreQuestion(question)"
@@ -58,9 +58,9 @@
               </div>
             </div>
           </div>
-          <div class="relative w-full mt-6">
+          <div class="relative w-full px-4 md:px-0 mt-6">
             <textarea
-              placeholder="Ask me anything!"
+              :placeholder="t('homepage.ask_me_anything!')"
               rows="4"
               v-model="inputQuestion"
               @keydown.enter="handleKeydown"
@@ -69,16 +69,20 @@
             <button
               :disabled="inputQuestion.trim().length < 2"
               @click="handelSubmit"
-              class="cursor-pointer size-10 min-w-10 flex justify-center items-center rounded-lg bg-[#D1D5DB] absolute bottom-5 transform right-4 -rotate-90 p-2 disabled:opacity-40"
+              class="cursor-pointer size-10 min-w-10 flex justify-center items-center rounded-lg bg-[#1570ef] disabled:bg-[#D1D5DB] absolute bottom-5 transform right-8 md:right-4 -rotate-90 p-2 disabled:opacity-40"
             >
-              <IconArrowRight width="20" height="20" fill="#9CA3AF" />
+              <IconArrowRight
+                width="20"
+                height="20"
+                :fill="inputQuestion.trim().length < 2 ? '#9CA3AF' : '#ffffff'"
+              />
             </button>
           </div>
         </div>
-        <div class="mt-12">
+        <div class="mt-12 px-4 md:px-0">
           <HomeDashboard />
         </div>
-        <div class="md:hidden mt-4">
+        <div class="md:hidden mt-4 px-4 md:px-0">
           <GetMentorshipBlock />
         </div>
       </div>
@@ -107,6 +111,7 @@ const sophieStore = useSophieStore();
 const localePath = useLocalePath();
 const appStore = useAppStore();
 const appTrackerStore = useAppTrackerStore();
+const { t } = useI18n();
 
 definePageMeta({
   layout: "dashboard-layout",
@@ -149,13 +154,16 @@ useHead(
 
 const inputQuestion = ref<string>("");
 
-const preQuestion: { number: number; question: string }[] = [
-  { number: 1, question: "Finding schools that match me" },
-  { number: 2, question: "How can I choose the right major" },
-  { number: 3, question: "Scholarships I’m eligible for" },
-  { number: 4, question: "Help me to write an essay draft" },
-  { number: 5, question: "What can I do for extracurricular activities?" },
-];
+const preQuestion = ref<{ number: number; question: string }[]>([
+  { number: 1, question: `${t("homepage.finding_schools_that_match_me")}` },
+  { number: 2, question: `${t("homepage.how_can_i_choose_the_right_major")}` },
+  { number: 3, question: `${t("homepage.scholarships_i’m_eligible_for")}` },
+  { number: 4, question: `${t("homepage.help_me_to_write_an_essay_draft")}` },
+  {
+    number: 5,
+    question: `${t("homepage.what_can_i_do_for_extracurricular_activities?")}`,
+  },
+]);
 
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === "Enter") {
@@ -178,7 +186,7 @@ const handelPreQuestion = (question: { number: number; question: string }) => {
     navigateTo(localePath("/sophie"));
   } else if (question.number === 3) {
     sophieStore.preQuestionSelected = question.question;
-    sophieStore.openSophieModal = true;
+    navigateTo(localePath("/scholarship"));
   } else if (question.number === 4) {
     navigateTo(localePath("/ai-essay"));
   } else if (question.number === 5) {

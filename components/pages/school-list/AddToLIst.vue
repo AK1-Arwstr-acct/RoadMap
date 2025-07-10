@@ -12,7 +12,7 @@
       width="16"
       height="17"
     />
-    <span> Add to List </span>
+    <span> {{ $t("schoolList_page.add_to_list_dropdown.add_to_list") }} </span>
   </button>
   <div v-else class="">
     <AppStatusDropdown
@@ -36,6 +36,7 @@ const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const route = useRoute();
+const { t } = useI18n();
 
 const props = defineProps({
   program: {
@@ -53,31 +54,38 @@ const isAddingSchol = ref<boolean>(false);
 const applicationStatusOptions = ref<OptionAttributes[]>([
   {
     value: "select_status",
-    label: "Select status",
+    label: `${t("schoolList_page.add_to_list_dropdown.select_status")}`,
+    description: "Select status",
   },
   {
     value: "considering",
-    label: "considering",
+    label: `${t("schoolList_page.add_to_list_dropdown.considering")}`,
+    description: "considering",
   },
   {
     value: "started_application",
-    label: "Started Application",
+    label: `${t("schoolList_page.add_to_list_dropdown.started_application")}`,
+    description: "Started Application",
   },
   {
     value: "applied",
-    label: "Applied",
+    label: `${t("schoolList_page.add_to_list_dropdown.applied")}`,
+    description: "Applied",
   },
   {
     value: "accepted",
-    label: "Accepted",
+    label: `${t("schoolList_page.add_to_list_dropdown.accepted")}`,
+    description: "Accepted",
   },
   {
     value: "waitlisted",
-    label: "Waitlisted",
+    label: `${t("schoolList_page.add_to_list_dropdown.waitlisted")}`,
+    description: "Waitlisted",
   },
   // {
   //   value: "denied",
-  //   label: "Denied",
+  //   label: `${t('schoolList_page.add_to_list_dropdown.denied')}`,
+  //   description: "Denied",
   // },
 ]);
 
@@ -176,7 +184,7 @@ const updateStatus = async () => {
       {
         program_id: props.program.id,
         class_grade_id: props.program.class_grades[0].id,
-        status: selectedStatus.value.label,
+        status: selectedStatus.value.description,
         note: "",
         // order_no: 1
       }

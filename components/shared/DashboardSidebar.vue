@@ -48,7 +48,7 @@
               isOpen ? 'justify-start gap-4' : 'justify-between',
               (
                 tab.route === '/'
-                  ? route.path === '/'
+                  ? route.path === '/' || route.path === '/vi'
                   : tab.activeList.some((item) => route.path.startsWith(item))
               )
                 ? 'text-[#1570EF] bg-[#EFF6FF]'
@@ -134,13 +134,13 @@
             to="/signup"
             class="w-full bg-[#2563EB] text-white font-semibold rounded-lg py-3 text-center"
           >
-            Sign up for free
+            {{ $t("dashboard.sign_up_for_free") }}
           </NuxtLinkLocale>
           <NuxtLinkLocale
             to="/login"
             class="w-full bg-[#E5E5E5] text-[#111827] font-semibold rounded-lg py-3 text-center"
           >
-            Log in
+            {{ $t("dashboard.login") }}
           </NuxtLinkLocale>
         </div>
       </div>
@@ -249,16 +249,16 @@ const tabList = ref<TabList[]>([
   //   activeList: ['/sophie', '/school-list', '/ai-essay']
   // },
   {
-    name: "Your checklist",
+    name: t("dashboard.sidebar.menu.your_checklist"),
     icon: shallowRef(IconTabApplication),
     route: "/checklist",
-    activeList: ["/checklist", "/sophie", "/school-list", "/ai-essay"],
+    activeList: ["/checklist","/vi/checklist" , "/sophie", "/sophie", "/school-list", "/vi/school-list", "/vi/ai-essay" , "/ai-essay"],
   },
   {
-    name: "Resources",
+    name: t("dashboard.sidebar.menu.resources"),
     icon: shallowRef(IconBookOpen),
     route: "/resources",
-    activeList: ["/resources"],
+    activeList: ["/resources", "/vi/resources"],
   },
 ]);
 
