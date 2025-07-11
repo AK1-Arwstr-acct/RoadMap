@@ -100,6 +100,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
                     type: "error",
                 });
             }
+            return []
         }
     }
 
@@ -134,6 +135,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
                     type: "error",
                 });
             }
+            return []
         }
     }
 
@@ -179,6 +181,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
                     type: "error",
                 });
             }
+            return []
         }
     }
 
@@ -213,6 +216,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
                     type: "error",
                 });
             }
+            return []
         }
     }
 

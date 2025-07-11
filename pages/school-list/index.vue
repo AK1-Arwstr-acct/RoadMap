@@ -175,14 +175,11 @@ onMounted(async () => {
   //   publicToken.value = JSON.stringify(response.data.data.token);
   //   await nextTick();
   // }
+  isTokenLoading.value = false;
   if (schoolListStore.isSchoolListPublic) {
     schoolListStore.setProgramListOptions();
-    isTokenLoading.value = false;
     schoolListStore.isSchoolsLoading = false;
-    return;
   }
-  isTokenLoading.value = false;
-  schoolListStore.setProgramListOptions();
 });
 
 onUnmounted(async () => {

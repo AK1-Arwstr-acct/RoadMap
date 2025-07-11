@@ -238,47 +238,82 @@ const setInitialValues = async (newValue: UserData) => {
   gpa.value = decimal > 0 ? value.toFixed(1) : value.toFixed(0);
   await gpaChanged();
 
+  if (!schoolListStore.programListOptions.length) {
+    schoolListStore.isSchoolsLoading = false;
+    return;
+  }
+
   studyPrograms.value = schoolListStore.programListOptions.find(
     (item) =>
       Number(item.value) == newValue?.educational_records.next_class_grade.id
   );
 
-  if (gpa.value && studyPrograms.value) {
-    await getLocationsList();
+  if (!gpa.value || !studyPrograms.value) {
+    schoolListStore.isSchoolsLoading = false;
+    return;
+  }
 
-    selectedLocationOptions.value =
-      appStore.userData?.educational_records.want_to_study_countries.map(
+  await getLocationsList();
+
+  if (!schoolListStore.locationOptions.length) {
+    schoolListStore.isSchoolsLoading = false;
+    return;
+  }
+
+  selectedLocationOptions.value =
+    appStore.userData?.educational_records.want_to_study_countries.map(
+      (item) => item.id
+    ) || [];
+
+  if (!selectedLocationOptions.value.length) {
+    schoolListStore.isSchoolsLoading = false;
+    return;
+  }
+
+  await destinationUpdates();
+
+  if (!schoolListStore.budgetList.length) {
+    schoolListStore.isSchoolsLoading = false;
+    return;
+  }
+
+  annualBudget.value =
+    schoolListStore.budgetList?.find((item) =>
+      item.value.includes(`${newValue?.educational_records.annual_max_budget}`)
+    ) || undefined;
+
+  if (!annualBudget.value) {
+    schoolListStore.isSchoolsLoading = false;
+    return;
+  }
+
+  await getProgramParent();
+
+  if (!schoolListStore.coursePreferenceOptions.length) {
+    schoolListStore.isSchoolsLoading = false;
+    return;
+  }
+
+  areaOfStudy.value = schoolListStore.coursePreferenceOptions?.find(
+    (item) =>
+      Number(item.value) == newValue?.educational_records.super_meta_category.id
+  );
+  if (!areaOfStudy.value) {
+    schoolListStore.isSchoolsLoading = false;
+    return;
+  }
+
+  schoolListStore.programTitleParentId = areaOfStudy.value?.value || "";
+  schoolListStore.isPublicMajorEnable = true;
+  if (appStore.userData?.educational_records.next_program_titles.length) {
+    const selectedMajors =
+      appStore.userData?.educational_records.next_program_titles.map(
         (item) => item.id
-      ) || [];
-
-    await destinationUpdates();
-
-    annualBudget.value =
-      schoolListStore.budgetList?.find((item) =>
-        item.value.includes(
-          `${newValue?.educational_records.annual_max_budget}`
-        )
-      ) || undefined;
-
-    await getProgramParent();
-    areaOfStudy.value = schoolListStore.coursePreferenceOptions?.find(
-      (item) =>
-        Number(item.value) ==
-        newValue?.educational_records.super_meta_category.id
-    );
-    // updateSchools();
-    schoolListStore.programTitleParentId = areaOfStudy.value?.value || "";
-    schoolListStore.isPublicMajorEnable = true;
-    if (appStore.userData?.educational_records.next_program_titles.length) {
-      const selectedMajors =
-        appStore.userData?.educational_records.next_program_titles.map(
-          (item) => item.id
-        );
-      schoolListStore.selectedPublicMajors = selectedMajors;
-      await schoolListStore.runEngine();
-    } else {
-      await schoolListStore.preRunEngine();
-    }
+      );
+    schoolListStore.selectedPublicMajors = selectedMajors;
+    await schoolListStore.runEngine();
+  } else {
+    await schoolListStore.preRunEngine();
   }
 };
 
@@ -312,6 +347,9 @@ const updateSchools = () => {
 };
 
 const gpaChanged = async () => {
+  if (!schoolListStore.programListOptions.length) {
+    schoolListStore.setProgramListOptions();
+  }
   isGpaChange.value = true;
   await getLocationsList();
   isGpaChange.value = false;
@@ -339,8 +377,8 @@ const getLocationsList = async () => {
     if (response) {
       await nextTick();
       calculateHeight();
-      isLocationLoading.value = false;
     }
+    isLocationLoading.value = false;
     updateSchools();
   } catch (error) {}
 };

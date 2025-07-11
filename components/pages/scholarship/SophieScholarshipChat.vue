@@ -87,7 +87,13 @@
                           class="text-xs flex flex-col gap-2 mt-3"
                           v-if="step.details"
                         >
-                          <p v-for="(detail, dIdx) in step.details" :key="dIdx">
+                          <p
+                            v-for="(detail, dIdx) in step.details.slice(
+                              0,
+                              childStep
+                            )"
+                            :key="dIdx"
+                          >
                             {{ detail }}
                           </p>
                         </div>
@@ -141,14 +147,9 @@
           <div
             v-if="hasChatScroll && !publicPaywall"
             @click="scrollDown"
-            class="bg-[#E5E7EB] size-10 cursor-pointer absolute bottom-2 left-1/2 transform -translate-x-1/2 rounded-lg flex items-center justify-center shadow-lg"
+            class="bg-[#E7E5E4] size-10 cursor-pointer absolute bottom-2 left-1/2 transform -translate-x-1/2 rounded-lg flex items-center justify-center shadow-[0_0_2px_2px_#0000,_0_0_3px_0px_#0000,_0px_0px_7px_3px_rgb(0_0_0_/_0.05)]"
           >
-            <IconArrowRight
-              fill="#111827"
-              width="24"
-              height="24"
-              class="transform rotate-90"
-            />
+            <IconArrowDownBigHead />
           </div>
         </div>
         <!-- input -->
@@ -287,6 +288,7 @@ const typingIndex = ref(0);
 const typingFullText = ref("");
 
 const loadingStep = ref(0);
+const childStep = ref(0);
 const loadingSteps = [
   {
     title: "Gathering information on your profile",
@@ -416,9 +418,14 @@ const submit = async () => {
     if (completeChat.value.length <= 2) {
       completeChat.value.push({
         isSender: false,
-        text: "Got it! Hang tight, I am looking into our database...",
+        text: "",
       });
+      (typingFullText.value =
+        "Got it! Hang tight, I am looking into our database..."),
+        (typingIndex.value = 0);
+      startTypingAnimation();
       showLoading.value = true;
+      runChildSteps();
     }
     scrollDown();
     if (!showLoading.value) {
@@ -475,7 +482,7 @@ const submit = async () => {
         });
         typingFullText.value = response.data.data;
         typingIndex.value = 0;
-        startTypingAnimation();
+        startTypingAnimation(true);
       } else {
         completeChat.value.push({
           isSender: false,
@@ -530,7 +537,16 @@ const stepAnimation = () => {
   }
 };
 
-const startTypingAnimation = () => {
+const runChildSteps = () => {
+  if (childStep.value < 3) {
+    setTimeout(() => {
+      childStep.value++;
+      runChildSteps();
+    }, 400);
+  }
+};
+
+const startTypingAnimation = (isPaywall: boolean = false) => {
   if (typingInterval.value) clearInterval(typingInterval.value);
   typingInterval.value = window.setInterval(() => {
     const lastBotMsg = completeChat.value.findLast((c) => !c.isSender);
@@ -541,10 +557,12 @@ const startTypingAnimation = () => {
     } else {
       clearInterval(typingInterval.value!);
       typingInterval.value = null;
-      setTimeout(() => {
-        publicPaywall.value = true;
-        textarea.value?.blur();
-      }, 2000);
+      if (isPaywall) {
+        setTimeout(() => {
+          publicPaywall.value = true;
+          textarea.value?.blur();
+        }, 2000);
+      }
     }
   }, 0); // Adjust speed as needed
 };
