@@ -24,6 +24,7 @@ const useAppStore = defineStore("appStore", () => {
 	const progressSoftPaywall = ref<boolean>(false);
 	const resourcesSoftPaywall = ref<boolean>(false);
 	const featureSoftPaywall = ref<boolean>(false);
+	const paywallOnLastScreen = ref<string>('')
 
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data
@@ -92,6 +93,7 @@ const useAppStore = defineStore("appStore", () => {
 		progressSoftPaywall,
 		resourcesSoftPaywall,
 		featureSoftPaywall,
+		paywallOnLastScreen,
 		firstTimeUser,
 		checkAuthenticatedUser,
 		setUserImagePreview,

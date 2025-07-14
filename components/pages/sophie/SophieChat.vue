@@ -50,39 +50,50 @@
                 "
               />
             </Transition>
-            <div
-              v-for="(chat, index) in completeChat.filter(
-                (item) => item.text !== ''
-              )"
-              :key="index"
-              class="flex items-start gap-3"
-              :class="{
-                'justify-end': chat.isSender,
-                'mt-6': index > 0,
-              }"
-            >
+            <div class="flex flex-col">
               <div
-                v-if="!chat.isSender"
-                class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
-              >
-                <img
-                  src="/images/chat-bot.png"
-                  alt="chat bot"
-                  class="object-cover object-center size-full"
-                  loading="eager"
-                />
-              </div>
-              <div
-                class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+                v-for="(chat, index) in completeChat.filter(
+                  (item) => item.text !== ''
+                )"
+                :key="index"
+                class="flex items-start gap-3"
                 :class="{
-                  'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
+                  'justify-end': chat.isSender,
+                  'mt-6': index > 0,
                 }"
               >
-                <div>
-                  <vue-markdown :source="chat.text" :options="options" />
+                <div
+                  v-if="!chat.isSender"
+                  class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
+                >
+                  <img
+                    src="/images/chat-bot.png"
+                    alt="chat bot"
+                    class="object-cover object-center size-full"
+                    loading="eager"
+                  />
+                </div>
+                <div
+                  class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+                  :class="{
+                    'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg':
+                      chat.isSender,
+                  }"
+                >
+                  <div>
+                    <vue-markdown :source="chat.text" :options="options" />
+                  </div>
                 </div>
               </div>
+              <!-- chat lodding state -->
+              <SophieMassageSkeleton v-if="isChatLoading" />
             </div>
+            <Transition name="temDiv">
+              <div
+                v-if="lastQueryStart"
+                class="max-h-[85%] h-full shrink-0"
+              />
+            </Transition>
             <div v-if="isEducationLevel && !studyPrograms">
               <div class="flex justify-end">
                 <BaseSelectRadio
@@ -94,8 +105,6 @@
                 />
               </div>
             </div>
-            <!-- chat lodding state -->
-            <SophieMassageSkeleton v-if="isChatLoading" />
             <!-- pre question for overview sidebar -->
             <div
               v-if="
@@ -209,7 +218,10 @@
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
             :class="{
               'bg-[#FAFAFA] pointer-events-none':
-                isChatFull || isChatLoading || scholarshipResponse || typingInterval !== null,
+                isChatFull ||
+                isChatLoading ||
+                scholarshipResponse ||
+                typingInterval !== null,
             }"
           >
             <textarea
@@ -219,7 +231,12 @@
               v-model="inputQuestion"
               @keydown.enter.exact.prevent="submit"
               @keydown.enter.ctrl.prevent="addNewLine"
-              :disabled="isChatLoading || isChatFull || isEducationLevel || typingInterval !== null"
+              :disabled="
+                isChatLoading ||
+                isChatFull ||
+                isEducationLevel ||
+                typingInterval !== null
+              "
               rows="4"
               autofocus
               class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
@@ -322,6 +339,9 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 const hasChatScroll = ref(false);
+
+const lastQueryStart = ref(false);
+// const tempHeightDiv = ref<number>()
 
 const scholarshipResponse = ref<boolean>(false);
 
@@ -480,6 +500,7 @@ const startTypingAnimation = () => {
     } else {
       clearInterval(typingInterval.value!);
       typingInterval.value = null;
+      lastQueryStart.value = false;
     }
   }, 0); // Adjust speed as needed
 };
@@ -495,6 +516,7 @@ const submit = async () => {
           : schoolListStore.overViews?.join("\n") || "",
       });
     }
+    lastQueryStart.value = true;
     scrollDown();
     isChatLoading.value = true;
     const userQuery = inputQuestion.value;
@@ -682,3 +704,14 @@ onMounted(async () => {
   }
 });
 </script>
+<style scoped>
+.temDiv-leave-active {
+  transition: height 1500ms ease-in-out;
+}
+.temDiv-leave-to {
+  height: 1px;
+}
+.temDiv-leave-from {
+  height: 100%;
+}
+</style>

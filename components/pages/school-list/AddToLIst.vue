@@ -138,7 +138,8 @@ const isInCheckList = computed(() => {
 const addToList = async () => {
   try {
     if (!appStore.authenticatedUser) {
-      schoolListStore.userSelectedSchoolsListPublic.push(props.program);
+      // schoolListStore.userSelectedSchoolsListPublic.push(props.program);
+      appStore.resourcesSoftPaywall = true;
       return;
     }
     isAddingSchol.value = true;

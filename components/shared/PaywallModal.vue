@@ -28,17 +28,22 @@
         >
           {{ $t("schoolList_page.mentorship.free_mentorship") }}
         </NuxtLinkLocale>
-        <NuxtLinkLocale
-          :to="'/signup'"
+        <button
+          @click="hangelNavigation"
           class="border border-[#1570EF] text-center bg-[#1570EF] py-2.5 w-full rounded-lg text-white font-semibold"
         >
           {{ $t("roadmap_page.paywall_resources.sign_up_for_free") }}
-        </NuxtLinkLocale>
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import useAppStore from "~/stores/AppStore";
+
+const appStore = useAppStore();
+const route = useRoute();
+
 defineProps({
   heading: {
     type: String,
@@ -49,6 +54,14 @@ defineProps({
     default: "",
   },
 });
+
+const localePath = useLocalePath();
+
+const hangelNavigation = () => {
+  appStore.paywallOnLastScreen = route.path;
+  navigateTo(localePath("/signup"));
+  emit("close");
+};
 
 const emit = defineEmits(["close"]);
 </script>

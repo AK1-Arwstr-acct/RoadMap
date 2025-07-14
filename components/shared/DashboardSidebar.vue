@@ -251,7 +251,7 @@ const tabList = ref<TabList[]>([
   {
     name: t("dashboard.sidebar.menu.your_checklist"),
     icon: shallowRef(IconTabApplication),
-    route: "/checklist",
+    route: appStore.authenticatedUser ? "/checklist" : "/login",
     activeList: ["/checklist","/vi/checklist" , "/sophie", "/sophie", "/school-list", "/vi/school-list", "/vi/ai-essay" , "/ai-essay"],
   },
   {

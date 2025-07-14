@@ -230,7 +230,7 @@ const countryCodes = computed(() => {
 
 const handelHotjar = () => {
   if (window.hj) {
-    window.hj('event', 'user_input_entered');
+    window.hj("event", "user_input_entered");
   }
 };
 
@@ -302,7 +302,10 @@ const submit = async () => {
     await appStore.checkAuthenticatedUser();
     await appStore.getAuthUserData();
     if (response.data.data.onboarded) {
-      navigateTo(localePath("/"));
+      appStore.paywallOnLastScreen === ""
+        ? navigateTo(localePath("/"))
+        : navigateTo(localePath(appStore.paywallOnLastScreen));
+      appStore.paywallOnLastScreen = "";
     } else {
       navigateTo(localePath("/onboarding"));
     }
