@@ -2,7 +2,9 @@
   <div class="flex flex-col gap-8">
     <!-- question -->
     <div class="flex items-center gap-3">
-      <div class="size-6 min-w-6 sm:size-8 sm:min-w-8 rounded-full border border-[#00000033] overflow-hidden">
+      <div
+        class="size-6 min-w-6 sm:size-8 sm:min-w-8 rounded-full border border-[#00000033] overflow-hidden"
+      >
         <img
           src="/images/chat-bot.png"
           alt="chat bot"
@@ -11,7 +13,7 @@
         />
       </div>
       <p class="text-[#414651] text-sm sm:text-base">
-        {{ question }}
+        {{ questionAnimation }}
       </p>
     </div>
     <!-- answer -->
@@ -42,14 +44,14 @@
             @click="cancelEdit"
             class="py-2 px-3.5 text-[#414651] text-sm font-semibold border border-[#D5D7DA] bg-white rounded-lg"
           >
-          {{ $t('ai_essay_page.cancel') }}
+            {{ $t("ai_essay_page.cancel") }}
           </button>
           <button
             @click="updateAnswer"
             :disabled="isUpdateDisable"
             class="py-2 px-3.5 text-white text-sm font-semibold border border-[#1570EF] bg-[#1570EF] rounded-lg disabled:opacity-60"
           >
-          {{ $t('ai_essay_page.update') }}
+            {{ $t("ai_essay_page.update") }}
           </button>
         </div>
       </div>
@@ -75,6 +77,27 @@ const editMode = ref<boolean>(false);
 const editableDiv = ref<HTMLDivElement | null>(null);
 const isUpdateDisable = ref<boolean>(false);
 
+const questionAnimation = ref<string>("");
+const typingIndex = ref<number>(0);
+const typingInterval = ref<number | null>(null);
+
+const startTypingAnimation = () => {
+  questionAnimation.value = "";
+  typingIndex.value = 0;
+
+  if (typingInterval.value) clearInterval(typingInterval.value);
+
+  typingInterval.value = window.setInterval(() => {
+    if (typingIndex.value < props.question.length) {
+      questionAnimation.value += props.question[typingIndex.value];
+      typingIndex.value++;
+    } else {
+      clearInterval(typingInterval.value!);
+      typingInterval.value = null;
+    }
+  }, 10);
+};
+
 const checkAnswer = () => {
   isUpdateDisable.value = editableDiv.value?.innerText.trim() === "";
 };
@@ -98,4 +121,8 @@ watch(
     tempData.value = newValue;
   }
 );
+
+onMounted(() => {
+  startTypingAnimation();
+});
 </script>

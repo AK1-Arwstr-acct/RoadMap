@@ -26,8 +26,8 @@
             v-model="schoolListStore.userSelectedSchoolsList"
             class="flex flex-col gap-6"
             ghostClass="parent"
+            dragClass="dragClass"
             >
-            <!-- dragClass="dragClass" -->
             <div
               v-for="(school, idx) in schoolListStore.userSelectedSchoolsList"
               :key="school.id"
@@ -156,7 +156,7 @@ const getChecklist = (pageNo: number = 1) => {
   opacity: 0 !important;
 }
 
-/* .dragClass {
+.dragClass {
   opacity: 1 !important;
-} */
+}
 </style>

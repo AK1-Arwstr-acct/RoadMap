@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="scrollContainer"
     class="remove-shadow-bg-white flex gap-2.5 items-center lg:flex-wrap overflow-x-auto overflow-y-hidden lg:overflow-y-visible lg:overflow-x-visible no-scrollbar"
   >
     <GpaDropdown
@@ -129,7 +130,7 @@
         </div>
       </Transition>
     </div>
-    <SophieRecommendation />
+    <SophieRecommendation v-if="(schoolListStore.totalSchool || 0) > 5" />
   </div>
   <Transition name="fade">
     <div
@@ -185,6 +186,13 @@ const convertedCgpa = computed(() => {
   return gpa.value ? ((Number(gpa.value) / 10) * 4).toFixed(2) : "";
 });
 
+const scrollContainer = ref<HTMLElement | null>(null);
+const scrollForward = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollBy({ left: 80, behavior: "smooth" });
+  }
+};
+
 const updateUserData = async () => {
   try {
     isSubmitting.value = true;
@@ -239,7 +247,6 @@ const setInitialValues = async (newValue: UserData) => {
   await gpaChanged();
 
   if (!schoolListStore.programListOptions.length) {
-    schoolListStore.isSchoolsLoading = false;
     return;
   }
 
@@ -347,9 +354,6 @@ const updateSchools = () => {
 };
 
 const gpaChanged = async () => {
-  if (!schoolListStore.programListOptions.length) {
-    schoolListStore.setProgramListOptions();
-  }
   isGpaChange.value = true;
   await getLocationsList();
   isGpaChange.value = false;
@@ -358,6 +362,7 @@ const gpaChanged = async () => {
 
 const getLocationsList = async () => {
   try {
+    scrollForward();
     if (!gpa.value || !studyPrograms.value?.value) {
       return;
     }
@@ -430,6 +435,7 @@ const getBudgets = async () => {
 
 const getProgramParent = async () => {
   try {
+    scrollForward();
     isAreaOfStudyLoading.value = true;
 
     areaOfStudy.value = undefined;
@@ -506,6 +512,7 @@ const updateAuthUserData = async () => {
 };
 
 const onParentProgramChanged = async () => {
+  scrollForward();
   if (schoolListStore.isSchoolListPublic) {
     updateUserData();
   } else {
