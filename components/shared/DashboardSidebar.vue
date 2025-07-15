@@ -37,10 +37,10 @@
       </div>
       <!-- tabs -->
       <div class="flex flex-col gap-1">
-        <NuxtLinkLocale
-          :to="tab.route"
+        <div
           v-for="(tab, idx) in tabList"
           :key="idx"
+          @click="handelTabNavigation(tab.route)"
         >
           <div
             class="p-4 flex items-center rounded-lg cursor-pointer overflow-hidden"
@@ -72,7 +72,7 @@
               {{ tab.name }}
             </span>
           </div>
-        </NuxtLinkLocale>
+        </div>
       </div>
     </div>
     <div class="overflow-hidden">
@@ -251,8 +251,17 @@ const tabList = ref<TabList[]>([
   {
     name: t("dashboard.sidebar.menu.your_checklist"),
     icon: shallowRef(IconTabApplication),
-    route: appStore.authenticatedUser ? "/checklist" : "/login",
-    activeList: ["/checklist","/vi/checklist" , "/sophie", "/sophie", "/school-list", "/vi/school-list", "/vi/ai-essay" , "/ai-essay"],
+    route: "/checklist",
+    activeList: [
+      "/checklist",
+      "/vi/checklist",
+      "/sophie",
+      "/sophie",
+      "/school-list",
+      "/vi/school-list",
+      "/vi/ai-essay",
+      "/ai-essay",
+    ],
   },
   {
     name: t("dashboard.sidebar.menu.resources"),
@@ -275,6 +284,14 @@ const clearTaskDetails = () => {
   // }
   // appStore.isFeatureChangeFromTasks = true;
   navigateTo(localePath("/scholarship"));
+};
+
+const handelTabNavigation = (route: string) => {
+  if (!appStore.authenticatedUser && route == "/checklist") {
+    appStore.resourcesSoftPaywall = true;
+    return;
+  }
+  navigateTo(localePath(route));
 };
 
 watch(

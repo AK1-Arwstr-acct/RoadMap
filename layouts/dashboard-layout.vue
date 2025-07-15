@@ -12,9 +12,23 @@
     <!-- Sophie Modal -->
     <!-- <SophieModal /> -->
   </div>
+  <Transition name="fade">
+    <component
+      :is="PaywallModal"
+      v-if="appStore.resourcesSoftPaywall"
+      :heading="t('roadmap_page.paywall_resources.heading')"
+      :detail="t('roadmap_page.paywall_resources.detail')"
+      @close="appStore.resourcesSoftPaywall = false"
+    />
+  </Transition>
 </template>
 <script setup lang="ts">
+import PaywallModal from "~/components/shared/PaywallModal.vue";
+import useAppStore from "~/stores/AppStore";
+
 const deviceType = useDeviceType();
+const appStore = useAppStore();
+const { t } = useI18n();
 
 const desktop = {
   DashboardSidebar: defineAsyncComponent(

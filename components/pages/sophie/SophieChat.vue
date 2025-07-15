@@ -3,7 +3,7 @@
     <div class="flex-1 overflow-hidden no-scrollbar">
       <div class="size-full flex flex-col gap-2 sm:gap-2">
         <!-- chat -->
-        <div class="flex-1 relative overflow-hidden">
+        <div ref="chatWrapper" class="flex-1 relative overflow-hidden">
           <div
             ref="chatContainer"
             @scroll="updateHasChatScroll"
@@ -56,10 +56,17 @@
                   (item) => item.text !== ''
                 )"
                 :key="index"
-                class="flex items-start gap-3"
+                class="flex items-start gap-3 relative"
                 :class="{
                   'justify-end': chat.isSender,
                   'mt-6': index > 0,
+                }"
+                :style="{
+                  minHeight: `${
+                    index + 1 == completeChat.length && !isChatLoading
+                      ? `${chatWrapperHeight}px`
+                      : 'auto'
+                  }`,
                 }"
               >
                 <div
@@ -84,25 +91,35 @@
                     <vue-markdown :source="chat.text" :options="options" />
                   </div>
                 </div>
+                <!-- dropdown for public user -->
+                <div
+                  v-if="
+                    chat.text ===
+                      `Cool! What's your current education level?` &&
+                    isEducationLevel &&
+                    !studyPrograms
+                  "
+                  class="absolute right-0 top-12"
+                >
+                  <BaseSelectRadio
+                    :options="educationLevelOption"
+                    v-model="studyPrograms"
+                    @onChange="handelEducationLevel"
+                    class="w-[300px]"
+                  />
+                  <!-- direction="upward" -->
+                </div>
               </div>
               <!-- chat lodding state -->
-              <SophieMassageSkeleton v-if="isChatLoading" />
-            </div>
-            <Transition name="temDiv">
               <div
-                v-if="lastQueryStart"
-                class="max-h-[85%] h-full shrink-0"
-              />
-            </Transition>
-            <div v-if="isEducationLevel && !studyPrograms">
-              <div class="flex justify-end">
-                <BaseSelectRadio
-                  :options="educationLevelOption"
-                  v-model="studyPrograms"
-                  @onChange="handelEducationLevel"
-                  class="w-[300px]"
-                  direction="upward"
-                />
+                v-if="isChatLoading"
+                class="mt-6 h-dvh"
+                :style="{
+                  minHeight: `${chatWrapperHeight}px`,
+                  maxHeight: `${chatWrapperHeight}px`,
+                }"
+              >
+                <SophieMassageSkeleton />
               </div>
             </div>
             <!-- pre question for overview sidebar -->
@@ -340,7 +357,6 @@ const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 const hasChatScroll = ref(false);
 
-const lastQueryStart = ref(false);
 // const tempHeightDiv = ref<number>()
 
 const scholarshipResponse = ref<boolean>(false);
@@ -456,6 +472,12 @@ const handelPreQuestionOfScholarship = (text: string) => {
   sophieStore.scholarshipSophieModal = false;
 };
 
+const chatWrapperHeight = computed(() => {
+  if (chatContainer.value) {
+    return chatContainer.value.clientHeight - 90;
+  }
+});
+
 // Function to scroll to the bottom
 const scrollDown = () => {
   nextTick(() => {
@@ -494,13 +516,13 @@ const startTypingAnimation = () => {
   typingInterval.value = window.setInterval(() => {
     const lastBotMsg = completeChat.value.findLast((c) => !c.isSender);
     if (!lastBotMsg) return;
+    if (typingIndex.value === 3) scrollDown(); 
     if (typingIndex.value < typingFullText.value.length) {
       lastBotMsg.text += typingFullText.value[typingIndex.value];
       typingIndex.value++;
     } else {
       clearInterval(typingInterval.value!);
       typingInterval.value = null;
-      lastQueryStart.value = false;
     }
   }, 0); // Adjust speed as needed
 };
@@ -516,7 +538,6 @@ const submit = async () => {
           : schoolListStore.overViews?.join("\n") || "",
       });
     }
-    lastQueryStart.value = true;
     scrollDown();
     isChatLoading.value = true;
     const userQuery = inputQuestion.value;
@@ -573,6 +594,7 @@ const submit = async () => {
         });
       }
     }
+    await nextTick();
     scrollDown();
     if (route.query.query) {
       router.replace({
@@ -668,7 +690,13 @@ watch(
   }
 );
 
-watch(() => completeChat.value, updateHasChatScroll, { deep: true });
+watch(
+  () => completeChat.value,
+  () => {
+    updateHasChatScroll();
+  },
+  { deep: true }
+);
 
 onMounted(async () => {
   updateHasChatScroll();
@@ -704,14 +732,3 @@ onMounted(async () => {
   }
 });
 </script>
-<style scoped>
-.temDiv-leave-active {
-  transition: height 1500ms ease-in-out;
-}
-.temDiv-leave-to {
-  height: 1px;
-}
-.temDiv-leave-from {
-  height: 100%;
-}
-</style>
