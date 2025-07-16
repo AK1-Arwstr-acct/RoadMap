@@ -4,7 +4,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const protectedPaths = [
         "/onboarding",
         "/profile",
-        "/checklist"
         // "/school-list",
         // "/sophie",
         // "/ai-essay",

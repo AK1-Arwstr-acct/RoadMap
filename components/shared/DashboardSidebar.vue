@@ -37,10 +37,10 @@
       </div>
       <!-- tabs -->
       <div class="flex flex-col gap-1">
-        <div
+        <NuxtLinkLocale
+          :to="tab.route"
           v-for="(tab, idx) in tabList"
           :key="idx"
-          @click="handelTabNavigation(tab.route)"
         >
           <div
             class="p-4 flex items-center rounded-lg cursor-pointer overflow-hidden"
@@ -72,7 +72,7 @@
               {{ tab.name }}
             </span>
           </div>
-        </div>
+        </NuxtLinkLocale>
       </div>
     </div>
     <div class="overflow-hidden">
@@ -223,6 +223,7 @@ import IconBookOpen from "../icons/IconBookOpen.vue";
 import useAppStore from "~/stores/AppStore";
 import GetMentorshipBlock from "../pages/home/GetMentorshipBlock.vue";
 import useSchoolListStore from "~/stores/SchoolListStore";
+import { NuxtLinkLocale } from "#components";
 
 const emit = defineEmits(["updateTab"]);
 
@@ -284,14 +285,6 @@ const clearTaskDetails = () => {
   // }
   // appStore.isFeatureChangeFromTasks = true;
   navigateTo(localePath("/scholarship"));
-};
-
-const handelTabNavigation = (route: string) => {
-  if (!appStore.authenticatedUser && route == "/checklist") {
-    appStore.resourcesSoftPaywall = true;
-    return;
-  }
-  navigateTo(localePath(route));
 };
 
 watch(
