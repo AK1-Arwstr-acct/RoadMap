@@ -278,6 +278,9 @@ const showMyThinking = ref<boolean>(true);
 const publicPaywall = ref<boolean>(false);
 const hasChatScroll = ref(false);
 
+// for public paywall
+const isIntroductionCompleted = ref(false);
+
 // for step animation
 const isStart = ref<boolean>(false);
 const animationTimer = ref<number>(400);
@@ -454,6 +457,9 @@ const submit = async () => {
           },
         }
       );
+      if (response.data) {
+        isIntroductionCompleted.value = response.data.isIntroductionCompleted || false;
+      }
     } else {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {
         query: userQuery,
@@ -463,6 +469,7 @@ const submit = async () => {
         //   roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         // }),
       });
+      isIntroductionCompleted.value = true;
     }
     if (response) {
       if (completeChat.value.length <= 3) {
@@ -472,7 +479,7 @@ const submit = async () => {
       }
       if (showLoading.value) {
         await new Promise((resolve) => setTimeout(resolve, 2200));
-        // showLoading.value = false;
+        showLoading.value = false;
       }
       if (response.data.data) {
         showMyThinking.value = false;
@@ -557,7 +564,7 @@ const startTypingAnimation = (isPaywall: boolean = false) => {
     } else {
       clearInterval(typingInterval.value!);
       typingInterval.value = null;
-      if (isPaywall) {
+      if (isPaywall && isIntroductionCompleted.value) {
         setTimeout(() => {
           publicPaywall.value = true;
           textarea.value?.blur();
