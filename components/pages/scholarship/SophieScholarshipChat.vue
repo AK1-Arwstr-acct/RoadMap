@@ -186,7 +186,7 @@
           </Transition>
           <!-- follow up question -->
           <div
-            v-if="completeChat.length === 0 && appStore.authenticatedUser"
+            v-if="completeChat.length === 0 || (!appStore.authenticatedUser && completeChat.length === 1)"
             class="flex flex-col gap-1 items-end mt-3"
             :class="{ 'pointer-events-none': isChatFull }"
           >
@@ -195,11 +195,7 @@
             </p>
             <div class="flex gap-1 items-end">
               <p
-                @click="
-                  handelPreQuestionOfScholarship(
-                    'Chance me with best fit scholarships'
-                  )
-                "
+                @click="handelPreQuestionOfScholarship('Chance me with best fit scholarships', appStore.authenticatedUser)"
                 class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer flex items-center gap-2"
               >
                 <IconStar />
@@ -391,13 +387,15 @@ const scrollDown = () => {
   });
 };
 
-const handelPreQuestionOfScholarship = async (question: string) => {
+const handelPreQuestionOfScholarship = async (question: string, sendEmail: boolean) => {
   try {
     inputQuestion.value = question;
     await submit();
-    await api.get(
-      `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
-    );
+    if(sendEmail) {
+      await api.get(
+        `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
+      );
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.status === 423) {
@@ -591,7 +589,8 @@ onMounted(async () => {
   updateHasChatScroll();
   uuid.value = uuidv4();
   if (!appStore.authenticatedUser) {
-    const sophieInfo = `<p class="text-[#181D27] text-2xl font-semibold">Nice to meet you!</p> <div class="mt-2 text-[#181D27]"> <p>Let’s find scholarships that are the perfect match for you 🎓</p> <p>Just fill in a few quick details below so I can recommend the best options:</p> <ul class="flex flex-col list-disc"> <li>Study program (e.g., Bachelor’s, Master’s)</li> <li>Preferred study destination</li> <li>Your GPA</li> <li>Field of study (e.g., Engineering, Business, Arts)</li> </ul> </div>`;
+    const sophieInfo = `<p class="text-[#181D27] text-2xl font-semibold">Nice to meet you!</p> <div class="mt-2 text-[#181D27]"> <p>Let’s find scholarships that are the perfect match for you 🎓</p> <p>Just fill in a few quick details below so I can recommend the best options:</p></div>`;
+    // <ul class="flex flex-col list-disc"> <li>Study program (e.g., Bachelor’s, Master’s)</li> <li>Preferred study destination</li> <li>Your GPA</li> <li>Field of study (e.g., Engineering, Business, Arts)</li> </ul>
     completeChat.value.push({
       isSender: false,
       text: sophieInfo,
