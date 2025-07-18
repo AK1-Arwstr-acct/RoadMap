@@ -7,110 +7,175 @@
           <div
             ref="chatContainer"
             @scroll="updateHasChatScroll"
-            class="size-full no-scrollbar flex flex-col gap-6 h-full relative"
-            :class="[publicPaywall ? 'overflow-hidden' : 'overflow-y-auto']"
+            class="size-full no-scrollbar flex flex-col gap-6 h-full relative border-2"
+            :class="[
+              publicPaywall ? 'overflow-hidden' : 'overflow-y-auto',
+              {
+                'justify-between':
+                  completeChat.length === 0 ||
+                  (!appStore.authenticatedUser && completeChat.length === 1),
+              },
+            ]"
           >
-            <div
-              v-for="(chat, index) in completeChat.filter(
-                (item) => item.text !== ''
-              )"
-              :key="index"
-              class="flex items-start gap-3"
-              :class="{
-                'justify-end': chat.isSender,
-              }"
-            >
+            <div class="flex flex-col gap-6">
               <div
-                v-if="
-                  !chat.isSender &&
-                  (index > 0
-                    ? completeChat.filter((item) => item.text !== '')[index - 1]
-                        .isSender
-                    : true)
-                "
-                class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
-              >
-                <img
-                  src="/images/chat-bot.png"
-                  alt="chat bot"
-                  class="object-cover object-center size-full"
-                  loading="eager"
-                />
-              </div>
-              <div v-else class="w-8" />
-              <div
-                class="w-fit max-w-[90%] text-wrap text-[#414651]"
+                v-for="(chat, index) in completeChat.filter(
+                  (item) => item.text !== ''
+                )"
+                :key="index"
+                class="flex items-start gap-3"
                 :class="{
-                  'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg': chat.isSender,
+                  'justify-end': chat.isSender,
+                }"
+                :style="{
+                  minHeight: `${
+                    (index + 1 == completeChat.length &&
+                      !isChatLoading &&
+                      appStore.authenticatedUser) ||
+                    (!appStore.authenticatedUser &&
+                      index + 1 == completeChat.length &&
+                      index != 0 &&
+                      !isChatLoading)
+                      ? `${chatWrapperHeight}px`
+                      : 'auto'
+                  }`,
                 }"
               >
-                <div class="suggestion-container">
-                  <vue-markdown :source="chat.text" :options="options" />
-                </div>
                 <div
-                  v-if="sophieStore.isSophiePublic ? index === 2 : index === 1"
+                  v-if="
+                    !chat.isSender &&
+                    (index > 0
+                      ? completeChat.filter((item) => item.text !== '')[
+                          index - 1
+                        ].isSender
+                      : true)
+                  "
+                  class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
                 >
-                  <!-- (button) show my thining -->
-                  <div
-                    v-if="showLoading"
-                    @click="showMyThinking = !showMyThinking"
-                    class="flex items-center gap-3 cursor-pointer text-[#4B5563] mt-6"
-                  >
-                    Show my thinking
-                    <IconChevronDown
-                      stroke="#4B5563"
-                      width="16"
-                      height="16"
-                      :class="[
-                        'transform transition-all ease-in-out duration-200',
-                        { 'rotate-180': showMyThinking },
-                      ]"
-                    />
+                  <img
+                    src="/images/chat-bot.png"
+                    alt="chat bot"
+                    class="object-cover object-center size-full"
+                    loading="eager"
+                  />
+                </div>
+                <div v-else class="w-8" />
+                <div
+                  class="w-fit max-w-[90%] text-wrap text-[#414651]"
+                  :class="{
+                    'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg':
+                      chat.isSender,
+                  }"
+                >
+                  <div class="suggestion-container">
+                    <vue-markdown :source="chat.text" :options="options" />
                   </div>
-                  <TransitionGroup
-                    name="fade"
-                    tag="div"
-                    v-if="showLoading && showMyThinking"
-                    class="border-l border-[#D1D5DB] px-5 text-[#4B5563] flex flex-col gap-9 mt-6"
+                  <div
+                    v-if="
+                      sophieStore.isSophiePublic ? index === 2 : index === 1
+                    "
                   >
-                    <template
-                      v-for="(step, idx) in loadingSteps.slice(0, loadingStep)"
+                    <!-- (button) show my thining -->
+                    <div
+                      v-if="showLoading"
+                      @click="showMyThinking = !showMyThinking"
+                      class="flex items-center gap-3 cursor-pointer text-[#4B5563] mt-6"
                     >
-                      <div v-if="idx === 0" :key="`${idx}-div`" class="">
-                        <p class="relative -mt-2">
+                      Show my thinking
+                      <IconChevronDown
+                        stroke="#4B5563"
+                        width="16"
+                        height="16"
+                        :class="[
+                          'transform transition-all ease-in-out duration-200',
+                          { 'rotate-180': showMyThinking },
+                        ]"
+                      />
+                    </div>
+                    <TransitionGroup
+                      name="fade"
+                      tag="div"
+                      v-if="showLoading && showMyThinking"
+                      class="border-l border-[#D1D5DB] px-5 text-[#4B5563] flex flex-col gap-9 mt-6"
+                    >
+                      <template
+                        v-for="(step, idx) in loadingSteps.slice(
+                          0,
+                          loadingStep
+                        )"
+                      >
+                        <div v-if="idx === 0" :key="`${idx}-div`" class="">
+                          <p class="relative -mt-2">
+                            {{ step.title }}
+                            <span
+                              class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
+                            />
+                          </p>
+                          <div
+                            class="text-xs flex flex-col gap-2 mt-3"
+                            v-if="step.details"
+                          >
+                            <p
+                              v-for="(detail, dIdx) in step.details.slice(
+                                0,
+                                childStep
+                              )"
+                              :key="dIdx"
+                            >
+                              {{ detail }}
+                            </p>
+                          </div>
+                        </div>
+                        <p v-else :key="`${idx}-p`" class="relative -mb-2">
                           {{ step.title }}
                           <span
                             class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
                           />
                         </p>
-                        <div
-                          class="text-xs flex flex-col gap-2 mt-3"
-                          v-if="step.details"
-                        >
-                          <p
-                            v-for="(detail, dIdx) in step.details.slice(
-                              0,
-                              childStep
-                            )"
-                            :key="dIdx"
-                          >
-                            {{ detail }}
-                          </p>
-                        </div>
-                      </div>
-                      <p v-else :key="`${idx}-p`" class="relative -mb-2">
-                        {{ step.title }}
-                        <span
-                          class="size-[9px] rounded-full bg-[#D1D5DB] absolute -left-[25px] top-2"
-                        />
-                      </p>
-                    </template>
-                  </TransitionGroup>
+                      </template>
+                    </TransitionGroup>
+                  </div>
                 </div>
               </div>
+              <!-- chat lodding state -->
+              <div
+                v-if="isChatLoading"
+                class="mt-6 h-dvh"
+                :style="{
+                  minHeight: `${chatWrapperHeight}px`,
+                  maxHeight: `${chatWrapperHeight}px`,
+                }"
+              >
+                <SophieMassageSkeleton />
+              </div>
             </div>
-            <!-- chat lodding state -->
-            <SophieMassageSkeleton v-if="isChatLoading" />
+            <!-- follow up question -->
+            <div
+              v-if="
+                completeChat.length === 0 ||
+                (!appStore.authenticatedUser && completeChat.length === 1)
+              "
+              class="flex flex-col gap-1 items-end mt-3"
+              :class="{ 'pointer-events-none': isChatFull }"
+            >
+              <p class="text-[#4B5563] text-xs font-semibold pb-1">
+                SUGGESTED FOLLOW UP
+              </p>
+              <div class="flex gap-1 items-end">
+                <p
+                  @click="
+                    handelPreQuestionOfScholarship(
+                      'Chance me with best fit scholarships',
+                      appStore.authenticatedUser
+                    )
+                  "
+                  class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer flex items-center gap-2"
+                >
+                  <IconStar />
+                  Chance me with best fit scholarships
+                </p>
+              </div>
+            </div>
           </div>
           <!-- paywall for PUblic user -->
           <Transition name="fade">
@@ -184,25 +249,6 @@
               </NuxtLinkLocale>
             </div>
           </Transition>
-          <!-- follow up question -->
-          <div
-            v-if="completeChat.length === 0 || (!appStore.authenticatedUser && completeChat.length === 1)"
-            class="flex flex-col gap-1 items-end mt-3"
-            :class="{ 'pointer-events-none': isChatFull }"
-          >
-            <p class="text-[#4B5563] text-xs font-semibold pb-1">
-              SUGGESTED FOLLOW UP
-            </p>
-            <div class="flex gap-1 items-end">
-              <p
-                @click="handelPreQuestionOfScholarship('Chance me with best fit scholarships', appStore.authenticatedUser)"
-                class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer flex items-center gap-2"
-              >
-                <IconStar />
-                Chance me with best fit scholarships
-              </p>
-            </div>
-          </div>
           <!-- textarea -->
           <div
             class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
@@ -374,6 +420,12 @@ const updateHasChatScroll = () => {
   });
 };
 
+const chatWrapperHeight = computed(() => {
+  if (chatContainer.value) {
+    return chatContainer.value.clientHeight - 70;
+  }
+});
+
 // Function to scroll to the bottom
 const scrollDown = () => {
   nextTick(() => {
@@ -381,7 +433,7 @@ const scrollDown = () => {
       chatContainer.value.scrollTo({
         top:
           chatContainer.value.scrollHeight - chatContainer.value.clientHeight,
-        behavior: "smooth",
+        behavior: "instant",
       });
     }
   });
@@ -495,6 +547,8 @@ const submit = async () => {
         });
       }
     }
+    await nextTick();
+    scrollDown();
     if (route.query.query) {
       router.replace({
         query: undefined,
@@ -556,6 +610,7 @@ const startTypingAnimation = (isPaywall: boolean = false) => {
   typingInterval.value = window.setInterval(() => {
     const lastBotMsg = completeChat.value.findLast((c) => !c.isSender);
     if (!lastBotMsg) return;
+    if (typingIndex.value === 1) scrollDown();
     if (typingIndex.value < typingFullText.value.length) {
       lastBotMsg.text += typingFullText.value[typingIndex.value];
       typingIndex.value++;
