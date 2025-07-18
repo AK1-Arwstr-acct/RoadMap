@@ -7,7 +7,7 @@
           <div
             ref="chatContainer"
             @scroll="updateHasChatScroll"
-            class="size-full no-scrollbar flex flex-col gap-6 h-full relative border-2"
+            class="size-full no-scrollbar flex flex-col gap-6 h-full relative"
             :class="[
               publicPaywall ? 'overflow-hidden' : 'overflow-y-auto',
               {
