@@ -62,8 +62,8 @@
                 "schools_list": "Danh sách trường",
                 "sophie": "Sophie",
                 "ai_essay": "Trình chỉnh sửa luận AI",
-                "your_checklist":"Checklist",
-                "resources":"Tài liệu"
+                "your_checklist": "Checklist",
+                "resources": "Tài liệu"
             }
         },
         "navbar": {
@@ -132,7 +132,7 @@
         "save_and_organize_your_top_choices": "Lưu và sắp xế lựa chọn trường",
         "scholarships_i’m_eligible_for": "Học bổng nào mình có thể nộp",
         "search_colleges": "Tìm kiếm trường học",
-        "send_essay_draft":"Gửi bản nháp essay",
+        "send_essay_draft": "Gửi bản nháp essay",
         "talk_to_a_real_counselor_and_get_honest_helpful_answers_totally_free": "Kết nối miễn phí với mentor đến từ các trường đại học hàng đầu",
         "what_can_i_do_for_extracurricular_activities?": "Hoạt động ngoại khoá mình nên tham gia",
         "your_calendar": "LỊCH CÁ NHÂN"
@@ -153,21 +153,31 @@
         "sign_up": "Đăng ký"
     },
     "onboarding": {
-        "academic_heading": "Dành 1 phút và nhận kế hoạch du học hoàn hảo của bạn.",
-        "area_of_interest_heading": "Bạn có thể cho chúng tôi biết về lĩnh vực bạn quan tâm không?",
         "area_of_study": "Lĩnh vực học tập",
-        "budget_heading": "Cuối cùng, bạn có thể chia sẻ một chút về tổng ngân sách của mình không?",
-        "continue": "Tiếp tục",
-        "destination_heading": "Còn điểm đến du học của bạn thì sao?",
-        "e_g_11": "Ví dụ: 11",
-        "e_g_7_0": "Ví dụ: 7.0",
-        "gpa": "Điểm trung bình (GPA)",
-        "programs_heading": "Bạn có thể cho chúng tôi biết về chương trình học và lĩnh vực bạn quan tâm không?",
-        "start_your_journey": "Bắt đầu hành trình",
-        "start_your_journey_heading": "Bạn đã sẵn sàng! Hãy bắt đầu hành trình của bạn với Arrowster!",
-        "your_gpa": "Điểm trung bình của bạn (0.0 - 10.0)",
-        "your_grade": "Lớp của bạn",
-        "ielts_optional": "IELTS (không bắt buộc)"
+        "e_g_7_0": "ví dụ: 7.0",
+        "help_us_get_to_know_you": "giúp chúng tôi hiểu bạn hơn 👋",
+        "hey": "Chào bạn",
+        "lastly_tell_us_your_area_of_interest": "Cuối cùng, hãy cho chúng tôi biết lĩnh vực bạn quan tâm",
+        "majors": "Chuyên ngành (Chọn tối đa 3 chuyên ngành)",
+        "next": "Tiếp theo",
+        "press_enter": "Nhấn Enter",
+        "situationList": {
+            "label_a": "Tôi chưa chắc nên học chuyên ngành nào",
+            "label_b": "Tôi có vài chuyên ngành trong đầu nhưng cần được tư vấn",
+            "label_c": "Tôi biết mình muốn học gì nhưng vẫn còn vài băn khoăn",
+            "label_d": "Tôi đã chọn được chuyên ngành và đang tìm trường học phù hợp",
+            "label_e": "Tôi chỉ đang tìm hiểu thêm"
+        },
+        "tell_us_your_intended_plan": "Hãy cho chúng tôi biết kế hoạch dự định của bạn",
+        "what_best_describes_your_current_situation": "Mô tả nào phù hợp nhất với tình hình hiện tại của bạn?",
+        "what_best_describes_your_current_status": "Mô tả nào phù hợp nhất với trạng thái hiện tại của bạn?",
+        "what_degree_are_you_planning_to_pursue": "Bạn dự định theo học bằng cấp nào?",
+        "what_is_your_estimated_budget_per_year": "Ngân sách ước tính hàng năm của bạn là bao nhiêu?",
+        "what_is_your_current_gpa_on_a_10_point_scale": "GPA hiện tại của bạn trên thang điểm 10 là bao nhiêu?",
+        "when_do_you_plan_to_enroll": "Bạn dự định nhập học khi nào?",
+        "where_would_you_like_to_study": "Bạn muốn học ở đâu? (Có thể chọn nhiều)",
+        "whats_your_current_gpa_on_a_10_point_scale": "GPA hiện tại của bạn trên thang điểm 10 là bao nhiêu?",
+        "you_can_always_update_it_later_in_your_profile": "Bạn có thể cập nhật thông tin này sau trong Hồ sơ của mình"
     },
     "otp": {
         "check_sms": "Vui lòng kiểm tra SMS của bạn.",

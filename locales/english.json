@@ -62,8 +62,8 @@
                 "schools_list": "Schools List",
                 "sophie": "Sophie",
                 "ai_essay": "AI Essay Editor",
-                "your_checklist":"Your checklist",
-                "resources":"Resources"
+                "your_checklist": "Your checklist",
+                "resources": "Resources"
             }
         },
         "navbar": {
@@ -153,21 +153,31 @@
         "sign_up": "Sign up"
     },
     "onboarding": {
-        "academic_heading": "Spend 1 minute and get your perfect study abroad plan",
-        "area_of_interest_heading": "Lastly, could you tell us about your area of interest?",
         "area_of_study": "Area of study",
-        "budget_heading": "Could you share a little about your total budget?",
-        "continue": "Continue",
-        "destination_heading": "What about your study destination?",
-        "e_g_11": "e.g. 11",
         "e_g_7_0": "e.g. 7.0",
-        "gpa": "GPA",
-        "programs_heading": "Could you tell us about your preferred study program?",
-        "start_your_journey": "Start your journey",
-        "start_your_journey_heading": "You're all set! Get ready to start your journey with Arrowster!",
-        "your_gpa": "Your GPA (0.0 - 10.0)",
-        "your_grade": "Your grade",
-        "ielts_optional": "IELTS (optional)"
+        "help_us_get_to_know_you": "help us get to know you 👋",
+        "hey": "Hey",
+        "lastly_tell_us_your_area_of_interest": "Lastly, tell us your area of interest",
+        "majors": "Majors (Pick up to 3 majors)",
+        "next": "Next",
+        "press_enter": "Press Enter",
+        "situationList": {
+            "label_a": "I'm unsure about what major to pursue",
+            "label_b": "I have a few majors in mind but need help choosing",
+            "label_c": "I know what I want to study, but I still have some concerns",
+            "label_d": "I've decided on my major and am now looking for schools",
+            "label_e": "I'm just browsing for now"
+        },
+        "tell_us_your_intended_plan": "Tell us your intended plan",
+        "what_best_describes_your_current_situation": "What best describes your current situation?",
+        "what_best_describes_your_current_status": "What best describes your current status?",
+        "what_degree_are_you_planning_to_pursue": "What degree are you planning to pursue?",
+        "what_is_your_estimated_budget_per_year": "What is your estimated budget (per year)?",
+        "what_is_your_current_gpa_on_a_10_point_scale": "What's your current GPA on a 10-point scale?",
+        "when_do_you_plan_to_enroll": "When do you plan to enroll?",
+        "where_would_you_like_to_study": "Where would you like to study? (You can pick more than one)",
+        "whats_your_current_gpa_on_a_10_point_scale": "What's your current GPA on a 10-point scale?",
+        "you_can_always_update_it_later_in_your_profile": "You can always update it later in your Profile"
     },
     "otp": {
         "check_sms": "Please check your SMS.",

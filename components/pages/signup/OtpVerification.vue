@@ -1,12 +1,12 @@
 <template>
   <div class="space-y-5">
     <div class="flex flex-col items-center gap-5">
-      <IconMessageRound />
+      <IconArrowsterLogo :class="{ invert: appStore.theme === 'theme-dark' }" />
       <div class="text-center space-y-3">
-        <h1 class="font-semibold text-lg text-[#181D27]">
+        <h1 class="font-semibold text-lg text-text-base">
           {{ $t("otp.check_sms") }}
         </h1>
-        <p class="text-[#535862] text-sm">
+        <p class="text-text-neutral-subtle text-sm">
           {{ $t("otp.sent_code") }} {{ userInput }}
         </p>
       </div>
@@ -17,7 +17,7 @@
           <div class="relative">
             <BaseOtpInput v-model:model-value="otp" :isOtpValid="isValid" />
             <div
-              class="text-sm text-gray-600 text-center flex gap-1 justify-center mt-5"
+              class="text-sm text-text-neutral-subtle text-center flex gap-1 justify-center mt-5"
             >
               <p>{{ $t("otp.did_not_get_code") }}</p>
               <button

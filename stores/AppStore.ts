@@ -6,6 +6,8 @@ const useAppStore = defineStore("appStore", () => {
 	const { $i18n } = useNuxtApp();
 	const tokenExists = useCookie("token");
 
+	const theme = ref<'theme-light' | 'theme-dark'>('theme-light');
+
 	const authUserData = ref<AuthUserData>()
 	const userData = ref<UserData>()
 	const userImagePreview = ref<string>('');
@@ -79,9 +81,19 @@ const useAppStore = defineStore("appStore", () => {
 
 	onMounted(() => {
 		checkAuthenticatedUser();
+		// theme
+		const saved = localStorage.getItem('theme')
+		if (saved === 'theme-dark' || saved === 'theme-light') {
+			theme.value = saved
+			document.documentElement.classList.add(saved)
+		} else {
+			theme.value = 'theme-light'
+			document.documentElement.classList.add('theme-light')
+		}
 	})
 
 	return {
+		theme,
 		userImagePreview,
 		userCoverPhotoPreview,
 		authenticatedUser,

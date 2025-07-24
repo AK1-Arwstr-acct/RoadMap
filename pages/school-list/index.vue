@@ -149,7 +149,6 @@ watch(
 onMounted(async () => {
   windowSize();
   window.addEventListener("resize", windowSize);
-  await nextTick();
   const publicToken = useCookie("publicToken");
   if (!publicToken.value) {
     await schoolListStore.setPublicToken();
@@ -176,7 +175,9 @@ onMounted(async () => {
   //   await nextTick();
   // }
   isTokenLoading.value = false;
-  schoolListStore.setProgramListOptions();
+  if (!schoolListStore.programListOptions.length) {
+    schoolListStore.setProgramListOptions();
+  }
   if (schoolListStore.isSchoolListPublic) {
     schoolListStore.isSchoolsLoading = false;
   }

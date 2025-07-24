@@ -2,8 +2,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const token = useCookie("token");
     const localePath = useLocalePath();
     const protectedPaths = [
+        "/vi/onboarding",
         "/onboarding",
         "/profile",
+        "/vi/profile",
         // "/school-list",
         // "/sophie",
         // "/ai-essay",

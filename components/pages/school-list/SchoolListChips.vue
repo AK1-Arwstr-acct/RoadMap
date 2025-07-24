@@ -22,7 +22,7 @@
       @open="(value: string) => (openDropdown = value as Dropdowns)"
     />
     <DestinationsDropdown
-      :label="t('schoolList_page.destination')"
+      :label="t('schoolList_page.study_destination')"
       :required="true"
       :loading="isLocationLoading"
       v-model="selectedLocationOptions"
@@ -143,14 +143,12 @@
 </template>
 <script setup lang="ts">
 import useSchoolListStore from "~/stores/SchoolListStore";
-import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { OptionAttributes, UserData } from "~/types/home";
 import useAppStore from "~/stores/AppStore";
 import axios from "axios";
 import type { Dropdowns } from "~/types/dashboard";
 
 const schoolListStore = useSchoolListStore();
-const appTrackerStore = useAppTrackerStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
@@ -160,7 +158,6 @@ const isSubmitting = ref<boolean>(false);
 const isDetailOpen = ref<boolean>(false);
 const gpa = ref<string>(schoolListStore.isSchoolListPublic ? "9" : "");
 const annualBudget = ref<OptionAttributes | null>();
-const checkBudgetSelection = ref<boolean>(true); // To check whether the list has a selected budget.
 const studyPrograms = ref<OptionAttributes>();
 const areaOfStudy = ref<OptionAttributes | null>();
 const selectedLocationOptions = ref<number[]>([]);
@@ -260,7 +257,13 @@ const setInitialValues = async (newValue: UserData) => {
     return;
   }
 
-  await getLocationsList();
+  if (!schoolListStore.locationOptions.length) {
+    // await getLocationsList();
+    await schoolListStore.setLocationOptions({
+      cgpa: convertedCgpa.value,
+      class_grade_ids: [Number(studyPrograms.value?.value)],
+    });
+  }
 
   if (!schoolListStore.locationOptions.length) {
     schoolListStore.isSchoolsLoading = false;
@@ -277,7 +280,12 @@ const setInitialValues = async (newValue: UserData) => {
     return;
   }
 
-  await destinationUpdates();
+  if (!schoolListStore.budgetList.length) {
+    // await destinationUpdates();
+    await schoolListStore.setBudgetList({
+      country_ids: selectedLocationOptions.value || [],
+    });
+  }
 
   if (!schoolListStore.budgetList.length) {
     schoolListStore.isSchoolsLoading = false;
@@ -294,7 +302,13 @@ const setInitialValues = async (newValue: UserData) => {
     return;
   }
 
-  await getProgramParent();
+  if (!schoolListStore.coursePreferenceOptions.length) {
+    // await getProgramParent();
+    await schoolListStore.setCoursePreferenceOptions({
+      min_budget: null,
+      max_budget: (annualBudget.value as { max?: number }).max,
+    });
+  }
 
   if (!schoolListStore.coursePreferenceOptions.length) {
     schoolListStore.isSchoolsLoading = false;
@@ -309,7 +323,6 @@ const setInitialValues = async (newValue: UserData) => {
     schoolListStore.isSchoolsLoading = false;
     return;
   }
-
   schoolListStore.programTitleParentId = areaOfStudy.value?.value || "";
   schoolListStore.isPublicMajorEnable = true;
   if (appStore.userData?.educational_records.next_program_titles.length) {
@@ -594,6 +607,12 @@ onMounted(async () => {
   }
   window.addEventListener("resize", updateModalPosition);
   window.addEventListener("resize", windowSize);
+
+  if (appStore.userData) {
+    schoolListStore.isAllowwedOnUserDadaChange = false;
+    schoolListStore.isPublicMajorEnable = false;
+    setInitialValues(appStore.userData);
+  }
 });
 
 onUnmounted(() => {

@@ -8,7 +8,7 @@ interface CountriesOptionAttributes {
   value: number[];
   label: string;
   description?: string;
-  icon?: string;
+  icon?: string | Component;
 }
 interface FormData {
   budget: OptionAttributes | null;
@@ -125,6 +125,8 @@ interface UserData {
   first_name: string;
   last_name: string;
   gender: string;
+  enroll_year: string;
+  current_situation: string;
   dob: string | null;
   starting_date: string | null;
   educational_records: EducationalRecords;

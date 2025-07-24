@@ -160,7 +160,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
 import axios from "axios";
 import useAppStore from "~/stores/AppStore";
 import type { ClassGrades, CurrentClassGrade, UserData } from "~/types/home";
@@ -168,7 +167,6 @@ import IconPasswordEye from "~/components/icons/IconPasswordEye.vue";
 import IconOpenEye from "~/components/icons/IconOpenEye.vue";
 
 const appStore = useAppStore();
-const dashboardStore = useDashboardStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const { t } = useI18n();

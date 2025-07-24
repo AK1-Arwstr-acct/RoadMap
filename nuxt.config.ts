@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   components: [{ path: "~/components", pathPrefix: false }],
-  css: ['~/assets/css/main.css', '~/assets/css/global.css'],
+  css: ['~/assets/css/main.css', '~/assets/css/global.css', '~/assets/css/theme.css'],
   modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/google-fonts'],
   i18n: {
     locales: [

@@ -21,7 +21,6 @@
   </section>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
 
 definePageMeta({
   layout: "dashboard-layout",
@@ -58,22 +57,4 @@ useHead(
     ],
   }))
 );
-
-const dashboardStore = useDashboardStore();
-
-onMounted(() => {
-  if (
-    !(
-      dashboardStore.programListOptions.length &&
-      dashboardStore.locationOptions.length &&
-      dashboardStore.budgetList.length &&
-      dashboardStore.coursePreferenceOptions.length
-    )
-  ) {
-    dashboardStore.setProgramListOptions();
-    dashboardStore.setLocationOptions();
-    dashboardStore.setBudgetList();
-    dashboardStore.setCoursePreferenceOptions();
-  }
-});
 </script>
