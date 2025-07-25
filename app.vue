@@ -12,28 +12,28 @@
       />
     </Transition>
     <!--temp theme changer-->
-    <!-- <div class="fixed bottom-5 right-5">
+    <div class="fixed bottom-5 right-5">
       <button
         @click="toggleTheme"
         class="text-white bg-blue-600 rounded-xl py-2.5 px-[18px]"
       >
         theme
       </button>
-    </div> -->
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import MentorshipPopup from "~/components/pages/school-list/MentorshipPopup.vue";
 import useAppStore from "~/stores/AppStore";
 import useSophieStore from "./stores/sophieStore";
-import useDashboardStore from "./stores/dashboardStore";
+import useSchoolListStore from "./stores/SchoolListStore";
 import { identifyUserInHotjar } from "@/utils/hotjar";
 import { identifyUserInTiktok, trackPageView } from "@/utils/tiktokPixel";
 
 const { locale } = useI18n();
 const { t } = useI18n();
 const route = useRoute();
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore();
 
 useHead(
   computed(() => ({
@@ -167,7 +167,7 @@ const handleMouseMove = () => {
   if (
     excludedRoutes.some((path) => route.fullPath.includes(path)) ||
     sophieStore.openSophieModal ||
-    dashboardStore.isSchoolDetailModal
+    schoolListStore.isSchoolDetailModal
   ) {
     return;
   }

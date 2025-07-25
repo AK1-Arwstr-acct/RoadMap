@@ -49,13 +49,11 @@
 <script setup lang="ts">
 import useAppStore from "~/stores/AppStore";
 import PaywallModal from "~/components/shared/PaywallModal.vue";
-import useDashboardStore from "~/stores/dashboardStore";
 
 const appStore = useAppStore();
 const deviceType = useDeviceType();
 const { t } = useI18n();
 const route = useRoute();
-const dashboardStore = useDashboardStore();
 
 const desktop = {
   DashboardSidebar: defineAsyncComponent(

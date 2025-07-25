@@ -39,12 +39,12 @@
           <BaseSelectRadio
             :label="t('schoolList_page.study_program')"
             :required="true"
-            :options="dashboardStore.programListOptions"
+            :options="demoStore.programListOptions"
             v-model="studyPrograms"
           />
         </div>
         <Transition name="fade">
-          <div class="mt-5" v-if="dashboardStore.locationOptions.length">
+          <div class="mt-5" v-if="demoStore.locationOptions.length">
             <div
               class="flex flex-col gap-3"
               :class="[
@@ -58,7 +58,7 @@
               </p>
               <div class="flex flex-col gap-4">
                 <div
-                  v-for="(option, index) in dashboardStore.locationOptions"
+                  v-for="(option, index) in demoStore.locationOptions"
                   :key="index"
                 >
                   <label
@@ -125,23 +125,23 @@
         <div class="mt-5">
           <BaseSelectRadio
             :label="t('schoolList_page.annual_total_budget')"
-            :options="dashboardStore.budgetList"
+            :options="demoStore.budgetList"
             v-model="annualBudget"
             direction="upward"
             :loading="isBudgetLoading"
-            :disabled="!route.path.includes('/demo') && ( !dashboardStore.budgetList.length || isBudgetLoading )"
+            :disabled="!route.path.includes('/demo') && ( !demoStore.budgetList.length || isBudgetLoading )"
           />
         </div>
         <div class="mt-5">
           <BaseSelectRadio
             :label="t('schoolList_page.area_of_study')"
             :required="true"
-            :options="dashboardStore.coursePreferenceOptions"
+            :options="demoStore.coursePreferenceOptions"
             v-model="areaOfStudy"
             direction="upward"
             :disabled="
               !route.path.includes('/demo') &&
-              (!dashboardStore.coursePreferenceOptions.length ||
+              (!demoStore.coursePreferenceOptions.length ||
                 isAreaOfStudyLoading)
             "
             :loading="isAreaOfStudyLoading"
@@ -171,7 +171,7 @@
     </div>
   </template>
   <script setup lang="ts">
-  import useDashboardStore from "~/stores/dashboardStore";
+  import useDemoStore from "~/stores/demoStore";
   import type { OptionAttributes, UserData } from "~/types/home";
   import useAppStore from "~/stores/AppStore";
   import axios from "axios";
@@ -183,7 +183,7 @@
   import { majors, schoolsList } from "~/utils/demoData";
   import type { Program } from "~/types/program";
   
-  const dashboardStore = useDashboardStore();
+  const demoStore = useDemoStore();
   const appStore = useAppStore();
   const { api } = useApi();
   const { showToast } = useToast();
@@ -257,7 +257,9 @@
   
   const updateUserData = async () => {
     try {
-      dashboardStore.majorsList = majors.filter(
+      demoStore.selectedPublicMajors = [];
+      demoStore.aiRecommendationList = false;
+      demoStore.majorsList = majors.filter(
         (item) => item.parent === Number(areaOfStudy.value?.value)
       );
       const { min, max } = getMinMax();
@@ -278,8 +280,8 @@
             item.super_meta_title.toLowerCase()
         );
       });
-      dashboardStore.filterSchoolsList = filterData;
-      dashboardStore.schoolsList = filterData;
+      demoStore.filterSchoolsList = filterData;
+      demoStore.schoolsList = filterData;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage = errorList(error);

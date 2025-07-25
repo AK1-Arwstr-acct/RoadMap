@@ -12,9 +12,9 @@
         <p class="text-sm 2xl:text-lg font-semibold text-[#181D27]">
           <span
             v-if="
-              dashboardStore.enginePosition === 'final'
+              demoStore.enginePosition === 'final'
                 ? false
-                : (dashboardStore.totalSchool || 0) >= 6
+                : (demoStore.totalSchool || 0) >= 6
             "
           >
             {{ $t("schoolList_page.overwhelmed_by_options") }}
@@ -26,9 +26,9 @@
         <p class="text-sm 2xl:text-base text-[#535862] mt-2">
           <span
             v-if="
-              dashboardStore.enginePosition === 'final'
+              demoStore.enginePosition === 'final'
                 ? false
-                : (dashboardStore.totalSchool || 0) >= 6
+                : (demoStore.totalSchool || 0) >= 6
             "
           >
             {{
@@ -55,12 +55,8 @@
         />
       </div>
       <button
-        v-if="
-          dashboardStore.enginePosition === 'final'
-            ? false
-            : (dashboardStore.totalSchool || 0) >= 6
-        "
-        :disabled="!isActive || dashboardStore.isFinalEnginCall"
+      v-if="!demoStore.aiRecommendationList"
+        :disabled="!isActive"
         class="bg-[#1570EF] disabled:opacity-50 text-sm text-white w-full py-2.5 rounded-lg flex gap-3 justify-center !disabled:cursor-pointer"
         @click="finalEngine"
       >
@@ -122,7 +118,7 @@
     </Transition>
   </template>
   <script setup lang="ts">
-  import useDashboardStore from "~/stores/dashboardStore";
+  import useDemoStore from "~/stores/demoStore";
   
   defineProps({
     isActive: {
@@ -132,20 +128,13 @@
   });
   
   const localePath = useLocalePath();
-  const dashboardStore = useDashboardStore();
+  const demoStore = useDemoStore();
   
   const isPublicPaywall = ref<boolean>(false);
   const isSubmitting = ref<boolean>(false);
   
   const finalEngine = async () => {
-    if (dashboardStore.isSchoolListPublic) {
-      isPublicPaywall.value = true;
-      return;
-    }
-    isSubmitting.value = true;
-    await dashboardStore.runFinalEngine();
-    isSubmitting.value = false;
-    dashboardStore.isFinalEnginCall = true;
+    demoStore.aiRecommendationList = true;
   };
   </script>
   

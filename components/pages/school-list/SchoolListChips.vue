@@ -179,10 +179,6 @@ const focusDiv = ref<HTMLElement | null>(null);
 const modalPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 });
 let resizeObserver: ResizeObserver | null = null;
 
-const convertedCgpa = computed(() => {
-  return gpa.value ? ((Number(gpa.value) / 10) * 4).toFixed(2) : "";
-});
-
 const scrollContainer = ref<HTMLElement | null>(null);
 const scrollForward = () => {
   if (scrollContainer.value) {
@@ -201,7 +197,7 @@ const updateUserData = async () => {
       });
       const { min, max } = getMinMax();
       const payload = {
-        cgpa: convertedCgpa.value,
+        cgpa: outOfFourGpa(gpa.value),
         next_educational_class_grade_id: studyPrograms.value?.value,
         annual_min_budget: min,
         annual_max_budget: max,
@@ -237,11 +233,8 @@ const updateModalPosition = () => {
 };
 
 const setInitialValues = async (newValue: UserData) => {
-  const cgpa = parseFloat(String(newValue?.educational_records.cgpa));
-  const value = (cgpa / 4) * 10;
-  const decimal = value - Math.floor(value);
-  gpa.value = decimal > 0 ? value.toFixed(1) : value.toFixed(0);
-  await gpaChanged();
+  (gpa.value = outOfTenGpa(newValue?.educational_records.cgpa)),
+    await gpaChanged();
 
   if (!schoolListStore.programListOptions.length) {
     return;
@@ -260,7 +253,7 @@ const setInitialValues = async (newValue: UserData) => {
   if (!schoolListStore.locationOptions.length) {
     // await getLocationsList();
     await schoolListStore.setLocationOptions({
-      cgpa: convertedCgpa.value,
+      cgpa: outOfFourGpa(gpa.value),
       class_grade_ids: [Number(studyPrograms.value?.value)],
     });
   }
@@ -389,7 +382,7 @@ const getLocationsList = async () => {
     schoolListStore.isPublicMajorEnable = false;
 
     const response = await schoolListStore.setLocationOptions({
-      cgpa: convertedCgpa.value,
+      cgpa: outOfFourGpa(gpa.value),
       class_grade_ids: [Number(studyPrograms.value?.value)],
     });
     if (response) {
@@ -478,7 +471,7 @@ const getProgramParent = async () => {
 const updateAuthMajors = async () => {
   try {
     const payload = {
-      cgpa: convertedCgpa.value,
+      cgpa: outOfFourGpa(gpa.value),
       next_program_title_ids: schoolListStore.selectedPublicMajors.length
         ? schoolListStore.selectedPublicMajors
         : -1,
@@ -500,7 +493,7 @@ const updateAuthUserData = async () => {
   try {
     const { min, max } = getMinMax();
     const payload = {
-      cgpa: convertedCgpa.value,
+      cgpa: outOfFourGpa(gpa.value),
       next_educational_class_grade_id: studyPrograms.value?.value,
       annual_min_budget: min,
       annual_max_budget: max,

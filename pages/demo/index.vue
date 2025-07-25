@@ -52,8 +52,7 @@
 <script setup lang="ts">
 import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { TabName } from "~/types/dashboard";
-import useAppStore from "~/stores/AppStore";
-import useDashboardStore from "~/stores/dashboardStore";
+import useDemoStore from "~/stores/demoStore";
 import {
   preApplication,
   postApplication,
@@ -67,7 +66,7 @@ import {
 } from "~/utils/demoData";
 
 const appTrackerStore = useAppTrackerStore();
-const dashboardStore = useDashboardStore();
+const demoStore = useDemoStore();
 
 const currentTab = ref<TabName>("schools_list");
 const openSophieModal = ref<boolean>(false);
@@ -85,32 +84,32 @@ watch(
 );
 
 watch(
-  () => dashboardStore.schoolsList,
+  () => demoStore.schoolsList,
   () => {
     schoolsListWrapper.value?.scrollTo({ top: 0, behavior: "smooth" });
   }
 );
 
 onBeforeMount(async () => {
-  dashboardStore.recommendedSchoolsPagination = pagination;
-  dashboardStore.totalSchool = schoolsList.length;
-  dashboardStore.programListOptions = programListOptions;
-  dashboardStore.locationOptions = locationOptions;
-  dashboardStore.budgetList = budgetList;
-  dashboardStore.coursePreferenceOptions = coursePreferenceOptions;
+  demoStore.recommendedSchoolsPagination = pagination;
+  demoStore.totalSchool = schoolsList.length;
+  demoStore.programListOptions = programListOptions;
+  demoStore.locationOptions = locationOptions;
+  demoStore.budgetList = budgetList;
+  demoStore.coursePreferenceOptions = coursePreferenceOptions;
   appTrackerStore.preApplication = preApplication;
   appTrackerStore.postApplication = postApplication;
   appTrackerStore.applicationList = applicationList;
 });
 
 onBeforeUnmount(() => {
-  dashboardStore.schoolsList = [];
-  dashboardStore.recommendedSchoolsPagination = null;
-  dashboardStore.totalSchool = null;
-  dashboardStore.locationOptions = [];
-  dashboardStore.budgetList = [];
-  dashboardStore.coursePreferenceOptions = [];
-  dashboardStore.selectedPublicMajors = [];
+  demoStore.schoolsList = [];
+  demoStore.recommendedSchoolsPagination = null;
+  demoStore.totalSchool = null;
+  demoStore.locationOptions = [];
+  demoStore.budgetList = [];
+  demoStore.coursePreferenceOptions = [];
+  demoStore.selectedPublicMajors = [];
   appTrackerStore.preApplication = undefined;
   appTrackerStore.postApplication = undefined;
   appTrackerStore.applicationList = [];
