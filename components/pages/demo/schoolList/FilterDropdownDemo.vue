@@ -86,10 +86,10 @@
 
 <script setup lang="ts">
 import type { OptionAttributes } from "~/types/home";
-import useDashboardStore from "~/stores/dashboardStore";
+import useDemoStore from "~/stores/demoStore";
 import { schoolsList } from "~/utils/demoData";
 
-const dashboardStore = useDashboardStore();
+const demoStore = useDemoStore();
 const route = useRoute();
 
 const props = defineProps({
@@ -124,25 +124,25 @@ const closeDropdown = () => {
 
 const clratSortFilter = () => {
   selectedOption.value = null;
-  dashboardStore.setSortParam(null);
+  demoStore.setSortParam(null);
 };
 
 const onChange = () => {
   closeDropdown();
   if (selectedOption.value?.value === "1") {
-    dashboardStore.schoolsList = dashboardStore.schoolsList.sort(
+    demoStore.schoolsList = demoStore.schoolsList.sort(
       (a, b) => (b.school_ranking ?? 0) - (a.school_ranking ?? 0)
     );
   } else if (selectedOption.value?.value === "2") {
-    dashboardStore.schoolsList = dashboardStore.schoolsList.sort(
+    demoStore.schoolsList = demoStore.schoolsList.sort(
       (a, b) => (a.school_ranking ?? 0) - (b.school_ranking ?? 0)
     );
   } else if (selectedOption.value?.value === "3") {
-    dashboardStore.schoolsList = dashboardStore.schoolsList.sort(
+    demoStore.schoolsList = demoStore.schoolsList.sort(
       (a, b) => (b.fee ?? 0) - (a.fee ?? 0)
     );
   } else if (selectedOption.value?.value === "4") {
-    dashboardStore.schoolsList = dashboardStore.schoolsList.sort(
+    demoStore.schoolsList = demoStore.schoolsList.sort(
       (a, b) => (a.fee ?? 0) - (b.fee ?? 0)
     );
   }

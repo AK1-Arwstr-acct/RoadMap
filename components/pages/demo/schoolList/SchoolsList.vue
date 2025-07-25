@@ -11,10 +11,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
 import useAppStore from "~/stores/AppStore";
 
 const appStore = useAppStore();
-const dashboardStore = useDashboardStore();
 
 </script>
