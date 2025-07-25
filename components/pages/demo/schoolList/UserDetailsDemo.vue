@@ -3,13 +3,13 @@
     <div v-if="deviceType === 'desktop'" class="my-6">
       <component :is="desktop.PublicUserDataInfoDemo" />
     </div>
-    <WhyTheseSchoolDemo v-if="(dashboardStore.overViews?.length ?? 0) >= 1" />
+    <WhyTheseSchoolDemo v-if="(demoStore.overViews?.length ?? 0) >= 1" />
     <PublicMajorsSelectionDemo />
     <SophieRecommendationDemo :isActive="isActive" />
   </section>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useDemoStore from "~/stores/demoStore";
 
 defineProps({
   isTokenLoading: {
@@ -18,7 +18,7 @@ defineProps({
   },
 });
 
-const dashboardStore = useDashboardStore();
+const demoStore = useDemoStore();
 const deviceType = useDeviceType();
 
 const desktop = {
@@ -32,7 +32,7 @@ const isActive = ref<boolean>(false);
 
 
 watch(
-  () => dashboardStore.selectedPublicMajors,
+  () => demoStore.selectedPublicMajors,
   async (newValue) => {
     if (newValue.length > 0) {
       isActive.value = true;

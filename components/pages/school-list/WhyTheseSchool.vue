@@ -31,9 +31,9 @@
 </template>
 
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 
-const dashboardStore = useDashboardStore();
+const schoolListStore = useSchoolListStore()
 
 const text =
   "A 4.0 GPA is fantastic! It shows your dedicate and capability to handle rigorous coursework.<br/> With your interest in law, this strong academic foundation will be crucial as law studies demand a lot of reading, critical thinking, and attention to detail.A 4.0 GPA is fantastic! It shows your dedicate and capability to handle rigorous coursework. With your interest in law, this strong academic foundation will be crucial as law studies demand a lot of reading, critical thinking, and attention to detail.";
@@ -60,8 +60,8 @@ const observeReadMore = () => {
 
 const typeEffect = () => {
   if (index.value < textLimit.value && typingText.value) {
-    const text1: string = dashboardStore.overViews
-      ? dashboardStore.overViews.join("<br/>")
+    const text1: string = schoolListStore.overViews
+      ? schoolListStore.overViews.join("<br/>")
       : "";
     typedText.value += text1.charAt(index.value);
     index.value++;

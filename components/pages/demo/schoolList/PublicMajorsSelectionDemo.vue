@@ -1,8 +1,8 @@
 <template>
   <div
     class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-[#FFFEFC] flex flex-col gap-6"
-    :class="{ 'pointer-events-none': dashboardStore.isSchoolsLoading }"
-  >
+    :class="{ 'pointer-events-none': demoStore.isSchoolsLoading }"
+    >
     <p class="font-medium text-[#414651]">
       {{ $t("schoolList_page.majors_pick_up_to_3_majors") }}
     </p>
@@ -81,9 +81,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import useDashboardStore from "~/stores/dashboardStore";
+import useDemoStore from "~/stores/demoStore";
 
-const dashboardStore = useDashboardStore();
+const demoStore = useDemoStore();
 
 interface programOptions {
   value: number;
@@ -105,22 +105,21 @@ const toggleSelection = (id: number) => {
   } else {
     selectedLPrograms.value.push(id);
   }
-  dashboardStore.selectedPublicMajors = selectedLPrograms.value;
+  demoStore.selectedPublicMajors = selectedLPrograms.value;
   submit();
+  demoStore.aiRecommendationList = false;
 };
 
 const submit = async () => {
   if (selectedLPrograms.value.length > 0) {
-    dashboardStore.schoolsList = dashboardStore.filterSchoolsList.filter(
-      (item) => {
-        let program_names: string[] = dashboardStore.majorsList
-          .filter((item) => selectedLPrograms.value.includes(item.value))
-          .map((major) => major.label);
-        return program_names.includes(item.program_title);
-      }
-    );
+    demoStore.schoolsList = demoStore.filterSchoolsList.filter((item) => {
+      let program_names: string[] = demoStore.majorsList
+        .filter((item) => selectedLPrograms.value.includes(item.value))
+        .map((major) => major.label);
+      return program_names.includes(item.program_title);
+    });
   } else {
-    dashboardStore.schoolsList = dashboardStore.filterSchoolsList;
+    demoStore.schoolsList = demoStore.filterSchoolsList;
   }
 };
 
@@ -132,9 +131,9 @@ watch(
 );
 
 watch(
-  () => dashboardStore.majorsList,
+  () => demoStore.majorsList,
   () => {
-    majorProgramsList.value = dashboardStore.majorsList;
+    majorProgramsList.value = demoStore.majorsList;
   }
 );
 </script>
