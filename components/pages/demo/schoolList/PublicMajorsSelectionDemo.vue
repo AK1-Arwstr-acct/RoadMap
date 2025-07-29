@@ -2,7 +2,7 @@
   <div
     class="py-5 px-6 rounded-2xl border-[1.5px] border-gray-200 bg-[#FFFEFC] flex flex-col gap-6"
     :class="{ 'pointer-events-none': demoStore.isSchoolsLoading }"
-  >
+    >
     <p class="font-medium text-[#414651]">
       {{ $t("schoolList_page.majors_pick_up_to_3_majors") }}
     </p>
