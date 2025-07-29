@@ -239,6 +239,7 @@ const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const { t } = useI18n();
+const route = useRoute();
 
 interface FormDetails {
   userName: string;
@@ -251,6 +252,14 @@ interface FormDetails {
   otherQuestions: string;
   selectedAlternativeContact: OptionAttributes | null;
   referralSource: OptionAttributes | null;
+}
+
+interface UtmParams {
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+  utm_content: string;
+  utm_term: string;
 }
 
 const isSubmitting = ref<boolean>(false);
@@ -273,6 +282,7 @@ const search = ref<string>("");
 const countryOptions = ref<Country[]>([]);
 const otherText = ref<string>("");
 const width = ref<number>(0);
+const oldUtmParams = ref<UtmParams>();
 
 const alternativeContact = [
   { value: "zalo", label: "Zalo" },
@@ -386,6 +396,26 @@ const countryCodes = computed(() => {
 const submit = async () => {
   try {
     isSubmitting.value = true;
+    const utmParamsCookie = useCookie("utm_params");
+    const utmData = utmParamsCookie.value as unknown as UtmParams;
+
+    const utmParams = {
+      first_utm_source:
+        oldUtmParams.value?.utm_source ?? utmData.utm_source ?? "website",
+      last_utm_source: utmData.utm_source || "website",
+      first_utm_medium:
+        oldUtmParams.value?.utm_medium ?? utmData.utm_medium ?? "",
+      last_utm_medium: utmData.utm_medium || "",
+      first_utm_campaign:
+        oldUtmParams.value?.utm_campaign ?? utmData.utm_campaign ?? "",
+      last_utm_campaign: utmData.utm_campaign || "",
+      first_utm_content:
+        oldUtmParams.value?.utm_content ?? utmData.utm_content ?? "",
+      last_utm_content: utmData.utm_content || "",
+      first_utm_term:
+        oldUtmParams.value?.utm_term ?? utmData.utm_term ?? "",
+      last_utm_term: utmData.utm_term || "",
+    };
     await api.post("/api/v1/plans/bundle", {
       plan_id: props.selectedPlan,
       name: formDetails.value.userName,
@@ -402,8 +432,10 @@ const submit = async () => {
       contact_platform: [formDetails.value.selectedAlternativeContact?.value],
       student_concern: formDetails.value.otherQuestions,
       referral_source: formDetails.value.referralSource?.value,
+      utm_params: utmParams,
     });
     emits("updateJourney");
+    utmParamsCookie.value = null;
     formDetails.value = {
       userName: appStore.userData?.name || "",
       userEmail: appStore.userData?.email || "",
@@ -448,6 +480,18 @@ onMounted(() => {
   windowSize();
   window.addEventListener("resize", windowSize);
   getCountries();
+
+  const utmParamsCookie = useCookie("utm_params", {
+    httpOnly: false,
+    secure: true,
+    maxAge: 604800, // one week in seconds
+  })
+  if(typeof utmParamsCookie.value === "object") {
+    oldUtmParams.value = JSON.parse(JSON.stringify(utmParamsCookie.value)) as UtmParams;
+  } else {
+    oldUtmParams.value = undefined;
+  }
+  utmParamsCookie.value = JSON.stringify(route.query);
 });
 
 onUnmounted(() => {
