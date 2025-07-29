@@ -12,14 +12,14 @@
       />
     </Transition>
     <!--temp theme changer-->
-    <div class="fixed bottom-5 right-5">
+    <!-- <div class="fixed bottom-5 right-5">
       <button
         @click="toggleTheme"
         class="text-white bg-blue-600 rounded-xl py-2.5 px-[18px]"
       >
         theme
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 <script setup lang="ts">
