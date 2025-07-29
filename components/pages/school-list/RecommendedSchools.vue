@@ -69,7 +69,8 @@
       <div v-else class="flex flex-col gap-6">
         <div v-for="(school, idx) in schoolListStore.schoolsList" :key="idx">
           <SchoolCard :program="school" @openDetail="openDetail" />
-          <OverwhelmedCard v-if="idx === 4" class="mt-6" />
+          <!-- Same condition added which is currently added on AI Match Me button -->
+          <OverwhelmedCard v-if="idx === 4 && (schoolListStore.totalSchool || 0) > 5" class="mt-6" />
         </div>
       </div>
       <div
