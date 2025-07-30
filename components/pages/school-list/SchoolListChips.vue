@@ -575,7 +575,7 @@ const calculateHeight = () => {
 };
 
 watch(
-  () => [schoolListStore.programListOptions, appStore.userData],
+  () => appStore.userData,
   () => {
     if (appStore.userData && schoolListStore.isAllowwedOnUserDadaChange) {
       setInitialValues(appStore.userData);
@@ -600,6 +600,10 @@ onMounted(async () => {
   }
   window.addEventListener("resize", updateModalPosition);
   window.addEventListener("resize", windowSize);
+
+  if (!schoolListStore.programListOptions.length) {
+    await schoolListStore.setProgramListOptions();
+  }
 
   if (appStore.userData) {
     schoolListStore.isAllowwedOnUserDadaChange = false;

@@ -175,9 +175,7 @@ onMounted(async () => {
   //   await nextTick();
   // }
   isTokenLoading.value = false;
-  if (!schoolListStore.programListOptions.length) {
-    schoolListStore.setProgramListOptions();
-  }
+  
   if (schoolListStore.isSchoolListPublic) {
     schoolListStore.isSchoolsLoading = false;
   }

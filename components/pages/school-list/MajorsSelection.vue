@@ -285,7 +285,6 @@ const getMajors = async () => {
       schoolListStore.selectedPublicMajors = selectedMajors;
       selectedLPrograms.value = selectedMajors;
     }
-    loadingMajors.value = false;
   } catch (error) {
     selectedLPrograms.value = [];
     if (axios.isAxiosError(error)) {
@@ -294,6 +293,8 @@ const getMajors = async () => {
         type: "error",
       });
     }
+  } finally {
+    loadingMajors.value = false;
   }
 };
 

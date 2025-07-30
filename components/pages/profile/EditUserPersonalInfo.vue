@@ -137,8 +137,9 @@
         class="flex justify-end gap-2 px-6 py-4 border-t-[1.5px] border-gray-200 text-sm"
       >
         <button
+          :disabled="disableSubmit || isSubmitting"
           @click="resetValues"
-          class="px-4 py-2.5 text-[#414651] font-semibold border-[1.5px] border-gray-200 rounded-lg"
+          class="px-4 py-2.5 text-[#414651] font-semibold border-[1.5px] border-gray-200 rounded-lg disabled:opacity-70"
         >
           {{ $t("profile_page.edit_profile_page.cancel") }}
         </button>
