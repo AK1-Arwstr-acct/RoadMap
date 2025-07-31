@@ -30,7 +30,7 @@
         @onChange="onCourseChange"
       />
       <OnboardingMajors
-        :label="t('onboarding.majors')"
+        :label="`${t('onboarding.majors')} (Optional)`"
         :options="majorProgramsList"
         v-model="selectedMajors"
         :loading="isLoadingMajors"

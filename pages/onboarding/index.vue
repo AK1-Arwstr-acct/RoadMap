@@ -1,6 +1,6 @@
 <template>
   <div class="h-dvh overflow-y-auto custom-scrollbar">
-    <div class="h-fit flex justify-center px-5 pt-24 pb-10 relative">
+    <div class="h-fit flex justify-center px-5 pt-20 pb-10 relative">
       <ProgressBar @updateStep="previousStep" />
       <AcademicInfo
         v-if="steps === 'academic'"
