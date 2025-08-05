@@ -329,10 +329,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  isTokenLoaded: {
-    type: Boolean,
-    default: false,
-  },
   isReadOnly: {
     type: Boolean,
     default: false,
@@ -516,7 +512,7 @@ const startTypingAnimation = () => {
   typingInterval.value = window.setInterval(() => {
     const lastBotMsg = completeChat.value.findLast((c) => !c.isSender);
     if (!lastBotMsg) return;
-    if (typingIndex.value === 3) scrollDown(); 
+    if (typingIndex.value === 3) scrollDown();
     if (typingIndex.value < typingFullText.value.length) {
       lastBotMsg.text += typingFullText.value[typingIndex.value];
       typingIndex.value++;
@@ -546,6 +542,7 @@ const submit = async () => {
     adjustHeight();
     let response;
     if (sophieStore.isSophiePublic) {
+      await sophieStore.checkPublicToken();
       const publicToken = useCookie("publicToken");
       response = await api.post(
         `/api/v1/session-based-journey/ai-conversation/sophie`,
@@ -659,15 +656,6 @@ watch(
 );
 
 watch(
-  () => props.isTokenLoaded,
-  (newValue) => {
-    if (newValue) {
-      submit();
-    }
-  }
-);
-
-watch(
   () => props.isReadOnly,
   () => {
     readOnly.value = props.isReadOnly;
@@ -722,6 +710,7 @@ onMounted(async () => {
     });
     isChatLoading.value = true;
     inputQuestion.value = `${route.query.query}`;
+    submit();
   }
   const sophieCompletedList = useCookie("sophieCompletedList");
   sophieStore.tasksWithCompletedSophie =

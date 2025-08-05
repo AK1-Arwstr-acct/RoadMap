@@ -70,7 +70,6 @@
               :isNewChat="isNewChat"
               :singleChatDetail="specificTaskChat"
               :isModal="isModal"
-              :isTokenLoaded="isTokenLoaded"
               :isSummarizeOverview="isSummarizeOverview"
               @isChatLoading="(value) => (isChatLoading = value)"
               :isReadOnly="true"
@@ -85,7 +84,6 @@
             :isNewChat="isNewChat"
             :singleChatDetail="isTaskChat ? specificTaskChat : singleChatDetail"
             :isModal="isModal"
-            :isTokenLoaded="isTokenLoaded"
             :isSummarizeOverview="isSummarizeOverview"
             @isChatLoading="(value) => (isChatLoading = value)"
           />
@@ -136,7 +134,6 @@ const props = defineProps({
   },
 });
 
-const isTokenLoaded = ref<boolean>(false);
 const isChatLoading = ref<boolean>(false);
 const isNewChat = ref<boolean>(false);
 const chatHistoryArray = ref<{ id: number; title: string }[]>([]);
@@ -238,9 +235,7 @@ watch(
 );
 
 onMounted(async () => {
-  if (sophieStore.isSophiePublic) {
-    isTokenLoaded.value = (await sophieStore.checkPublicToken()) ?? false;
-  } else {
+  if (!sophieStore.isSophiePublic) {
     getChatHistory();
   }
 });

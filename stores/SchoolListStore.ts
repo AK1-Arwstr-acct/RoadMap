@@ -10,6 +10,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
     const { api } = useApi();
     const appStore = useAppStore();
 
+    const isPublicTokenLoading = ref<boolean>(true);
     const isAllowwedOnUserDadaChange = ref<boolean>(true);
     const isSchoolListPublic = ref<boolean>(!appStore.authenticatedUser);
     const selectedFilter = ref<OptionAttributes | null>(null);
@@ -46,24 +47,35 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
     // const publicToken = useCookie("publicToken");
 
     const setPublicToken = async () => {
-        const token = useCookie("token")
-        let response;
-        if (token.value) {
-            response = await api.get("/api/v1/session-based-journey/session", {
-                headers: {
-                    "Authorization": `Bearer ${token.value}`,
-                },
-            });
-        } else {
-            response = await api.get("/api/v1/session-based-journey/session");
-        }
-        if (response.data) {
-            const publicToken = useCookie("publicToken", {
-                maxAge: 10800,
-                httpOnly: false,
-                secure: true,
-            });
-            publicToken.value = JSON.stringify(response.data.data.token);
+        try {
+            const token = useCookie("token")
+            let response;
+            if (token.value) {
+                response = await api.get("/api/v1/session-based-journey/session", {
+                    headers: {
+                        "Authorization": `Bearer ${token.value}`,
+                    },
+                });
+            } else {
+                response = await api.get("/api/v1/session-based-journey/session");
+            }
+            if (response.data) {
+                const publicToken = useCookie("publicToken", {
+                    maxAge: 10800,
+                    httpOnly: false,
+                    secure: true,
+                });
+                publicToken.value = JSON.stringify(response.data.data.token);
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const errorMessage = errorList(error);
+                showToast(errorMessage, {
+                    type: "error",
+                });
+            }
+        } finally {
+            isPublicTokenLoading.value = false;
         }
     }
 
@@ -396,6 +408,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
     // })
 
     return {
+        isPublicTokenLoading,
         isAllowwedOnUserDadaChange,
         isSchoolListPublic,
         selectedFilter,

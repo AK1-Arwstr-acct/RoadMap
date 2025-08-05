@@ -12,7 +12,7 @@
           >
             <div class="flex-1 overflow-hidden w-full max-w-[800px] mx-auto">
               <RecommendedSchools
-                :isTokenLoading="isTokenLoading"
+                :isTokenLoading="schoolListStore.isPublicTokenLoading"
                 @getRecommendations="getRecommendations"
               />
             </div>
@@ -104,7 +104,6 @@ const { api } = useApi();
 const schoolListStore = useSchoolListStore();
 
 const isActive = ref<boolean>(false);
-const isTokenLoading = ref<boolean>(true);
 const schoolsListWrapper = ref<HTMLElement | null>(null);
 const width = ref<number>(0);
 
@@ -149,32 +148,6 @@ watch(
 onMounted(async () => {
   windowSize();
   window.addEventListener("resize", windowSize);
-  const publicToken = useCookie("publicToken");
-  if (!publicToken.value) {
-    await schoolListStore.setPublicToken();
-    await nextTick();
-  }
-  // const token = useCookie("token")
-  // let response;
-  // if (token.value) {
-  //   response = await api.get("/api/v1/session-based-journey/session", {
-  //     headers: {
-  //       "Authorization": `Bearer ${token.value}`,
-  //     },
-  //   });
-  // } else {
-  //   response = await api.get("/api/v1/session-based-journey/session");
-  // }
-  // if (response.data) {
-  //   const publicToken = useCookie("publicToken", {
-  //     maxAge: 10800,
-  //     httpOnly: false,
-  //     secure: true,
-  //   });
-  //   publicToken.value = JSON.stringify(response.data.data.token);
-  //   await nextTick();
-  // }
-  isTokenLoading.value = false;
   
   if (schoolListStore.isSchoolListPublic) {
     schoolListStore.isSchoolsLoading = false;

@@ -601,6 +601,11 @@ onMounted(async () => {
   window.addEventListener("resize", updateModalPosition);
   window.addEventListener("resize", windowSize);
 
+  const publicToken = useCookie("publicToken");
+  if (!publicToken.value) {
+    await schoolListStore.setPublicToken();
+    await nextTick();
+  }
   if (!schoolListStore.programListOptions.length) {
     await schoolListStore.setProgramListOptions();
   }
