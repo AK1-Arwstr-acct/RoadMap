@@ -1,3 +1,5 @@
+import type { Component } from "vue";
+
 interface OptionAttributes {
   value: string;
   label: string;
@@ -119,7 +121,7 @@ interface UserData {
   current_location: CurrentLocation;
   name: string;
   email: string;
-  isEmailVerified : boolean;
+  isEmailVerified: boolean;
   phone_number: string | null;
   user_name: string;
   first_name: string;
@@ -177,6 +179,14 @@ interface programOptions {
   parent: number;
 }
 
+interface Tabs {
+  name: string;
+  label: string;
+  icon: Component
+}
+
+type MajorsTabs = 'chat' | 'guide';
+
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, AuthUserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, ChatDetail, EssayData, Plan, programOptions }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, AuthUserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, ChatDetail, EssayData, Plan, programOptions, Tabs, MajorsTabs }

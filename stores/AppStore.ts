@@ -14,6 +14,7 @@ const useAppStore = defineStore("appStore", () => {
 	const userCoverPhotoPreview = ref<string>('');
 	const authenticatedUser = ref<boolean>(tokenExists.value ? true : false);
 	const isFeatureChangeFromTasks = ref<boolean>(false);
+	const userMajors = ref<string>("[major]");
 
 	// modal for first time user
 	const firstTimeUser = ref<boolean>(false);
@@ -60,6 +61,21 @@ const useAppStore = defineStore("appStore", () => {
 		if (tokenExists.value) {
 			const response = await api.get("/api/v1/student/basic-info")
 			userData.value = response.data.data
+			const majors =
+				userData.value?.educational_records.next_program_titles.map(
+					(item) => item.title
+				) || [];
+			if (majors.length > 2) {
+				userMajors.value = (
+					majors.slice(0, -2).join(", ") +
+					", " +
+					majors.slice(-2).join(" and ")
+				);
+			} else if (majors.length > 0) {
+				userMajors.value = majors.join(" and ");
+			} else {
+				userMajors.value = "[major]"
+			}
 		} else {
 			userData.value = undefined;
 		}
@@ -107,6 +123,7 @@ const useAppStore = defineStore("appStore", () => {
 		featureSoftPaywall,
 		paywallOnLastScreen,
 		firstTimeUser,
+		userMajors,
 		checkAuthenticatedUser,
 		setUserImagePreview,
 		setUserCoverPhotoPreview,

@@ -14,6 +14,8 @@ export default {
         sans: ['"Plus Jakarta Sans"', "sans-serif"],
       },
       colors: {
+        "surface": "var(--color-surface)",
+
         "text-base": "var(--color-text-neutral)",
         "text-base-inverse": "var(--color-text-inverse)",
         "text-neutral-subtle": "var(--color-text-neutral-subtle)",
@@ -41,7 +43,11 @@ export default {
         "background-brand-subtle": "var(--color-background-brand-subtle)",
         "background-brand-subtle-selected": "var(--color-background-brand-subtle-selected)",
         "background-brand-hovered": "var(--color-background-brand-hovered)",
+        "background-neutral": "var(--color-background-neutral)",
         "background-neutral-bold": "var(--color-background-neutral-bold)",
+        "background-neutral-bolder": "var(--color-background-neutral-bolder)",
+        "background-neutral-boldest": "var(--color-background-neutral-boldest)",
+        "background-neutral-subtle": "var(--color-background-neutral-subtle)",
         "background-disabled": "var(--color-background-disabled)",
 
         "divider": "var(--color-divider)",
@@ -49,6 +55,7 @@ export default {
         "progress-track-brand": "var(--color-progress-track-brand)",
         "progress-indicator-brand": "var(--color-progress-indicator-brand)",
 
+        "border-neutral": "var(--color-border-neutral)",
         "border-neutral-subtle": "var(--color-border-neutral-subtle)",
         "border-brand": "var(--color-border-brand)",
         "border-error": "var(--color-border-error)",
@@ -56,6 +63,7 @@ export default {
         
         "icon-neutral-subtle": "var(--color-icon-neutral-subtle)",
         "icon-neutral": "var(--color-icon-neutral)",
+        "icon-brand": "var(--color-icon-brand)",
       },
       screens: {
         "3xl": "1920px",

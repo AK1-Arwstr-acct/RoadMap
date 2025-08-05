@@ -100,6 +100,16 @@
     border: 1px solid #ddd; /* Default border */
     overflow: auto; /* Default overflow handling */
   }
+
+  html.theme-light pre {
+    background-color: #FAFAFA; /* Default background color */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Default border */
+  }
+
+  html.theme-dark pre {
+    background-color: #171717; /* Default background color */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Default border */
+  }
   
   /* Default styles for inline code */
   .suggestion-container code {
@@ -108,6 +118,16 @@
     border: 1px solid #ddd; /* Default border */
     padding: 0 4px; /* Default padding */
     border-radius: 4px; /* Default border radius */
+  }
+
+  html.theme-light code {
+    background-color: #E5E5E5; /* Default background color */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Default border */
+  }
+
+  html.theme-dark code {
+    background-color: #404040; /* Default background color */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Default border */
   }
   
   /* Default styles for images */

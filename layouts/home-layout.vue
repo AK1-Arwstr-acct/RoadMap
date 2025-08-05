@@ -11,8 +11,11 @@
       /> -->
       <DashboardSidebar />
       <RoadmapSidebar />
-      <div class="flex-1 overflow-hidden pb-16 lg:pb-0">
-        <slot />
+      <div class="flex-1 h-full overflow-hidden pb-16 lg:pb-0 flex flex-col">
+        <PageTitleNav />
+        <div class="h-full overflow-hidden">
+          <slot />
+        </div>
       </div>
     </div>
     <!-- Sophie Modal -->
