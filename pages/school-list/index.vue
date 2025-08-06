@@ -148,7 +148,11 @@ watch(
 onMounted(async () => {
   windowSize();
   window.addEventListener("resize", windowSize);
-  
+  const publicToken = useCookie("publicToken");
+  if (publicToken.value) {
+    schoolListStore.isPublicTokenLoading = false;
+  }
+
   if (schoolListStore.isSchoolListPublic) {
     schoolListStore.isSchoolsLoading = false;
   }
