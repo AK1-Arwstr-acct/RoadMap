@@ -258,25 +258,7 @@ const submit = async () => {
 const getMajors = async () => {
   try {
     loadingMajors.value = true;
-    const publicToken = useCookie("publicToken");
-    const response = await api.get(
-      "/api/v2/session-based-journey/school-recommended/program-titles",
-      {
-        headers: {
-          "X-auth-token": publicToken.value,
-        },
-      }
-    );
-    if (response) {
-      majorProgramsList.value = response.data.data.map(
-        (item: { id: number; title: string }) => {
-          return {
-            value: item.id,
-            label: item.title,
-          };
-        }
-      );
-    }
+    majorProgramsList.value = await schoolListStore.getMajors();
     if (appStore.userData?.educational_records.next_program_titles.length) {
       const selectedMajors =
         appStore.userData?.educational_records.next_program_titles.map(

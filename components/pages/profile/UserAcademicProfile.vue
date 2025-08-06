@@ -145,6 +145,17 @@
               isLocationLoading ||
               isGpaChange
             "
+            @onChange="getMajors"
+          />
+        </div>
+        <div class="">
+          <MultiMajorsDropdown
+            :label="t('onboarding.majors')"
+            :options="majorProgramsList"
+            v-model="selectedMajors"
+            :loading="isLoadingMajors"
+            :disable="!majorProgramsList.length"
+            direction="upward"
           />
         </div>
       </div>
@@ -154,7 +165,7 @@
         <button
           @click="resetUserData"
           :disabled="disabledBtn"
-          class="py-2.5 px-4 border-[1.5px] border-gray-200 w-fit rounded-lg font-semibold text-sm text-[#414651]"
+          class="py-2.5 px-4 border-[1.5px] border-gray-200 w-fit rounded-lg font-semibold text-sm text-[#414651] disabled:opacity-70"
         >
           {{ $t("profile_page.edit_profile_page.cancel") }}
         </button>
@@ -211,6 +222,9 @@ const isAreaOfStudyLoading = ref<boolean>(false);
 const isGpaChange = ref<boolean>(false);
 const isLocationchange = ref<boolean>(false);
 const isLocationLoading = ref<boolean>(false);
+const majorProgramsList = ref<OptionAttributes[]>([]);
+const selectedMajors = ref<number[]>([]);
+const isLoadingMajors = ref<boolean>(false);
 
 const isUpdateBtnDisable = computed(() => {
   return !!(
@@ -218,7 +232,8 @@ const isUpdateBtnDisable = computed(() => {
     studyPrograms.value?.value &&
     selectedLocationOptions.value.length > 0 &&
     annualBudget.value?.value &&
-    areaOfStudy.value?.value
+    areaOfStudy.value?.value &&
+    selectedMajors.value.length > 0
   );
 });
 
@@ -227,6 +242,10 @@ const disabledBtn = computed(() => {
     appStore.userData?.educational_records.want_to_study_countries
       .map((item) => item.id)
       .every((id) => selectedLocationOptions.value.includes(id));
+
+  let majorsCheck = appStore.userData?.educational_records.next_program_titles
+    .map((item) => item.id)
+    .every((id) => selectedMajors.value.includes(id));
 
   return (
     Number(gpa.value) ===
@@ -239,7 +258,10 @@ const disabledBtn = computed(() => {
       appStore.userData?.educational_records.super_meta_category.id &&
     appStore.userData?.educational_records.want_to_study_countries.length ===
       selectedLocationOptions.value.length &&
-    countryCheck
+    countryCheck &&
+    appStore.userData?.educational_records.next_program_titles.length ===
+      selectedMajors.value.length &&
+    majorsCheck
   );
 });
 
@@ -262,6 +284,28 @@ const toggleSelection = async (ids: number[]) => {
 const resetUserData = () => {
   if (appStore.userData) {
     setInitialValues(appStore.userData);
+  }
+};
+
+const getMajors = async () => {
+  try {
+    isLoadingMajors.value = true;
+    majorProgramsList.value = await schoolListStore.getMajors();
+    if (appStore.userData?.educational_records.next_program_titles.length) {
+      selectedMajors.value =
+        appStore.userData?.educational_records.next_program_titles.map(
+          (item) => item.id
+        );
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isLoadingMajors.value = false;
   }
 };
 
@@ -343,6 +387,14 @@ const setInitialValues = async (newValue: UserData) => {
     (item) =>
       Number(item.value) == newValue?.educational_records.super_meta_category.id
   );
+
+  if (appStore.userData?.educational_records.next_program_titles.length) {
+    selectedMajors.value =
+      appStore.userData?.educational_records.next_program_titles.map(
+        (item) => item.id
+      );
+    getMajors();
+  }
 };
 
 const getMinMax = () => {
@@ -481,7 +533,10 @@ const updateAuthUserData = async () => {
       annual_max_budget: max,
       destination_country_ids: selectedLocationOptions.value,
       super_meta_category_id: areaOfStudy.value?.value,
-      next_program_title_ids: -1,
+      // next_program_title_ids: -1,
+      next_program_title_ids: selectedMajors.value.length
+        ? selectedMajors.value
+        : -1,
     };
     await api.post("/api/v1/student/update-profile-basic-info", payload);
     showToast("Profile updated successfully", {

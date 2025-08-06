@@ -51,7 +51,7 @@
           >
           <p class="mb-4 text-text-neutral-subtle">
             Take 15 minutes to do the MBTI test
-            <a href="#" target="_blank" class="text-link">here</a>
+            <a href="https://www.16personalities.com/" target="_blank" class="text-link">here</a>
             to have more in-depth answer from us
           </p>
           <input
@@ -186,6 +186,7 @@ const redoQuiz = () => {
   majorStore.extraQuestion.mbti = "";
   majorStore.extraQuestion.activities = "";
   majorStore.isStepperSubmitted = false;
+  majorStore.completeChat = [];
 };
 
 const learnMore = () => {

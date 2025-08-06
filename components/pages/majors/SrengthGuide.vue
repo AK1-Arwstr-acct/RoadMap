@@ -6,8 +6,8 @@
       <span class="font-semibold">1. Analyze Your Personal Capabilities</span>
       <div class="mt-1">
         To understand yourself better, we recommend taking the
-        <a href="#" target="_blank" class="text-text-brand font-semibold"
-          >Big Five personality test</a
+        <span class="text-text-brand font-semibold"
+          >Big Five personality test</span
         >. This tool is more reliable than MBTI because it evaluates personality
         on a spectrum rather than just categorizing into two extremes. Instead
         of saying you’re “completely introverted” or “completely extroverted,”
@@ -81,6 +81,7 @@
           </p>
         </div>
         <button
+          @click="startQuiz"
           class="rounded-lg px-[18px] py-1 bg-background-brand text-text-constant-white text-nowrap"
         >
           Start your quiz
@@ -89,3 +90,14 @@
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import useMajorStore from "~/stores/majorStore";
+
+const majorStore = useMajorStore();
+
+const startQuiz = () => {
+  majorStore.showQuiz = true;
+  majorStore.isQuizStart = true;
+  majorStore.activeTab = "chat";
+};
+</script>

@@ -29,7 +29,7 @@
         :disabled="coursePreferenceOptions.length === 0"
         @onChange="onCourseChange"
       />
-      <OnboardingMajors
+      <MultiMajorsDropdown
         :label="`${t('onboarding.majors')} (Optional)`"
         :options="majorProgramsList"
         v-model="selectedMajors"
@@ -58,8 +58,6 @@ import useAppStore from "~/stores/AppStore";
 import type { OptionAttributes } from "~/types/home";
 import useOnboardingStore from "~/stores/OnboardingStore";
 import useSchoolListStore from "~/stores/SchoolListStore";
-
-const emit = defineEmits(["submitParentCategory"]);
 
 const { t } = useI18n();
 const { api } = useApi();
@@ -129,25 +127,7 @@ const getMajors = async () => {
   try {
     isLoadingMajors.value = true;
     await checkPublicToken();
-    const publicToken = useCookie("publicToken");
-    const response = await api.get(
-      "/api/v2/session-based-journey/school-recommended/program-titles",
-      {
-        headers: {
-          "X-auth-token": publicToken.value,
-        },
-      }
-    );
-    if (response) {
-      majorProgramsList.value = response.data.data.map(
-        (item: { id: number; title: string }) => {
-          return {
-            value: item.id,
-            label: item.title,
-          };
-        }
-      );
-    }
+    majorProgramsList.value = await schoolListStore.getMajors();
     if (appStore.userData?.educational_records.next_program_titles.length) {
       selectedMajors.value =
         appStore.userData?.educational_records.next_program_titles.map(
@@ -177,8 +157,20 @@ const onSubmit = async () => {
         : undefined,
     });
     await appStore.getUserData();
-    navigateTo(localePath("/school-list"));
-    emit("submitParentCategory");
+    const userSelection = [
+      "I'm unsure about what major to pursue",
+      "I have a few majors in mind but need help choosing",
+      "I know what I want to study, but I still have some concerns",
+    ];
+    if (
+      userSelection.some((item) =>
+        item.includes(appStore.userData?.current_situation || "")
+      )
+    ) {
+      navigateTo(localePath("/majors"));
+    } else {
+      navigateTo(localePath("/school-list"));
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);

@@ -155,7 +155,15 @@
                     />
                   </div>
                   <!-- ResourceCard -->
-                  <!-- <div v-if="!chat.isSender" class="mt-10 flex flex-col gap-4 pb-5">
+                  <div
+                    v-if="
+                      typingInterval == null &&
+                      !chat.isSender &&
+                      index ===
+                        majorStore.completeChat.findIndex((c) => !c.isSender)
+                    "
+                    class="mt-10 flex flex-col gap-4 pb-5"
+                  >
                     <div class="flex items-center gap-3">
                       <IconTelescope />
                       <p class="text-xl font-semibold text-text-base">
@@ -163,9 +171,13 @@
                       </p>
                     </div>
                     <div class="flex gap-3">
-                      <ResourceCard v-for="a in 3" />
+                      <ResourceCard
+                        v-for="(item, idx) in discoverMoreList"
+                        :key="idx"
+                        :list="item"
+                      />
                     </div>
-                  </div> -->
+                  </div>
                 </div>
                 <!-- dropdown for public user -->
                 <div
@@ -295,12 +307,12 @@
             />
             <div class="flex justify-between items-center p-4">
               <div class="flex items-center gap-2 pl-2">
-                <div>
+                <!-- <div>
                   <IconPlus class="size-6" />
                 </div>
                 <div>
                   <IconFilterDotLines />
-                </div>
+                </div> -->
               </div>
               <button
                 :disabled="
@@ -343,6 +355,7 @@ import { v4 as uuidv4 } from "uuid";
 import useSophieStore from "~/stores/sophieStore";
 import useAppStore from "~/stores/AppStore";
 import useMajorStore from "~/stores/majorStore";
+import { list } from "postcss";
 
 const { api } = useApi();
 const { showToast } = useToast();
@@ -405,6 +418,27 @@ const educationLevelOption: OptionAttributes[] = [
   {
     value: "4",
     label: `${t("sophie_page.masters")}`,
+  },
+];
+
+const discoverMoreList: { title: string; detail: string; link: string }[] = [
+  {
+    title: "16personalities",
+    detail:
+      "Matches MBTI types to careers based on personality values and strengths.",
+    link: "https://www.16personalities.com/articles/our-theory",
+  },
+  {
+    title: "O*NET Interest Profiler",
+    detail:
+      "Helps match interests (Holland Codes) to careers and majors, backed by real-world labor market data.",
+    link: "https://www.mynextmove.org/explore/ip",
+  },
+  {
+    title: "Truity’s Personality-Career Match Tools",
+    detail:
+      "Explains how MBTI types like INFP align with certain careers and fields of study",
+    link: "https://www.truity.com/test/career-personality-profiler-test",
   },
 ];
 
