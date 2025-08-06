@@ -1,6 +1,6 @@
 <template>
   <section>
-    <p class="text-2xl font-semibold mb-4 text-text-base">
+    <p class="text-xl md:text-2xl font-semibold mb-4 text-text-base">
       ❓ Frequently Asked Questions
     </p>
     <div

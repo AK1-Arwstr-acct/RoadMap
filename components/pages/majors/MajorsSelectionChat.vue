@@ -76,29 +76,31 @@
                 <div v-if="majorStore.showQuiz">
                   <div
                     v-if="!majorStore.isQuizStart"
-                    class="mt-6 rounded-2xl overflow-hidden border border-border-neutral-subtle bg-background-neutral-subtle flex items-center"
+                    class="mt-6 rounded-2xl overflow-hidden border border-border-neutral-subtle bg-background-neutral-subtle flex items-center gap-2"
                   >
-                    <div class="size-[140px]">
+                    <div class="size-[100px] md:size-[140px]">
                       <img
                         src="/images/sophieQuiz.png"
                         alt="application"
-                        class="object-cover"
+                        class="size-full object-cover"
                       />
                     </div>
                     <div
-                      class="p-6 flex-1 flex justify-between items-center gap-6"
+                      class="p-2 md:p-6 flex-1 flex flex-col md:flex-row items-start md:justify-between md:items-center gap-3 md:gap-6"
                     >
                       <div class="">
-                        <p class="text-text-base text-xl font-semibold">
+                        <p
+                          class="text-text-base text-lg md:text-xl font-semibold"
+                        >
                           Career framework quiz
                         </p>
-                        <p class="text-text-neutral-subtle text-sm">
+                        <p class="text-text-neutral-subtle text-xs md:text-sm">
                           Identify work cluster, strengths, and career goals
                         </p>
                       </div>
                       <button
                         @click="majorStore.isQuizStart = true"
-                        class="rounded-lg px-[18px] py-1 bg-background-brand text-text-constant-white text-nowrap"
+                        class="rounded-lg px-[18px] text-sm md:text-base py-1 bg-background-brand text-text-constant-white text-nowrap"
                       >
                         Start quiz
                       </button>
@@ -214,11 +216,11 @@
             <div
               v-if="
                 majorStore.completeChat.length === 0 &&
-                !readOnly &&
+                preQuestion.length > 0 &&
                 !isModal &&
                 !majorStore.isQuizStart
               "
-              class="flex flex-col gap-1 items-end mt-3"
+              class="flex flex-col gap-1 items-end mt-3 overflow-hidden"
               :class="{ 'pointer-events-none': isChatFull }"
             >
               <p class="text-text-neutral-subtle text-xs font-semibold pb-1">
@@ -232,7 +234,7 @@
                   v-for="(question, idx) in preQuestion"
                   :key="idx"
                   @click="handelPreQuestion(question)"
-                  class="py-2 px-4 rounded-full border border-border-neutral-subtle text-sm text-text-base bg-background-base-subtle font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
+                  class="py-2 px-4 rounded-full border border-border-neutral-subtle text-xs md:text-sm text-text-base bg-background-base-subtle font-semibold cursor-pointer w-fit flex items-center gap-2"
                 >
                   {{ question }}
                 </div>
@@ -389,18 +391,12 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 const hasChatScroll = ref(false);
+const preQuestion = ref<string[]>([]);
 
 // typing animation
 const typingInterval = ref<number | null>(null);
 const typingIndex = ref(0);
 const typingFullText = ref("");
-
-const preQuestion = ref<string[]>([
-  "Compare majors",
-  `Explore ${appStore.userMajors} in more detail`,
-  `What do students say about ${appStore.userMajors}`,
-  "Recommend majors I’m most suited for",
-]);
 
 const educationLevelOption: OptionAttributes[] = [
   {
@@ -719,10 +715,9 @@ const checkInitialContent = () => {
         appStore.userData.current_situation ===
         "I'm unsure about what major to pursue"
       ) {
-        preQuestion.value = preQuestion.value.slice(0, -1);
         majorStore.initialChat.push({
           isSender: false,
-          text: `<p class="!m-0 text-2xl font-semibold">Hey ${appStore.userData.name} 👋 Not sure where to start with major selection?</p><p class="pt-2 leading-7">This short quiz will help you uncover the right majors for you:</p>`,
+          text: `<p class="!m-0 text-lg md:text-2xl font-semibold">Hey ${appStore.userData.name} 👋 Not sure where to start with major selection?</p><p class="pt-2 leading-7">This short quiz will help you uncover the right majors for you:</p>`,
         });
         majorStore.showQuiz = true;
       } else if (
@@ -731,7 +726,7 @@ const checkInitialContent = () => {
       ) {
         majorStore.initialChat.push({
           isSender: false,
-          text: `<p class="!m-0 text-2xl font-semibold">Hey ${appStore.userData.name} 👋  I noticed you're deciding between a few majors.</p><p class="pt-2 leading-7">Tell me the majors you're considering, and I'll help you compare them by career paths, daily tasks, job demand, salary, and even immigration or hiring trends in different countries.</p>`,
+          text: `<p class="!m-0 text-lg md:text-2xl font-semibold">Hey ${appStore.userData.name} 👋  I noticed you're deciding between a few majors.</p><p class="pt-2 leading-7">Tell me the majors you're considering, and I'll help you compare them by career paths, daily tasks, job demand, salary, and even immigration or hiring trends in different countries.</p>`,
         });
       } else if (
         appStore.userData.current_situation ===
@@ -739,13 +734,33 @@ const checkInitialContent = () => {
       ) {
         majorStore.initialChat.push({
           isSender: false,
-          text: `<p class="!m-0 text-2xl font-semibold">Hey ${appStore.userData.name} 👋  you are planning to study ${appStore.userMajors}</p><p class="pt-2 leading-7">That’s great! Let’s chat about what’s on your mind so I can help you feel more confident.</p><p class="pt-4 leading-7">I've got tons of tools to help you explore any major - from what it's like day to day, to career paths, salary, job demand, and even hiring or immigration trends by country.</p>`,
+          text: `<p class="!m-0 text-lg md:text-2xl font-semibold">Hey ${appStore.userData.name} 👋  you are planning to study ${appStore.userMajors}</p><p class="pt-2 leading-7">That’s great! Let’s chat about what’s on your mind so I can help you feel more confident.</p><p class="pt-4 leading-7">I've got tons of tools to help you explore any major - from what it's like day to day, to career paths, salary, job demand, and even hiring or immigration trends by country.</p>`,
         });
       }
     } else return;
   }
   // further code for public if require
 };
+
+watch(
+  () => appStore.userMajors,
+  () => {
+    if (appStore.userMajors != "[major]") {
+      preQuestion.value = [
+        "Compare majors",
+        `Explore ${appStore.userMajors} in more detail`,
+        `What do students say about ${appStore.userMajors}`,
+        "Recommend majors I’m most suited for",
+      ];
+      if (
+        appStore.userData?.current_situation ===
+        "I'm unsure about what major to pursue"
+      ) {
+        preQuestion.value = preQuestion.value.slice(0, -1);
+      }
+    }
+  }
+);
 
 watch(
   () => props.isReadOnly,

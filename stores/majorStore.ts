@@ -46,8 +46,8 @@ const useMajorStore = defineStore("majorStore", () => {
 
     // cluster
     const cluster = ref<{ heading: string, summary: string }>({
-        heading: "Management/Administrative",
-        summary: "You’re likely great at organizing, planning, and leading. You enjoy solving problems and keeping things on track. To succeed here, focus on gaining experience, building your network, and developing leadership skills, more than just getting a degree."
+        heading: "N/A",
+        summary: ""
     })
 
     return {

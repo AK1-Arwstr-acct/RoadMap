@@ -5,7 +5,7 @@
   >
     <div class="flex flex-col gap-6">
       <!-- question -->
-      <div class="text-xl font-semibold text-text-base">
+      <div class="text-lg md:text-xl font-semibold text-text-base">
         <span v-if="majorStore.currentStep < majorStore.quiz.length">
           {{ majorStore.currentStep + 1 }}.
           {{ majorStore.quiz[majorStore.currentStep].question }}
@@ -25,16 +25,17 @@
           <button
             class="w-full flex items-center gap-5 px-4 py-2.5 rounded-lg border transition-all"
             :class="
-              majorStore.answers[majorStore.currentStep] === option
+              isSelected(option)
                 ? 'bg-background-brand-subtle text-text-brand border-border-brand'
                 : 'bg-background-neutral text-text-base border-border-neutral-subtle'
             "
-            @click="selectOption(option)"
+            @click="handleOptionClick(option)"
+            type="button"
           >
             <span
               class="font-bold mr-2 size-10 min-w-10 rounded-lg flex justify-center items-center text-text-constant-white"
               :class="
-                majorStore.answers[majorStore.currentStep] === option
+                isSelected(option)
                   ? 'bg-background-brand'
                   : 'bg-background-neutral-bolder'
               "
@@ -51,7 +52,12 @@
           >
           <p class="mb-4 text-text-neutral-subtle">
             Take 15 minutes to do the MBTI test
-            <a href="https://www.16personalities.com/" target="_blank" class="text-link">here</a>
+            <a
+              href="https://www.16personalities.com/"
+              target="_blank"
+              class="text-link"
+              >here</a
+            >
             to have more in-depth answer from us
           </p>
           <input
@@ -108,14 +114,17 @@
     <img
       src="/images//lets-go.png"
       alt="Rocket"
-      class="min-w-[156px] size-[156px] mb-4"
+      class="min-w-[120px] size-[120px] md:min-w-[156px] md:size-[156px] mb-4"
     />
-    <div class="text-xl font-semibold mb-1.5">
+    <div class="text-lg md:text-xl font-semibold mb-1.5">
       You're a fit for the
       <span class="text-text-brand">{{ majorStore.cluster.heading }}</span>
       cluster.
     </div>
-    <div class="mb-12 text-text-neutral-subtle">
+    <div
+      v-if="majorStore.cluster.summary != ''"
+      class="mb-12 text-text-neutral-subtle"
+    >
       <vue-markdown :source="majorStore.cluster.summary" :options="options" />
     </div>
     <div class="flex gap-1 leading-7 font-semibold">
@@ -141,24 +150,51 @@ const majorStore = useMajorStore();
 
 const emit = defineEmits(["submit"]);
 
+const multiSelectFirst = ref<string[]>([]);
+
 const options = {
   html: true,
 };
 
-const isDisable = (currentStep: number) => {
-  return currentStep + 1 === majorStore.quiz.length + 1
-    ? !(
-        majorStore.extraQuestion.mbti !== "" &&
-        majorStore.extraQuestion.activities !== ""
-      )
-    : majorStore.answers[currentStep] === "";
+const isSelected = (option: string) => {
+  if (majorStore.currentStep === 0) {
+    return multiSelectFirst.value.includes(option);
+  }
+  return majorStore.answers[majorStore.currentStep] === option;
 };
 
-const selectOption = (option: string) => {
-  majorStore.answers[majorStore.currentStep] = option;
+// Handle option click for multi/single select
+const handleOptionClick = (option: string) => {
+  if (majorStore.currentStep === 0) {
+    const idx = multiSelectFirst.value.indexOf(option);
+    if (idx > -1) {
+      multiSelectFirst.value.splice(idx, 1);
+    } else {
+      multiSelectFirst.value.push(option);
+    }
+    // No need to update majorStore.answers[0] here, will do on nextStep/submit
+  } else {
+    majorStore.answers[majorStore.currentStep] = option;
+  }
+};
+
+const isDisable = (currentStep: number) => {
+  if (currentStep + 1 === majorStore.quiz.length + 1) {
+    return !(
+      majorStore.extraQuestion.mbti !== "" &&
+      majorStore.extraQuestion.activities !== ""
+    );
+  }
+  if (currentStep === 0) {
+    return multiSelectFirst.value.length === 0;
+  }
+  return majorStore.answers[currentStep] === "";
 };
 
 const nextStep = () => {
+  if (majorStore.currentStep === 0) {
+    majorStore.answers[0] = multiSelectFirst.value.join(".");
+  }
   if (majorStore.currentStep + 1 === majorStore.quiz.length + 1) {
     submitQuiz();
   }
@@ -170,12 +206,9 @@ const prevStep = () => {
 };
 
 const submitQuiz = () => {
-  // const result = {
-  //   answers: majorStore.answers,
-  //   mbti: majorStore.extraQuestion.mbti,
-  //   activities: majorStore.extraQuestion.activities,
-  // };
-  // console.log("Quiz submitted:", result);
+  if (majorStore.currentStep === 0) {
+    majorStore.answers[0] = multiSelectFirst.value.join(".");
+  }
   majorStore.isQuizSubmitting = true;
   emit("submit");
 };
@@ -193,4 +226,17 @@ const learnMore = () => {
   majorStore.navigateFromTabInside = true;
   majorStore.activeTab = "guide";
 };
+
+watch(
+  () => majorStore.currentStep,
+  (step) => {
+    if (step === 0) {
+      // Restore selection from store if coming back
+      multiSelectFirst.value = majorStore.answers[0]
+        ? majorStore.answers[0].split(".").filter(Boolean)
+        : [];
+    }
+  },
+  { immediate: true }
+);
 </script>

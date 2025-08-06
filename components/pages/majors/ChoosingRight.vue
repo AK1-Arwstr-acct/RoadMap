@@ -1,6 +1,6 @@
 <template>
   <div class="text-text-base flex flex-col gap-4 leading-7">
-    <p class="font-semibold text-2xl">✅ How to Know You've Chosen Right</p>
+    <p class="font-semibold text-xl md:text-2xl">✅ How to Know You've Chosen Right</p>
     <!-- 1 -->
     <p class="">
       The final goal after choosing your major is you need to understand

@@ -1,6 +1,6 @@
 <template>
   <div class="text-text-base flex flex-col gap-4 leading-7">
-    <p class="font-semibold text-2xl">🔍 Evaluate your strengths</p>
+    <p class="font-semibold text-xl md:text-2xl">🔍 Evaluate your strengths</p>
     <!-- 1 -->
     <div>
       <span class="font-semibold">1. Analyze Your Personal Capabilities</span>
@@ -59,21 +59,21 @@
     <div
       class="rounded-2xl overflow-hidden border border-border-neutral-subtle bg-background-neutral-subtle flex items-center"
     >
-      <div class="h-full min-h-[140px] w-[140px]">
+      <div class="h-full md:min-h-[140px] w-[140px] p-3 md:p-0">
         <img
           src="/images/sophieQuiz.png"
           alt="application"
-          class="size-full object-cover"
+          class="size-full object-cover rounded-xl md:rounded-none"
         />
       </div>
-      <div class="p-6 flex-1 flex justify-between items-center gap-6">
+      <div class="p-2 md:p-6 flex-1 flex flex-col md:flex-row items-start md:justify-between md:items-center gap-2 md:gap-6">
         <div>
           <p
             class="text-xs font-semibold uppercase bg-gradient-to-r from-[#9333EA] to-[#C084FC] bg-clip-text text-transparent"
           >
             Want to try out this framework?
           </p>
-          <p class="text-text-base text-xl font-semibold">
+          <p class="text-text-base text-lg md:text-xl font-semibold">
             Find your major with Sophie AI
           </p>
           <p class="text-text-neutral-subtle text-sm">
@@ -82,7 +82,7 @@
         </div>
         <button
           @click="startQuiz"
-          class="rounded-lg px-[18px] py-1 bg-background-brand text-text-constant-white text-nowrap"
+          class="rounded-lg px-[18px] py-1 bg-background-brand text-text-constant-white text-nowrap text-sm md:text-base"
         >
           Start your quiz
         </button>

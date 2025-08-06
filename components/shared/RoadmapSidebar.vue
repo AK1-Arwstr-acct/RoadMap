@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-r transition-all ease-in-out duration-700 flex flex-col absolute z-20 lg:z-0 lg:relative top-0 left-0 h-[calc(100%-16px)] sm:h-full"
+    class="border-r bg-surface transition-all ease-in-out duration-700 flex flex-col absolute z-20 lg:z-0 lg:relative top-0 left-0 h-[calc(100%-16px)] sm:h-full"
     :class="[
       appTrackerStore.isRoadmapSidebarOPen
         ? 'w-full lg:w-[336px] md:pb-4 lg:pt-6 px-5 '

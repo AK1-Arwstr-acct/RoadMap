@@ -3,15 +3,15 @@
     <div class="size-full p-5 overflow-y-auto custom-scrollbar">
       <div class="w-full max-w-[920px] mx-auto flex flex-col gap-10">
         <!-- header  -->
-        <div class="w-full h-[252px] rounded-2xl overflow-hidden relative">
+        <div class="w-full h-[152px] md:h-[252px] rounded-2xl overflow-hidden relative">
           <img
             src="/images/guides-header.png"
             alt="guides-header"
             class="size-full object-cover object-top"
           />
           <div class="absolute z-10 inset-0 flex items-center px-[84px]">
-            <div>
-              <h1 class="text-text-constant-white font-semibold text-[40px]">
+            <div class="flex flex-col md:gap-2">
+              <h1 class="text-text-constant-white font-semibold text-xl md:text-[40px] leading-[44px]">
                 How to Choose Your Major
               </h1>
               <p class="text-text-constant-white font-semibold">
@@ -44,17 +44,17 @@
               aligns with your strengths, interests, and career goals.
             </P>
             <div class="p-6 rounded-2xl bg-background-neutral text-text-base">
-              <p class="text-2xl font-semibold mb-1">
+              <p class="text-xl md:text-2xl font-semibold mb-1">
                 🎯 Ready to Choose Your Major?
               </p>
-              <p class="leading-7 mb-6">
+              <p class="leading-7 mb-6 text-sm">
                 You've explored the resources — now it's time to take the next
                 step. Update your profile so Sophie can help you find the
                 best-fit schools!
               </p>
               <NuxtLinkLocale
                 to="/profile"
-                class="py-2.5 px-6 rounded-lg bg-background-brand flex items-center gap-2 text-text-constant-white w-fit"
+                class="py-2.5 px-4 md:px-6 rounded-lg bg-background-brand flex items-center gap-2 text-text-constant-white w-fit text-sm md:text-base"
               >
                 Lock in your major
                 <IconChevronDown
@@ -64,7 +64,7 @@
               </NuxtLinkLocale>
             </div>
           </div>
-          <div class="w-[200px]">
+          <div class="w-[200px] hidden lg:block">
             <GuidesStepper
               :activeStep="activeStep"
               @stepClick="scrollToSection"

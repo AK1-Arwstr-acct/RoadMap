@@ -1,6 +1,6 @@
 <template>
   <div class="text-text-base flex flex-col gap-4 leading-7">
-    <p class="font-semibold text-2xl">📚 Research Your Field</p>
+    <p class="font-semibold text-xl md:text-2xl">📚 Research Your Field</p>
     <!-- 1 -->
     <p class="">
       After understanding yourself clearly, the next step is to research your
@@ -67,7 +67,7 @@
     </div>
     <!-- Sophie Help Section -->
     <div class="mt-9">
-      <div class="flex items-center gap-3 mb-3 cursor-pointer">
+      <div class="flex items-center gap-3 mb-3">
         <div
           class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral"
         >
@@ -82,7 +82,7 @@
           <IconStar />
           <span
             class="font-semibold bg-gradient-to-r from-[#9333EA] to-[#C084FC] bg-clip-text text-transparent"
-            >Need help deciding, Thi? Ask Sophie for your case</span
+            >Need help deciding, {{ appStore.userData?.name }}? Ask Sophie for your case</span
           >
         </div>
         <div class="transform -rotate-90 cursor-pointer">
@@ -90,7 +90,7 @@
         </div>
       </div>
       <!-- cards -->
-      <div class="flex gap-4">
+      <div class="flex gap-4 flex-col md:flex-row">
         <div
           v-for="(question, idx) in commonQuestion"
           :key="idx"
