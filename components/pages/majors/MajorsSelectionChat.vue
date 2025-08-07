@@ -156,9 +156,13 @@
                       class="!text-text-base"
                     />
                   </div>
+                  <!-- ReactionThumbs  -->
+                  <div v-if="!chat.isSender && !chat.isTyping && chat.message_support_id" class="mt-2 pb-3">
+                    <ReactionThumbs :supportId="chat.message_support_id" />
+                  </div>
                   <!-- ResourceCard -->
                   <div
-                    v-if="typingInterval == null && chat.showDiscoverMore"
+                    v-if="!chat.isTyping && chat.showDiscoverMore"
                     class="mt-10 flex flex-col gap-4 pb-5"
                   >
                     <div class="flex items-center gap-3">
@@ -533,9 +537,11 @@ const updateHasChatScroll = () => {
 
 const startTypingAnimation = () => {
   if (typingInterval.value) clearInterval(typingInterval.value);
+
+  const lastBotMsg = majorStore.completeChat.findLast((c) => !c.isSender);
+  if (!lastBotMsg) return;
+
   typingInterval.value = window.setInterval(() => {
-    const lastBotMsg = majorStore.completeChat.findLast((c) => !c.isSender);
-    if (!lastBotMsg) return;
     if (typingIndex.value === 3) scrollDown();
     if (typingIndex.value < typingFullText.value.length) {
       lastBotMsg.text += typingFullText.value[typingIndex.value];
@@ -543,9 +549,11 @@ const startTypingAnimation = () => {
     } else {
       clearInterval(typingInterval.value!);
       typingInterval.value = null;
+      lastBotMsg.isTyping = false; // ✅ Typing complete
     }
-  }, 0); // Adjust speed as needed
+  }, 0);
 };
+
 
 const quizSubmit = async () => {
   try {
@@ -601,7 +609,9 @@ const quizSubmit = async () => {
       majorStore.completeChat.push({
         isSender: false,
         text: "",
+        isTyping: true,
         showDiscoverMore: true,
+        message_support_id: response.data.message_support_id,
       });
       typingFullText.value = response.data.data.response;
       typingIndex.value = 0;
@@ -662,6 +672,8 @@ const submit = async () => {
         majorStore.completeChat.push({
           isSender: false,
           text: "",
+          isTyping: true,
+          message_support_id: response.data.message_support_id,
         });
         typingFullText.value = response.data.data;
         typingIndex.value = 0;

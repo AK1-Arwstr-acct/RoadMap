@@ -50,8 +50,16 @@
       @close="appStore.featureSoftPaywall = false"
     />
   </Transition>
+  <Transition name="fade">
+    <component
+      :is="UserMenu"
+      v-if="appStore.isMenuOpen"
+      @close="appStore.isMenuOpen = false"
+    />
+  </Transition>
 </template>
 <script setup lang="ts">
+import UserMenu from "~/components/shared/UserMenu.vue";
 import useAppStore from "~/stores/AppStore";
 import PaywallModal from "~/components/shared/PaywallModal.vue";
 

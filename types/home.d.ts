@@ -32,6 +32,8 @@ interface SophieChat {
 interface MajorsSelectionChat {
   isSender: boolean,
   text: string,
+  isTyping?: boolean,
+  message_support_id?: string,
   showDiscoverMore?: boolean,
 }
 

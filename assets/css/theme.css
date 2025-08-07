@@ -48,6 +48,7 @@
     --color-icon-neutral-subtle: #4B5563;
     --color-icon-neutral: #111827;
     --color-icon-brand: #2563EB;
+    --color-overlay: rgba(0, 0, 0, 0.6);
 }
 
 .theme-light {
@@ -99,7 +100,9 @@
     --color-icon-neutral-subtle: #4B5563;
     --color-icon-neutral: #111827;
     --color-icon-brand: #2563EB;
-
+    
+    /* overlay */
+    --color-overlay: rgba(0, 0, 0, 0.6);
 
 }
 
@@ -151,4 +154,7 @@
     --color-icon-neutral-subtle: #A3A3A3;
     --color-icon-neutral: #FAFAFA;
     --color-icon-brand: #60A5FA;
+
+    /* overlay */
+    --color-overlay: rgba(0, 0, 0, 0.7);
 }

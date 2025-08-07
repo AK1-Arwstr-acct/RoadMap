@@ -7,6 +7,7 @@ const useAppStore = defineStore("appStore", () => {
 	const tokenExists = useCookie("token");
 
 	const theme = ref<'theme-light' | 'theme-dark'>('theme-light');
+	const isMenuOpen = ref<boolean>(false); // for menu in title navbar
 
 	const authUserData = ref<AuthUserData>()
 	const userData = ref<UserData>()
@@ -110,6 +111,7 @@ const useAppStore = defineStore("appStore", () => {
 
 	return {
 		theme,
+		isMenuOpen,
 		userImagePreview,
 		userCoverPhotoPreview,
 		authenticatedUser,

@@ -64,6 +64,8 @@ export default {
         "icon-neutral-subtle": "var(--color-icon-neutral-subtle)",
         "icon-neutral": "var(--color-icon-neutral)",
         "icon-brand": "var(--color-icon-brand)",
+
+        "overlay": "var(--color-overlay)",
       },
       screens: {
         "3xl": "1920px",

@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="hidden lg:flex justify-between items-center px-9 py-4 bg-surface"
-  >
+  <div class="hidden lg:flex justify-between items-center px-9 py-4 bg-surface">
     <div class="text-2xl font-semibold text-text-base">Choose your major</div>
     <div class="flex gap-4">
       <div
@@ -13,7 +11,7 @@
             class="px-5 py-2.5 rounded-lg font-semibold text-text-base bg-background-neutral-bold cursor-pointer text-sm"
           >
             <!-- {{ t("dashboard.talk_to_us") }} -->
-              Book a Meeting
+            Book a Meeting
           </p>
         </NuxtLinkLocale>
         <div>
@@ -23,7 +21,7 @@
           v-if="appStore.authenticatedUser || tokenExists"
           class="cursor-pointer rounded-full overflow-hidden size-10"
         >
-          <NuxtLinkLocale to="/profile">
+          <div @click="appStore.isMenuOpen = true">
             <img
               v-if="appStore.userData?.avatar"
               :src="appStore.userImagePreview || appStore.userData?.avatar"
@@ -36,7 +34,7 @@
             >
               <span>{{ appStore.userData?.name.charAt(0) }}</span>
             </div>
-          </NuxtLinkLocale>
+          </div>
         </div>
         <div
           v-else
