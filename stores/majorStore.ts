@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { MajorsTabs, SophieChat } from "~/types/home";
+import type { MajorsTabs, MajorsSelectionChat } from "~/types/home";
 
 const useMajorStore = defineStore("majorStore", () => {
     // tabs
@@ -11,8 +11,8 @@ const useMajorStore = defineStore("majorStore", () => {
     const firstRun = ref<boolean>(true); //to triger the mounted function at chat
     const showQuiz = ref<boolean>(false);
     const isQuizStart = ref<boolean>(false);
-    const initialChat = ref<SophieChat[]>([]);
-    const completeChat = ref<SophieChat[]>([]);
+    const initialChat = ref<MajorsSelectionChat[]>([]);
+    const completeChat = ref<MajorsSelectionChat[]>([]);
 
     // quiz stepper
     const currentStep = ref(0);

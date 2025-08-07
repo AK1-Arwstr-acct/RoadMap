@@ -158,12 +158,7 @@
                   </div>
                   <!-- ResourceCard -->
                   <div
-                    v-if="
-                      typingInterval == null &&
-                      !chat.isSender &&
-                      index ===
-                        majorStore.completeChat.findIndex((c) => !c.isSender)
-                    "
+                    v-if="typingInterval == null && chat.showDiscoverMore"
                     class="mt-10 flex flex-col gap-4 pb-5"
                   >
                     <div class="flex items-center gap-3">
@@ -352,7 +347,7 @@
 </template>
 <script setup lang="ts">
 import axios from "axios";
-import type { ChatDetail, OptionAttributes, SophieChat } from "~/types/home";
+import type { OptionAttributes } from "~/types/home";
 import { v4 as uuidv4 } from "uuid";
 import useSophieStore from "~/stores/sophieStore";
 import useAppStore from "~/stores/AppStore";
@@ -391,12 +386,18 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 const hasChatScroll = ref(false);
-const preQuestion = ref<string[]>([]);
 
 // typing animation
 const typingInterval = ref<number | null>(null);
 const typingIndex = ref(0);
 const typingFullText = ref("");
+
+const preQuestion = ref<string[]>([
+  "Compare majors",
+  `Explore ${appStore.userMajors} in more detail`,
+  `What do students say about ${appStore.userMajors}`,
+  "Recommend majors I’m most suited for",
+]);
 
 const educationLevelOption: OptionAttributes[] = [
   {
@@ -600,6 +601,7 @@ const quizSubmit = async () => {
       majorStore.completeChat.push({
         isSender: false,
         text: "",
+        showDiscoverMore: true,
       });
       typingFullText.value = response.data.data.response;
       typingIndex.value = 0;
@@ -631,32 +633,30 @@ const submit = async () => {
     await nextTick();
     adjustHeight();
     let response;
-    if (sophieStore.isSophiePublic) {
-      const publicToken = useCookie("publicToken");
-      response = await api.post(
-        `/api/v1/session-based-journey/ai-conversation/sophie`,
-        {
-          query: userQuery,
-          sophieSessionId: uuid.value,
-          ...(!props.isModal && {
-            roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
-          }),
-        },
-        {
-          headers: {
-            "X-auth-token": publicToken.value,
-          },
-        }
-      );
-    } else {
-      response = await api.post(`/api/v1/ai-conversation/sophie`, {
-        query: userQuery,
-        sophieSessionId: uuid.value,
-        ...(!props.isModal && {
-          roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
-        }),
-      });
-    }
+    // if (sophieStore.isSophiePublic) {
+    //   const publicToken = useCookie("publicToken");
+    //   response = await api.post(
+    //     `/api/v1/session-based-journey/ai-conversation/sophie`,
+    //     {
+    //       query: userQuery,
+    //       sophieSessionId: uuid.value,
+    //       ...(!props.isModal && {
+    //         roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
+    //       }),
+    //     },
+    //     {
+    //       headers: {
+    //         "X-auth-token": publicToken.value,
+    //       },
+    //     }
+    //   );
+    // } else {
+    response = await api.post(`/api/v1/ai-conversation/analysis-major`, {
+      query: userQuery,
+      sophieSessionId: uuid.value,
+      roadmap_task_id: "11",
+    });
+    // }
     if (response) {
       if (response.data.data) {
         majorStore.completeChat.push({
@@ -715,6 +715,7 @@ const checkInitialContent = () => {
         appStore.userData.current_situation ===
         "I'm unsure about what major to pursue"
       ) {
+        preQuestion.value = preQuestion.value.slice(0, -1);
         majorStore.initialChat.push({
           isSender: false,
           text: `<p class="!m-0 text-lg md:text-2xl font-semibold">Hey ${appStore.userData.name} 👋 Not sure where to start with major selection?</p><p class="pt-2 leading-7">This short quiz will help you uncover the right majors for you:</p>`,
@@ -743,21 +744,16 @@ const checkInitialContent = () => {
 };
 
 watch(
-  () => appStore.userMajors,
+  () => appStore.userData,
   () => {
-    if (appStore.userMajors != "[major]") {
+    if (appStore.userData) {
       preQuestion.value = [
         "Compare majors",
         `Explore ${appStore.userMajors} in more detail`,
         `What do students say about ${appStore.userMajors}`,
         "Recommend majors I’m most suited for",
       ];
-      if (
-        appStore.userData?.current_situation ===
-        "I'm unsure about what major to pursue"
-      ) {
-        preQuestion.value = preQuestion.value.slice(0, -1);
-      }
+      checkInitialContent();
     }
   }
 );
@@ -766,12 +762,6 @@ watch(
   () => props.isReadOnly,
   () => {
     readOnly.value = props.isReadOnly;
-  }
-);
-watch(
-  () => appStore.userData,
-  () => {
-    checkInitialContent();
   }
 );
 

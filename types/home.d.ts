@@ -29,6 +29,11 @@ interface SophieChat {
   isSender: boolean,
   text: string,
 }
+interface MajorsSelectionChat {
+  isSender: boolean,
+  text: string,
+  showDiscoverMore?: boolean,
+}
 
 interface Tasks {
   id: number;
@@ -189,4 +194,4 @@ type MajorsTabs = 'chat' | 'guide';
 
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, AuthUserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, ChatDetail, EssayData, Plan, programOptions, Tabs, MajorsTabs }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, AuthUserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, MajorsSelectionChat, ChatDetail, EssayData, Plan, programOptions, Tabs, MajorsTabs }

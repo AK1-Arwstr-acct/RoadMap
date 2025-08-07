@@ -168,6 +168,10 @@ const onSubmit = async () => {
       )
     ) {
       navigateTo(localePath("/majors"));
+    } else if (
+      appStore.userData?.current_situation === "I'm just browsing for now"
+    ) {
+      navigateTo(localePath("/"));
     } else {
       navigateTo(localePath("/school-list"));
     }
