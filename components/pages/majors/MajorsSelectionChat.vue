@@ -3,20 +3,122 @@
     <div class="flex-1 overflow-hidden no-scrollbar">
       <div class="size-full flex flex-col gap-2 sm:gap-2">
         <!-- chat -->
-        <div ref="chatWrapper" class="flex-1 relative overflow-hidden h-full">
+        <div ref="chatWrapper" class="flex-1 relative overflow-hidden">
           <div
             ref="chatContainer"
             @scroll="updateHasChatScroll"
-            class="size-full overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full relative pt-2 max-w-[800px] mx-auto px-5"
-            :class="{
-              'justify-between': majorStore.completeChat.length === 0,
-            }"
+            class="size-full overflow-y-auto overflow-x-hidden no-scrollbar h-full relative pt-2 max-w-[800px] mx-auto px-5"
           >
-            <div class="flex flex-col pt-2">
-              <!-- initialChat -->
-              <div class="mb-6">
+            <div
+              class="flex flex-col"
+              :class="{
+                'justify-between': majorStore.completeChat.length === 0,
+                'h-full' : deviceType === 'desktop'
+              }"
+            >
+              <div class="flex flex-col pt-2">
+                <!-- initialChat -->
+                <div class="mb-6">
+                  <div
+                    v-for="(chat, index) in majorStore.initialChat.filter(
+                      (item) => item.text !== ''
+                    )"
+                    :key="index"
+                    class="flex items-start gap-3 relative"
+                    :class="{
+                      'justify-end': chat.isSender,
+                      'mt-6': index > 0,
+                    }"
+                  >
+                    <div
+                      v-if="!chat.isSender"
+                      class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral"
+                    >
+                      <img
+                        src="/images/chat-bot.png"
+                        alt="chat bot"
+                        class="object-cover object-center size-full"
+                        loading="eager"
+                      />
+                    </div>
+                    <div
+                      class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+                      :class="{
+                        'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg':
+                          chat.isSender,
+                      }"
+                    >
+                      <div>
+                        <vue-markdown
+                          :source="chat.text"
+                          :options="options"
+                          class="!text-text-base"
+                        />
+                      </div>
+                    </div>
+                    <!-- dropdown for public user -->
+                    <div
+                      v-if="
+                        chat.text ===
+                          `Cool! What's your current education level?` &&
+                        isEducationLevel &&
+                        !studyPrograms
+                      "
+                      class="absolute right-0 top-12"
+                    >
+                      <BaseSelectRadio
+                        :options="educationLevelOption"
+                        v-model="studyPrograms"
+                        @onChange="handelEducationLevel"
+                        class="w-[300px]"
+                      />
+                      <!-- direction="upward" -->
+                    </div>
+                  </div>
+                  <!-- quiz button section -->
+                  <div v-if="majorStore.showQuiz">
+                    <div
+                      v-if="!majorStore.isQuizStart"
+                      class="mt-6 rounded-2xl overflow-hidden border border-border-neutral-subtle bg-background-neutral-subtle flex items-center gap-2"
+                    >
+                      <div class="size-[100px] md:size-[140px]">
+                        <img
+                          src="/images/sophieQuiz.png"
+                          alt="application"
+                          class="size-full object-cover"
+                        />
+                      </div>
+                      <div
+                        class="p-2 md:p-6 flex-1 flex flex-col md:flex-row items-start md:justify-between md:items-center gap-3 md:gap-6"
+                      >
+                        <div class="">
+                          <p
+                            class="text-text-base text-lg md:text-xl font-semibold"
+                          >
+                            Career framework quiz
+                          </p>
+                          <p
+                            class="text-text-neutral-subtle text-xs md:text-sm"
+                          >
+                            Identify work cluster, strengths, and career goals
+                          </p>
+                        </div>
+                        <button
+                          @click="majorStore.isQuizStart = true"
+                          class="rounded-lg px-[18px] text-sm md:text-base py-1 bg-background-brand text-text-constant-white text-nowrap"
+                        >
+                          Start quiz
+                        </button>
+                      </div>
+                    </div>
+                    <div v-else class="mt-6">
+                      <QuizSection @submit="quizSubmit" />
+                    </div>
+                  </div>
+                </div>
+                <!-- complete chat -->
                 <div
-                  v-for="(chat, index) in majorStore.initialChat.filter(
+                  v-for="(chat, index) in majorStore.completeChat.filter(
                     (item) => item.text !== ''
                   )"
                   :key="index"
@@ -24,6 +126,14 @@
                   :class="{
                     'justify-end': chat.isSender,
                     'mt-6': index > 0,
+                  }"
+                  :style="{
+                    minHeight: `${
+                      index + 1 == majorStore.completeChat.length &&
+                      !isChatLoading
+                        ? `${chatWrapperHeight}px`
+                        : 'auto'
+                    }`,
                   }"
                 >
                   <div
@@ -51,6 +161,36 @@
                         class="!text-text-base"
                       />
                     </div>
+                    <!-- ReactionThumbs  -->
+                    <div
+                      v-if="
+                        !chat.isSender &&
+                        !chat.isTyping &&
+                        chat.message_support_id
+                      "
+                      class="mt-2 pb-3"
+                    >
+                      <ReactionThumbs :supportId="chat.message_support_id" />
+                    </div>
+                    <!-- ResourceCard -->
+                    <div
+                      v-if="!chat.isTyping && chat.showDiscoverMore"
+                      class="mt-10 flex flex-col gap-4 pb-5"
+                    >
+                      <div class="flex items-center gap-3">
+                        <IconTelescope />
+                        <p class="text-xl font-semibold text-text-base">
+                          Discover more
+                        </p>
+                      </div>
+                      <div class="flex gap-3">
+                        <ResourceCard
+                          v-for="(item, idx) in discoverMoreList"
+                          :key="idx"
+                          :list="item"
+                        />
+                      </div>
+                    </div>
                   </div>
                   <!-- dropdown for public user -->
                   <div
@@ -71,202 +211,71 @@
                     <!-- direction="upward" -->
                   </div>
                 </div>
-                <!-- quiz button section -->
-                <div v-if="majorStore.showQuiz">
-                  <div
-                    v-if="!majorStore.isQuizStart"
-                    class="mt-6 rounded-2xl overflow-hidden border border-border-neutral-subtle bg-background-neutral-subtle flex items-center gap-2"
-                  >
-                    <div class="size-[100px] md:size-[140px]">
-                      <img
-                        src="/images/sophieQuiz.png"
-                        alt="application"
-                        class="size-full object-cover"
-                      />
-                    </div>
-                    <div
-                      class="p-2 md:p-6 flex-1 flex flex-col md:flex-row items-start md:justify-between md:items-center gap-3 md:gap-6"
-                    >
-                      <div class="">
-                        <p
-                          class="text-text-base text-lg md:text-xl font-semibold"
-                        >
-                          Career framework quiz
-                        </p>
-                        <p class="text-text-neutral-subtle text-xs md:text-sm">
-                          Identify work cluster, strengths, and career goals
-                        </p>
-                      </div>
-                      <button
-                        @click="majorStore.isQuizStart = true"
-                        class="rounded-lg px-[18px] text-sm md:text-base py-1 bg-background-brand text-text-constant-white text-nowrap"
-                      >
-                        Start quiz
-                      </button>
-                    </div>
-                  </div>
-                  <div v-else class="mt-6">
-                    <QuizSection @submit="quizSubmit" />
-                  </div>
-                </div>
-              </div>
-              <!-- complete chat -->
-              <div
-                v-for="(chat, index) in majorStore.completeChat.filter(
-                  (item) => item.text !== ''
-                )"
-                :key="index"
-                class="flex items-start gap-3 relative"
-                :class="{
-                  'justify-end': chat.isSender,
-                  'mt-6': index > 0,
-                }"
-                :style="{
-                  minHeight: `${
-                    index + 1 == majorStore.completeChat.length &&
-                    !isChatLoading
-                      ? `${chatWrapperHeight}px`
-                      : 'auto'
-                  }`,
-                }"
-              >
+                <!-- chat lodding state -->
                 <div
-                  v-if="!chat.isSender"
-                  class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral"
-                >
-                  <img
-                    src="/images/chat-bot.png"
-                    alt="chat bot"
-                    class="object-cover object-center size-full"
-                    loading="eager"
-                  />
-                </div>
-                <div
-                  class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
-                  :class="{
-                    'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg':
-                      chat.isSender,
+                  v-if="isChatLoading"
+                  class="mt-6 h-dvh"
+                  :style="{
+                    minHeight: `${chatWrapperHeight}px`,
+                    maxHeight: `${chatWrapperHeight}px`,
                   }"
                 >
-                  <div>
-                    <vue-markdown
-                      :source="chat.text"
-                      :options="options"
-                      class="!text-text-base"
-                    />
-                  </div>
-                  <!-- ReactionThumbs  -->
-                  <div
-                    v-if="
-                      !chat.isSender &&
-                      !chat.isTyping &&
-                      chat.message_support_id
-                    "
-                    class="mt-2 pb-3"
-                  >
-                    <ReactionThumbs :supportId="chat.message_support_id" />
-                  </div>
-                  <!-- ResourceCard -->
-                  <div
-                    v-if="!chat.isTyping && chat.showDiscoverMore"
-                    class="mt-10 flex flex-col gap-4 pb-5"
-                  >
-                    <div class="flex items-center gap-3">
-                      <IconTelescope />
-                      <p class="text-xl font-semibold text-text-base">
-                        Discover more
-                      </p>
-                    </div>
-                    <div class="flex gap-3">
-                      <ResourceCard
-                        v-for="(item, idx) in discoverMoreList"
-                        :key="idx"
-                        :list="item"
-                      />
-                    </div>
-                  </div>
+                  <SophieMassageSkeleton />
                 </div>
-                <!-- dropdown for public user -->
+                <!-- response follow up question -->
                 <div
                   v-if="
-                    chat.text ===
-                      `Cool! What's your current education level?` &&
-                    isEducationLevel &&
-                    !studyPrograms
+                    typingInterval === null &&
+                    majorStore.completeChat.length !== 0 &&
+                    followUpQuestions !== null &&
+                    !majorStore.isQuizStart
                   "
-                  class="absolute right-0 top-12"
+                  class="flex flex-col gap-1 items-end mt-3 overflow-hidden"
+                  :class="{ 'pointer-events-none': isChatFull }"
                 >
-                  <BaseSelectRadio
-                    :options="educationLevelOption"
-                    v-model="studyPrograms"
-                    @onChange="handelEducationLevel"
-                    class="w-[300px]"
-                  />
-                  <!-- direction="upward" -->
+                  <p
+                    class="text-text-neutral-subtle text-xs font-semibold pb-1"
+                  >
+                    {{ followUpQuestions.title }}
+                  </p>
+                  <div class="flex flex-col gap-1 items-end">
+                    <div
+                      v-for="(question, idx) in followUpQuestions.questions"
+                      :key="idx"
+                      @click="handelPreQuestion(question)"
+                      class="py-2 px-4 rounded-full border border-border-neutral-subtle text-xs md:text-sm text-text-base bg-background-base-subtle font-semibold cursor-pointer w-fit flex items-center gap-2"
+                    >
+                      {{ question }}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <!-- chat lodding state -->
-              <div
-                v-if="isChatLoading"
-                class="mt-6 h-dvh"
-                :style="{
-                  minHeight: `${chatWrapperHeight}px`,
-                  maxHeight: `${chatWrapperHeight}px`,
-                }"
-              >
-                <SophieMassageSkeleton />
-              </div>
-              <!-- response follow up question -->
+              <!-- pre question for task chat -->
               <div
                 v-if="
-                  typingInterval === null &&
-                  majorStore.completeChat.length !== 0 &&
-                  followUpQuestions !== null &&
+                  majorStore.completeChat.length === 0 &&
+                  preQuestion.length > 0 &&
+                  !isModal &&
                   !majorStore.isQuizStart
                 "
                 class="flex flex-col gap-1 items-end mt-3 overflow-hidden"
                 :class="{ 'pointer-events-none': isChatFull }"
               >
                 <p class="text-text-neutral-subtle text-xs font-semibold pb-1">
-                  {{ followUpQuestions.title }}
+                  Ask Sophie to help
                 </p>
-                <div class="flex flex-col gap-1 items-end">
+                <div
+                  class="flex gap-1 items-end"
+                  :class="{ 'flex-col': !isModal }"
+                >
                   <div
-                    v-for="(question, idx) in followUpQuestions.questions"
+                    v-for="(question, idx) in preQuestion"
                     :key="idx"
                     @click="handelPreQuestion(question)"
                     class="py-2 px-4 rounded-full border border-border-neutral-subtle text-xs md:text-sm text-text-base bg-background-base-subtle font-semibold cursor-pointer w-fit flex items-center gap-2"
                   >
                     {{ question }}
                   </div>
-                </div>
-              </div>
-            </div>
-            <!-- pre question for task chat -->
-            <div
-              v-if="
-                majorStore.completeChat.length === 0 &&
-                preQuestion.length > 0 &&
-                !isModal &&
-                !majorStore.isQuizStart
-              "
-              class="flex flex-col gap-1 items-end mt-3 overflow-hidden"
-              :class="{ 'pointer-events-none': isChatFull }"
-            >
-              <p class="text-text-neutral-subtle text-xs font-semibold pb-1">
-                Ask Sophie to help
-              </p>
-              <div
-                class="flex gap-1 items-end"
-                :class="{ 'flex-col': !isModal }"
-              >
-                <div
-                  v-for="(question, idx) in preQuestion"
-                  :key="idx"
-                  @click="handelPreQuestion(question)"
-                  class="py-2 px-4 rounded-full border border-border-neutral-subtle text-xs md:text-sm text-text-base bg-background-base-subtle font-semibold cursor-pointer w-fit flex items-center gap-2"
-                >
-                  {{ question }}
                 </div>
               </div>
             </div>
@@ -281,7 +290,7 @@
           </div>
         </div>
         <!-- input -->
-        <div class="flex flex-col gap-4 w-full max-w-[800px] mx-auto px-5">
+        <div class="flex flex-col gap-4 w-full max-w-[800px] mx-auto">
           <Transition name="fade">
             <div
               v-if="isChatFull"
@@ -305,7 +314,7 @@
               </div>
               <NuxtLinkLocale to="/pricing">
                 <button
-                  class="border-[1.5px] border-gray-200 bg-white rounded-lg py-2 px-3.5"
+                  class="border border-border-neutral-subtle bg-white rounded-lg py-2 px-3.5"
                 >
                   {{ $t("sophie_page.upgrade_now") }}
                 </button>
@@ -313,7 +322,7 @@
             </div>
           </Transition>
           <div
-            class="relative border border-border-neutral-subtle rounded-lg flex flex-col bg-background-neutral-subtle"
+            class="relative border border-border-neutral-subtle bg-background-neutral-subtle rounded-lg flex items-center min-h-full"
             :class="{
               'bg-[#FAFAFA] pointer-events-none':
                 isChatFull || isChatLoading || typingInterval !== null,
@@ -332,30 +341,20 @@
                 isEducationLevel ||
                 typingInterval !== null
               "
-              rows="1"
+              rows="4"
               autofocus
-              class="placeholder:font-thin w-full h-full focus:outline-none resize-none no-scrollbar p-4 rounded-lg bg-transparent text-text-neutral-subtle"
+              class="placeholder:font-thin w-full h-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg bg-transparent text-text-neutral-subtle"
               data-hj-allow
             />
-            <div class="flex justify-between items-center p-4">
-              <div class="flex items-center gap-2 pl-2">
-                <!-- <div>
-                  <IconPlus class="size-6" />
-                </div>
-                <div>
-                  <IconFilterDotLines />
-                </div> -->
-              </div>
-              <button
-                :disabled="
-                  isChatLoading || isChatFull || inputQuestion.trim().length < 2
-                "
-                @click="submit"
-                class="cursor-pointer rounded-lg bg-background-brand transform -rotate-90 p-2 disabled:opacity-40"
-              >
-                <IconArrowRight />
-              </button>
-            </div>
+            <button
+              :disabled="
+                isChatLoading || isChatFull || inputQuestion.trim().length < 2
+              "
+              @click="submit"
+              class="cursor-pointer rounded-lg bg-background-brand no-scrollbar absolute top-1.5 2xl:top-auto 2xl:bottom-4 transform right-2 2xl:right-4 -rotate-90 p-2 disabled:opacity-40"
+            >
+              <IconArrowRight />
+            </button>
           </div>
         </div>
       </div>
@@ -397,6 +396,7 @@ const majorStore = useMajorStore();
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
+const deviceType = useDeviceType();
 
 const emit = defineEmits(["isChatLoading"]);
 
@@ -480,7 +480,7 @@ const adjustHeight = () => {
   const el = textarea.value;
   if (el) {
     el.style.height = "auto";
-    el.style.height = Math.min(el.scrollHeight, 50) + "px";
+    el.style.height = Math.min(el.scrollHeight, 115) + "px";
   }
 };
 
