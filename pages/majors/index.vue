@@ -38,4 +38,8 @@ const tabs: Tabs[] = [
     icon: IconBookOpen,
   },
 ];
+
+onUnmounted(() => {
+  majorStore.clearStoreData();
+});
 </script>

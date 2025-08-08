@@ -37,6 +37,11 @@ interface MajorsSelectionChat {
   showDiscoverMore?: boolean,
 }
 
+interface FollowUps {
+  questions: string[],
+  title: string
+}
+
 interface Tasks {
   id: number;
   users: {
@@ -196,4 +201,4 @@ type MajorsTabs = 'chat' | 'guide';
 
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, AuthUserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, MajorsSelectionChat, ChatDetail, EssayData, Plan, programOptions, Tabs, MajorsTabs }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, AuthUserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, MajorsSelectionChat, FollowUps, ChatDetail, EssayData, Plan, programOptions, Tabs, MajorsTabs }

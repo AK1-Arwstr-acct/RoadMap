@@ -50,6 +50,29 @@ const useMajorStore = defineStore("majorStore", () => {
         summary: ""
     })
 
+    const clearStoreData = () => {
+        activeTab.value = "chat"
+        inputText.value = ""
+        navigateFromTabInside.value = false
+        firstRun.value = true
+        showQuiz.value = false
+        isQuizStart.value = false
+        initialChat.value = []
+        completeChat.value = []
+        currentStep.value = 0
+        answers.value = Array(quiz.length).fill("")
+        extraQuestion.value = {
+            mbti: "",
+            activities: ""
+        }
+        isStepperSubmitted.value = false
+        isQuizSubmitting.value = false
+        cluster.value = {
+            heading: "N/A",
+            summary: ""
+        }
+    }
+
     return {
         activeTab,
         navigateFromTabInside,
@@ -67,7 +90,8 @@ const useMajorStore = defineStore("majorStore", () => {
         extraQuestion,
         isStepperSubmitted,
         isQuizSubmitting,
-        cluster
+        cluster,
+        clearStoreData
     }
 })
 

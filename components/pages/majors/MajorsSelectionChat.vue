@@ -9,8 +9,7 @@
             @scroll="updateHasChatScroll"
             class="size-full overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full relative pt-2 max-w-[800px] mx-auto px-5"
             :class="{
-              'justify-between':
-                majorStore.completeChat.length === 0 && !readOnly && !isModal,
+              'justify-between': majorStore.completeChat.length === 0,
             }"
           >
             <div class="flex flex-col pt-2">
@@ -157,7 +156,14 @@
                     />
                   </div>
                   <!-- ReactionThumbs  -->
-                  <div v-if="!chat.isSender && !chat.isTyping && chat.message_support_id" class="mt-2 pb-3">
+                  <div
+                    v-if="
+                      !chat.isSender &&
+                      !chat.isTyping &&
+                      chat.message_support_id
+                    "
+                    class="mt-2 pb-3"
+                  >
                     <ReactionThumbs :supportId="chat.message_support_id" />
                   </div>
                   <!-- ResourceCard -->
@@ -209,6 +215,31 @@
                 }"
               >
                 <SophieMassageSkeleton />
+              </div>
+              <!-- response follow up question -->
+              <div
+                v-if="
+                  typingInterval === null &&
+                  majorStore.completeChat.length !== 0 &&
+                  followUpQuestions !== null &&
+                  !majorStore.isQuizStart
+                "
+                class="flex flex-col gap-1 items-end mt-3 overflow-hidden"
+                :class="{ 'pointer-events-none': isChatFull }"
+              >
+                <p class="text-text-neutral-subtle text-xs font-semibold pb-1">
+                  {{ followUpQuestions.title }}
+                </p>
+                <div class="flex flex-col gap-1 items-end">
+                  <div
+                    v-for="(question, idx) in followUpQuestions.questions"
+                    :key="idx"
+                    @click="handelPreQuestion(question)"
+                    class="py-2 px-4 rounded-full border border-border-neutral-subtle text-xs md:text-sm text-text-base bg-background-base-subtle font-semibold cursor-pointer w-fit flex items-center gap-2"
+                  >
+                    {{ question }}
+                  </div>
+                </div>
               </div>
             </div>
             <!-- pre question for task chat -->
@@ -396,12 +427,10 @@ const typingInterval = ref<number | null>(null);
 const typingIndex = ref(0);
 const typingFullText = ref("");
 
-const preQuestion = ref<string[]>([
-  "Compare majors",
-  `Explore ${appStore.userMajors} in more detail`,
-  `What do students say about ${appStore.userMajors}`,
-  "Recommend majors I’m most suited for",
-]);
+const preQuestion = ref<string[]>([]);
+const followUpQuestions = ref<{ questions: string[]; title: string } | null>(
+  null
+);
 
 const educationLevelOption: OptionAttributes[] = [
   {
@@ -442,21 +471,6 @@ const discoverMoreList: { title: string; detail: string; link: string }[] = [
     link: "https://www.truity.com/test/career-personality-profiler-test",
   },
 ];
-
-// const preQuestionOptionOne = ref<string[]>([
-//   "I want similar tables for other majors",
-//   "Help me understand more about Human-Computer Interaction major",
-//   "Can you share a quote or insight from current students studying one of the majors?",
-// ]);
-// const preQuestionOptiontwo = ref<string[]>([
-//   "Can you give me more trusted sites to explore these fields?",
-//   "Which majors offer solid job prospects and what’s a typical starting salary for each?",
-//   "Help me compare two of these majors to understand the key differences?",
-// ]);
-// const preQuestionOptionThree = ref<string[]>([
-//   "Can you share a quote or insight from current students studying one of the majors?",
-//   "Help me compare some these majors to understand the key differences?",
-// ]);
 
 const options = {
   html: true,
@@ -554,7 +568,6 @@ const startTypingAnimation = () => {
   }, 0);
 };
 
-
 const quizSubmit = async () => {
   try {
     const messages = [
@@ -632,6 +645,7 @@ const quizSubmit = async () => {
 const submit = async () => {
   try {
     emit("isChatLoading", true);
+    followUpQuestions.value = null;
     majorStore.completeChat.push({
       isSender: true,
       text: inputQuestion.value,
@@ -691,6 +705,11 @@ const submit = async () => {
           text: "type again",
         });
       }
+      if (response.data.suggested_follow_ups) {
+        followUpQuestions.value = response.data.suggested_follow_ups;
+      } else {
+        followUpQuestions.value = null;
+      }
     }
     await nextTick();
     scrollDown();
@@ -723,6 +742,12 @@ const submit = async () => {
 const checkInitialContent = () => {
   if (appStore.authenticatedUser) {
     if (appStore.userData) {
+      preQuestion.value = [
+        "Compare majors",
+        `Explore ${appStore.userMajors} in more detail`,
+        `What do students say about ${appStore.userMajors}`,
+        "Recommend majors I’m most suited for",
+      ];
       if (
         appStore.userData.current_situation ===
         "I'm unsure about what major to pursue"
@@ -759,12 +784,6 @@ watch(
   () => appStore.userData,
   () => {
     if (appStore.userData) {
-      preQuestion.value = [
-        "Compare majors",
-        `Explore ${appStore.userMajors} in more detail`,
-        `What do students say about ${appStore.userMajors}`,
-        "Recommend majors I’m most suited for",
-      ];
       checkInitialContent();
     }
   }
