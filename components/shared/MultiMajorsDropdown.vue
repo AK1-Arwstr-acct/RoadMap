@@ -4,12 +4,12 @@
       {{ label }}
     </p>
     <div
-      @click.stop="isDropdownOpen = !isDropdownOpen"
-      @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
+      @click.stop="openDropdownHandler"
+      @touchstart.prevent="openDropdownHandler"
       class="bg-background-base-subtle border-[1.5px] border-border-neutral-subtle rounded-lg py-2.5 pl-[14px] pr-[32px] w-full transition-colors duration-150 ease-in-out cursor-pointer relative"
       :class="{
         // '!bg-background-disabled pointer-events-none': !disabled,
-        '!bg-[#f8f8f8] pointer-events-none': disabled || !options.length,
+        'opacity-50 pointer-events-none': disabled || !options.length,
         '!border-border-brand shadow-[0px_0px_0px_4px_rgba(225,225,225,0.24)]':
           isDropdownOpen,
       }"
@@ -169,11 +169,21 @@ const props = defineProps({
     type: Object as PropType<number[]>,
     default: () => [],
   },
+   // for dropdown
+  openDropdown: {
+    type: String,
+    default: "",
+  },
+  dropdownName: {
+    type: String,
+    default: "",
+  },
 });
 
 const emits = defineEmits<{
   (e: "update:modelValue", selectedOptions: number[]): void;
   (e: "onChange", selectedOptions: number[] | null): void;
+  (e: "open", value: string): void;
 }>();
 
 const selectedOptions = ref<number[]>(props.modelValue);
@@ -185,6 +195,11 @@ const selectedLabels = computed(() => {
   );
   return list.map((item) => item.label).join(", ");
 });
+
+const openDropdownHandler = () => {
+  emits("open", props.dropdownName);
+  isDropdownOpen.value = !isDropdownOpen.value
+};
 
 const closeDropdown = () => {
   isDropdownOpen.value = false;
@@ -210,6 +225,15 @@ watch(
   () => props.modelValue,
   (newValue) => {
     selectedOptions.value = newValue ? newValue : [];
+  }
+);
+
+watch(
+  () => props.openDropdown,
+  (newValue) => {
+    if (newValue !== props.dropdownName) {
+      isDropdownOpen.value = false
+    }
   }
 );
 </script>

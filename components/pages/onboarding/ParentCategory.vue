@@ -28,12 +28,18 @@
         :loading="iscoursePreferenceOptionsLoading"
         :disabled="coursePreferenceOptions.length === 0"
         @onChange="onCourseChange"
+        :openDropdown="openDropdown"
+        dropdownName="parent_program"
+        @open="(value: string) => (openDropdown = value as string)"
       />
       <MultiMajorsDropdown
         :label="`${t('onboarding.majors')} (Optional)`"
         :options="majorProgramsList"
         v-model="selectedMajors"
         :loading="isLoadingMajors"
+        :openDropdown="openDropdown"
+        dropdownName="majors"
+        @open="(value: string) => (openDropdown = value as string)"
       />
       <!--  -->
       <div class="flex items-center gap-10">
@@ -74,6 +80,9 @@ const isLoadingMajors = ref<boolean>(false);
 const isSubmitting = ref<boolean>(false);
 const selectedCourse = ref<OptionAttributes>();
 const selectedMajors = ref<number[]>([]);
+
+// for dropdown open
+const openDropdown = ref<string>("");
 
 const getAreaofStudies = async () => {
   try {

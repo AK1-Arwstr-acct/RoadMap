@@ -5,8 +5,8 @@
       }}<span v-if="required" class="text-text-error font-medium">*</span>
     </p>
     <div
-      @click.stop="isDropdownOpen = !isDropdownOpen"
-      @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
+      @click.stop="openDropdownHandler"
+      @touchstart.prevent="openDropdownHandler"
       class="bg-background-base-subtle h-12 border-[1.5px] border-border-neutral-subtle rounded-lg py-2 pl-[14px] w-full transition-colors duration-150 ease-in-out flex justify-between items-center cursor-pointer relative"
       :class="{
         // '!bg-background-disabled pointer-events-none': !disabled,
@@ -187,15 +187,30 @@ const props = defineProps({
     type: String as PropType<"tick" | "radio">,
     default: "tick",
   },
+  // for dropdown
+  openDropdown: {
+    type: String,
+    default: "",
+  },
+  dropdownName: {
+    type: String,
+    default: "",
+  },
 });
 
 const emits = defineEmits<{
   (e: "update:modelValue", selectedOptions: OptionAttributes | null): void;
   (e: "onChange"): void;
+  (e: "open", value: string): void;
 }>();
 
 const isDropdownOpen = ref<boolean>(false);
 const selectedOption = ref<OptionAttributes | null>(props.modelValue);
+
+const openDropdownHandler = () => {
+  emits("open", props.dropdownName);
+  isDropdownOpen.value = !isDropdownOpen.value
+};
 
 const closeDropdown = () => {
   isDropdownOpen.value = false;
@@ -211,6 +226,15 @@ watch(
   () => props.modelValue,
   (newValue) => {
     selectedOption.value = newValue ? newValue : null;
+  }
+);
+
+watch(
+  () => props.openDropdown,
+  (newValue) => {
+    if (newValue !== props.dropdownName) {
+      isDropdownOpen.value = false
+    }
   }
 );
 </script>

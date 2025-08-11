@@ -150,7 +150,7 @@
         </div>
         <div class="">
           <MultiMajorsDropdown
-            :label="t('onboarding.majors')"
+            :label="`${t('onboarding.majors')} (Optional)`"
             :options="majorProgramsList"
             v-model="selectedMajors"
             :loading="isLoadingMajors"
@@ -233,8 +233,7 @@ const isUpdateBtnDisable = computed(() => {
     studyPrograms.value?.value &&
     selectedLocationOptions.value.length > 0 &&
     annualBudget.value?.value &&
-    areaOfStudy.value?.value &&
-    selectedMajors.value.length > 0
+    areaOfStudy.value?.value
   );
 });
 
@@ -412,12 +411,12 @@ const setInitialValues = async (newValue: UserData) => {
   );
   await nextTick(); //to bypass the areaOfStudy onchange func
 
+  getMajors();
   if (appStore.userData?.educational_records.next_program_titles.length) {
     selectedMajors.value =
       appStore.userData?.educational_records.next_program_titles.map(
         (item) => item.id
       );
-    getMajors();
   }
 };
 
