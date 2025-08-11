@@ -145,7 +145,7 @@
               isLocationLoading ||
               isGpaChange
             "
-            @onChange="getMajors"
+            @onChange="onParentProgramChanged"
           />
         </div>
         <div class="">
@@ -154,8 +154,9 @@
             :options="majorProgramsList"
             v-model="selectedMajors"
             :loading="isLoadingMajors"
-            :disable="!majorProgramsList.length"
+            :disabled="!areaOfStudy?.value"
             direction="upward"
+            :parentID="areaOfStudy?.value"
           />
         </div>
       </div>
@@ -287,15 +288,37 @@ const resetUserData = () => {
   }
 };
 
+const onParentProgramChanged = () => {
+  selectedMajors.value = [];
+  getMajors();
+};
+
 const getMajors = async () => {
   try {
     isLoadingMajors.value = true;
-    majorProgramsList.value = await schoolListStore.getMajors();
-    if (appStore.userData?.educational_records.next_program_titles.length) {
-      selectedMajors.value =
-        appStore.userData?.educational_records.next_program_titles.map(
-          (item) => item.id
-        );
+    const { min, max } = getMinMax();
+    const payload = {
+      cgpa: outOfFourGpa(gpa.value),
+      class_grade_ids: [studyPrograms.value?.value],
+      country_ids: selectedLocationOptions.value,
+      state_ids: null,
+      min_budget: 0,
+      max_budget: max,
+      program_title_parent_id: areaOfStudy.value?.value,
+    };
+    const response = await api.post(
+      "/api/v2/openapi/school-recommended/program-titles",
+      payload
+    );
+    if (response.data.data) {
+      majorProgramsList.value = response.data.data.map(
+        (item: { id: number; title: string }) => {
+          return {
+            value: item.id,
+            label: item.title,
+          };
+        }
+      );
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -387,6 +410,7 @@ const setInitialValues = async (newValue: UserData) => {
     (item) =>
       Number(item.value) == newValue?.educational_records.super_meta_category.id
   );
+  await nextTick(); //to bypass the areaOfStudy onchange func
 
   if (appStore.userData?.educational_records.next_program_titles.length) {
     selectedMajors.value =

@@ -9,7 +9,7 @@
       class="bg-background-base-subtle border-[1.5px] border-border-neutral-subtle rounded-lg py-2.5 pl-[14px] pr-[32px] w-full transition-colors duration-150 ease-in-out cursor-pointer relative"
       :class="{
         // '!bg-background-disabled pointer-events-none': !disabled,
-        '!bg-[#f8f8f8] pointer-events-none': disabled,
+        '!bg-[#f8f8f8] pointer-events-none': disabled || !options.length,
         '!border-border-brand shadow-[0px_0px_0px_4px_rgba(225,225,225,0.24)]':
           isDropdownOpen,
       }"
