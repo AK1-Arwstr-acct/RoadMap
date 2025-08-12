@@ -48,7 +48,7 @@
     <section class="w-full mx-auto max-w-[1220px] px-0 mt-8">
       <div class="px-5">
         <div class="hidden md:flex justify-end">
-          <span @click="router.back()" class="cursor-pointer">
+          <span @click="backRoute" class="cursor-pointer">
             <IconCross fill="#A4A7AE" width="24" height="24" />
           </span>
         </div>
@@ -95,7 +95,7 @@
     class="bg-[#1849A9] flex justify-center items-center h-dvh w-full"
   >
     <div
-      class=" mx-auto flex flex-col items-center text-center justify-center px-5"
+      class="mx-auto flex flex-col items-center text-center justify-center px-5"
     >
       <img
         src="/images/countries-application.png"
@@ -141,6 +141,7 @@ const router = useRouter();
 const route = useRoute();
 const { t } = useI18n();
 const { api } = useApi();
+const lastRoute = useLastRoute();
 
 const canonicalUrl = `${runtimeConfig.public.appMode}${
   locale.value !== "en" ? `/${locale.value}` : ""
@@ -278,9 +279,17 @@ const close = () => {
   isMobileSideBarOpen.value = false;
 };
 
+const backRoute = () => {
+  if (lastRoute.value) {
+    router.back();
+  } else {
+    router.push("/");
+  }
+};
+
 onMounted(async () => {
   const tokenExists = useCookie("token");
-  if(tokenExists.value) {
+  if (tokenExists.value) {
     await api.get("/api/v1/user", {
       headers: {
         "X-Client-Route": `${window.location.origin}${route.fullPath}`,

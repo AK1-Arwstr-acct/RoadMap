@@ -45,7 +45,7 @@
 import useEssayStore from "~/stores/essayStore";
 
 definePageMeta({
-  layout: "dashboard-layout",
+  layout: "profile-layout",
 });
 
 const route = useRoute();

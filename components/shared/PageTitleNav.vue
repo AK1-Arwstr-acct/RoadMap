@@ -1,6 +1,6 @@
 <template>
   <div class="hidden lg:flex justify-between items-center px-9 py-4 bg-surface">
-    <div class="text-2xl font-semibold text-text-base">Choose your major</div>
+    <div class="text-2xl font-semibold text-text-base">{{ title }}</div>
     <div class="flex gap-4">
       <div
         v-if="appStore.authenticatedUser || tokenExists"
@@ -77,6 +77,13 @@ const localePath = useLocalePath();
 const appStore = useAppStore();
 const { t } = useI18n();
 const route = useRoute();
+
+defineProps({
+  title: {
+    type: String,
+    default: "",
+  },
+});
 
 const isMobileSideBarOpen = ref<boolean>(false);
 const tokenExists = useCookie("token");

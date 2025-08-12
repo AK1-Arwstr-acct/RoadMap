@@ -1,0 +1,1 @@
+export const useLastRoute = () => useState<string | null>('lastRoute', () => null)

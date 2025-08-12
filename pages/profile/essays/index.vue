@@ -35,7 +35,7 @@ const localePath = useLocalePath();
 const router = useRouter();
 
 definePageMeta({
-  layout: "dashboard-layout",
+  layout: "profile-layout",
 });
 
 const runtimeConfig = useRuntimeConfig();

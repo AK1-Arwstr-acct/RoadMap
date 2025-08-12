@@ -54,7 +54,7 @@ import useEssayStore from "~/stores/essayStore";
 import type { EssayData } from "~/types/home";
 
 definePageMeta({
-  layout: "dashboard-layout",
+  layout: "profile-layout",
 });
 
 const runtimeConfig = useRuntimeConfig();
