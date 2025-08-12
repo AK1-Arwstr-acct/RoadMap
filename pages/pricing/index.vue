@@ -48,9 +48,9 @@
     <section class="w-full mx-auto max-w-[1220px] px-0 mt-8">
       <div class="px-5">
         <div class="hidden md:flex justify-end">
-          <span @click="router.back()" class="cursor-pointer">
+          <NuxtLinkLocale to="/" class="cursor-pointer">
             <IconCross fill="#A4A7AE" width="24" height="24" />
-          </span>
+          </NuxtLinkLocale>
         </div>
         <h1 class="text-4xl text-[#181D27] font-semibold">
           {{ $t("pricing_page.heading") }}
