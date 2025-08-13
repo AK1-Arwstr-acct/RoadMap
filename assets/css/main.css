@@ -36,18 +36,18 @@
   /* Default styles for headings (h1 to h6) */
   .suggestion-container h1 {
     margin: 0 0 0.47em 0; /* Default margins for h1 */
-    font-size: 2em; /* Default font size */
+    font-size: 24px; /* Default font size */
     line-height: 30px;
   }
   
   .suggestion-container h2 {
     margin: 0.75em 0; /* Default margins for h2 */
-    font-size: 1.5em; /* Default font size */
+    font-size: 20px; /* Default font size */
   }
   
   .suggestion-container h3 {
     margin: 0.83em 0; /* Default margins for h3 */
-    font-size: 1.17em; /* Default font size */
+    font-size: 18px; /* Default font size */
   }
   
   .suggestion-container h4 {

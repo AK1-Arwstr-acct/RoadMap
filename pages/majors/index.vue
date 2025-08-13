@@ -41,9 +41,9 @@ const tabs: Tabs[] = [
   },
 ];
 
-// onMounted(() => {
-//   appStore.autoCloseSidebar = true;
-// });
+onMounted(() => {
+  appStore.autoCloseSidebar = true;
+});
 onUnmounted(() => {
   majorStore.clearStoreData();
 });

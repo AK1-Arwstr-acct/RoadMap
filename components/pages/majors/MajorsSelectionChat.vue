@@ -130,7 +130,7 @@
                   :style="{
                     minHeight: `${
                       index + 1 == majorStore.completeChat.length &&
-                      !isChatLoading
+                      !isChatLoading && !chat.showDiscoverMore
                         ? `${chatWrapperHeight}px`
                         : 'auto'
                     }`,
@@ -168,7 +168,7 @@
                         !chat.isTyping &&
                         chat.message_support_id
                       "
-                      class="mt-2 pb-3"
+                      class="mt-5"
                     >
                       <ReactionThumbs :supportId="chat.message_support_id" />
                     </div>
@@ -290,75 +290,75 @@
           </div>
         </div>
         <!-- input -->
-         <div class="w-full px-5">
-           <div class="flex flex-col gap-4 w-full max-w-[800px] mx-auto">
-             <Transition name="fade">
-               <div
-                 v-if="isChatFull"
-                 class="border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
-               >
-                 <div class="text-[#414651] text-sm order-1 md:order-none">
-                   <p class="font-semibold mb-1.5">
-                     {{
-                       $t(
-                         "sophie_page.you_reached_your_daily_limit_for_sophie_interactions"
-                       )
-                     }}
-                   </p>
-                   <p class="">
-                     {{
-                       $t(
-                         "sophie_page.please_find_instructions_to_upgrade_for_more_access_here"
-                       )
-                     }}
-                   </p>
-                 </div>
-                 <NuxtLinkLocale to="/pricing">
-                   <button
-                     class="border border-border-neutral-subtle bg-white rounded-lg py-2 px-3.5"
-                   >
-                     {{ $t("sophie_page.upgrade_now") }}
-                   </button>
-                 </NuxtLinkLocale>
-               </div>
-             </Transition>
-             <div
-               class="relative border border-border-neutral-subtle bg-background-base rounded-2xl flex items-center min-h-full"
-               :class="{
-                 'bg-[#FAFAFA] pointer-events-none':
-                   isChatFull || isChatLoading || typingInterval !== null,
-               }"
-             >
-               <textarea
-                 v-if="!readOnly"
-                 ref="textarea"
-                 placeholder="Ask Sophie anything"
-                 v-model="inputQuestion"
-                 @keydown.enter.exact.prevent="submit"
-                 @keydown.enter.ctrl.prevent="addNewLine"
-                 :disabled="
-                   isChatLoading ||
-                   isChatFull ||
-                   isEducationLevel ||
-                   typingInterval !== null
-                 "
-                 rows="4"
-                 autofocus
-                 class="placeholder:text-text-neutral-subtle w-full h-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg bg-transparent text-text-neutral-subtle"
-                 data-hj-allow
-               />
-               <button
-                 :disabled="
-                   isChatLoading || isChatFull || inputQuestion.trim().length < 2
-                 "
-                 @click="submit"
-                 class="cursor-pointer rounded-lg bg-background-brand no-scrollbar absolute top-1.5 2xl:top-auto 2xl:bottom-4 transform right-2 2xl:right-4 -rotate-90 p-2 disabled:opacity-40"
-               >
-                 <IconArrowRight />
-               </button>
-             </div>
-           </div>
-         </div>
+        <div class="w-full px-5">
+          <div class="flex flex-col gap-4 w-full max-w-[800px] mx-auto">
+            <Transition name="fade">
+              <div
+                v-if="isChatFull"
+                class="border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
+              >
+                <div class="text-[#414651] text-sm order-1 md:order-none">
+                  <p class="font-semibold mb-1.5">
+                    {{
+                      $t(
+                        "sophie_page.you_reached_your_daily_limit_for_sophie_interactions"
+                      )
+                    }}
+                  </p>
+                  <p class="">
+                    {{
+                      $t(
+                        "sophie_page.please_find_instructions_to_upgrade_for_more_access_here"
+                      )
+                    }}
+                  </p>
+                </div>
+                <NuxtLinkLocale to="/pricing">
+                  <button
+                    class="border border-border-neutral-subtle bg-white rounded-lg py-2 px-3.5"
+                  >
+                    {{ $t("sophie_page.upgrade_now") }}
+                  </button>
+                </NuxtLinkLocale>
+              </div>
+            </Transition>
+            <div
+              class="relative border border-border-neutral-subtle bg-background-base rounded-2xl flex items-center min-h-full"
+              :class="{
+                'bg-[#FAFAFA] pointer-events-none':
+                  isChatFull || isChatLoading || typingInterval !== null,
+              }"
+            >
+              <textarea
+                v-if="!readOnly"
+                ref="textarea"
+                placeholder="Ask Sophie anything"
+                v-model="inputQuestion"
+                @keydown.enter.exact.prevent="submit"
+                @keydown.enter.ctrl.prevent="addNewLine"
+                :disabled="
+                  isChatLoading ||
+                  isChatFull ||
+                  isEducationLevel ||
+                  typingInterval !== null
+                "
+                rows="4"
+                autofocus
+                class="placeholder:text-text-neutral-subtle w-full h-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg bg-transparent text-text-neutral-subtle"
+                data-hj-allow
+              />
+              <button
+                :disabled="
+                  isChatLoading || isChatFull || inputQuestion.trim().length < 2
+                "
+                @click="submit"
+                class="cursor-pointer rounded-lg bg-background-brand no-scrollbar absolute top-1.5 2xl:top-auto 2xl:bottom-4 transform right-2 2xl:right-4 -rotate-90 p-2 disabled:opacity-40"
+              >
+                <IconArrowRight />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div>
@@ -620,7 +620,6 @@ const quizSubmit = async () => {
         majorStore.cluster.summary = response.data.data.cluster_summary;
       }
       majorStore.isStepperSubmitted = true;
-      scrollDown();
       majorStore.completeChat.push({
         isSender: false,
         text: "",
