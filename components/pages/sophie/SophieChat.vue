@@ -260,7 +260,7 @@
               "
               rows="4"
               autofocus
-              class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
+              class="placeholder:text-text-neutral-subtle w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
               data-hj-allow
             />
             <button
