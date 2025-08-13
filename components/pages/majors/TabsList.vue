@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex gap-3 w-full px-8 pb-1 overflow-x-auto no-scrollbar border-b border-divider"
+    class="flex gap-3 w-full px-8 pt-1.5 pb-1 overflow-x-auto no-scrollbar border-b border-divider"
   >
     <div
       v-for="tab in tabs"

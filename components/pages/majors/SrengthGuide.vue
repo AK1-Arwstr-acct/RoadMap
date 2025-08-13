@@ -82,7 +82,7 @@
         </div>
         <button
           @click="startQuiz"
-          class="rounded-lg px-[18px] py-1 bg-background-brand text-text-constant-white text-nowrap text-sm md:text-base"
+          class="rounded-lg px-4 py-2 bg-background-brand text-text-constant-white text-nowrap text-sm md:text-base font-semibold"
         >
           Start your quiz
         </button>

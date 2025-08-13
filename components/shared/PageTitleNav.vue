@@ -1,6 +1,6 @@
 <template>
   <div class="hidden lg:flex justify-between items-center px-9 py-4 bg-surface">
-    <div class="text-2xl font-semibold text-text-base">{{ title }}</div>
+    <div class="text-2xl font-semibold text-text-base leading-[36px]">{{ title }}</div>
     <div class="flex gap-4">
       <div
         v-if="appStore.authenticatedUser || tokenExists"
@@ -8,25 +8,25 @@
       >
         <NuxtLinkLocale to="/pricing">
           <p
-            class="px-5 py-2.5 rounded-lg font-semibold text-text-base bg-background-neutral-bold cursor-pointer text-sm"
+            class="px-5 py-1.5 rounded-lg font-semibold text-text-base bg-background-neutral-bold cursor-pointer leading-7"
           >
             <!-- {{ t("dashboard.talk_to_us") }} -->
             Book a Meeting
           </p>
         </NuxtLinkLocale>
-        <div>
+        <!-- <div>
           <IconNotification />
-        </div>
+        </div> -->
         <div
           v-if="appStore.authenticatedUser || tokenExists"
-          class="cursor-pointer rounded-full overflow-hidden size-10"
+          class="cursor-pointer rounded-full overflow-hidden size-10 min-h-10 min-w-10"
         >
-          <div @click="appStore.isMenuOpen = true">
+          <div @click="appStore.isMenuOpen = true" class="size-full">
             <img
               v-if="appStore.userData?.avatar"
               :src="appStore.userImagePreview || appStore.userData?.avatar"
               alt="user-icon"
-              class="size-full"
+              class="size-full object-cover"
             />
             <div
               v-else
@@ -39,7 +39,7 @@
         <div
           v-else
           @click="isMobileSideBarOpen = true"
-          class="cursor-pointer rounded-full overflow-hidden size-10"
+          class="cursor-pointer rounded-full overflow-hidden size-10 min-h-10 min-w-10"
         >
           <img
             src="/images/chat-bot.png"

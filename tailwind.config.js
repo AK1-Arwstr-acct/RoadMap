@@ -45,6 +45,7 @@ export default {
         "background-brand-hovered": "var(--color-background-brand-hovered)",
         "background-neutral": "var(--color-background-neutral)",
         "background-neutral-bold": "var(--color-background-neutral-bold)",
+        "background-neutral-bold-hovered": "var(--color-background-neutral-bold-hovered)",
         "background-neutral-bolder": "var(--color-background-neutral-bolder)",
         "background-neutral-boldest": "var(--color-background-neutral-boldest)",
         "background-neutral-subtle": "var(--color-background-neutral-subtle)",

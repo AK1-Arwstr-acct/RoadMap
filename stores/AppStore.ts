@@ -30,6 +30,9 @@ const useAppStore = defineStore("appStore", () => {
 	const featureSoftPaywall = ref<boolean>(false);
 	const paywallOnLastScreen = ref<string>('')
 
+	// main sidebar
+	const autoCloseSidebar = ref<boolean>(false);
+
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data
 	}
@@ -126,6 +129,7 @@ const useAppStore = defineStore("appStore", () => {
 		paywallOnLastScreen,
 		firstTimeUser,
 		userMajors,
+		autoCloseSidebar,
 		checkAuthenticatedUser,
 		setUserImagePreview,
 		setUserCoverPhotoPreview,

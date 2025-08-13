@@ -47,7 +47,7 @@
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute left-0 border-[1.5px] border-border-neutral-subtle bg-background-base-subtle z-20 max-h-[300px] sm:max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
+      class="absolute left-0 border-[1.5px] border-border-neutral-subtle bg-background-base-subtle z-20 max-h-[200px] overflow-y-auto py-1.5 rounded-md shadow-sm"
       :class="[
         direction === 'upward'
           ? label
@@ -100,7 +100,7 @@
               />
             </div>
             <div
-              class="flex items-center gap-2 text-text-base transition-all ease-in-out duration-200 text-sm"
+              class="flex items-center gap-2 text-text-base transition-all ease-in-out duration-200"
               :class="{
                 '!text-text-disabled':
                   !selectedOptions.includes(Number(option.value)) &&

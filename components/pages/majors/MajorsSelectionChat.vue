@@ -7,16 +7,16 @@
           <div
             ref="chatContainer"
             @scroll="updateHasChatScroll"
-            class="size-full overflow-y-auto overflow-x-hidden no-scrollbar h-full relative pt-2 max-w-[800px] mx-auto px-5"
+            class="size-full overflow-y-auto overflow-x-hidden no-scrollbar h-full relative pt-5 sm:pt-10 max-w-[800px] mx-auto px-5"
           >
             <div
               class="flex flex-col"
               :class="{
                 'justify-between': majorStore.completeChat.length === 0,
-                'h-full' : deviceType === 'desktop'
+                'h-full': deviceType === 'desktop',
               }"
             >
-              <div class="flex flex-col pt-2">
+              <div class="flex flex-col">
                 <!-- initialChat -->
                 <div class="mb-6">
                   <div
@@ -105,7 +105,7 @@
                         </div>
                         <button
                           @click="majorStore.isQuizStart = true"
-                          class="rounded-lg px-[18px] text-sm md:text-base py-1 bg-background-brand text-text-constant-white text-nowrap"
+                          class="rounded-lg px-4 text-sm md:text-base py-2 bg-background-brand text-text-constant-white text-nowrap font-semibold"
                         >
                           Start quiz
                         </button>
@@ -158,7 +158,7 @@
                       <vue-markdown
                         :source="chat.text"
                         :options="options"
-                        class="!text-text-base"
+                        class="!text-text-base flex flex-col leading-7"
                       />
                     </div>
                     <!-- ReactionThumbs  -->
@@ -675,11 +675,24 @@ const submit = async () => {
     //     }
     //   );
     // } else {
-    response = await api.post(`/api/v1/ai-conversation/analysis-major`, {
-      query: userQuery,
-      sophieSessionId: uuid.value,
-      roadmap_task_id: "11",
-    });
+    if (majorStore.isStepperSubmitted) {
+      response = await api.post("/api/v1/ai-conversation/determine-major", {
+        roadmap_task_id: 11,
+        sophieSessionId: uuid.value,
+        messages: [
+          {
+            role: "user",
+            content: userQuery,
+          },
+        ],
+      });
+    } else {
+      response = await api.post(`/api/v1/ai-conversation/analysis-major`, {
+        query: userQuery,
+        sophieSessionId: uuid.value,
+        roadmap_task_id: "11",
+      });
+    }
     // }
     if (response) {
       if (response.data.data) {
@@ -689,7 +702,11 @@ const submit = async () => {
           isTyping: true,
           message_support_id: response.data.message_support_id,
         });
-        typingFullText.value = response.data.data;
+        if (majorStore.isStepperSubmitted) {
+          typingFullText.value = response.data.data.response;
+        } else {
+          typingFullText.value = response.data.data;
+        }
         typingIndex.value = 0;
         startTypingAnimation();
         if (

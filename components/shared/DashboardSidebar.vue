@@ -88,13 +88,12 @@
       <Transition name="fade">
         <component v-if="isOpen" :is="GetMentorshipBlock" />
       </Transition>
-      <div v-if="isOpen" class="w-full mt-4 border-t border-[#E9EAEB]">
+      <!-- <div v-if="isOpen" class="w-full mt-4 border-t border-[#E9EAEB]">
         <NuxtLinkLocale
           to="/profile"
           v-if="appStore.authenticatedUser"
           class="pt-[28px] bg-white rounded-xl shadow-sm flex items-center gap-3 cursor-pointer"
         >
-          <!-- profile -->
           <div
             v-if="appStore.authenticatedUser || tokenExists"
             class="cursor-pointer rounded-full overflow-hidden size-10"
@@ -169,7 +168,7 @@
         >
           <IconUser />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -292,6 +291,16 @@ watch(
   (newValue) => {
     if (newValue?.length) {
       isOpen.value = false;
+    }
+  }
+);
+
+watch(
+  () => appStore.autoCloseSidebar,
+  () => {
+    if (appStore.autoCloseSidebar) {
+      isOpen.value = false;
+      appStore.autoCloseSidebar = false;
     }
   }
 );

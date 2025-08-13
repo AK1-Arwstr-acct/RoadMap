@@ -35,6 +35,7 @@
     --color-background-brand-subtle-selected: #BFDBFE;
     --color-background-neutral: #F5F5F5;
     --color-background-neutral-bold: #E5E5E5;
+    --color-background-neutral-bold-hovered: #D4D4D4;
     --color-background-neutral-bolder: #D4D4D4;
     --color-background-neutral-boldest: #0A0A0A;
     --color-background-neutral-subtle: #FAFAFA;
@@ -79,6 +80,7 @@
     --color-background-brand-subtle-selected: #BFDBFE;
     --color-background-neutral: #F5F5F5;
     --color-background-neutral-bold: #E5E5E5;
+    --color-background-neutral-bold-hovered: #D4D4D4;
     --color-background-neutral-bolder: #D4D4D4;
     --color-background-neutral-boldest: #0A0A0A;
     --color-background-neutral-subtle: #FAFAFA;
@@ -133,6 +135,7 @@
     --color-background-brand-subtle-selected: #1E40AF;
     --color-background-neutral: #262626;
     --color-background-neutral-bold: #404040;
+    --color-background-neutral-bold-hovered: #525252;
     --color-background-neutral-bolder: #525252;
     --color-background-neutral-boldest: #FDFDFD;
     --color-background-neutral-subtle: #171717;

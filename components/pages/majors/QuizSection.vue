@@ -1,6 +1,21 @@
 <template>
+  <!-- loading screen -->
   <div
-    v-if="!majorStore.isStepperSubmitted"
+    v-if="majorStore.isQuizSubmitting"
+    class="border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl px-6 py-[124px] flex flex-col items-center text-center text-text-base"
+  >
+    <img
+      src="/images/open-book.png"
+      alt="Rocket"
+      class="min-w-[120px] size-[120px] md:min-w-[156px] md:size-[156px] mb-4"
+    />
+    <p class="font-semibold text-xl animate-pulse text-text-base">
+      Cooking up your perfect match...
+    </p>
+  </div>
+  <!-- quiz -->
+  <div
+    v-else-if="!majorStore.isStepperSubmitted"
     class="border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl p-6"
   >
     <div class="flex flex-col gap-6">
@@ -112,7 +127,7 @@
     class="border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl p-6 flex flex-col items-center text-center text-text-base"
   >
     <img
-      src="/images//lets-go.png"
+      src="/images/lets-go.png"
       alt="Rocket"
       class="min-w-[120px] size-[120px] md:min-w-[156px] md:size-[156px] mb-4"
     />

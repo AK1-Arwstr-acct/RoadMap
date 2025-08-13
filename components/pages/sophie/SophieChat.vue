@@ -88,7 +88,11 @@
                   }"
                 >
                   <div>
-                    <vue-markdown :source="chat.text" :options="options" />
+                    <vue-markdown
+                      :source="chat.text"
+                      :options="options"
+                      class="!text-text-base flex flex-col gap-2 leading-7"
+                    />
                   </div>
                 </div>
                 <!-- dropdown for public user -->

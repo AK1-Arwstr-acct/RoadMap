@@ -54,7 +54,7 @@
               </p>
               <NuxtLinkLocale
                 to="/profile"
-                class="py-2.5 px-4 md:px-6 rounded-lg bg-background-brand flex items-center gap-2 text-text-constant-white w-fit text-sm md:text-base"
+                class="py-2 px-4 rounded-lg font-semibold bg-background-brand flex items-center gap-2 text-text-constant-white w-fit text-sm md:text-base"
               >
                 Lock in your major
                 <IconChevronDown

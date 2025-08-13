@@ -1,19 +1,18 @@
 <template>
-  <div class="flex gap-2">
-    <div @click="thumbClicked('like')" class="cursor-pointer">
-      <IconThumb
-        :fill="activeThumb == 'like' ? '#2563EB' : 'none'"
-        :class="{ '!text-icon-brand': activeThumb == 'like' }"
-      />
+  <div class="flex">
+    <div
+      @click="thumbClicked('like')"
+      class="cursor-pointer group p-3 rounded-lg hover:bg-background-neutral-bold-hovered transition-all ease-in-out duration-200"
+    >
+      <IconThumbFilled v-if="activeThumb == 'like'" />
+      <IconThumb v-else />
     </div>
     <div
       @click="thumbClicked('dislike')"
-      class="transform rotate-180 cursor-pointer"
+      class="transform rotate-180 cursor-pointer p-3 rounded-lg hover:bg-background-neutral-bold-hovered transition-all ease-in-out duration-200"
     >
-      <IconThumb
-        :fill="activeThumb == 'dislike' ? '#2563EB' : 'none'"
-        :class="{ '!text-icon-brand': activeThumb == 'dislike' }"
-      />
+      <IconThumbFilled v-if="activeThumb == 'dislike'" />
+      <IconThumb v-else />
     </div>
   </div>
 </template>

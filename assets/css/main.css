@@ -30,7 +30,7 @@
   /* Default styles for paragraphs */
   .suggestion-container p {
     margin: 4px 0; /* Default margins for paragraphs */
-    line-height: 1.5; /* Default line height */
+    line-height: 28px; /* Default line height */
   }
   
   /* Default styles for headings (h1 to h6) */
@@ -67,14 +67,14 @@
   
   /* Default styles for unordered lists */
   .suggestion-container ul {
-    margin: 4px 0; /* Default margins */
+    margin: 0 0; /* Default margins */
     padding: 0 20px; /* Default padding for nested list items */
     list-style-type: disc; /* Default bullet style */
   }
   
   /* Default styles for ordered lists */
   .suggestion-container ol {
-    margin: 1em 0; /* Default margins */
+    margin: 0 0; /* Default margins */
     padding: 0 20px; /* Default padding for nested list items */
     list-style-type: decimal; /* Default numbering style */
   }

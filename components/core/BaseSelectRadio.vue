@@ -75,7 +75,7 @@
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute left-0 border-[1.5px] border-border-neutral-subtle bg-background-base-subtle z-20 max-h-[300px] sm:max-h-[400px] overflow-y-auto py-1.5 rounded-md shadow-sm"
+      class="absolute left-0 border-[1.5px] border-border-neutral-subtle bg-background-base-subtle z-20 max-h-[200px] overflow-y-auto py-1.5 rounded-md shadow-sm"
       :class="[
         direction === 'upward'
           ? label
@@ -97,7 +97,7 @@
         }"
       >
         <label
-          class="text-text-neutral-subtle text-left cursor-pointer w-full flex items-center gap-2 py-2.5 px-[14px] truncate"
+          class="text-text-base text-left cursor-pointer w-full flex items-center gap-2 py-2.5 px-[14px] truncate"
           :class="{
             'justify-between': mode === 'tick',
           }"
@@ -112,7 +112,7 @@
             :class="{ hidden: mode === 'tick' }"
           />
           <span
-            class="truncate text-text-neutral-subtle font-medium flex item-center gap-2"
+            class="truncate font-medium flex item-center gap-2"
           >
             <div v-if="item.icon">
               <component

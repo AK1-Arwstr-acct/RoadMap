@@ -19,12 +19,14 @@ import useMajorStore from "~/stores/majorStore";
 import type { Tabs } from "~/types/home";
 import IconBookOpen from "~/components/icons/IconBookOpen.vue";
 import IconMessageSquare from "~/components/icons/IconMessageSquare.vue";
+import useAppStore from "~/stores/AppStore";
 
 definePageMeta({
   layout: "home-layout",
 });
 
 const majorStore = useMajorStore();
+const appStore = useAppStore();
 
 const tabs: Tabs[] = [
   {
@@ -39,6 +41,9 @@ const tabs: Tabs[] = [
   },
 ];
 
+// onMounted(() => {
+//   appStore.autoCloseSidebar = true;
+// });
 onUnmounted(() => {
   majorStore.clearStoreData();
 });
