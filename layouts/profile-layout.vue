@@ -62,16 +62,22 @@ const tabs: Tabs[] = [
   },
 ];
 
-const activeTab = ref<(typeof tabs)[number]["name"]>("profile");
+const activeTab = ref<(typeof tabs)[number]["name"]>("");
+
+const checkActiveTab = () => {
+  if (route.path === "/") {
+    activeTab.value = "";
+  } else if (route.path === "/profile/checklist") {
+    activeTab.value = "college-list";
+  } else {
+    activeTab.value = "profile";
+  }
+};
 
 watch(
   () => route.path,
   () => {
-    if (route.path.includes("/checklist")) {
-      activeTab.value = "college-list";
-    } else {
-      activeTab.value = "profile";
-    }
+    checkActiveTab();
   }
 );
 
@@ -81,8 +87,12 @@ watch(
     if (newValue === "profile") {
       navigateTo(localePath("/profile"));
     } else if (newValue === "college-list") {
-      navigateTo(localePath("/checklist"));
+      navigateTo(localePath("/profile/checklist"));
     }
   }
 );
+
+onMounted(() => {
+  checkActiveTab();
+});
 </script>

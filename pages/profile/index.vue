@@ -5,7 +5,7 @@
         <Header />
         <div class="max-w-[752px] mx-auto flex flex-col gap-[58px] pb-5 lg:pb-8 px-5">
           <PersonelInfo />
-          <div v-show="showAchievements">
+          <!-- <div v-show="showAchievements">
             <div class="flex justify-between items-center font-semibold mb-5">
               <p class="text-xl md:text-2xl text-[#181D27]">
                 {{ $t("profile_page.your_achievement") }}
@@ -19,7 +19,7 @@
             <Achievements
               @remainingTask="(value) => (showAchievements = value)"
             />
-          </div>
+          </div> -->
 
           <!-- AI essay -->
 
@@ -94,7 +94,7 @@ const { api } = useApi();
 const essayStore = useEssayStore();
 const localePath = useLocalePath();
 
-const showAchievements = ref<boolean>(false);
+// const showAchievements = ref<boolean>(false);
 
 const openDetail = (essayDetail: EssayData) => {
   const details = filterEssay(essayDetail.generated_essay);

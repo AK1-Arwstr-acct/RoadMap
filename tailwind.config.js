@@ -23,6 +23,7 @@ export default {
         "text-disabled": "var(--color-text-disabled)",
         "text-brand-subtle": "var(--color-text-brand-subtle)",
         "text-brand": "var(--color-text-brand)",
+        "text-brand-bold": "var(--color-text-brand-bold)",
         "text-success": "var(--color-text-success)",
         "text-warning": "var(--color-text-warning)",
         "text-error": "var(--color-text-error)",

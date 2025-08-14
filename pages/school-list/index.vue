@@ -5,7 +5,7 @@
       class="flex-1 h-full overflow-y-auto custom-scrollbar pb-5 lg:pb-0"
     >
       <div class="h-fitt w-full max-w-[1150px] mx-auto">
-        <div class="px-4 mt-4 lg:mt-10 md:px-6 w-full h-fit">
+        <div class="px-4 md:px-6 w-full h-fit">
           <div
             class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14"
             :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"

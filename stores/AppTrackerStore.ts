@@ -13,7 +13,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const taskActiveStates = ref<Record<number, boolean>>({});
     const roadmapData = ref<Application[]>([]);
     const preApplication = ref<Application>();
-    const applicationList = ref<Application[]>([]);
+    const applicationList = ref<Application>();
     const postApplication = ref<Application>();
     // layout sidebar
     const isSidebarOpen = ref<boolean>(false);
@@ -27,7 +27,7 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
             roadmapData.value = response.data.data;
             preApplication.value = roadmapData.value.find((item: Application) => item.title.toLowerCase().includes('pre'));
             postApplication.value = roadmapData.value.find((item: Application) => item.title.toLowerCase().includes('post'));
-            applicationList.value = roadmapData.value.filter((item: Application) => item.country_title !== null)
+            applicationList.value = roadmapData.value.find((item: Application) => item.title === "APPLICATION")
 
 
         } catch (error) {

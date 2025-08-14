@@ -12,9 +12,7 @@
       <DashboardSidebar />
       <RoadmapSidebar />
       <div class="flex-1 h-full overflow-hidden pb-16 lg:pb-0 flex flex-col">
-        <div v-if="route.path.includes('/majors')">
-          <PageTitleNav title="Choose your major" />
-        </div>
+        <PageTitleNav :title="pageTitle" />
         <div class="h-full overflow-hidden">
           <slot />
         </div>
@@ -50,16 +48,8 @@
       @close="appStore.featureSoftPaywall = false"
     />
   </Transition>
-  <Transition name="fade">
-    <component
-      :is="UserMenu"
-      v-if="appStore.isMenuOpen"
-      @close="appStore.isMenuOpen = false"
-    />
-  </Transition>
 </template>
 <script setup lang="ts">
-import UserMenu from "~/components/shared/UserMenu.vue";
 import useAppStore from "~/stores/AppStore";
 import PaywallModal from "~/components/shared/PaywallModal.vue";
 
@@ -73,4 +63,18 @@ const desktop = {
     () => import("~/components/shared/DashboardSidebar.vue")
   ),
 };
+
+const pageTitle = computed(() => {
+  if (route.path.includes("/majors")) {
+    return "Choose your major";
+  } else if (route.path.includes("/school-list")) {
+    return "Find your college";
+  } else if (route.path.includes("/scholarship")) {
+    return "Scholarship";
+  } else if (route.path.includes("/sophie")) {
+    return "Sophie";
+  } else if (route.path.includes("/ai-essay")) {
+    return "Ai Essay";
+  }
+});
 </script>

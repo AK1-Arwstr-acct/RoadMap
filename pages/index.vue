@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full flex justify-center items-center pt-4 md:pt-8 md:px-6 overflow-hidden"
+    class="h-full flex justify-center items-center md:px-6 overflow-hidden"
   >
     <div class="overflow-y-auto no-scrollbar pb-6 size-full">
       <div class="w-full mx-auto h-fit max-w-[900px]">
@@ -183,7 +183,7 @@ const handelPreQuestion = (question: { number: number; question: string }) => {
     navigateTo(localePath("/school-list"));
   } else if (question.number === 2) {
     appTrackerStore.taskFromHomeQuestion = 4;
-    navigateTo(localePath("/sophie"));
+    navigateTo(localePath("/majors"));
   } else if (question.number === 3) {
     sophieStore.preQuestionSelected = question.question;
     navigateTo(localePath("/scholarship"));

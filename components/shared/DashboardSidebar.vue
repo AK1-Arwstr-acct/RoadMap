@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group hidden lg:flex flex-col h-full pt-6 pb-5 justify-between gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-gray-200 overflow-y-auto no-scrollbar"
+    class="group hidden lg:flex flex-col h-full pt-6 pb-5 justify-between gap-6 transition-all transform duration-500 ease-in-out border-r-[1.5px] border-divider overflow-y-auto no-scrollbar"
     :class="[!isOpen ? 'w-[72px] px-2' : 'w-[264px] px-2']"
   >
     <div class="flex flex-col gap-6">
@@ -88,7 +88,7 @@
       <Transition name="fade">
         <component v-if="isOpen" :is="GetMentorshipBlock" />
       </Transition>
-      <div v-if="!route.path.includes('/majors')">
+      <!-- <div v-if="!route.path.includes('/majors')">
         <div v-if="isOpen" class="w-full mt-4 border-t border-[#E9EAEB]">
           <NuxtLinkLocale
             to="/profile"
@@ -170,7 +170,7 @@
             <IconUser />
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -253,10 +253,10 @@ const tabList = ref<TabList[]>([
   {
     name: t("dashboard.sidebar.menu.your_checklist"),
     icon: shallowRef(IconTabApplication),
-    route: "/checklist",
+    route: "/majors",
     activeList: [
-      "/checklist",
-      "/vi/checklist",
+      "/majors",
+      "/vi/majors",
       "/sophie",
       "/sophie",
       "/school-list",

@@ -1,6 +1,8 @@
 <template>
   <div class="hidden lg:flex justify-between items-center px-9 py-4 bg-surface">
-    <div class="text-2xl font-semibold text-text-base leading-[36px]">{{ title }}</div>
+    <div class="text-2xl font-semibold text-text-base leading-[36px]">
+      {{ title }}
+    </div>
     <div class="flex gap-4">
       <div
         v-if="appStore.authenticatedUser || tokenExists"
@@ -19,21 +21,20 @@
         </div> -->
         <div
           v-if="appStore.authenticatedUser || tokenExists"
+          @click="appStore.isMenuOpen = true"
           class="cursor-pointer rounded-full overflow-hidden size-10 min-h-10 min-w-10"
         >
-          <div @click="appStore.isMenuOpen = true" class="size-full">
-            <img
-              v-if="appStore.userData?.avatar"
-              :src="appStore.userImagePreview || appStore.userData?.avatar"
-              alt="user-icon"
-              class="size-full object-cover"
-            />
-            <div
-              v-else
-              class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
-            >
-              <span>{{ appStore.userData?.name.charAt(0) }}</span>
-            </div>
+          <img
+            v-if="appStore.userData?.avatar"
+            :src="appStore.userImagePreview || appStore.userData?.avatar"
+            alt="user-icon"
+            class="size-full object-cover"
+          />
+          <div
+            v-else
+            class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
+          >
+            <span>{{ appStore.userData?.name.charAt(0) }}</span>
           </div>
         </div>
         <div

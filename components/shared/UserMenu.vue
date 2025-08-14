@@ -3,7 +3,7 @@
     <div class="relative size-full">
       <div
         v-click-outside="() => emits('close')"
-        class="bg-background-base rounded-xl p-2 w-[320px] flex flex-col gap-4 absolute right-8 top-20"
+        class="bg-background-base rounded-xl px-2 pt-2 pb-6 w-[320px] flex flex-col gap-4 absolute right-8 top-20"
       >
         <div class="border-b border-divider pb-4 px-2">
           <div class="flex items-center gap-4">
@@ -38,7 +38,7 @@
           >
         </div>
         <div class="px-2">
-          <p @click="logOut" class="font-semibold cursor-pointer">Log out</p>
+          <p @click="logOut" class="font-semibold cursor-pointer text-text-base">Log out</p>
         </div>
       </div>
     </div>

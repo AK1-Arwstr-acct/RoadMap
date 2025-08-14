@@ -51,7 +51,7 @@ const selectedCategories = computed(() => {
 
   for (const { list, source } of categoryLists.value) {
     const categories = categoryList(list);
-    if (categories.length > 0) {
+    if (categories.length || 0 > 0) {
       const takeCount = Math.min(totalNeeded, categories.length);
       result.push(
         ...categories
@@ -142,7 +142,7 @@ const categoryList = (application: Application | Application[]) => {
 watch(
   () => [
     appTrackerStore.preApplication,
-    appTrackerStore.applicationList.length,
+    appTrackerStore.applicationList,
     appTrackerStore.postApplication,
   ],
   () => {
@@ -163,7 +163,7 @@ watch(
 onMounted(async () => {
   if (
     !appTrackerStore.preApplication &&
-    !appTrackerStore.applicationList.length &&
+    !appTrackerStore.applicationList &&
     !appTrackerStore.postApplication
   ) {
     await appTrackerStore.getRoadmapData();

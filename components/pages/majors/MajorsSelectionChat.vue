@@ -607,7 +607,7 @@ const quizSubmit = async () => {
       },
     ];
     const response = await api.post("/api/v1/ai-conversation/determine-major", {
-      roadmap_task_id: 11,
+      roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
       sophieSessionId: uuid.value,
       messages: messages,
     });
@@ -678,7 +678,7 @@ const submit = async () => {
     // } else {
     if (majorStore.isStepperSubmitted) {
       response = await api.post("/api/v1/ai-conversation/determine-major", {
-        roadmap_task_id: 11,
+        roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         sophieSessionId: uuid.value,
         messages: [
           {
@@ -691,7 +691,7 @@ const submit = async () => {
       response = await api.post(`/api/v1/ai-conversation/analysis-major`, {
         query: userQuery,
         sophieSessionId: uuid.value,
-        roadmap_task_id: "11",
+        roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
       });
     }
     // }
