@@ -24,19 +24,15 @@
         ref="appListContainer"
         class="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-6 px-2"
       >
-        <ApplicationsList
-          :heading="t('roadmap_page.pre_application')"
-          :application="appTrackerStore.preApplication"
-        />
-        <ApplicationsList
-          :heading="t('roadmap_page.application')"
-          :application="appTrackerStore.applicationList"
-        />
-        <ApplicationsList
-          :heading="t('roadmap_page.post_application')"
-          :application="appTrackerStore.postApplication"
-          @scrollDown="scrollDown"
-        />
+        <AppCategoryTask
+            :application="appTrackerStore.preApplication"
+          />
+        <AppCategoryTask
+            :application="appTrackerStore.applicationList"
+          />
+        <AppCategoryTask
+            :application="appTrackerStore.postApplication"
+          />
       </div>
     </Transition>
   </div>

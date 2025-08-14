@@ -24,10 +24,10 @@ const useAppTrackerStore = defineStore("appTrackerStore", () => {
     const getRoadmapData = async () => {
         try {
             const response = await api.get(`${appStore.authenticatedUser ? '/api/v1/roadmap/tasks' : 'api/v1/session-based-journey/roadmap/tasks'}`);
-            roadmapData.value = response.data.data;
+            roadmapData.value = response.data.data || [];
             preApplication.value = roadmapData.value.find((item: Application) => item.title.toLowerCase().includes('pre'));
             postApplication.value = roadmapData.value.find((item: Application) => item.title.toLowerCase().includes('post'));
-            applicationList.value = roadmapData.value.find((item: Application) => item.title === "APPLICATION")
+            applicationList.value = roadmapData.value.find((item: Application) => item.title.toLowerCase() === "application")
 
 
         } catch (error) {

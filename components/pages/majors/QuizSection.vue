@@ -4,11 +4,15 @@
     v-if="majorStore.isQuizSubmitting"
     class="border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl px-6 py-[124px] flex flex-col items-center text-center text-text-base"
   >
-    <img
-      src="/images/open-book.png"
-      alt="Rocket"
-      class="min-w-[120px] size-[120px] md:min-w-[156px] md:size-[156px] mb-4"
-    />
+    <lottie-player
+      autoplay
+      loop
+      background="transparent"
+      preserveAspectRatio="xMidYMid slice"
+      src="/animations/book-blue.json"
+      style="width: 200px; height: 200px; transform: scale(2); transform-origin: center;"
+      />
+      <!-- style="width: 200px; height: 200px" -->
     <p class="font-semibold text-xl animate-pulse text-text-base">
       Cooking up your perfect match...
     </p>

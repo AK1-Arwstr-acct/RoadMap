@@ -1,8 +1,13 @@
 <template>
   <section>
-    <div class="overflow-hidden transition-all ease-in-out duration-500">
+    <p
+      class="text-text-brand-bold text-xs uppercase font-semibold px-2"
+    >
+      {{ application?.title || "" }}
+    </p>
+    <div class="mt-3 flex flex-col">
       <div
-        v-for="(task, idx) in filteredTask(category)"
+        v-for="(task, idx) in tasks"
         :key="idx"
         @click.stop="handelTaskDetail(task)"
         :ref="(el) => setTaskRef(el, task.id)"
@@ -52,14 +57,15 @@ const props = defineProps({
     type: Object as PropType<Application>,
     default: () => {},
   },
-  category: {
-    type: String,
-    default: "",
-  },
+  // category: {
+  //   type: String,
+  //   default: "",
+  // },
 });
 
-const isOpen = ref<boolean>(true); // default open
 const taskRefs = ref<Record<number, HTMLElement | null>>({});
+
+const tasks = computed(() => props.application?.tasks || []);
 
 const imageSrc = (task: Task) => {
   return task.title?.toLowerCase().includes("major")
@@ -86,19 +92,15 @@ const setTaskRef = (el: HTMLElement | null, id: number) => {
 };
 
 const handelTaskDetail = async (task: Task) => {
-  // if (appStore.authenticatedUser && task.feature_state === "scholarship") {
-  //   sophieStore.openSophieModal = true;
-  //   sophieStore.scholarshipSophieModal = true;
-  //   appStore.isFeatureChangeFromTasks = true;
-  //   return;
-  // }
   const taskId = task.id;
-  appTrackerStore.taskActiveStates[taskId] = true;
-  Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
-    if (Number(key) !== taskId) {
-      appTrackerStore.taskActiveStates[Number(key)] = false;
-    }
-  });
+  if (task.feature_state !== "mentor_support") {
+    appTrackerStore.taskActiveStates[taskId] = true;
+    Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
+      if (Number(key) !== taskId) {
+        appTrackerStore.taskActiveStates[Number(key)] = false;
+      }
+    });
+  }
 
   sophieStore.roadmapTaskDetail = task;
   let routeName: string = "";
@@ -124,21 +126,20 @@ const handelTaskDetail = async (task: Task) => {
   navigateTo(localePath(routeName));
 };
 
-const filteredTask = (category: string) => {
-  const tasks = props.application.tasks.filter((item) =>
-    item.category.title.includes(category)
-  );
-  return tasks;
-};
+// const filteredTask = (category: string) => {
+//   const tasks = props.application?.tasks.filter((item) =>
+//     item.category.title.includes(category)
+//   );
+//   return tasks;
+// };
 
 watch(
   () => appTrackerStore.taskActiveStates,
   async (states) => {
     const activeId = Number(Object.entries(states).find(([_, v]) => v)?.[0]);
     if (
-      isOpen.value &&
       activeId &&
-      filteredTask(props.category).some((task) => task.id === activeId)
+      tasks.value.some((task) => task.id === activeId)
     ) {
       await nextTick();
       const el = taskRefs.value[activeId];
