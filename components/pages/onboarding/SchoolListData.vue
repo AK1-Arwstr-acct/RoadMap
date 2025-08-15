@@ -19,6 +19,9 @@
           :disabled="programListOptions.length === 0"
           :loading="isProgramLoading"
           @onChange="getStudyDestination"
+          :openDropdown="openDropdown"
+          dropdownName="program_list"
+          @open="(value: string) => (openDropdown = value as string)"
         />
         <Transition name="fade">
           <div v-if="locationOptions.length" class="flex flex-col gap-3">
@@ -80,6 +83,9 @@
           v-model="schoolListData.enrollPlan"
           :disabled="enrollPlanOptions.length === 0"
           :loading="enrollPlanOptions.length === 0"
+          :openDropdown="openDropdown"
+          dropdownName="enroll_plan"
+          @open="(value: string) => (openDropdown = value as string)"
         />
         <BaseSelectRadio
           :label="t('onboarding.what_is_your_estimated_budget_per_year')"
@@ -88,6 +94,9 @@
           :disabled="budgetListOptions.length === 0"
           :loading="isBudgetLoading"
           direction="upward"
+          :openDropdown="openDropdown"
+          dropdownName="budget_option"
+          @open="(value: string) => (openDropdown = value as string)"
         />
       </div>
       <div class="flex items-center gap-10">
@@ -152,6 +161,9 @@ const isProgramLoading = ref<boolean>(false);
 const isLocationLoading = ref<boolean>(false);
 const isBudgetLoading = ref<boolean>(false);
 const isSubmitting = ref<boolean>(false);
+
+// for dropdown open
+const openDropdown = ref<string>("");
 
 const enrollPlanOptions: OptionAttributes[] = [
   {

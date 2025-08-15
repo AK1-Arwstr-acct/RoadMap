@@ -1,13 +1,12 @@
 <template>
-  <a
-    :href="list.link"
-    target="_blank"
+  <div
+    @click="onClick"
     class="w-full rounded-lg p-3 flex flex-col gap-2 bg-background-neutral no-underline"
     style="text-decoration: none"
   >
-    <div class="rounded overflow-hidden">
+    <div class="rounded overflow-hidden w-full h-[112px]">
       <img
-        src="/images/discover-more.png"
+        :src="list.thumbnail"
         alt="discover-more"
         class="size-full object-cover"
       />
@@ -24,13 +23,32 @@
     <p class="text-text-neutral-subtle text-xs leading-[22px]">
       {{ list.detail }}
     </p>
-  </a>
+  </div>
 </template>
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   list: {
-    type: Object as PropType<{ title: string; detail: string; link: string }>,
+    type: Object as PropType<{
+      title: string;
+      detail: string;
+      link: string;
+      thumbnail: string;
+    }>,
     default: () => {},
   },
 });
+
+const onClick = () => {
+  window.open(props.list.link, "_blank");
+};
+
+// const thumbnail = ref<string>("");
+
+// onMounted(async () => {
+//     const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(props.list.link)}&screenshot=true&meta=false`);
+//     const data = await res.json();
+//     thumbnail.value = data?.data?.screenshot?.url || '';
+//     console.log(thumbnail.value);
+
+//   });
 </script>

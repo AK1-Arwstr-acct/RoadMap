@@ -130,7 +130,8 @@
                   :style="{
                     minHeight: `${
                       index + 1 == majorStore.completeChat.length &&
-                      !isChatLoading && !chat.showDiscoverMore
+                      !isChatLoading &&
+                      !chat.showDiscoverMore
                         ? `${chatWrapperHeight}px`
                         : 'auto'
                     }`,
@@ -453,24 +454,35 @@ const educationLevelOption: OptionAttributes[] = [
   },
 ];
 
-const discoverMoreList: { title: string; detail: string; link: string }[] = [
+const discoverMoreList: {
+  title: string;
+  detail: string;
+  link: string;
+  thumbnail: string;
+}[] = [
   {
     title: "16personalities",
     detail:
       "Matches MBTI types to careers based on personality values and strengths.",
     link: "https://www.16personalities.com/articles/our-theory",
+    thumbnail:
+      "https://iad.microlink.io/14OiAl-Z2ZqPKrFpDQZ3npz2jT62MsY9qZbWp_BFVGjl5i38BjQLtSzxhmvyjzWVuuuXxJd-FmDn-2xxDQdwBw.png",
   },
   {
     title: "O*NET Interest Profiler",
     detail:
       "Helps match interests (Holland Codes) to careers and majors, backed by real-world labor market data.",
     link: "https://www.mynextmove.org/explore/ip",
+    thumbnail:
+      "https://iad.microlink.io/vCRVwJD97LMLoPKhCjfXBxYxfZSL9fOu75ZL9Xrm59U5D7UqYrAYhTiSaPWOnHcUaiXURp9ZzRzXTZyKqSQFWQ.png",
   },
   {
     title: "Truity’s Personality-Career Match Tools",
     detail:
       "Explains how MBTI types like INFP align with certain careers and fields of study",
     link: "https://www.truity.com/test/career-personality-profiler-test",
+    thumbnail:
+      "https://iad.microlink.io/ys32iwVT3BX1Ld51LAwW6GpuyIYN2N0peEKHJU_nHna3hZyTDhoVbluW1c_e8nypo6E0a5GyCx-5Mcj3whlgPw.png",
   },
 ];
 

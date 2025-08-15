@@ -29,7 +29,7 @@
             v-model="academicInfo.gpa"
             @input="validateNumber"
             :placeholder="t('onboarding.e_g_7_0')"
-            class="mt-1 bg-background-base-subtle rounded-lg border-2 shadow-sm border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
+            class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
             data-hj-allow
           />
         </div>

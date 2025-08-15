@@ -7,7 +7,7 @@
     <div
       @click.stop="openDropdownHandler"
       @touchstart.prevent="openDropdownHandler"
-      class="bg-background-base-subtle h-12 border-[1.5px] border-border-neutral-subtle rounded-lg py-2 pl-[14px] w-full transition-colors duration-150 ease-in-out flex justify-between items-center cursor-pointer relative"
+      class="bg-background-base-subtle h-12 border border-border-neutral-subtle rounded-lg py-2 pl-[14px] w-full transition-colors duration-150 ease-in-out flex justify-between items-center cursor-pointer relative"
       :class="{
         // '!bg-background-disabled pointer-events-none': !disabled,
         'opacity-50 pointer-events-none': disabled,
