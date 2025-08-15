@@ -137,7 +137,7 @@
                     }`,
                   }"
                 >
-                  <div
+                  <!-- <div
                     v-if="!chat.isSender"
                     class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral"
                   >
@@ -147,7 +147,7 @@
                       class="object-cover object-center size-full"
                       loading="eager"
                     />
-                  </div>
+                  </div> -->
                   <div
                     class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
                     :class="{
@@ -156,6 +156,17 @@
                     }"
                   >
                     <div>
+                      <span
+                        v-if="!chat.isSender"
+                        class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral inline-block"
+                      >
+                        <img
+                          src="/images/chat-bot.png"
+                          alt="chat bot"
+                          class="object-cover object-center size-full"
+                          loading="eager"
+                        />
+                      </span>
                       <vue-markdown
                         :source="chat.text"
                         :options="options"

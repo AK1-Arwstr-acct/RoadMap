@@ -147,9 +147,16 @@
   /* Default styles for table cells */
   .suggestion-container th,
   .suggestion-container td {
-    border: 1px solid #ddd; /* Default border */
-    padding: 8px; /* Default padding */
+    border: none;
+    padding: 12px 12px 12px 0; /* Default padding */
     text-align: left; /* Default text alignment */
+  }
+
+  html.theme-light .suggestion-container tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+  }
+  html.theme-dark .suggestion-container tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   }
   
   /* Default styles for form elements */

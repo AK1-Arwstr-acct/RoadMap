@@ -225,9 +225,9 @@ watch(
 onMounted(async () => {
   const user = await appStore.getUserData();
   const tokenExists = useCookie("token");
-  if (tokenExists.value && !route.path.includes('/onboarding')) {
-    await appStore.getAuthUserData();
-  }
+  // if (tokenExists.value && !route.path.includes('/onboarding')) {
+  //   await appStore.getAuthUserData();
+  // }
   hotjarConfig();
   tiktokConfig();
   await nextTick();
