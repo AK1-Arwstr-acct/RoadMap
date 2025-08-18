@@ -52,11 +52,13 @@
 <script setup lang="ts">
 import useAppStore from "~/stores/AppStore";
 import PaywallModal from "~/components/shared/PaywallModal.vue";
+import useSophieStore from "~/stores/sophieStore";
 
 const appStore = useAppStore();
 const deviceType = useDeviceType();
 const { t } = useI18n();
 const route = useRoute();
+const sophieStore = useSophieStore();
 
 const desktop = {
   DashboardSidebar: defineAsyncComponent(
@@ -65,16 +67,17 @@ const desktop = {
 };
 
 const pageTitle = computed(() => {
-  if (route.path.includes("/majors")) {
-    return "Choose your major";
-  } else if (route.path.includes("/school-list")) {
-    return "Find your college";
-  } else if (route.path.includes("/scholarship")) {
-    return "Scholarship";
-  } else if (route.path.includes("/sophie")) {
-    return "Sophie";
-  } else if (route.path.includes("/ai-essay")) {
-    return "Ai Essay";
-  }
+  // if (route.path.includes("/majors")) {
+  //   return "Choose your major";
+  // } else if (route.path.includes("/school-list")) {
+  //   return "Find your college";
+  // } else if (route.path.includes("/scholarship")) {
+  //   return "Scholarship";
+  // } else if (route.path.includes("/sophie")) {
+  //   return "Sophie";
+  // } else if (route.path.includes("/ai-essay")) {
+  //   return "Ai Essay";
+  // }
+  return sophieStore.roadmapTaskDetail?.title;
 });
 </script>

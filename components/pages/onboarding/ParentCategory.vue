@@ -28,12 +28,13 @@
         :loading="iscoursePreferenceOptionsLoading"
         :disabled="coursePreferenceOptions.length === 0"
         @onChange="onCourseChange"
+        :required="true"
         :openDropdown="openDropdown"
         dropdownName="parent_program"
         @open="(value: string) => (openDropdown = value as string)"
       />
       <MultiMajorsDropdown
-        :label="`${t('onboarding.majors')} (Optional)`"
+        :label="`${t('onboarding.majors')}`"
         :options="majorProgramsList"
         v-model="selectedMajors"
         :loading="isLoadingMajors"

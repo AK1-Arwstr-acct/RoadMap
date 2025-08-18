@@ -14,6 +14,7 @@
             <NuxtLinkLocale v-else to="/">
               <img
                 class="w-[148px]"
+                :class="{ invert: appStore.theme === 'theme-dark' }"
                 src="/images/logo/logo.svg"
                 alt="Logo"
                 loading="eager"
@@ -51,8 +52,8 @@
                   ? route.path === '/' || route.path === '/vi'
                   : tab.activeList.some((item) => route.path.startsWith(item))
               )
-                ? 'text-[#1570EF] bg-[#EFF6FF]'
-                : 'text-[#414651]',
+                ? 'text-text-brand bg-background-brand-subtle'
+                : 'text-text-base',
             ]"
           >
             <component
@@ -64,8 +65,8 @@
                     ? route.path === '/'
                     : tab.activeList.some((item) => route.path.startsWith(item))
                 )
-                  ? 'text-[#1570EF]'
-                  : 'text-[#717680]',
+                  ? 'text-icon-brand'
+                  : 'text-icon-neutral-subtle',
               ]"
             />
             <span v-if="isOpen" class="font-medium text-base text-nowrap">
@@ -80,7 +81,7 @@
         <button
           @click="clearTaskDetails"
           v-if="isOpen"
-          class="mb-3 overflow-hidden text-center px-4 py-2.5 border-[1.5px] border-[#1570EF] rounded-lg font-semibold text-white bg-[#1570EF] cursor-pointer text-sm w-full"
+          class="mb-3 overflow-hidden text-center px-4 py-2.5 rounded-lg font-semibold text-text-constant-white bg-background-brand cursor-pointer text-sm w-full"
         >
           {{ t("dashboard.best_fit_scholarships") }}
         </button>
@@ -218,13 +219,13 @@
 </template>
 <script setup lang="ts">
 import IconTabHome from "~/components/icons/IconTabHome.vue";
-import IconTabApplication from "~/components/icons/IconTabApplication.vue";
 import type { TabList } from "~/types/dashboard";
 import IconBookOpen from "../icons/IconBookOpen.vue";
 import useAppStore from "~/stores/AppStore";
 import GetMentorshipBlock from "../pages/home/GetMentorshipBlock.vue";
 import useSchoolListStore from "~/stores/SchoolListStore";
 import { NuxtLinkLocale } from "#components";
+import IconStarOutline from "../icons/IconStarOutline.vue";
 
 const emit = defineEmits(["updateTab"]);
 
@@ -251,8 +252,9 @@ const tabList = ref<TabList[]>([
   //   activeList: ['/sophie', '/school-list', '/ai-essay']
   // },
   {
-    name: t("dashboard.sidebar.menu.your_checklist"),
-    icon: shallowRef(IconTabApplication),
+    // name: t("dashboard.sidebar.menu.your_checklist"),
+    name: "Application toolkit",
+    icon: shallowRef(IconStarOutline),
     route: "/majors",
     activeList: [
       "/majors",

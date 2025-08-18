@@ -1,7 +1,8 @@
 <template>
   <div class="relative">
     <p v-if="label" class="font-medium text-text-neutral-subtle text-sm mb-1.5">
-      {{ label }}
+      {{ label
+      }}<span v-if="required" class="text-text-error font-medium"> *</span>
     </p>
     <div
       @click.stop="openDropdownHandler"
@@ -169,7 +170,11 @@ const props = defineProps({
     type: Object as PropType<number[]>,
     default: () => [],
   },
-   // for dropdown
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  // for dropdown
   openDropdown: {
     type: String,
     default: "",
@@ -198,7 +203,7 @@ const selectedLabels = computed(() => {
 
 const openDropdownHandler = () => {
   emits("open", props.dropdownName);
-  isDropdownOpen.value = !isDropdownOpen.value
+  isDropdownOpen.value = !isDropdownOpen.value;
 };
 
 const closeDropdown = () => {
@@ -232,7 +237,7 @@ watch(
   () => props.openDropdown,
   (newValue) => {
     if (newValue !== props.dropdownName) {
-      isDropdownOpen.value = false
+      isDropdownOpen.value = false;
     }
   }
 );

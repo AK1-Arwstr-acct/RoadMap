@@ -17,7 +17,7 @@
               },
             ]"
           >
-            <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-6 w-full max-w-[800px] mx-auto">
               <div
                 v-for="(chat, index) in completeChat.filter(
                   (item) => item.text !== ''
@@ -155,7 +155,7 @@
                 completeChat.length === 0 ||
                 (!appStore.authenticatedUser && completeChat.length === 1)
               "
-              class="flex flex-col gap-1 items-end mt-3"
+              class="flex flex-col gap-1 items-end mt-3  w-full max-w-[800px] mx-auto"
               :class="{ 'pointer-events-none': isChatFull }"
             >
               <p class="text-[#4B5563] text-xs font-semibold pb-1">
@@ -179,7 +179,7 @@
           </div>
           <!-- paywall for PUblic user -->
           <Transition name="fade">
-            <div v-if="publicPaywall" class="absolute inset-0 flex flex-col">
+            <div v-if="publicPaywall" class="absolute inset-0 flex flex-col w-full max-w-[800px] mx-auto">
               <!-- shadow bg -->
               <div
                 class="flex-1 bg-gradient-to-b from-transparent via-white/60 to-white"
@@ -218,7 +218,7 @@
           </div>
         </div>
         <!-- input -->
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4  w-full max-w-[800px] mx-auto">
           <Transition name="fade">
             <div
               v-if="isChatFull"

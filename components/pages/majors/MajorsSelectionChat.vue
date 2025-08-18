@@ -337,7 +337,7 @@
             <div
               class="relative border border-border-neutral-subtle bg-background-base rounded-2xl flex items-center min-h-full"
               :class="{
-                'bg-[#FAFAFA] pointer-events-none':
+                'pointer-events-none':
                   isChatFull || isChatLoading || typingInterval !== null,
               }"
             >

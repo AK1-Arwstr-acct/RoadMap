@@ -2,7 +2,7 @@
   <div class="relative">
     <p v-if="label" class="font-medium text-text-neutral-subtle text-sm mb-1.5">
       {{ label
-      }}<span v-if="required" class="text-text-error font-medium">*</span>
+      }}<span v-if="required" class="text-text-error font-medium"> *</span>
     </p>
     <div
       @click.stop="openDropdownHandler"

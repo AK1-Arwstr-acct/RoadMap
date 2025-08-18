@@ -7,7 +7,7 @@
         : 'w-0',
     ]"
   >
-    <div class="px-4">
+    <!-- <div class="px-4">
       <Transition name="sidebar">
         <p
           v-if="appTrackerStore.isRoadmapSidebarOPen"
@@ -16,7 +16,7 @@
           Application toolkit
         </p>
       </Transition>
-    </div>
+    </div> -->
     <!-- for open sidebar -->
     <Transition name="sidebar">
       <div

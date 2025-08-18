@@ -8,7 +8,8 @@
           class="size-20 min-w-20"
         />
         <h1 class="text-text-base text-xl md:text-2xl font-medium text-center">
-          {{ $t('onboarding.hey') }} {{ appStore.userData?.name }}, {{ $t('onboarding.help_us_get_to_know_you') }}
+          {{ $t("onboarding.hey") }} {{ appStore.userData?.name }},
+          {{ $t("onboarding.help_us_get_to_know_you") }}
         </h1>
       </div>
       <BaseSelectRadio
@@ -17,10 +18,14 @@
         v-model="academicInfo.grade"
         :disabled="classGradeList.length === 0"
         :loading="isClassGradesLoading"
+        :required="true"
       />
       <div class="remove-shadow-bg-white">
         <label class="font-medium text-text-neutral-subtle text-sm"
-          >{{ $t('onboarding.whats_your_current_gpa_on_a_10_point_scale') }}</label
+          >{{ $t("onboarding.whats_your_current_gpa")
+          }}<span class="text-text-error font-medium"
+            > *</span
+          ></label
         >
         <div class="relative">
           <input
@@ -32,6 +37,9 @@
             class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
             data-hj-allow
           />
+          <span class="text-text-neutral-subtle absolute right-[14px] top-1/2 transform -translate-y-1/2">
+            /10
+          </span>
         </div>
       </div>
       <div class="flex items-center gap-10">
@@ -44,10 +52,10 @@
           "
           class="text-text-constant-white font-semibold bg-background-brand rounded-lg flex gap-3 items-center justify-center py-2.5 px-[18px] disabled:opacity-50"
         >
-          {{ $t('onboarding.next') }}
+          {{ $t("onboarding.next") }}
         </button>
         <p class="w-fit flex items-center gap-2 text-text-base text-xs">
-          {{ $t('onboarding.press_enter') }}
+          {{ $t("onboarding.press_enter") }}
           <IconEnter />
         </p>
       </div>
