@@ -14,7 +14,14 @@ const useMajorStore = defineStore("majorStore", () => {
     const initialChat = ref<MajorsSelectionChat[]>([]);
     const completeChat = ref<MajorsSelectionChat[]>([]);
 
+    // floow up questions
+    const preQuestion = ref<string[]>([]);
+    const followUpQuestions = ref<{ questions: string[]; title: string } | null>(
+        null
+    );
+
     // quiz stepper
+    const isQuizSubmitted = ref<boolean>(false);
     const currentStep = ref(0);
     const quiz = [
         {
@@ -82,8 +89,11 @@ const useMajorStore = defineStore("majorStore", () => {
         isQuizStart,
         initialChat,
         completeChat,
+        preQuestion,
+        followUpQuestions,
 
         // quiz variables
+        isQuizSubmitted,
         currentStep,
         quiz,
         answers,

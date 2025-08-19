@@ -130,8 +130,8 @@
                   :style="{
                     minHeight: `${
                       index + 1 == majorStore.completeChat.length &&
-                      !isChatLoading &&
-                      !chat.showDiscoverMore
+                      !isChatLoading && 
+                      !chat.showDiscoverMore && chat.text !== 'redo-quiz'
                         ? `${chatWrapperHeight}px`
                         : 'auto'
                     }`,
@@ -239,8 +239,7 @@
                   v-if="
                     typingInterval === null &&
                     majorStore.completeChat.length !== 0 &&
-                    followUpQuestions !== null &&
-                    !majorStore.isQuizStart
+                    majorStore.followUpQuestions !== null
                   "
                   class="flex flex-col gap-1 items-end mt-3 overflow-hidden"
                   :class="{ 'pointer-events-none': isChatFull }"
@@ -248,11 +247,12 @@
                   <p
                     class="text-text-neutral-subtle text-xs font-semibold pb-1"
                   >
-                    {{ followUpQuestions.title }}
+                    {{ majorStore.followUpQuestions.title }}
                   </p>
                   <div class="flex flex-col gap-1 items-end">
                     <div
-                      v-for="(question, idx) in followUpQuestions.questions"
+                      v-for="(question, idx) in majorStore.followUpQuestions
+                        .questions"
                       :key="idx"
                       @click="handelPreQuestion(question)"
                       class="py-2 px-4 rounded-full border border-border-neutral-subtle text-xs md:text-sm text-text-base bg-background-base-subtle font-semibold cursor-pointer w-fit flex items-center gap-2"
@@ -266,7 +266,7 @@
               <div
                 v-if="
                   majorStore.completeChat.length === 0 &&
-                  preQuestion.length > 0 &&
+                  majorStore.preQuestion.length > 0 &&
                   !isModal &&
                   !majorStore.isQuizStart
                 "
@@ -281,7 +281,7 @@
                   :class="{ 'flex-col': !isModal }"
                 >
                   <div
-                    v-for="(question, idx) in preQuestion"
+                    v-for="(question, idx) in majorStore.preQuestion"
                     :key="idx"
                     @click="handelPreQuestion(question)"
                     class="py-2 px-4 rounded-full border border-border-neutral-subtle text-xs md:text-sm text-text-base bg-background-base-subtle font-semibold cursor-pointer w-fit flex items-center gap-2"
@@ -307,9 +307,9 @@
             <Transition name="fade">
               <div
                 v-if="isChatFull"
-                class="border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
+                class="bg-background-base-subtle-selected py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
               >
-                <div class="text-[#414651] text-sm order-1 md:order-none">
+                <div class="text-text-neutral-subtle text-sm order-1 md:order-none">
                   <p class="font-semibold mb-1.5">
                     {{
                       $t(
@@ -327,7 +327,7 @@
                 </div>
                 <NuxtLinkLocale to="/pricing">
                   <button
-                    class="border border-border-neutral-subtle bg-white rounded-lg py-2 px-3.5"
+                    class="border border-border-neutral-subtle bg-background-neutral-subtle text-text-base rounded-lg py-2 px-3.5"
                   >
                     {{ $t("sophie_page.upgrade_now") }}
                   </button>
@@ -435,16 +435,12 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 const hasChatScroll = ref(false);
+const isFollowUpQuestion = ref(false);
 
 // typing animation
 const typingInterval = ref<number | null>(null);
 const typingIndex = ref(0);
 const typingFullText = ref("");
-
-const preQuestion = ref<string[]>([]);
-const followUpQuestions = ref<{ questions: string[]; title: string } | null>(
-  null
-);
 
 const educationLevelOption: OptionAttributes[] = [
   {
@@ -519,16 +515,13 @@ const handelPreQuestion = async (question: string) => {
   if (question === "Recommend majors I’m most suited for") {
     majorStore.showQuiz = true;
     majorStore.isQuizStart = true;
+    scrollToTop();
     return;
   }
+  isFollowUpQuestion.value = true;
   if (question.includes("[star]")) {
     inputQuestion.value = question.replace("[star]", "");
     submit();
-    // if (!sophieStore.isSophiePublic) {
-    //   await api.get(
-    //     `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
-    //   );
-    // }
   } else {
     inputQuestion.value = question;
     submit();
@@ -548,6 +541,18 @@ const scrollDown = () => {
       chatContainer.value.scrollTo({
         top:
           chatContainer.value.scrollHeight - chatContainer.value.clientHeight,
+        behavior: "smooth",
+      });
+    }
+  });
+};
+
+// Function to scroll to the Top
+const scrollToTop = () => {
+  nextTick(() => {
+    if (chatContainer.value) {
+      chatContainer.value.scrollTo({
+        top: 0,
         behavior: "smooth",
       });
     }
@@ -595,6 +600,7 @@ const startTypingAnimation = () => {
 
 const quizSubmit = async () => {
   try {
+    majorStore.followUpQuestions = null;
     const messages = [
       {
         role: "assistant",
@@ -654,6 +660,11 @@ const quizSubmit = async () => {
       typingIndex.value = 0;
       startTypingAnimation();
     }
+    if (response.data.suggested_follow_ups) {
+      majorStore.followUpQuestions = response.data.suggested_follow_ups;
+    } else {
+      majorStore.followUpQuestions = null;
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -669,7 +680,7 @@ const quizSubmit = async () => {
 const submit = async () => {
   try {
     emit("isChatLoading", true);
-    followUpQuestions.value = null;
+    majorStore.followUpQuestions = null;
     majorStore.completeChat.push({
       isSender: true,
       text: inputQuestion.value,
@@ -699,7 +710,7 @@ const submit = async () => {
     //     }
     //   );
     // } else {
-    if (majorStore.isStepperSubmitted) {
+    if (majorStore.isQuizSubmitted && !isFollowUpQuestion.value) {
       response = await api.post("/api/v1/ai-conversation/determine-major", {
         roadmap_task_id: sophieStore.roadmapTaskDetail?.id,
         sophieSessionId: uuid.value,
@@ -726,7 +737,7 @@ const submit = async () => {
           isTyping: true,
           message_support_id: response.data.message_support_id,
         });
-        if (majorStore.isStepperSubmitted) {
+        if (majorStore.isQuizSubmitted && !isFollowUpQuestion.value) {
           typingFullText.value = response.data.data.response;
         } else {
           typingFullText.value = response.data.data;
@@ -747,9 +758,9 @@ const submit = async () => {
         });
       }
       if (response.data.suggested_follow_ups) {
-        followUpQuestions.value = response.data.suggested_follow_ups;
+        majorStore.followUpQuestions = response.data.suggested_follow_ups;
       } else {
-        followUpQuestions.value = null;
+        majorStore.followUpQuestions = null;
       }
     }
     await nextTick();
@@ -771,6 +782,7 @@ const submit = async () => {
       });
     }
   } finally {
+    isFollowUpQuestion.value = false;
     isChatLoading.value = false;
     emit("isChatLoading", false);
     await nextTick();
@@ -783,7 +795,7 @@ const submit = async () => {
 const checkInitialContent = () => {
   if (appStore.authenticatedUser) {
     if (appStore.userData) {
-      preQuestion.value = [
+      majorStore.preQuestion = [
         "Compare majors",
         `Explore ${appStore.userMajors} in more detail`,
         `What do students say about ${appStore.userMajors}`,
@@ -793,7 +805,7 @@ const checkInitialContent = () => {
         appStore.userData.current_situation ===
         "I'm unsure about what major to pursue"
       ) {
-        preQuestion.value = preQuestion.value.slice(0, -1);
+        majorStore.preQuestion = majorStore.preQuestion.slice(0, -1);
         majorStore.initialChat.push({
           isSender: false,
           text: `<p class="!m-0 text-lg md:text-2xl font-semibold">Hey ${appStore.userData.name} 👋 Not sure where to start with major selection?</p><p class="pt-2 leading-7">This short quiz will help you uncover the right majors for you:</p>`,
@@ -857,6 +869,9 @@ onMounted(async () => {
     inputQuestion.value = majorStore.inputText;
     majorStore.navigateFromTabInside = false;
     majorStore.inputText = "";
+  }
+  if (majorStore.completeChat.length) {
+    scrollDown();
   }
 });
 </script>

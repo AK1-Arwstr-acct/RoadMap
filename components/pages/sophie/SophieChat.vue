@@ -72,7 +72,7 @@
                     }`,
                   }"
                 >
-                  <div
+                  <!-- <div
                     v-if="!chat.isSender"
                     class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
                   >
@@ -82,7 +82,7 @@
                       class="object-cover object-center size-full"
                       loading="eager"
                     />
-                  </div>
+                  </div> -->
                   <div
                     class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
                     :class="{
@@ -91,6 +91,17 @@
                     }"
                   >
                     <div>
+                      <span
+                        v-if="!chat.isSender"
+                        class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral inline-block"
+                      >
+                        <img
+                          src="/images/chat-bot.png"
+                          alt="chat bot"
+                          class="object-cover object-center size-full"
+                          loading="eager"
+                        />
+                      </span>
                       <vue-markdown
                         :source="chat.text"
                         :options="options"
@@ -197,9 +208,11 @@
           <Transition name="fade">
             <div
               v-if="isChatFull"
-              class="border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
+              class="bg-background-base-subtle-selected py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
             >
-              <div class="text-[#414651] text-sm order-1 md:order-none">
+              <div
+                class="text-text-neutral-subtle text-sm order-1 md:order-none"
+              >
                 <p class="font-semibold mb-1.5">
                   {{
                     $t(
@@ -217,7 +230,7 @@
               </div>
               <NuxtLinkLocale to="/pricing">
                 <button
-                  class="border-[1.5px] border-gray-200 bg-white rounded-lg py-2 px-3.5"
+                  class="border border-border-neutral-subtle bg-background-neutral-subtle text-text-base rounded-lg py-2 px-3.5"
                 >
                   {{ $t("sophie_page.upgrade_now") }}
                 </button>

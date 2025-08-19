@@ -10,9 +10,14 @@
       background="transparent"
       preserveAspectRatio="xMidYMid slice"
       src="/animations/book-blue.json"
-      style="width: 200px; height: 200px; transform: scale(2); transform-origin: center;"
-      />
-      <!-- style="width: 200px; height: 200px" -->
+      style="
+        width: 200px;
+        height: 200px;
+        transform: scale(2);
+        transform-origin: center;
+      "
+    />
+    <!-- style="width: 200px; height: 200px" -->
     <p class="font-semibold text-xl animate-pulse text-text-base">
       Cooking up your perfect match...
     </p>
@@ -167,7 +172,7 @@ import useMajorStore from "~/stores/majorStore";
 
 const majorStore = useMajorStore();
 
-const emit = defineEmits(["submit"]);
+const emit = defineEmits(["submit", "redoQuiz"]);
 
 const multiSelectFirst = ref<string[]>([]);
 
@@ -229,6 +234,9 @@ const submitQuiz = () => {
     majorStore.answers[0] = multiSelectFirst.value.join(".");
   }
   majorStore.isQuizSubmitting = true;
+  if (!majorStore.isQuizSubmitted) {
+    majorStore.isQuizSubmitted = true;
+  }
   emit("submit");
 };
 
@@ -238,7 +246,6 @@ const redoQuiz = () => {
   majorStore.extraQuestion.mbti = "";
   majorStore.extraQuestion.activities = "";
   majorStore.isStepperSubmitted = false;
-  majorStore.completeChat = [];
 };
 
 const learnMore = () => {
