@@ -13,10 +13,7 @@
     </div>
     <div class="flex gap-2 items-center">
       <div class="size-[18px] min-w-[18px] overflow-hidden rounded-full">
-        <img
-          :src="`https://www.google.com/s2/favicons?sz=64&domain_url=${list.link}`"
-          alt="Website Logo"
-        />
+        <img src="/images/discover-user-img.png" alt="discover-user-img" />
       </div>
       <p class="text-text-brand text-sm">{{ list.title }}</p>
     </div>

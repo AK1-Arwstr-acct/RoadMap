@@ -1,60 +1,107 @@
 <template>
   <div class="text-text-base flex flex-col gap-4 leading-7">
-    <p class="font-semibold text-xl md:text-2xl">🔍 Evaluate your strengths</p>
+    <p class="font-semibold text-xl md:text-2xl">
+      {{ $t("majors_page.guide.srengthGuide.heading") }}
+    </p>
     <!-- 1 -->
     <div>
-      <span class="font-semibold">1. Analyze Your Personal Capabilities</span>
+      <span class="font-semibold">{{
+        $t("majors_page.guide.srengthGuide.analyze_your_personal_capabilities")
+      }}</span>
       <div class="mt-1">
-        To understand yourself better, we recommend taking the
-        <span class="text-text-brand font-semibold"
-          >Big Five personality test</span
-        >. This tool is more reliable than MBTI because it evaluates personality
-        on a spectrum rather than just categorizing into two extremes. Instead
-        of saying you’re “completely introverted” or “completely extroverted,”
-        Big Five shows you where you fall on the introversion-extroversion
-        scale, providing a more nuanced and scientific self-understanding.
+        {{
+          $t(
+            "majors_page.guide.srengthGuide.to_understand_yourself_better_we_recommend_taking_the"
+          )
+        }}
+        <span class="text-text-brand font-semibold">{{
+          $t("majors_page.guide.srengthGuide.big_five_personality_test")
+        }}</span
+        >.
+        {{
+          $t(
+            "majors_page.guide.srengthGuide.this_tool_is_more_reliable_than_mbti"
+          )
+        }}
       </div>
     </div>
     <!-- 2 -->
     <div class="flex flex-col gap-3">
-      <span class="font-semibold"
-        >2. Choose Based on Career Clusters Framework</span
-      >
+      <span class="font-semibold">{{
+        $t(
+          "majors_page.guide.srengthGuide.choose_based_on_career_clusters_framework"
+        )
+      }}</span>
       <div>
-        Personality tests alone aren’t enough for major selection. While MBTI
-        might suggest an INTJ suits technology, you might not excel at math or
-        logic. Here’s a simpler framework looking at three factors:
+        {{
+          $t(
+            "majors_page.guide.srengthGuide.personality_tests_alone_arent_enough_for_major_selection"
+          )
+        }}
       </div>
       <div>
-        <p class="font-semibold">🧠 Natural Abilities</p>
-        <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
-          <li>Skills you learn faster than others</li>
-          <li>Example: Quick math comprehension, trend analysis insight</li>
-        </ul>
-      </div>
-      <div>
-        <p class="font-semibold">❤️ Genuine Interests</p>
+        <p class="font-semibold">
+          {{ $t("majors_page.guide.srengthGuide.natural_abilities") }}
+        </p>
         <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
           <li>
-            Activities you never tire of and willingly invest time learning,
-            even when difficult
+            {{
+              $t(
+                "majors_page.guide.srengthGuide.skills_you_learn_faster_than_others"
+              )
+            }}
+          </li>
+          <li>
+            {{
+              $t(
+                "majors_page.guide.srengthGuide.example_quick_math_comprehension_trend_analysis_insight"
+              )
+            }}
           </li>
         </ul>
       </div>
       <div>
-        <p class="font-semibold">🎯 Extracurricular Activities</p>
+        <p class="font-semibold">
+          {{ $t("majors_page.guide.srengthGuide.genuine_interests") }}
+        </p>
         <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
-          <li>Closest to real work experience</li>
           <li>
-            Example: Enjoying project leadership suggests management potential;
-            debate skills might suit law or consulting
+            {{
+              $t(
+                "majors_page.guide.srengthGuide.activities_you_never_tire_of_and_willingly_invest_time_learning_even_when_difficult"
+              )
+            }}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-semibold">
+          {{ $t("majors_page.guide.srengthGuide.extracurricular_activities") }}
+        </p>
+        <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
+          <li>
+            {{
+              $t(
+                "majors_page.guide.srengthGuide.closest_to_real_work_experience"
+              )
+            }}
+          </li>
+          <li>
+            {{
+              $t(
+                "majors_page.guide.srengthGuide.example_enjoying_project_leadership_suggests_management_potential_debate_skills_might_suit_law_or_consulting"
+              )
+            }}
           </li>
         </ul>
       </div>
     </div>
     <div>
-      This framework helps you understand WHY you’re suited for a particular
-      field – extremely useful for application essays and interviews!
+      {{
+        $t(
+          "majors_page.guide.srengthGuide.this_framework_helps_you_understand_why_you_are_suited_for_a_particular_field_extremely_useful_for_application_essays_and_interviews"
+        )
+      }}
     </div>
     <div
       class="rounded-2xl overflow-hidden border border-border-neutral-subtle bg-background-neutral-subtle flex items-center"
@@ -66,25 +113,39 @@
           class="size-full object-cover rounded-xl md:rounded-none"
         />
       </div>
-      <div class="p-2 md:p-6 flex-1 flex flex-col md:flex-row items-start md:justify-between md:items-center gap-2 md:gap-6">
+      <div
+        class="p-2 md:p-6 flex-1 flex flex-col md:flex-row items-start md:justify-between md:items-center gap-2 md:gap-6"
+      >
         <div>
           <p
             class="text-xs font-semibold uppercase bg-gradient-to-r from-[#9333EA] to-[#C084FC] bg-clip-text text-transparent"
           >
-            Want to try out this framework?
+            {{
+              $t(
+                "majors_page.guide.srengthGuide.want_to_try_out_this_framework"
+              )
+            }}
           </p>
           <p class="text-text-base text-lg md:text-xl font-semibold">
-            Find your major with Sophie AI
+            {{
+              $t(
+                "majors_page.guide.srengthGuide.find_your_major_with_sophie_ai"
+              )
+            }}
           </p>
           <p class="text-text-neutral-subtle text-sm">
-            Identify work cluster, strengths, and career goals
+            {{
+              $t(
+                "majors_page.guide.srengthGuide.identify_work_cluster_strengths_and_career_goals"
+              )
+            }}
           </p>
         </div>
         <button
           @click="startQuiz"
           class="rounded-lg px-4 py-2 bg-background-brand text-text-constant-white text-nowrap text-sm md:text-base font-semibold"
         >
-          Start your quiz
+          {{ $t("majors_page.guide.srengthGuide.start_your_quiz") }}
         </button>
       </div>
     </div>

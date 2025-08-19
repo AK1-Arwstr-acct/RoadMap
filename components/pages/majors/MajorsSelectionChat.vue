@@ -81,7 +81,7 @@
                       v-if="!majorStore.isQuizStart"
                       class="mt-6 rounded-2xl overflow-hidden border border-border-neutral-subtle bg-background-neutral-subtle flex items-center gap-2"
                     >
-                      <div class="size-[100px] md:size-[140px]">
+                      <div class="size-[100px] min-w-[100px] md:size-[140px] md:min-w-[140px]">
                         <img
                           src="/images/sophieQuiz.png"
                           alt="application"
@@ -95,19 +95,19 @@
                           <p
                             class="text-text-base text-lg md:text-xl font-semibold"
                           >
-                            Career framework quiz
+                            {{ $t('majors_page.chat.career_framework_quiz') }}
                           </p>
                           <p
                             class="text-text-neutral-subtle text-xs md:text-sm"
                           >
-                            Identify work cluster, strengths, and career goals
+                            {{ $t('majors_page.chat.identify_work_cluster_strengths_and_career_goals') }}
                           </p>
                         </div>
                         <button
                           @click="majorStore.isQuizStart = true"
                           class="rounded-lg px-4 text-sm md:text-base py-2 bg-background-brand text-text-constant-white text-nowrap font-semibold"
                         >
-                          Start quiz
+                          {{ $t('majors_page.chat.start_quiz') }}
                         </button>
                       </div>
                     </div>
@@ -344,7 +344,7 @@
               <textarea
                 v-if="!readOnly"
                 ref="textarea"
-                placeholder="Ask Sophie anything"
+                :placeholder="t('homepage.ask_sophie_anything')"
                 v-model="inputQuestion"
                 @keydown.enter.exact.prevent="submit"
                 @keydown.enter.ctrl.prevent="addNewLine"
@@ -473,7 +473,7 @@ const discoverMoreList: {
       "Matches MBTI types to careers based on personality values and strengths.",
     link: "https://www.16personalities.com/articles/our-theory",
     thumbnail:
-      "https://iad.microlink.io/14OiAl-Z2ZqPKrFpDQZ3npz2jT62MsY9qZbWp_BFVGjl5i38BjQLtSzxhmvyjzWVuuuXxJd-FmDn-2xxDQdwBw.png",
+      "/images/thumbnail1.png",
   },
   {
     title: "O*NET Interest Profiler",
@@ -481,7 +481,7 @@ const discoverMoreList: {
       "Helps match interests (Holland Codes) to careers and majors, backed by real-world labor market data.",
     link: "https://www.mynextmove.org/explore/ip",
     thumbnail:
-      "https://iad.microlink.io/vCRVwJD97LMLoPKhCjfXBxYxfZSL9fOu75ZL9Xrm59U5D7UqYrAYhTiSaPWOnHcUaiXURp9ZzRzXTZyKqSQFWQ.png",
+      "/images/thumbnail2.png",
   },
   {
     title: "Truity’s Personality-Career Match Tools",
@@ -489,7 +489,7 @@ const discoverMoreList: {
       "Explains how MBTI types like INFP align with certain careers and fields of study",
     link: "https://www.truity.com/test/career-personality-profiler-test",
     thumbnail:
-      "https://iad.microlink.io/ys32iwVT3BX1Ld51LAwW6GpuyIYN2N0peEKHJU_nHna3hZyTDhoVbluW1c_e8nypo6E0a5GyCx-5Mcj3whlgPw.png",
+      "/images/thumbnail3.png",
   },
 ];
 
@@ -679,6 +679,9 @@ const quizSubmit = async () => {
 
 const submit = async () => {
   try {
+    if (inputQuestion.value.trim().length < 2) {
+      return;
+    }
     emit("isChatLoading", true);
     majorStore.followUpQuestions = null;
     majorStore.completeChat.push({

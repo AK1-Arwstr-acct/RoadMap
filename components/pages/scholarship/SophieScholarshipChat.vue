@@ -488,6 +488,9 @@ const handelPreQuestionOfScholarship = async (
 
 const submit = async () => {
   try {
+    if (inputQuestion.value.trim().length < 2) {
+      return;
+    }
     completeChat.value.push({
       isSender: true,
       text: inputQuestion.value,

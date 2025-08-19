@@ -62,7 +62,7 @@
                 "schools_list": "Danh sách trường",
                 "sophie": "Sophie",
                 "ai_essay": "Trình chỉnh sửa luận AI",
-                "your_checklist": "Checklist",
+                "application_toolkit": "Bộ công cụ ứng dụng",
                 "resources": "Tài liệu"
             }
         },
@@ -114,6 +114,7 @@
         },
         "application_process": "Quá trình nộp hồ sơ",
         "ask_me_anything!": "Hỏi mình bất cứ điều gì nhé!",
+        "ask_sophie_anything": "Hỏi Sophie bất cứ điều gì",
         "coming_soon": "Sắp ra mắt",
         "essay_outline_review_with_mentor": "Review essay outline cùng mentor",
         "finalize_extracurricular_activity": "Chốt hoạt động ngoại khoá",
@@ -151,6 +152,75 @@
         "please_verify_your_email_to_continue": "Vui lòng xác minh email của bạn để tiếp tục.",
         "enter_your_password": "Nhập mật khẩu của bạn",
         "sign_up": "Đăng ký"
+    },
+    "majors_page": {
+        "chat": {
+            "career_framework_quiz": "Bài kiểm tra khung nghề nghiệp",
+            "cooking_up_your_perfect_match": "Đang chuẩn bị sự lựa chọn hoàn hảo cho bạn...",
+            "identify_work_cluster_strengths_and_career_goals": "Xác định nhóm công việc, điểm mạnh và mục tiêu nghề nghiệp",
+            "learn_more": "Tìm hiểu thêm",
+            "next": "Tiếp theo",
+            "redo_quiz": "Làm lại bài kiểm tra",
+            "start_quiz": "Bắt đầu bài kiểm tra",
+            "submit": "Gửi"
+        },
+        "guide": {
+            "how_to_choose_your_major": "Cách chọn ngành học của bạn",
+            "lock_in_major_card": {
+                "button": "Xác nhận ngành học của bạn",
+                "detail": "Bạn đã khám phá các tài nguyên — bây giờ là lúc thực hiện bước tiếp theo. Cập nhật hồ sơ của bạn để Sophie có thể giúp bạn tìm trường phù hợp nhất!",
+                "heding": "🎯 Sẵn sàng chọn ngành học của bạn?"
+            },
+            "majorsGuide": {
+                "and": "và",
+                "career_prospects_settlement_opportunities": "cơ hội nghề nghiệp/cơ hội định cư",
+                "education_quality": "chất lượng giáo dục",
+                "key_principle": "Nguyên tắc chính",
+                "light": "Ngành học của bạn cũng là yếu tố then chốt trong việc chọn trường đại học vì",
+                "p1": {
+                    "and": "và",
+                    "career_prospects_settlement_opportunities": "cơ hội nghề nghiệp/cơ hội định cư",
+                    "education_quality": "chất lượng giáo dục",
+                    "when_preparing_to_study": "Khi chuẩn bị đi du học, việc chọn ngành học là quyết định quan trọng nhất vì nó ảnh hưởng trực tiếp đến hai yếu tố thiết yếu:"
+                },
+                "p2": "Không phải quốc gia nào cũng mạnh về tất cả các lĩnh vực. Ví dụ, học các ngành sáng tạo ở châu Âu (Pháp hoặc Ý) có thể mạnh hơn và rẻ hơn nhiều so với ở Mỹ. Một ví dụ khác: Nếu bạn học STEM ở Mỹ, bạn gần như chắc chắn sẽ có 3 năm STEM OPT, nhưng ở Úc, bạn có thể không được đưa vào Danh sách Nghề nghiệp Kỹ năng để có lợi thế khi xin việc.",
+                "p3": {
+                    "bold": "xếp hạng chương trình quan trọng hơn xếp hạng tổng thể của trường",
+                    "light": "Ngành học của bạn cũng là yếu tố then chốt trong việc chọn trường đại học vì"
+                },
+                "p4": "Bạn không cần phải chọn hoàn hảo ngay từ ngày đầu vào đại học, nhưng chắc chắn bạn không nên chọn ngẫu nhiên. Nhiều sinh viên lầm tưởng rằng chọn các ngành \"hot\" như phân tích kinh doanh hoặc khoa học dữ liệu sẽ đảm bảo thành công, nhưng ngay cả các lĩnh vực đang thịnh hành cũng có thể dẫn đến thất nghiệp.",
+                "so_how_do_you_choose_a_major": "Vậy làm thế nào để chọn ngành học?",
+                "there_are_no_hot_majors": "Không có ngành học ‘hot’, chỉ có những chuyên gia giỏi mang lại giá trị cho khách hàng và xã hội – đó mới là điều khiến một cá nhân trở nên ‘hot’."
+            },
+            "srengthGuide": {
+                "activities_you_never_tire_of_and_willingly_invest_time_learning_even_when_difficult": "Những hoạt động bạn không bao giờ thấy chán và sẵn sàng dành thời gian học hỏi, ngay cả khi khó khăn",
+                "analyze_your_personal_capabilities": "1. Phân tích năng lực cá nhân của bạn",
+                "big_five_personality_test": "Bài kiểm tra tính cách Big Five",
+                "choose_based_on_career_clusters_framework": "2. Chọn dựa trên khung cụm nghề nghiệp",
+                "closest_to_real_work_experience": "Gần nhất với kinh nghiệm làm việc thực tế",
+                "example_enjoying_project_leadership_suggests_management_potential_debate_skills_might_suit_law_or_consulting": "Ví dụ: Thích lãnh đạo dự án gợi ý tiềm năng quản lý; kỹ năng tranh luận có thể phù hợp với luật hoặc tư vấn",
+                "example_quick_math_comprehension_trend_analysis_insight": "Ví dụ: Hiểu nhanh toán học, phân tích xu hướng",
+                "extracurricular_activities": "🎯 Hoạt động ngoại khóa",
+                "find_your_major_with_sophie_ai": "Tìm ngành học của bạn với Sophie AI",
+                "genuine_interests": "❤️ Sở thích thực sự",
+                "heading": "🔍 Đánh giá điểm mạnh của bạn",
+                "identify_work_cluster_strengths_and_career_goals": "Xác định nhóm công việc, điểm mạnh và mục tiêu nghề nghiệp",
+                "natural_abilities": "🧠 Khả năng tự nhiên",
+                "personality_tests_alone_arent_enough_for_major_selection": "Các bài kiểm tra tính cách một mình không đủ để chọn ngành học. Trong khi MBTI có thể gợi ý rằng một INTJ phù hợp với công nghệ, bạn có thể không giỏi toán hoặc logic. Đây là một khung đơn giản hơn dựa trên ba yếu tố:",
+                "skills_you_learn_faster_than_others": "Kỹ năng bạn học nhanh hơn người khác",
+                "start_your_quiz": "Bắt đầu bài kiểm tra của bạn",
+                "this_framework_helps_you_understand_why_you_are_suited_for_a_particular_field_extremely_useful_for_application_essays_and_interviews": "Khung này giúp bạn hiểu TẠI SAO bạn phù hợp với một lĩnh vực cụ thể – cực kỳ hữu ích cho bài luận và phỏng vấn xin học!",
+                "this_tool_is_more_reliable_than_mbti": "Công cụ này đáng tin cậy hơn MBTI vì nó đánh giá tính cách trên một phổ thay vì chỉ phân loại thành hai cực. Thay vì nói bạn “hoàn toàn hướng nội” hoặc “hoàn toàn hướng ngoại,” Big Five cho thấy bạn ở đâu trên thang đo hướng nội–hướng ngoại, mang lại sự hiểu biết khoa học và chi tiết hơn về bản thân.",
+                "to_understand_yourself_better_we_recommend_taking_the": "Để hiểu bản thân rõ hơn, chúng tôi khuyên bạn nên làm",
+                "want_to_try_out_this_framework": "Bạn có muốn thử khung này không?"
+            },
+            "curated_by_arrowster": "Được tuyển chọn bởi Arrowster",
+            "use_this_guide": "Sử dụng hướng dẫn này như lộ trình để đưa ra quyết định sáng suốt về tương lai học tập của bạn. Hãy nhớ rằng, ngành học tốt nhất là ngành phù hợp với điểm mạnh, sở thích và mục tiêu nghề nghiệp của bạn."
+        },
+        "tabs": {
+            "guides_tips": "Hướng dẫn & Mẹo",
+            "smart_help": "Hỗ trợ thông minh"
+        }
     },
     "onboarding": {
         "area_of_study": "Lĩnh vực học tập",

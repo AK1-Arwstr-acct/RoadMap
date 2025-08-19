@@ -3,7 +3,9 @@
     <div class="size-full p-5 overflow-y-auto custom-scrollbar">
       <div class="w-full max-w-[920px] mx-auto flex flex-col gap-10">
         <!-- header  -->
-        <div class="w-full h-[152px] md:h-[252px] rounded-2xl overflow-hidden relative">
+        <div
+          class="w-full h-[152px] md:h-[252px] rounded-2xl overflow-hidden relative"
+        >
           <img
             src="/images/guides-header.png"
             alt="guides-header"
@@ -11,11 +13,13 @@
           />
           <div class="absolute z-10 inset-0 flex items-center px-[84px]">
             <div class="flex flex-col md:gap-2">
-              <h1 class="text-text-constant-white font-semibold text-xl md:text-[40px] leading-[44px]">
-                How to Choose Your Major
+              <h1
+                class="text-text-constant-white font-semibold text-xl md:text-[40px] leading-[44px]"
+              >
+                {{ $t("majors_page.guide.how_to_choose_your_major") }}
               </h1>
               <p class="text-text-constant-white font-semibold">
-                Curated by Arrowster
+                {{ $t("majors_page.guide.curated_by_arrowster") }}
               </p>
             </div>
           </div>
@@ -38,25 +42,21 @@
             <div ref="section4">
               <ChoosingRight />
             </div>
-            <P class="text-text-base leading-7">
-              Use this guide as your roadmap to making an informed decision
-              about your academic future. Remember, the best major is one that
-              aligns with your strengths, interests, and career goals.
+            <P class="text-text-base leading-7 text-wrap">
+              {{ $t("majors_page.guide.use_this_guide") }}
             </P>
             <div class="p-6 rounded-2xl bg-background-neutral text-text-base">
-              <p class="text-xl md:text-2xl font-semibold mb-1">
-                🎯 Ready to Choose Your Major?
+              <p class="text-xl md:text-2xl font-semibold mb-1 text-wrap">
+                {{ $t("majors_page.guide.lock_in_major_card.heding") }}
               </p>
-              <p class="leading-7 mb-6 text-sm">
-                You've explored the resources — now it's time to take the next
-                step. Update your profile so Sophie can help you find the
-                best-fit schools!
+              <p class="leading-7 mb-6 text-sm text-wrap">
+                {{ $t("majors_page.guide.lock_in_major_card.detail") }}
               </p>
               <NuxtLinkLocale
                 to="/profile"
-                class="py-2 px-4 rounded-lg font-semibold bg-background-brand flex items-center gap-2 text-text-constant-white w-fit text-sm md:text-base"
+                class="py-2 text-wrap px-4 rounded-lg font-semibold bg-background-brand flex items-center gap-2 text-text-constant-white w-fit text-sm md:text-base"
               >
-                Lock in your major
+                {{ $t("majors_page.guide.lock_in_major_card.button") }}
                 <IconChevronDown
                   class="transform -rotate-90"
                   stroke="text-text-constant-white"

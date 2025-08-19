@@ -204,7 +204,7 @@
           </div>
         </div>
         <!-- input -->
-        <div class="flex flex-col gap-4 w-full max-w-[800px] mx-auto">
+        <div class="flex flex-col gap-4 h-fit w-full max-w-[800px] mx-auto">
           <Transition name="fade">
             <div
               v-if="isChatFull"
@@ -253,7 +253,7 @@
             {{ t("dashboard.pre_question") }}
           </p>
           <div
-            class="relative border border-border-neutral-subtle bg-background-base rounded-2xl flex items-center min-h-full"
+            class="relative border border-border-neutral-subtle bg-background-base rounded-2xl flex items-center min-h-fit"
             :class="{
               'bg-[#FAFAFA] pointer-events-none':
                 isChatFull ||
@@ -546,6 +546,9 @@ const startTypingAnimation = () => {
 
 const submit = async () => {
   try {
+    if (inputQuestion.value.trim().length < 2) {
+      return;
+    }
     emit("isChatLoading", true);
     if (!route.query.query) {
       completeChat.value.push({

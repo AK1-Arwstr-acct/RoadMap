@@ -2,7 +2,7 @@
   <!-- loading screen -->
   <div
     v-if="majorStore.isQuizSubmitting"
-    class="border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl px-6 py-[124px] flex flex-col items-center text-center text-text-base"
+    class="min-h-[430px] border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl px-6 py-[124px] flex flex-col items-center text-center text-text-base"
   >
     <lottie-player
       autoplay
@@ -19,7 +19,7 @@
     />
     <!-- style="width: 200px; height: 200px" -->
     <p class="font-semibold text-xl animate-pulse text-text-base">
-      Cooking up your perfect match...
+      {{ $t('majors_page.chat.cooking_up_your_perfect_match') }}
     </p>
   </div>
   <!-- quiz -->
@@ -27,78 +27,80 @@
     v-else-if="!majorStore.isStepperSubmitted"
     class="border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl p-6"
   >
-    <div class="flex flex-col gap-6">
-      <!-- question -->
-      <div class="text-lg md:text-xl font-semibold text-text-base">
-        <span v-if="majorStore.currentStep < majorStore.quiz.length">
-          {{ majorStore.currentStep + 1 }}.
-          {{ majorStore.quiz[majorStore.currentStep].question }}
-        </span>
-        <span v-else>
-          {{ majorStore.quiz.length + 1 }}. Tell us more about you
-        </span>
-      </div>
-      <!-- option -->
-      <div v-if="majorStore.currentStep < majorStore.quiz.length">
-        <div
-          v-for="(option, idx) in majorStore.quiz[majorStore.currentStep]
-            .options"
-          :key="idx"
-          class="mb-2"
-        >
-          <button
-            class="w-full flex items-center gap-5 px-4 py-2.5 rounded-lg border transition-all"
-            :class="
-              isSelected(option)
-                ? 'bg-background-brand-subtle text-text-brand border-border-brand'
-                : 'bg-background-neutral text-text-base border-border-neutral-subtle'
-            "
-            @click="handleOptionClick(option)"
-            type="button"
+    <div class="flex flex-col gap-6 justify-between h-[410px]">
+      <div class="flex flex-col gap-6">
+        <!-- question -->
+        <div class="text-lg md:text-xl font-semibold text-text-base">
+          <span v-if="majorStore.currentStep < majorStore.quiz.length">
+            {{ majorStore.currentStep + 1 }}.
+            {{ majorStore.quiz[majorStore.currentStep].question }}
+          </span>
+          <span v-else>
+            {{ majorStore.quiz.length + 1 }}. Tell us more about you
+          </span>
+        </div>
+        <!-- option -->
+        <div v-if="majorStore.currentStep < majorStore.quiz.length">
+          <div
+            v-for="(option, idx) in majorStore.quiz[majorStore.currentStep]
+              .options"
+            :key="idx"
+            class="mb-2"
           >
-            <span
-              class="font-bold mr-2 size-10 min-w-10 rounded-lg flex justify-center items-center text-text-constant-white"
+            <button
+              class="w-full flex items-center gap-5 px-4 py-2.5 rounded-lg border transition-all"
               :class="
                 isSelected(option)
-                  ? 'bg-background-brand'
-                  : 'bg-background-neutral-bolder'
+                  ? 'bg-background-brand-subtle text-text-brand border-border-brand'
+                  : 'bg-background-neutral text-text-base border-border-neutral-subtle'
               "
-              >{{ String.fromCharCode(65 + idx) }}</span
+              @click="handleOptionClick(option)"
+              type="button"
             >
-            {{ option }}
-          </button>
+              <span
+                class="font-bold mr-2 size-10 min-w-10 rounded-lg flex justify-center items-center text-text-constant-white"
+                :class="
+                  isSelected(option)
+                    ? 'bg-background-brand'
+                    : 'bg-background-neutral-bolder'
+                "
+                >{{ String.fromCharCode(65 + idx) }}</span
+              >
+              {{ option }}
+            </button>
+          </div>
         </div>
-      </div>
-      <div v-else>
-        <div class="mb-8">
-          <label class="block font-semibold mb-1 text-text-base"
-            >Your MBTI</label
-          >
-          <p class="mb-4 text-text-neutral-subtle">
-            Take 15 minutes to do the MBTI test
-            <a
-              href="https://www.16personalities.com/"
-              target="_blank"
-              class="text-link"
-              >here</a
+        <div v-else>
+          <div class="mb-8">
+            <label class="block font-semibold mb-1 text-text-base"
+              >Your MBTI</label
             >
-            to have more in-depth answer from us
-          </p>
-          <input
-            v-model="majorStore.extraQuestion.mbti"
-            placeholder="INFJ, ESFP, etc."
-            class="w-full placeholder:text-text-disabled pb-2 border-b outline-none bg-transparent border-border-neutral text-text-base"
-          />
-        </div>
-        <div class="">
-          <label class="block mb-4 text-text-base font-semibold"
-            >Any particular extracurricular activities you enjoy doing?</label
-          >
-          <input
-            v-model="majorStore.extraQuestion.activities"
-            placeholder="Join math competition, music club."
-            class="w-full placeholder:text-text-disabled pb-2 border-b outline-none bg-transparent border-border-neutral text-text-base"
-          />
+            <p class="mb-4 text-text-neutral-subtle">
+              Take 15 minutes to do the MBTI test
+              <a
+                href="https://www.16personalities.com/"
+                target="_blank"
+                class="text-link"
+                >here</a
+              >
+              to have more in-depth answer from us
+            </p>
+            <input
+              v-model="majorStore.extraQuestion.mbti"
+              placeholder="INFJ, ESFP, etc."
+              class="w-full placeholder:text-text-disabled pb-2 border-b outline-none bg-transparent border-border-neutral text-text-base"
+            />
+          </div>
+          <div class="">
+            <label class="block mb-4 text-text-base font-semibold"
+              >Any particular extracurricular activities you enjoy doing?</label
+            >
+            <input
+              v-model="majorStore.extraQuestion.activities"
+              placeholder="Join math competition, music club."
+              class="w-full placeholder:text-text-disabled pb-2 border-b outline-none bg-transparent border-border-neutral text-text-base"
+            />
+          </div>
         </div>
       </div>
       <!-- buttons -->
@@ -123,8 +125,8 @@
         >
           {{
             majorStore.currentStep + 1 === majorStore.quiz.length + 1
-              ? "Submit"
-              : "Next"
+              ? t('majors_page.chat.submit')
+              : t('majors_page.chat.next')
           }}
         </button>
       </div>
@@ -133,7 +135,7 @@
   <!-- redo quiz -->
   <div
     v-else
-    class="border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl p-6 flex flex-col items-center text-center text-text-base"
+    class="min-h-[430px] border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl p-6 flex flex-col items-center text-center text-text-base"
   >
     <img
       src="/images/lets-go.png"
@@ -156,13 +158,13 @@
         @click="redoQuiz"
         class="bg-transparent border border-border-neutral px-5 py-1.5 rounded-lg"
       >
-        Redo quiz
+        {{ $t('majors_page.chat.redo_quiz') }}
       </button>
       <button
         @click="learnMore"
         class="bg-background-brand text-text-constant-white px-5 py-1.5 rounded-lg"
       >
-        Learn more
+        {{ $t('majors_page.chat.learn_more') }}
       </button>
     </div>
   </div>
@@ -171,6 +173,7 @@
 import useMajorStore from "~/stores/majorStore";
 
 const majorStore = useMajorStore();
+const { t } = useI18n();
 
 const emit = defineEmits(["submit", "redoQuiz"]);
 

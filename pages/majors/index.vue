@@ -45,6 +45,6 @@ onMounted(() => {
   appStore.autoCloseSidebar = true;
 });
 onUnmounted(() => {
-  majorStore.clearStoreData();
+  // majorStore.clearStoreData();
 });
 </script>

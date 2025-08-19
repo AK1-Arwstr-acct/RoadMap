@@ -252,8 +252,8 @@ const tabList = ref<TabList[]>([
   //   activeList: ['/sophie', '/school-list', '/ai-essay']
   // },
   {
-    // name: t("dashboard.sidebar.menu.your_checklist"),
-    name: "Application toolkit",
+    // name: "Application toolkit",
+    name: t("dashboard.sidebar.menu.application_toolkit"),
     icon: shallowRef(IconStarOutline),
     route: "/majors",
     activeList: [
