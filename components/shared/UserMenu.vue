@@ -34,11 +34,11 @@
             @click="emits('close')"
             to="/profile"
             class="block rounded-lg bg-background-neutral-bold text-text-base py-2.5 w-full text-center font-semibold"
-            >View profile</NuxtLinkLocale
+            >{{ $t("dashboard.view_profile") }}</NuxtLinkLocale
           >
         </div>
         <div class="px-2">
-          <p @click="logOut" class="font-semibold cursor-pointer text-text-base">Log out</p>
+          <p @click="logOut" class="font-semibold cursor-pointer text-text-base">{{ $t("dashboard.logout") }}</p>
         </div>
       </div>
     </div>

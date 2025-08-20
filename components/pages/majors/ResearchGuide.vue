@@ -1,66 +1,114 @@
 <template>
   <div class="text-text-base flex flex-col gap-4 leading-7">
-    <p class="font-semibold text-xl md:text-2xl">📚 Research Your Field</p>
+    <p class="font-semibold text-xl md:text-2xl">
+      {{ $t("majors_page.guide.researchGuide.heading") }}
+    </p>
     <!-- 1 -->
     <p class="">
-      After understanding yourself clearly, the next step is to research your
-      field and career thoroughly to see if you're truly suitable for the field
-      group and what the prospects after graduation look like.
+      {{ $t("majors_page.guide.researchGuide.details") }}
     </p>
     <!-- 2 -->
     <div class="flex flex-col gap-3">
-      <span class="font-semibold">Key Notes on Popular Majors:</span>
+      <span class="font-semibold">{{
+        $t("majors_page.guide.researchGuide.key_notes_on_popular_majors")
+      }}</span>
       <div>
-        <p class="font-semibold">💻 Information Technology/Computer Science</p>
+        <p class="font-semibold">
+          {{
+            $t(
+              "majors_page.guide.researchGuide.information_technology_computer_science"
+            )
+          }}
+        </p>
         <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
           <li>
-            Need clear specialization focus due to high competition
-            (front-end/back-end, AI/ML/data)
-          </li>
-          <li>Require early personal projects for job applications</li>
-        </ul>
-      </div>
-      <div>
-        <p class="font-semibold">📊 Business</p>
-        <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
-          <li>
-            Need clear direction on which branch to study - shouldn't study
-            general business administration because it's too broad.
+            {{
+              $t("majors_page.guide.researchGuide.need_clear_specialization")
+            }}
           </li>
           <li>
-            Typical specializations: Marketing, Finance, Logistics/Supply Chain,
-            Accounting/Auditing, HR
+            {{
+              $t(
+                "majors_page.guide.researchGuide.require_early_personal_projects_for_job_applications"
+              )
+            }}
           </li>
-          <li>Prioritize internship experience early</li>
         </ul>
       </div>
       <div>
         <p class="font-semibold">
-          🏥 Health Sciences (Pharmacy, Nursing, Physical Therapy)
+          {{ $t("majors_page.guide.researchGuide.business") }}
         </p>
         <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
           <li>
-            Find schools ensuring employment outcomes - each country has
-            different regulations for international students in these fields
+            {{ $t("majors_page.guide.researchGuide.need_clear_direction") }}
+          </li>
+          <li>
+            {{ $t("majors_page.guide.researchGuide.typical_specializations") }}
+          </li>
+          <li>
+            {{
+              $t(
+                "majors_page.guide.researchGuide.prioritize_internship_experience_early"
+              )
+            }}
           </li>
         </ul>
       </div>
       <div>
-        <p class="font-semibold">🔬 Research (aiming for Master's/PhD)</p>
+        <p class="font-semibold">
+          {{
+            $t(
+              "majors_page.guide.researchGuide.health_sciences_pharmacy_nursing_physical_therapy"
+            )
+          }}
+        </p>
         <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
-          <li>Clearly define research topics</li>
           <li>
-            Find universities with high research activity and faculty who can
-            guide your research
+            {{
+              $t(
+                "majors_page.guide.researchGuide.find_schools_ensuring_employment"
+              )
+            }}
           </li>
         </ul>
       </div>
       <div>
-        <p class="font-semibold">⚖️ Law/Medicine</p>
+        <p class="font-semibold">
+          {{
+            $t(
+              "majors_page.guide.researchGuide.research_aiming_for_masters_phd"
+            )
+          }}
+        </p>
         <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
           <li>
-            Generally not recommended for study abroad unless planning to settle
-            permanently
+            {{
+              $t(
+                "majors_page.guide.researchGuide.clearly_define_research_topics"
+              )
+            }}
+          </li>
+          <li>
+            {{
+              $t(
+                "majors_page.guide.researchGuide.find_universities_with_high_research"
+              )
+            }}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-semibold">
+          {{ $t("majors_page.guide.researchGuide.law_medicine") }}
+        </p>
+        <ul class="mt-1 list-disc list-inside pl-9 -indent-6">
+          <li>
+            {{
+              $t(
+                "majors_page.guide.researchGuide.generally_not_recommended_for_study_abroad"
+              )
+            }}
           </li>
         </ul>
       </div>
@@ -82,7 +130,10 @@
           <IconStar />
           <span
             class="font-semibold bg-gradient-to-r from-[#9333EA] to-[#C084FC] bg-clip-text text-transparent"
-            >Need help deciding, {{ appStore.userData?.name }}? Ask Sophie for your case</span
+            >{{ $t("majors_page.guide.researchGuide.need_help_deciding") }}{{ appStore.userData?.name ? `, ${appStore.userData?.name} ` : '' }}?
+            {{
+              $t("majors_page.guide.researchGuide.ask_sophie_for_your_case")
+            }}</span
           >
         </div>
         <div class="transform -rotate-90 cursor-pointer">

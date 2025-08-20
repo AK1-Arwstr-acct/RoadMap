@@ -155,7 +155,7 @@
                         chat.isSender,
                     }"
                   >
-                    <div>
+                    <div class="overflow-x-auto">
                       <span
                         v-if="!chat.isSender"
                         class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral inline-block"
@@ -195,7 +195,7 @@
                           Discover more
                         </p>
                       </div>
-                      <div class="flex gap-3">
+                      <div class="flex flex-col md:flex-col gap-3">
                         <ResourceCard
                           v-for="(item, idx) in discoverMoreList"
                           :key="idx"

@@ -12,8 +12,7 @@
           <p
             class="px-5 py-1.5 rounded-lg font-semibold text-text-base bg-background-neutral-bold cursor-pointer leading-7"
           >
-            <!-- {{ t("dashboard.talk_to_us") }} -->
-            Book a Meeting
+            {{ $t("dashboard.book_a_meeting") }}
           </p>
         </NuxtLinkLocale>
         <!-- <div>

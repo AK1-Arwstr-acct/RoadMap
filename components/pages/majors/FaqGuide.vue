@@ -1,108 +1,132 @@
 <template>
   <section>
     <p class="text-xl md:text-2xl font-semibold mb-4 text-text-base">
-      ❓ Frequently Asked Questions
+      {{ $t("majors_page.guide.faqGuide.heading") }}
     </p>
-    <div
-      class="border-[1.5px] border-border-neutral-subtle rounded-2xl px-6 text-text-base bg-background-base"
-    >
+    <div class="border-[1.5px] border-border-neutral-subtle rounded-2xl px-6 text-text-base bg-background-base">
       <div v-for="(faq, index) in faqList" :key="index" class="">
-        <div
-          class="flex items-start gap-4 py-4"
-          :class="[{ 'border-b border-divider': index + 1 != faqList.length }]"
-        >
+        <div class="flex items-start gap-4 py-4" :class="[{ 'border-b border-divider': index + 1 != faqList.length }]">
           <div class="flex-1">
-            <p
-              class="sm:text-xl font-medium cursor-pointer"
-              @click="toggleAnswer(index)"
-            >
+            <p class="sm:text-xl font-medium cursor-pointer" @click="toggleAnswer(index)">
               {{ faq.question }}
             </p>
-            <div
-              class="overflow-hidden transition-all duration-300 ease-in-out leading-7"
-              :class="
-                isOpen[index]
-                  ? 'max-h-[1200px] opacity-100 mt-2'
-                  : 'max-h-0 opacity-0'
-              "
-            >
+            <div class="overflow-hidden transition-all duration-300 ease-in-out leading-7" :class="isOpen[index]
+                ? 'max-h-[1200px] opacity-100 mt-2'
+                : 'max-h-0 opacity-0'
+              ">
               <div v-if="index == 0" class="flex flex-col gap-2 pb-[18px]">
                 <p>
-                  Many students focus too much on the name of a program,
-                  forgetting that the same major can be taught very differently
-                  at different universities.
+                  {{
+                    $t(
+                      "majors_page.guide.faqGuide.answer1.many_students_focus_too_much"
+                    )
+                  }}
                 </p>
-                <p>Example: Bachelor of Commerce in Australia</p>
+                <p>
+                  {{
+                    $t(
+                      "majors_page.guide.faqGuide.answer1.example_bachelor_of_commerce"
+                    )
+                  }}
+                </p>
                 <ul class="mt-1 list-disc list-inside pl-8 -indent-6">
                   <li>
-                    <span class="font-semibold">University of Sydney: </span>
-                    Research and theory-focused, with strong emphasis on
-                    finance. Best suited for students interested in deep
-                    academic study or pursuing graduate school.
+                    <span class="font-semibold">{{
+                      $t(
+                        "majors_page.guide.faqGuide.answer1.university_of_sydney"
+                      )
+                    }}
+                    </span>
+                    {{
+                      $t(
+                        "majors_page.guide.faqGuide.answer1.research_and_theory_focused"
+                      )
+                    }}
                   </li>
                   <li>
-                    <span class="font-semibold">Monash University: </span>
-                    More practice-oriented, with strong industry connections and
-                    many internship opportunities. A good fit for students who
-                    want to enter the workforce early.
+                    <span class="font-semibold">{{
+                      $t(
+                        "majors_page.guide.faqGuide.answer1.monash_university"
+                      )
+                    }}
+                    </span>
+                    {{
+                      $t(
+                        "majors_page.guide.faqGuide.answer1.more_practice_oriented_with_strong"
+                      )
+                    }}
                   </li>
                 </ul>
                 <p>
-                  <span class="font-semibold">🔍 Tip: </span>
-                  Instead of choosing programs based on their name, like
-                  "Business Analytics" because it sounds impressive or
-                  "Economics" because it seems prestigious, take time to review
-                  each university’s curriculum, available internships, and talk
-                  to current students about their experience.
+                  <span class="font-semibold">{{ $t("majors_page.guide.faqGuide.answer1.tip") }}
+                  </span>
+                  {{
+                    $t("majors_page.guide.faqGuide.answer1.instead_of_choosing")
+                  }}
                 </p>
               </div>
               <div v-else-if="index === 1" class="flex flex-col gap-2">
                 <p>
-                  You're not alone, this is a common concern. Here's what you
-                  need to know:
+                  {{ $t("majors_page.guide.faqGuide.answer2.youre_not_alone") }}
                 </p>
-                <ol
-                  class="mt-1 list-decimal list-inside pl-4 -indent-4 flex flex-col gap-2"
-                >
+                <ol class="mt-1 list-decimal list-inside pl-4 -indent-4 flex flex-col gap-2">
                   <li>
                     <span class="font-semibold">
-                      You can usually change your major. </span
-                    ><br />
+                      {{
+                        $t(
+                          "majors_page.guide.faqGuide.answer2.you_can_usually_change"
+                        )
+                      }} </span><br />
                     <span>
-                      Most universities allow students to switch majors after
-                      the first year or during the first semester of the second
-                      year, as long as you maintain a good GPA and meet the new
-                      major’s prerequisites.
+                      {{
+                        $t(
+                          "majors_page.guide.faqGuide.answer2.most_universities_allow_students"
+                        )
+                      }}
                     </span>
                   </li>
                   <li>
                     <span class="font-semibold">
-                      Your degree does not limit your career. </span
-                    ><br />
+                      {{
+                        $t(
+                          "majors_page.guide.faqGuide.answer2.your_degree_does_not"
+                        )
+                      }} </span><br />
                     <span>
-                      In reality, employers care more about your skills and
-                      experience than your exact degree title.
+                      {{
+                        $t(
+                          "majors_page.guide.faqGuide.answer2.in_reality_employers"
+                        )
+                      }}
                     </span>
                     <ul class="mt-1 list-disc list-inside pl-8 -indent-6">
                       <li>
-                        Many Marketing graduates become successful Product
-                        Managers.
+                        {{
+                          $t(
+                            "majors_page.guide.faqGuide.answer2.many_marketing_graduates_become"
+                          )
+                        }}
                       </li>
                       <li>
-                        It's also common to move from Finance into Data
-                        Analytics.
+                        {{
+                          $t(
+                            "majors_page.guide.faqGuide.answer2.its_also_common"
+                          )
+                        }}
                       </li>
                     </ul>
                     <span>
-                      The most important factor is your relevant skills and your
-                      willingness to learn.
+                      {{
+                        $t(
+                          "majors_page.guide.faqGuide.answer2.the_most_important_factor"
+                        )
+                      }}
                     </span>
                   </li>
                 </ol>
 
                 <p>
-                  💡 Don't stress too much about choosing the “perfect” major
-                  from the beginning, your path can evolve as you grow.
+                  {{ $t("majors_page.guide.faqGuide.answer2.dont_stress_too") }}
                 </p>
               </div>
             </div>
@@ -121,11 +145,11 @@ const { t } = useI18n();
 
 const faqList: { question: string; answer: string }[] = [
   {
-    question: `There are too many programs available. How do I know which one to choose?`,
+    question: `${t("majors_page.guide.faqGuide.question1")}`,
     answer: ``,
   },
   {
-    question: `What if I choose the wrong major? I'm afraid of working in a different field later.`,
+    question: `${t("majors_page.guide.faqGuide.question2")}`,
     answer: ``,
   },
 ];

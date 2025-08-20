@@ -27,7 +27,7 @@
     v-else-if="!majorStore.isStepperSubmitted"
     class="border border-border-neutral-subtle bg-background-neutral-subtle rounded-2xl p-6"
   >
-    <div class="flex flex-col gap-6 justify-between h-[410px]">
+    <div class="flex flex-col gap-6 justify-between min-h-[410px]">
       <div class="flex flex-col gap-6">
         <!-- question -->
         <div class="text-lg md:text-xl font-semibold text-text-base">

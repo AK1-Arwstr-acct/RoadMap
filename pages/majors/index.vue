@@ -27,16 +27,17 @@ definePageMeta({
 
 const majorStore = useMajorStore();
 const appStore = useAppStore();
+const { t } = useI18n();
 
 const tabs: Tabs[] = [
   {
     name: "chat",
-    label: "Smart help",
+    label: `${t('majors_page.tabs.smart_help')}`,
     icon: IconMessageSquare,
   },
   {
     name: "guide",
-    label: "Guides & Tips",
+    label: `${t('majors_page.tabs.guides_tips')}`,
     icon: IconBookOpen,
   },
 ];

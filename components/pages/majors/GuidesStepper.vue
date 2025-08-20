@@ -1,6 +1,6 @@
 <template>
   <div class="sticky top-0">
-    <div class="font-semibold mb-3 text-text-base">On this page</div>
+    <div class="font-semibold mb-3 text-text-base">{{ $t('majors_page.guide.guidesStepper.on_this_page') }}</div>
     <div class="flex flex-col gap-2">
       <div v-for="(step, idx) in steps" :key="idx">
         <div
@@ -33,13 +33,15 @@ defineProps({
   },
 });
 
+const { t } = useI18n();
+
 const emit = defineEmits(["stepClick"]);
 
 const steps = [
-  "How do you choose a major?",
-  "Evaluate your strengths",
-  "Research Your Field",
-  "Frequently Asked Questions",
-  "How to Know You've Chosen Right",
+  `${t("majors_page.guide.guidesStepper.evaluate_your_strengths")}`,
+  `${t("majors_page.guide.guidesStepper.frequently_asked_questions")}`,
+  `${t("majors_page.guide.guidesStepper.how_do_you_choose_a_major")}`,
+  `${t("majors_page.guide.guidesStepper.how_to_know_you_have_chosen_right")}`,
+  `${t("majors_page.guide.guidesStepper.research_your_field")}`,
 ];
 </script>
