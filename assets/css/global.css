@@ -1,7 +1,9 @@
 /* No Scrollbar */
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -11,7 +13,6 @@
 /* Custom Scrollbar */
 .custom-scrollbar {
 	scrollbar-width: thin;
-	scrollbar-color: #d9d9d9 transparent;
 
 	&::-webkit-scrollbar {
 		width: 8px;
@@ -28,6 +29,14 @@
 	}
 }
 
+html.theme-light .custom-scrollbar {
+	scrollbar-color: rgb(0, 0, 0, 0.2) transparent;
+}
+
+html.theme-dark .custom-scrollbar {
+	scrollbar-color: rgb(255, 255, 255, 0.2) transparent;
+}
+
 /* remove inner shadows of input */
 .remove-shadow-bg-white input:-webkit-autofill {
 	-webkit-box-shadow: 0 0 0 1000px transparent inset;
@@ -37,6 +46,18 @@
 	-webkit-text-fill-color: black;
 	transition: background-color 5000s ease-in-out 0s;
 	caret-color: black;
+}
+
+html.theme-light input:-webkit-autofill {
+	-webkit-text-fill-color: #525252 !important;
+	-webkit-box-shadow: 0 0 0 1000px #FFFFFF inset;
+	caret-color: black !important;
+}
+
+html.theme-dark input:-webkit-autofill {
+	-webkit-text-fill-color: #A3A3A3 !important;
+	-webkit-box-shadow: 0 0 0 1000px #0A0A0A inset;
+	caret-color: white !important;
 }
 
 /* Fade effect */

@@ -1,12 +1,15 @@
 <template>
-  <div class="h-dvh flex relative">
+  <div class="h-dvh flex overflow-hidden relative">
     <component :is="desktop.DashboardSidebar" />
     <div class="flex-1 overflow-hidden flex flex-col">
       <div class="lg:hidden">
         <DashboardNav />
       </div>
-      <div class="flex-1 w-screen lg:w-full overflow-hidden pb-[70px] lg:pb-0">
-        <slot />
+      <div class="flex-1 h-full w-screen lg:w-full overflow-hidden pb-[70px] lg:pb-0 flex flex-col">
+        <PageTitleNav :title="pageTitle" />
+        <div class="h-full overflow-hidden">
+          <slot />
+        </div>
       </div>
     </div>
     <!-- Sophie Modal -->
@@ -29,10 +32,19 @@ import useAppStore from "~/stores/AppStore";
 const deviceType = useDeviceType();
 const appStore = useAppStore();
 const { t } = useI18n();
+const route = useRoute();
 
 const desktop = {
   DashboardSidebar: defineAsyncComponent(
     () => import("~/components/shared/DashboardSidebar.vue")
   ),
 };
+
+const pageTitle = computed(() => {
+  if (route.path.includes("/resources")) {
+    return "Resources";
+  } else {
+    return "Home";
+  }
+});
 </script>

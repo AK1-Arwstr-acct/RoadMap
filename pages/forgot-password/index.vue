@@ -1,7 +1,8 @@
 <template>
   <div
-    class="min-h-svh w-full flex justify-center items-center p-5 pt-24 pb-16"
+    class="h-dvh w-full flex items-center p-5 py-10 overflow-y-auto custom-scrollbar"
   >
+  <div class="m-auto">
     <InputNumber
       v-if="steps === 'input_number'"
       @getCode="getCode"
@@ -15,13 +16,14 @@
     />
     <UpdatePassword v-else :verificationToken="verificationToken" />
   </div>
+  </div>
 </template>
 <script setup lang="ts">
 import type { Country } from "~/types/auth";
 
-definePageMeta({
-  layout: "main-layout",
-});
+// definePageMeta({
+//   layout: "main-layout",
+// });
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();

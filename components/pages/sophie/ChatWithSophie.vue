@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white size-full overflow-hidden flex"
+    class="bg-surface size-full overflow-hidden flex"
     :class="{
       'rounded-xl drop-shadow-lg relative max-w-[1302px] max-h-[904px] pt-12':
         isModal,
@@ -70,7 +70,6 @@
               :isNewChat="isNewChat"
               :singleChatDetail="specificTaskChat"
               :isModal="isModal"
-              :isTokenLoaded="isTokenLoaded"
               :isSummarizeOverview="isSummarizeOverview"
               @isChatLoading="(value) => (isChatLoading = value)"
               :isReadOnly="true"
@@ -79,13 +78,12 @@
         </div>
         <div
           v-show="chatOrHistory === 'messages'"
-          class="flex-1 md:p-6 w-full h-full p-4"
+          class="flex-1 md:px-6 w-full h-full"
         >
           <SophieChat
             :isNewChat="isNewChat"
             :singleChatDetail="isTaskChat ? specificTaskChat : singleChatDetail"
             :isModal="isModal"
-            :isTokenLoaded="isTokenLoaded"
             :isSummarizeOverview="isSummarizeOverview"
             @isChatLoading="(value) => (isChatLoading = value)"
           />
@@ -136,7 +134,6 @@ const props = defineProps({
   },
 });
 
-const isTokenLoaded = ref<boolean>(false);
 const isChatLoading = ref<boolean>(false);
 const isNewChat = ref<boolean>(false);
 const chatHistoryArray = ref<{ id: number; title: string }[]>([]);
@@ -238,9 +235,7 @@ watch(
 );
 
 onMounted(async () => {
-  if (sophieStore.isSophiePublic) {
-    isTokenLoaded.value = (await sophieStore.checkPublicToken()) ?? false;
-  } else {
+  if (!sophieStore.isSophiePublic) {
     getChatHistory();
   }
 });

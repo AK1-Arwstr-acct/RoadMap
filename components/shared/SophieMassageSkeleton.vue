@@ -1,5 +1,5 @@
 <template>
-  <div class="text-[#A4A7AE] font-thin flex items-center gap-3 p-1">
+  <div class="font-thin flex items-center gap-3 p-1">
     <div class="size-8 min-w-8 rounded-full avatar-rotate">
       <img
         src="/images/chat-bot.png"
@@ -8,7 +8,7 @@
         loading="eager"
       />
     </div>
-    <span class="text-[#111827] animate-pulse"> Working on it... </span>
+    <span class="text-text-base animate-pulse"> Working on it... </span>
   </div>
 </template>
 <script setup lang="ts"></script>

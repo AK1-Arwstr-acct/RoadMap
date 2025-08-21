@@ -18,7 +18,7 @@
         />
       </div>
     </div>
-    <div class="p-6">
+    <div class="px-6">
       <div
         v-if="questionStep < 3"
         class="border-[1.5px] border-[#E9EAEB] py-1.5 pr-1.5 pl-3.5 rounded-xl flex items-start gap-2 shadow-[0px_1px_2px_0px_#0A0D120F]"
@@ -70,11 +70,11 @@
       </div>
       <p
         v-if="questionStep < 3"
-        class="text-xs sm:text-sm text-[#A4A7AE] text-center pt-4"
+        class="text-xs sm:text-sm text-[#A4A7AE] text-center pt-4 pb-1"
       >
         {{ $t("ai_essay_page.no_need_to_rush_here_take_your_time_to_think") }}
       </p>
-      <p v-else class="text-xs sm:text-sm text-[#A4A7AE] text-center pt-4">
+      <p v-else class="text-xs sm:text-sm text-[#A4A7AE] text-center pt-4 pb-1">
         {{ $t("ai_essay_page.great_job") }}
       </p>
     </div>

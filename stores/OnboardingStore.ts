@@ -5,15 +5,10 @@ import axios from "axios";
 
 
 const useOnboardingStore = defineStore("onboardingStore", () => {
-    const onboardingProgress = ref<string | null>('20%')
-
-    const setOnboardingProgress = (value: string | null) => {
-        onboardingProgress.value = value;
-    }
+    const onboardingStep = ref<number>(1);
 
     return {
-        onboardingProgress,
-        setOnboardingProgress,
+        onboardingStep,
     }
 });
 

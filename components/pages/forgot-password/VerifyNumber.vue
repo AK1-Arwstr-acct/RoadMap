@@ -1,12 +1,12 @@
 <template>
   <div class="space-y-5">
     <div class="flex flex-col items-center gap-5">
-      <IconArrowsterLogo />
+      <IconArrowsterLogo :class="{ invert: appStore.theme === 'theme-dark' }" />
       <div class="text-center space-y-3">
-        <h1 class="font-semibold text-3xl text-[#181D27]">
+        <h1 class="font-semibold text-3xl text-text-base">
           {{ $t("forgotPassword.forgot_password") }}
         </h1>
-        <p class="text-[#535862] text-sm">
+        <p class="text-text-neutral-subtle text-sm">
           {{ $t("forgotPassword.please_check_sms") }}<br />
           {{ $t("forgotPassword.we_sent_code_to") }} {{ phoneNumber }} <br />{{
             $t("forgotPassword.enter_code_to_reset_password")
@@ -20,14 +20,14 @@
           <div class="relative">
             <BaseOtpInput v-model:model-value="otp" :isOtpValid="isValid" />
             <div
-              class="text-sm text-gray-600 text-center flex gap-1 justify-center mt-5"
+              class="text-sm text-text-neutral-subtle text-center flex gap-1 justify-center mt-5"
             >
               <p>{{ $t("otp.did_not_get_code") }}</p>
               <button
                 v-if="timeLeft === 30"
                 @click="timer"
                 type="button"
-                class="underline"
+                class="underline "
               >
                 {{ $t("otp.click_to_resend") }}
               </button>
@@ -41,7 +41,7 @@
               type="submit"
               @click="onSubmit"
               :disabled="!isValidOtp || isSubmitting"
-              class="cursor-pointer disabled:cursor-default disabled:opacity-70 w-full focus:outline-none bg-[#1570EF] text-white rounded-lg font-semibold py-[10px] flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
+              class="cursor-pointer disabled:cursor-default disabled:opacity-70 w-full focus:outline-none bg-background-brand hover:bg-background-brand-hovered text-text-constant-white rounded-lg font-semibold py-[10px] flex gap-2 justify-center items-center transition-all ease-in-out duration-200"
             >
               {{ $t("otp.verify") }}
               <IconSpinner class="size-5" v-if="isSubmitting" />
@@ -56,6 +56,7 @@
 import axios from "axios";
 import type { PropType } from "vue";
 import type { Country } from "~/types/auth";
+import useAppStore from "~/stores/AppStore";
 
 const emits = defineEmits(["verifyNumber"]);
 
@@ -71,6 +72,7 @@ const props = defineProps({
 
 const { api } = useApi();
 const { showToast } = useToast();
+const appStore = useAppStore();
 
 const otp = ref<string[]>(["-", "-", "-", "-"]);
 const isValid = ref<boolean>(true);

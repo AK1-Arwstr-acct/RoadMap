@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-surface ">
     <NuxtRouteAnnouncer />
     <NuxtLayout>
       <NuxtPage />
@@ -11,6 +11,22 @@
         @close="appStore.isMentorshipPopup = false"
       />
     </Transition>
+    <Transition name="fade">
+    <component
+      :is="UserMenu"
+      v-if="appStore.isMenuOpen"
+      @close="appStore.isMenuOpen = false"
+    />
+  </Transition>
+    <!--temp theme changer-->
+    <!-- <div class="fixed bottom-5 right-5">
+      <button
+        @click="toggleTheme"
+        class="text-white bg-blue-600 rounded-xl py-2.5 px-[18px]"
+      >
+        theme
+      </button>
+    </div> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -20,6 +36,7 @@ import useSophieStore from "./stores/sophieStore";
 import useSchoolListStore from "./stores/SchoolListStore";
 import { identifyUserInHotjar } from "@/utils/hotjar";
 import { identifyUserInTiktok, trackPageView } from "@/utils/tiktokPixel";
+import UserMenu from "~/components/shared/UserMenu.vue";
 
 const { locale } = useI18n();
 const { t } = useI18n();
@@ -45,6 +62,21 @@ useHead(
 
 const appStore = useAppStore();
 const sophieStore = useSophieStore();
+
+const toggleTheme = () => {
+  const html = document.documentElement;
+  if (appStore.theme === "theme-dark") {
+    html.classList.remove("theme-dark");
+    html.classList.add("theme-light");
+    localStorage.setItem("theme", "theme-light");
+    appStore.theme = "theme-light";
+  } else {
+    html.classList.remove("theme-light");
+    html.classList.add("theme-dark");
+    localStorage.setItem("theme", "theme-dark");
+    appStore.theme = "theme-dark";
+  }
+};
 
 const hotjarConfig = () => {
   const runtimeConfig = useRuntimeConfig();
@@ -193,29 +225,29 @@ watch(
 onMounted(async () => {
   const user = await appStore.getUserData();
   const tokenExists = useCookie("token");
-  if (tokenExists.value) {
-    await appStore.getAuthUserData();
-  }
+  // if (tokenExists.value && !route.path.includes('/onboarding')) {
+  //   await appStore.getAuthUserData();
+  // }
   hotjarConfig();
   tiktokConfig();
   await nextTick();
   identifyUserInHotjar(user);
   identifyUserInTiktok(user);
   trackPageView();
-  window.addEventListener("mousemove", handleMouseMove);
-  window.addEventListener("keydown", handleMouseMove);
-  window.addEventListener("click", handleClick);
-  timeoutId = setTimeout(() => {
-    appStore.isMentorshipPopup = true;
-  }, appStore.popupTimer);
+  // window.addEventListener("mousemove", handleMouseMove);
+  // window.addEventListener("keydown", handleMouseMove);
+  // window.addEventListener("click", handleClick);
+  // timeoutId = setTimeout(() => {
+  //   appStore.isMentorshipPopup = true;
+  // }, appStore.popupTimer);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("mousemove", handleMouseMove);
-  window.removeEventListener("keydown", handleMouseMove);
-  window.removeEventListener("click", handleClick);
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
+  // window.removeEventListener("mousemove", handleMouseMove);
+  // window.removeEventListener("keydown", handleMouseMove);
+  // window.removeEventListener("click", handleClick);
+  // if (timeoutId) {
+  //   clearTimeout(timeoutId);
+  // }
 });
 </script>

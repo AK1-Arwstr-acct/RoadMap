@@ -7,170 +7,189 @@
           <div
             ref="chatContainer"
             @scroll="updateHasChatScroll"
-            class="size-full overflow-y-auto overflow-x-hidden no-scrollbar flex flex-col h-full relative"
-            :class="{
-              'justify-between':
-                completeChat.length === 0 &&
-                !readOnly &&
-                !isModal &&
-                sophieStore.roadmapTaskDetail !== null,
-            }"
+            class="size-full overflow-y-auto overflow-x-hidden no-scrollbar"
           >
-            <!-- <Transition name="fade">
-              <div
-                v-if="welcomeMessage && appStore.authenticatedUser && !readOnly"
-                class="mb-8 bg-[#D1E9FF66]/40 py-3.5 px-4 rounded-lg flex gap-2 items-start"
-              >
-                <div class="flex-1 text-[#181D27]">
-                  <p class="font-semibold text-lg mb-1.5 text-[#175CD3]">
-                    {{ $t("sophie_page.welcome.welcome") }}
-                    {{ appStore.userData?.name }} 👋
-                  </p>
-                  <p class="font-medium text-[#181D27]">
-                    {{ $t("sophie_page.welcome.intro") }}
-                  </p>
-                </div>
-                <div
-                  @click="welcomeMessage = !welcomeMessage"
-                  class="cursor-pointer"
-                >
-                  <IconCross fill="#717680" />
-                </div>
-              </div>
-            </Transition> -->
-            <Transition name="fade">
-              <component
-                :is="TaskDetailChatModal"
-                v-if="
-                  showTaskDetail &&
-                  sophieStore.roadmapTaskDetail &&
+            <div
+              class="flex flex-col h-full relative w-full max-w-[800px] mx-auto"
+              :class="{
+                'justify-between':
+                  completeChat.length === 0 &&
                   !readOnly &&
                   !isModal &&
-                  !isOverviewSidebar
-                "
-              />
-            </Transition>
-            <div class="flex flex-col">
+                  sophieStore.roadmapTaskDetail !== null,
+              }"
+            >
+              <!-- <Transition name="fade">
+            <div
+              v-if="welcomeMessage && appStore.authenticatedUser && !readOnly"
+              class="mb-8 bg-[#D1E9FF66]/40 py-3.5 px-4 rounded-lg flex gap-2 items-start"
+            >
+              <div class="flex-1 text-[#181D27]">
+                <p class="font-semibold text-lg mb-1.5 text-[#175CD3]">
+                  {{ $t("sophie_page.welcome.welcome") }}
+                  {{ appStore.userData?.name }} 👋
+                </p>
+                <p class="font-medium text-[#181D27]">
+                  {{ $t("sophie_page.welcome.intro") }}
+                </p>
+              </div>
               <div
-                v-for="(chat, index) in completeChat.filter(
-                  (item) => item.text !== ''
-                )"
-                :key="index"
-                class="flex items-start gap-3 relative"
-                :class="{
-                  'justify-end': chat.isSender,
-                  'mt-6': index > 0,
-                }"
-                :style="{
-                  minHeight: `${
-                    index + 1 == completeChat.length && !isChatLoading
-                      ? `${chatWrapperHeight}px`
-                      : 'auto'
-                  }`,
-                }"
+                @click="welcomeMessage = !welcomeMessage"
+                class="cursor-pointer"
               >
+                <IconCross fill="#717680" />
+              </div>
+            </div>
+          </Transition> -->
+              <Transition name="fade">
+                <component
+                  :is="TaskDetailChatModal"
+                  v-if="
+                    showTaskDetail &&
+                    sophieStore.roadmapTaskDetail &&
+                    !readOnly &&
+                    !isModal &&
+                    !isOverviewSidebar
+                  "
+                />
+              </Transition>
+              <div class="flex flex-col">
                 <div
-                  v-if="!chat.isSender"
-                  class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
-                >
-                  <img
-                    src="/images/chat-bot.png"
-                    alt="chat bot"
-                    class="object-cover object-center size-full"
-                    loading="eager"
-                  />
-                </div>
-                <div
-                  class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+                  v-for="(chat, index) in completeChat.filter(
+                    (item) => item.text !== ''
+                  )"
+                  :key="index"
+                  class="flex items-start gap-3 relative"
                   :class="{
-                    'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg':
-                      chat.isSender,
+                    'justify-end': chat.isSender,
+                    'mt-6': index > 0,
+                  }"
+                  :style="{
+                    minHeight: `${
+                      index + 1 == completeChat.length && !isChatLoading
+                        ? `${chatWrapperHeight}px`
+                        : 'auto'
+                    }`,
                   }"
                 >
-                  <div>
-                    <vue-markdown :source="chat.text" :options="options" />
+                  <!-- <div
+                    v-if="!chat.isSender"
+                    class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
+                  >
+                    <img
+                      src="/images/chat-bot.png"
+                      alt="chat bot"
+                      class="object-cover object-center size-full"
+                      loading="eager"
+                    />
+                  </div> -->
+                  <div
+                    class="w-fit max-w-[90%] text-wrap text-[#414651] suggestion-container"
+                    :class="{
+                      'bg-[#E8E8E880] py-1 px-2 md:px-3 rounded-lg':
+                        chat.isSender,
+                    }"
+                  >
+                    <div>
+                      <span
+                        v-if="!chat.isSender"
+                        class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral inline-block"
+                      >
+                        <img
+                          src="/images/chat-bot.png"
+                          alt="chat bot"
+                          class="object-cover object-center size-full"
+                          loading="eager"
+                        />
+                      </span>
+                      <vue-markdown
+                        :source="chat.text"
+                        :options="options"
+                        class="!text-text-base flex flex-col gap-2 leading-7"
+                      />
+                    </div>
+                  </div>
+                  <!-- dropdown for public user -->
+                  <div
+                    v-if="
+                      chat.text ===
+                        `Cool! What's your current education level?` &&
+                      isEducationLevel &&
+                      !studyPrograms
+                    "
+                    class="absolute right-0 top-12"
+                  >
+                    <BaseSelectRadio
+                      :options="educationLevelOption"
+                      v-model="studyPrograms"
+                      @onChange="handelEducationLevel"
+                      class="w-[300px]"
+                    />
+                    <!-- direction="upward" -->
                   </div>
                 </div>
-                <!-- dropdown for public user -->
+                <!-- chat lodding state -->
                 <div
-                  v-if="
-                    chat.text ===
-                      `Cool! What's your current education level?` &&
-                    isEducationLevel &&
-                    !studyPrograms
-                  "
-                  class="absolute right-0 top-12"
+                  v-if="isChatLoading"
+                  class="mt-6 h-dvh"
+                  :style="{
+                    minHeight: `${chatWrapperHeight}px`,
+                    maxHeight: `${chatWrapperHeight}px`,
+                  }"
                 >
-                  <BaseSelectRadio
-                    :options="educationLevelOption"
-                    v-model="studyPrograms"
-                    @onChange="handelEducationLevel"
-                    class="w-[300px]"
-                  />
-                  <!-- direction="upward" -->
+                  <SophieMassageSkeleton />
                 </div>
               </div>
-              <!-- chat lodding state -->
+              <!-- pre question for overview sidebar -->
               <div
-                v-if="isChatLoading"
-                class="mt-6 h-dvh"
-                :style="{
-                  minHeight: `${chatWrapperHeight}px`,
-                  maxHeight: `${chatWrapperHeight}px`,
-                }"
+                v-if="
+                  (isSummarizeOverview || isOverviewSidebar) &&
+                  completeChat.length === 2
+                "
+                class="flex flex-col gap-1 items-end mt-3"
+                :class="{ 'pointer-events-none': isChatFull }"
               >
-                <SophieMassageSkeleton />
-              </div>
-            </div>
-            <!-- pre question for overview sidebar -->
-            <div
-              v-if="
-                (isSummarizeOverview || isOverviewSidebar) &&
-                completeChat.length === 2
-              "
-              class="flex flex-col gap-1 items-end mt-3"
-              :class="{ 'pointer-events-none': isChatFull }"
-            >
-              <p class="text-[#4B5563] text-xs font-semibold pb-1">
-                SUGGESTED FOLLOW UP
-              </p>
-              <div
-                class="flex gap-1 items-end"
-                :class="{ 'flex-col': !isModal }"
-              >
+                <p class="text-[#4B5563] text-xs font-semibold pb-1">
+                  SUGGESTED FOLLOW UP
+                </p>
                 <div
-                  v-for="(question, idx) in OverviewPreQuestion"
-                  :key="idx"
-                  @click="handelPreQuestion(question)"
-                  class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
+                  class="flex gap-1 items-end"
+                  :class="{ 'flex-col': !isModal }"
                 >
-                  {{ question }}
+                  <div
+                    v-for="(question, idx) in OverviewPreQuestion"
+                    :key="idx"
+                    @click="handelPreQuestion(question)"
+                    class="py-2 px-4 rounded-full border border-[#0000001A] text-[#111827] font-semibold w-fit cursor-pointer"
+                  >
+                    {{ question }}
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- pre question for task chat -->
-            <div
-              v-if="
-                completeChat.length === 0 &&
-                !readOnly &&
-                !isModal &&
-                sophieStore.roadmapTaskDetail !== null
-              "
-              class="mt-3 flex flex-col items-end"
-            >
-              <p class="text-[#4B5563] text-xs font-semibold pb-1">
-                SUGGESTED FOLLOW UP
-              </p>
-              <div class="flex gap-3 justify-end flex-wrap custom-scrollbar">
-                <div
-                  v-for="(question, idx) in sophieStore.roadmapTaskDetail
-                    ?.common_questions_prompt"
-                  :key="idx"
-                  @click="handelPreQuestion(question.text)"
-                  class="py-2 px-4 rounded-full border border-[#0000001A] text-sm text-[#111827] font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
-                >
-                  <IconStar v-if="question.text.includes('[star]')" />
-                  {{ question.text.replace("[star]", "") }}
+              <!-- pre question for task chat -->
+              <div
+                v-if="
+                  completeChat.length === 0 &&
+                  !readOnly &&
+                  !isModal &&
+                  sophieStore.roadmapTaskDetail !== null
+                "
+                class="mt-3 flex flex-col items-end"
+              >
+                <p class="text-[#4B5563] text-xs font-semibold pb-1">
+                  SUGGESTED FOLLOW UP
+                </p>
+                <div class="flex gap-3 justify-end flex-wrap custom-scrollbar">
+                  <div
+                    v-for="(question, idx) in sophieStore.roadmapTaskDetail
+                      ?.common_questions_prompt"
+                    :key="idx"
+                    @click="handelPreQuestion(question.text)"
+                    class="py-2 px-4 rounded-full border border-[#0000001A] text-sm text-[#111827] font-semibold cursor-pointer text-nowrap w-fit flex items-center gap-2"
+                  >
+                    <IconStar v-if="question.text.includes('[star]')" />
+                    {{ question.text.replace("[star]", "") }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -185,13 +204,15 @@
           </div>
         </div>
         <!-- input -->
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 h-fit w-full max-w-[800px] mx-auto">
           <Transition name="fade">
             <div
               v-if="isChatFull"
-              class="border-[1.5px] border-[#F5F5F5] bg-[#F5F5F5] py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
+              class="bg-background-base-subtle-selected py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
             >
-              <div class="text-[#414651] text-sm order-1 md:order-none">
+              <div
+                class="text-text-neutral-subtle text-sm order-1 md:order-none"
+              >
                 <p class="font-semibold mb-1.5">
                   {{
                     $t(
@@ -209,7 +230,7 @@
               </div>
               <NuxtLinkLocale to="/pricing">
                 <button
-                  class="border-[1.5px] border-gray-200 bg-white rounded-lg py-2 px-3.5"
+                  class="border border-border-neutral-subtle bg-background-neutral-subtle text-text-base rounded-lg py-2 px-3.5"
                 >
                   {{ $t("sophie_page.upgrade_now") }}
                 </button>
@@ -232,7 +253,7 @@
             {{ t("dashboard.pre_question") }}
           </p>
           <div
-            class="relative border-[1.5px] border-gray-200 rounded-lg flex items-center"
+            class="relative border border-border-neutral-subtle bg-background-base rounded-2xl flex items-center min-h-fit"
             :class="{
               'bg-[#FAFAFA] pointer-events-none':
                 isChatFull ||
@@ -244,7 +265,7 @@
             <textarea
               v-if="!readOnly"
               ref="textarea"
-              :placeholder="t('sophie_page.message_sophie')"
+              placeholder="Ask Sophie anything"
               v-model="inputQuestion"
               @keydown.enter.exact.prevent="submit"
               @keydown.enter.ctrl.prevent="addNewLine"
@@ -256,7 +277,7 @@
               "
               rows="4"
               autofocus
-              class="placeholder:font-thin w-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg"
+              class="placeholder:text-text-neutral-subtle w-full h-full focus:outline-none resize-none py-2.5 pl-3.5 pr-12 rounded-lg bg-transparent text-text-neutral-subtle"
               data-hj-allow
             />
             <button
@@ -264,7 +285,7 @@
                 isChatLoading || isChatFull || inputQuestion.trim().length < 2
               "
               @click="submit"
-              class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1.5 transform right-2 -rotate-90 p-2 disabled:opacity-40"
+              class="cursor-pointer rounded-lg bg-background-brand no-scrollbar absolute top-1.5 2xl:top-auto 2xl:bottom-4 transform right-2 2xl:right-4 -rotate-90 p-2 disabled:opacity-40"
             >
               <IconArrowRight />
             </button>
@@ -326,10 +347,6 @@ const props = defineProps({
     default: false,
   },
   isSummarizeOverview: {
-    type: Boolean,
-    default: false,
-  },
-  isTokenLoaded: {
     type: Boolean,
     default: false,
   },
@@ -516,7 +533,7 @@ const startTypingAnimation = () => {
   typingInterval.value = window.setInterval(() => {
     const lastBotMsg = completeChat.value.findLast((c) => !c.isSender);
     if (!lastBotMsg) return;
-    if (typingIndex.value === 3) scrollDown(); 
+    if (typingIndex.value === 3) scrollDown();
     if (typingIndex.value < typingFullText.value.length) {
       lastBotMsg.text += typingFullText.value[typingIndex.value];
       typingIndex.value++;
@@ -529,6 +546,9 @@ const startTypingAnimation = () => {
 
 const submit = async () => {
   try {
+    if (inputQuestion.value.trim().length < 2) {
+      return;
+    }
     emit("isChatLoading", true);
     if (!route.query.query) {
       completeChat.value.push({
@@ -546,6 +566,7 @@ const submit = async () => {
     adjustHeight();
     let response;
     if (sophieStore.isSophiePublic) {
+      await sophieStore.checkPublicToken();
       const publicToken = useCookie("publicToken");
       response = await api.post(
         `/api/v1/session-based-journey/ai-conversation/sophie`,
@@ -659,15 +680,6 @@ watch(
 );
 
 watch(
-  () => props.isTokenLoaded,
-  (newValue) => {
-    if (newValue) {
-      submit();
-    }
-  }
-);
-
-watch(
   () => props.isReadOnly,
   () => {
     readOnly.value = props.isReadOnly;
@@ -722,6 +734,7 @@ onMounted(async () => {
     });
     isChatLoading.value = true;
     inputQuestion.value = `${route.query.query}`;
+    submit();
   }
   const sophieCompletedList = useCookie("sophieCompletedList");
   sophieStore.tasksWithCompletedSophie =
