@@ -178,6 +178,7 @@ const { t } = useI18n();
 const emit = defineEmits(["submit", "redoQuiz"]);
 
 const multiSelectFirst = ref<string[]>([]);
+const multiSelectsecond = ref<string[]>([]);
 
 const options = {
   html: true,
@@ -187,7 +188,8 @@ const isSelected = (option: string) => {
   if (majorStore.currentStep === 0) {
     return multiSelectFirst.value.includes(option);
   }
-  return majorStore.answers[majorStore.currentStep] === option;
+  return multiSelectsecond.value.includes(option);
+  // return majorStore.answers[majorStore.currentStep] === option;
 };
 
 // Handle option click for multi/single select
@@ -201,7 +203,13 @@ const handleOptionClick = (option: string) => {
     }
     // No need to update majorStore.answers[0] here, will do on nextStep/submit
   } else {
-    majorStore.answers[majorStore.currentStep] = option;
+    // majorStore.answers[majorStore.currentStep] = option;
+    const idx = multiSelectsecond.value.indexOf(option);
+    if (idx > -1) {
+      multiSelectsecond.value.splice(idx, 1);
+    } else {
+      multiSelectsecond.value.push(option);
+    }
   }
 };
 
@@ -215,12 +223,15 @@ const isDisable = (currentStep: number) => {
   if (currentStep === 0) {
     return multiSelectFirst.value.length === 0;
   }
-  return majorStore.answers[currentStep] === "";
+  // return majorStore.answers[currentStep] === "";
+  return multiSelectsecond.value.length === 0;
 };
 
 const nextStep = () => {
   if (majorStore.currentStep === 0) {
     majorStore.answers[0] = multiSelectFirst.value.join(".");
+  } else if(majorStore.currentStep === 1) {
+    majorStore.answers[1] = multiSelectsecond.value.join(".");
   }
   if (majorStore.currentStep + 1 === majorStore.quiz.length + 1) {
     submitQuiz();
@@ -233,9 +244,9 @@ const prevStep = () => {
 };
 
 const submitQuiz = () => {
-  if (majorStore.currentStep === 0) {
-    majorStore.answers[0] = multiSelectFirst.value.join(".");
-  }
+  // if (majorStore.currentStep === 0) {
+  //   majorStore.answers[0] = multiSelectFirst.value.join(".");
+  // }
   majorStore.isQuizSubmitting = true;
   if (!majorStore.isQuizSubmitted) {
     majorStore.isQuizSubmitted = true;
@@ -262,6 +273,10 @@ watch(
     if (step === 0) {
       // Restore selection from store if coming back
       multiSelectFirst.value = majorStore.answers[0]
+        ? majorStore.answers[0].split(".").filter(Boolean)
+        : [];
+    } else if(step === 1){
+      multiSelectsecond.value = majorStore.answers[1]
         ? majorStore.answers[0].split(".").filter(Boolean)
         : [];
     }

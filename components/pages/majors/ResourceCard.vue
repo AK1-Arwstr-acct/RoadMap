@@ -15,9 +15,9 @@
       <div class="size-[18px] min-w-[18px] overflow-hidden rounded-full">
         <img src="/images/discover-user-img.png" alt="discover-user-img" />
       </div>
-      <p class="text-text-brand text-sm">{{ list.title }}</p>
+      <p class="text-text-brand text-sm leading-6 font-semibold">{{ list.title }}</p>
     </div>
-    <p class="text-text-neutral-subtle text-xs leading-[22px]">
+    <p class="text-text-neutral-subtle text-sm leading-6">
       {{ list.detail }}
     </p>
   </div>

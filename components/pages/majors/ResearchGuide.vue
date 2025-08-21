@@ -127,7 +127,6 @@
           />
         </div>
         <div class="flex-1 flex items-center gap-2">
-          <IconStar />
           <span
             class="font-semibold bg-gradient-to-r from-[#9333EA] to-[#C084FC] bg-clip-text text-transparent"
             >{{ $t("majors_page.guide.researchGuide.need_help_deciding") }}{{ appStore.userData?.name ? `, ${appStore.userData?.name} ` : '' }}?
@@ -136,9 +135,6 @@
             }}</span
           >
         </div>
-        <div class="transform -rotate-90 cursor-pointer">
-          <IconChevronDown width="16" height="16" stroke="text-icon-neutral" />
-        </div>
       </div>
       <!-- cards -->
       <div class="flex gap-4 flex-col md:flex-row">
@@ -146,13 +142,13 @@
           v-for="(question, idx) in commonQuestion"
           :key="idx"
           @click="handleCard(question.label)"
-          class="flex-1 bg-background-neutral rounded-lg p-3 flex flex-col gap-2 cursor-pointer"
+          class="flex-1 bg-background-neutral rounded-lg p-3 flex flex-col gap-2 cursor-pointer text-sm"
         >
           <component :is="question.icon" />
-          <div class="font-semibold text-text-base text-sm">
+          <div class="font-semibold text-text-base">
             {{ question.label }}
           </div>
-          <div class="text-text-neutral-subtle text-xs">
+          <div class="text-text-neutral-subtle">
             {{ question.value }}
           </div>
         </div>

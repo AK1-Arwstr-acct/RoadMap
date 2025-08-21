@@ -130,8 +130,9 @@
                   :style="{
                     minHeight: `${
                       index + 1 == majorStore.completeChat.length &&
-                      !isChatLoading && 
-                      !chat.showDiscoverMore && chat.text !== 'redo-quiz'
+                      !isChatLoading &&
+                      !chat.showDiscoverMore &&
+                      chat.text !== 'redo-quiz'
                         ? `${chatWrapperHeight}px`
                         : 'auto'
                     }`,
@@ -309,7 +310,9 @@
                 v-if="isChatFull"
                 class="bg-background-base-subtle-selected py-3 px-3.5 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3"
               >
-                <div class="text-text-neutral-subtle text-sm order-1 md:order-none">
+                <div
+                  class="text-text-neutral-subtle text-sm order-1 md:order-none"
+                >
                   <p class="font-semibold mb-1.5">
                     {{
                       $t(
@@ -472,24 +475,21 @@ const discoverMoreList: {
     detail:
       "Matches MBTI types to careers based on personality values and strengths.",
     link: "https://www.16personalities.com/articles/our-theory",
-    thumbnail:
-      "/images/thumbnail1.png",
+    thumbnail: "/images/thumbnail1.png",
   },
   {
     title: "O*NET Interest Profiler",
     detail:
       "Helps match interests (Holland Codes) to careers and majors, backed by real-world labor market data.",
     link: "https://www.mynextmove.org/explore/ip",
-    thumbnail:
-      "/images/thumbnail2.png",
+    thumbnail: "/images/thumbnail2.png",
   },
   {
     title: "Truity’s Personality-Career Match Tools",
     detail:
       "Explains how MBTI types like INFP align with certain careers and fields of study",
     link: "https://www.truity.com/test/career-personality-profiler-test",
-    thumbnail:
-      "/images/thumbnail3.png",
+    thumbnail: "/images/thumbnail3.png",
   },
 ];
 
@@ -512,12 +512,12 @@ const addNewLine = async () => {
 };
 
 const handelPreQuestion = async (question: string) => {
-  if (question === "Recommend majors I’m most suited for") {
-    majorStore.showQuiz = true;
-    majorStore.isQuizStart = true;
-    scrollToTop();
-    return;
-  }
+  // if (question === "Recommend majors I’m most suited for") {
+  //   majorStore.showQuiz = true;
+  //   majorStore.isQuizStart = true;
+  //   scrollToTop();
+  //   return;
+  // }
   isFollowUpQuestion.value = true;
   if (question.includes("[star]")) {
     inputQuestion.value = question.replace("[star]", "");
@@ -799,21 +799,20 @@ const checkInitialContent = () => {
   if (appStore.authenticatedUser) {
     if (appStore.userData) {
       majorStore.preQuestion = [
-        "Compare majors",
-        `Explore ${appStore.userMajors} in more detail`,
+        `How does ${appStore.userMajors} differ from other options?`,
+        `What’s important to know before choosing ${appStore.userMajors}`,
         `What do students say about ${appStore.userMajors}`,
-        "Recommend majors I’m most suited for",
       ];
+      majorStore.showQuiz = true;
       if (
         appStore.userData.current_situation ===
         "I'm unsure about what major to pursue"
       ) {
-        majorStore.preQuestion = majorStore.preQuestion.slice(0, -1);
+        // majorStore.preQuestion = majorStore.preQuestion.slice(0, -1);
         majorStore.initialChat.push({
           isSender: false,
           text: `<p class="!m-0 text-lg md:text-2xl font-semibold">Hey ${appStore.userData.name} 👋 Not sure where to start with major selection?</p><p class="pt-2 leading-7">This short quiz will help you uncover the right majors for you:</p>`,
         });
-        majorStore.showQuiz = true;
       } else if (
         appStore.userData.current_situation ===
         "I have a few majors in mind but need help choosing"
