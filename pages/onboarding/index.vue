@@ -1,62 +1,53 @@
 <template>
-  <div class="min-h-svh flex justify-center items-center px-5 pt-24 pb-16">
-    <AcademicInfo
-      v-if="steps === 'academic'"
-      @submitAcademic="submitAcademic"
-    />
-    <ProgramsInfo
-      v-else-if="steps === 'programs'"
-      :programListOptions="programListOptions"
-      @submitProgram="submitProgram"
-    />
-    <DestinationInfo
-      v-else-if="steps === 'destination'"
-      :locationOptions="locationOptions"
-      @submitDestination="submitDestination"
-    />
-    <BudgetInfo
-      v-else-if="steps === 'budget'"
-      :budgetList="budgetList"
-      @submitBudget="submitBudget"
-    />
-    <ParentCategory
-      v-else-if="steps === 'areaOfInterest'"
-      :coursePreferenceOptions="coursePreferenceOptions"
-      @submitParentCategory="submitParentCategory"
-    />
+  <div class="h-dvh overflow-y-auto custom-scrollbar">
+    <div class="h-fit flex justify-center px-5 pt-20 pb-10 relative">
+      <ProgressBar @updateStep="previousStep" />
+      <AcademicInfo
+        v-if="steps === 'academic'"
+        @updateStep="steps = 'currentSituation'"
+      />
+      <CurrentSituation
+        v-else-if="steps === 'currentSituation'"
+        :situationList="situationList"
+        @updateStep="steps = 'schoolListData'"
+      />
+      <SchoolListData
+        v-else-if="steps === 'schoolListData'"
+        @updateStep="steps = 'areaOfInterest'"
+      />
+      <ParentCategory v-else-if="steps === 'areaOfInterest'" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
-import axios from "axios";
-import useAppStore from "~/stores/AppStore";
-import useOnboardingStore from "~/stores/OnboardingStore";
-import IconAssociate from "~/components/icons/IconAssociate.vue";
-import IconBachelor from "~/components/icons/IconBachelor.vue";
-import IconMaster from "~/components/icons/IconMaster.vue";
-
-import type { CountriesOptionAttributes, OptionAttributes } from "~/types/home";
-
-definePageMeta({
-  layout: "main-layout",
-});
+import type { OptionAttributes } from "~/types/home";
+import useSchoolListStore from "~/stores/SchoolListStore";
 
 const runtimeConfig = useRuntimeConfig();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
+const schoolListStore = useSchoolListStore();
 
-const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/onboarding`;
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/onboarding`;
 
 useHead(
   computed(() => ({
     link: [
       {
-        rel: 'preload',
-        href: '/images/tell-me-more.png',
-        as: 'image',
+        rel: "preload",
+        href: "/images/academic.png",
+        as: "image",
       },
       {
-        rel: 'preload',
-        href: '/images/lets-go.png',
-        as: 'image',
+        rel: "preload",
+        href: "/images/application.png",
+        as: "image",
+      },
+      {
+        rel: "preload",
+        href: "/images/school-list.png",
+        as: "image",
       },
       {
         rel: "canonical",
@@ -81,78 +72,55 @@ useHead(
   }))
 );
 
-const appStore = useAppStore();
-const onboardingStore = useOnboardingStore();
-const { showToast } = useToast();
-const { api } = useApi();
-
 const steps = ref<
-  | "academic"
-  | "programs"
-  | "destination"
-  | "budget"
-  | "areaOfInterest"
+  "academic" | "currentSituation" | "schoolListData" | "areaOfInterest"
 >("academic");
-const programListOptions = ref<OptionAttributes[]>();
-const locationOptions = ref<CountriesOptionAttributes[]>([]);
-const coursePreferenceOptions = ref<OptionAttributes[]>();
-const budgetList = ref<OptionAttributes[]>();
 
-const submitAcademic = () => {
-  steps.value = "programs";
-  onboardingStore.setOnboardingProgress("40%");
-};
-const submitProgram = async (locations: CountriesOptionAttributes[]) => {
-  locationOptions.value = locations;
-  steps.value = "destination";
-  onboardingStore.setOnboardingProgress("60%");
-};
-const submitDestination = async (budgets: OptionAttributes[]) => {
-  budgetList.value = budgets;
-  steps.value = "budget";
-  onboardingStore.setOnboardingProgress("80%");
-};
-const submitBudget = async (categories: OptionAttributes[]) => {
-  coursePreferenceOptions.value = categories;
-  steps.value = "areaOfInterest";
-  onboardingStore.setOnboardingProgress("100%");
-};
-const submitParentCategory = async () => {
-  onboardingStore.setOnboardingProgress(null);
-};
-const getStudyPrograms = async () => {
-  try {
-    const response = await api.get(`/api/v1/school/recommended/class-grades`);
-    if (response.data.data) {
-      programListOptions.value = response.data.data.map(
-        (item: { id: number; class_name: string }) => {
-          return {
-            value: item.id,
-            label: item.class_name,
-            icon: item.class_name?.toLowerCase().includes("bachelor")
-              ? shallowRef(IconBachelor)
-              : item.class_name?.toLowerCase().includes("master")
-              ? shallowRef(IconMaster)
-              : shallowRef(IconAssociate),
-          };
-        }
-      );
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorMessage = errorList(error);
-      showToast(errorMessage, {
-        type: "error",
-      });
-    }
+const previousStep = () => {
+  if (steps.value === "academic") {
+    return;
+  } else if (steps.value === "currentSituation") {
+    steps.value = "academic";
+  } else if (steps.value === "schoolListData") {
+    steps.value = "currentSituation";
+  } else if (steps.value === "areaOfInterest") {
+    steps.value = "schoolListData";
   }
 };
 
-onBeforeMount(async () => {
-  onboardingStore.setOnboardingProgress("20%");
-  getStudyPrograms();
-  if (!appStore.userData) {
-    await appStore.getUserData();
+const situationList = ref<OptionAttributes[]>([
+  {
+    value: "A",
+    label: "I'm unsure about what major to pursue",
+    description: t("onboarding.situationList.label_a"),
+  },
+  {
+    value: "B",
+    label: "I have a few majors in mind but need help choosing",
+    description: t("onboarding.situationList.label_b"),
+  },
+  {
+    value: "C",
+    label: "I know what I want to study, but I still have some concerns",
+    description: t("onboarding.situationList.label_c"),
+  },
+  {
+    value: "D",
+    label: "I've decided on my major and am now looking for schools",
+    description: t("onboarding.situationList.label_d"),
+  },
+  {
+    value: "E",
+    label: "I'm just browsing for now",
+    description: t("onboarding.situationList.label_e"),
+  },
+]);
+
+onMounted(async ()=>{
+  const publicToken = useCookie("publicToken");
+  if (!publicToken.value) {
+    await schoolListStore.setPublicToken();
+    await nextTick();
   }
-});
+})
 </script>

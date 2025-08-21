@@ -1,47 +1,45 @@
 <template>
-  <div class="w-full sm:w-[390px] space-y-8">
+  <div class="w-full sm:w-[400px] flex flex-col gap-8">
     <div class="flex flex-col items-center gap-6">
-      <IconArrowsterLogo />
-      <div class="text-center space-y-3">
-        <h1 class="font-semibold text-3xl text-[#181D27]">
+      <IconArrowsterLogo
+          :class="{ invert: appStore.theme === 'theme-dark' }"
+        />
+      <div class="text-center flex flex-col gap-3">
+        <h1 class="font-semibold text-xl md:text-3xl text-text-base">
           {{ $t("verifyPhone.we_ll_need_your_phone_number_to_get_started") }}
         </h1>
       </div>
     </div>
     <div>
       <div class="relative remove-shadow-bg-white">
-        <label class="text-sm text-[#344054] font-medium mb-2">
-          {{ $t("verifyPhone.phone_number") }}
-        </label>
-        <div
-          class="relative border-[1.5px] rounded-lg flex items-center gap-2 p-1"
-          :class="[
-            isFocused
-              ? '!border-[#84CAFF] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]'
-              : 'border-gray-200',
-          ]"
-          tabindex="0"
-          @focus="handleFocus"
-          @blur="handleBlur"
-        >
-          <div class="flex gap-2 items-center justify-center">
+          <label class="text-sm text-text-neutral-subtle font-medium mb-2">
+            {{ $t("verifyPhone.phone_number") }}
+          </label>
+          <div
+            class="relative border rounded-lg flex items-center gap-2 p-1 bg-background-base-subtle"
+            :class="[
+              isFocused
+                ? '!border-[#84CAFF] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05),0px_0px_0px_4px_rgba(132,202,255,0.24)]'
+                : 'border-border-neutral-subtle',
+            ]"
+            tabindex="0"
+            @focus="handleFocus"
+            @blur="handleBlur"
+          >
             <div
-              class="flex justify-between items-center cursor-pointer rounded pr-1 pl-2 py-2 gap-1"
+              class="flex justify-between items-center cursor-pointer px-2 gap-1 border-r border-divider"
               @click="isDropdownOpen = !isDropdownOpen"
               @touchstart.prevent="isDropdownOpen = !isDropdownOpen"
             >
               <div>
                 <p
                   v-if="selectedOption"
-                  class="min-h-6 min-w-6 h-6 w-6 mt-0.5 uppercase text-[#181D27]"
+                  class="uppercase text-text-neutral-subtle"
                 >
-                  {{ selectedOption?.country_code }}
+                  {{ selectedOption?.phone_code }}
                 </p>
                 <div v-else class="min-w-6 min-h-6">
-                  <IconSpinner
-                    bgColor="white"
-                    stroke="#1570EF"
-                  />
+                  <IconSpinner bgColor="white" stroke="#1570EF" />
                 </div>
               </div>
               <IconChevronDown
@@ -52,56 +50,48 @@
                 :class="{ 'transform rotate-180': isDropdownOpen }"
               />
             </div>
-            <div
-              :class="[
-                phoneNumber.length > 0 ? 'text-[#05092C]' : 'text-[#667085]',
-              ]"
-            >
-              {{ selectedOption?.phone_code }}
-            </div>
-          </div>
-          <Transition name="fade">
-            <div
-              class="absolute left-0 top-[52px] w-full border-[1.5px] border-gray-200 bg-white z-20 max-h-[260px] overflow-y-auto rounded-lg"
-              v-if="isDropdownOpen"
-              v-click-outside="closeDropdown"
-            >
+            <Transition name="fade">
               <div
-                v-for="country in countryCodes"
-                :key="country.id"
-                class="flex gap-1 items-center cursor-pointer justify-between hover:bg-[#FAFAFA] p-2 active:bg-[#FAFAFA]"
-                :class="{ 'bg-[#FAFAFA]': country.id === selectedOption?.id }"
-                @click="selectCountry(country)"
+                class="absolute left-0 top-[52px] w-full border-[1.5px] border-border-neutral-subtle bg-background-base-subtle z-20 max-h-[260px] overflow-y-auto rounded-lg"
+                v-if="isDropdownOpen"
+                v-click-outside="closeDropdown"
               >
-                <div class="text-[#667085] text-sm">
-                  {{ country.title }} ({{ country.phone_code }})
+                <div
+                  v-for="country in countryCodes"
+                  :key="country.id"
+                  class="flex gap-1 items-center cursor-pointer justify-between hover:bg-background-base-subtle-hovered p-2 active:bg-[#FAFAFA]"
+                  :class="{ 'bg-background-base-subtle-selected': country.id === selectedOption?.id }"
+                  @click="selectCountry(country)"
+                >
+                  <div class="text-text-neutral-subtle text-sm">
+                    {{ country.title }} ({{ country.phone_code }})
+                  </div>
+                  <span v-if="selectedOption?.id === country.id">
+                    <IconTick stroke="#1570EF" strokeWidth="2" />
+                  </span>
                 </div>
-                <span v-if="selectedOption?.id === country.id">
-                  <IconTick stroke="#1570EF" strokeWidth="2" />
-                </span>
               </div>
-            </div>
-          </Transition>
-          <input
-            name="user_input"
-            inputmode="numeric"
-            @input="(event) => validateNumber(event)"
-            autofocus
-            @focus="handleFocus"
-            @blur="handleBlur"
-            @keydown.enter="submit"
-            @keydown="preventNonNumeric"
-            class="w-full pr-4 py-2 outline-none text-[#05092C]"
-            placeholder="915 343 643"
-            data-hj-allow
-          />
+            </Transition>
+            <input
+              name="user_input"
+              ref="phoneInput"
+              inputmode="numeric"
+              @input="(event) => validateNumber(event)"
+              autofocus
+              @focus="handleFocus"
+              @blur="handleBlur"
+              @keydown="preventNonNumeric"
+              class="w-full pr-4 py-2 outline-none placeholder:text-text-disabled text-text-neutral-subtle bg-background-base-subtle caret-text-base"
+              placeholder="915 343 643"
+              data-hj-allow
+            />
+          </div>
         </div>
-      </div>
       <div class="mt-6">
         <button
           @click="submit"
           :disabled="phoneNumber === ''"
-          class="bg-[#1570EF] w-full rounded-lg font-semibold outline-none py-3 text-white disabled:opacity-50 flex justify-center items-center gap-2"
+          class="bg-background-brand hover:bg-background-brand-hovered w-full rounded-lg font-semibold outline-none py-3 text-text-constant-white disabled:opacity-50 flex justify-center items-center gap-2"
         >
           {{ $t("verifyPhone.verify_phone_number") }}
           <IconSpinner v-if="isSubmitting"  />
@@ -113,11 +103,13 @@
 <script setup lang="ts">
 import axios from "axios";
 import type { Country } from "~/types/auth";
+import useAppStore from "~/stores/AppStore";
 
 const emits = defineEmits(["verifyPhoneNumber", "setSelectedCountry"]);
 const { t } = useI18n();
 const { api } = useApi();
 const { showToast } = useToast();
+const appStore = useAppStore();
 
 const isSubmitting = ref<boolean>(false);
 

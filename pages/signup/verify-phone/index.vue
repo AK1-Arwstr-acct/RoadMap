@@ -1,31 +1,28 @@
 <template>
-  <div
-    class="min-h-svh w-full flex justify-center items-center px-5 pt-24 pb-16"
-  >
-    <AddPhoneNumber
-      v-if="steps === 'inputPhoneNumber'"
-      @verifyPhoneNumber="verifyPhoneNumber"
-      @setSelectedCountry="setSelectedCountry"
-    />
-    <OtpVerification
-      v-else
-      :userInput="phoneNumber"
-      :selectedOption="selectedOption"
-    />
+  <div class="h-svh w-full flex items-center px-5 py-8 overflow-y-auto custom-scrollbar">
+    <div class="m-auto">
+      <AddPhoneNumber
+        v-if="steps === 'inputPhoneNumber'"
+        @verifyPhoneNumber="verifyPhoneNumber"
+        @setSelectedCountry="setSelectedCountry"
+      />
+      <OtpVerification
+        v-else
+        :userInput="phoneNumber"
+        :selectedOption="selectedOption"
+      />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import type { Country } from "~/types/auth";
 
-definePageMeta({
-  layout: "main-layout",
-  middleware: "verify-data"
-});
-
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
 
-const canonicalUrl = `${runtimeConfig.public.appMode}${locale.value !== "en" ? `/${locale.value}` : ""}/verify-phone`;
+const canonicalUrl = `${runtimeConfig.public.appMode}${
+  locale.value !== "en" ? `/${locale.value}` : ""
+}/verify-phone`;
 
 useHead(
   computed(() => ({

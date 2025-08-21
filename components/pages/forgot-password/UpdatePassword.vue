@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full sm:w-[390px] space-y-8">
+  <div class="w-full sm:w-[400px] flex flex-col gap-8">
     <div class="flex flex-col items-center gap-6">
       <IconArrowsterLogo />
       <div class="text-center space-y-3">

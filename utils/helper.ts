@@ -29,3 +29,19 @@ export const filterEssay = (value: string) => {
         essayText: essay,
     }
 }
+
+export const outOfTenGpa = (number: number | string) => {
+    if (number === null) {
+        return ''
+    }
+    const parseValue = parseFloat(String(number));
+    const value = (parseValue / 4) * 10;
+    const decimal = value - Math.floor(value);
+    return decimal > 0 ? value.toFixed(1) : value.toFixed(0);
+};
+
+export const outOfFourGpa = (number: number | string) => {
+    return number
+        ? ((Number(number) / 10) * 4).toFixed(2)
+        : "";
+};

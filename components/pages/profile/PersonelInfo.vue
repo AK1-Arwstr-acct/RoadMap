@@ -10,7 +10,7 @@
         <span><IconHeartHexagon class="size-8 md:size-full" /></span>
         <div>
           <p class="md:text-xl text-[#181D27] font-semibold mb-2">
-            {{ convertedTo10Gpa }}
+            {{ isNaN(Number(convertedTo10Gpa)) ? "" : convertedTo10Gpa }}
           </p>
           <h6 class="text-[#A4A7AE]">{{ $t("profile_page.gpa") }}</h6>
         </div>
@@ -33,7 +33,7 @@
       >
         <span><IconCoins class="size-8 md:size-full" /></span>
         <div>
-          <p class="md:text-xl text-[#181D27] font-semibold mb-2">
+          <p v-if="userInfo?.educational_records.annual_max_budget" class="md:text-xl text-[#181D27] font-semibold mb-2">
             $0 - ${{ userInfo?.educational_records.annual_max_budget }}
           </p>
           <h6 class="text-[#A4A7AE]">

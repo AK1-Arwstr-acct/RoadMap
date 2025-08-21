@@ -5,14 +5,14 @@
       class="flex-1 h-full overflow-y-auto custom-scrollbar pb-5 lg:pb-0"
     >
       <div class="h-fitt w-full max-w-[1150px] mx-auto">
-        <div class="px-4 mt-4 lg:mt-10 md:px-6 w-full h-fit">
+        <div class="px-4 md:px-6 w-full h-fit">
           <div
             class="flex flex-col md:flex-row gap-8 lg:gap-10 xl:gap-14"
             :class="{ 'flex-wrap': appTrackerStore.isSidebarOpen }"
           >
             <div class="flex-1 overflow-hidden w-full max-w-[800px] mx-auto">
               <RecommendedSchools
-                :isTokenLoading="isTokenLoading"
+                :isTokenLoading="schoolListStore.isPublicTokenLoading"
                 @getRecommendations="getRecommendations"
               />
             </div>
@@ -104,7 +104,6 @@ const { api } = useApi();
 const schoolListStore = useSchoolListStore();
 
 const isActive = ref<boolean>(false);
-const isTokenLoading = ref<boolean>(true);
 const schoolsListWrapper = ref<HTMLElement | null>(null);
 const width = ref<number>(0);
 
@@ -149,34 +148,11 @@ watch(
 onMounted(async () => {
   windowSize();
   window.addEventListener("resize", windowSize);
-  await nextTick();
   const publicToken = useCookie("publicToken");
-  if (!publicToken.value) {
-    await schoolListStore.setPublicToken();
-    await nextTick();
+  if (publicToken.value) {
+    schoolListStore.isPublicTokenLoading = false;
   }
-  // const token = useCookie("token")
-  // let response;
-  // if (token.value) {
-  //   response = await api.get("/api/v1/session-based-journey/session", {
-  //     headers: {
-  //       "Authorization": `Bearer ${token.value}`,
-  //     },
-  //   });
-  // } else {
-  //   response = await api.get("/api/v1/session-based-journey/session");
-  // }
-  // if (response.data) {
-  //   const publicToken = useCookie("publicToken", {
-  //     maxAge: 10800,
-  //     httpOnly: false,
-  //     secure: true,
-  //   });
-  //   publicToken.value = JSON.stringify(response.data.data.token);
-  //   await nextTick();
-  // }
-  isTokenLoading.value = false;
-  schoolListStore.setProgramListOptions();
+
   if (schoolListStore.isSchoolListPublic) {
     schoolListStore.isSchoolsLoading = false;
   }

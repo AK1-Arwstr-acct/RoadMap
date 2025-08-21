@@ -1,13 +1,22 @@
 export default defineNuxtRouteMiddleware((to, from) => {
     const token = useCookie("token");
     const localePath = useLocalePath();
+    const lastRoute = useLastRoute()
+
     const protectedPaths = [
+        "/vi/onboarding",
         "/onboarding",
         "/profile",
+        "/vi/profile",
         // "/school-list",
         // "/sophie",
         // "/ai-essay",
     ];
+
+    if (from.fullPath && from.fullPath !== to.fullPath) {
+      lastRoute.value = from.fullPath
+    }
+
     // const notAllowedPathsIfLoggedIn = ["/", "/login", "/signup", "/auth", "/forgot-password"];
     const notAllowedPathsIfLoggedIn = ["/login", "/signup", "/auth", "/forgot-password"];
     // Check if the current path is public and user is logged in
