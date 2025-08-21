@@ -15,7 +15,7 @@
         <div v-for="(option, index) in situationList" :key="index">
           <label
             :for="option.label"
-            class="flex items-center gap-5 size-full font-medium rounded-lg cursor-pointer relative border p-4 transition-all ease-in-out duration-200"
+            class="flex items-center gap-5 size-full rounded-lg cursor-pointer relative border p-4 transition-all ease-in-out duration-200"
             :class="[
               selectedOption?.value === option.value
                 ? 'border-background-brand-subtle-selected bg-background-brand-subtle text-text-brand'

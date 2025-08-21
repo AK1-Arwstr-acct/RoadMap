@@ -345,6 +345,37 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
         }
     };
 
+    const getMajors = async () => {
+        try {
+            const publicToken = useCookie("publicToken");
+            const response = await api.get(
+                "/api/v2/session-based-journey/school-recommended/program-titles",
+                {
+                    headers: {
+                        "X-auth-token": publicToken.value,
+                    },
+                }
+            );
+            if (response) {
+                return response.data.data.map(
+                    (item: { id: number; title: string }) => {
+                        return {
+                            value: item.id,
+                            label: item.title,
+                        };
+                    }
+                ) || [];
+            } else return []
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const errorMessage = errorList(error);
+                showToast(errorMessage, {
+                    type: "error",
+                });
+            }
+        }
+    }
+
     const removePublicUserData = () => {
         programTitleParentId.value = '';
         selectedPublicMajors.value = [];
@@ -444,6 +475,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
         preRunEngine,
         runEngine,
         runFinalEngine,
+        getMajors
     }
 });
 

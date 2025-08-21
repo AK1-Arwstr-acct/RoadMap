@@ -7,6 +7,7 @@ const useAppStore = defineStore("appStore", () => {
 	const tokenExists = useCookie("token");
 
 	const theme = ref<'theme-light' | 'theme-dark'>('theme-light');
+	const isMenuOpen = ref<boolean>(false); // for menu in title navbar
 
 	const authUserData = ref<AuthUserData>()
 	const userData = ref<UserData>()
@@ -14,6 +15,7 @@ const useAppStore = defineStore("appStore", () => {
 	const userCoverPhotoPreview = ref<string>('');
 	const authenticatedUser = ref<boolean>(tokenExists.value ? true : false);
 	const isFeatureChangeFromTasks = ref<boolean>(false);
+	const userMajors = ref<string>("[major]");
 
 	// modal for first time user
 	const firstTimeUser = ref<boolean>(false);
@@ -27,6 +29,9 @@ const useAppStore = defineStore("appStore", () => {
 	const resourcesSoftPaywall = ref<boolean>(false);
 	const featureSoftPaywall = ref<boolean>(false);
 	const paywallOnLastScreen = ref<string>('')
+
+	// main sidebar
+	const autoCloseSidebar = ref<boolean>(false);
 
 	const setUserImagePreview = (data: string) => {
 		userImagePreview.value = data
@@ -60,6 +65,21 @@ const useAppStore = defineStore("appStore", () => {
 		if (tokenExists.value) {
 			const response = await api.get("/api/v1/student/basic-info")
 			userData.value = response.data.data
+			const majors =
+				userData.value?.educational_records.next_program_titles.map(
+					(item) => item.title
+				) || [];
+			if (majors.length > 2) {
+				userMajors.value = (
+					majors.slice(0, -2).join(", ") +
+					", " +
+					majors.slice(-2).join(" and ")
+				);
+			} else if (majors.length > 0) {
+				userMajors.value = majors.join(" and ");
+			} else {
+				userMajors.value = "[major]"
+			}
 		} else {
 			userData.value = undefined;
 		}
@@ -94,6 +114,7 @@ const useAppStore = defineStore("appStore", () => {
 
 	return {
 		theme,
+		isMenuOpen,
 		userImagePreview,
 		userCoverPhotoPreview,
 		authenticatedUser,
@@ -107,6 +128,8 @@ const useAppStore = defineStore("appStore", () => {
 		featureSoftPaywall,
 		paywallOnLastScreen,
 		firstTimeUser,
+		userMajors,
+		autoCloseSidebar,
 		checkAuthenticatedUser,
 		setUserImagePreview,
 		setUserCoverPhotoPreview,

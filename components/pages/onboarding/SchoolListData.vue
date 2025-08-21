@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-[1000px] w-full flex justify-center">
-    <div class="flex-1 max-w-[400px] flex flex-col gap-8 md:gap-10">
+    <div class="flex-1 max-w-[410px] flex flex-col gap-8 md:gap-10">
       <div class="flex flex-col items-center gap-4">
         <img
           src="/images/school-list.png"
@@ -18,12 +18,17 @@
           v-model="schoolListData.degreeProgram"
           :disabled="programListOptions.length === 0"
           :loading="isProgramLoading"
+          :required="true"
           @onChange="getStudyDestination"
+          :openDropdown="openDropdown"
+          dropdownName="program_list"
+          @open="(value: string) => (openDropdown = value as string)"
         />
         <Transition name="fade">
           <div v-if="locationOptions.length" class="flex flex-col gap-3">
             <p class="font-medium text-text-neutral-subtle text-sm">
-              {{ $t("onboarding.where_would_you_like_to_study") }}
+              {{ $t("onboarding.where_would_you_like_to_study")
+              }}<span class="text-text-error font-medium"> *</span>
             </p>
             <div class="flex flex-wrap gap-3">
               <div v-for="(option, index) in locationOptions" :key="index">
@@ -80,6 +85,10 @@
           v-model="schoolListData.enrollPlan"
           :disabled="enrollPlanOptions.length === 0"
           :loading="enrollPlanOptions.length === 0"
+          :required="true"
+          :openDropdown="openDropdown"
+          dropdownName="enroll_plan"
+          @open="(value: string) => (openDropdown = value as string)"
         />
         <BaseSelectRadio
           :label="t('onboarding.what_is_your_estimated_budget_per_year')"
@@ -87,7 +96,11 @@
           v-model="schoolListData.budget"
           :disabled="budgetListOptions.length === 0"
           :loading="isBudgetLoading"
+          :required="true"
           direction="upward"
+          :openDropdown="openDropdown"
+          dropdownName="budget_option"
+          @open="(value: string) => (openDropdown = value as string)"
         />
       </div>
       <div class="flex items-center gap-10">
@@ -152,6 +165,9 @@ const isProgramLoading = ref<boolean>(false);
 const isLocationLoading = ref<boolean>(false);
 const isBudgetLoading = ref<boolean>(false);
 const isSubmitting = ref<boolean>(false);
+
+// for dropdown open
+const openDropdown = ref<string>("");
 
 const enrollPlanOptions: OptionAttributes[] = [
   {

@@ -28,12 +28,19 @@
         :loading="iscoursePreferenceOptionsLoading"
         :disabled="coursePreferenceOptions.length === 0"
         @onChange="onCourseChange"
+        :required="true"
+        :openDropdown="openDropdown"
+        dropdownName="parent_program"
+        @open="(value: string) => (openDropdown = value as string)"
       />
-      <OnboardingMajors
-        :label="`${t('onboarding.majors')} (Optional)`"
+      <MultiMajorsDropdown
+        :label="`${t('onboarding.majors')}`"
         :options="majorProgramsList"
         v-model="selectedMajors"
         :loading="isLoadingMajors"
+        :openDropdown="openDropdown"
+        dropdownName="majors"
+        @open="(value: string) => (openDropdown = value as string)"
       />
       <!--  -->
       <div class="flex items-center gap-10">
@@ -59,8 +66,6 @@ import type { OptionAttributes } from "~/types/home";
 import useOnboardingStore from "~/stores/OnboardingStore";
 import useSchoolListStore from "~/stores/SchoolListStore";
 
-const emit = defineEmits(["submitParentCategory"]);
-
 const { t } = useI18n();
 const { api } = useApi();
 const { showToast } = useToast();
@@ -76,6 +81,9 @@ const isLoadingMajors = ref<boolean>(false);
 const isSubmitting = ref<boolean>(false);
 const selectedCourse = ref<OptionAttributes>();
 const selectedMajors = ref<number[]>([]);
+
+// for dropdown open
+const openDropdown = ref<string>("");
 
 const getAreaofStudies = async () => {
   try {
@@ -129,25 +137,7 @@ const getMajors = async () => {
   try {
     isLoadingMajors.value = true;
     await checkPublicToken();
-    const publicToken = useCookie("publicToken");
-    const response = await api.get(
-      "/api/v2/session-based-journey/school-recommended/program-titles",
-      {
-        headers: {
-          "X-auth-token": publicToken.value,
-        },
-      }
-    );
-    if (response) {
-      majorProgramsList.value = response.data.data.map(
-        (item: { id: number; title: string }) => {
-          return {
-            value: item.id,
-            label: item.title,
-          };
-        }
-      );
-    }
+    majorProgramsList.value = await schoolListStore.getMajors();
     if (appStore.userData?.educational_records.next_program_titles.length) {
       selectedMajors.value =
         appStore.userData?.educational_records.next_program_titles.map(
@@ -177,8 +167,24 @@ const onSubmit = async () => {
         : undefined,
     });
     await appStore.getUserData();
-    navigateTo(localePath("/school-list"));
-    emit("submitParentCategory");
+    const userSelection = [
+      "I'm unsure about what major to pursue",
+      "I have a few majors in mind but need help choosing",
+      "I know what I want to study, but I still have some concerns",
+    ];
+    if (
+      userSelection.some((item) =>
+        item.includes(appStore.userData?.current_situation || "")
+      )
+    ) {
+      navigateTo(localePath("/majors"));
+    } else if (
+      appStore.userData?.current_situation === "I'm just browsing for now"
+    ) {
+      navigateTo(localePath("/"));
+    } else {
+      navigateTo(localePath("/school-list"));
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-background-base">
+  <div class="bg-surface ">
     <NuxtRouteAnnouncer />
     <NuxtLayout>
       <NuxtPage />
@@ -11,6 +11,13 @@
         @close="appStore.isMentorshipPopup = false"
       />
     </Transition>
+    <Transition name="fade">
+    <component
+      :is="UserMenu"
+      v-if="appStore.isMenuOpen"
+      @close="appStore.isMenuOpen = false"
+    />
+  </Transition>
     <!--temp theme changer-->
     <!-- <div class="fixed bottom-5 right-5">
       <button
@@ -29,6 +36,7 @@ import useSophieStore from "./stores/sophieStore";
 import useSchoolListStore from "./stores/SchoolListStore";
 import { identifyUserInHotjar } from "@/utils/hotjar";
 import { identifyUserInTiktok, trackPageView } from "@/utils/tiktokPixel";
+import UserMenu from "~/components/shared/UserMenu.vue";
 
 const { locale } = useI18n();
 const { t } = useI18n();
@@ -217,9 +225,9 @@ watch(
 onMounted(async () => {
   const user = await appStore.getUserData();
   const tokenExists = useCookie("token");
-  if (tokenExists.value && !route.path.includes('/onboarding')) {
-    await appStore.getAuthUserData();
-  }
+  // if (tokenExists.value && !route.path.includes('/onboarding')) {
+  //   await appStore.getAuthUserData();
+  // }
   hotjarConfig();
   tiktokConfig();
   await nextTick();

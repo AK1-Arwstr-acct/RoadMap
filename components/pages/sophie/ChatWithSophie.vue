@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white size-full overflow-hidden flex"
+    class="bg-surface size-full overflow-hidden flex"
     :class="{
       'rounded-xl drop-shadow-lg relative max-w-[1302px] max-h-[904px] pt-12':
         isModal,
@@ -78,7 +78,7 @@
         </div>
         <div
           v-show="chatOrHistory === 'messages'"
-          class="flex-1 md:p-6 w-full h-full p-4"
+          class="flex-1 md:px-6 w-full h-full"
         >
           <SophieChat
             :isNewChat="isNewChat"

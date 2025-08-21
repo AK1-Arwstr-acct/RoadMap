@@ -1,81 +1,40 @@
 <template>
   <div
-    class="border-r bg-white transition-all ease-in-out duration-700 flex flex-col absolute z-20 lg:z-0 lg:relative top-0 left-0 h-[calc(100%-16px)] sm:h-full"
+    class="border-r border-divider bg-surface transition-all ease-in-out duration-700 flex flex-col gap-8 absolute z-20 lg:z-0 lg:relative top-0 left-0 h-[calc(100%-16px)] sm:h-full"
     :class="[
       appTrackerStore.isRoadmapSidebarOPen
-        ? 'w-full lg:w-[336px] md:pb-4 lg:pt-6 px-5 '
+        ? 'w-full lg:w-[256px] md:pb-4 lg:pt-6'
         : 'w-0',
     ]"
   >
-    <div
-      class="flex gap-4 relative isolate"
-      :class="[
-        appTrackerStore.isRoadmapSidebarOPen
-          ? 'justify-between'
-          : 'justify-center',
-      ]"
-    >
+    <!-- <div class="px-4">
       <Transition name="sidebar">
         <p
           v-if="appTrackerStore.isRoadmapSidebarOPen"
-          class="text-[#181D27] text-xl font-semibold text-nowrap sm:text-nowrap overflow-hidden"
+          class="text-text-base text-xl font-semibold text-nowrap sm:text-nowrap overflow-hidden"
         >
-          {{ $t("roadmap_page.your_personalised_application") }} <br />
-          {{ $t("roadmap_page.checklist") }}
+          Application toolkit
         </p>
       </Transition>
-      <!-- <IconSidebar
-        @click="toggleSidebar"
-        class="cursor-pointer min-w-fit lg:hidden"
-        :class="[appTrackerStore.isRoadmapSidebarOPen ? 'text-[#717680]' : 'text-[#1570EF] hidden']"
-      /> -->
-      <!-- <Transition name="fade">
-        <div
-          v-if="!appTrackerStore.isRoadmapSidebarOPen"
-          class="fixed lg:hidden z-50 top-28 -left-2 bg-white py-5 px-1 rounded-r-full shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
-        >
-          <div class="px-1.5 rounded-full">
-            <IconSidebar
-              @click="toggleSidebar"
-              class="cursor-pointer size-5"
-              :class="[appTrackerStore.isRoadmapSidebarOPen ? 'text-[#717680]' : 'text-[#1570EF]']"
-            />
-          </div>
-        </div>
-      </Transition> -->
-    </div>
+    </div> -->
     <!-- for open sidebar -->
     <Transition name="sidebar">
-      <div ref="appListContainer" class="flex-1 overflow-y-auto no-scrollbar">
-        <div class="h-px bg-[#E9EAEB] my-6" />
-        <ApplicationsList
-          :heading="t('roadmap_page.pre_application')"
-          :application="appTrackerStore.preApplication"
-        />
-        <div class="h-px bg-[#E9EAEB] my-6" />
-        <ApplicationsList
-          :heading="t('roadmap_page.application')"
-          :application="appTrackerStore.applicationList"
-        />
-        <div class="h-px bg-[#E9EAEB] my-6" />
-        <ApplicationsList
-          :heading="t('roadmap_page.post_application')"
-          :application="appTrackerStore.postApplication"
-          @scrollDown="scrollDown"
-        />
+      <div
+        v-if="appTrackerStore.isRoadmapSidebarOPen"
+        ref="appListContainer"
+        class="flex-1 overflow-y-auto no-scrollbar flex flex-col gap-6 px-2"
+      >
+        <AppCategoryTask
+            :application="appTrackerStore.preApplication"
+          />
+        <AppCategoryTask
+            :application="appTrackerStore.applicationList"
+          />
+        <AppCategoryTask
+            :application="appTrackerStore.postApplication"
+          />
       </div>
     </Transition>
-    <!-- close sidebar -->
-    <!-- <Transition name="fade">
-      <div
-        v-if="!appTrackerStore.isRoadmapSidebarOPen"
-        class="flex-1 overflow-y-auto no-scrollbar w-full hidden sm:flex flex-col gap-14 mt-8"
-      >
-        <CompleteTaskList :application="appTrackerStore.preApplication" />
-        <CompleteTaskList :application="appTrackerStore.applicationList" />
-        <CompleteTaskList :application="appTrackerStore.postApplication" />
-      </div>
-    </Transition> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -89,9 +48,7 @@ const sophieStore = useSophieStore();
 const appStore = useAppStore();
 const { t } = useI18n();
 const route = useRoute();
-const localePath = useLocalePath();
 
-// const isOpen = ref<boolean>(appTrackerStore.isRoadmapSidebarOPen);
 const width = ref<number>(0);
 const appListContainer = ref<HTMLElement | null>(null);
 
@@ -103,11 +60,6 @@ function scrollDown() {
     });
   }
 }
-
-const toggleSidebar = () => {
-  appTrackerStore.isRoadmapSidebarOPen = !appTrackerStore.isRoadmapSidebarOPen;
-  // appTrackerStore.isSidebarOpen = isOpen.value; // will remove after update school list layout
-};
 
 const windowSize = () => {
   if (typeof window !== "undefined") {
@@ -121,12 +73,9 @@ const onRouteChange = () => {
   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
     appTrackerStore.taskActiveStates[Number(key)] = false;
   });
-  const applicationListTasks = (appTrackerStore.applicationList ?? []).flatMap(
-    (item) => item.tasks ?? []
-  );
   const tasksArray = [
     ...(appTrackerStore.preApplication?.tasks ?? []),
-    ...applicationListTasks,
+    ...(appTrackerStore.applicationList?.tasks ?? []),
     ...(appTrackerStore.postApplication?.tasks ?? []),
   ];
   let matchedTask: Task | undefined;
@@ -202,7 +151,7 @@ onMounted(async () => {
   window.addEventListener("resize", windowSize);
   if (
     !appTrackerStore.preApplication &&
-    !appTrackerStore.applicationList.length &&
+    !appTrackerStore.applicationList &&
     !appTrackerStore.postApplication
   ) {
     appTrackerStore.getRoadmapData();

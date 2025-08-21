@@ -62,7 +62,7 @@
                 "schools_list": "Schools List",
                 "sophie": "Sophie",
                 "ai_essay": "AI Essay Editor",
-                "your_checklist": "Your checklist",
+                "application_toolkit": "Application toolkit",
                 "resources": "Resources"
             }
         },
@@ -75,7 +75,10 @@
             "scholarship": "Scholarship"
         },
         "talk_to_us": "Free Mentorship",
+        "book_a_meeting" : "Book a Meeting",
+        "view_profile": "View profile",
         "login": "Log in",
+        "logout": "Log out",
         "signup": "Sign up",
         "sign_up_for_free": "Sign up for free",
         "get_scholarship": "Get Scholarship",
@@ -114,6 +117,7 @@
         },
         "application_process": "Application process",
         "ask_me_anything!": "Ask me anything!",
+        "ask_sophie_anything": "Ask Sophie anything",
         "coming_soon": "Coming soon",
         "essay_outline_review_with_mentor": "Essay outline review with mentor",
         "finalize_extracurricular_activity": "Finalize extracurricular activity",
@@ -152,6 +156,145 @@
         "please_verify_your_email_to_continue": "Please verify your email to continue.",
         "sign_up": "Sign up"
     },
+    "majors_page": {
+        "chat": {
+            "career_framework_quiz": "Career framework quiz",
+            "cooking_up_your_perfect_match": "Cooking up your perfect match...",
+            "identify_work_cluster_strengths_and_career_goals": "Identify work cluster, strengths, and career goals",
+            "learn_more": "Learn more",
+            "next": "Next",
+            "redo_quiz": "Redo quiz",
+            "start_quiz": "Start quiz",
+            "submit": "Submit"
+        },
+        "guide": {
+            "how_to_choose_your_major": "How to Choose Your Major",
+            "lock_in_major_card": {
+                "button": "Lock in your major",
+                "detail": "You've explored the resources — now it's time to take the next step. Update your profile so Sophie can help you find the best-fit schools!",
+                "heding": "🎯 Ready to Choose Your Major?"
+            },
+            "majorsGuide": {
+                "and": "and",
+                "career_prospects_settlement_opportunities": "career prospects/settlement opportunities",
+                "education_quality": "education quality",
+                "key_principle": "Key principle",
+                "light": "Your major is also a key factor in choosing universities because",
+                "p1": {
+                    "and": "and",
+                    "career_prospects_settlement_opportunities": "career prospects/settlement opportunities",
+                    "education_quality": "education quality",
+                    "when_preparing_to_study": "When preparing to study abroad, choosing your major is the most crucial decision because it directly impacts two vital factors:"
+                },
+                "p2": "Not every country excels in all fields. For example, studying creative fields in Europe (France or Italy) might be stronger and significantly cheaper than in the US. Another example: If you study STEM in the US, you're almost guaranteed a 3-year STEM OPT, but in Australia, you might not make it onto the Skilled Occupation List for job application advantages.",
+                "p3": {
+                    "bold": "program rankings matter more than overall university rankings",
+                    "light": "Your major is also a key factor in choosing universities because"
+                },
+                "p4": "You don’t need to choose perfectly from day one of university, but you definitely shouldn’t choose randomly. Many students mistakenly think choosing \"hot\" majors like business analytics or data science guarantees success, but even trending fields can lead to unemployment.",
+                "so_how_do_you_choose_a_major": "So how do you choose a major?",
+                "there_are_no_hot_majors": "There are no ‘hot’ majors, only skilled professionals who bring value  to customers and society – that’s what makes individuals ‘hot’."
+            },
+            "srengthGuide": {
+                "activities_you_never_tire_of_and_willingly_invest_time_learning_even_when_difficult": "Activities you never tire of and willingly invest time learning, even when difficult",
+                "analyze_your_personal_capabilities": "1. Analyze Your Personal Capabilities",
+                "big_five_personality_test": "Big Five personality test",
+                "choose_based_on_career_clusters_framework": "2. Choose Based on Career Clusters Framework",
+                "closest_to_real_work_experience": "Closest to real work experience",
+                "example_enjoying_project_leadership_suggests_management_potential_debate_skills_might_suit_law_or_consulting": "Example: Enjoying project leadership suggests management potential; debate skills might suit law or consulting",
+                "example_quick_math_comprehension_trend_analysis_insight": "Example: Quick math comprehension, trend analysis insight",
+                "extracurricular_activities": "🎯 Extracurricular Activities",
+                "find_your_major_with_sophie_ai": "Find your major with Sophie AI",
+                "genuine_interests": "❤️ Genuine Interests",
+                "heading": "🔍 Evaluate your strengths",
+                "identify_work_cluster_strengths_and_career_goals": "Identify work cluster, strengths, and career goals",
+                "natural_abilities": "🧠 Natural Abilities",
+                "personality_tests_alone_arent_enough_for_major_selection": "Personality tests alone aren’t enough for major selection. While MBTI might suggest an INTJ suits technology, you might not excel at math or logic. Here’s a simpler framework looking at three factors:",
+                "skills_you_learn_faster_than_others": "Skills you learn faster than others",
+                "start_your_quiz": "Start your quiz",
+                "this_framework_helps_you_understand_why_you_are_suited_for_a_particular_field_extremely_useful_for_application_essays_and_interviews": "This framework helps you understand WHY you’re suited for a particular field – extremely useful for application essays and interviews!",
+                "this_tool_is_more_reliable_than_mbti": "This tool is more reliable than MBTI because it evaluates personality  on a spectrum rather than just categorizing into two extremes. Instead  of saying you’re “completely introverted” or “completely extroverted,”  Big Five shows you where you fall on the introversion-extroversion scale, providing a more nuanced and scientific self-understanding.",
+                "to_understand_yourself_better_we_recommend_taking_the": "To understand yourself better, we recommend taking the",
+                "want_to_try_out_this_framework": "Want to try out this framework?"
+            },
+            "researchGuide": {
+                "ask_sophie_for_your_case": "Ask Sophie for your case",
+                "business": "📊 Business",
+                "clearly_define_research_topics": "Clearly define research topics",
+                "details": "After understanding yourself clearly, the next step is to research your field and career thoroughly to see if you're truly suitable for the field group and what the prospects after graduation look like.",
+                "find_schools_ensuring_employment": "Find schools ensuring employment outcomes - each country has different regulations for international students in these fields",
+                "find_universities_with_high_research": "Find universities with high research activity and faculty who can guide your research",
+                "generally_not_recommended_for_study_abroad": "Generally not recommended for study abroad unless planning to settle permanently",
+                "heading": "📚 Research Your Field",
+                "health_sciences_pharmacy_nursing_physical_therapy": "🏥 Health Sciences (Pharmacy, Nursing, Physical Therapy)",
+                "information_technology_computer_science": "💻 Information Technology/Computer Science",
+                "key_notes_on_popular_majors": "Key Notes on Popular Majors:",
+                "law_medicine": "⚖️ Law/Medicine",
+                "need_clear_direction": "Need clear direction on which branch to study - shouldn't study general business administration because it's too broad.",
+                "need_clear_specialization": "Need clear specialization focus due to high competition (front-end/back-end, AI/ML/data)",
+                "need_help_deciding": "Need help deciding",
+                "prioritize_internship_experience_early": "Prioritize internship experience early",
+                "require_early_personal_projects_for_job_applications": "Require early personal projects for job applications",
+                "research_aiming_for_masters_phd": "🔬 Research (aiming for Master's/PhD)",
+                "typical_specializations": "Typical specializations: Marketing, Finance, Logistics/Supply Chain, Accounting/Auditing, HR"
+            },
+            "faqGuide": {
+                "answer1": {
+                    "example_bachelor_of_commerce": "Example: Bachelor of Commerce in Australia",
+                    "instead_of_choosing": "Instead of choosing programs based on their name, like \"Business Analytics\" because it sounds impressive or \"Economics\" because it seems prestigious, take time to review each university’s curriculum, available internships, and talk to current students about their experience.",
+                    "many_students_focus_too_much": "Many students focus too much on the name of a program, forgetting that the same major can be taught very differently at different universities.",
+                    "monash_university": "Monash University:",
+                    "more_practice_oriented_with_strong": "More practice-oriented, with strong industry connections and many internship opportunities. A good fit for students who want to enter the workforce early.",
+                    "research_and_theory_focused": "Research and theory-focused, with strong emphasis on finance. Best suited for students interested in deep academic study or pursuing graduate school.",
+                    "tip": "🔍 Tip: ",
+                    "university_of_sydney": "University of Sydney:"
+                },
+                "answer2": {
+                    "dont_stress_too": "💡 Don't stress too much about choosing the “perfect” major from the beginning, your path can evolve as you grow.",
+                    "in_reality_employers": "In reality, employers care more about your skills and experience than your exact degree title.",
+                    "its_also_common": "It's also common to move from Finance into Data Analytics.",
+                    "many_marketing_graduates_become": "Many Marketing graduates become successful Product Managers.",
+                    "most_universities_allow_students": "Most universities allow students to switch majors after the first year or during the first semester of the second year, as long as you maintain a good GPA and meet the new major’s prerequisites.",
+                    "the_most_important_factor": "The most important factor is your relevant skills and your willingness to learn.",
+                    "you_can_usually_change": "You can usually change your major.",
+                    "youre_not_alone": "You're not alone, this is a common concern. Here's what you need to know:",
+                    "your_degree_does_not": "Your degree does not limit your career."
+                },
+                "heading": "❓ Frequently Asked Questions",
+                "question1": "There are too many programs available. How do I know which one to choose?",
+                "question2": "What if I choose the wrong major? I'm afraid of working in a different field later."
+            },
+            "choosingRight": {
+                "about_universities": "🏫 About Universities:",
+                "about_your_field": "📖 About Your Field:",
+                "career_prospects": "💼 Career Prospects:",
+                "heading": "✅ How to Know You've Chosen Right",
+                "not_just_the_broad_major_name": "Not just the broad major name (for example Computer Science) but also the small specialization you want to pursue (like AI, Cybersecurity, or Software Engineering).",
+                "potential_job_positions": "Potential job positions",
+                "preparation_process": "📈 Preparation Process:",
+                "program_rankings_internship": "Program rankings, internship opportunities, alumni networks",
+                "specific_criteria_for_choosing_suitable_schools": "Specific criteria for choosing suitable schools",
+                "target_companies_for_employment": "Target companies for employment",
+                "the_final_goal_after_choosing": "The final goal after choosing your major is you need to understand clearly:",
+                "their_specific_hiring_requirements": "Their specific hiring requirements",
+                "year_by_year_development_plan": "Year-by-year development plan - from choosing courses, finding internships, to participating in necessary extracurricular activities."
+            },
+            "guidesStepper": {
+                "on_this_page":"On this page",
+                "evaluate_your_strengths": "Evaluate your strengths",
+                "frequently_asked_questions": "Frequently Asked Questions",
+                "how_do_you_choose_a_major": "How do you choose a major?",
+                "how_to_know_you_have_chosen_right": "How to Know You've Chosen Right",
+                "research_your_field": "Research Your Field"
+            },
+            "curated_by_arrowster": "Curated by Arrowster",
+            "use_this_guide": "Use this guide as your roadmap to making an informed decision about your academic future. Remember, the best major is one that aligns with your strengths, interests, and career goals."
+        },
+        "tabs": {
+            "guides_tips": "Guides & Tips",
+            "smart_help": "Smart help"
+        }
+    },
     "onboarding": {
         "area_of_study": "Area of study",
         "e_g_7_0": "e.g. 7.0",
@@ -176,7 +319,7 @@
         "what_is_your_current_gpa_on_a_10_point_scale": "What's your current GPA on a 10-point scale?",
         "when_do_you_plan_to_enroll": "When do you plan to enroll?",
         "where_would_you_like_to_study": "Where would you like to study? (You can pick more than one)",
-        "whats_your_current_gpa_on_a_10_point_scale": "What's your current GPA on a 10-point scale?",
+        "whats_your_current_gpa": "What's your current GPA",
         "you_can_always_update_it_later_in_your_profile": "You can always update it later in your Profile"
     },
     "otp": {

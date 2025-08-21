@@ -31,6 +31,9 @@ export const filterEssay = (value: string) => {
 }
 
 export const outOfTenGpa = (number: number | string) => {
+    if (number === null) {
+        return ''
+    }
     const parseValue = parseFloat(String(number));
     const value = (parseValue / 4) * 10;
     const decimal = value - Math.floor(value);

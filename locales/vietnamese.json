@@ -62,7 +62,7 @@
                 "schools_list": "Danh sách trường",
                 "sophie": "Sophie",
                 "ai_essay": "Trình chỉnh sửa luận AI",
-                "your_checklist": "Checklist",
+                "application_toolkit": "Bộ công cụ ứng dụng",
                 "resources": "Tài liệu"
             }
         },
@@ -75,7 +75,10 @@
             "scholarship": "Học bổng"
         },
         "talk_to_us": "Đăng ký mentorship",
+        "book_a_meeting": "Đặt lịch hẹn",
+        "view_profile": "Xem hồ sơ",
         "login": "Đăng nhập",
+        "logout": "Đăng xuất",
         "signup": "Đăng ký",
         "sign_up_for_free": "Đăng ký miễn phí",
         "get_scholarship": "Nhận học bổng",
@@ -114,6 +117,7 @@
         },
         "application_process": "Quá trình nộp hồ sơ",
         "ask_me_anything!": "Hỏi mình bất cứ điều gì nhé!",
+        "ask_sophie_anything": "Hỏi Sophie bất cứ điều gì",
         "coming_soon": "Sắp ra mắt",
         "essay_outline_review_with_mentor": "Review essay outline cùng mentor",
         "finalize_extracurricular_activity": "Chốt hoạt động ngoại khoá",
@@ -152,6 +156,145 @@
         "enter_your_password": "Nhập mật khẩu của bạn",
         "sign_up": "Đăng ký"
     },
+    "majors_page": {
+        "chat": {
+            "career_framework_quiz": "Bài kiểm tra khung nghề nghiệp",
+            "cooking_up_your_perfect_match": "Đang chuẩn bị sự lựa chọn hoàn hảo cho bạn...",
+            "identify_work_cluster_strengths_and_career_goals": "Xác định nhóm công việc, điểm mạnh và mục tiêu nghề nghiệp",
+            "learn_more": "Tìm hiểu thêm",
+            "next": "Tiếp theo",
+            "redo_quiz": "Làm lại bài kiểm tra",
+            "start_quiz": "Bắt đầu bài kiểm tra",
+            "submit": "Gửi"
+        },
+        "guide": {
+            "how_to_choose_your_major": "Cách chọn ngành học của bạn",
+            "lock_in_major_card": {
+                "button": "Xác nhận ngành học của bạn",
+                "detail": "Bạn đã khám phá các tài nguyên — bây giờ là lúc thực hiện bước tiếp theo. Cập nhật hồ sơ của bạn để Sophie có thể giúp bạn tìm trường phù hợp nhất!",
+                "heding": "🎯 Sẵn sàng chọn ngành học của bạn?"
+            },
+            "majorsGuide": {
+                "and": "và",
+                "career_prospects_settlement_opportunities": "cơ hội nghề nghiệp/cơ hội định cư",
+                "education_quality": "chất lượng giáo dục",
+                "key_principle": "Nguyên tắc chính",
+                "light": "Ngành học của bạn cũng là yếu tố then chốt trong việc chọn trường đại học vì",
+                "p1": {
+                    "and": "và",
+                    "career_prospects_settlement_opportunities": "cơ hội nghề nghiệp/cơ hội định cư",
+                    "education_quality": "chất lượng giáo dục",
+                    "when_preparing_to_study": "Khi chuẩn bị đi du học, việc chọn ngành học là quyết định quan trọng nhất vì nó ảnh hưởng trực tiếp đến hai yếu tố thiết yếu:"
+                },
+                "p2": "Không phải quốc gia nào cũng mạnh về tất cả các lĩnh vực. Ví dụ, học các ngành sáng tạo ở châu Âu (Pháp hoặc Ý) có thể mạnh hơn và rẻ hơn nhiều so với ở Mỹ. Một ví dụ khác: Nếu bạn học STEM ở Mỹ, bạn gần như chắc chắn sẽ có 3 năm STEM OPT, nhưng ở Úc, bạn có thể không được đưa vào Danh sách Nghề nghiệp Kỹ năng để có lợi thế khi xin việc.",
+                "p3": {
+                    "bold": "xếp hạng chương trình quan trọng hơn xếp hạng tổng thể của trường",
+                    "light": "Ngành học của bạn cũng là yếu tố then chốt trong việc chọn trường đại học vì"
+                },
+                "p4": "Bạn không cần phải chọn hoàn hảo ngay từ ngày đầu vào đại học, nhưng chắc chắn bạn không nên chọn ngẫu nhiên. Nhiều sinh viên lầm tưởng rằng chọn các ngành \"hot\" như phân tích kinh doanh hoặc khoa học dữ liệu sẽ đảm bảo thành công, nhưng ngay cả các lĩnh vực đang thịnh hành cũng có thể dẫn đến thất nghiệp.",
+                "so_how_do_you_choose_a_major": "Vậy làm thế nào để chọn ngành học?",
+                "there_are_no_hot_majors": "Không có ngành học ‘hot’, chỉ có những chuyên gia giỏi mang lại giá trị cho khách hàng và xã hội – đó mới là điều khiến một cá nhân trở nên ‘hot’."
+            },
+            "srengthGuide": {
+                "activities_you_never_tire_of_and_willingly_invest_time_learning_even_when_difficult": "Những hoạt động bạn không bao giờ thấy chán và sẵn sàng dành thời gian học hỏi, ngay cả khi khó khăn",
+                "analyze_your_personal_capabilities": "1. Phân tích năng lực cá nhân của bạn",
+                "big_five_personality_test": "Bài kiểm tra tính cách Big Five",
+                "choose_based_on_career_clusters_framework": "2. Chọn dựa trên khung cụm nghề nghiệp",
+                "closest_to_real_work_experience": "Gần nhất với kinh nghiệm làm việc thực tế",
+                "example_enjoying_project_leadership_suggests_management_potential_debate_skills_might_suit_law_or_consulting": "Ví dụ: Thích lãnh đạo dự án gợi ý tiềm năng quản lý; kỹ năng tranh luận có thể phù hợp với luật hoặc tư vấn",
+                "example_quick_math_comprehension_trend_analysis_insight": "Ví dụ: Hiểu nhanh toán học, phân tích xu hướng",
+                "extracurricular_activities": "🎯 Hoạt động ngoại khóa",
+                "find_your_major_with_sophie_ai": "Tìm ngành học của bạn với Sophie AI",
+                "genuine_interests": "❤️ Sở thích thực sự",
+                "heading": "🔍 Đánh giá điểm mạnh của bạn",
+                "identify_work_cluster_strengths_and_career_goals": "Xác định nhóm công việc, điểm mạnh và mục tiêu nghề nghiệp",
+                "natural_abilities": "🧠 Khả năng tự nhiên",
+                "personality_tests_alone_arent_enough_for_major_selection": "Các bài kiểm tra tính cách một mình không đủ để chọn ngành học. Trong khi MBTI có thể gợi ý rằng một INTJ phù hợp với công nghệ, bạn có thể không giỏi toán hoặc logic. Đây là một khung đơn giản hơn dựa trên ba yếu tố:",
+                "skills_you_learn_faster_than_others": "Kỹ năng bạn học nhanh hơn người khác",
+                "start_your_quiz": "Bắt đầu bài kiểm tra của bạn",
+                "this_framework_helps_you_understand_why_you_are_suited_for_a_particular_field_extremely_useful_for_application_essays_and_interviews": "Khung này giúp bạn hiểu TẠI SAO bạn phù hợp với một lĩnh vực cụ thể – cực kỳ hữu ích cho bài luận và phỏng vấn xin học!",
+                "this_tool_is_more_reliable_than_mbti": "Công cụ này đáng tin cậy hơn MBTI vì nó đánh giá tính cách trên một phổ thay vì chỉ phân loại thành hai cực. Thay vì nói bạn “hoàn toàn hướng nội” hoặc “hoàn toàn hướng ngoại,” Big Five cho thấy bạn ở đâu trên thang đo hướng nội–hướng ngoại, mang lại sự hiểu biết khoa học và chi tiết hơn về bản thân.",
+                "to_understand_yourself_better_we_recommend_taking_the": "Để hiểu bản thân rõ hơn, chúng tôi khuyên bạn nên làm",
+                "want_to_try_out_this_framework": "Bạn có muốn thử khung này không?"
+            },
+            "researchGuide": {
+                "ask_sophie_for_your_case": "Hãy hỏi Sophie cho trường hợp của bạn",
+                "business": "📊 Kinh doanh",
+                "clearly_define_research_topics": "Xác định rõ ràng các chủ đề nghiên cứu",
+                "details": "Sau khi hiểu rõ bản thân, bước tiếp theo là nghiên cứu kỹ ngành học và nghề nghiệp của bạn để xem liệu bạn có thực sự phù hợp với nhóm ngành đó và triển vọng sau khi tốt nghiệp như thế nào.",
+                "find_schools_ensuring_employment": "Tìm các trường đảm bảo cơ hội việc làm – mỗi quốc gia có những quy định khác nhau cho sinh viên quốc tế trong các lĩnh vực này",
+                "find_universities_with_high_research": "Tìm các trường đại học có hoạt động nghiên cứu mạnh và giảng viên có thể hướng dẫn nghiên cứu của bạn",
+                "generally_not_recommended_for_study_abroad": "Nói chung không khuyến khích đi du học trừ khi có kế hoạch định cư lâu dài",
+                "heading": "📚 Nghiên cứu ngành học của bạn",
+                "health_sciences_pharmacy_nursing_physical_therapy": "🏥 Khoa học sức khỏe (Dược, Điều dưỡng, Vật lý trị liệu)",
+                "information_technology_computer_science": "💻 Công nghệ thông tin/Khoa học máy tính",
+                "key_notes_on_popular_majors": "Lưu ý quan trọng về các ngành phổ biến:",
+                "law_medicine": "⚖️ Luật/Y khoa",
+                "need_clear_direction": "Cần xác định rõ hướng chuyên ngành – không nên học quản trị kinh doanh tổng quát vì quá rộng.",
+                "need_clear_specialization": "Cần tập trung chuyên ngành rõ ràng do mức độ cạnh tranh cao (front-end/back-end, AI/ML/data)",
+                "need_help_deciding": "Cần giúp đỡ để quyết định",
+                "prioritize_internship_experience_early": "Ưu tiên trải nghiệm thực tập sớm",
+                "require_early_personal_projects_for_job_applications": "Cần có dự án cá nhân từ sớm để phục vụ hồ sơ xin việc",
+                "research_aiming_for_masters_phd": "🔬 Nghiên cứu (hướng tới Thạc sĩ/Tiến sĩ)",
+                "typical_specializations": "Các chuyên ngành điển hình: Marketing, Tài chính, Logistics/Chuỗi cung ứng, Kế toán/Kiểm toán, Nhân sự"
+            },
+            "faqGuide": {
+                "answer1": {
+                    "example_bachelor_of_commerce": "Ví dụ: Cử nhân Thương mại tại Úc",
+                    "instead_of_choosing": "Thay vì chọn chương trình chỉ dựa trên tên gọi, như \"Phân tích Kinh doanh\" vì nghe ấn tượng hay \"Kinh tế học\" vì có vẻ danh giá, hãy dành thời gian xem xét chương trình học của từng trường, các cơ hội thực tập sẵn có, và trò chuyện với sinh viên hiện tại về trải nghiệm của họ.",
+                    "many_students_focus_too_much": "Nhiều sinh viên quá tập trung vào tên gọi của một chương trình, quên rằng cùng một ngành có thể được giảng dạy rất khác nhau ở các trường đại học khác nhau.",
+                    "monash_university": "Đại học Monash:",
+                    "more_practice_oriented_with_strong": "Thiên về thực hành hơn, có nhiều mối quan hệ với doanh nghiệp và nhiều cơ hội thực tập. Phù hợp với sinh viên muốn đi làm sớm.",
+                    "research_and_theory_focused": "Thiên về nghiên cứu và lý thuyết, chú trọng nhiều đến tài chính. Phù hợp nhất với sinh viên quan tâm đến nghiên cứu học thuật chuyên sâu hoặc muốn học lên cao học.",
+                    "tip": "🔍 Mẹo: ",
+                    "university_of_sydney": "Đại học Sydney:"
+                },
+                "answer2": {
+                    "dont_stress_too": "💡 Đừng quá căng thẳng về việc chọn chuyên ngành 'hoàn hảo' ngay từ đầu, con đường của bạn có thể thay đổi khi bạn phát triển.",
+                    "in_reality_employers": "Trên thực tế, nhà tuyển dụng quan tâm nhiều hơn đến kỹ năng và kinh nghiệm của bạn hơn là tên bằng cấp.",
+                    "its_also_common": "Việc chuyển từ Tài chính sang Phân tích Dữ liệu cũng khá phổ biến.",
+                    "many_marketing_graduates_become": "Nhiều sinh viên tốt nghiệp ngành Marketing đã trở thành những Quản lý Sản phẩm thành công.",
+                    "most_universities_allow_students": "Hầu hết các trường đại học cho phép sinh viên chuyển ngành sau năm đầu tiên hoặc trong học kỳ đầu tiên của năm thứ hai, miễn là bạn duy trì GPA tốt và đáp ứng các điều kiện tiên quyết của ngành mới.",
+                    "the_most_important_factor": "Yếu tố quan trọng nhất là kỹ năng liên quan và sự sẵn sàng học hỏi của bạn.",
+                    "you_can_usually_change": "Bạn thường có thể thay đổi chuyên ngành của mình.",
+                    "youre_not_alone": "Bạn không đơn độc, đây là một mối quan tâm phổ biến. Đây là những gì bạn cần biết:",
+                    "your_degree_does_not": "Bằng cấp của bạn không giới hạn sự nghiệp của bạn."
+                },
+                "heading": "❓ Câu Hỏi Thường Gặp",
+                "question1": "Có quá nhiều chương trình học. Làm sao tôi biết nên chọn chương trình nào?",
+                "question2": "Nếu tôi chọn sai ngành thì sao? Tôi lo sợ sẽ phải làm việc trong một lĩnh vực khác sau này."
+            },
+            "choosingRight": {
+                "about_universities": "🏫 Về các trường đại học:",
+                "about_your_field": "📖 Về ngành học của bạn:",
+                "career_prospects": "💼 Triển vọng nghề nghiệp:",
+                "heading": "✅ Làm thế nào để biết bạn đã chọn đúng",
+                "not_just_the_broad_major_name": "Không chỉ là tên ngành rộng (ví dụ Khoa học Máy tính) mà còn cả chuyên ngành nhỏ bạn muốn theo đuổi (như Trí tuệ nhân tạo, An ninh mạng hoặc Kỹ thuật phần mềm).",
+                "potential_job_positions": "Các vị trí công việc tiềm năng",
+                "preparation_process": "📈 Quá trình chuẩn bị:",
+                "program_rankings_internship": "Xếp hạng chương trình, cơ hội thực tập, mạng lưới cựu sinh viên",
+                "specific_criteria_for_choosing_suitable_schools": "Tiêu chí cụ thể để chọn trường phù hợp",
+                "target_companies_for_employment": "Các công ty mục tiêu để làm việc",
+                "the_final_goal_after_choosing": "Mục tiêu cuối cùng sau khi chọn ngành là bạn cần hiểu rõ:",
+                "their_specific_hiring_requirements": "Các yêu cầu tuyển dụng cụ thể của họ",
+                "year_by_year_development_plan": "Kế hoạch phát triển theo từng năm - từ chọn môn học, tìm thực tập cho đến tham gia các hoạt động ngoại khóa cần thiết."
+            },
+            "guidesStepper": {
+                "on_this_page": "Trên trang này",
+                "evaluate_your_strengths": "Đánh giá điểm mạnh của bạn",
+                "frequently_asked_questions": "Các câu hỏi thường gặp",
+                "how_do_you_choose_a_major": "Bạn chọn ngành học như thế nào?",
+                "how_to_know_you_have_chosen_right": "Làm thế nào để biết bạn đã chọn đúng",
+                "research_your_field": "Nghiên cứu lĩnh vực của bạn"
+            },
+            "curated_by_arrowster": "Được tuyển chọn bởi Arrowster",
+            "use_this_guide": "Sử dụng hướng dẫn này như lộ trình để đưa ra quyết định sáng suốt về tương lai học tập của bạn. Hãy nhớ rằng, ngành học tốt nhất là ngành phù hợp với điểm mạnh, sở thích và mục tiêu nghề nghiệp của bạn."
+        },
+        "tabs": {
+            "guides_tips": "Hướng dẫn & Mẹo",
+            "smart_help": "Hỗ trợ thông minh"
+        }
+    },
     "onboarding": {
         "area_of_study": "Lĩnh vực học tập",
         "e_g_7_0": "ví dụ: 7.0",
@@ -176,7 +319,7 @@
         "what_is_your_current_gpa_on_a_10_point_scale": "GPA hiện tại của bạn trên thang điểm 10 là bao nhiêu?",
         "when_do_you_plan_to_enroll": "Bạn dự định nhập học khi nào?",
         "where_would_you_like_to_study": "Bạn muốn học ở đâu? (Có thể chọn nhiều)",
-        "whats_your_current_gpa_on_a_10_point_scale": "GPA hiện tại của bạn trên thang điểm 10 là bao nhiêu?",
+        "whats_your_current_gpa": "Điểm trung bình (GPA) hiện tại của bạn là bao nhiêu?",
         "you_can_always_update_it_later_in_your_profile": "Bạn có thể cập nhật thông tin này sau trong Hồ sơ của mình"
     },
     "otp": {
