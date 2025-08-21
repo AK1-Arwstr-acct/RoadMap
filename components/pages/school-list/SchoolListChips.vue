@@ -22,7 +22,7 @@
       @open="(value: string) => (openDropdown = value as Dropdowns)"
     />
     <DestinationsDropdown
-      :label="t('schoolList_page.destination')"
+      :label="t('schoolList_page.study_destination')"
       :required="true"
       :loading="isLocationLoading"
       v-model="selectedLocationOptions"
@@ -143,14 +143,12 @@
 </template>
 <script setup lang="ts">
 import useSchoolListStore from "~/stores/SchoolListStore";
-import useAppTrackerStore from "~/stores/AppTrackerStore";
 import type { OptionAttributes, UserData } from "~/types/home";
 import useAppStore from "~/stores/AppStore";
 import axios from "axios";
 import type { Dropdowns } from "~/types/dashboard";
 
 const schoolListStore = useSchoolListStore();
-const appTrackerStore = useAppTrackerStore();
 const appStore = useAppStore();
 const { api } = useApi();
 const { showToast } = useToast();
@@ -160,7 +158,6 @@ const isSubmitting = ref<boolean>(false);
 const isDetailOpen = ref<boolean>(false);
 const gpa = ref<string>(schoolListStore.isSchoolListPublic ? "9" : "");
 const annualBudget = ref<OptionAttributes | null>();
-const checkBudgetSelection = ref<boolean>(true); // To check whether the list has a selected budget.
 const studyPrograms = ref<OptionAttributes>();
 const areaOfStudy = ref<OptionAttributes | null>();
 const selectedLocationOptions = ref<number[]>([]);
@@ -182,10 +179,6 @@ const focusDiv = ref<HTMLElement | null>(null);
 const modalPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 });
 let resizeObserver: ResizeObserver | null = null;
 
-const convertedCgpa = computed(() => {
-  return gpa.value ? ((Number(gpa.value) / 10) * 4).toFixed(2) : "";
-});
-
 const scrollContainer = ref<HTMLElement | null>(null);
 const scrollForward = () => {
   if (scrollContainer.value) {
@@ -204,7 +197,7 @@ const updateUserData = async () => {
       });
       const { min, max } = getMinMax();
       const payload = {
-        cgpa: convertedCgpa.value,
+        cgpa: outOfFourGpa(gpa.value),
         next_educational_class_grade_id: studyPrograms.value?.value,
         annual_min_budget: min,
         annual_max_budget: max,
@@ -240,11 +233,8 @@ const updateModalPosition = () => {
 };
 
 const setInitialValues = async (newValue: UserData) => {
-  const cgpa = parseFloat(String(newValue?.educational_records.cgpa));
-  const value = (cgpa / 4) * 10;
-  const decimal = value - Math.floor(value);
-  gpa.value = decimal > 0 ? value.toFixed(1) : value.toFixed(0);
-  await gpaChanged();
+  (gpa.value = outOfTenGpa(newValue?.educational_records.cgpa)),
+    await gpaChanged();
 
   if (!schoolListStore.programListOptions.length) {
     return;
@@ -260,7 +250,13 @@ const setInitialValues = async (newValue: UserData) => {
     return;
   }
 
-  await getLocationsList();
+  if (!schoolListStore.locationOptions.length) {
+    // await getLocationsList();
+    await schoolListStore.setLocationOptions({
+      cgpa: outOfFourGpa(gpa.value),
+      class_grade_ids: [Number(studyPrograms.value?.value)],
+    });
+  }
 
   if (!schoolListStore.locationOptions.length) {
     schoolListStore.isSchoolsLoading = false;
@@ -277,7 +273,12 @@ const setInitialValues = async (newValue: UserData) => {
     return;
   }
 
-  await destinationUpdates();
+  if (!schoolListStore.budgetList.length) {
+    // await destinationUpdates();
+    await schoolListStore.setBudgetList({
+      country_ids: selectedLocationOptions.value || [],
+    });
+  }
 
   if (!schoolListStore.budgetList.length) {
     schoolListStore.isSchoolsLoading = false;
@@ -294,7 +295,13 @@ const setInitialValues = async (newValue: UserData) => {
     return;
   }
 
-  await getProgramParent();
+  if (!schoolListStore.coursePreferenceOptions.length) {
+    // await getProgramParent();
+    await schoolListStore.setCoursePreferenceOptions({
+      min_budget: null,
+      max_budget: (annualBudget.value as { max?: number }).max,
+    });
+  }
 
   if (!schoolListStore.coursePreferenceOptions.length) {
     schoolListStore.isSchoolsLoading = false;
@@ -309,7 +316,6 @@ const setInitialValues = async (newValue: UserData) => {
     schoolListStore.isSchoolsLoading = false;
     return;
   }
-
   schoolListStore.programTitleParentId = areaOfStudy.value?.value || "";
   schoolListStore.isPublicMajorEnable = true;
   if (appStore.userData?.educational_records.next_program_titles.length) {
@@ -376,7 +382,7 @@ const getLocationsList = async () => {
     schoolListStore.isPublicMajorEnable = false;
 
     const response = await schoolListStore.setLocationOptions({
-      cgpa: convertedCgpa.value,
+      cgpa: outOfFourGpa(gpa.value),
       class_grade_ids: [Number(studyPrograms.value?.value)],
     });
     if (response) {
@@ -465,7 +471,7 @@ const getProgramParent = async () => {
 const updateAuthMajors = async () => {
   try {
     const payload = {
-      cgpa: convertedCgpa.value,
+      cgpa: outOfFourGpa(gpa.value),
       next_program_title_ids: schoolListStore.selectedPublicMajors.length
         ? schoolListStore.selectedPublicMajors
         : -1,
@@ -487,7 +493,7 @@ const updateAuthUserData = async () => {
   try {
     const { min, max } = getMinMax();
     const payload = {
-      cgpa: convertedCgpa.value,
+      cgpa: outOfFourGpa(gpa.value),
       next_educational_class_grade_id: studyPrograms.value?.value,
       annual_min_budget: min,
       annual_max_budget: max,
@@ -569,7 +575,7 @@ const calculateHeight = () => {
 };
 
 watch(
-  () => [schoolListStore.programListOptions, appStore.userData],
+  () => appStore.userData,
   () => {
     if (appStore.userData && schoolListStore.isAllowwedOnUserDadaChange) {
       setInitialValues(appStore.userData);
@@ -594,6 +600,21 @@ onMounted(async () => {
   }
   window.addEventListener("resize", updateModalPosition);
   window.addEventListener("resize", windowSize);
+
+  const publicToken = useCookie("publicToken");
+  if (!publicToken.value) {
+    await schoolListStore.setPublicToken();
+    await nextTick();
+  }
+  if (!schoolListStore.programListOptions.length) {
+    await schoolListStore.setProgramListOptions();
+  }
+
+  if (appStore.userData) {
+    schoolListStore.isAllowwedOnUserDadaChange = false;
+    schoolListStore.isPublicMajorEnable = false;
+    setInitialValues(appStore.userData);
+  }
 });
 
 onUnmounted(() => {

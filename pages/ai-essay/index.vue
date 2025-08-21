@@ -1,53 +1,5 @@
 <template>
   <main class="size-full flex flex-col">
-    <!-- <div
-      v-if="deviceType === 'mobile'"
-      class="py-5 px-3 border-b border-gray-200"
-    >
-      <div class="flex justify-between items-center">
-        <NuxtLinkLocale :to="'/dashboard'">
-          <div class="cursor-pointer flex items-center gap-1">
-            <IconArrowsterLogo class="size-8 min-w-8" />
-            <img
-              src="/images/logo/logo.svg"
-              alt="Logo"
-              class="w-full h-5"
-              loading="eager"
-            />
-          </div>
-        </NuxtLinkLocale>
-        <div
-          v-if="appStore.authenticatedUser"
-          @click="isMobileSideBarOpen = true"
-          class="cursor-pointer rounded-full overflow-hidden size-10"
-        >
-          <img
-            v-if="appStore.userData?.avatar"
-            :src="appStore.userImagePreview || appStore.userData?.avatar"
-            alt="user-icon"
-            class="size-full"
-          />
-          <div
-            v-else
-            class="size-full bg-orange-500 flex items-center justify-center text-white font-medium uppercase text-xl"
-          >
-            <span>{{ appStore.userData?.name.charAt(0) }}</span>
-          </div>
-        </div>
-        <div
-          v-else
-          @click="isMobileSideBarOpen = true"
-          class="cursor-pointer rounded-full overflow-hidden size-10"
-        >
-          <img
-            src="/images/chat-bot.png"
-            alt="user-icon"
-            class="size-full"
-            loading="eager"
-          />
-        </div>
-      </div>
-    </div> -->
     <div
       v-if="!essayStore.finalEssay && !essayStore.tryFreeArrowster"
       class="flex-1 overflow-hidden"
@@ -56,28 +8,6 @@
         v-if="!isAiQuestionStart"
         class="size-full md:p-8 flex flex-col overflow-y-auto no-scrollbar"
       >
-        <!-- <div
-          v-if="deviceType !== 'mobile'"
-          class="flex justify-between items-start"
-        >
-          <NuxtLinkLocale :to="'/dashboard'">
-            <div class="cursor-pointer">
-              <img
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                class="w-40 md:w-44 h-6 md:h-7"
-                loading="eager"
-              />
-            </div>
-          </NuxtLinkLocale>
-          <div
-            @click="router.back()"
-            v-if="!getUserInfo"
-            class="cursor-pointer"
-          >
-            <IconCross fill="#717680" class="size-6 md:size-8" />
-          </div>
-        </div> -->
         <div class="flex-1 md:p-6 flex justify-center items-center px-5">
           <PublicUserInfo v-if="getUserInfo" @submit="startQuestions" />
           <div v-else class="flex flex-col gap-8 items-center max-w-[668px]">

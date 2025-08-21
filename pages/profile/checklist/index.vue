@@ -1,7 +1,7 @@
 <template>
   <div class="size-full px-4 flex flex-col overflow-hidden">
     <!-- tabs -->
-    <div
+    <!-- <div
       class="mt-2 md:mt-10 flex gap-1 w-full max-w-[800px] mx-auto pb-2 overflow-x-auto no-scrollbar"
     >
       <div
@@ -22,7 +22,6 @@
           class="absolute h-[3px] w-full left-0 -bottom-1 bg-[#2563EB] rounded-tl-[4px] rounded-tr-[4px]"
         />
       </div>
-      <!-- @click="activeTab = 'comparison'" -->
       <div
         @click="navigateTo(localePath('/pricing'))"
         class="px-3 pb-1.5 flex gap-1.5 items-center font-semibold cursor-pointer transition-all ease-in-out duration-200"
@@ -48,8 +47,8 @@
           {{ $t("checklist_page.coming_soon") }}
         </p>
       </div>
-    </div>
-    <div class="flex-1 w-full overflow-y-auto custom-scrollbar mt-8">
+    </div> -->
+    <div class="flex-1 w-full overflow-y-auto custom-scrollbar pt-4">
       <div class="w-full max-w-[800px] mx-auto mb-8">
         <Transition name="fade">
           <Checklist v-if="activeTab == 'checklist'" @openDetail="openDetail" />
@@ -121,7 +120,7 @@ useHead(
 );
 
 definePageMeta({
-  layout: "home-layout",
+  layout: "profile-layout",
 });
 
 const activeTab = ref<"checklist" | "comparison">("checklist");

@@ -3,7 +3,7 @@
     class="size-full overflow-hidden flex flex-col items-center"
     :class="{ 'overflow-y-auto pb-4': phase === 'keepGoing' }"
   >
-    <div class="md:pt-6 pb-6 px-[24px] flex flex-col gap-6 md:gap-10 w-full">
+    <div class="md:pt-6 pb-6 px-[24px] flex flex-col gap-6 md:gap-10 w-full max-w-[800px] mx-auto">
       <div class="flex items-center gap-6">
         <div
           class="flex-1 w-full rounded-full bg-[#F5F5F5] overflow-hidden h-2 md:h-3"
@@ -36,7 +36,7 @@
     <!-- chat -->
     <div
       v-if="phase === 'keepGoing'"
-      class="w-full flex flex-col items-center gap-8 px-5"
+      class="w-full flex flex-col items-center gap-8 px-5 max-w-[800px] mx-auto"
     >
       <img
         src="/images/countries-application.png"
@@ -64,7 +64,7 @@
         </p>
       </div>
     </div>
-    <div v-else class="w-full flex-1 overflow-hidden">
+    <div v-else class="w-full flex-1 overflow-hidden max-w-[800px] mx-auto">
       <div
         v-if="phase === 'questionPhase'"
         class="size-full flex flex-col gap-2 overflow-hidden"

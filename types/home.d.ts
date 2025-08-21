@@ -1,3 +1,5 @@
+import type { Component } from "vue";
+
 interface OptionAttributes {
   value: string;
   label: string;
@@ -8,7 +10,7 @@ interface CountriesOptionAttributes {
   value: number[];
   label: string;
   description?: string;
-  icon?: string;
+  icon?: string | Component;
 }
 interface FormData {
   budget: OptionAttributes | null;
@@ -26,6 +28,18 @@ interface PocChat {
 interface SophieChat {
   isSender: boolean,
   text: string,
+}
+interface MajorsSelectionChat {
+  isSender: boolean,
+  text: string,
+  isTyping?: boolean,
+  message_support_id?: string,
+  showDiscoverMore?: boolean,
+}
+
+interface FollowUps {
+  questions: string[],
+  title: string
 }
 
 interface Tasks {
@@ -119,12 +133,14 @@ interface UserData {
   current_location: CurrentLocation;
   name: string;
   email: string;
-  isEmailVerified : boolean;
+  isEmailVerified: boolean;
   phone_number: string | null;
   user_name: string;
   first_name: string;
   last_name: string;
   gender: string;
+  enroll_year: string;
+  current_situation: string;
   dob: string | null;
   starting_date: string | null;
   educational_records: EducationalRecords;
@@ -175,6 +191,14 @@ interface programOptions {
   parent: number;
 }
 
+interface Tabs {
+  name: string;
+  label: string;
+  icon: Component
+}
+
+type MajorsTabs = 'chat' | 'guide';
+
 export type LanguageLocale = typeof ALL_LOCALES_LANGUAGE[number];
 
-export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, AuthUserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, ChatDetail, EssayData, Plan, programOptions }
+export { OptionAttributes, FormData, PocChat, Tasks, CurrentClassGrade, TestScores, ClassGrades, UserData, AuthUserData, UserInput, CountriesOptionAttributes, FilterKey, SophieChat, MajorsSelectionChat, FollowUps, ChatDetail, EssayData, Plan, programOptions, Tabs, MajorsTabs }

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white w-[424px] h-dvh relative z-40 border-l border-[#00000033] flex flex-col"
+    class="bg-white w-[424px] h-full relative z-40 border-l border-[#00000033] flex flex-col"
   >
     <div class="pt-8 pb-4 px-6 flex justify-between items-center border-b border-[#00000033]">
       <div class="font-semibold">

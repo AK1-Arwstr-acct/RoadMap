@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="h-full flex justify-center items-center pt-4 md:pt-8 md:px-6 overflow-hidden"
-  >
+  <div class="h-full flex justify-center items-center md:px-6 overflow-hidden">
     <div class="overflow-y-auto no-scrollbar pb-6 size-full">
       <div class="w-full mx-auto h-fit max-w-[900px]">
         <div
@@ -63,7 +61,7 @@
               :placeholder="t('homepage.ask_me_anything!')"
               rows="4"
               v-model="inputQuestion"
-              @keydown.enter="handleKeydown"
+              @keydown.enter.exact.prevent="handelSubmit"
               class="w-full px-3.5 py-2.5 bg-[#F5F5F5] border-[1.5px] border-[#F5F5F5] rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"
             />
             <button
@@ -165,14 +163,10 @@ const preQuestion = ref<{ number: number; question: string }[]>([
   },
 ]);
 
-const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    handelSubmit();
-  }
-};
-
 const handelSubmit = () => {
+  if (inputQuestion.value.trim().length < 2) {
+    return;
+  }
   sophieStore.preQuestionSelected = inputQuestion.value;
   sophieStore.openSophieModal = true;
   inputQuestion.value = "";
@@ -183,7 +177,7 @@ const handelPreQuestion = (question: { number: number; question: string }) => {
     navigateTo(localePath("/school-list"));
   } else if (question.number === 2) {
     appTrackerStore.taskFromHomeQuestion = 4;
-    navigateTo(localePath("/sophie"));
+    navigateTo(localePath("/majors"));
   } else if (question.number === 3) {
     sophieStore.preQuestionSelected = question.question;
     navigateTo(localePath("/scholarship"));

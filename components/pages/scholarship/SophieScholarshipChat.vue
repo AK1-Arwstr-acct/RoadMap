@@ -17,7 +17,7 @@
               },
             ]"
           >
-            <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-6 w-full max-w-[800px] mx-auto">
               <div
                 v-for="(chat, index) in completeChat.filter(
                   (item) => item.text !== ''
@@ -41,7 +41,7 @@
                   }`,
                 }"
               >
-                <div
+                <!-- <div
                   v-if="
                     !chat.isSender &&
                     (index > 0
@@ -59,7 +59,7 @@
                     loading="eager"
                   />
                 </div>
-                <div v-else class="w-8" />
+                <div v-else class="w-8" /> -->
                 <div
                   class="w-fit max-w-[90%] text-wrap text-[#414651]"
                   :class="{
@@ -68,6 +68,24 @@
                   }"
                 >
                   <div class="suggestion-container">
+                    <span
+                      v-if="
+                        !chat.isSender &&
+                        (index > 0
+                          ? completeChat.filter((item) => item.text !== '')[
+                              index - 1
+                            ].isSender
+                          : true)
+                      "
+                      class="size-8 min-w-8 rounded-full overflow-hidden border border-border-neutral inline-block"
+                    >
+                      <img
+                        src="/images/chat-bot.png"
+                        alt="chat bot"
+                        class="object-cover object-center size-full"
+                        loading="eager"
+                      />
+                    </span>
                     <vue-markdown :source="chat.text" :options="options" />
                   </div>
                   <div
@@ -155,7 +173,7 @@
                 completeChat.length === 0 ||
                 (!appStore.authenticatedUser && completeChat.length === 1)
               "
-              class="flex flex-col gap-1 items-end mt-3"
+              class="flex flex-col gap-1 items-end mt-3 w-full max-w-[800px] mx-auto"
               :class="{ 'pointer-events-none': isChatFull }"
             >
               <p class="text-[#4B5563] text-xs font-semibold pb-1">
@@ -179,7 +197,10 @@
           </div>
           <!-- paywall for PUblic user -->
           <Transition name="fade">
-            <div v-if="publicPaywall" class="absolute inset-0 flex flex-col">
+            <div
+              v-if="publicPaywall"
+              class="absolute inset-0 flex flex-col w-full max-w-[800px] mx-auto"
+            >
               <!-- shadow bg -->
               <div
                 class="flex-1 bg-gradient-to-b from-transparent via-white/60 to-white"
@@ -218,7 +239,7 @@
           </div>
         </div>
         <!-- input -->
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 w-full max-w-[800px] mx-auto">
           <Transition name="fade">
             <div
               v-if="isChatFull"
@@ -439,11 +460,14 @@ const scrollDown = () => {
   });
 };
 
-const handelPreQuestionOfScholarship = async (question: string, sendEmail: boolean) => {
+const handelPreQuestionOfScholarship = async (
+  question: string,
+  sendEmail: boolean
+) => {
   try {
     inputQuestion.value = question;
     await submit();
-    if(sendEmail) {
+    if (sendEmail) {
       await api.get(
         `/api/v1/roadmap/tasks/${sophieStore.roadmapTaskDetail?.id}/book-oneToOne-meeting`
       );
@@ -464,6 +488,9 @@ const handelPreQuestionOfScholarship = async (question: string, sendEmail: boole
 
 const submit = async () => {
   try {
+    if (inputQuestion.value.trim().length < 2) {
+      return;
+    }
     completeChat.value.push({
       isSender: true,
       text: inputQuestion.value,
@@ -508,7 +535,8 @@ const submit = async () => {
         }
       );
       if (response.data) {
-        isIntroductionCompleted.value = response.data.isIntroductionCompleted || false;
+        isIntroductionCompleted.value =
+          response.data.isIntroductionCompleted || false;
       }
     } else {
       response = await api.post(`/api/v1/ai-conversation/sophie`, {

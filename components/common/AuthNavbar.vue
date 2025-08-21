@@ -7,15 +7,6 @@
         <IconArrowsterLogoFull class="w-full" :class="{'lg:invert': ishome}" />
       </NuxtLinkLocale>
     </div>
-    <div
-      v-if="isOnboarding && onboardingStore.onboardingProgress"
-      class="w-[50%] bg-[#E9EAEB] h-2 rounded-full hidden md:block"
-    >
-      <div
-        class="h-full bg-[#1570EF] rounded-full transition-all ease-in-out duration-700"
-        :style="{ width: onboardingStore.onboardingProgress }"
-      />
-    </div>
     <BaseLanguageDropdown />
   </div>
 </template>
