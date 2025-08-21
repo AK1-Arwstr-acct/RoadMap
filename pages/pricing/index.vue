@@ -50,7 +50,7 @@
         <div class="hidden md:flex justify-end">
           <span @click="backRoute" class="cursor-pointer">
             <IconCross fill="#A4A7AE" width="24" height="24" />
-          </NuxtLinkLocale>
+          </span>
         </div>
         <h1 class="text-4xl text-[#181D27] font-semibold">
           {{ $t("pricing_page.heading") }}
