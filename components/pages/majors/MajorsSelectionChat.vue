@@ -815,8 +815,6 @@ const checkInitialContent = () => {
       if (
         appStore.userData.current_situation ===
           "I'm unsure about what major to pursue" ||
-        appStore.userData.current_situation ===
-          "I've decided on my major and am now looking for schools" ||
         appStore.userData.current_situation === "I'm just browsing for now"
       ) {
         majorStore.initialChat.push({
@@ -833,7 +831,9 @@ const checkInitialContent = () => {
         });
       } else if (
         appStore.userData.current_situation ===
-        "I know what I want to study, but I still have some concerns"
+          "I know what I want to study, but I still have some concerns" ||
+        appStore.userData.current_situation ===
+          "I've decided on my major and am now looking for schools"
       ) {
         majorStore.initialChat.push({
           isSender: false,

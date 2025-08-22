@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-surface ">
+  <div class="bg-surface">
     <NuxtRouteAnnouncer />
     <NuxtLayout>
       <NuxtPage />
@@ -12,12 +12,12 @@
       />
     </Transition>
     <Transition name="fade">
-    <component
-      :is="UserMenu"
-      v-if="appStore.isMenuOpen"
-      @close="appStore.isMenuOpen = false"
-    />
-  </Transition>
+      <component
+        :is="UserMenu"
+        v-if="appStore.isMenuOpen"
+        @close="appStore.isMenuOpen = false"
+      />
+    </Transition>
     <!--temp theme changer-->
     <!-- <div class="fixed bottom-5 right-5">
       <button
@@ -171,11 +171,14 @@ const popupFirstRun = ref<boolean>(true);
 const closePopup = () => {
   appStore.isMentorshipPopup = false;
   popupFirstRun.value = false;
-}
+};
 
 const handleMouseMove = () => {
+  if (route.path.includes("onboarding")) {
+    return;
+  }
   if (!popupFirstRun.value) {
-    return
+    return;
   }
   if (timeoutId) {
     clearTimeout(timeoutId);
@@ -188,7 +191,7 @@ const handleMouseMove = () => {
   ) {
     return;
   }
-  
+
   if (appStore.isMentorshipPopup === false) {
     timeoutId = setTimeout(() => {
       appStore.isMentorshipPopup = true;
@@ -198,8 +201,11 @@ const handleMouseMove = () => {
 
 let clickTimestamps: number[] = [];
 const handleClick = () => {
+  if (route.path.includes("onboarding")) {
+    return;
+  }
   if (!popupFirstRun.value) {
-    return
+    return;
   }
   if (
     excludedRoutes.some((path) => route.fullPath.includes(path)) ||
@@ -249,9 +255,11 @@ onMounted(async () => {
   window.addEventListener("mousemove", handleMouseMove);
   window.addEventListener("keydown", handleMouseMove);
   window.addEventListener("click", handleClick);
-  timeoutId = setTimeout(() => {
-    appStore.isMentorshipPopup = true;
-  }, appStore.popupTimer);
+  if (!route.path.includes("onboarding")) {
+    timeoutId = setTimeout(() => {
+      appStore.isMentorshipPopup = true;
+    }, appStore.popupTimer);
+  }
 });
 
 onUnmounted(() => {
