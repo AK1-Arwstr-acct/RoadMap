@@ -8,7 +8,7 @@
       <component
         v-if="appStore.isMentorshipPopup"
         :is="MentorshipPopup"
-        @close="appStore.isMentorshipPopup = false"
+        @close="closePopup"
       />
     </Transition>
     <Transition name="fade">
@@ -166,8 +166,17 @@ const tiktokConfig = () => {
 
 let timeoutId: ReturnType<typeof setTimeout> | null = null;
 const excludedRoutes = ["/pricing", "/login", "/signup"];
+const popupFirstRun = ref<boolean>(true);
+
+const closePopup = () => {
+  appStore.isMentorshipPopup = false;
+  popupFirstRun.value = false;
+}
 
 const handleMouseMove = () => {
+  if (!popupFirstRun.value) {
+    return
+  }
   if (timeoutId) {
     clearTimeout(timeoutId);
     timeoutId = null;
@@ -179,7 +188,7 @@ const handleMouseMove = () => {
   ) {
     return;
   }
-
+  
   if (appStore.isMentorshipPopup === false) {
     timeoutId = setTimeout(() => {
       appStore.isMentorshipPopup = true;
@@ -189,6 +198,9 @@ const handleMouseMove = () => {
 
 let clickTimestamps: number[] = [];
 const handleClick = () => {
+  if (!popupFirstRun.value) {
+    return
+  }
   if (
     excludedRoutes.some((path) => route.fullPath.includes(path)) ||
     sophieStore.openSophieModal
@@ -211,20 +223,20 @@ const handleClick = () => {
   }
 };
 
-watch(
-  () => appStore.isMentorshipPopup,
-  () => {
-    if (appStore.isMentorshipPopup === false) {
-      timeoutId = setTimeout(() => {
-        appStore.isMentorshipPopup = true;
-      }, appStore.popupTimer);
-    }
-  }
-);
+// watch(
+//   () => appStore.isMentorshipPopup,
+//   () => {
+//     if (appStore.isMentorshipPopup === false) {
+//       timeoutId = setTimeout(() => {
+//         appStore.isMentorshipPopup = true;
+//       }, appStore.popupTimer);
+//     }
+//   }
+// );
 
 onMounted(async () => {
   const user = await appStore.getUserData();
-  const tokenExists = useCookie("token");
+  // const tokenExists = useCookie("token");
   // if (tokenExists.value && !route.path.includes('/onboarding')) {
   //   await appStore.getAuthUserData();
   // }
@@ -234,20 +246,20 @@ onMounted(async () => {
   identifyUserInHotjar(user);
   identifyUserInTiktok(user);
   trackPageView();
-  // window.addEventListener("mousemove", handleMouseMove);
-  // window.addEventListener("keydown", handleMouseMove);
-  // window.addEventListener("click", handleClick);
-  // timeoutId = setTimeout(() => {
-  //   appStore.isMentorshipPopup = true;
-  // }, appStore.popupTimer);
+  window.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("keydown", handleMouseMove);
+  window.addEventListener("click", handleClick);
+  timeoutId = setTimeout(() => {
+    appStore.isMentorshipPopup = true;
+  }, appStore.popupTimer);
 });
 
 onUnmounted(() => {
-  // window.removeEventListener("mousemove", handleMouseMove);
-  // window.removeEventListener("keydown", handleMouseMove);
-  // window.removeEventListener("click", handleClick);
-  // if (timeoutId) {
-  //   clearTimeout(timeoutId);
-  // }
+  window.removeEventListener("mousemove", handleMouseMove);
+  window.removeEventListener("keydown", handleMouseMove);
+  window.removeEventListener("click", handleClick);
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
 });
 </script>

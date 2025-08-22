@@ -38,6 +38,7 @@
         :options="majorProgramsList"
         v-model="selectedMajors"
         :loading="isLoadingMajors"
+        :required="isMajorsRequired"
         :openDropdown="openDropdown"
         dropdownName="majors"
         @open="(value: string) => (openDropdown = value as string)"
@@ -46,7 +47,7 @@
       <div class="flex items-center gap-10">
         <button
           @click="onSubmit"
-          :disabled="!selectedCourse || isSubmitting"
+          :disabled="!selectedCourse || (!selectedMajors.length && isMajorsRequired) || isSubmitting"
           class="text-text-constant-white font-semibold bg-background-brand rounded-lg flex gap-3 items-center justify-center py-2.5 px-[18px] disabled:opacity-50"
         >
           {{ $t("onboarding.next") }}
@@ -156,6 +157,17 @@ const getMajors = async () => {
   }
 };
 
+const isMajorsRequired = computed(() => {
+  const userSelection = [
+    "I have a few majors in mind but need help choosing",
+    "I know what I want to study, but I still have some concerns",
+    "I've decided on my major and am now looking for schools"
+  ];
+  return userSelection.some((item) =>
+    item.includes(appStore.userData?.current_situation || "")
+  );
+});
+
 const onSubmit = async () => {
   try {
     isSubmitting.value = true;
@@ -164,7 +176,7 @@ const onSubmit = async () => {
       super_meta_category_id: selectedCourse.value?.value,
       next_program_title_ids: selectedMajors.value.length
         ? selectedMajors.value
-        : undefined,
+        : -1,
     });
     await appStore.getUserData();
     const userSelection = [

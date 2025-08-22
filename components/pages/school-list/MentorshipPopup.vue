@@ -89,9 +89,9 @@ const getMentorship = () => {
 };
 
 const close = () => {
-  if (appStore.popupTimer !== 60000) {
-    appStore.popupTimer = 60000;
-  }
+  // if (appStore.popupTimer !== 60000) {
+  //   appStore.popupTimer = 60000;
+  // }
   emit("close");
 };
 </script>

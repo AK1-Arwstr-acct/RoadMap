@@ -1,7 +1,13 @@
 import axios from 'axios';
+import useAppStore from '~/stores/AppStore';
+import useMajorStore from '~/stores/majorStore';
 
 export const useApi = () => {
   const config = useRuntimeConfig();
+  const appStore = useAppStore();
+  const majorStore = useMajorStore();
+  const localePath = useLocalePath();
+
   const api = axios.create({
     baseURL: config.public.baseURL,
     headers: {
@@ -24,7 +30,14 @@ export const useApi = () => {
     error => {
       if (error.response && error.response.status === 401) {
         useCookie('token').value = null;
-        navigateTo('/login');
+        const checkToken = useCookie("token");
+        if (checkToken.value) {
+          checkToken.value = null;
+        }
+        appStore.checkAuthenticatedUser();
+        appStore.userData = undefined;
+        majorStore.clearStoreData();
+        navigateTo(localePath("/login"));
       }
       return Promise.reject(error);
     }

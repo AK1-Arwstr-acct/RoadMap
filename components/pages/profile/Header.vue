@@ -143,9 +143,11 @@
 </template>
 <script setup lang="ts">
 import useAppStore from "~/stores/AppStore";
+import useMajorStore from "~/stores/majorStore";
 import axios from "axios";
 
 const appStore = useAppStore();
+const majorStore = useMajorStore();
 const { api } = useApi();
 const { showToast } = useToast();
 const localePath = useLocalePath();
@@ -169,6 +171,7 @@ const logOut = async () => {
   }
   appStore.checkAuthenticatedUser();
   appStore.userData = undefined;
+  majorStore.clearStoreData();
   await navigateTo(localePath("/login"));
 };
 

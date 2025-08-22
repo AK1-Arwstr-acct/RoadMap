@@ -3,17 +3,29 @@
     <p class="text-xl md:text-2xl font-semibold mb-4 text-text-base">
       {{ $t("majors_page.guide.faqGuide.heading") }}
     </p>
-    <div class="border-[1.5px] border-border-neutral-subtle rounded-2xl px-6 text-text-base bg-background-base">
+    <div
+      class="border-[1.5px] border-border-neutral-subtle rounded-2xl px-6 text-text-base bg-background-base"
+    >
       <div v-for="(faq, index) in faqList" :key="index" class="">
-        <div class="flex items-start gap-4 py-4" :class="[{ 'border-b border-divider': index + 1 != faqList.length }]">
+        <div
+          class="flex items-start gap-4 py-4"
+          :class="[{ 'border-b border-divider': index + 1 != faqList.length }]"
+        >
           <div class="flex-1">
-            <p class="sm:text-xl font-medium cursor-pointer" @click="toggleAnswer(index)">
+            <p
+              class="sm:text-xl font-medium cursor-pointer"
+              @click="toggleAnswer(index)"
+            >
               {{ faq.question }}
             </p>
-            <div class="overflow-hidden transition-all duration-300 ease-in-out leading-7" :class="isOpen[index]
-                ? 'max-h-[1200px] opacity-100 mt-2'
-                : 'max-h-0 opacity-0'
-              ">
+            <div
+              class="overflow-hidden transition-all duration-300 ease-in-out leading-7"
+              :class="
+                isOpen[index]
+                  ? 'max-h-[1200px] opacity-100 mt-2'
+                  : 'max-h-0 opacity-0'
+              "
+            >
               <div v-if="index == 0" class="flex flex-col gap-2 pb-[18px]">
                 <p>
                   {{
@@ -31,11 +43,12 @@
                 </p>
                 <ul class="mt-1 list-disc list-inside pl-8 -indent-6">
                   <li>
-                    <span class="font-semibold">{{
-                      $t(
-                        "majors_page.guide.faqGuide.answer1.university_of_sydney"
-                      )
-                    }}
+                    <span class="font-semibold"
+                      >{{
+                        $t(
+                          "majors_page.guide.faqGuide.answer1.university_of_sydney"
+                        )
+                      }}
                     </span>
                     {{
                       $t(
@@ -44,11 +57,12 @@
                     }}
                   </li>
                   <li>
-                    <span class="font-semibold">{{
-                      $t(
-                        "majors_page.guide.faqGuide.answer1.monash_university"
-                      )
-                    }}
+                    <span class="font-semibold"
+                      >{{
+                        $t(
+                          "majors_page.guide.faqGuide.answer1.monash_university"
+                        )
+                      }}
                     </span>
                     {{
                       $t(
@@ -58,7 +72,8 @@
                   </li>
                 </ul>
                 <p>
-                  <span class="font-semibold">{{ $t("majors_page.guide.faqGuide.answer1.tip") }}
+                  <span class="font-semibold"
+                    >{{ $t("majors_page.guide.faqGuide.answer1.tip") }}
                   </span>
                   {{
                     $t("majors_page.guide.faqGuide.answer1.instead_of_choosing")
@@ -69,14 +84,17 @@
                 <p>
                   {{ $t("majors_page.guide.faqGuide.answer2.youre_not_alone") }}
                 </p>
-                <ol class="mt-1 list-decimal list-inside pl-4 -indent-4 flex flex-col gap-2">
+                <ol
+                  class="mt-1 list-decimal list-inside pl-4 -indent-4 flex flex-col gap-2"
+                >
                   <li>
                     <span class="font-semibold">
                       {{
                         $t(
                           "majors_page.guide.faqGuide.answer2.you_can_usually_change"
                         )
-                      }} </span><br />
+                      }} </span
+                    ><br />
                     <span>
                       {{
                         $t(
@@ -91,7 +109,8 @@
                         $t(
                           "majors_page.guide.faqGuide.answer2.your_degree_does_not"
                         )
-                      }} </span><br />
+                      }} </span
+                    ><br />
                     <span>
                       {{
                         $t(
@@ -154,7 +173,7 @@ const faqList: { question: string; answer: string }[] = [
   },
 ];
 
-const isOpen = ref<boolean[]>(faqList.map(() => true));
+const isOpen = ref<boolean[]>(faqList.map(() => false));
 
 const toggleAnswer = (index: number) => {
   isOpen.value[index] = !isOpen.value[index];
