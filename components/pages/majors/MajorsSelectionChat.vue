@@ -81,7 +81,9 @@
                       v-if="!majorStore.isQuizStart"
                       class="mt-6 rounded-2xl overflow-hidden border border-border-neutral-subtle bg-background-neutral-subtle flex items-center gap-2"
                     >
-                      <div class="size-[100px] min-w-[100px] md:size-[140px] md:min-w-[140px]">
+                      <div
+                        class="size-[100px] min-w-[100px] md:size-[140px] md:min-w-[140px]"
+                      >
                         <img
                           src="/images/sophieQuiz.png"
                           alt="application"
@@ -95,19 +97,23 @@
                           <p
                             class="text-text-base text-lg md:text-xl font-semibold"
                           >
-                            {{ $t('majors_page.chat.career_framework_quiz') }}
+                            {{ $t("majors_page.chat.career_framework_quiz") }}
                           </p>
                           <p
                             class="text-text-neutral-subtle text-xs md:text-sm"
                           >
-                            {{ $t('majors_page.chat.identify_work_cluster_strengths_and_career_goals') }}
+                            {{
+                              $t(
+                                "majors_page.chat.identify_work_cluster_strengths_and_career_goals"
+                              )
+                            }}
                           </p>
                         </div>
                         <button
                           @click="majorStore.isQuizStart = true"
                           class="rounded-lg px-4 text-sm md:text-base py-2 bg-background-brand text-text-constant-white text-nowrap font-semibold"
                         >
-                          {{ $t('majors_page.chat.start_quiz') }}
+                          {{ $t("majors_page.chat.start_quiz") }}
                         </button>
                       </div>
                     </div>
@@ -403,6 +409,7 @@ import { v4 as uuidv4 } from "uuid";
 import useSophieStore from "~/stores/sophieStore";
 import useAppStore from "~/stores/AppStore";
 import useMajorStore from "~/stores/majorStore";
+import useSchoolListStore from "~/stores/SchoolListStore";
 import { list } from "postcss";
 
 const { api } = useApi();
@@ -410,6 +417,7 @@ const { showToast } = useToast();
 const sophieStore = useSophieStore();
 const appStore = useAppStore();
 const majorStore = useMajorStore();
+const schoolListStore = useSchoolListStore();
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
@@ -806,9 +814,11 @@ const checkInitialContent = () => {
       majorStore.showQuiz = true;
       if (
         appStore.userData.current_situation ===
-        "I'm unsure about what major to pursue"
+          "I'm unsure about what major to pursue" ||
+        appStore.userData.current_situation ===
+          "I've decided on my major and am now looking for schools" ||
+        appStore.userData.current_situation === "I'm just browsing for now"
       ) {
-        // majorStore.preQuestion = majorStore.preQuestion.slice(0, -1);
         majorStore.initialChat.push({
           isSender: false,
           text: `<p class="!m-0 text-lg md:text-2xl font-semibold">Hey ${appStore.userData.name} 👋 Not sure where to start with major selection?</p><p class="pt-2 leading-7">This short quiz will help you uncover the right majors for you:</p>`,
@@ -831,6 +841,17 @@ const checkInitialContent = () => {
         });
       }
     } else return;
+  } else {
+    majorStore.preQuestion = [
+      `How does ${appStore.userMajors} differ from other options?`,
+      `What’s important to know before choosing ${appStore.userMajors}`,
+      `What do students say about ${appStore.userMajors}`,
+    ];
+    majorStore.showQuiz = true;
+    majorStore.initialChat.push({
+      isSender: false,
+      text: `<p class="!m-0 text-lg md:text-2xl font-semibold">Hey👋 Not sure where to start with major selection?</p><p class="pt-2 leading-7">This short quiz will help you uncover the right majors for you:</p>`,
+    });
   }
   // further code for public if require
 };
@@ -875,5 +896,8 @@ onMounted(async () => {
   if (majorStore.completeChat.length) {
     scrollDown();
   }
+  // if (!appStore.authenticatedUser) {
+  //   schoolListStore.setPublicToken();
+  // }
 });
 </script>

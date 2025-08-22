@@ -46,9 +46,11 @@
 </template>
 <script setup lang="ts">
 import useAppStore from "~/stores/AppStore";
+import useMajorStore from "~/stores/majorStore";
 
 const appStore = useAppStore();
 const localePath = useLocalePath();
+const majorStore = useMajorStore();
 
 const emits = defineEmits(["close"]);
 
@@ -60,6 +62,7 @@ const logOut = async () => {
   }
   appStore.checkAuthenticatedUser();
   appStore.userData = undefined;
+  majorStore.clearStoreData();
   await navigateTo(localePath("/login"));
 };
 </script>
