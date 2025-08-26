@@ -204,7 +204,7 @@
           </div>
         </div>
         <!-- input -->
-        <div class="flex flex-col gap-4 h-fit w-full max-w-[800px] mx-auto">
+        <div class="flex flex-col gap-4 w-full max-w-[800px] mx-auto">
           <Transition name="fade">
             <div
               v-if="isChatFull"
@@ -282,7 +282,7 @@
             />
             <button
               :disabled="
-                isChatLoading || isChatFull || inputQuestion.trim().length < 2
+                isChatLoading || isChatFull || inputQuestion.trim().length < minInputCharacters
               "
               @click="submit"
               class="cursor-pointer rounded-lg bg-background-brand no-scrollbar absolute top-1.5 2xl:top-auto 2xl:bottom-4 transform right-2 2xl:right-4 -rotate-90 p-2 disabled:opacity-40"
@@ -293,7 +293,7 @@
         </div>
       </div>
     </div>
-    <div v-if="completeChat.length !== 0 || readOnly">
+    <div>
       <p class="text-[#A4A7AE] text-xs text-center">
         <span v-if="!readOnly">
           {{
@@ -373,6 +373,7 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 const hasChatScroll = ref(false);
+const minInputCharacters = ref<number>(1);
 
 // const tempHeightDiv = ref<number>()
 
@@ -546,7 +547,7 @@ const startTypingAnimation = () => {
 
 const submit = async () => {
   try {
-    if (inputQuestion.value.trim().length < 2) {
+    if (inputQuestion.value.trim().length < minInputCharacters.value) {
       return;
     }
     emit("isChatLoading", true);

@@ -65,14 +65,14 @@
               class="w-full px-3.5 py-2.5 bg-[#F5F5F5] border-[1.5px] border-[#F5F5F5] rounded-xl focus:outline-none resize-none placeholder:font-light min-h-fit"
             />
             <button
-              :disabled="inputQuestion.trim().length < 2"
+              :disabled="inputQuestion.trim().length < minInputCharacters"
               @click="handelSubmit"
               class="cursor-pointer size-10 min-w-10 flex justify-center items-center rounded-lg bg-[#1570ef] disabled:bg-[#D1D5DB] absolute bottom-5 transform right-8 md:right-4 -rotate-90 p-2 disabled:opacity-40"
             >
               <IconArrowRight
                 width="20"
                 height="20"
-                :fill="inputQuestion.trim().length < 2 ? '#9CA3AF' : '#ffffff'"
+                :fill="inputQuestion.trim().length < minInputCharacters ? '#9CA3AF' : '#ffffff'"
               />
             </button>
           </div>
@@ -150,6 +150,7 @@ useHead(
   }))
 );
 
+const minInputCharacters = ref<number>(1);
 const inputQuestion = ref<string>("");
 
 const preQuestion = ref<{ number: number; question: string }[]>([
@@ -164,7 +165,7 @@ const preQuestion = ref<{ number: number; question: string }[]>([
 ]);
 
 const handelSubmit = () => {
-  if (inputQuestion.value.trim().length < 2) {
+  if (inputQuestion.value.trim().length < minInputCharacters.value) {
     return;
   }
   sophieStore.preQuestionSelected = inputQuestion.value;
