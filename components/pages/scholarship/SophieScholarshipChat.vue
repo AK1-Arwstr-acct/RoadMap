@@ -295,7 +295,7 @@
             />
             <button
               :disabled="
-                isChatLoading || isChatFull || inputQuestion.trim().length < 2
+                isChatLoading || isChatFull || inputQuestion.trim().length < minInputCharacters
               "
               @click="submit"
               class="cursor-pointer rounded-lg bg-[#1570EF] absolute top-1.5 transform right-2 -rotate-90 p-2 disabled:opacity-40"
@@ -340,6 +340,7 @@ const showLoading = ref<boolean>(false);
 const showMyThinking = ref<boolean>(true);
 const publicPaywall = ref<boolean>(false);
 const hasChatScroll = ref(false);
+const minInputCharacters = ref<number>(1);
 
 // for public paywall
 const isIntroductionCompleted = ref(false);
@@ -361,7 +362,7 @@ const loadingSteps = [
     details: [
       `Searching ${
         appStore.userData
-          ? appStore.userData.educational_records.next_class_grade.class_name
+          ? appStore.userData?.educational_records?.next_class_grade?.class_name || "bachelor’s"
           : "bachelor’s"
       } program in the ${
         appStore.userData
@@ -488,7 +489,7 @@ const handelPreQuestionOfScholarship = async (
 
 const submit = async () => {
   try {
-    if (inputQuestion.value.trim().length < 2) {
+    if (inputQuestion.value.trim().length < minInputCharacters.value) {
       return;
     }
     completeChat.value.push({

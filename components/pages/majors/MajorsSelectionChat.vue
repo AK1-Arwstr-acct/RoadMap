@@ -370,7 +370,7 @@
               />
               <button
                 :disabled="
-                  isChatLoading || isChatFull || inputQuestion.trim().length < 2
+                  isChatLoading || isChatFull || inputQuestion.trim().length < minInputCharacters
                 "
                 @click="submit"
                 class="cursor-pointer rounded-lg bg-background-brand no-scrollbar absolute top-1.5 2xl:top-auto 2xl:bottom-4 transform right-2 2xl:right-4 -rotate-90 p-2 disabled:opacity-40"
@@ -447,6 +447,7 @@ const isEducationLevel = ref<boolean>(false);
 const studyPrograms = ref<OptionAttributes>();
 const hasChatScroll = ref(false);
 const isFollowUpQuestion = ref(false);
+const minInputCharacters = ref<number>(1);
 
 // typing animation
 const typingInterval = ref<number | null>(null);
@@ -687,7 +688,7 @@ const quizSubmit = async () => {
 
 const submit = async () => {
   try {
-    if (inputQuestion.value.trim().length < 2) {
+    if (inputQuestion.value.trim().length < minInputCharacters.value) {
       return;
     }
     emit("isChatLoading", true);
