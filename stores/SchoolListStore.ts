@@ -377,7 +377,6 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
     }
 
     const getMajorsUsingAuthToken = async () => {
-        console.log('inside')
         try {
             const authToken = useCookie("token");
             const response = await api.get(

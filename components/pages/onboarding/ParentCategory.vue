@@ -86,6 +86,23 @@ const selectedMajors = ref<number[]>([]);
 // for dropdown open
 const openDropdown = ref<string>("");
 
+watch(
+    () => coursePreferenceOptions.value,
+    () => {
+      const preselected = appStore.userData?.educational_records?.super_meta_category;
+      if (preselected) {
+        selectedCourse.value = coursePreferenceOptions.value.find(
+            (item) => Number(item.value) === preselected.id
+        );
+        if (selectedCourse.value) {
+          getMajorsUsingAuthToken();
+        }
+      }
+    }
+);
+
+
+
 const getAreaofStudies = async () => {
   try {
     iscoursePreferenceOptionsLoading.value = true;
@@ -159,8 +176,8 @@ const getMajors = async () => {
 
 const getMajorsUsingAuthToken = async () => {
   try {
-    console.log('hello')
     isLoadingMajors.value = true;
+    selectedMajors.value = ''
 
     majorProgramsList.value = await schoolListStore.getMajorsUsingAuthToken()
     if (appStore.userData?.educational_records.next_program_titles.length) {
