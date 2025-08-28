@@ -1,5 +1,7 @@
 <template>
-  <div class="h-dvh w-full p-5 py-8 flex items-center overflow-y-auto custom-scrollbar">
+  <div
+    class="h-dvh w-full p-5 py-8 flex items-center overflow-y-auto custom-scrollbar"
+  >
     <div class="w-full sm:w-[400px] m-auto flex flex-col gap-8 h-fit">
       <div class="flex flex-col items-center gap-6">
         <IconArrowsterLogo
@@ -289,6 +291,16 @@ const submit = async () => {
     identifyUserInHotjar(user);
     await appStore.checkAuthenticatedUser();
     await appStore.getAuthUserData();
+    const userRole = useCookie("userRole", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
+    userRole.value = appStore.authUserData?.role.title.toLowerCase();
+    if (appStore.authUserData?.role.title.toLowerCase().includes("counselor")) {
+      navigateTo(localePath("/counselor/students"));
+      return;
+    }
     if (response.data.data.onboarded) {
       appStore.paywallOnLastScreen === ""
         ? navigateTo(localePath("/"))
@@ -326,5 +338,9 @@ const getCountries = async () => {
 
 onMounted(() => {
   getCountries();
+  const userRole = useCookie("userRole");
+  if (userRole.value) {
+    userRole.value = null;
+  }
 });
 </script>

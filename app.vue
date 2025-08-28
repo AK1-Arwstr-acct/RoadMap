@@ -18,6 +18,13 @@
         @close="appStore.isMenuOpen = false"
       />
     </Transition>
+    <Transition name="fade">
+      <component
+        :is="CounselorPopupMenu"
+        v-if="counselorStore.isCounselorMenuOpen"
+        @close="counselorStore.isCounselorMenuOpen = false"
+      />
+    </Transition>
     <!--temp theme changer-->
     <!-- <div class="fixed bottom-5 right-5">
       <button
@@ -34,9 +41,11 @@ import MentorshipPopup from "~/components/pages/school-list/MentorshipPopup.vue"
 import useAppStore from "~/stores/AppStore";
 import useSophieStore from "./stores/sophieStore";
 import useSchoolListStore from "./stores/SchoolListStore";
+import useCounselorStore from "./stores/counselorStore";
 import { identifyUserInHotjar } from "@/utils/hotjar";
 import { identifyUserInTiktok, trackPageView } from "@/utils/tiktokPixel";
 import UserMenu from "~/components/shared/UserMenu.vue";
+import CounselorPopupMenu from "./components/pages/counselor/CounselorPopupMenu.vue";
 
 const { locale } = useI18n();
 const { t } = useI18n();
@@ -62,6 +71,7 @@ useHead(
 
 const appStore = useAppStore();
 const sophieStore = useSophieStore();
+const counselorStore = useCounselorStore();
 
 const toggleTheme = () => {
   const html = document.documentElement;

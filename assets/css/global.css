@@ -77,6 +77,25 @@ html.theme-dark input:-webkit-autofill {
 	opacity: 1;
 }
 
+/* slideModal-effect */
+.slideModal-enter-active,
+.slideModal-leave-active {
+  transition: all 400ms;
+  transform: all 400ms;
+}
+
+.slideModal-enter-from,
+.slideModal-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slideModal-enter-to,
+.slideModal-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 /* Custom Toast Styles */
 .custom-toast-container {
 	display: flex;

@@ -10,6 +10,7 @@
             <IconArrowsterLogo
               v-if="!isOpen"
               class="size-[30px] min-w-[30px] group-hover:hidden"
+              :class="{ invert: appStore.theme === 'theme-dark' }"
             />
             <NuxtLinkLocale v-else to="/">
               <img
@@ -176,8 +177,8 @@
   </div>
 
   <!-- mobile bottom bar -->
-  <div class="lg:hidden fixed z-20 bottom-0 w-full bg-white px-1.5">
-    <div class="flex gap-1 justify-evenly py-1.5 border-t border-[#000000]/20">
+  <div class="lg:hidden bg-surface fixed z-20 bottom-0 w-full px-1.5">
+    <div class="flex gap-1 justify-evenly py-1.5 border-t border-divider">
       <NuxtLinkLocale
         :to="tab.route"
         v-for="(tab, idx) in tabList"
@@ -192,8 +193,8 @@
                 ? route.path === '/'
                 : tab.activeList.some((item) => route.path.startsWith(item))
             )
-              ? 'text-[#1570EF] bg-[#EFF8FF]'
-              : 'text-[#414651]',
+              ? 'text-text-brand bg-background-brand-subtle'
+              : 'text-text-base',
           ]"
         >
           <component
@@ -205,8 +206,8 @@
                   ? route.path === '/'
                   : tab.activeList.some((item) => route.path.startsWith(item))
               )
-                ? 'text-[#1570EF]'
-                : 'text-[#717680]',
+                ? 'text-icon-brand'
+                : 'text-icon-neutral-subtle',
             ]"
           />
           <span class="font-semibold text-xs text-nowrap">

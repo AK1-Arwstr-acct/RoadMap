@@ -50,9 +50,12 @@ export default {
         "background-neutral-bolder": "var(--color-background-neutral-bolder)",
         "background-neutral-boldest": "var(--color-background-neutral-boldest)",
         "background-neutral-subtle": "var(--color-background-neutral-subtle)",
+        "background-warning-subtle": "var(--color-background-warning-subtle)",
+        "background-info-subtle": "var(--color-background-info-subtle)",
         "background-disabled": "var(--color-background-disabled)",
 
         "divider": "var(--color-divider)",
+        "divider-subtle": "var(--color-divider-subtle)",
 
         "progress-track-brand": "var(--color-progress-track-brand)",
         "progress-indicator-brand": "var(--color-progress-indicator-brand)",

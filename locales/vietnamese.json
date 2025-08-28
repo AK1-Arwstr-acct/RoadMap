@@ -54,6 +54,14 @@
         "no_saved_colleges_yet": "Chưa có trường nào",
         "no_school_detail": "Bạn chưa lưu trường nào. Sử dụng công cụ tìm kiếm để khám phá trường dành riêng cho bạn."
     },
+    "counselor_pages": {
+        "create_new": "Tạo mới",
+        "students": "Sinh viên",
+        "schools": "trường học",
+        "referral_program": "Chương trình giới thiệu",
+        "students_details": "Chi tiết sinh viên",
+        "students_page": {}
+    },
     "dashboard": {
         "sidebar": {
             "menu": {

@@ -40,7 +40,10 @@
     --color-background-neutral-bolder: #D4D4D4;
     --color-background-neutral-boldest: #0A0A0A;
     --color-background-neutral-subtle: #FAFAFA;
+    --color-background-warning-subtle: #FFEDD5;
+    --color-background-info-subtle: #E0E7FF;
     --color-divider: rgba(0, 0, 0, 0.2);
+    --color-divider-subtle: rgba(0, 0, 0, 0.1);
     --color-progress-track-brand: #DBEAFE;
     --color-progress-indicator-brand: #2563EB;
     --color-border-neutral: rgba(0, 0, 0, 0.2);
@@ -86,9 +89,11 @@
     --color-background-neutral-bolder: #D4D4D4;
     --color-background-neutral-boldest: #0A0A0A;
     --color-background-neutral-subtle: #FAFAFA;
+    --color-background-info-subtle: #E0E7FF;
 
     /* divider */
     --color-divider: rgba(0, 0, 0, 0.2);
+    --color-divider-subtle: rgba(0, 0, 0, 0.1);
 
     /* progress */
     --color-progress-track-brand: #DBEAFE;
@@ -142,9 +147,11 @@
     --color-background-neutral-bolder: #525252;
     --color-background-neutral-boldest: #FDFDFD;
     --color-background-neutral-subtle: #171717;
+    --color-background-info-subtle: #EEF2FF;
 
     /* divider */
     --color-divider: rgba(255, 255, 255, 0.2);
+    --color-divider-subtle: rgba(255, 255, 255, 0.1);
 
     /* progress */
     --color-progress-track-brand: #1E3A8A;

@@ -5,7 +5,7 @@
         v-click-outside="() => emits('close')"
         class="bg-background-base rounded-xl px-2 pt-2 pb-6 w-[320px] flex flex-col gap-4 absolute right-8 top-20"
       >
-        <div class="border-b border-divider pb-4 px-2">
+        <div class="border-b border-divider px-2">
           <div class="flex items-center gap-4">
             <div class="cursor-pointer rounded-full overflow-hidden size-10">
               <img
@@ -30,12 +30,6 @@
               </p>
             </div>
           </div>
-          <NuxtLinkLocale
-            @click="emits('close')"
-            to="/profile"
-            class="block rounded-lg bg-background-neutral-bold text-text-base py-2.5 w-full text-center font-semibold"
-            >{{ $t("dashboard.view_profile") }}</NuxtLinkLocale
-          >
         </div>
         <div class="px-2">
           <p @click="logOut" class="font-semibold cursor-pointer text-text-base">{{ $t("dashboard.logout") }}</p>

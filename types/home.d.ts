@@ -4,7 +4,7 @@ interface OptionAttributes {
   value: string;
   label: string;
   description?: string;
-  icon?: Component;
+  icon?: Component | string;
 }
 interface CountriesOptionAttributes {
   value: number[];
@@ -118,6 +118,10 @@ interface AuthUserData {
   created_at: string;
   oldUser: boolean;
   onboarded: boolean;
+  role: {
+    id: number;
+    title: string;
+  }
   currentPlan: {
     plan_id: number;
     plan_price: number;

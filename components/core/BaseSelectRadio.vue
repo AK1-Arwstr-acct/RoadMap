@@ -40,7 +40,9 @@
               : placeholder
           }}
         </p>
-        <p class="text-text-neutral-subtle text-left w-[calc(100%-24px)] truncate">
+        <p
+          class="text-text-neutral-subtle text-left w-[calc(100%-24px)] truncate"
+        >
           {{ selectedOption.label }}
         </p>
       </div>
@@ -48,12 +50,25 @@
         <p
           class="text-text-base text-left w-[calc(100%-24px)] truncate flex items-center gap-2"
         >
-          <div v-if="selectedOption.icon">
+          <!-- <div v-if="selectedOption.icon">
               <component
                 :is="selectedOption.icon"
                 class="size-6 text-text-neutral-subtle"
               />
-            </div>
+            </div> -->
+          <template v-if="selectedOption.icon">
+            <component
+              v-if="typeof selectedOption.icon !== 'string'"
+              :is="selectedOption.icon"
+              class="size-6 text-text-neutral-subtle"
+            />
+            <img
+              v-else
+              :src="selectedOption.icon"
+              alt="icon"
+              class="size-6 min-w-6 rounded-full overflow-hidden"
+            />
+          </template>
           {{ selectedOption.label }}
         </p>
       </div>
@@ -64,11 +79,7 @@
             : 'absolute right-[14px] top-3 transition-transform duration-200 ease-in-out',
         ]"
       >
-        <IconChevronDown
-          v-if="!loading"
-          height="18"
-          width="18"
-          />
+        <IconChevronDown v-if="!loading" height="18" width="18" />
         <IconSpinner v-else stroke="#A4A7AE" bgColor="transparent" width="20" />
       </span>
     </div>
@@ -84,13 +95,13 @@
           : label
           ? 'top-[82px]'
           : 'top-[52px]',
-        dropdownWidth === '' ? 'w-full' : dropdownWidth
+        dropdownWidth === '' ? 'w-full' : dropdownWidth,
       ]"
     >
       <div
         v-for="(item, index) in options"
         :key="index"
-        class="flex items-center cursor-pointer  hover:bg-background-base-subtle-hovered"
+        class="flex items-center cursor-pointer hover:bg-background-base-subtle-hovered"
         :class="{
           'bg-background-base-subtle-selected':
             mode === 'tick' && selectedOption?.value === item.value,
@@ -111,19 +122,21 @@
             class="min-w-5 h-5 cursor-pointer"
             :class="{ hidden: mode === 'tick' }"
           />
-          <span
-            class="truncate font-medium flex item-center gap-2"
-          >
-            <div v-if="item.icon">
+          <span class="truncate font-medium flex item-center gap-2">
+            <template v-if="item.icon">
               <component
+                v-if="typeof item.icon !== 'string'"
                 :is="item.icon"
                 class="size-6 text-text-neutral-subtle"
               />
-            </div>
-            {{ item.label }}</span
-          >
-          <span v-if="selectedOption?.value === item.value && mode === 'tick'">
-            <IconTick stroke="#1570EF" stroke-width="2" />
+              <img
+                v-else
+                :src="item.icon"
+                alt="icon"
+                class="size-6 min-w-6 rounded-full overflow-hidden"
+              />
+            </template>
+            {{ item.label }}
           </span>
         </label>
       </div>
@@ -209,7 +222,7 @@ const selectedOption = ref<OptionAttributes | null>(props.modelValue);
 
 const openDropdownHandler = () => {
   emits("open", props.dropdownName);
-  isDropdownOpen.value = !isDropdownOpen.value
+  isDropdownOpen.value = !isDropdownOpen.value;
 };
 
 const closeDropdown = () => {
@@ -233,7 +246,7 @@ watch(
   () => props.openDropdown,
   (newValue) => {
     if (newValue !== props.dropdownName) {
-      isDropdownOpen.value = false
+      isDropdownOpen.value = false;
     }
   }
 );

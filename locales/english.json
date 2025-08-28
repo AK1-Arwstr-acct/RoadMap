@@ -54,6 +54,14 @@
         "no_saved_colleges_yet": "No Saved Colleges Yet",
         "no_school_detail": "You haven't saved any colleges yet. Use our search and filters to discover schools that fit you best."
     },
+    "counselor_pages": {
+        "create_new": "Create new",
+        "students": "Students",
+        "schools": "Schools",
+        "referral_program": "Referral program",
+        "students_details": "Students details",
+        "students_page": {}
+    },
     "dashboard": {
         "sidebar": {
             "menu": {
