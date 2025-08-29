@@ -86,23 +86,6 @@ const selectedMajors = ref<number[]>([]);
 // for dropdown open
 const openDropdown = ref<string>("");
 
-watch(
-    () => coursePreferenceOptions.value,
-    () => {
-      const preselected = appStore.userData?.educational_records?.super_meta_category;
-      if (preselected) {
-        selectedCourse.value = coursePreferenceOptions.value.find(
-            (item) => Number(item.value) === preselected.id
-        );
-        if (selectedCourse.value) {
-          getMajorsUsingAuthToken();
-        }
-      }
-    }
-);
-
-
-
 const getAreaofStudies = async () => {
   try {
     iscoursePreferenceOptionsLoading.value = true;
@@ -130,9 +113,10 @@ const onCourseChange = async () => {
     await api.post("/api/v1/student/update-profile-basic-info", {
       cgpa: appStore.userData?.educational_records.cgpa,
       super_meta_category_id: selectedCourse.value?.value,
-    })
+    });
     // await appStore.getUserData();
-    getMajorsUsingAuthToken();
+    selectedMajors.value = [];
+    getMajors();
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -155,36 +139,12 @@ const getMajors = async () => {
   try {
     isLoadingMajors.value = true;
     await checkPublicToken();
-    majorProgramsList.value = await schoolListStore.getMajor();
+    majorProgramsList.value = await schoolListStore.getMajors();
     if (appStore.userData?.educational_records.next_program_titles.length) {
       selectedMajors.value =
         appStore.userData?.educational_records.next_program_titles.map(
           (item) => item.id
         );
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const errorMessage = errorList(error);
-      showToast(errorMessage, {
-        type: "error",
-      });
-    }
-  } finally {
-    isLoadingMajors.value = false;
-  }
-};
-
-const getMajorsUsingAuthToken = async () => {
-  try {
-    isLoadingMajors.value = true;
-    selectedMajors.value = ''
-
-    majorProgramsList.value = await schoolListStore.getMajorsUsingAuthToken()
-    if (appStore.userData?.educational_records.next_program_titles.length) {
-      selectedMajors.value =
-          appStore.userData?.educational_records.next_program_titles.map(
-              (item) => item.id
-          );
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {

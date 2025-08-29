@@ -376,37 +376,6 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
         }
     }
 
-    const getMajorsUsingAuthToken = async () => {
-        try {
-            const authToken = useCookie("token");
-            const response = await api.get(
-                "/api/v1/school/recommended/program-titles",
-                {
-                    headers: {
-                        "Authorization":  `Bearer ${authToken}`,
-                    },
-                }
-            );
-            if (response) {
-                return response.data.data.map(
-                    (item: { id: number; title: string }) => {
-                        return {
-                            value: item.id,
-                            label: item.title,
-                        };
-                    }
-                ) || [];
-            } else return []
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                const errorMessage = errorList(error);
-                showToast(errorMessage, {
-                    type: "error",
-                });
-            }
-        }
-    }
-
     const removePublicUserData = () => {
         programTitleParentId.value = '';
         selectedPublicMajors.value = [];
@@ -506,8 +475,7 @@ const useSchoolListStore = defineStore("schoolListStore", () => {
         preRunEngine,
         runEngine,
         runFinalEngine,
-        getMajors,
-        getMajorsUsingAuthToken,
+        getMajors
     }
 });
 
