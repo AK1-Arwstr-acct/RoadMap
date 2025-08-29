@@ -115,6 +115,7 @@ const onCourseChange = async () => {
       super_meta_category_id: selectedCourse.value?.value,
     });
     // await appStore.getUserData();
+    selectedMajors.value = [];
     getMajors();
   } catch (error) {
     if (axios.isAxiosError(error)) {

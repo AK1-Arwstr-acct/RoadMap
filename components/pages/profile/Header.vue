@@ -98,8 +98,8 @@
                     .class_name || ""
                 }}
               </span>
-              <span class="mx-2 text-[#535862]">•</span>
-              <span class="flex items-center gap-1.5">
+              <span v-if="appStore.userData?.current_location.title" class="mx-2 text-[#535862]">•</span>
+              <span v-if="appStore.userData?.current_location.title" class="flex items-center gap-1.5">
                 <IconMap />
                 {{ appStore.userData?.current_location.title }}
               </span>
