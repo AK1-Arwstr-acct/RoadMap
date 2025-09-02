@@ -16,6 +16,7 @@
         <div class="w-5 h-[32px] hidden md:block">
           <img
             src="/images/bulb.png"
+            alt="icon-bulb"
             class="size-full object-contain"
             loading="eager"
           />
@@ -40,6 +41,7 @@
     >
       <img
         src="/images/countries-application.png"
+        alt="application"
         class="w-[200px] md:w-[260px]"
         loading="eager"
       />

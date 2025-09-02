@@ -251,6 +251,8 @@ const getStudyDestination = async () => {
       class_grade_ids: [Number(schoolListData.value.degreeProgram?.value)],
     };
     const response = await schoolListStore.setLocationOptions(payload);
+    console.log(response);
+    
     if (response) {
       locationOptions.value = response.map(
         (item: CountriesOptionAttributes) => {

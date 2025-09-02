@@ -42,21 +42,6 @@
         </div>
       </div>
     </div>
-    <!-- <Transition name="fade">
-      <div
-        v-if="isMobileSideBarOpen"
-        @click="isMobileSideBarOpen = false"
-        class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-      />
-    </Transition>
-    <Transition name="slideModal">
-      <component
-        :is="MobileSideBar"
-        v-if="isMobileSideBarOpen"
-        @close="close"
-        @updateTab="updateTab"
-      />
-    </Transition> -->
   </div>
 </template>
 <script setup lang="ts">

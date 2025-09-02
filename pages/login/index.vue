@@ -117,7 +117,7 @@
           <button
             @click="submit"
             :disabled="
-              userInput.phoneNumber === '' || userInput.password === ''
+              userInput.phoneNumber === '' || userInput.password === '' || selectedOption === null
             "
             class="bg-background-brand hover:bg-background-brand-hovered w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
           >
@@ -162,6 +162,7 @@ const { api } = useApi();
 const { showToast } = useToast();
 const config = useRuntimeConfig();
 const appStore = useAppStore();
+const route = useRoute();
 
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
@@ -279,6 +280,7 @@ const submit = async () => {
     const response = await api.post("/api/v1/login", {
       emailOrMsisdn: `${selectedOption.value?.phone_code}${userInput.value.phoneNumber}`,
       password: userInput.value.password,
+      counsellor_uuid: route.query.counsellor_uuid ? route.query.counsellor_uuid : undefined
     });
     const token = useCookie("token", {
       maxAge: 604800,
@@ -330,7 +332,12 @@ const getCountries = async () => {
   try {
     const response = await api.get(`/api/v1/country_codes`);
     countryOptions.value = response.data.data.all_phone_codes;
-    selectedOption.value = response.data.data.current_country_code;
+    const currentCountry = response.data.data.current_country_code;
+    if (Array.isArray(currentCountry) && currentCountry.length === 0) {
+      selectedOption.value = countryOptions.value[0];
+    } else {
+      selectedOption.value = currentCountry;
+    }
   } catch (error) {
     console.error(error);
   }

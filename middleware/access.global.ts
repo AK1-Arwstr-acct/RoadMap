@@ -9,6 +9,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const counselorPaths = [
         "/counselor/students",
         "/vi/counselor/students",
+        "/student-onboarding",
+        "/vi/student-onboarding",
         "/counselor/schools",
         "/vi/counselor/schools",
         "/counselor/referral",

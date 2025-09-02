@@ -28,7 +28,7 @@
         <div v-if="isSearchOpen" v-click-outside="() => (isSearchOpen = false)">
           <input
             class="text-sm w-full border-l border-text-brand outline-none bg-transparent text-text-base"
-            placeholder="Search"
+            :placeholder="t('counselor_pages.search')"
           />
         </div>
       </div>
@@ -64,6 +64,7 @@
 import useCounselorStore from '~/stores/counselorStore';
 
 const counselorStore = useCounselorStore();
+const { t } = useI18n();
 
 const isSearchOpen = ref<boolean>(false);
 const isFilterOpen = ref<boolean>(false);

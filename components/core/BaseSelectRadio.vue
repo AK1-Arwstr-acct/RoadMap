@@ -1,9 +1,9 @@
 <template>
   <div class="relative">
-    <p v-if="label" class="font-medium text-text-neutral-subtle text-sm mb-1.5">
+    <label v-if="label" class="font-medium text-text-neutral-subtle text-sm block mb-1.5">
       {{ label
       }}<span v-if="required" class="text-text-error font-medium"> *</span>
-    </p>
+    </label>
     <div
       @click.stop="openDropdownHandler"
       @touchstart.prevent="openDropdownHandler"
@@ -41,24 +41,29 @@
           }}
         </p>
         <p
-          class="text-text-neutral-subtle text-left w-[calc(100%-24px)] truncate"
+          class="text-text-neutral-subtle text-left w-[calc(100%-30px)] border truncate"
         >
           {{ selectedOption.label }}
         </p>
       </div>
       <div v-else class="flex-1">
         <p
-          class="text-text-base text-left w-[calc(100%-24px)] truncate flex items-center gap-2"
+          class="text-text-base text-left w-[calc(100%-30px)] truncate flex items-center gap-2"
         >
-          <!-- <div v-if="selectedOption.icon">
-              <component
-                :is="selectedOption.icon"
-                class="size-6 text-text-neutral-subtle"
-              />
-            </div> -->
-          <template v-if="selectedOption.icon">
+          <template v-if="showtextAvatar">
+            <div class="size-6 min-w-6 rounded-full overflow-hidden">
+              <div
+                class="size-full bg-orange-500 flex items-center justify-center text-text-constant-white font-medium text-sm leading-3"
+              >
+                <span>{{
+                  selectedOption.label.charAt(0).toUpperCase()
+                }}</span>
+              </div>
+            </div>
+          </template>
+          <template v-else-if="selectedOption.icon">
             <component
-              v-if="typeof selectedOption.icon !== 'string'"
+              v-if="(typeof selectedOption.icon !== 'string')"
               :is="selectedOption.icon"
               class="size-6 text-text-neutral-subtle"
             />
@@ -73,11 +78,8 @@
         </p>
       </div>
       <span
-        :class="[
-          isDropdownOpen
-            ? 'absolute right-[14px] top-3 transition-transform duration-200 ease-in-out transform rotate-180'
-            : 'absolute right-[14px] top-3 transition-transform duration-200 ease-in-out',
-        ]"
+        class="absolute right-[14px] top-3 transition-transform duration-200 ease-in-out"
+        :class="{'transform rotate-180': isDropdownOpen}"
       >
         <IconChevronDown v-if="!loading" height="18" width="18" />
         <IconSpinner v-else stroke="#A4A7AE" bgColor="transparent" width="20" />
@@ -86,7 +88,7 @@
     <div
       v-if="isDropdownOpen"
       v-click-outside="closeDropdown"
-      class="absolute left-0 border-[1.5px] border-border-neutral-subtle bg-background-base-subtle z-20 max-h-[200px] overflow-y-auto py-1.5 rounded-md shadow-sm"
+      class="absolute left-0 border-[1.5px] border-border-neutral-subtle bg-background-base-subtle z-20 max-h-[200px] overflow-y-auto custom-scrollbar py-1.5 rounded-md shadow-sm"
       :class="[
         direction === 'upward'
           ? label
@@ -122,8 +124,17 @@
             class="min-w-5 h-5 cursor-pointer"
             :class="{ hidden: mode === 'tick' }"
           />
-          <span class="truncate font-medium flex item-center gap-2">
-            <template v-if="item.icon">
+          <div class="truncate font-medium flex item-center gap-2">
+            <template v-if="showtextAvatar">
+              <div class="size-6 min-w-6 rounded-full overflow-hidden">
+                <div
+                  class="size-full bg-orange-500 flex items-center justify-center text-text-constant-white font-medium text-sm leading-3"
+                >
+                  <span>{{ item.label.charAt(0).toUpperCase() }}</span>
+                </div>
+              </div>
+            </template>
+            <template v-else-if="item.icon">
               <component
                 v-if="typeof item.icon !== 'string'"
                 :is="item.icon"
@@ -137,7 +148,7 @@
               />
             </template>
             {{ item.label }}
-          </span>
+          </div>
         </label>
       </div>
     </div>
@@ -145,7 +156,7 @@
 </template>
 
 <script setup lang="ts">
-import type { OptionAttributes } from "~/types/home";
+import type { CountriesOptionAttributes, OptionAttributes } from "~/types/home";
 
 const props = defineProps({
   dropdownWidth: {
@@ -157,7 +168,7 @@ const props = defineProps({
     default: "Select Option",
   },
   options: {
-    type: Array as PropType<OptionAttributes[]>,
+    type: Array as PropType<OptionAttributes[] | CountriesOptionAttributes[]>,
     default: [],
   },
   modelValue: {
@@ -189,6 +200,10 @@ const props = defineProps({
     default: false,
   },
   isShadowDark: {
+    type: Boolean,
+    default: false,
+  },
+  showtextAvatar: {
     type: Boolean,
     default: false,
   },

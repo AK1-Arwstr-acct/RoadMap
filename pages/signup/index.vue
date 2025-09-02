@@ -1,5 +1,7 @@
 <template>
-  <div class="h-dvh w-full flex items-center px-5 py-8 overflow-y-auto custom-scrollbar">
+  <div
+    class="h-dvh w-full flex items-center px-5 py-8 overflow-y-auto custom-scrollbar"
+  >
     <div class="w-full sm:w-[400px] m-auto flex flex-col gap-8">
       <div class="flex flex-col items-center gap-6">
         <IconArrowsterLogo
@@ -139,12 +141,14 @@ const { t } = useI18n();
 const localePath = useLocalePath();
 const config = useRuntimeConfig();
 const appStore = useAppStore();
+const route = useRoute();
 
 const isShowPassword = ref<boolean>(false);
 const userInput = ref<UserInput>({
   name: "",
   email: "",
   password: "",
+  counsellor_uuid: "",
 });
 
 const handelHotjar = () => {
@@ -166,6 +170,8 @@ const onSubmit = () => {
     secure: true,
     maxAge: 3600,
   });
+  const counsellor_uuid = (route.query.counsellor_uuid as string) || "";
+  userInput.value.counsellor_uuid = counsellor_uuid;
   signupInfo.value = JSON.stringify(userInput.value);
   navigateTo(localePath("/signup/verify-phone"));
 };

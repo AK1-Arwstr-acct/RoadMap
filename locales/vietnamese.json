@@ -60,7 +60,35 @@
         "schools": "trường học",
         "referral_program": "Chương trình giới thiệu",
         "students_details": "Chi tiết sinh viên",
-        "students_page": {}
+        "sort_by": "Sắp xếp theo",
+        "filter_by": "Lọc theo",
+        "reset": "Đặt lại",
+        "apply": "Áp dụng",
+        "enter_name": "Nhập tên",
+        "search": "Tìm kiếm",
+        "students_page": {
+            "student_table": {
+                "name": "Tên",
+                "earliest_deadline": "Hạn chót sớm nhất",
+                "earliest_cycle": "Chu kỳ sớm nhất",
+                "main_counselor": "Cố vấn chính",
+                "status": "Trạng thái",
+                "progress": "Tiến độ",
+                "of": "trên"
+            }
+        },
+        "new_student_modal": {
+            "create_new_profile": "Tạo hồ sơ mới",
+            "student_name": "Tên học sinh",
+            "enter_student_name": "Nhập tên học sinh",
+            "email": "Email",
+            "counselor": "Cố vấn",
+            "type_of_contract": "Loại hợp đồng",
+            "basic_mentorship": "Hướng dẫn cơ bản",
+            "advanced_mentorship": "Hướng dẫn nâng cao",
+            "send_onboarding_invite": "Gửi lời mời khởi động",
+            "cancel": "Hủy"
+        }
     },
     "dashboard": {
         "sidebar": {

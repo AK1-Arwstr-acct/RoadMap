@@ -12,4 +12,5 @@ export interface UserSignupDetail {
     name: string;
     email: string;
     password: string;
+    counsellor_uuid?: string;
 }

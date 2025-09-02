@@ -37,24 +37,6 @@
                 </span>
               </button>
             </div>
-            <!-- upgrade popup -->
-            <!-- <div
-              class="bg-[#F5F5F5] rounded-lg py-3 px-3.5 w-full flex items-center justify-between gap-3 mt-5 text-sm"
-            >
-              <div>
-                <p class="text-[#414651] font-semibold">
-                  {{ $t('ai_essay_page.youve_reached_your_daily_limit_for_ai_essay_editor') }}
-                </p>
-                <p class="text-[#414651] mt-1.5">
-                  {{ $t('ai_essay_page.please_find_instructions_to_upgrade_for_more_access_here') }}
-                </p>
-              </div>
-              <button
-                class="text-[#414651] font-semibold py-2 px-3.5 rounded-lg border border-gray-200 bg-white shadow[0px_1px_2px_0px_#0A0D120D]"
-              >
-                {{ $t('ai_essay_page.upgrade_now') }}
-              </button>
-            </div> -->
           </div>
         </div>
       </div>

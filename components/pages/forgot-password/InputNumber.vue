@@ -93,8 +93,8 @@
       <div class="mt-6">
         <button
           @click="submit"
-          :disabled="phoneNumber === ''"
-          class="bg-background-brand  hover:bg-background-brand-hovered border-border-neutral-subtle w-full rounded-lg font-semibold py-3 text-text-constant-white disabled:opacity-70 flex justify-center items-center gap-2"
+          :disabled="phoneNumber === '' || selectedOption === null"
+          class="bg-background-brand hover:bg-background-brand-hovered border-border-neutral-subtle w-full rounded-lg font-semibold py-3 text-text-constant-white disabled:opacity-70 flex justify-center items-center gap-2"
         >
           {{ $t("forgotPassword.get_verification_code") }}
           <IconSpinner class="size-5" v-if="isSubmitting" />
@@ -198,7 +198,12 @@ const getCountries = async () => {
   try {
     const response = await api.get(`/api/v1/country_codes`);
     countryOptions.value = response.data.data.all_phone_codes;
-    selectedOption.value = response.data.data.current_country_code;
+    const currentCountry = response.data.data.current_country_code;
+    if (Array.isArray(currentCountry) && currentCountry.length === 0) {
+      selectedOption.value = countryOptions.value[0];
+    } else {
+      selectedOption.value = currentCountry;
+    }
   } catch (error) {
     console.error(error);
   }

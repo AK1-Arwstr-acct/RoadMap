@@ -38,14 +38,4 @@ const props = defineProps({
 const onClick = () => {
   window.open(props.list.link, "_blank");
 };
-
-// const thumbnail = ref<string>("");
-
-// onMounted(async () => {
-//     const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(props.list.link)}&screenshot=true&meta=false`);
-//     const data = await res.json();
-//     thumbnail.value = data?.data?.screenshot?.url || '';
-//     console.log(thumbnail.value);
-
-//   });
 </script>

@@ -21,7 +21,6 @@
           :isShadowDark="true"
           dropdownWidth="w-[calc(100%+30px)]"
         />
-        <!-- @onChange="onFeatureStateChange" -->
       </div>
     </div>
     <div class="flex gap-4">
@@ -128,21 +127,6 @@
         <IconUser />
       </NuxtLinkLocale>
     </div>
-    <!-- <Transition name="fade">
-      <div
-        v-if="isMobileSideBarOpen"
-        @click="isMobileSideBarOpen = false"
-        class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-      />
-    </Transition>
-    <Transition name="slideModal">
-      <component
-        :is="MobileSideBar"
-        v-if="isMobileSideBarOpen"
-        @close="close"
-        @updateTab="updateTab"
-      />
-    </Transition> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -211,40 +195,6 @@ const checkFeatureState = () => {
   const matched = features.find((item) => route.path.includes(item.value));
   featureState.value = matched || null;
 };
-
-// const onFeatureStateChange = () => {
-//   // in case of scholarship option
-//   if (featureState.value?.value === "/scholarship") {
-//     appStore.isFeatureChangeFromTasks = true;
-//     Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
-//       appTrackerStore.taskActiveStates[Number(key)] = false;
-//     });
-//     sophieStore.roadmapTaskDetail = null;
-//     return;
-//   }
-
-//   Object.keys(appTrackerStore.taskActiveStates).forEach((key) => {
-//     appTrackerStore.taskActiveStates[Number(key)] = false;
-//   });
-//   const applicationListTasks = (appTrackerStore.applicationList ?? []).flatMap(
-//     (item) => item.tasks ?? []
-//   );
-//   const tasksArray = [
-//     ...(appTrackerStore.preApplication?.tasks ?? []),
-//     ...applicationListTasks,
-//     ...(appTrackerStore.postApplication?.tasks ?? []),
-//   ];
-//   const matchedTask: Task | undefined = tasksArray.find((item) => {
-//     return featureState.value?.value
-//       .replace("-", " ")
-//       .includes(item.feature_state.replace("_", " "));
-//   });
-//   if (matchedTask) {
-//     appTrackerStore.taskActiveStates[Number(matchedTask?.id)] = true;
-//     sophieStore.roadmapTaskDetail = matchedTask;
-//   }
-// };
-
 watch(
   () => featureState.value?.value,
   () => {
@@ -265,21 +215,8 @@ watch(
   () => route.path,
   () => {
     checkFeatureState();
-    // if (appStore.isFeatureChangeFromTasks) {
-    //   appStore.isFeatureChangeFromTasks = false;
-    //   return;
-    // }
-    // onFeatureStateChange();
   }
 );
-
-// watch(
-//   () => appTrackerStore.roadmapData,
-//   () => {
-//     onFeatureStateChange();
-//   },
-//   { deep: true, immediate: true }
-// );
 
 onMounted(() => {
   checkFeatureState();

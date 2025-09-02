@@ -175,7 +175,16 @@ const tiktokConfig = () => {
 };
 
 let timeoutId: ReturnType<typeof setTimeout> | null = null;
-const excludedRoutes = ["/pricing", "/login", "/signup"];
+const excludedRoutes = [
+  "/pricing",
+  "/vi/pricing",
+  "/login",
+  "/vi/login",
+  "/signup",
+  "/vi/signup",
+  "/onboarding",
+  "/vi/onboarding",
+];
 const popupFirstRun = ref<boolean>(true);
 
 const closePopup = () => {
@@ -184,12 +193,7 @@ const closePopup = () => {
 };
 
 const handleMouseMove = () => {
-  if (route.path.includes("onboarding")) {
-    return;
-  }
-  if (!popupFirstRun.value) {
-    return;
-  }
+  const userRole = useCookie("userRole");
   if (timeoutId) {
     clearTimeout(timeoutId);
     timeoutId = null;
@@ -197,7 +201,9 @@ const handleMouseMove = () => {
   if (
     excludedRoutes.some((path) => route.fullPath.includes(path)) ||
     sophieStore.openSophieModal ||
-    schoolListStore.isSchoolDetailModal
+    schoolListStore.isSchoolDetailModal ||
+    !popupFirstRun.value ||
+    userRole.value?.includes("counselor")
   ) {
     return;
   }
@@ -211,15 +217,12 @@ const handleMouseMove = () => {
 
 let clickTimestamps: number[] = [];
 const handleClick = () => {
-  if (route.path.includes("onboarding")) {
-    return;
-  }
-  if (!popupFirstRun.value) {
-    return;
-  }
+  const userRole = useCookie("userRole");
   if (
     excludedRoutes.some((path) => route.fullPath.includes(path)) ||
-    sophieStore.openSophieModal
+    sophieStore.openSophieModal ||
+    !popupFirstRun.value ||
+    userRole.value?.includes("counselor")
   ) {
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -265,7 +268,11 @@ onMounted(async () => {
   window.addEventListener("mousemove", handleMouseMove);
   window.addEventListener("keydown", handleMouseMove);
   window.addEventListener("click", handleClick);
-  if (!route.path.includes("onboarding")) {
+  const userRole = useCookie("userRole");
+  if (userRole.value?.includes("counselor")) {
+    return;
+  }
+  if (!excludedRoutes.some((path) => route.fullPath.includes(path))) {
     timeoutId = setTimeout(() => {
       appStore.isMentorshipPopup = true;
     }, appStore.popupTimer);

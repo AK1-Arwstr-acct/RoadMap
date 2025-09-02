@@ -142,6 +142,7 @@ const onSubmit = async () => {
       verify_token: otpResponse.data.data.verify_token,
       msisdn: props.userInput,
       country_id: props.selectedOption?.id || null,
+      counsellor_uuid: userDetail.counsellor_uuid ? userDetail.counsellor_uuid : undefined
     });
 
     const token = useCookie("token", {

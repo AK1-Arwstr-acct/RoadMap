@@ -2,23 +2,23 @@
   <div
     class="bg-background-base-subtle border border-border-neutral-subtle text-text-neutral-subtle px-4 rounded-xl w-[304px] shadow-[0px_4px_6px_-2px_#0A0D1208]"
   >
-    <p class="uppercase font-semibold text-[10px] py-2">Filter by</p>
+    <p class="uppercase font-semibold text-[10px] py-2">{{ $t("counselor_pages.filter_by") }}</p>
     <div class="flex flex-col gap-4 py-4">
       <div class="">
         <label class="font-medium text-text-neutral-subtle text-sm mb-1.5"
-          >Name</label
+          >{{ $t("counselor_pages.students_page.student_table.name") }}</label
         >
         <input
           name="name"
           type="text"
           v-model="formData.name"
-          placeholder="Enter Name"
+          :placeholder="t('counselor_pages.enter_name')"
           class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 w-full outline-none appearance-none text-text-base"
           data-hj-allow
         />
       </div>
       <BaseSelectRadio
-        label="Earliest deadline"
+        :label="t('counselor_pages.students_page.student_table.earliest_deadline')"
         :options="deadlines"
         v-model="formData.deadline"
         :isShadowDark="true"
@@ -27,7 +27,7 @@
         @open="(value: string) => (openDropdown = value as string)"
       />
       <BaseSelectRadio
-        label="Earliest cycle"
+        :label="t('counselor_pages.students_page.student_table.earliest_cycle')"
         :options="deadlines"
         v-model="formData.cycle"
         :isShadowDark="true"
@@ -36,7 +36,7 @@
         @open="(value: string) => (openDropdown = value as string)"
       />
       <BaseSelectRadio
-        label="Main counselor"
+        :label="t('counselor_pages.students_page.student_table.main_counselor')"
         :options="deadlines"
         v-model="formData.counselor"
         :isShadowDark="true"
@@ -45,7 +45,7 @@
         @open="(value: string) => (openDropdown = value as string)"
       />
       <BaseSelectRadio
-        label="Status"
+        :label="t('counselor_pages.students_page.student_table.status')"
         :options="deadlines"
         v-model="formData.status"
         :isShadowDark="true"
@@ -59,13 +59,13 @@
           @click="onReset"
           class="bg-background-neutral-bold text-text-base px-5 py-1.5 rounded-lg w-full"
         >
-          Reset
+          {{ $t('counselor_pages.reset') }}
         </button>
         <button
             @submit="onSubmit"
           class="bg-background-brand text-text-constant-white px-5 py-1.5 rounded-lg w-full"
         >
-          Apply
+          {{ $t('counselor_pages.apply') }}
         </button>
       </div>
     </div>
@@ -73,6 +73,8 @@
 </template>
 <script setup lang="ts">
 import type { OptionAttributes } from '~/types/home';
+
+const { t } = useI18n();
 
 interface FormData {
   name: string;

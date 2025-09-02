@@ -60,7 +60,35 @@
         "schools": "Schools",
         "referral_program": "Referral program",
         "students_details": "Students details",
-        "students_page": {}
+        "sort_by": "Sort by",
+        "filter_by": "Filter by",
+        "reset": "Reset",
+        "apply": "Apply",
+        "enter_name": "Enter Name",
+        "search": "Search",
+        "students_page": {
+            "student_table": {
+                "name": "NAME",
+                "earliest_deadline": "EARLIEST DEADLINE",
+                "earliest_cycle": "EARLIEST CYCLE",
+                "main_counselor": "MAIN COUNSELOR",
+                "status": "STATUS",
+                "progress": "PROGRESS",
+                "of": "of"
+            }
+        },
+        "new_student_modal": {
+            "create_new_profile": "Create new profile",
+            "student_name": "Student’s name",
+            "enter_student_name": "Enter student’s name",
+            "email": "Email",
+            "counselor": "Counselor",
+            "type_of_contract": "Type of contract",
+            "basic_mentorship": "Basic mentorship",
+            "advanced_mentorship": "Advanced mentorship",
+            "send_onboarding_invite": "Send onboarding invite",
+            "cancel": "Cancel"
+        }
     },
     "dashboard": {
         "sidebar": {
@@ -83,7 +111,7 @@
             "scholarship": "Scholarship"
         },
         "talk_to_us": "Free Mentorship",
-        "book_a_meeting" : "Book a Meeting",
+        "book_a_meeting": "Book a Meeting",
         "view_profile": "View profile",
         "login": "Log in",
         "logout": "Log out",
@@ -288,7 +316,7 @@
                 "year_by_year_development_plan": "Year-by-year development plan - from choosing courses, finding internships, to participating in necessary extracurricular activities."
             },
             "guidesStepper": {
-                "on_this_page":"On this page",
+                "on_this_page": "On this page",
                 "evaluate_your_strengths": "Evaluate your strengths",
                 "frequently_asked_questions": "Frequently Asked Questions",
                 "how_do_you_choose_a_major": "How do you choose a major?",

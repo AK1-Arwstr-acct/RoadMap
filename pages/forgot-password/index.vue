@@ -21,10 +21,6 @@
 <script setup lang="ts">
 import type { Country } from "~/types/auth";
 
-// definePageMeta({
-//   layout: "main-layout",
-// });
-
 const runtimeConfig = useRuntimeConfig();
 const { locale } = useI18n();
 

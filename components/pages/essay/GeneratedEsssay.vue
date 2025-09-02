@@ -39,6 +39,7 @@
           <div class="flex gap-3">
             <img
               src="/images/chatbot.png"
+              alt="chat-bot"
               class="w-[64px] sm:w-[74px] h-[60px] sm:h-[70px] object-contain"
             />
             <div>

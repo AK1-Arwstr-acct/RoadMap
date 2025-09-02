@@ -28,11 +28,15 @@
     --color-link-visited: #7E22CE;
     --color-link-visited-hovered: #6B21A8;
     --color-link-visited-pressed: #581C87;
+    --color-background-success: #16A34A;
+    --color-background-success-subtle: #DCFCE7;
+    --color-background-error-subtle: #FEE2E2;
     --color-background-base: #FFFFFF;
     --color-background-base-subtle: #FFFFFF;
     --color-background-base-subtle-hovered: #FAFAFA;
     --color-background-base-subtle-selected: #F5F5F5;
     --color-background-brand-subtle: #EFF6FF;
+    --color-background-brand-subtle-hovered: #DBEAFE;
     --color-background-brand-subtle-selected: #BFDBFE;
     --color-background-neutral: #F5F5F5;
     --color-background-neutral-bold: #E5E5E5;
@@ -53,6 +57,10 @@
     --color-icon-neutral-subtle: #4B5563;
     --color-icon-neutral: #111827;
     --color-icon-brand: #2563EB;
+    --color-icon-success: #16A34A;
+    --color-icon-warning: #EA580C;
+    --color-icon-error: #DC2626;
+    --color-icon-info: #4F46E5;
     --color-overlay: rgba(0, 0, 0, 0.6);
 }
 
@@ -82,6 +90,7 @@
     --color-background-base-subtle-hovered: #FAFAFA;
     --color-background-base-subtle-selected: #F5F5F5;
     --color-background-brand-subtle: #EFF6FF;
+    --color-background-brand-subtle-hovered: #DBEAFE;
     --color-background-brand-subtle-selected: #BFDBFE;
     --color-background-neutral: #F5F5F5;
     --color-background-neutral-bold: #E5E5E5;
@@ -90,6 +99,8 @@
     --color-background-neutral-boldest: #0A0A0A;
     --color-background-neutral-subtle: #FAFAFA;
     --color-background-info-subtle: #E0E7FF;
+    --color-background-error-subtle: #FEE2E2;
+    --color-background-success-subtle: #DCFCE7;
 
     /* divider */
     --color-divider: rgba(0, 0, 0, 0.2);
@@ -140,6 +151,7 @@
     --color-background-base-subtle-hovered: #171717;
     --color-background-base-subtle-selected: #262626;
     --color-background-brand-subtle: #111827;
+    --color-background-brand-subtle-hovered: #1E3A8A;
     --color-background-brand-subtle-selected: #1E40AF;
     --color-background-neutral: #262626;
     --color-background-neutral-bold: #404040;
@@ -148,6 +160,8 @@
     --color-background-neutral-boldest: #FDFDFD;
     --color-background-neutral-subtle: #171717;
     --color-background-info-subtle: #EEF2FF;
+    --color-background-error-subtle: #FEF2F2;
+    --color-background-success-subtle: #F0FDF4;
 
     /* divider */
     --color-divider: rgba(255, 255, 255, 0.2);

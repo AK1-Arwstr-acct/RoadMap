@@ -41,25 +41,6 @@
                   }`,
                 }"
               >
-                <!-- <div
-                  v-if="
-                    !chat.isSender &&
-                    (index > 0
-                      ? completeChat.filter((item) => item.text !== '')[
-                          index - 1
-                        ].isSender
-                      : true)
-                  "
-                  class="size-8 min-w-8 rounded-full overflow-hidden border border-[#00000033]"
-                >
-                  <img
-                    src="/images/chat-bot.png"
-                    alt="chat bot"
-                    class="object-cover object-center size-full"
-                    loading="eager"
-                  />
-                </div>
-                <div v-else class="w-8" /> -->
                 <div
                   class="w-fit max-w-[90%] text-wrap text-[#414651]"
                   :class="{

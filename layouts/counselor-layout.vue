@@ -1,6 +1,6 @@
 <template>
   <div class="h-dvh flex overflow-hidden relative">
-    <component :is="CounselorSideabr" />
+    <component :is="CounselorSidebar" />
     <div class="flex-1 h-full overflow-hidden pb-[70px] lg:pb-0 flex flex-col">
       <CounselorTitleNave :title="pageTitle" />
       <div class="h-full overflow-hidden">
@@ -24,7 +24,7 @@
   </Transition>
 </template>
 <script setup lang="ts">
-import CounselorSideabr from "~/components/pages/counselor/CounselorSideabr.vue";
+import CounselorSidebar from "~/components/pages/counselor/CounselorSidebar.vue";
 import NewStudentModal from "~/components/pages/counselor/students/NewStudentModal.vue";
 import useCounselorStore from "~/stores/counselorStore";
 

@@ -42,17 +42,6 @@
           }}</label>
           <div class="flex mt-1.5 border-[1.5px] border-gray-200 rounded-lg">
             <div class="relative w-fit">
-              <!-- <select
-                class="px-3.5 py-2.5 text-[#181D27] rounded-l-lg outline-none appearance-none"
-              >
-                <option selected disabled>VN</option>
-              </select> -->
-              <!-- <p class="flex justify-center items-center w-full h-full px-4 bg-[#f8f8f8] rounded-lg">VN</p>
-              <div
-                class="absolute inset-y-0 -right-2 flex items-center pointer-events-none"
-              >
-                <IconArrowDownThick />
-              </div> -->
             </div>
             <input
               name="user_input_n"

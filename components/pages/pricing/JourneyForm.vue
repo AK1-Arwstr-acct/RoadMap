@@ -210,7 +210,7 @@
     </div>
     <!-- button -->
     <button
-      :disabled="isDisable || isSubmitting"
+      :disabled="isDisable || isSubmitting || selectedOption === null"
       @click="submit"
       class="bg-[#1570EF] rounded-lg py-3 px-5 flex items-center justify-center gap-2 text-white disabled:opacity-70"
     >
@@ -464,7 +464,12 @@ const getCountries = async () => {
   try {
     const response = await api.get(`/api/v1/country_codes`);
     countryOptions.value = response.data.data.all_phone_codes;
-    selectedOption.value = response.data.data.current_country_code;
+     const currentCountry = response.data.data.current_country_code;
+    if (Array.isArray(currentCountry) && currentCountry.length === 0) {
+      selectedOption.value = countryOptions.value[0];
+    } else {
+      selectedOption.value = currentCountry;
+    }
   } catch (error) {
     console.error(error);
   }

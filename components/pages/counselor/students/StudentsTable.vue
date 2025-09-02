@@ -2,16 +2,17 @@
   <div class="rounded-xl overflow-hidden">
     <div class="overflow-x-auto custom-scrollbar">
       <table class="w-full">
+        <caption class="hidden">student table</caption>
         <thead class="">
           <tr
             class="bg-background-neutral font-semibold text-[10px] text-text-base text-nowrap"
           >
-            <th class="text-left pl-6 pr-3 py-4">NAME</th>
-            <th class="text-left px-3 py-4">EARLIEST DEADLINE</th>
-            <th class="text-left px-3 py-4">EARLIEST CYCLE</th>
-            <th class="text-left px-3 py-4">MAIN COUNSELOR</th>
-            <th class="text-left px-3 py-4">STATUS</th>
-            <th class="text-left pl-3 pr-6 py-4">PROGRESS</th>
+            <th class="text-left pl-6 pr-3 py-4">{{ $t("counselor_pages.students_page.student_table.name") }}</th>
+            <th class="text-left px-3 py-4">{{ $t("counselor_pages.students_page.student_table.earliest_deadline") }}</th>
+            <th class="text-left px-3 py-4">{{ $t("counselor_pages.students_page.student_table.earliest_cycle") }}</th>
+            <th class="text-left px-3 py-4">{{ $t("counselor_pages.students_page.student_table.main_counselor") }}</th>
+            <th class="text-left px-3 py-4">{{ $t("counselor_pages.students_page.student_table.status") }}</th>
+            <th class="text-left pl-3 pr-6 py-4">{{ $t("counselor_pages.students_page.student_table.progress") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -40,11 +41,13 @@
             </td>
             <td class="py-3 px-3 text-nowrap">
               <div class="flex items-center gap-2">
-                <img
-                  :src="student.counselorAvatar"
-                  alt="counselor"
-                  class="size-[18px] min-w-[18px] rounded-full object-cover"
-                />
+                <div class="size-[18px] min-w-[18px] rounded-full overflow-hidden">
+                <div
+                  class="size-full bg-orange-500 flex items-center justify-center text-text-constant-white font-medium text-[8px] leading-3"
+                >
+                  <span>{{ student.name.charAt(0).toUpperCase() }}</span>
+                </div>
+              </div>
                 {{ student.counselor }}
               </div>
             </td>
@@ -82,7 +85,7 @@
     <div
       class="flex justify-end items-center gap-6 mt-4 text-xs text-text-base"
     >
-      <span>1-10 of 120</span>
+      <span>1-10 {{ $t("counselor_pages.students_page.student_table.of") }} 120</span>
       <div class="flex items-center gap-2">
         <button class="transform rotate-90"><IconChevronDown /></button>
         <button class="transform -rotate-90"><IconChevronDown /></button>

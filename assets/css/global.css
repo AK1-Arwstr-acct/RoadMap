@@ -60,6 +60,29 @@ html.theme-dark input:-webkit-autofill {
 	caret-color: white !important;
 }
 
+/* remove inner shadows of textarea */
+.remove-shadow-bg-white textarea:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 1000px transparent inset;
+	box-shadow: 0 0 0 1000px transparent inset;
+	font-size: 16px;
+	color: black;
+	-webkit-text-fill-color: black;
+	transition: background-color 5000s ease-in-out 0s;
+	caret-color: black;
+}
+
+html.theme-light textarea:-webkit-autofill {
+	-webkit-text-fill-color: #525252 !important;
+	-webkit-box-shadow: 0 0 0 1000px #FFFFFF inset;
+	caret-color: black !important;
+}
+
+html.theme-dark textarea:-webkit-autofill {
+	-webkit-text-fill-color: #A3A3A3 !important;
+	-webkit-box-shadow: 0 0 0 1000px #0A0A0A inset;
+	caret-color: white !important;
+}
+
 /* Fade effect */
 .fade-enter-active,
 .fade-leave-active {
@@ -124,4 +147,17 @@ html.theme-dark input:-webkit-autofill {
 .Toastify__progress-bar {
 	/* height: 4px !important; */
 	background-color: transparent !important;
+}
+
+/* removing number range buttons */
+/* Chrome, Safari, Edge, Opera */  
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

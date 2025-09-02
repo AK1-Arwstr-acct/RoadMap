@@ -90,7 +90,7 @@
       <div class="mt-6">
         <button
           @click="submit"
-          :disabled="phoneNumber === ''"
+          :disabled="phoneNumber === '' || selectedOption === null"
           class="bg-background-brand hover:bg-background-brand-hovered w-full rounded-lg font-semibold outline-none py-3 text-text-constant-white disabled:opacity-50 flex justify-center items-center gap-2"
         >
           {{ $t("verifyPhone.verify_phone_number") }}
@@ -194,7 +194,12 @@ const getCountries = async () => {
   try {
     const response = await api.get(`/api/v1/country_codes`);
     countryOptions.value = response.data.data.all_phone_codes;
-    selectedOption.value = response.data.data.current_country_code;
+     const currentCountry = response.data.data.current_country_code;
+    if (Array.isArray(currentCountry) && currentCountry.length === 0) {
+      selectedOption.value = countryOptions.value[0];
+    } else {
+      selectedOption.value = currentCountry;
+    }
   } catch (error) {
     console.error(error);
   }

@@ -11,7 +11,6 @@
             class="size-[30px] min-w-[30px] group-hover:hidden"
             :class="{ invert: appStore.theme === 'theme-dark' }"
           />
-          <!-- <NuxtLinkLocale v-else to="/"> -->
           <img
             v-else
             class="w-[148px]"
@@ -20,7 +19,6 @@
             alt="Logo"
             loading="eager"
           />
-          <!-- </NuxtLinkLocale> -->
           <div v-if="isOpen" @click="isOpen = false">
             <IconSidebarClose />
           </div>

@@ -18,8 +18,6 @@
       <div v-else>
         <RecommendedSchoolSkeleton v-if="schoolListStore.isSchoolsLoading" />
         <div v-else>
-          <!-- @start="onStartReorder" -->
-          <!-- @change="onStartReorder" -->
           <VueDraggable
             ref="el"
             @end="onEndReorder"

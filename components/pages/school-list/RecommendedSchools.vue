@@ -1,9 +1,6 @@
 <template>
   <div class="py-1 h-fit flex flex-col">
     <div class="">
-      <!-- <h1 class="text-[#181D27] text-2xl md:text-[32px] font-semibold lg:mb-8">
-        {{ $t("schoolList_page.find_your_perfect_school_match") }}
-      </h1> -->
       <div class="mb-6 mt-2">
         <SchoolListChips />
       </div>
