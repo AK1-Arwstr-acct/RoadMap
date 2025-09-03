@@ -33,7 +33,8 @@
     <div class="flex justify-center pt-2">
       <button
         @click="handleNext"
-        class="rounded-lg bg-background-brand py-1.5 px-5 leading-7 min-w-24 text-text-constant-white font-semibold"
+        :disabled="isAnyFieldMissing"
+        class="rounded-lg bg-background-brand py-1.5 px-5 leading-7 min-w-24 text-text-constant-white font-semibold disabled:opacity-70"
       >
         Next
       </button>
@@ -48,4 +49,43 @@ const counselorStudentStore = useCounselorStudentStore();
 const handleNext = () => {
   counselorStudentStore.onboardingStep++;
 };
+
+const isAnyFieldMissing = computed(() => {
+  const data = counselorStudentStore.onBoardingData;
+  const isEmpty = (val: any) =>
+    val === null ||
+    val === undefined ||
+    (typeof val === "string" && val.trim() === "") ||
+    (typeof val === "object" && Object.keys(val).length === 0);
+
+  return (
+    isEmpty(data.name_on_contract) ||
+    isEmpty(data.contract_legal_address) ||
+    isEmpty(data.contract_email) ||
+    isEmpty(data.contract_phoneNumber) ||
+    isEmpty(data.contract_holder.id) ||
+    isEmpty(data.contract_holder.issue_date) ||
+    isEmpty(data.contract_holder.place_of_issue) ||
+    isEmpty(data.students_national_id.id) ||
+    isEmpty(data.students_national_id.issue_date) ||
+    isEmpty(data.students_national_id.place_of_issue) ||
+    isEmpty(data.name_on_bank_account) ||
+    isEmpty(data.bank_account_number) ||
+    isEmpty(data.bank_name)
+  );
+});
+
+watch(
+  () => counselorStudentStore.moveToNextStep,
+  () => {
+    if (counselorStudentStore.moveToNextStep) {
+      counselorStudentStore.moveToNextStep = false;
+      if (isAnyFieldMissing.value) {
+        return;
+      } else {
+        handleNext();
+      }
+    }
+  }
+);
 </script>

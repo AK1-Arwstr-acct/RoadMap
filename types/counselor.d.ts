@@ -11,9 +11,9 @@ interface CounselorStudent {
     email: string;
     legal_address: string;
     current_address: string;
-    nationality: OptionAttributes | null;
-    permanent_residency: "yes" | "no" | null;
-    residency_country_name: OptionAttributes | null;
+    nationality: string;
+    permanent_residency: "yes" | "no";
+    residency_country_name: string;
     passport_number: string;
     recent_school: string;
     level_of_study: OptionAttributes | null;
@@ -47,7 +47,7 @@ interface CounselorStudent {
     },
     // 
     family_visited_before: string;
-    denied_visa_before: "yes" | "no" | null;
+    denied_visa_before: "yes" | "no";
     detail_for_visa_rejection: string;
     father_occupation: string;
     mother_occupation: string;
@@ -58,15 +58,15 @@ interface CounselorStudent {
     contract_legal_address: string;
     contract_email: string;
     contract_phoneNumber: string;
-    contract_holderd: {
+    contract_holder: {
         id: string;
         issue_date: string;
-        place_if_issue: string;
+        place_of_issue: string;
     },
     students_national_id: {
         id: string;
         issue_date: string;
-        place_if_issue: string;
+        place_of_issue: string;
     },
     name_on_bank_account: string;
     bank_account_number: string;

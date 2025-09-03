@@ -79,7 +79,7 @@
           <input
             name="phone-number"
             type="number"
-            v-model="counselorStudentStore.onBoardingData.contract_holderd.id"
+            v-model="counselorStudentStore.onBoardingData.contract_holder.id"
             placeholder="e.g. 062199002343"
             class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
             data-hj-allow
@@ -93,12 +93,14 @@
             ></label
           >
           <input
+            @click="openPicker"
+            ref="dateRef"
             name="phone-number"
             type="date"
             v-model="
-              counselorStudentStore.onBoardingData.contract_holderd.issue_date
+              counselorStudentStore.onBoardingData.contract_holder.issue_date
             "
-            class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-[9px] px-[14px] w-full outline-none appearance-none text-text-disabled uppercase"
+            class="cursor-pointer mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-[9px] px-[14px] w-full outline-none appearance-none text-text-disabled uppercase"
             data-hj-allow
           />
         </div>
@@ -113,7 +115,7 @@
           name="place"
           type="text"
           v-model="
-            counselorStudentStore.onBoardingData.contract_holderd.place_if_issue
+            counselorStudentStore.onBoardingData.contract_holder.place_of_issue
           "
           placeholder="Enter Place of issue"
           class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
@@ -151,13 +153,15 @@
             ></label
           >
           <input
-            name="phone-number"
+            @click="openPicker2"
+            ref="dateRef2"
+            name="date2"
             type="date"
             v-model="
               counselorStudentStore.onBoardingData.students_national_id
                 .issue_date
             "
-            class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-[9px] px-[14px] w-full outline-none appearance-none text-text-disabled uppercase"
+            class="cursor-pointer mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-[9px] px-[14px] w-full outline-none appearance-none text-text-disabled uppercase"
             data-hj-allow
           />
         </div>
@@ -173,7 +177,7 @@
           type="text"
           v-model="
             counselorStudentStore.onBoardingData.students_national_id
-              .place_if_issue
+              .place_of_issue
           "
           placeholder="Enter Place of issue"
           class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
@@ -187,4 +191,20 @@
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
 
 const counselorStudentStore = useCounselorStudentStore();
+
+const dateRef = ref<HTMLInputElement | null>(null);
+const dateRef2 = ref<HTMLInputElement | null>(null);
+
+const openPicker = () => {
+  const el = dateRef.value;
+  if (!el) return;
+  if (typeof el.showPicker === "function") el.showPicker();
+  else el.focus();
+}
+const openPicker2 = () => {
+  const el = dateRef2.value;
+  if (!el) return;
+  if (typeof el.showPicker === "function") el.showPicker();
+  else el.focus();
+}
 </script>

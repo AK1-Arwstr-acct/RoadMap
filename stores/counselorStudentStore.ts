@@ -8,6 +8,7 @@ const useCounselorStudentStore = defineStore("counselorStudentStore", () => {
     const appStore = useAppStore();
     const { api } = useApi();
 
+    const moveToNextStep = ref<boolean>(false);
     const onboardingStep = ref<number>(1);
     const onBoardingData = ref<CounselorStudent>({
         name: "",
@@ -16,9 +17,9 @@ const useCounselorStudentStore = defineStore("counselorStudentStore", () => {
         email: "",
         legal_address: "",
         current_address: "",
-        nationality: null,
-        permanent_residency: null,
-        residency_country_name: null,
+        nationality: "",
+        permanent_residency: "no",
+        residency_country_name: "",
         passport_number: "",
         recent_school: "",
         level_of_study: null,
@@ -43,7 +44,7 @@ const useCounselorStudentStore = defineStore("counselorStudentStore", () => {
             test_scrore: "",
         },
         family_visited_before: "",
-        denied_visa_before: null,
+        denied_visa_before: "no",
         detail_for_visa_rejection: "",
         father_occupation: "",
         mother_occupation: "",
@@ -53,15 +54,15 @@ const useCounselorStudentStore = defineStore("counselorStudentStore", () => {
         contract_legal_address: "",
         contract_email: "",
         contract_phoneNumber: "",
-        contract_holderd: {
+        contract_holder: {
             id: "",
             issue_date: "",
-            place_if_issue: "",
+            place_of_issue: "",
         },
         students_national_id: {
             id: "",
             issue_date: "",
-            place_if_issue: "",
+            place_of_issue: "",
         },
         name_on_bank_account: "",
         bank_account_number: "",
@@ -76,6 +77,7 @@ const useCounselorStudentStore = defineStore("counselorStudentStore", () => {
     })
 
     return {
+        moveToNextStep,
         onboardingStep,
         onBoardingData,
     }

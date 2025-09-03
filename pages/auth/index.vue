@@ -20,6 +20,22 @@ onBeforeMount(async () => {
   appStore.getUserData();
   appStore.getAuthUserData();
   const parsedOnboarded = onboarded === 1;
-  parsedOnboarded ? navigateTo(localePath("/")) : navigateTo(localePath("/onboarding"));
+  const isStudentnboarded = useCookie("isStudentnboarded", {
+    maxAge: 604800,
+    httpOnly: false,
+    secure: true,
+  });
+  isStudentnboarded.value = String(appStore.userData?.onboarded || false);
+  const isInvitedByCounsellor = useCookie("isInvitedByCounsellor", {
+    maxAge: 604800,
+    httpOnly: false,
+    secure: true,
+  });
+  isInvitedByCounsellor.value = String(
+    appStore.authUserData?.counsellor?.isInvitedByCounsellor || false
+  );
+  parsedOnboarded
+    ? navigateTo(localePath("/"))
+    : navigateTo(localePath("/onboarding"));
 });
 </script>

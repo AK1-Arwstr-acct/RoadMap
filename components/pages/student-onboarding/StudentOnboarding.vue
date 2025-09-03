@@ -20,7 +20,7 @@
           <div>
             <button
               v-if="counselorStudentStore.onboardingStep < 4"
-              @click="counselorStudentStore.onboardingStep++"
+              @click="counselorStudentStore.moveToNextStep = true"
               class="size-10 min-w-10 rounded-lg border border-border-neutral flex justify-center items-center"
             >
               <IconChevronDown class="transform -rotate-90" />

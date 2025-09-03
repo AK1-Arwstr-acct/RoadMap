@@ -3,14 +3,13 @@ import useAppStore from "~/stores/AppStore";
 export default defineNuxtRouteMiddleware((to, from) => {
     const token = useCookie("token");
     const userRole = useCookie("userRole");
+    const isStudentnboarded = useCookie("isStudentnboarded");
     const localePath = useLocalePath();
     const lastRoute = useLastRoute();
 
     const counselorPaths = [
         "/counselor/students",
         "/vi/counselor/students",
-        "/student-onboarding",
-        "/vi/student-onboarding",
         "/counselor/schools",
         "/vi/counselor/schools",
         "/counselor/referral",
@@ -61,6 +60,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
             // Non-counselor cannot access counselorPaths
             if (counselorPaths.includes(to.path)) {
                 return navigateTo(localePath("/"));
+            }
+            if (!isStudentnboarded.value && to.path != "/onboarding") {
+                return navigateTo(localePath("/onboarding"));
             }
         }
     }

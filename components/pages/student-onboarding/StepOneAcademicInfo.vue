@@ -29,7 +29,9 @@
     <!-- Level of study -->
     <BaseSelectRadio
       label="Level of study"
-      :options="tempOptions"
+      :options="classGradeList"
+      :loading="isClassGradesLoading"
+      :disabled="!classGradeList.length"
       v-model="counselorStudentStore.onBoardingData.level_of_study"
       :isShadowDark="true"
       :required="true"
@@ -78,9 +80,16 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
+import type { ClassGrades, CurrentClassGrade } from "~/types/home";
 
 const counselorStudentStore = useCounselorStudentStore();
+const { api } = useApi();
+const { showToast } = useToast();
+
+const isClassGradesLoading = ref<boolean>(false);
+const classGradeList = ref<ClassGrades[]>([]);
 
 const tempOptions = [
   {
@@ -112,4 +121,33 @@ const validateNumber = (event: Event) => {
     counselorStudentStore.onBoardingData.gpa = input.value;
   }
 };
+
+const getClassGrades = async () => {
+  try {
+    isClassGradesLoading.value = true;
+    const response = await api.get(`/api/v1/sign-up/get-class-grades`);
+    classGradeList.value = response.data.data.map((item: CurrentClassGrade) => {
+      return {
+        value: item.id,
+        label:
+          item.class_name === "Others"
+            ? item.class_name
+            : `I'm in ${item.class_name}`,
+      };
+    });
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isClassGradesLoading.value = false;
+  }
+};
+
+onMounted(() => {
+  getClassGrades();
+});
 </script>

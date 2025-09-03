@@ -168,20 +168,20 @@
           <label class="flex items-center gap-2 cursor-pointer group">
             <input
               type="radio"
-              value="advanced"
+              value="advance"
               v-model="formData.contractType"
               class="appearance-none hidden"
             />
             <div
               class="size-6 border-2 rounded-full flex items-center justify-center transition-all ease-in-out duration-200 shadow-2xl group-hover:outline outline-8"
               :class="[
-                formData.contractType === 'advanced'
+                formData.contractType === 'advance'
                   ? 'border-background-brand bg-background-brand group-hover:outline-background-brand-subtle-hovered'
                   : 'border-border-neutral group-hover:outline-background-base-subtle-hovered',
               ]"
             >
               <span
-                v-if="formData.contractType === 'advanced'"
+                v-if="formData.contractType === 'advance'"
                 class="size-[9px] min-w-[9px] rounded-full bg-white"
               />
             </div>
@@ -335,7 +335,6 @@ const submit = async () => {
         type: "success",
       });
     }
-    isSubmitting.value = false;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = errorList(error);
@@ -343,6 +342,8 @@ const submit = async () => {
         type: "error",
       });
     }
+  } finally {
+    isSubmitting.value = false;
   }
 };
 

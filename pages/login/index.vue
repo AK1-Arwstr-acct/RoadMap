@@ -117,7 +117,9 @@
           <button
             @click="submit"
             :disabled="
-              userInput.phoneNumber === '' || userInput.password === '' || selectedOption === null
+              userInput.phoneNumber === '' ||
+              userInput.password === '' ||
+              selectedOption === null
             "
             class="bg-background-brand hover:bg-background-brand-hovered w-full rounded-lg font-semibold py-3 text-white disabled:opacity-70 flex justify-center items-center gap-2"
           >
@@ -280,7 +282,9 @@ const submit = async () => {
     const response = await api.post("/api/v1/login", {
       emailOrMsisdn: `${selectedOption.value?.phone_code}${userInput.value.phoneNumber}`,
       password: userInput.value.password,
-      counsellor_uuid: route.query.counsellor_uuid ? route.query.counsellor_uuid : undefined
+      counsellor_uuid: route.query.counsellor_uuid
+        ? route.query.counsellor_uuid
+        : undefined,
     });
     const token = useCookie("token", {
       maxAge: 604800,
@@ -298,11 +302,25 @@ const submit = async () => {
       httpOnly: false,
       secure: true,
     });
+    const isInvitedByCounsellor = useCookie("isInvitedByCounsellor", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
     userRole.value = appStore.authUserData?.role.title.toLowerCase();
+    isInvitedByCounsellor.value = String(
+      appStore.authUserData?.counsellor?.isInvitedByCounsellor || false
+    );
     if (appStore.authUserData?.role.title.toLowerCase().includes("counselor")) {
       navigateTo(localePath("/counselor/students"));
       return;
     }
+    const isStudentnboarded = useCookie("isStudentnboarded", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
+    isStudentnboarded.value = String(appStore.userData?.onboarded || false);
     if (response.data.data.onboarded) {
       appStore.paywallOnLastScreen === ""
         ? navigateTo(localePath("/"))
@@ -346,8 +364,17 @@ const getCountries = async () => {
 onMounted(() => {
   getCountries();
   const userRole = useCookie("userRole");
+  const isInvitedByCounsellor = useCookie("isInvitedByCounsellor");
+  const isStudentnboarded = useCookie("isStudentnboarded");
+
   if (userRole.value) {
     userRole.value = null;
+  }
+  if (isInvitedByCounsellor.value) {
+    isInvitedByCounsellor.value = null;
+  }
+  if (isStudentnboarded.value) {
+    isStudentnboarded.value = null;
   }
 });
 </script>

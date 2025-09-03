@@ -19,7 +19,6 @@
           name="name"
           type="text"
           v-model="counselorStudentStore.onBoardingData.name"
-          @input=""
           placeholder="Full legal name"
           class="mt-1.5 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 w-full outline-none appearance-none text-text-base"
           data-hj-allow
@@ -36,7 +35,6 @@
           name="day"
           type="text"
           v-model="counselorStudentStore.onBoardingData.date_of_birth.day"
-          @input=""
           placeholder="Day"
           class="w-full bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 outline-none appearance-none text-text-base"
           data-hj-allow
@@ -53,7 +51,6 @@
           name="year"
           type="text"
           v-model="counselorStudentStore.onBoardingData.date_of_birth.year"
-          @input=""
           placeholder="Year"
           class="w-full bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 outline-none appearance-none text-text-base"
           data-hj-allow
@@ -70,7 +67,6 @@
           name="phone-name"
           type="text"
           v-model="counselorStudentStore.onBoardingData.phone_number"
-          @input=""
           placeholder="Phone number"
           class="mt-1.5 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 w-full outline-none appearance-none text-text-base"
           data-hj-allow
@@ -87,7 +83,6 @@
           name="email"
           type="email"
           v-model="counselorStudentStore.onBoardingData.email"
-          @input=""
           placeholder="Email"
           class="mt-1.5 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 w-full outline-none appearance-none text-text-base"
           data-hj-allow
@@ -104,7 +99,6 @@
           name="address"
           v-model="counselorStudentStore.onBoardingData.legal_address"
           type="text"
-          @input=""
           placeholder="Legal address"
           class="mt-1.5 bg-background-base-subtle resize-none rounded-lg border border-border-neutral-subtle py-3 px-4 w-full outline-none appearance-none text-text-base custom-scrollbar"
           data-hj-allow
@@ -123,9 +117,9 @@
           name="address"
           v-model="counselorStudentStore.onBoardingData.current_address"
           type="email"
-          @input=""
           placeholder="Current address"
-          class="mt-1.5 bg-background-base-subtle resize-none rounded-lg border border-border-neutral-subtle py-3 px-4 w-full outline-none appearance-none text-text-base custom-scrollbar"
+          :disabled="sameAddress"
+          class="mt-1.5 bg-background-base-subtle resize-none rounded-lg border border-border-neutral-subtle py-3 px-4 w-full outline-none appearance-none text-text-base custom-scrollbar disabled:opacity-70"
           data-hj-allow
         />
         <label
@@ -162,13 +156,21 @@
       </div>
     </div>
     <!-- nationality -->
-    <BaseSelectRadio
-      label="Nationality"
-      :options="countriesList"
-      v-model="counselorStudentStore.onBoardingData.nationality"
-      :isShadowDark="true"
-      :required="true"
-    />
+    <div class="remove-shadow-bg-white">
+      <label class="font-medium text-text-neutral-subtle text-sm"
+        >Nationality<span class="text-text-error font-medium"> *</span></label
+      >
+      <div class="">
+        <input
+          name="Nationality"
+          type="text"
+          v-model="counselorStudentStore.onBoardingData.nationality"
+          placeholder="Enter Nationality"
+          class="mt-1.5 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 w-full outline-none appearance-none text-text-base"
+          data-hj-allow
+        />
+      </div>
+    </div>
     <!-- residency -->
     <div class="">
       <label class="font-medium text-text-neutral-subtle text-sm pb-2.5 block">
@@ -232,14 +234,28 @@
       </div>
     </div>
     <!-- country -->
-    <BaseSelectRadio
+    <div
       v-if="counselorStudentStore.onBoardingData.permanent_residency === 'yes'"
-      label="If yes, please name the country"
-      :options="tempOptions"
-      v-model="counselorStudentStore.onBoardingData.residency_country_name"
-      :isShadowDark="true"
-      :required="true"
-    />
+      class="remove-shadow-bg-white"
+    >
+      <label class="font-medium text-text-neutral-subtle text-sm"
+        >If yes, please name the country<span
+          class="text-text-error font-medium"
+        >
+          *</span
+        ></label
+      >
+      <div>
+        <input
+          name="country"
+          type="text"
+          v-model="counselorStudentStore.onBoardingData.residency_country_name"
+          placeholder="Enter country"
+          class="mt-1.5 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 w-full outline-none appearance-none text-text-base"
+          data-hj-allow
+        />
+      </div>
+    </div>
     <!-- passport -->
     <div class="remove-shadow-bg-white">
       <label class="font-medium text-text-neutral-subtle text-sm"
@@ -250,7 +266,6 @@
           name="passport-number"
           type="text"
           v-model="counselorStudentStore.onBoardingData.passport_number"
-          @input=""
           placeholder="Passport number"
           class="mt-1.5 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 w-full outline-none appearance-none text-text-base"
           data-hj-allow
@@ -300,17 +315,6 @@ const months = [
   { value: "October", label: "October" },
   { value: "November", label: "November" },
   { value: "December", label: "December" },
-];
-
-const countriesList : CountriesOptionAttributes[] = [
-  { value: [92], label: "United Kingdom" },
-  { value: [156], label: "Canada" },
-  { value: [182], label: "United States" },
-  {
-    value: [67, 68, 62, 63, 88, 78, 191, 80, 90],
-    label: "Europe",
-  },
-  { value: [185], label: "Australia" },
 ];
 
 const oldDress = () => {

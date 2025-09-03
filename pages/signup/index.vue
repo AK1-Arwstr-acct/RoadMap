@@ -175,4 +175,20 @@ const onSubmit = () => {
   signupInfo.value = JSON.stringify(userInput.value);
   navigateTo(localePath("/signup/verify-phone"));
 };
+
+onMounted(() => {
+  const userRole = useCookie("userRole");
+  const isInvitedByCounsellor = useCookie("isInvitedByCounsellor");
+  const isStudentnboarded = useCookie("isStudentnboarded");
+
+  if (userRole.value) {
+    userRole.value = null;
+  }
+  if (isInvitedByCounsellor.value) {
+    isInvitedByCounsellor.value = null;
+  }
+  if (isStudentnboarded.value) {
+    isStudentnboarded.value = null;
+  }
+});
 </script>

@@ -118,6 +118,10 @@ interface AuthUserData {
   created_at: string;
   oldUser: boolean;
   onboarded: boolean;
+  counsellor: {
+    isInvitedByCounsellor: boolean;
+    uuid: string | null;
+  }
   role: {
     id: number;
     title: string;

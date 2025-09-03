@@ -142,7 +142,9 @@ const onSubmit = async () => {
       verify_token: otpResponse.data.data.verify_token,
       msisdn: props.userInput,
       country_id: props.selectedOption?.id || null,
-      counsellor_uuid: userDetail.counsellor_uuid ? userDetail.counsellor_uuid : undefined
+      counsellor_uuid: userDetail.counsellor_uuid
+        ? userDetail.counsellor_uuid
+        : undefined,
     });
 
     const token = useCookie("token", {
@@ -158,6 +160,20 @@ const onSubmit = async () => {
     identifyUserInHotjar(user);
     appStore.checkAuthenticatedUser();
     appStore.getAuthUserData();
+    const isStudentnboarded = useCookie("isStudentnboarded", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
+    isStudentnboarded.value = String(appStore.userData?.onboarded || false);
+    const isInvitedByCounsellor = useCookie("isInvitedByCounsellor", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
+    isInvitedByCounsellor.value = String(
+      appStore.authUserData?.counsellor?.isInvitedByCounsellor || false
+    );
     navigateTo(localePath("/onboarding"));
     isSubmitting.value = false;
   } catch (error) {
