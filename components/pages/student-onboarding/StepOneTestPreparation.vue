@@ -23,11 +23,17 @@
         :isShadowDark="true"
         :required="true"
       />
-      <div v-if="counselorStudentStore.onBoardingData.english_language_test.status?.value !== 'Not decided'" class="flex flex-col gap-3">
+      <div
+        v-if="
+          counselorStudentStore.onBoardingData.english_language_test.status
+            ?.value !== 'Not decided'
+        "
+        class="flex flex-col gap-3"
+      >
         <!-- Test type -->
         <BaseSelectRadio
           label="Test type"
-          :options="test_type"
+          :options="englishTestTypes"
           v-model="
             counselorStudentStore.onBoardingData.english_language_test.test_type
           "
@@ -40,7 +46,6 @@
             >Test date<span class="text-text-error font-medium"> *</span></label
           >
           <div class="flex items-center gap-2 pt-1.5">
-            <!-- v-model="" -->
             <input
               name="day"
               type="text"
@@ -48,7 +53,7 @@
                 counselorStudentStore.onBoardingData.english_language_test
                   .test_date.day
               "
-              @input=""
+              @input="validateEnglishTestDate"
               placeholder="Day"
               class="w-full bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 outline-none appearance-none text-text-base"
               data-hj-allow
@@ -62,6 +67,7 @@
                 "
                 :isShadowDark="true"
                 placeholder="Month"
+                @onChange="onMonthChange"
               />
             </div>
             <input
@@ -71,7 +77,7 @@
                 counselorStudentStore.onBoardingData.english_language_test
                   .test_date.year
               "
-              @input=""
+              @input="validateEnglishTestYear"
               placeholder="Year"
               class="w-full bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 outline-none appearance-none text-text-base"
               data-hj-allow
@@ -79,9 +85,17 @@
           </div>
         </div>
         <!-- Test score -->
-        <div v-if="counselorStudentStore.onBoardingData.english_language_test.status?.value !== 'Planning to take'" class="remove-shadow-bg-white">
+        <div
+          v-if="
+            counselorStudentStore.onBoardingData.english_language_test.status
+              ?.value !== 'Planning to take'
+          "
+          class="remove-shadow-bg-white"
+        >
           <label class="font-medium text-text-neutral-subtle text-sm"
-            >Test score<span class="text-text-error font-medium"> *</span></label
+            >Test score<span class="text-text-error font-medium">
+              *</span
+            ></label
           >
           <div class="relative">
             <input
@@ -117,11 +131,17 @@
         :isShadowDark="true"
         :required="true"
       />
-      <div v-if="counselorStudentStore.onBoardingData.standardized_test.status?.value !== 'Not decided'" class="flex flex-col gap-3">
+      <div
+        v-if="
+          counselorStudentStore.onBoardingData.standardized_test.status
+            ?.value !== 'Not decided'
+        "
+        class="flex flex-col gap-3"
+      >
         <!-- Test type -->
         <BaseSelectRadio
           label="Test type"
-          :options="test_type"
+          :options="standardizedTestType"
           v-model="
             counselorStudentStore.onBoardingData.standardized_test.test_type
           "
@@ -141,7 +161,7 @@
                 counselorStudentStore.onBoardingData.standardized_test.test_date
                   .day
               "
-              @input=""
+              @input="validateStandardizedTestDate"
               placeholder="Day"
               class="w-full bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 outline-none appearance-none text-text-base"
               data-hj-allow
@@ -150,9 +170,10 @@
               <BaseSelectRadio
                 :options="months"
                 v-model="
-                  counselorStudentStore.onBoardingData.standardized_test.test_date
-                    .month
+                  counselorStudentStore.onBoardingData.standardized_test
+                    .test_date.month
                 "
+                @onChange="onMonthChange2"
                 :isShadowDark="true"
                 placeholder="Month"
               />
@@ -164,7 +185,7 @@
                 counselorStudentStore.onBoardingData.standardized_test.test_date
                   .year
               "
-              @input=""
+              @input="validateStandardizedTestYear"
               placeholder="Year"
               class="w-full bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 outline-none appearance-none text-text-base"
               data-hj-allow
@@ -172,9 +193,17 @@
           </div>
         </div>
         <!-- Test score -->
-        <div v-if="counselorStudentStore.onBoardingData.standardized_test.status?.value !== 'Planning to take'" class="remove-shadow-bg-white">
+        <div
+          v-if="
+            counselorStudentStore.onBoardingData.standardized_test.status
+              ?.value !== 'Planning to take'
+          "
+          class="remove-shadow-bg-white"
+        >
           <label class="font-medium text-text-neutral-subtle text-sm"
-            >Test score<span class="text-text-error font-medium"> *</span></label
+            >Test score<span class="text-text-error font-medium">
+              *</span
+            ></label
           >
           <div class="relative">
             <input
@@ -201,17 +230,16 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
 import type { OptionAttributes } from "~/types/home";
 
 const counselorStudentStore = useCounselorStudentStore();
+const { showToast } = useToast();
+const { api } = useApi();
 
-const radioTemp = ref();
-const radioTemp2 = ref();
-const sameAddress = ref<boolean>(false);
-// const testScore = ref<string>("");
-
-const status : OptionAttributes[] = [
+const isTestScoresLoading = ref<boolean>(false);
+const status: OptionAttributes[] = [
   {
     label: "Not decided",
     value: "Not decided",
@@ -225,7 +253,7 @@ const status : OptionAttributes[] = [
     value: "Test taken",
   },
 ];
-const test_type : OptionAttributes[] = [
+const englishTestTypes: OptionAttributes[] = [
   {
     label: "TOEFL",
     value: "TOEFL",
@@ -237,6 +265,21 @@ const test_type : OptionAttributes[] = [
   {
     label: "Duolingo",
     value: "Duolingo",
+  },
+];
+
+const standardizedTestType: OptionAttributes[] = [
+  {
+    label: "SAT",
+    value: "SAT",
+  },
+  {
+    label: "ACT",
+    value: "ACT",
+  },
+  {
+    label: "GRE",
+    value: "GRE",
   },
 ];
 
@@ -254,14 +297,15 @@ const months = [
   { value: "November", label: "November" },
   { value: "December", label: "December" },
 ];
-
-const oldDress = () => {
-  if (sameAddress.value) {
-    radioTemp2.value = radioTemp.value;
-  } else {
-    radioTemp2.value = "";
-  }
-};
+const fullMonths = [
+  "January",
+  "March",
+  "May",
+  "July",
+  "August",
+  "October",
+  "December",
+];
 
 const validateEnglishLanguageScore = (event: Event) => {
   const input = (event as InputEvent).target as HTMLInputElement;
@@ -273,14 +317,16 @@ const validateEnglishLanguageScore = (event: Event) => {
     // Limit to 2 decimal places
     value = num.toFixed(value.includes(".") ? 2 : 0).replace(/\.00$/, "");
     input.value = value;
-    counselorStudentStore.onBoardingData.english_language_test.test_scrore = value;
+    counselorStudentStore.onBoardingData.english_language_test.test_scrore =
+      value;
   } else if (value === "") {
     counselorStudentStore.onBoardingData.english_language_test.test_scrore = "";
   } else {
     // Remove last character if out of range
     value = value.slice(0, -1);
     input.value = value;
-    counselorStudentStore.onBoardingData.english_language_test.test_scrore = value;
+    counselorStudentStore.onBoardingData.english_language_test.test_scrore =
+      value;
   }
 };
 const validateStandardizedScore = (event: Event) => {
@@ -303,4 +349,219 @@ const validateStandardizedScore = (event: Event) => {
     counselorStudentStore.onBoardingData.standardized_test.test_scrore = value;
   }
 };
+
+const validateEnglishTestDate = (event: Event) => {
+  const input = (event as InputEvent).target as HTMLInputElement;
+  let value = input.value.replace(/[^0-9.]/g, "");
+  const num = parseFloat(value);
+  let limit = 31;
+  const month =
+    counselorStudentStore.onBoardingData.english_language_test.test_date.month
+      ?.value;
+  const year =
+    counselorStudentStore.onBoardingData.english_language_test.test_date.year;
+  if (month && month === "February") {
+    limit = 29;
+    if (year && Number(year) % 4 !== 0) {
+      limit = 28;
+    }
+  } else if (month && !fullMonths.includes(month)) {
+    limit = 30;
+  }
+  if (!isNaN(num) && num >= 0 && num <= limit) {
+    // Limit to 2 decimal places
+    value = num.toFixed(value.includes(".") ? 2 : 0).replace(/\.00$/, "");
+    input.value = value;
+    counselorStudentStore.onBoardingData.english_language_test.test_date.day =
+      value;
+  } else if (value === "") {
+    counselorStudentStore.onBoardingData.english_language_test.test_date.day =
+      "";
+  } else {
+    // Remove last character if out of range
+    value = value.slice(0, -1);
+    input.value = value;
+    counselorStudentStore.onBoardingData.english_language_test.test_date.day =
+      value;
+  }
+};
+
+const validateEnglishTestYear = (event: Event) => {
+  const input = (event as InputEvent).target as HTMLInputElement;
+  let value = input.value.replace(/[^0-9.]/g, "");
+
+  const currentYear = new Date().getFullYear();
+  const num = parseFloat(value);
+  if (!isNaN(num) && num >= 0 && num <= currentYear) {
+    // Limit to 2 decimal places
+    value = num.toFixed(value.includes(".") ? 2 : 0).replace(/\.00$/, "");
+    input.value = value;
+    counselorStudentStore.onBoardingData.english_language_test.test_date.year =
+      value;
+  } else if (value === "") {
+    counselorStudentStore.onBoardingData.english_language_test.test_date.year =
+      "";
+  } else {
+    // Remove last character if out of range
+    value = value.slice(0, -1);
+    input.value = value;
+    counselorStudentStore.onBoardingData.english_language_test.test_date.year =
+      value;
+  }
+  const year =
+    counselorStudentStore.onBoardingData.english_language_test.test_date.year;
+  const day = Number(
+    counselorStudentStore.onBoardingData.english_language_test.test_date.day
+  );
+  const month =
+    counselorStudentStore.onBoardingData.english_language_test.test_date.month
+      ?.value;
+  if (
+    year.length === 4 &&
+    Number(year) % 4 !== 0 &&
+    month === "February" &&
+    day === 29
+  ) {
+    counselorStudentStore.onBoardingData.english_language_test.test_date.day =
+      "";
+  }
+};
+
+const onMonthChange = () => {
+  const day = Number(
+    counselorStudentStore.onBoardingData.english_language_test.test_date.day
+  );
+  const month =
+    counselorStudentStore.onBoardingData.english_language_test.test_date.month
+      ?.value;
+  if (month === "February" && day > 29) {
+    counselorStudentStore.onBoardingData.english_language_test.test_date.day =
+      "";
+    return;
+  }
+  if (month && !fullMonths.includes(month) && day > 30) {
+    counselorStudentStore.onBoardingData.english_language_test.test_date.day =
+      "";
+  }
+};
+
+const validateStandardizedTestDate = (event: Event) => {
+  const input = (event as InputEvent).target as HTMLInputElement;
+  let value = input.value.replace(/[^0-9.]/g, "");
+  const num = parseFloat(value);
+  let limit = 31;
+  const month =
+    counselorStudentStore.onBoardingData.standardized_test.test_date.month
+      ?.value;
+  const year =
+    counselorStudentStore.onBoardingData.standardized_test.test_date.year;
+  if (month && month === "February") {
+    limit = 29;
+    if (year && Number(year) % 4 !== 0) {
+      limit = 28;
+    }
+  } else if (month && !fullMonths.includes(month)) {
+    limit = 30;
+  }
+  if (!isNaN(num) && num >= 0 && num <= limit) {
+    // Limit to 2 decimal places
+    value = num.toFixed(value.includes(".") ? 2 : 0).replace(/\.00$/, "");
+    input.value = value;
+    counselorStudentStore.onBoardingData.standardized_test.test_date.day =
+      value;
+  } else if (value === "") {
+    counselorStudentStore.onBoardingData.standardized_test.test_date.day = "";
+  } else {
+    // Remove last character if out of range
+    value = value.slice(0, -1);
+    input.value = value;
+    counselorStudentStore.onBoardingData.standardized_test.test_date.day =
+      value;
+  }
+};
+
+const validateStandardizedTestYear = (event: Event) => {
+  const input = (event as InputEvent).target as HTMLInputElement;
+  let value = input.value.replace(/[^0-9.]/g, "");
+
+  const currentYear = new Date().getFullYear();
+  const num = parseFloat(value);
+  if (!isNaN(num) && num >= 0 && num <= currentYear) {
+    // Limit to 2 decimal places
+    value = num.toFixed(value.includes(".") ? 2 : 0).replace(/\.00$/, "");
+    input.value = value;
+    counselorStudentStore.onBoardingData.standardized_test.test_date.year =
+      value;
+  } else if (value === "") {
+    counselorStudentStore.onBoardingData.standardized_test.test_date.year = "";
+  } else {
+    // Remove last character if out of range
+    value = value.slice(0, -1);
+    input.value = value;
+    counselorStudentStore.onBoardingData.standardized_test.test_date.year =
+      value;
+  }
+  const year =
+    counselorStudentStore.onBoardingData.standardized_test.test_date.year;
+  const day = Number(
+    counselorStudentStore.onBoardingData.standardized_test.test_date.day
+  );
+  const month =
+    counselorStudentStore.onBoardingData.standardized_test.test_date.month
+      ?.value;
+  if (
+    year.length === 4 &&
+    Number(year) % 4 !== 0 &&
+    month === "February" &&
+    day === 29
+  ) {
+    counselorStudentStore.onBoardingData.standardized_test.test_date.day = "";
+  }
+};
+
+const onMonthChange2 = () => {
+  const day = Number(
+    counselorStudentStore.onBoardingData.standardized_test.test_date.day
+  );
+  const month =
+    counselorStudentStore.onBoardingData.standardized_test.test_date.month
+      ?.value;
+  if (month === "February" && day > 29) {
+    counselorStudentStore.onBoardingData.standardized_test.test_date.day = "";
+    return;
+  }
+  if (month && !fullMonths.includes(month) && day > 30) {
+    counselorStudentStore.onBoardingData.standardized_test.test_date.day = "";
+  }
+};
+
+const setTestScores = async () => {
+  try {
+    isTestScoresLoading.value = true;
+    const response = await api.get(`/api/v2/openapi/test-scores`);
+    if (response?.data.data) {
+      // studyProgram.value = response.data.data.map(
+      //   (item: { id: number; title: string }) => {
+      //     return {
+      //       value: item.id,
+      //       label: title,
+      //     };
+      //   }
+      // );
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isTestScoresLoading.value = false;
+  }
+};
+
+onMounted(() => {
+  // setTestScores();
+});
 </script>

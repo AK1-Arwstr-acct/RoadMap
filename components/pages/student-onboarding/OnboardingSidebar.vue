@@ -10,9 +10,12 @@
       </div>
       <div class="flex flex-col gap-8">
         <div class="text-text-constant-white">
-          <p class="font-semibold text-2xl leading-9">Welcome {{ appStore.userData?.name }} 👋</p>
+          <p class="font-semibold text-2xl leading-9">
+            {{ $t("student_onboarding.sidebar.welcome") }}
+            {{ appStore.userData?.name }} 👋
+          </p>
           <p class="leading-7">
-            We are so excited to have you onboard. Let’s set up your profile!
+            {{ $t("student_onboarding.sidebar.onboarding_message") }}
           </p>
         </div>
         <!-- stepper -->
@@ -60,6 +63,7 @@
               {{ step }}
             </div>
           </div>
+          <BaseLanguageDropdown />
         </div>
       </div>
     </div>
@@ -71,11 +75,12 @@ import useCounselorStudentStore from "~/stores/counselorStudentStore";
 
 const counselorStudentStore = useCounselorStudentStore();
 const appStore = useAppStore();
+const { t } = useI18n();
 
-const steps = [
-  "Student information",
-  "Family travel and financial records",
-  "Contract details",
-  "Schedule first meeting",
-];
+const steps = ref<string[]>([
+  t("student_onboarding.sidebar.student_information"),
+  t("student_onboarding.sidebar.family_travel_and_financial_records"),
+  t("student_onboarding.sidebar.contract_details"),
+  t("student_onboarding.sidebar.schedule_first_meeting"),
+]);
 </script>

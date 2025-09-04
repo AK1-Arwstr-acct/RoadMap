@@ -10,6 +10,7 @@ const useCounselorStudentStore = defineStore("counselorStudentStore", () => {
 
     const moveToNextStep = ref<boolean>(false);
     const onboardingStep = ref<number>(1);
+    const sameAddress = ref<boolean>(false);
     const onBoardingData = ref<CounselorStudent>({
         name: "",
         date_of_birth: { day: "", year: "", month: null },
@@ -79,6 +80,7 @@ const useCounselorStudentStore = defineStore("counselorStudentStore", () => {
     return {
         moveToNextStep,
         onboardingStep,
+        sameAddress,
         onBoardingData,
     }
 })

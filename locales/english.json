@@ -731,6 +731,16 @@
         "you_can_review_this_chat_but_replying_or_continuing_the_conversation_is_currently_not_available": "You can review this chat, but replying or continuing the conversation is currently not available.",
         "you_reached_your_daily_limit_for_sophie_interactions": "You've reached your daily limit for Sophie interactions."
     },
+    "student_onboarding": {
+        "sidebar": {
+            "contract_details": "Contract details",
+            "family_travel_and_financial_records": "Family travel and financial records",
+            "onboarding_message": "We are so excited to have you onboard. Let’s set up your profile!",
+            "schedule_first_meeting": "Schedule first meeting",
+            "student_information": "Student information",
+            "welcome": "Welcome"
+        }
+    },
     "verifyPhone": {
         "enter_10_digits": "Enter 10 digits",
         "phone_number": "Phone number",

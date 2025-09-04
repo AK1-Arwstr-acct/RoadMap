@@ -14,6 +14,8 @@
       v-model="counselorStudentStore.onBoardingData.intended_study_program"
       :isShadowDark="true"
       :required="true"
+      :disabled="!studyProgram.length"
+      :loading="isStudyProgramLoading"
     />
     <!-- Intended major or Field -->
     <div class="remove-shadow-bg-white">
@@ -144,23 +146,14 @@ import IconUS from "~/components/icons/IconUS.vue";
 import IconEurope from "~/components/icons/IconEurope.vue";
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
 import type { OptionAttributes } from "~/types/home";
+import axios from "axios";
 
 const counselorStudentStore = useCounselorStudentStore();
+const { showToast } = useToast();
+const { api } = useApi();
 
-const studyProgram = [
-  {
-    label: "Bachelor's",
-    value: "1",
-  },
-  {
-    label: "Master's",
-    value: "2",
-  },
-  {
-    label: "Associate",
-    value: "6",
-  },
-];
+const studyProgram = ref<OptionAttributes[]>([]);
+const isStudyProgramLoading = ref<boolean>(false);
 
 const enrollPlanOptions: OptionAttributes[] = [
   {
@@ -231,4 +224,35 @@ const toggleSelection = async (ids: number[]) => {
     ];
   }
 };
+
+const setProgramListOptions = async () => {
+  try {
+    isStudyProgramLoading.value = true;
+    const response = await api.get(`/api/v2/openapi/types-of-class-grades`);
+    if (response?.data.data) {
+      studyProgram.value = response.data.data.map(
+        (item: { id: number; class_name: string }) => {
+          return {
+            value: item.id,
+            label: item.class_name,
+          };
+        }
+      );
+      return studyProgram.value;
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isStudyProgramLoading.value = false;
+  }
+};
+
+onMounted(() => {
+  setProgramListOptions();
+});
 </script>

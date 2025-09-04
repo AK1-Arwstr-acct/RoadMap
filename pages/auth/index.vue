@@ -16,15 +16,21 @@ onBeforeMount(async () => {
     savedtoken.value = Array.isArray(token) ? token.join("") : token;
   }
   await nextTick();
-  appStore.checkAuthenticatedUser();
-  appStore.getUserData();
-  appStore.getAuthUserData();
+  await appStore.checkAuthenticatedUser();
+  await appStore.getUserData();
+  await appStore.getAuthUserData();
   const parsedOnboarded = onboarded === 1;
+  const userRole = useCookie("userRole", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
   const isStudentnboarded = useCookie("isStudentnboarded", {
     maxAge: 604800,
     httpOnly: false,
     secure: true,
   });
+  userRole.value = appStore.authUserData?.role.title.toLowerCase();
   isStudentnboarded.value = String(appStore.userData?.onboarded || false);
   const isInvitedByCounsellor = useCookie("isInvitedByCounsellor", {
     maxAge: 604800,

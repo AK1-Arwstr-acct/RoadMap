@@ -36,6 +36,7 @@
           type="text"
           v-model="counselorStudentStore.onBoardingData.date_of_birth.day"
           placeholder="Day"
+          @input="validateBirthDate"
           class="w-full bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 outline-none appearance-none text-text-base"
           data-hj-allow
         />
@@ -45,6 +46,7 @@
             v-model="counselorStudentStore.onBoardingData.date_of_birth.month"
             :isShadowDark="true"
             placeholder="Month"
+            @onChange="onMonthChange"
           />
         </div>
         <input
@@ -52,6 +54,7 @@
           type="text"
           v-model="counselorStudentStore.onBoardingData.date_of_birth.year"
           placeholder="Year"
+          @input="validateBirthYear"
           class="w-full bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 outline-none appearance-none text-text-base"
           data-hj-allow
         />
@@ -118,7 +121,7 @@
           v-model="counselorStudentStore.onBoardingData.current_address"
           type="email"
           placeholder="Current address"
-          :disabled="sameAddress"
+          :disabled="counselorStudentStore.sameAddress"
           class="mt-1.5 bg-background-base-subtle resize-none rounded-lg border border-border-neutral-subtle py-3 px-4 w-full outline-none appearance-none text-text-base custom-scrollbar disabled:opacity-70"
           data-hj-allow
         />
@@ -129,20 +132,20 @@
           <input
             type="checkbox"
             id="address"
-            v-model="sameAddress"
+            v-model="counselorStudentStore.sameAddress"
             @change="oldDress"
             class="appearance-none hidden"
           />
           <span
             class="size-6 border-2 rounded-md flex items-center justify-center"
             :class="[
-              sameAddress
+              counselorStudentStore.sameAddress
                 ? 'border-background-brand bg-background-brand'
                 : 'border-border-neutral-subtle',
             ]"
           >
             <IconTick
-              v-if="sameAddress"
+              v-if="counselorStudentStore.sameAddress"
               stroke="#ffffff"
               width="16"
               height="16"
@@ -276,31 +279,8 @@
 </template>
 <script setup lang="ts">
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
-import IconUK from "~/components/icons/IconUK.vue";
-import IconCanada from "~/components/icons/IconCanada.vue";
-import IconAustralia from "~/components/icons/IconAustralia.vue";
-import IconUS from "~/components/icons/IconUS.vue";
-import IconEurope from "~/components/icons/IconEurope.vue";
-import type { CountriesOptionAttributes } from "~/types/home";
 
 const counselorStudentStore = useCounselorStudentStore();
-
-const sameAddress = ref<boolean>(false);
-
-const tempOptions = [
-  {
-    label: "temp",
-    value: "temp",
-  },
-  {
-    label: "temp",
-    value: "temp",
-  },
-  {
-    label: "temp",
-    value: "temp",
-  },
-];
 
 const months = [
   { value: "January", label: "January" },
@@ -316,13 +296,96 @@ const months = [
   { value: "November", label: "November" },
   { value: "December", label: "December" },
 ];
+const fullMonths = [
+  "January",
+  "March",
+  "May",
+  "July",
+  "August",
+  "October",
+  "December",
+];
 
 const oldDress = () => {
-  if (sameAddress.value) {
+  if (counselorStudentStore.sameAddress) {
     counselorStudentStore.onBoardingData.current_address =
       counselorStudentStore.onBoardingData.legal_address;
   } else {
     counselorStudentStore.onBoardingData.current_address = "";
+  }
+};
+
+const validateBirthDate = (event: Event) => {
+  const input = (event as InputEvent).target as HTMLInputElement;
+  let value = input.value.replace(/[^0-9.]/g, "");
+  const num = parseFloat(value);
+  let limit = 31;
+  const month = counselorStudentStore.onBoardingData.date_of_birth.month?.value;
+  const year = counselorStudentStore.onBoardingData.date_of_birth.year;
+  if (month && month === "February") {
+    limit = 29;
+    if (year && Number(year) % 4 !== 0) {
+      limit = 28;
+    }
+  } else if (month && !fullMonths.includes(month)) {
+    limit = 30;
+  }
+  if (!isNaN(num) && num >= 0 && num <= limit) {
+    // Limit to 2 decimal places
+    value = num.toFixed(value.includes(".") ? 2 : 0).replace(/\.00$/, "");
+    input.value = value;
+    counselorStudentStore.onBoardingData.date_of_birth.day = value;
+  } else if (value === "") {
+    counselorStudentStore.onBoardingData.date_of_birth.day = "";
+  } else {
+    // Remove last character if out of range
+    value = value.slice(0, -1);
+    input.value = value;
+    counselorStudentStore.onBoardingData.date_of_birth.day = value;
+  }
+};
+
+const validateBirthYear = (event: Event) => {
+  const input = (event as InputEvent).target as HTMLInputElement;
+  let value = input.value.replace(/[^0-9.]/g, "");
+
+  const currentYear = new Date().getFullYear();
+  const num = parseFloat(value);
+  if (!isNaN(num) && num >= 0 && num <= currentYear) {
+    // Limit to 2 decimal places
+    value = num.toFixed(value.includes(".") ? 2 : 0).replace(/\.00$/, "");
+    input.value = value;
+    counselorStudentStore.onBoardingData.date_of_birth.year = value;
+  } else if (value === "") {
+    counselorStudentStore.onBoardingData.date_of_birth.year = "";
+  } else {
+    // Remove last character if out of range
+    value = value.slice(0, -1);
+    input.value = value;
+    counselorStudentStore.onBoardingData.date_of_birth.year = value;
+  }
+  const year = counselorStudentStore.onBoardingData.date_of_birth.year;
+  const day = Number(counselorStudentStore.onBoardingData.date_of_birth.day);
+  const month = counselorStudentStore.onBoardingData.date_of_birth.month?.value;
+  if (
+    year.length === 4 &&
+    Number(year) % 4 !== 0 &&
+    month === "February" &&
+    day === 29
+  ) {
+    counselorStudentStore.onBoardingData.date_of_birth.day = "";
+  }
+};
+
+const onMonthChange = () => {
+  const day = Number(counselorStudentStore.onBoardingData.date_of_birth.day);
+  const month = counselorStudentStore.onBoardingData.date_of_birth.month?.value;
+  if (month === "February" && day > 29) {
+    counselorStudentStore.onBoardingData.date_of_birth.day = "";
+    return;
+  }
+  if (month && !fullMonths.includes(month) && day > 30) {
+    counselorStudentStore.onBoardingData.date_of_birth.day = "";
   }
 };
 </script>

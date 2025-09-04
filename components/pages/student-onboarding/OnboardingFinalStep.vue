@@ -16,19 +16,17 @@
         a time that works best for you!
       </p>
     </div>
-    <div>
-      <BaseSelectRadio
-        label="Choose your onboarding date"
-        :options="tempOptions"
-        v-model="counselorStudentStore.onBoardingData.onboarding_date"
-        :isShadowDark="true"
-        :required="true"
-      />
-    </div>
+    <!-- calendly -->
+    <div
+      class="calendly-inline-widget"
+      data-url="https://calendly.com/mohid-khan-arrowster"
+      style="min-width: 405px; height: 400px"
+    ></div>
     <div class="flex justify-center pt-2">
       <button
         @click="onSubmit"
-        class="rounded-lg bg-background-brand py-1.5 px-5 leading-7 min-w-24 text-text-constant-white font-semibold"
+        :disabled="isDisable"
+        class="rounded-lg bg-background-brand py-1.5 px-5 leading-7 min-w-24 text-text-constant-white font-semibold disabled:opacity-70"
       >
         Complete onboarding
       </button>
@@ -40,24 +38,43 @@ import useCounselorStudentStore from "~/stores/counselorStudentStore";
 
 const counselorStudentStore = useCounselorStudentStore();
 
-const temp = ref();
+const isDisable = ref<boolean>(true);
 
-const tempOptions = [
-  {
-    label: "temp",
-    value: "temp",
-  },
-  {
-    label: "temp",
-    value: "temp",
-  },
-  {
-    label: "temp",
-    value: "temp",
-  },
-];
+const onSubmit = () => {};
 
-const onSubmit = () => {
+const initCalendly = () => {
+  if ((window as any).Calendly) {
+    (window as any).Calendly.initInlineWidget({
+      url: "https://calendly.com/mohid-khan-arrowster",
+      parentElement: document.querySelector(".calendly-inline-widget"),
+      prefill: {},
+      utm: {},
+    });
+  }
+};
 
-}
+const handleCalendlyEvent = (event: MessageEvent) => {
+  if (event.origin !== "https://calendly.com") return;
+  if (event.data.event === "calendly.event_scheduled") {
+    isDisable.value = false;
+  }
+};
+
+onMounted(() => {
+  const scriptId = "calendly-script";
+  if (!document.getElementById(scriptId)) {
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+  } else {
+    initCalendly();
+  }
+  window.addEventListener("message", handleCalendlyEvent);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("message", handleCalendlyEvent);
+});
 </script>

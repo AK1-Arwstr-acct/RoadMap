@@ -158,13 +158,19 @@ const onSubmit = async () => {
     await nextTick();
     const user = await appStore.getUserData();
     identifyUserInHotjar(user);
-    appStore.checkAuthenticatedUser();
-    appStore.getAuthUserData();
+    await appStore.checkAuthenticatedUser();
+    await appStore.getAuthUserData();
+    const userRole = useCookie("userRole", {
+      maxAge: 604800,
+      httpOnly: false,
+      secure: true,
+    });
     const isStudentnboarded = useCookie("isStudentnboarded", {
       maxAge: 604800,
       httpOnly: false,
       secure: true,
     });
+    userRole.value = appStore.authUserData?.role.title.toLowerCase();
     isStudentnboarded.value = String(appStore.userData?.onboarded || false);
     const isInvitedByCounsellor = useCookie("isInvitedByCounsellor", {
       maxAge: 604800,

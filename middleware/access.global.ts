@@ -61,7 +61,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
             if (counselorPaths.includes(to.path)) {
                 return navigateTo(localePath("/"));
             }
-            if (!isStudentnboarded.value && to.path != "/onboarding") {
+            if (!isStudentnboarded.value && to.path != localePath("/onboarding")) {
                 return navigateTo(localePath("/onboarding"));
             }
         }

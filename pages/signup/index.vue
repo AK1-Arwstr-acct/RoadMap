@@ -41,9 +41,10 @@
               type="text"
               v-model="userInput.email"
               placeholder="nguyen@example.com"
-              class="bg-background-base-subtle mt-1 rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base placeholder:text-text-disabled"
+              class="bg-background-base-subtle mt-1 rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base placeholder:text-text-disabled disabled:opacity-70"
               data-hj-allow
               @input="handelHotjar"
+              :disabled="isEmailFromRoute"
             />
           </div>
           <div class="remove-shadow-bg-white">
@@ -143,6 +144,7 @@ const config = useRuntimeConfig();
 const appStore = useAppStore();
 const route = useRoute();
 
+const isEmailFromRoute = ref<boolean>(false);
 const isShowPassword = ref<boolean>(false);
 const userInput = ref<UserInput>({
   name: "",
@@ -177,6 +179,11 @@ const onSubmit = () => {
 };
 
 onMounted(() => {
+  if (route.query.email) {
+    userInput.value.email = route.query.email as string;
+    isEmailFromRoute.value = true;
+  } else isEmailFromRoute.value = false;
+
   const userRole = useCookie("userRole");
   const isInvitedByCounsellor = useCookie("isInvitedByCounsellor");
   const isStudentnboarded = useCookie("isStudentnboarded");

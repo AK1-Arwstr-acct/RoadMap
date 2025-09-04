@@ -731,6 +731,16 @@
         "you_can_review_this_chat_but_replying_or_continuing_the_conversation_is_currently_not_available": "Bạn có thể xem lại cuộc trò chuyện này, nhưng hiện tại không thể trả lời hoặc tiếp tục.",
         "you_reached_your_daily_limit_for_sophie_interactions": "Bạn đã đạt đến giới hạn tương tác hàng ngày với Sophie."
     },
+    "student_onboarding": {
+        "sidebar": {
+            "contract_details": "Chi tiết hợp đồng",
+            "family_travel_and_financial_records": "Hồ sơ du lịch và tài chính của gia đình",
+            "onboarding_message": "Chúng tôi rất vui mừng khi bạn tham gia. Hãy cùng thiết lập hồ sơ của bạn!",
+            "schedule_first_meeting": "Lên lịch cuộc hẹn đầu tiên",
+            "student_information": "Thông tin sinh viên",
+            "welcome": "Chào mừng"
+        }
+    },
     "verifyPhone": {
         "enter_10_digits": "Nhập 10 chữ số",
         "phone_number": "Số điện thoại",
