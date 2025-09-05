@@ -19,7 +19,7 @@
     <div class="flex justify-center pt-2">
       <button
         @click="handleNext"
-        :disabled="isAnyFieldMissing"
+        :disabled="isAnyFieldMissing || isSubmitting"
         class="rounded-lg bg-background-brand py-1.5 px-5 leading-7 min-w-24 text-text-constant-white font-semibold disabled:opacity-70"
       >
         Next
@@ -28,13 +28,43 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
 
 const counselorStudentStore = useCounselorStudentStore();
+const { showToast } = useToast();
+const { api } = useApi();
 
-const handleNext = () => {
-  console.log(counselorStudentStore.onBoardingData);
-  counselorStudentStore.onboardingStep++;
+const isSubmitting = ref<boolean>(false);
+
+const handleNext = async () => {
+  try {
+    isSubmitting.value = true;
+    const userData = counselorStudentStore.onBoardingData;
+    const payload = {
+      countries_visited: [userData.family_visited_before],
+      visa_denied: userData.denied_visa_before === "yes" ? true : false,
+      visa_denied_details:
+        userData.denied_visa_before === "yes"
+          ? counselorStudentStore.onBoardingData.detail_for_visa_rejection
+          : null,
+      father_occupation: userData.father_occupation,
+      mother_occupation: userData.mother_occupation,
+      parents_monthly_income: userData.parents_total_income,
+      saving_account_amount: userData.saving_account_amount,
+    };
+    await api.post("/api/v1/counsellor-form/student/family-finance-travels", payload);
+    counselorStudentStore.onboardingStep++;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isSubmitting.value = false;
+  }
 };
 
 const isAnyFieldMissing = computed(() => {
@@ -70,4 +100,8 @@ watch(
     }
   }
 );
+
+onMounted(() => {
+  counselorStudentStore.getStudentFinanceData();
+});
 </script>

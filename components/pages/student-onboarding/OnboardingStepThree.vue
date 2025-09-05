@@ -88,4 +88,8 @@ watch(
     }
   }
 );
+
+onMounted(() => {
+  // counselorStudentStore.getStudentData();
+});
 </script>

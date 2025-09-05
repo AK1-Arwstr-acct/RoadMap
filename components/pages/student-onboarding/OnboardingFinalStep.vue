@@ -25,7 +25,7 @@
     <div class="flex justify-center pt-2">
       <button
         @click="onSubmit"
-        :disabled="isDisable"
+        :disabled="isDisable || isSubmitting"
         class="rounded-lg bg-background-brand py-1.5 px-5 leading-7 min-w-24 text-text-constant-white font-semibold disabled:opacity-70"
       >
         Complete onboarding
@@ -34,13 +34,18 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
 
 const counselorStudentStore = useCounselorStudentStore();
+const { showToast } = useToast();
+const { api } = useApi();
 
 const isDisable = ref<boolean>(true);
+const isSubmitting = ref<boolean>(false);
 
-const onSubmit = () => {};
+const onSubmit = () => {
+};
 
 const initCalendly = () => {
   if ((window as any).Calendly) {

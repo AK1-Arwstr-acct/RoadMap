@@ -57,6 +57,7 @@
           class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
           inputmode="numeric"
           data-hj-allow
+          min="0"
         />
         <span
           class="text-text-neutral-subtle absolute right-[14px] top-1/2 transform -translate-y-1/2"
@@ -81,6 +82,7 @@
           class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
           inputmode="numeric"
           data-hj-allow
+          min="0"
         />
         <span
           class="text-text-neutral-subtle absolute right-[14px] top-1/2 transform -translate-y-1/2"

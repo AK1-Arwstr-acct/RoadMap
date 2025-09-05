@@ -11,9 +11,9 @@ interface CounselorStudent {
     email: string;
     legal_address: string;
     current_address: string;
-    nationality: string;
+    nationality: OptionAttributes | null;
     permanent_residency: "yes" | "no";
-    residency_country_name: string;
+    residency_country_name: OptionAttributes | null;
     passport_number: string;
     recent_school: string;
     level_of_study: OptionAttributes | null;
@@ -22,7 +22,7 @@ interface CounselorStudent {
     intended_study_program: OptionAttributes | null;
     intended_major: string;
     country_destinations: number[];
-    annual_budget: string;
+    annual_budget: number | null;
     earliest_intake: OptionAttributes | null;
     post_graduation_plan: string;
     english_language_test: {

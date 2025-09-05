@@ -79,6 +79,7 @@
           <input
             name="phone-number"
             type="number"
+            inputmode="numeric"
             v-model="counselorStudentStore.onBoardingData.contract_holder.id"
             placeholder="e.g. 062199002343"
             class="mt-1 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-[14px] w-full outline-none appearance-none text-text-base"
@@ -137,6 +138,7 @@
           <input
             name="phone-number"
             type="number"
+            inputmode="numeric"
             v-model="
               counselorStudentStore.onBoardingData.students_national_id.id
             "

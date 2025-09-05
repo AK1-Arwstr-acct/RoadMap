@@ -72,19 +72,10 @@
                 @change="toggleSelection(option.value)"
               />
               <div class="flex items-center gap-2" :for="`destination${index}`">
-                <component
-                  :is="
-                    option.label.toLowerCase().includes('kingdom')
-                      ? IconUK
-                      : option.label.toLowerCase().includes('canada')
-                      ? IconCanada
-                      : option.label.toLowerCase().includes('australia')
-                      ? IconAustralia
-                      : option.label.toLowerCase().includes('states')
-                      ? IconUS
-                      : IconEurope
-                  "
-                  class="w-6 h-6"
+                <img
+                  :src="(option.icon as string)"
+                  :alt="option.label"
+                  class="size-6 min-w-6 overflow-hidden rounded-full object-cover"
                 />
                 {{ option.label }}
               </div>
@@ -102,7 +93,8 @@
         <!-- v-model="" -->
         <input
           name="Annual-budget"
-          type="text"
+          type="number"
+          inputmode="numeric"
           v-model="counselorStudentStore.onBoardingData.annual_budget"
           @input=""
           placeholder="$40,000"
@@ -139,13 +131,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import IconUK from "~/components/icons/IconUK.vue";
-import IconCanada from "~/components/icons/IconCanada.vue";
-import IconAustralia from "~/components/icons/IconAustralia.vue";
-import IconUS from "~/components/icons/IconUS.vue";
-import IconEurope from "~/components/icons/IconEurope.vue";
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
-import type { OptionAttributes } from "~/types/home";
+import type { CountriesOptionAttributes, OptionAttributes } from "~/types/home";
 import axios from "axios";
 
 const counselorStudentStore = useCounselorStudentStore();
@@ -154,6 +141,12 @@ const { api } = useApi();
 
 const studyProgram = ref<OptionAttributes[]>([]);
 const isStudyProgramLoading = ref<boolean>(false);
+
+interface CountriesList {
+  value: Number[];
+  label: String;
+  flag: String;
+}
 
 const enrollPlanOptions: OptionAttributes[] = [
   {
@@ -194,17 +187,7 @@ const enrollPlanOptions: OptionAttributes[] = [
   },
 ];
 
-const countriesList = [
-  { value: [92], label: "United Kingdom", icon: shallowRef(IconUK) },
-  { value: [156], label: "Canada", icon: shallowRef(IconCanada) },
-  { value: [182], label: "United States", icon: shallowRef(IconUS) },
-  {
-    value: [67, 68, 62, 63, 88, 78, 191, 80, 90],
-    label: "Europe",
-    icon: shallowRef(IconEurope),
-  },
-  { value: [185], label: "Australia", icon: shallowRef(IconAustralia) },
-];
+const countriesList = ref<CountriesOptionAttributes[]>([]);
 
 const toggleSelection = async (ids: number[]) => {
   const allSelected = ids.every((id) =>
@@ -252,7 +235,32 @@ const setProgramListOptions = async () => {
   }
 };
 
+const setCountriesList = async () => {
+  try {
+    const response = await api.get(`/api/v2/openapi/preferred_countries`);
+    if (response?.data.data) {
+      countriesList.value = response.data.data.map(
+        (item: { id: number; title: string; flag: string }) => {
+          return {
+            value: [item.id],
+            label: item.title,
+            icon: item.flag,
+          };
+        }
+      );
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
+};
+
 onMounted(() => {
   setProgramListOptions();
+  setCountriesList();
 });
 </script>

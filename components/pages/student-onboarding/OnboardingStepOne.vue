@@ -21,7 +21,7 @@
     <div class="flex justify-center pt-2">
       <button
         @click="handleNext"
-        :disabled="isAnyFieldMissing"
+        :disabled="isAnyFieldMissing || isSubmitting"
         class="rounded-lg bg-background-brand py-1.5 px-5 leading-7 min-w-24 text-text-constant-white font-semibold disabled:opacity-70"
       >
         Next
@@ -30,14 +30,85 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
 
 const counselorStudentStore = useCounselorStudentStore();
+const { showToast } = useToast();
+const { api } = useApi();
 
-const handleNext = () => {
-  console.log(counselorStudentStore.onBoardingData);
+const isSubmitting = ref<boolean>(false);
 
-  counselorStudentStore.onboardingStep++;
+const handleNext = async () => {
+  try {
+    isSubmitting.value = true;
+    const userData = counselorStudentStore.onBoardingData;
+    const payload = {
+      full_legal_name: userData.name,
+      date_of_birth: `${userData.date_of_birth.year}-${userData.date_of_birth.month?.value}-${userData.date_of_birth.day}`,
+      phone_number: userData.phone_number,
+      email: userData.email,
+      legal_address: userData.legal_address,
+      current_address: userData.current_address,
+      national_country_id:
+        counselorStudentStore.onBoardingData.nationality?.value,
+      permanent_residency:
+        userData.permanent_residency === "yes" ? true : false,
+      pr_country_id:
+        userData.permanent_residency === "yes"
+          ? counselorStudentStore.onBoardingData.residency_country_name?.value
+          : null,
+      passport_number: userData.passport_number,
+      most_recent_school: userData.recent_school,
+      current_class_grade_id: userData.level_of_study?.value,
+      curriculum: userData.curriculum,
+      current_gpa: userData.gpa,
+      intended_class_grade_id: userData.intended_study_program?.value,
+      // super_meta_category_id: userData.intended_major,
+      preferred_country_ids: userData.country_destinations,
+      min_budget: 0,
+      max_budget: counselorStudentStore.onBoardingData.annual_budget,
+      // preferred_earliest_intake: userData.earliest_intake?.value,
+      post_graduation_plan: userData.post_graduation_plan,
+      test_score_status: userData.english_language_test.status?.value,
+      test_score_type_id:
+        userData.english_language_test.status?.value !== "Not decided"
+          ? userData.english_language_test.test_type?.value
+          : null,
+      english_test_date:
+        userData.english_language_test.status?.value !== "Not decided"
+          ? `${userData.english_language_test.test_date.year}-${userData.english_language_test.test_date.month?.value}-${userData.english_language_test.test_date.day}`
+          : null,
+      test_score:
+        userData.english_language_test.status?.value === "Test taken"
+          ? userData.english_language_test.test_scrore
+          : null,
+      standardized_test_status: userData.standardized_test.status?.value,
+      standardized_test_type_id:
+        userData.standardized_test.status?.value !== "Not decided"
+          ? userData.standardized_test.test_type?.value
+          : null,
+      standardized_test_date:
+        userData.standardized_test.status?.value !== "Not decided"
+          ? `${userData.standardized_test.test_date.year}-${userData.standardized_test.test_date.month?.value}-${userData.standardized_test.test_date.day}`
+          : null,
+      standardized_score:
+        userData.standardized_test.status?.value === "Test taken"
+          ? userData.standardized_test.test_scrore
+          : null,
+    };
+    await api.post("/api/v1/counsellor-form/student", payload);
+    counselorStudentStore.onboardingStep++;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isSubmitting.value = false;
+  }
 };
 
 const isAnyFieldMissing = computed(() => {
@@ -115,4 +186,8 @@ watch(
     }
   }
 );
+
+onMounted(() => {
+  counselorStudentStore.getStudentInitailData();
+});
 </script>

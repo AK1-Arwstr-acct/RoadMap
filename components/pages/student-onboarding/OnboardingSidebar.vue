@@ -63,7 +63,6 @@
               {{ step }}
             </div>
           </div>
-          <BaseLanguageDropdown />
         </div>
       </div>
     </div>

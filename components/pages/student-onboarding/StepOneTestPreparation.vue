@@ -34,11 +34,13 @@
         <BaseSelectRadio
           label="Test type"
           :options="englishTestTypes"
+          :disabled="!englishTestTypes.length"
           v-model="
             counselorStudentStore.onBoardingData.english_language_test.test_type
           "
           :isShadowDark="true"
           :required="true"
+          :loading="isTestScoresLoading"
         />
         <!-- Test date -->
         <div class="remove-shadow-bg-white">
@@ -176,6 +178,7 @@
                 @onChange="onMonthChange2"
                 :isShadowDark="true"
                 placeholder="Month"
+                direction="upward"
               />
             </div>
             <input
@@ -239,6 +242,7 @@ const { showToast } = useToast();
 const { api } = useApi();
 
 const isTestScoresLoading = ref<boolean>(false);
+const isStandardizedScoresLoading = ref<boolean>(false);
 const status: OptionAttributes[] = [
   {
     label: "Not decided",
@@ -253,58 +257,31 @@ const status: OptionAttributes[] = [
     value: "Test taken",
   },
 ];
-const englishTestTypes: OptionAttributes[] = [
-  {
-    label: "TOEFL",
-    value: "TOEFL",
-  },
-  {
-    label: "IELTS",
-    value: "IELTS",
-  },
-  {
-    label: "Duolingo",
-    value: "Duolingo",
-  },
-];
-
-const standardizedTestType: OptionAttributes[] = [
-  {
-    label: "SAT",
-    value: "SAT",
-  },
-  {
-    label: "ACT",
-    value: "ACT",
-  },
-  {
-    label: "GRE",
-    value: "GRE",
-  },
-];
+const englishTestTypes = ref<OptionAttributes[]>([])
+const standardizedTestType = ref<OptionAttributes[]>([])
 
 const months = [
-  { value: "January", label: "January" },
-  { value: "February", label: "February" },
-  { value: "March", label: "March" },
-  { value: "April", label: "April" },
-  { value: "May", label: "May" },
-  { value: "June", label: "June" },
-  { value: "July", label: "July" },
-  { value: "August", label: "August" },
-  { value: "September", label: "September" },
-  { value: "October", label: "October" },
-  { value: "November", label: "November" },
-  { value: "December", label: "December" },
+  { value: "01", label: "January" },
+  { value: "02", label: "February" },
+  { value: "03", label: "March" },
+  { value: "04", label: "April" },
+  { value: "05", label: "May" },
+  { value: "06", label: "June" },
+  { value: "07", label: "July" },
+  { value: "08", label: "August" },
+  { value: "09", label: "September" },
+  { value: "10", label: "October" },
+  { value: "11", label: "November" },
+  { value: "12", label: "December" },
 ];
 const fullMonths = [
-  "January",
-  "March",
-  "May",
-  "July",
-  "August",
-  "October",
-  "December",
+  "01",
+  "03",
+  "05",
+  "07",
+  "08",
+  "10",
+  "12",
 ];
 
 const validateEnglishLanguageScore = (event: Event) => {
@@ -360,7 +337,7 @@ const validateEnglishTestDate = (event: Event) => {
       ?.value;
   const year =
     counselorStudentStore.onBoardingData.english_language_test.test_date.year;
-  if (month && month === "February") {
+  if (month && month === "02") {
     limit = 29;
     if (year && Number(year) % 4 !== 0) {
       limit = 28;
@@ -419,7 +396,7 @@ const validateEnglishTestYear = (event: Event) => {
   if (
     year.length === 4 &&
     Number(year) % 4 !== 0 &&
-    month === "February" &&
+    month === "02" &&
     day === 29
   ) {
     counselorStudentStore.onBoardingData.english_language_test.test_date.day =
@@ -434,7 +411,7 @@ const onMonthChange = () => {
   const month =
     counselorStudentStore.onBoardingData.english_language_test.test_date.month
       ?.value;
-  if (month === "February" && day > 29) {
+  if (month === "02" && day > 29) {
     counselorStudentStore.onBoardingData.english_language_test.test_date.day =
       "";
     return;
@@ -455,7 +432,7 @@ const validateStandardizedTestDate = (event: Event) => {
       ?.value;
   const year =
     counselorStudentStore.onBoardingData.standardized_test.test_date.year;
-  if (month && month === "February") {
+  if (month && month === "02") {
     limit = 29;
     if (year && Number(year) % 4 !== 0) {
       limit = 28;
@@ -512,7 +489,7 @@ const validateStandardizedTestYear = (event: Event) => {
   if (
     year.length === 4 &&
     Number(year) % 4 !== 0 &&
-    month === "February" &&
+    month === "02" &&
     day === 29
   ) {
     counselorStudentStore.onBoardingData.standardized_test.test_date.day = "";
@@ -526,7 +503,7 @@ const onMonthChange2 = () => {
   const month =
     counselorStudentStore.onBoardingData.standardized_test.test_date.month
       ?.value;
-  if (month === "February" && day > 29) {
+  if (month === "02" && day > 29) {
     counselorStudentStore.onBoardingData.standardized_test.test_date.day = "";
     return;
   }
@@ -535,19 +512,19 @@ const onMonthChange2 = () => {
   }
 };
 
-const setTestScores = async () => {
+const setEnglishTestScores = async () => {
   try {
     isTestScoresLoading.value = true;
-    const response = await api.get(`/api/v2/openapi/test-scores`);
+    const response = await api.get(`/api/v2/openapi/english-test-scores`);
     if (response?.data.data) {
-      // studyProgram.value = response.data.data.map(
-      //   (item: { id: number; title: string }) => {
-      //     return {
-      //       value: item.id,
-      //       label: title,
-      //     };
-      //   }
-      // );
+      englishTestTypes.value = response.data.data.map(
+        (item: { id: number; title: string }) => {
+          return {
+            value: item.id,
+            label: item.title,
+          };
+        }
+      );
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -561,7 +538,34 @@ const setTestScores = async () => {
   }
 };
 
+const setStandardizedTestScores = async () => {
+  try {
+    isStandardizedScoresLoading.value = true;
+    const response = await api.get(`/api/v2/openapi/standard-test-scores`);
+    if (response?.data.data) {
+      standardizedTestType.value = response.data.data.map(
+        (item: { id: number; title: string }) => {
+          return {
+            value: item.id,
+            label: item.title,
+          };
+        }
+      );
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  } finally {
+    isStandardizedScoresLoading.value = false;
+  }
+};
+
 onMounted(() => {
-  // setTestScores();
+  setEnglishTestScores();
+  setStandardizedTestScores();
 });
 </script>

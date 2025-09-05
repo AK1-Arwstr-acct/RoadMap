@@ -159,21 +159,13 @@
       </div>
     </div>
     <!-- nationality -->
-    <div class="remove-shadow-bg-white">
-      <label class="font-medium text-text-neutral-subtle text-sm"
-        >Nationality<span class="text-text-error font-medium"> *</span></label
-      >
-      <div class="">
-        <input
-          name="Nationality"
-          type="text"
-          v-model="counselorStudentStore.onBoardingData.nationality"
-          placeholder="Enter Nationality"
-          class="mt-1.5 bg-background-base-subtle rounded-lg border border-border-neutral-subtle py-2.5 px-3 w-full outline-none appearance-none text-text-base"
-          data-hj-allow
-        />
-      </div>
-    </div>
+    <BaseSelectRadio
+      label="Nationality"
+      :options="countriesList"
+      v-model="counselorStudentStore.onBoardingData.nationality"
+      :isShadowDark="true"
+      :required="true"
+    />
     <!-- residency -->
     <div class="">
       <label class="font-medium text-text-neutral-subtle text-sm pb-2.5 block">
@@ -237,7 +229,15 @@
       </div>
     </div>
     <!-- country -->
-    <div
+    <BaseSelectRadio
+      v-if="counselorStudentStore.onBoardingData.permanent_residency === 'yes'"
+      label="If yes, please name the country"
+      :options="countriesList"
+      v-model="counselorStudentStore.onBoardingData.residency_country_name"
+      :isShadowDark="true"
+      :required="true"
+    />
+    <!-- <div
       v-if="counselorStudentStore.onBoardingData.permanent_residency === 'yes'"
       class="remove-shadow-bg-white"
     >
@@ -258,7 +258,7 @@
           data-hj-allow
         />
       </div>
-    </div>
+    </div> -->
     <!-- passport -->
     <div class="remove-shadow-bg-white">
       <label class="font-medium text-text-neutral-subtle text-sm"
@@ -278,33 +278,30 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from "axios";
 import useCounselorStudentStore from "~/stores/counselorStudentStore";
+import type { OptionAttributes } from "~/types/home";
 
 const counselorStudentStore = useCounselorStudentStore();
+const { showToast } = useToast();
+const { api } = useApi();
 
+const countriesList = ref<OptionAttributes[]>([]);
 const months = [
-  { value: "January", label: "January" },
-  { value: "February", label: "February" },
-  { value: "March", label: "March" },
-  { value: "April", label: "April" },
-  { value: "May", label: "May" },
-  { value: "June", label: "June" },
-  { value: "July", label: "July" },
-  { value: "August", label: "August" },
-  { value: "September", label: "September" },
-  { value: "October", label: "October" },
-  { value: "November", label: "November" },
-  { value: "December", label: "December" },
+  { value: "01", label: "January" },
+  { value: "02", label: "February" },
+  { value: "03", label: "March" },
+  { value: "04", label: "April" },
+  { value: "05", label: "May" },
+  { value: "06", label: "June" },
+  { value: "07", label: "July" },
+  { value: "08", label: "August" },
+  { value: "09", label: "September" },
+  { value: "10", label: "October" },
+  { value: "11", label: "November" },
+  { value: "12", label: "December" },
 ];
-const fullMonths = [
-  "January",
-  "March",
-  "May",
-  "July",
-  "August",
-  "October",
-  "December",
-];
+const fullMonths = ["01", "03", "05", "07", "08", "10", "12"];
 
 const oldDress = () => {
   if (counselorStudentStore.sameAddress) {
@@ -322,7 +319,7 @@ const validateBirthDate = (event: Event) => {
   let limit = 31;
   const month = counselorStudentStore.onBoardingData.date_of_birth.month?.value;
   const year = counselorStudentStore.onBoardingData.date_of_birth.year;
-  if (month && month === "February") {
+  if (month && month === "02") {
     limit = 29;
     if (year && Number(year) % 4 !== 0) {
       limit = 28;
@@ -370,7 +367,7 @@ const validateBirthYear = (event: Event) => {
   if (
     year.length === 4 &&
     Number(year) % 4 !== 0 &&
-    month === "February" &&
+    month === "02" &&
     day === 29
   ) {
     counselorStudentStore.onBoardingData.date_of_birth.day = "";
@@ -380,7 +377,7 @@ const validateBirthYear = (event: Event) => {
 const onMonthChange = () => {
   const day = Number(counselorStudentStore.onBoardingData.date_of_birth.day);
   const month = counselorStudentStore.onBoardingData.date_of_birth.month?.value;
-  if (month === "February" && day > 29) {
+  if (month === "02" && day > 29) {
     counselorStudentStore.onBoardingData.date_of_birth.day = "";
     return;
   }
@@ -388,4 +385,51 @@ const onMonthChange = () => {
     counselorStudentStore.onBoardingData.date_of_birth.day = "";
   }
 };
+
+const setCountriesList = async () => {
+  try {
+    const response = await api.get(`/api/v2/openapi/countries`);
+    if (response?.data.data) {
+      countriesList.value = response.data.data.all_phone_codes.map(
+        (item: { id: number; title: string }) => {
+          return {
+            value: item.id,
+            label: item.title,
+          };
+        }
+      );
+      if (response.data.data.current_country_code) {
+        counselorStudentStore.onBoardingData.nationality =
+          countriesList.value.find(
+            (item) => item.value === response.data.data.current_country_code.id
+          ) || countriesList.value[0];
+        counselorStudentStore.onBoardingData.residency_country_name =
+          counselorStudentStore.onBoardingData.nationality;
+      }
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = errorList(error);
+      showToast(errorMessage, {
+        type: "error",
+      });
+    }
+  }
+};
+
+watch(
+  () => counselorStudentStore.onBoardingData.current_address,
+  () => {
+    if (
+      counselorStudentStore.onBoardingData.current_address ===
+      counselorStudentStore.onBoardingData.legal_address
+    ) {
+      counselorStudentStore.sameAddress = true;
+    }
+  }
+);
+
+onMounted(() => {
+  setCountriesList();
+});
 </script>
